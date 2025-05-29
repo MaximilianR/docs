@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'Mona Sans';
+    src: local('Mona Sans Regular'), local('MonaSans-Regular'),
+      url('./MonaSans-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Mona Sans';
+    src: local('Mona Sans Bold'), local('MonaSans-Bold'),
+      url('./MonaSans-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Mona Sans';
+    src: local('Mona Sans Light'), local('MonaSans-Light'),
+      url('./MonaSans-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Mona Sans';
+    src: local('Mona Sans Medium'), local('MonaSans-Medium'),
+      url('./MonaSans-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Mona Sans';
+    src: local('Mona Sans SemiBold'), local('MonaSans-SemiBold'),
+      url('./MonaSans-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Mona Sans';
+    src: local('Mona Sans ExtraBold'), local('MonaSans-ExtraBold'),
+      url('./MonaSans-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Mona Sans';
+    src: local('Mona Sans Black'), local('MonaSans-Black'),
+      url('./MonaSans-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Mona Sans';
+    src: local('Mona Sans Italic'), local('MonaSans-Italic'),
+      url('./MonaSans-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Mona Sans';
+    src: local('Mona Sans Bold Italic'), local('MonaSans-BoldItalic'),
+      url('./MonaSans-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+  }
