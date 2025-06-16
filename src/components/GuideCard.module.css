@@ -1,0 +1,40 @@
+.card {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  /* border-radius: var(--ifm-card-border-radius); */
+  color: inherit;
+  display: block;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  transition: all 0.2s ease-out;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  border-color: var(--ifm-color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.cardImage {
+  border-top-left-radius: var(--ifm-card-border-radius);
+  border-top-right-radius: var(--ifm-card-border-radius);
+  display: block;
+  width: 100%;
+}
+
+.cardContent {
+  padding: 1.25rem;
+  flex-grow: 1;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.cardDescription {
+  margin-bottom: 0;
+}

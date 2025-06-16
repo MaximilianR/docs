@@ -1,0 +1,47 @@
+---
+title: CRV
+sidebar_label: CRV
+hide_title: true
+---
+
+import GuideCardGrid from '@site/src/components/GuideCardGrid';
+import CrvSupply from '@site/src/components/CrvSupply';
+import InlinePill from '@site/src/components/InlinePill';
+
+import CrvLogo from '@site/static/img/logos/CRV_s_heading.svg';
+import VecrvLogo from '@site/static/img/logos/veCRV_s.svg';
+
+# <CrvLogo class="heading-inline-logo" /> The CRV Token
+
+CRV is the native token of the Curve ecosystem. It was launched in August 2020 on Ethereum and has a fixed maximum supply of approximately 3.03 billion tokens. CRV is mainly used for:
+
+- Rewarding users who provide liquidity in Curve pools and Llamalend markets
+- Participating in Curve governance and earning a share of Curve's revenue by locking CRV into vote-escrowed CRV (veCRV)
+
+New CRV is constantly slowly created and distributed to Liquidity Providers (LPs). The issuance rate decreases over time, reducing by 16% once per year. A portion of the initial supply (1.3B) was distributed with vesting schedules that have now finished as of August 2024. The other 1.7B CRV is emitted to liquidity providers gradually over the next ~200 years.
+
+## Guides
+
+See the guides below for how to lock your CRV for veCRV, and how to claim your earned CRV rewards from providing liquidity to a pool or Llamalend market.
+
+<GuideCardGrid guideKeys={['lockingCrv', 'claimingCrvRewards']} />
+
+## Current CRV Stats
+
+The following table pulls current data from <InlinePill icon="/img/logos/ethereum.png" label="Ethereum" />:
+
+<CrvSupply />
+
+## FAQ
+
+### What is veCRV?
+
+veCRV stands for vote-escrowed CRV (locked CRV).  You obtain veCRV by "locking" your CRV tokens for a specified period, ranging from 1 week to 4 years.  The longer you lock your CRV, the more veCRV you receive proportionally.  See the [veCRV page](vecrv) for the benefits of locking CRV for veCRV, and how locking works.
+
+### How is CRV Distributed?
+
+Each week veCRV holders vote for which pools and lending markets they want the weekly minted CRV to flow to, and the CRV is split based on how many votes each pool/lending market receives.  This is called [Gauge voting](../dao/voting-gauges.md), see the page for more information.
+
+### Are there any upcoming team, investor, or insider unlocks?
+
+No, all unlocks have already occurred.  The final unlock (team vesting) finished in August, 2024.  All unreleased CRV tokens will be rewarded to LPs over the next ~200 years.
