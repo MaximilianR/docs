@@ -50,3 +50,8 @@ h1, h2, h3, h4, h5, h6 {
 code, pre {
   font-family: 'Mona Sans Mono', monospace;
 }
+
+[data-theme='light'] img[src$='#only-dark'],
+[data-theme='dark']  img[src$='#only-light'] {
+  display: none;
+}

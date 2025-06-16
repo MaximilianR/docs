@@ -7,146 +7,115 @@ export default {
         },
         {
             type: 'category',
-            label: 'Overview',
+            label: 'Why Curve?',
             items: [
                 {
                     type: 'doc',
-                    id: 'overview/overview',
-                    label: 'Overview',
-                },
-                {
-                    type: 'doc',
-                    id: 'overview/why-curve',
+                    id: 'why-curve/why-curve',
                     label: 'Why Launch on Curve?',
                 },
                 {
                     type: 'doc',
-                    id: 'overview/compare',
+                    id: 'why-curve/compare-amm',
                     label: 'How Curve Compares to Other AMMs',
                 },
                 {
                     type: 'doc',
-                    id: 'overview/product-types',
+                    id: 'why-curve/compare-lending',
+                    label: 'How Curve Compares to Other Lending Markets',
+                },
+                {
+                    type: 'doc',
+                    id: 'why-curve/product-types',
                     label: 'Curve Pool Types & Tradeoffs',
                 },
             ],
         },
         {
             type: 'category',
-            label: 'Deploy a Liquidity Pool',
+            label: 'Liquidity Pools',
             items: [
                 {
                     type: 'doc',
-                    id: 'deploy-pool/factory',
-                    label: 'What is a Curve Factory Pool?',
+                    id: 'pool/overview',
+                    label: 'Overview & Pool Types',
                 },
                 {
                     type: 'doc',
-                    id: 'deploy-pool/guides/deploy-stableswap',
+                    id: 'pool/guides/deploy-stableswap',
                     label: 'Guide: Deploy a Stableswap Pool',
                 },
                 {
                     type: 'doc',
-                    id: 'deploy-pool/guides/deploy-cryptoswap',
+                    id: 'pool/guides/deploy-cryptoswap',
                     label: 'Guide: Deploy a Cryptoswap Pool',
                 },
                 {
                     type: 'doc',
-                    id: 'deploy-pool/pool-deployment',
-                    label: 'Video: Pool Deployment Walkthrough',
+                    id: 'pool/pool-parameters',
+                    label: 'Understanding Pool Parameters',
                 },
                 {
                     type: 'doc',
-                    id: 'deploy-pool/parameters',
-                    label: 'Pool Parameters',
+                    id: 'pool/post-deployment',
+                    label: 'Post Deployment',
                 },
             ],
         },
         {
             type: 'category',
-            label: 'Deploy a Lending Market',
+            label: 'Lending Markets',
             items: [
                 {
                     type: 'doc',
-                    id: 'deploy-lending/overview',
+                    id: 'lending/overview',
                     label: 'Overview',
                 },
                 {
                     type: 'doc',
-                    id: 'deploy-lending/requirements',
-                    label: 'Requirements',
+                    id: 'lending/parameters',
+                    label: 'Choosing Lending Parameters',
                 },
                 {
                     type: 'doc',
-                    id: 'deploy-lending/parameters',
-                    label: 'Parameters',
-                },
-                {
-                    type: 'doc',
-                    id: 'deploy-lending/guides/deploy-lending-market',
+                    id: 'lending/guides/deploy-lending-market',
                     label: 'Guide: Deploy a Lending Market',
                 },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Get a Gauge',
-            items: [
                 {
                     type: 'doc',
-                    id: 'gauge/what-is-gauge',
-                    label: 'What is a Gauge & Why It Matters',
-                },
-                {
-                    type: 'doc',
-                    id: 'gauge/emissions',
-                    label: 'Emission Mechanics',
-                },
-                {
-                    type: 'doc',
-                    id: 'gauge/guides/add-gauge',
-                    label: 'Guide: Add a Gauge',
-                },
-                {
-                    type: 'doc',
-                    id: 'gauge/gauge-walkthrough',
-                    label: 'Video: Gauge Walkthrough',
-                },
-                {
-                    type: 'doc',
-                    id: 'gauge/gauge-eligibility',
-                    label: 'Gauge Eligibility Checklist',
+                    id: 'lending/post-deployment',
+                    label: 'Post Deployment',
                 },
             ],
         },
         {
             type: 'category',
-            label: 'Adding Incentives',
+            label: 'Gauges & Incentive Mechanics',
             items: [
                 {
                     type: 'doc',
-                    id: 'incentives/incentives-overview',
-                    label: 'Boosting Liquidity via Rewards',
+                    id: 'gauge/overview',
+                    label: 'What is a Gauge & How it Works',
                 },
                 {
                     type: 'doc',
-                    id: 'incentives/reward-types',
-                    label: 'Permissionless Rewards vs DAO Vote',
+                    id: 'gauge/incentives',
+                    label: 'Incentives: CRV Emissions vs Permissionless Rewards',
                 },
                 {
                     type: 'doc',
-                    id: 'incentives/guides/add-bribes',
-                    label: 'Guide: Add Bribes via Votium',
+                    id: 'gauge/whitelisting-gauge',
+                    label: 'Whitelisting a Gauge',
                 },
                 {
                     type: 'doc',
-                    id: 'incentives/guides/add-permissionless',
-                    label: 'Guide: Add Permissionless CRV Incentives',
+                    id: 'gauge/guides/get-crv-emissions',
+                    label: 'Getting CRV Emissions',
                 },
                 {
                     type: 'doc',
-                    id: 'incentives/incentives',
-                    label: 'Video: Incentivizing Your Pool',
+                    id: 'gauge/guides/adding-permissionless-rewards',
+                    label: 'Adding Permissionless Rewards',
                 },
             ],
         },
@@ -177,20 +146,9 @@ export default {
             ],
         },
         {
-            type: 'category',
-            label: 'FAQ & Resources',
-            items: [
-                {
-                    type: 'doc',
-                    id: 'faq-resources/branding',
-                    label: 'Branding & Icon Submission',
-                },
-                {
-                    type: 'doc',
-                    id: 'faq-resources/links',
-                    label: 'Useful Links',
-                },
-            ],
+            type: 'doc',
+            id: 'resources/branding',
+            label: 'Branding & Icon Submission',
         },
     ],
 };

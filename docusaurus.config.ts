@@ -58,7 +58,7 @@ const config: Config = {
         },
         {
           to: 'protocol/introduction',
-          label: 'For Protocols',
+          label: 'Build On Curve',
           activeBasePath: '/protocol',
         },
         // {
