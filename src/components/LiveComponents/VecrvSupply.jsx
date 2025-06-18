@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 // Change 1: Import the new formatter function
-import { formatNumber } from '../utils/formatters';
+import { formatNumber } from '../../utils/formatters';
 
-import CrvLogo from '@site/static/img/logos/CRV_s_heading.svg';
-import VecrvLogo from '@site/static/img/logos/veCRV_s.svg';
+import CrvLogo from '@site/static/img/logos/CRV_xs.png';
+import VecrvLogo from '@site/static/img/logos/veCRV_xs.png';
 
 
 // --- Configuration for this specific component ---
@@ -68,21 +68,21 @@ const VecrvSupply = () => {
       </thead>
       <tbody>
         <tr>
-          <td><CrvLogo class="subheading-inline-logo" /> CRV Current Total</td>
+          <td><img src={CrvLogo} className="subheading-inline-logo" alt="CRV" /> CRV Current Total</td>
           <td>{formatNumber(supplyData?.crvSupply, 4)}</td>
         </tr>
         <tr>
-          <td><CrvLogo class="subheading-inline-logo" /> CRV Locked</td>
+          <td><img src={CrvLogo} className="subheading-inline-logo" alt="CRV" /> CRV Locked</td>
           <td>{formatNumber(supplyData?.lockedCrvSupply, 3)} <span style={{ color: 'var(--ifm-color-emphasis-600)', fontWeight: 'normal'}}>
   ({supplyData?.percentLocked.toPrecision(3)}%)
 </span></td>
         </tr>
         <tr>
-          <td><CrvLogo class="subheading-inline-logo" /> Average Lock Time</td>
+          <td><img src={CrvLogo} className="subheading-inline-logo" alt="CRV" /> Average Lock Time</td>
           <td>{supplyData?.avgLockTime.toPrecision(3) + " Years"}</td>
         </tr>
         <tr>
-          <td><VecrvLogo class="subheading-inline-logo" /> veCRV Total</td>
+          <td><img src={VecrvLogo} className="subheading-inline-logo" alt="veCRV" /> veCRV Total</td>
           <td>{formatNumber(supplyData?.vecrvSupply, 3)}</td>
         </tr>
       </tbody>

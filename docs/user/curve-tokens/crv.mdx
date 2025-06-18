@@ -5,20 +5,21 @@ hide_title: true
 ---
 
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
-import CrvSupply from '@site/src/components/CrvSupply';
+import CrvSupply from '@site/src/components/LiveComponents/CrvSupply';
 import InlinePill from '@site/src/components/InlinePill';
+import CrvAllocationChart from '@site/src/components/Charts/CrvAllocation';
 
-import CrvLogo from '@site/static/img/logos/CRV_s_heading.svg';
-import VecrvLogo from '@site/static/img/logos/veCRV_s.svg';
+import CrvLogo from '@site/static/img/logos/CRV_s.png';
 
-# <CrvLogo class="heading-inline-logo" /> The CRV Token
+# <img src={CrvLogo} className="heading-inline-logo" alt="CRV" /> The CRV Token
 
 CRV is the native token of the Curve ecosystem. It was launched in August 2020 on Ethereum and has a fixed maximum supply of approximately 3.03 billion tokens. CRV is mainly used for:
 
 - Rewarding users who provide liquidity in Curve pools and Llamalend markets
-- Participating in Curve governance and earning a share of Curve's revenue by locking CRV into vote-escrowed CRV (veCRV)
+- Participating in Curve governance, earning a share of Curve's revenue, and boosting LP rewards by locking CRV into vote-escrowed CRV (veCRV).  See [veCRV page for more info](../vecrv/what-is-vecrv.md)
 
-New CRV is constantly slowly created and distributed to Liquidity Providers (LPs). The issuance rate decreases over time, reducing by 16% once per year. A portion of the initial supply (1.3B) was distributed with vesting schedules that have now finished as of August 2024. The other 1.7B CRV is emitted to liquidity providers gradually over the next ~200 years.
+New CRV is constantly slowly created and distributed to Liquidity Providers (LPs). The issuance rate decreases over time, reducing by 16% each August (see [table](#current-crv-stats) below for this year's exact date). A portion of the initial supply (1.3B) was distributed with vesting schedules that have now finished as of August 2024.  The majority of the other 1.7B CRV is emitted to liquidity providers gradually over the next approx. 200 years.
+
 
 ## Guides
 
@@ -31,6 +32,14 @@ See the guides below for how to lock your CRV for veCRV, and how to claim your e
 The following table pulls current data from <InlinePill icon="/img/logos/ethereum.png" label="Ethereum" />:
 
 <CrvSupply />
+
+## CRV Allocation Chart
+
+The chart below illustrates the initial distribution of the CRV token at launch.
+
+<CrvAllocationChart style={{ marginBottom: '10px' }} />
+
+The Community allocation represents a dedicated supply that is emitted over time as rewards for liquidity providers. Allocations for the Core Team, Investors, Employees and Early users have all fully unlocked.
 
 ## FAQ
 

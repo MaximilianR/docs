@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { formatNumber } from '../utils/formatters'; // Make sure the path is correct
+import { formatNumber } from '../../utils/formatters'; // Make sure the path is correct
 
-import CrvusdLogo from '@site/static/img/logos/crvUSD_s_heading.svg';
+import CrvusdLogo from '@site/static/img/logos/crvUSD_xs.png';
 
 // --- API Configuration ---
 const MARKETS_API_URL = 'https://prices.curve.finance/v1/crvusd/markets?fetch_on_chain=false';
@@ -83,19 +83,19 @@ const CrvusdSupply = () => {
       </thead>
       <tbody>
         <tr>
-          <td><CrvusdLogo class="subheading-inline-logo" /> crvUSD Total Supply</td>
+          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> crvUSD Total Supply</td>
           <td>{formatNumber(supplyData?.totalSupply, 3)}</td>
         </tr>
         <tr>
-          <td><CrvusdLogo class="subheading-inline-logo" /> crvUSD Borrowed</td>
+          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> crvUSD Borrowed</td>
           <td>{formatNumber(supplyData?.borrowed, 3)}</td>
         </tr>
         <tr>
-          <td><CrvusdLogo class="subheading-inline-logo" /> Deployed PegKeeper Reserves</td>
+          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> Deployed PegKeeper Reserves</td>
           <td>{formatNumber(supplyData?.pegkeeperReserves, 3)}</td>
         </tr>
         <tr>
-          <td><CrvusdLogo class="subheading-inline-logo" /> Peg</td>
+          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> Price</td>
           <td>${formatNumber(supplyData?.peg, 5)}</td>
         </tr>
       </tbody>

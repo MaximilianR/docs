@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { formatNumber } from '../utils/formatters'; // Adjust path if needed
+import { formatNumber } from '../../utils/formatters'; // Adjust path if needed
 
-import CrvusdLogo from '@site/static/img/logos/crvUSD_s_heading.svg';
-import ScrvusdLogo from '@site/static/img/logos/scrvUSD_s_heading.svg';
+import CrvusdLogo from '@site/static/img/logos/crvUSD_xs.png';
+import ScrvusdLogo from '@site/static/img/logos/scrvUSD_xs.png';
 
 
 // --- API Configuration ---
@@ -95,25 +95,25 @@ const ScrvusdSupply = () => {
       </thead>
       <tbody>
         <tr>
-          <td><CrvusdLogo class="subheading-inline-logo" /> crvUSD Total Supply</td>
+          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> crvUSD Total Supply</td>
           <td>{formatNumber(supplyData?.crvusdTotalSupply, 3)}</td>
         </tr>
         <tr>
-          <td><CrvusdLogo class="subheading-inline-logo" /> Total Staked crvUSD</td>
+          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> Total Staked crvUSD</td>
           <td>{formatNumber(supplyData?.totalStaked, 3)} <span style={{ color: 'var(--ifm-color-emphasis-600)', fontWeight: 'normal'}}>
   ({formatNumber(supplyData?.stakedRatio, 3)}%)
 </span></td>
         </tr>
         <tr>
-          <td><ScrvusdLogo class="subheading-inline-logo" /> Total scrvUSD Supply</td>
+          <td><img src={ScrvusdLogo} className="subheading-inline-logo" alt="scrvUSD" /> Total scrvUSD Supply</td>
           <td>{formatNumber(supplyData?.scrvusdTotalSupply, 3)}</td>
         </tr>
         <tr>
-          <td><CrvusdLogo class="subheading-inline-logo" /> crvUSD per <ScrvusdLogo class="subheading-inline-logo" /> scrvUSD</td>
+          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> crvUSD per <img src={ScrvusdLogo} className="subheading-inline-logo" alt="scrvUSD" /> scrvUSD</td>
           <td>{formatNumber(supplyData?.price, 4)}</td>
         </tr>
         <tr>
-          <td><ScrvusdLogo class="subheading-inline-logo" /> scrvUSD Yield (APY)</td>
+          <td><img src={ScrvusdLogo} className="subheading-inline-logo" alt="scrvUSD" /> scrvUSD Yield (APY)</td>
           <td>{formatNumber(supplyData?.yieldApy, 3)}%</td>
         </tr>
       </tbody>

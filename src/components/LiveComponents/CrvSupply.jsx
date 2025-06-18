@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 // Change 1: Import the new formatter function
-import { formatNumber } from '../utils/formatters';
+import { formatNumber } from '../../utils/formatters';
 
-import CrvLogo from '@site/static/img/logos/CRV_s_heading.svg';
+import CrvLogo from '@site/static/img/logos/CRV_xs.png';
 
 // --- Configuration for this specific component ---
 const CRV_CONTRACT_ADDRESS = '0xD533a949740bb3306d119CC777fa900bA034cd52';
@@ -63,23 +63,23 @@ const CrvSupply = () => {
       </thead>
       <tbody>
         <tr>
-          <td><CrvLogo class="subheading-inline-logo" /> Max Supply</td>
+          <td><img src={CrvLogo} className="subheading-inline-logo" alt="CRV" /> Max Supply</td>
           <td>{formatNumber(supplyData?.maxSupply, 4)}</td>
         </tr>
         <tr>
-          <td><CrvLogo class="subheading-inline-logo" /> Current Total Supply</td>
+          <td><img src={CrvLogo} className="subheading-inline-logo" alt="CRV" /> Current Total Supply</td>
           <td>{formatNumber(supplyData?.currentSupply, 4)}</td>
         </tr>
         <tr>
-          <td><CrvLogo class="subheading-inline-logo" /> Weekly Emissions</td>
+          <td><img src={CrvLogo} className="subheading-inline-logo" alt="CRV" /> Weekly Emissions</td>
           <td>{formatNumber(supplyData?.weeklyEmissions)}</td>
         </tr>
         <tr>
-          <td><CrvLogo class="subheading-inline-logo" /> Inflation Rate</td>
+          <td><img src={CrvLogo} className="subheading-inline-logo" alt="CRV" /> Inflation Rate</td>
           <td>{supplyData?.inflationRate.toFixed(2)} %</td>
         </tr>
         <tr>
-          <td><CrvLogo class="subheading-inline-logo" /> Next Inflation Reduction</td>
+          <td><img src={CrvLogo} className="subheading-inline-logo" alt="CRV" /> Next Inflation Reduction</td>
           <td>{new Date(supplyData?.nextEpochTime * 1000).toISOString().slice(0, 10)}</td>
         </tr>
       </tbody>
