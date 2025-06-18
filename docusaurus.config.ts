@@ -10,7 +10,7 @@ const config: Config = {
   favicon: 'img/favicon.png',
 
   // Set the production url of your site here
-  url: 'https://docs.curve.fi',
+  url: 'https://docs.curve.finance',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -69,7 +69,7 @@ const config: Config = {
         {
           label: 'News',
           position: 'right',
-          href: 'https://news.curve.fi/',
+          href: 'https://news.curve.finance/',
         },
         {
           href: 'https://github.com/curvefi',
@@ -78,10 +78,10 @@ const config: Config = {
           'aria-label': 'GitHub repository',
         },
         {
-          href: 'https://curve.fi/',
+          href: 'https://curve.finance/',
           position: 'right',
           className: 'header-curve-link',
-          'aria-label': 'curve.fi',
+          'aria-label': 'curve.finance',
         },
         {
           type: 'dropdown',
@@ -89,8 +89,8 @@ const config: Config = {
           position: 'right',
           items: [
             {
-              label: 'curve.fi',
-              href: 'https://curve.fi',
+              label: 'curve.finance',
+              href: 'https://curve.finance',
             },
             {
               label: 'Discord',

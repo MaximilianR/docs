@@ -57,6 +57,11 @@ export default {
                 },
                 {
                     type: 'doc',
+                    id: 'yield/scrvusd',
+                    label: 'Savings Vault (scrvUSD)',
+                },
+                {
+                    type: 'doc',
                     id: 'yield/boosting',
                     label: 'Boosting with veCRV',
                 },
@@ -105,6 +110,27 @@ export default {
                     type: 'doc',
                     id: 'dex/faq',
                     label: 'FAQ',
+                },
+                {
+                    type: 'category',
+                    label: 'Guides',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'dex/guides/how-to-swap',
+                            label: 'How to Swap',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'dex/guides/how-to-lp',
+                            label: 'How to LP',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'dex/guides/how-to-earn-crv',
+                            label: 'How to Earn CRV',
+                        },
+                    ],
                 },
             ],
         },

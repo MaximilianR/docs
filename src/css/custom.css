@@ -22,6 +22,9 @@
   /* Font overrides */
   --ifm-font-family-base: 'Mona Sans', sans-serif;
   --ifm-font-family-monospace: 'Mona Sans Mono', monospace;
+
+  /* make things square */
+  --ifm-pagination-nav-border-radius: 0;
 }
 
 [data-theme='dark'] {
@@ -49,4 +52,146 @@ h1, h2, h3, h4, h5, h6 {
 
 code, pre {
   font-family: 'Mona Sans Mono', monospace;
+}
+
+.heading-inline-logo {
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0em; 
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.subheading-inline-logo {
+  border-radius: 50%;
+  background-size: contain;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0em; 
+  height: 1.1em;
+  width: 1.1em;
+  margin-left: 0em;
+  margin-bottom: 0.2em;
+}
+
+.menu__link, .menu__caret, .menu__list-item-collapsible {
+  border-radius: 0rem;
+}
+
+  
+
+.theme-doc-sidebar-item-link > a[href="/user/curve-tokens/crv"]::before {
+  content: '';
+  background-image: url('/img/logos/CRV_xs.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 1.2em;
+  height: 1.2em;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.4em;
+}
+
+.theme-doc-sidebar-item-link > a[href="/user/curve-tokens/vecrv"]::before {
+  content: '';
+  background-image: url('/img/logos/veCRV_xs.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 1.2em;
+  height: 1.2em;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.4em;
+}
+
+.theme-doc-sidebar-item-link > a[href="/user/curve-tokens/crvusd"]::before {
+  content: '';
+  background-image: url('/img/logos/crvUSD_xs.png');
+  background-size: contain;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  vertical-align: middle;
+  margin-right: 0.4em;
+}
+
+.theme-doc-sidebar-item-link > a[href="/user/curve-tokens/scrvusd"]::before {
+  content: '';
+  background-image: url('/img/logos/scrvUSD_xs.png');
+  background-size: contain;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  vertical-align: middle;
+  margin-right: 0.4em;
+}
+
+.guide-card-row .col {
+  margin-bottom: 1.5rem;
+}
+
+.metric-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  overflow: hidden;
+}
+
+.markdown table.metric-table {
+  display: table;
+}
+
+.metric-table th,
+.metric-table td {
+  padding: 0.5em 1em;
+  text-align: left;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.metric-table td {
+  background-color: var(--ifm-color-emphasis-0);
+}
+
+.metric-table thead th {
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.metric-table td:nth-child(2) {
+  font-weight: bold;
+}
+
+.inline-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.inline-pill {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-decoration: none !important;
+  padding: 0px 6px 0px 2px;
+  border-radius: 99999px;
+  background-color: var(--ifm-color-emphasis-100);
+  box-shadow: 1px 1px 2px var(--ifm-color-emphasis-200);
+  font-weight: bold;
+  font-size: 0.85em;
+  color: var(--ifm-color-emphasis-700);
+  border: 1px solid var(--ifm-color-emphasis-200);
 }
