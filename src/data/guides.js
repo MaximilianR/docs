@@ -47,4 +47,16 @@ export const ALL_GUIDES = {
     image: '',
     link: '/user/yield/scrvusd',
   },
+  depositScrvusd: {
+    title: 'How to Deposit crvUSD to the scrvUSD Savings Vault',
+    description: "Learn how to use the UI to deposit your crvUSD to the Savings Vault",
+    image: '',
+    link: '/user/yield/scrvusd#depositing-into-the-savings-vault',
+  },
+  withdrawScrvusd: {
+    title: 'How to Withdraw your crvUSD from the scrvUSD Savings Vault',
+    description: "Learn how to use the UI to redeem your scrvUSD for the underlying crvUSD",
+    image: '',
+    link: '/user/yield/scrvusd#withdrawing-from-the-savings-vault',
+  },
 };

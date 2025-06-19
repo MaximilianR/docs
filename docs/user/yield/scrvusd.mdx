@@ -1,0 +1,213 @@
+---
+title: Savings Vault (scrvUSD)
+---
+import Button from '@site/src/components/Button';
+import ThemedImage from '@theme/ThemedImage';
+import GuideCardGrid from '@site/src/components/GuideCardGrid';
+
+
+scrvUSD is short for savings-crvUSD, and it functions like a bank savings account for crvUSD.  It is similar to other staked versions of USD stablecoins like sDOLA, sUSDS, sUSDe, etc.  Users can stake their crvUSD to receive scrvUSD, or swap for it directly.  Yield accrues automatically to scrvUSD holders, increasing the value of their tokens over time.
+
+### Official UI
+
+<Button
+  centered={true}
+  link="https://www.curve.finance/crvusd/ethereum/scrvUSD/"
+  line1="Go to"
+  line2="Savings crvUSD"
+  icon="/img/logos/scrvUSD_s.png"
+  iconAlt="scrvUSD"
+/>
+
+### In Page Guides
+
+<GuideCardGrid guideKeys={['depositScrvusd', 'withdrawScrvusd']} />
+
+---
+
+## How scrvUSD works
+
+The way scrvUSD works is very simple, it's called a savings vault because it works like a bank savings account:
+
+1. Deposit crvUSD to the vault and receive scrvUSD in return
+2. Hold your scrvUSD
+3. Over time your scrvUSD will be worth more crvUSD
+4. Withdraw crvUSD from the scrvUSD vault by sending back scrvUSD tokens, you'll receive your initial deposit and any earned interest
+
+### How much will I earn?
+
+The interest rate (yield) is variable and changes every few days, the current and historical rates are all shown on the [scrvUSD UI](https://www.curve.finance/crvusd/ethereum/scrvUSD/).  To understand what the different numbers mean, see this section [FAQ: What do the different APR/APY numbers on the UI mean?](scrvusd.mdx#what-do-the-different-aprapy-numbers-on-the-ui-mean)
+
+The interest rate scrvUSD holders earn is roughly equal to the previous week's crvUSD average borrow rate for all the [crvUSD minting markets](https://www.curve.finance/crvusd/ethereum/markets/), unless there's more than 50% of crvUSD staked, then yield will be slightly diluted, see the table here to see how much crvUSD is currently staked: [Current scrvUSD Stats](../curve-tokens/scrvusd.mdx#current-scrvusd-stats).
+
+### Where does the yield come from?
+
+When users borrow (mint) crvUSD, they pay a borrowing interest rate while their loan remains open.  scrvUSD receives up to 50% of these fees, and the Curve DAO receives the rest. This means the underlying crvUSD is not loaned out, or deployed to swap pools, it remains safely within the vault, minimizing risk.
+
+### What's the catch, why does Curve give out free money?
+
+scrvUSD is an important part of how crvUSD stays priced at $1.  See below:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="scrvUSD dynamics"
+    sources={{
+      light: require('@site/static/img/charts/savings/scrvusd-dynamics.png').default,
+      dark: require('@site/static/img/charts/savings/scrvusd-dynamics.png').default,
+    }}
+    style={{
+      maxWidth: '800px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+---
+
+## Guides
+
+*Note: scrvUSD is available as a token on many chains, which all earn interest, however you can only deposit and withdraw to the vault on Ethereum*.
+
+### Depositing into the Savings Vault
+
+To deposit into the savings vault and start earning interest, first you need crvUSD on Ethereum mainnet.  If you don't have any crvUSD read our guide here on how to swap for crvUSD on Curve's DEX: [How to Swap on Curve's DEX](../dex/guides/how-to-swap).  
+
+Once you have crvUSD on Ethereum, go to the [scrvUSD vault](https://www.curve.finance/crvusd/ethereum/scrvUSD/), and connect your wallet.  You should see something like the following:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="scrvUSD Whole UI"
+    sources={{
+      light: require('@site/static/img/ui/savings/no-deposit-whole-ui-light.png').default,
+      dark: require('@site/static/img/ui/savings/no-deposit-whole-ui-dark.png').default,
+    }}
+    style={{
+      maxWidth: '1684px',
+      width: '100%'
+    }}
+  />
+  <figcaption>*Here we have 1000 crvUSD we can deposit to scrvUSD.  At the time of writing, deposited crvUSD is earning 6.9% APY*</figcaption>
+</figure>
+
+On the left hand side in the deposit tab you can choose an amount of crvUSD to deposit, or click max to deposit all the crvUSD in your wallet, here we've chosen to deposit 1000 crvUSD, which means we will receive back 953 scrvUSD, because currently 1 scrvUSD is worth 1.049 crvUSD (1 crvUSD = 0.9532 scrvUSD).  Remember that over time scrvUSD will continue to be worth more crvUSD, that's how it's designed.
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Deposit Amount"
+    sources={{
+      light: require('@site/static/img/ui/savings/deposit-amount-light.png').default,
+      dark: require('@site/static/img/ui/savings/deposit-amount-dark.png').default,
+    }}
+    style={{
+      maxWidth: '400px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+If this is your first time depositing, you will need to do 2 transactions:
+
+1. **Approve**: Allow your crvUSD to be sent to the scrvUSD vault
+2. **Deposit**: Deposit your crvUSD to the vault
+
+These will pop up in order for you to sign and send in your wallet.  After you've done this you'll see the transactions progress below the deposit box:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Deposit Success"
+    sources={{
+      light: require('@site/static/img/ui/savings/deposit-success-light.png').default,
+      dark: require('@site/static/img/ui/savings/deposit-success-dark.png').default,
+    }}
+    style={{
+      maxWidth: '400px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+Congratulations, you've successfully deposited!  In this example we've now got 953.2 scrvUSD, these will be worth more crvUSD over time, you can see this on the Position details box by hovering over the "Your crvUSD Staked" box:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Position Details"
+    sources={{
+      light: require('@site/static/img/ui/savings/position-details-light.png').default,
+      dark: require('@site/static/img/ui/savings/position-details-dark.png').default,
+    }}
+    style={{
+      maxWidth: '1000px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+### Withdrawing from the Savings Vault
+
+You can withdraw from the Vault at any time, there is no delay or lock at all.  Whenever you want to withdraw simply go to the [scrvUSD vault](https://www.curve.finance/crvusd/ethereum/scrvUSD/) and click on the withdraw tab on the left.  It will show you how many scrvUSD tokens you have, you can choose an amount to withdraw, or click "MAX" to withdraw all:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Withdrawal Amount"
+    sources={{
+      light: require('@site/static/img/ui/savings/withdraw-amount-light.png').default,
+      dark: require('@site/static/img/ui/savings/withdraw-amount-dark.png').default,
+    }}
+    style={{
+      maxWidth: '400px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+Notice that the amount of scrvUSD tokens we had stayed the same (953 scrvUSD), but deposited 1000 crvUSD and a few months later can withdraw 1022 crvUSD, a profit of 22 crvUSD!
+
+After deciding the amount, click on withdraw and send the transaction from your wallet.  After the transaction is confirmed you will see your crvUSD back in your wallet:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Withdrawal Success"
+    sources={{
+      light: require('@site/static/img/ui/savings/withdrawal-success-light.png').default,
+      dark: require('@site/static/img/ui/savings/withdrawal-success-dark.png').default,
+    }}
+    style={{
+      maxWidth: '400px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+## FAQ
+
+### What do the different APR/APY numbers on the UI mean?
+
+On the [scrvUSD UI](https://www.curve.finance/crvusd/ethereum/scrvUSD/) you'll see a screen like the following:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="scrvUSD statistics"
+    sources={{
+      light: require('@site/static/img/ui/savings/statistics-light.png').default,
+      dark: require('@site/static/img/ui/savings/statistics-dark.png').default,
+    }}
+    style={{
+      maxWidth: '933px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+Above you can see there are a few different numbers shown, here's what they mean:
+
+- **Current APY**: Current interest rate with compounding included
+- **APR**: Interest rate at that time without compounding
+- **7-day MA APR**: Average interest rate for the 7 days before that time, without compounding
+- **Average APR**: Average interest rate without compounding for your chosen time window, e.g. above in the bottom right corner 1M (1 month) is chosen, so this is the average interest rate for the last month

@@ -3,7 +3,7 @@
   /* border-radius: var(--ifm-card-border-radius); */
   color: inherit;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.25rem;
   text-decoration: none;
   transition: all 0.2s ease-out;
   height: 100%;
