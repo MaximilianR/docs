@@ -241,17 +241,22 @@ export default {
         },
         {
             type: 'category',
-            label: 'Governance',
+            label: 'DAO & Governance',
             items: [
                 {
                     type: 'doc',
                     id: 'dao/overview',
-                    label: 'What is the Curve DAO?',
+                    label: 'Curve DAO',
                 },
                 {
                     type: 'doc',
-                    id: 'dao/voting-gauges',
-                    label: 'Voting & Gauge Weights',
+                    id: 'dao/gauge-weights',
+                    label: 'Gauge Weights',
+                },
+                {
+                    type: 'doc',
+                    id: 'dao/proposals',
+                    label: 'Proposals',
                 },
                 {
                     type: 'doc',
@@ -260,18 +265,8 @@ export default {
                 },
                 {
                     type: 'doc',
-                    id: 'dao/proposals',
-                    label: 'Submitting a Proposal',
-                },
-                {
-                    type: 'doc',
-                    id: 'dao/community-fund',
+                    id: 'dao/community-fund-treasury',
                     label: 'Community Fund & Treasury',
-                },
-                {
-                    type: 'doc',
-                    id: 'dao/faq',
-                    label: 'Governance FAQ',
                 },
             ],
         },
