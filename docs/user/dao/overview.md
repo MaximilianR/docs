@@ -22,7 +22,7 @@ The EmergencyDAO is a 5-of-9 multisig authorized for emergency interventions, su
 - Recovering ERC20 tokens from the DAO's revenue collection and distribution process.
 - Pausing the Peg Stabilization Reserve's associated contracts to stop them from depositing or withdrawing crvUSD. This pause does not affect the pool level.
 
-The EmergencyDAO is deployed on Ethereum at [0x467947EE34aF926cF1DCac093870f613C96B1E0c](https://etherscan.io/address/0x467947EE34aF926cF1DCac093870f613C96B1E0c) and consists of the following members:
+The EmergencyDAO is deployed on Ethereum at [`0x467947EE34aF926cF1DCac093870f613C96B1E0c`](https://etherscan.io/address/0x467947EE34aF926cF1DCac093870f613C96B1E0c) and consists of the following members:
 
 <div class="centered" markdown="block">
 | Name            | Telegram Handle       |

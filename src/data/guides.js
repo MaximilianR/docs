@@ -48,13 +48,13 @@ export const ALL_GUIDES = {
     link: '/user/yield/scrvusd',
   },
   gaugeWeights: {
-    title: 'Voting for Gauge Weights',
+    title: '⚖️ Voting for Gauge Weights',
     description: 'A guide which teaches you how to vote for gauge weights in the Curve DAO.',
     image: '',
     link: '/user/dao/gauge-weights',
   },
   votingProposals: {
-    title: 'Voting on Proposals',
+    title: '🗳️ Voting on Proposals',
     description: 'A guide which teaches you how to vote on proposals in the Curve DAO.',
     image: '',
     link: '/user/dao/proposals#voting-on-proposals',
