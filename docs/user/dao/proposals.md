@@ -10,10 +10,6 @@ import ThemedImage from '@theme/ThemedImage';
 
 Governance proposals are the primary mechanism for making changes to the Curve protocol. veCRV holders can create and vote on proposals that affect protocol parameters, add new features, or make other important decisions. All proposals are open for voting for **7 days** and require specific quorum and support thresholds to pass.
 
-:::info Example
-    **Proposal #87**: A proposal to whitelist a new gauge for the USDC/USDT pool receives 35% quorum and 65% support. Since it's an Ownership Vote requiring 30% quorum and 51% support, the proposal passes and will be executable after the 12-hour timelock period.
-:::
-
 <figure>
 <ThemedImage
     alt="Curve DAO proposals interface showing active and past proposals"
@@ -40,15 +36,21 @@ To view all current and past proposals, visit the [Curve DAO Proposals page](htt
 
 **Emergency Vote** – Reserved for critical actions, executed by the 5-of-9 **Emergency DAO** multisig. These votes are not open to public participation and are used for urgent protocol changes. Learn more in the [Emergency DAO section](../dao/overview#emergency-dao).
 
+:::info Quorum 
+    In the Curve DAO, only "Yes" votes count towards quorum.
+:::
+
 ---
 
 ## Voting on Proposals
 
+Voting on proposals always happens on Ethereum. Anyone who **already held veCRV when the vote began** can participate in voting. Since voting is fully on-chain, each vote requires signing a transaction and paying gas fees, so consider the current gas costs before voting.
+
 ### Voting Power and Decay
 
-Anyone who **already held veCRV when the vote began** can vote on proposals. To deter last-minute vote swings by large holders, voting power decays after the halfway mark: your veCRV counts for **full 100% during the first 3.5 days**, then linearly falls to **0% by the deadline**.
+To prevent last-minute vote manipulation by large holders, voting power (only for the specifc proposal) decays after the halfway point: your veCRV counts for **100% during the first 3.5 days**, then linearly decreases to **0% by the deadline**.
 
-*Note: Gauge-weight votes are exempt from this decay; they retain full power for the entire weekly epoch.*
+> *Note: Gauge-weight votes are exempt from this decay and retain full power for the entire weekly epoch.*
 
 <figure>
 <ThemedImage
@@ -59,10 +61,7 @@ Anyone who **already held veCRV when the vote began** can vote on proposals. To 
     }}
     style={{ width: '600px', display: 'block', margin: '0 auto' }}
 />
-<figcaption>Voting power decays linearly from 100% to 0% during the final 3.5 days of a proposal</figcaption>
 </figure>
-
-⏱️ **Tip:** Vote early to wield maximum influence.
 
 ### How to Vote
 
@@ -77,7 +76,6 @@ To vote on a proposal, navigate to the [Curve DAO Proposals page](https://www.cu
     }}
     style={{ width: '250px', display: 'block', margin: '0 auto' }}
 />
-<figcaption>Voting interface with For/Against options</figcaption>
 </figure>
 
 Each proposal card displays:
@@ -118,7 +116,6 @@ After the 7-day voting period, if the proposal passes successfully, it needs to 
     }}
     style={{ width: '150px', display: 'block', margin: '0 auto' }}
 />
-<figcaption>Execute button appears after proposal passes and timelock expires</figcaption>
 </figure>
 
 :::info

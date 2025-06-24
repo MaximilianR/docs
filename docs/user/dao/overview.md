@@ -4,16 +4,19 @@ hide_title: true
 ---
 
 ## Overview
-The Curve DAO is a true DAO, governed solely by its holders. Members gain governance rights by locking CRV for veCRV tokens. The longer a user locks their tokens up for, the more voting power they receive. This reduces governance attacks and helps align incentives so the DAO passes proposals which help it long term.
 
-- [**Locking CRV:**](../vecrv/how-to-lock.md) Users must lock CRV to participate in DAO governance and duties.
-- [**Proposals:**](./proposals.md) These are DAO votes. Voting lasts 7 days, and votes pass if they meet the Quorum and Min support thresholds. Anyone with veCRV can vote on proposals, and holders of at least 2500 veCRV can create votes.
-- [**Gauge Weights:**](./gauge-weights.md) Each week veCRV holders vote on where the weekly CRV emissions will go. Gauges are how CRV emissions are distributed to LPs in DEX pools or suppliers to lending markets.
-- **Analytics:** Shows analytics about veCRV metrics, holders, and DAO fee distribution.
-- **Discussion:** The DAO's governance discussion forum. Users are free to post and discuss any current proposals or future proposals or ideas.
+The Curve DAO is the decentralized governance system that controls all aspects of Curve Finance. All contracts and decisions on Curve are in the hands of the DAO, governed solely by its holders through a system pioneered by Curve called **veTokenomics**. Members receive governance power by locking CRV for veCRV tokens. The longer a user locks their tokens up for, the more voting power they receive. This reduces governance attacks and helps align incentives so the DAO passes proposals which benefit the protocol long term.
+
+**Governance Mechanics**
+- [**Locking CRV:**](../vecrv/how-to-lock.md) Users must lock CRV to participate in DAO governance and access protocol benefits.
+- [**Proposals:**](./proposals.md) These are DAO votes that last 7 days and can contain all sorts of different actions. Votes pass if they meet the Quorum and Min support thresholds. Anyone with veCRV can vote on proposals, and holders of at least 2,500 veCRV can create votes.
+- [**Gauge Weights:**](./gauge-weights.md) Each week veCRV holders vote on where the weekly CRV emissions will go. Gauges distribute CRV emissions to LPs in DEX pools or suppliers to lending markets.
+
+The [governance discussion forum](https://gov.curve.finance/) allows users to post and discuss current proposals, future proposals, or ideas.
 
 Users can access the Curve DAO dashboard at https://curve.finance/dao. This dashboard provides an overview of all current and closed votes. Each proposal should have a corresponding topic on the Curve governance forum, accessible at https://gov.curve.finance/.
 
+Ready to participate in Curve governance? Start by [locking your CRV tokens](../vecrv/how-to-lock.md) to receive veCRV and gain voting power. Then visit the [governance forum](https://gov.curve.finance/) to join discussions, stay informed about current proposals and start voting on proposals on [https://www.curve.finance/dao/ethereum/proposals/](https://www.curve.finance/dao/ethereum/proposals/).
 
 ## Emergency DAO
 The EmergencyDAO is a 5-of-9 multisig authorized for emergency interventions, such as:

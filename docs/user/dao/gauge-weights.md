@@ -9,10 +9,6 @@ import ThemedImage from '@theme/ThemedImage';
 
 On Curve, CRV token inflation is distributed through a weekly gauge weight system. Each gauge's weight is determined by the amount of veCRV votes it receives, with updates occurring every **Thursday at 00:00 UTC**. Gauges are smart contracts where users stake their LP tokens or vault shares, and the contract tracks each user's position to distribute rewards proportionally based on their share of the total staked value.
 
-:::info Example
-    **Thursday 00:00 UTC**: A snapshot is taken for this week's gauge weights. Pool A's gauge receives 10% of all veCRV votes. As a result, 10% of the weekly CRV inflation is allocated to Pool A's gauge and distributed to stakers throughout the week.
-:::
-
 <figure>
 <ThemedImage
     alt="Weekly gauge weight cycle showing the voting and distribution timeline"
@@ -22,8 +18,12 @@ On Curve, CRV token inflation is distributed through a weekly gauge weight syste
     }}
     style={{ width: '800px', display: 'block', margin: '0 auto' }}
 />
-<figcaption>Weekly gauge weight cycle: votes are collected throughout the week and weights are updated every Thursday at 00:00 UTC</figcaption>
 </figure>
+
+:::info Gauge Weight Example
+    **Thursday 00:00 UTC**: A snapshot is taken for this week's gauge weights. Pool A's gauge receives 10% of all veCRV votes. As a result, 10% of the weekly CRV inflation is allocated to Pool A's gauge and distributed to users who stake the LP token of that pool in the gauge throughout the week.
+:::
+
 
 To check the current gauge weights across all gauges, visit the [Curve DAO Gauge Section](https://www.curve.finance/dao/ethereum/gauges/) and connect your wallet to load the data.
 
@@ -57,7 +57,9 @@ Below the chart is a table listing each gauge. Users can click on a gauge to vie
 
 ## Voting for Gauge Weight
 
-Users can vote in the next gauge weight week if they have a positive veCRV balance. If a user locks CRV, they will not be able to take part in the current gauge weight voting cycle and must wait for the next week. Gauge weights are not final and can be adjusted. You can change your vote on each gauge every 10 days. Your votes are not reset every Thursday at 00:00 UTC - if you don't change your weight, it will simply remain the same.
+Users can start voting for gauge weights as soon as they have voting power in the form of veCRV. If a user freshly locks CRV, they will not be able to take part in the current gauge weight voting cycle and must wait for the next week (updates every Thursday 00:00 UTC). A user's votes on gauge weights are not final and can be adjusted. You can change your vote on each gauge every 10 days. Your votes are not reset every Thursday at 00:00 UTC - if you don't change your weight, your voting power allocation will simply remain the same.
+
+Since gauge weight voting is fully on-chain, each vote requires signing a transaction and paying gas fees.
 
 To get started, simply navigate to `DAO -> Gauges -> Voting` and connect your wallet:
 
@@ -87,7 +89,7 @@ If you have already allocated some or all of your voting power, your vote weight
 
 ### Voting For the First Time
 
-If you are voting for the first time, your used voting power is 0%. You are free to distribute up to 100% of your voting power across as many gauges as you wish.
+If you are voting for the first time, your used voting power starts at 0%. You can distribute up to 100% of your voting power across as many gauges as you wish. You don't need to allocate the full 100% - you can use as much or as little as you want.
 
 <figure>
   <ThemedImage
@@ -185,16 +187,17 @@ There's no minimum amount of veCRV required to vote. However, the more veCRV you
 **Do I need to stake LP tokens to vote on gauges?**  
 No, you don't need to stake LP tokens to vote on gauges. Gauge voting and LP staking are separate activities. You can vote on gauges with just your veCRV tokens. However, to earn rewards from the gauges you vote for, you would need to stake LP tokens in those specific pools.
 
+
 ### Voting Mechanics
 
 **Can I vote for multiple gauges at once?**  
 Yes! You can vote for as many gauges as you want, but your total voting allocation cannot exceed 100% of your voting power. You can distribute your votes across multiple gauges (e.g., 40% to gauge A, 30% to gauge B, 30% to gauge C).
 
 **How often can I change my vote?**  
-You can update your voting weights **once every 10 days**.
+You can update your voting weights **once every 10 days per gauge**.
 
 **How often are gauge weights updated?**  
-Gauge weights are recalculated every **Thursday at 00:00 UTC**, based on all active votes.
+Gauge weights are recalculated every **Thursday at 00:00 UTC** based on all active votes. CRV emissions are then distributed according to these updated weights.
 
 **What happens if I don't use all 100% of my voting power?**  
 If you don't use all 100% of your voting power, the unused portion simply goes unused. You're not penalized for this, but you're missing out on potential influence. You can always come back later to allocate the remaining voting power.
@@ -215,6 +218,7 @@ No. Resetting your votes (setting your votes to 0%) will trigger a 10-day cooldo
 Resetting gauge weights before re-voting will block you from voting again for 10 days on those same gauges.  
 Always **re-vote directly** unless you're intentionally changing your selection.
 :::
+
 
 ### Rewards & Benefits
 
