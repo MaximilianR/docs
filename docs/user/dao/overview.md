@@ -24,7 +24,7 @@ The EmergencyDAO is a 5-of-9 multisig authorized for emergency interventions, su
 
 The EmergencyDAO is deployed on Ethereum at [`0x467947EE34aF926cF1DCac093870f613C96B1E0c`](https://etherscan.io/address/0x467947EE34aF926cF1DCac093870f613C96B1E0c) and consists of the following members:
 
-<div class="centered" markdown="block">
+<div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }} markdown="block">
 | Name            | Telegram Handle       |
 | --------------- | --------------------- |
 | `banteg`        | `Yearn, @banteg`      |
