@@ -15,7 +15,7 @@ The community fund is deployed on Ethereum at [`0xe3997288987e6297ad550a69b31439
 
 ## Treasury
 
-On June 27th, 2025, a dedicated Treasury was voted in by the Curve DAO to support various initiatives including service providers (SwissStake, LlamaRisk), insurance for bad debt or hack reimbursements, bug bounties, audits, etc. 
+On June 27, 2025, the Curve DAO voted to establish a dedicated Treasury, allocating 10% of DAO revenue to it. These funds belong to the DAO and remain entirely under its control. With a successful governance vote, they can be used for any purpose the DAO chooses, such as development, research, risk assessment, bad debt insurance, bug bounties, audits, or anything else the DAO chooses.
 
 Prior to discussions on various channels and a [post](https://gov.curve.finance/t/activate-the-fee-allocator-and-redirect-10-of-revenue-to-community-fund/10676) in the governance forum, the DAO decided to allocate **10% of the protocol revenue** to a newly deployed Treasury which does not require a one-year vesting period. The DAO maintains full control of the funds in the Treasury.
 
