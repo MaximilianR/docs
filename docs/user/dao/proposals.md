@@ -30,11 +30,9 @@ To view all current and past proposals, visit the [Curve DAO Proposals page](htt
 
 [Curve DAO proposals](https://www.curve.finance/dao/ethereum/proposals/) fall into three main categories:
 
-**Ownership Vote** – The most common proposal type, used for a wide range of DAO matters such as gaining control over protocol fees, whitelisting new gauges, or adding crvUSD mint markets. Requires **30% quorum** and **51% minimum support** to pass.
+**Ownership Vote** – The most common proposal type, used for a wide range of DAO matters such as gaining control over protocol fees, whitelisting new gauges, changing pool parameters, adding crvUSD mint markets, or implementing protocol upgrades. Requires **30% quorum** and **51% minimum support** to pass.
 
-**Parameter Vote** – Used to modify parameters on existing liquidity pools, such as fees, amplification factors, or other pool-level settings. Requires **15% quorum** and **60% minimum support** to pass.
-
-**Emergency Vote** – Reserved for critical actions, executed by the 5-of-9 **Emergency DAO** multisig. These votes are not open to public participation and are used for urgent protocol changes. Learn more in the [Emergency DAO section](../dao/overview#emergency-dao).
+**Parameter Vote** – Used to modify parameters on older liquidity pools, such as fees, amplification factors, or other pool-level settings. Requires **15% quorum** and **60% minimum support** to pass. This type of vote is rarely used in todays Curve governance as most operations are now handled through ownership votes.
 
 :::info Quorum 
     In the Curve DAO, only "Yes" votes count towards quorum.
@@ -48,7 +46,7 @@ Voting on proposals always happens on Ethereum. Anyone who **already held veCRV 
 
 ### Voting Power and Decay
 
-To prevent last-minute vote manipulation by large holders, voting power (only for the specifc proposal) decays after the halfway point: your veCRV counts for **100% during the first 3.5 days**, then linearly decreases to **0% by the deadline**.
+Voting decay is a safety measure to stop manipulation of proposals at the last minute by whales, to give all DAO members time to react to large votes in a timely manner. Your veCRV counts for **100% during the first 3.5 days**, then linearly decreases to **0% by the deadline**.
 
 > *Note: Gauge-weight votes are exempt from this decay and retain full power for the entire weekly epoch.*
 
@@ -131,7 +129,7 @@ If you're looking to whitelist a gauge, check out the [Gauge Whitelisting Guide]
 ### Getting Started & Prerequisites
 
 **What is veCRV and why do I need it to vote?**  
-veCRV (vote-escrowed CRV) is a token you get when you lock your CRV tokens for a specific period. You need veCRV to participate in governance voting because it represents your voting power in the Curve DAO.
+[veCRV (vote-escrowed CRV)](../vecrv/what-is-vecrv.md) is a token you get when you lock your CRV tokens for a specific period. You need veCRV to participate in governance voting because it represents your voting power in the Curve DAO.
 
 **What's the minimum amount of veCRV I need to vote?**  
 There's no minimum amount of veCRV required to vote on proposals. However, the more veCRV you have, the more voting power you'll have. Even a small amount of veCRV allows you to participate in governance.
@@ -171,9 +169,6 @@ Your veCRV counts for **full 100% during the first 3.5 days**, then linearly fal
 No, gauge-weight votes are exempt from this decay. They retain full power for the entire weekly epoch.
 
 ### Proposal Execution
-
-**What happens after a proposal passes?**  
-After a proposal passes, there's a **12-hour timelock period** before it can be executed. This provides time for the community to review the changes and take any necessary actions.
 
 **Who can execute a passed proposal?**  
 Anyone can execute a passed proposal after the timelock expires. You don't need veCRV to execute proposals.

@@ -51,7 +51,7 @@ export const ALL_GUIDES = {
     title: '⚖️ Voting for Gauge Weights',
     description: 'A guide which teaches you how to vote for gauge weights in the Curve DAO.',
     image: '',
-    link: '/user/dao/gauge-weights',
+    link: '/user/dao/gauge-weights#voting-for-gauge-weights',
   },
   votingProposals: {
     title: '🗳️ Voting on Proposals',

@@ -7,7 +7,8 @@ import ThemedImage from '@theme/ThemedImage';
 
 ## What are Gauge Weights
 
-On Curve, CRV token inflation is distributed through a weekly gauge weight system. Each gauge's weight is determined by the amount of veCRV votes it receives, with updates occurring every **Thursday at 00:00 UTC**. Gauges are smart contracts where users stake their LP tokens or vault shares, and the contract tracks each user's position to distribute rewards proportionally based on their share of the total staked value.
+Each week on Curve, a fixed amount of CRV is emitted and distributed to liquidity providers. Where that CRV flows is decided by the gauge weight system.
+veCRV holders vote to assign weights to different gauges, which are smart contracts that track deposits of LP tokens or vault shares. The more votes a gauge receives, the more CRV it distributes to depositors (stakers) over the week. **Gauge weights are updated every Thursday at 00:00 UTC**, and rewards are continuously distributed proportionally based on their share of the total staked value.
 
 <figure>
 <ThemedImage
@@ -57,7 +58,7 @@ Below the chart is a table listing each gauge. Users can click on a gauge to vie
 
 ## Voting for Gauge Weight
 
-Users can start voting for gauge weights as soon as they have voting power in the form of veCRV. If a user freshly locks CRV, they will not be able to take part in the current gauge weight voting cycle and must wait for the next week (updates every Thursday 00:00 UTC). A user's votes on gauge weights are not final and can be adjusted. You can change your vote on each gauge every 10 days. Your votes are not reset every Thursday at 00:00 UTC - if you don't change your weight, your voting power allocation will simply remain the same.
+Users can start voting for gauge weights as soon as they have voting power in the form of veCRV. If a user freshly locks CRV, they will not be able to take part in the current gauge weight voting cycle and must wait for the next week (updates every Thursday 00:00 UTC). A user's votes on gauge weights are not final and can be adjusted. You can change your vote on each gauge every 10 days. **Your votes are not reset every Thursday at 00:00 UTC - if you don't change your weight, your voting power allocation will simply remain the same.**
 
 Since gauge weight voting is fully on-chain, each vote requires signing a transaction and paying gas fees.
 
@@ -166,7 +167,7 @@ The UI shows you the exact date and time when you'll be able to update your vote
 
 :::info **Example**  
 You previously allocated **80%** of your voting power to the reUSD/scrvUSD gauge. You can reduce it to **60%**, and immediately reallocate the freed-up **20%** to other gauges.  
-However, if you later want to reduce your vote on reUSD/scrvUSD again (e.g., from 20% to 10%), you'll need to wait 10 days from your last change to that specific gauge.
+However, if you later want to reduce your vote on reUSD/scrvUSD again (e.g., from 60% to 38%), you'll need to wait 10 days from your last change to that specific gauge.
 :::
 
 ---
@@ -176,7 +177,7 @@ However, if you later want to reduce your vote on reUSD/scrvUSD again (e.g., fro
 ### Getting Started & Prerequisites
 
 **What is veCRV & why do I need it to vote?**  
-veCRV (vote-escrowed CRV) is a token you get when you lock your CRV tokens for a specific period. The longer you lock, the more veCRV you receive. You need veCRV to participate in gauge weight voting because it represents your voting power in the Curve DAO.
+[veCRV (vote-escrowed CRV)](../vecrv/what-is-vecrv.md) is a token you get when you lock your CRV tokens for a specific period. The longer you lock, the more veCRV you receive. You need veCRV to participate in gauge weight voting because it represents your voting power in the Curve DAO.
 
 **What if I add more CRV or extend my lock?**  
 If you increase your veCRV balance (by locking more CRV or extending the lock), your vote power increases — but you must **re-vote** to apply the new power.
