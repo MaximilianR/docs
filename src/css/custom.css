@@ -19,6 +19,7 @@
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-card-border-radius: 0;
+  --ifm-color-curve-blue: #2747B5;
 
   /* Font overrides */
   --ifm-font-family-base: 'Mona Sans', sans-serif;
@@ -26,6 +27,7 @@
 
   /* make things square */
   --ifm-pagination-nav-border-radius: 0;
+  --ifm-col-gutter: 0.5rem;
 }
 
 [data-theme='dark'] {
@@ -37,6 +39,7 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-curve-blue: #5A81F3;
 
   /* Font overrides */
   --ifm-font-family-base: 'Mona Sans', sans-serif;

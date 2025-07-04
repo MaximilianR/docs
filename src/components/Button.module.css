@@ -3,8 +3,8 @@
   flex-direction: column; 
   align-items: center;
   justify-content: center;
-  color: var(--ifm-color-primary);
-  border: 1px solid var(--ifm-color-primary);
+  color: var(--ifm-color-emphasis-900);
+  border: 1px solid var(--ifm-color-curve-blue);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   text-decoration: none;
   transition: all 0.2s ease-out;
@@ -12,15 +12,17 @@
   border-radius: var(--ifm-card-border-radius);
   background-color: var(--ifm-color-emphasis-100);
   cursor: pointer;
+  width: 100%;
 }
 
 .button:hover,
 .button:focus {
-  border-color: var(--ifm-color-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  background-color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-curve-blue);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  background-color: var(--ifm-color-curve-blue);
   color: #ffffff;
+  text-decoration: none;
 }
 
 .secondLine {
@@ -28,13 +30,6 @@
   display: flex;
   align-items: center;
   font-weight: bold;
-}
-
-.icon {
-  height: 1.5em;
-  width: 1.5em;
-  border-radius: 100%;
-  margin-right: 0.5rem;
 }
 
 .firstLine {

@@ -1,30 +1,13 @@
 import React from 'react';
 import styles from './Button.module.css';
 
-export default function ActionButton({ link, line1, line2, icon, iconAlt, centered = false }) {
+export default function ActionButton({ link, line1, line2Content }) {
   
   const buttonContent = (
-    <a href={link} className={styles.button}>
+    <a href={link} className={styles.button} target="_blank">
       <span className={styles.firstLine}>{line1}</span>
-      
-      <span className={styles.secondLine}>
-        <img
-          src={icon}
-          alt={iconAlt}
-          className={styles.icon}
-        />
-        {line2}
-      </span>
+      <span className={styles.secondLine}>{line2Content}</span>
     </a>
   );
-
-  if (centered) {
-    return (
-      <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-        {buttonContent}
-      </div>
-    );
-  }
-
   return buttonContent;
 }
