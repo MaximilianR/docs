@@ -13,7 +13,9 @@ import ScrvusdLogo from '@site/static/img/logos/scrvUSD_s.png';
 
 
 
-scrvUSD is short for savings-crvUSD, and it functions like a bank savings account for crvUSD.  It is similar to other staked versions of USD stablecoins like sDOLA, sUSDS, sUSDe, etc.  Users can stake their crvUSD to receive scrvUSD, or swap for it directly.  Yield accrues automatically to scrvUSD holders, increasing the value of their tokens over time.
+scrvUSD stands for “savings-crvUSD,” and works like a bank savings account for crvUSD. It is similar to other staked versions of USD stablecoins, such as sDAI, sUSDS, sUSDe, etc. Users can either stake their crvUSD to receive scrvUSD, or buy it directly on the market. Yield accrues automatically, increasing the value of their tokens over time.
+
+scrvUSD is designed with minimal risk in mind. The underlying crvUSD deposited into the vault is not loaned out or deployed into other liquidity pools. Instead, it remains securely within the vault, minimizing risk for scrvUSD holders.
 
 <ButtonGrid buttonKeys={['gotoScrvusd']} />
 
@@ -28,26 +30,27 @@ scrvUSD is short for savings-crvUSD, and it functions like a bank savings accoun
 
 ## How scrvUSD Works: Earn Savings on Your crvUSD
 
-Think of scrvUSD as a specialized savings account for your crvUSD stablecoins. When you deposit crvUSD, you receive scrvUSD tokens in return. Over time, your scrvUSD tokens will automatically increase in value, meaning each scrvUSD token will represent more crvUSD.
+Think of scrvUSD as a specialized savings account for your crvUSD stablecoins. When you deposit crvUSD, you receive scrvUSD tokens in return. Over time, your scrvUSD tokens will automatically increase in value, meaning each scrvUSD token will represent more crvUSD than what you deposited.
 
 Here's how it works:
 
 1.  **Deposit crvUSD:** Send your crvUSD to the scrvUSD vault and receive scrvUSD tokens back.
 2.  **Hold scrvUSD:** Simply hold onto your scrvUSD tokens in your wallet. There's no need to stake or lock them.
 3.  **Earn Interest:** As you hold scrvUSD, its value against crvUSD steadily increases. This means your scrvUSD tokens are worth more crvUSD over time, reflecting the interest earned.
-4.  **Withdraw crvUSD:** When you're ready to access your funds, send your scrvUSD tokens back to the vault. You'll receive your initial crvUSD deposit plus all the interest you've earned.
+4.  **Withdraw crvUSD:** You can withdraw your crvUSD at any time. You'll receive your initial crvUSD deposit plus all the interest you've earned.
 
 ### How Much Will You Earn?
 
-The interest rate (or yield) for scrvUSD is variable and adjusts regularly, typically every few days. You can view the current and historical rates directly on the [scrvUSD UI](https://www.curve.finance/crvusd/ethereum/scrvUSD/). For a detailed explanation of the different rate numbers you see on the interface, please refer to our FAQ: [What do the different APR/APY numbers on the UI mean?](scrvusd.mdx#what-do-the-different-aprapy-numbers-on-the-ui-mean)
+The interest rate (or yield) for scrvUSD is variable and adjusts regularly, typically every few days. You can view the current and historical rates directly on the [scrvUSD UI](https://www.curve.finance/crvusd/ethereum/scrvUSD/).  
+For a detailed explanation of the different rate numbers you see on the interface, please refer to our FAQ: [What do the different APR/APY numbers on the UI mean?](scrvusd.mdx#what-do-the-different-aprapy-numbers-on-the-ui-mean)
 
 Generally, the interest rate earned by scrvUSD holders is set to roughly match the average crvUSD borrowing rate from the previous week across all [crvUSD minting markets](https://www.curve.finance/crvusd/ethereum/markets/). However, if more than 50% of the total crvUSD supply is held as scrvUSD, the yield may be slightly diluted. You can see the current amount of crvUSD held as scrvUSD on our [Current scrvUSD Stats](../curve-tokens/scrvusd.mdx#current-scrvusd-stats) page.
 
 ### Where Does the Interest Come From?
 
-The interest paid to scrvUSD holders originates from the fees paid by users who borrow (or "mint") crvUSD against their collateral. These users pay a continuous borrowing interest rate as long as their loan is open.
+The interest paid to scrvUSD holders originates from the fees paid by users who mint crvUSD against their collateral. These users pay a continuous borrowing interest rate as long as their loan is open.
 
-scrvUSD receives up to 50% of these borrowing fees, with the remaining portion going to the Curve DAO. This design ensures that the underlying crvUSD deposited into the vault is not loaned out or deployed into other liquidity pools. Instead, it remains securely within the vault, minimizing risk for scrvUSD holders.
+scrvUSD receives up to 50% of these borrowing fees, the remaining portion going to the Curve DAO.
 
 ### What's the catch, why does Curve give out free money?
 
@@ -72,11 +75,14 @@ scrvUSD plays a crucial role in maintaining crvUSD's peg to $1. Its mechanics ar
 
 ## Guides
 
-*Important Note: While scrvUSD tokens exist and earn interest on all deployed networks, the deposit and withdrawal functions for the scrvUSD vault are exclusively available on the Ethereum mainnet.*
+
+:::info Important Note
+While scrvUSD tokens exist and earn interest on all deployed networks, the deposit and withdrawal functions for the scrvUSD vault are exclusively available on the Ethereum mainnet. You can simply buy and sell scrvUSD from a curve pool and it will essentially have the same effect.
+:::
 
 ### Depositing into the Savings Vault
 
-Before you can start earning interest by depositing into the scrvUSD savings vault, you'll **need to have crvUSD tokens on the Ethereum mainnet**. If you have scrvUSD on any other chain, it will still earn interest, but you can't deposit or withdraw it directly to this main vault. To move your funds, you'll typically need to use a decentralized exchange (DEX) to swap between tokens on that chain, or bridge your assets back to Ethereum.
+Before you can start earning interest by depositing into the scrvUSD savings vault, you'll **need to have crvUSD tokens on the Ethereum mainnet**. If you have scrvUSD on any other chain, it will still earn interest, but you can't directly interact with the scrvUSD vault.
 
 #### Step 1: Navigate to the scrvUSD Vault and Connect Your Wallet
 
@@ -98,14 +104,14 @@ Once on the page, connect your Web3 wallet by clicking the "Connect Wallet" butt
       width: '100%'
     }}
   />
-  <figcaption>*Here we have 1000 crvUSD we can deposit, which is earning 6.9% APY*</figcaption>
+  <figcaption>*Here we have 1000 crvUSD we can deposit, which can earn 6.9% APY*</figcaption>
 </figure>
 
 #### Step 2: Choose Your Deposit Amount
 
-On the left you'll see the `Deposit` tab. Here, enter the amount of crvUSD you wish to deposit, or click `Max` to deposit all your crvUSD.
+On the left you'll see the `Deposit` tab. Here, enter the amount of crvUSD you wish to deposit, or click `Max` to deposit all your crvUSD from your wallet.
 
-After entering your amount, you'll see how many scrvUSD vault tokens you'll receive. In the example below, if we deposit **1,000 crvUSD**, we would receive **953 scrvUSD**. This is because scrvUSD is designed to continuously grow in value against crvUSD (1 scrvUSD = 1.049 crvUSD). Over time, scrvUSD tokens will continue to be worth more crvUSD, which is how depositors earn interest.
+After entering your amount, you'll see how many scrvUSD vault tokens you'll receive. In the example below, if we deposit **1,000 crvUSD**, we would receive **953 scrvUSD**. This is because scrvUSD is designed to continuously grow in value against crvUSD (1 scrvUSD = 1.049 crvUSD).
 
 <figure style={{ textAlign: 'center' }}>
   <ThemedImage
@@ -150,7 +156,7 @@ These transactions will appear sequentially in your Web3 wallet for you to revie
 
 #### Congratulations! Your Deposit is Complete.
 
-You've successfully deposited your crvUSD! In our example, you now hold **953.2 scrvUSD**. Remember, these scrvUSD tokens will automatically become worth *more* crvUSD over time, reflecting your earned interest.
+You've successfully deposited your crvUSD! In our example, you now hold **953.2 scrvUSD**. Remember, the scrvUSD token balance will not change, but the value of each scrvUSD token will automatically become worth *more* crvUSD over time, reflecting your earned interest.
 
 ---
 
@@ -175,7 +181,7 @@ This will reveal the current crvUSD value of your scrvUSD holdings. For instance
       width: '100%'
     }}
   />
-  <figcaption>*953 scrvUSD value after 3 months*</figcaption>
+  <figcaption>*Value of 953 scrvUSD after 3 months*</figcaption>
 </figure>
 
 ---
@@ -291,4 +297,4 @@ Yes, absolutely! scrvUSD earns interest no matter which blockchain network it's 
 However, remember that the main scrvUSD vault for depositing and withdrawing is **only on Ethereum**. So, if your scrvUSD is on another network and you want to turn it back into crvUSD from the main vault, you'll need to either:
 
   * Move your funds back to the Ethereum network (this is called "bridging").
-  * Or, you can simply swap your scrvUSD for crvUSD (or any other token) directly on a decentralized exchange (DEX) on the network you are currently on.
+  * Or, you can simply swap your scrvUSD for crvUSD (or any other token) directly on Curve on the network you are currently on.
