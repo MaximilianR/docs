@@ -1,6 +1,8 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -116,6 +118,8 @@ const config: Config = {
           sidebarPath: './sidebars/sidebarUser.js',
           sidebarCollapsed: true,
           breadcrumbs: false,
+          remarkPlugins: [remarkMath],
+          rehypePlugins: [rehypeKatex],
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -135,6 +139,8 @@ const config: Config = {
         sidebarPath: './sidebars/sidebarAssetIssuer.js',
         sidebarCollapsed: true,
         breadcrumbs: false,
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
       },
     ],
     //[
@@ -163,6 +169,13 @@ const config: Config = {
         // rehypePlugins: [katex],
       // },
     // ],
+  ],
+
+  stylesheets: [
+    {
+      href: '/katex/katex.min.css',
+      type: 'text/css',
+    },
   ],
 };
 

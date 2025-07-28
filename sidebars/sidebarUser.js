@@ -232,11 +232,6 @@ export default {
                     id: 'vecrv/revenue',
                     label: 'Claiming Revenue Share',
                 },
-                {
-                    type: 'doc',
-                    id: 'vecrv/faq',
-                    label: 'veCRV FAQ',
-                },
             ],
         },
         {
