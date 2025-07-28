@@ -95,7 +95,7 @@ export const ALL_GUIDES = {
     description: "This guide teaches you how to Lend or withdraw your assets from Llamalend and claim any earned rewards.",
     image: '',
     link: '/user/lending/guides/beginner/lending',
-=======
+  },
   gaugeWeights: {
     title: '⚖️ Voting for Gauge Weights',
     description: 'A guide which teaches you how to vote for gauge weights in the Curve DAO.',
