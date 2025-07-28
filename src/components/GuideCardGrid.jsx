@@ -1,28 +1,35 @@
-// src/components/GuideCardGrid.js
-
 import React from 'react';
-import GuideCard from './GuideCard'; // Your existing GuideCard component
-import { ALL_GUIDES } from '@site/src/data/guides'; // Import the central data
+import GuideCard from './GuideCard';
+import { ALL_GUIDES } from '@site/src/data/guides';
+import clsx from 'clsx'; // Import the clsx utility
 
-// This component takes an array of guide keys (e.g., ['lockingCRV', 'claimingRevenue'])
-// and renders them in a grid.
 export default function GuideCardGrid({ guideKeys }) {
   if (!guideKeys || guideKeys.length === 0) {
-    return null; // Don't render anything if no keys are provided
+    return null;
   }
 
+  const totalGuides = guideKeys.length;
+  // Check if the total number of guides is odd
+  const isOddCount = totalGuides % 2 !== 0;
+
   return (
-    // Use the class you created for spacing between rows
-    <div className="row guide-card-row">
-      {guideKeys.map((key) => {
+    <div className="row">
+      {guideKeys.map((key, index) => {
         const guide = ALL_GUIDES[key];
         if (!guide) {
           console.warn(`Guide with key "${key}" not found.`);
           return null;
         }
+
+        // Center the guide if the total count is odd AND it's the last item
+        const shouldCenter = isOddCount && (index === totalGuides - 1);
+
+        const colClassName = clsx('col col--6', {
+          'col--offset-3': shouldCenter,
+        });
+        
         return (
-          // Assuming a 2-column layout. You can change col--6 to col--4 for 3 columns etc.
-          <div className="col col--6" key={key}>
+          <div className={colClassName} key={key} style={{ marginBottom: '1rem' }}>
             <GuideCard
               title={guide.title}
               description={guide.description}

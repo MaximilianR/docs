@@ -34,8 +34,8 @@ const ScrvusdSupply = () => {
         const pegkeepersData = await pegkeepersRes.json();
         
         const borrowed = marketsData.chains.ethereum.data.reduce((acc, market) => acc + market.total_debt, 0);
-        const pegkeeperReserves = pegkeepersData.keepers.reduce((acc, keeper) => acc + keeper.total_debt, 0);
-        const crvusdTotalSupply = borrowed + pegkeeperReserves;
+        // const pegkeeperReserves = pegkeepersData.keepers.reduce((acc, keeper) => acc + keeper.total_debt, 0);
+        const crvusdTotalSupply = borrowed;
 
 
         // --- Step 2: Fetch the savings/yield data ---
@@ -95,7 +95,7 @@ const ScrvusdSupply = () => {
       </thead>
       <tbody>
         <tr>
-          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> crvUSD Total Supply</td>
+          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> Total crvUSD borrowed</td>
           <td>{formatNumber(supplyData?.crvusdTotalSupply, 3)}</td>
         </tr>
         <tr>

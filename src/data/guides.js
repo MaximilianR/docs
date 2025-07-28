@@ -47,6 +47,55 @@ export const ALL_GUIDES = {
     image: '',
     link: '/user/yield/scrvusd',
   },
+  
+  depositScrvusd: {
+    title: 'How to Deposit crvUSD to the scrvUSD Savings Vault',
+    description: "Learn how to use the UI to deposit your crvUSD to the Savings Vault.",
+    image: '',
+    link: '/user/yield/scrvusd#depositing-into-the-savings-vault',
+  },
+  withdrawScrvusd: {
+    title: 'How to Withdraw your crvUSD from the scrvUSD Savings Vault',
+    description: "Learn how to use the UI to redeem your scrvUSD for the underlying crvUSD.",
+    image: '',
+    link: '/user/yield/scrvusd#withdrawing-from-the-savings-vault',
+  },
+  lpInPool: {
+    title: 'How to Deposit and Withdraw from a Pool',
+    description: "Learn how to use the UI to deposit, withdraw and stake your assets.",
+    image: '',
+    link: '/user/dex/guides/how-to-lp',
+  },
+  claimPoolRewards: {
+    title: 'How to Claim Pool Rewards',
+    description: "Learn how to claim your CRV and other token rewards earned from pools.",
+    image: '',
+    link: '/user/dex/guides/how-to-claim-rewards',
+  },
+  learnLPRewards: {
+    title: 'Learn about LP Rewards',
+    description: "Learn more about how pool LP rewards are earned, accrue and are claimed.",
+    image: '',
+    link: '/user/dex/earning-yield',
+  },
+  learnToLP: {
+    title: 'Learn about Providing Liquidity to Pools',
+    description: "Learn more about and how the different pool types work, and LP risks.",
+    image: '',
+    link: '/user/dex/liquidity',
+  },
+  learnLlamalend: {
+    title: 'Learn how Llamalend Works',
+    description: "Learn more about Lending, borrowing and risks involved with Llamalend.",
+    image: '',
+    link: '/user/lending/primitives',
+  },
+  howToLend: {
+    title: 'How to Lend with Llamalend',
+    description: "This guide teaches you how to Lend or withdraw your assets from Llamalend and claim any earned rewards.",
+    image: '',
+    link: '/user/lending/guides/beginner/lending',
+=======
   gaugeWeights: {
     title: '⚖️ Voting for Gauge Weights',
     description: 'A guide which teaches you how to vote for gauge weights in the Curve DAO.',

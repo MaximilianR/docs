@@ -1,0 +1,49 @@
+---
+title: Providing Liquidity in Pools
+---
+
+import ThemedImage from '@theme/ThemedImage';
+import GuideCardGrid from '@site/src/components/GuideCardGrid';
+import ButtonGrid from '@site/src/components/ButtonGrid';
+
+<ButtonGrid buttonKeys={['gotoDex']} />
+
+One of the primary ways to **earn yield** on Curve is by providing liquidity to liquidity pools. When you deposit assets, you become a liquidity provider (LP) and, in return, receive LP tokens. These tokens represent your ownership stake in the pool's assets.
+
+As an LP, you can earn yield through:
+* **Trading Fees:** A direct share of the fees generated from swaps within the pool. These fees automatically increase the value of your LP tokens.
+* **CRV Rewards:** Additional CRV tokens (if available), earned by staking your LP tokens in the pool's associated [gauge](lp.mdx#what-is-a-gauge). These rewards can be claimed at the LP's convenience.
+* **Other Token Rewards:** Sometimes, partner projects offer their own tokens as incentives, which are also distributed by staking your LP tokens in the [gauge](lp.mdx#what-is-a-gauge).
+* **Points:** Many pools also award points for depositing and/or staking. These points can qualify you for future benefits or airdrops, but eligibility requirements should be checked with the specific project or issuer.
+
+By depositing to a pool, you enable other users to trade between the assets within it. In exchange for providing this liquidity, you earn a share of the trading fees generated from those swaps.
+
+### What is a Gauge?
+
+A "gauge" is a simple smart contract where you can stake your LP tokens to earn additional CRV and other token rewards. Gauges are designed to distribute these reward tokens evenly over time, effectively incentivizing liquidity provision to specific pools.  Users can claim their earned rewards at any time from the gauge.
+
+---
+
+### Guides
+
+<GuideCardGrid guideKeys={['depositToPool', 'withdrawFromPool', 'claimPoolRewards']} />
+
+---
+
+## Understanding Curve's Pool Types
+
+Curve uses specialized liquidity pools to make trading very efficient. When you provide liquidity, you're helping these pools allow others to swap tokens. There are two main types of pools, each designed for different kinds of digital assets:
+
+### Stableswap Pools
+
+* **For:** Assets that should stay at a similar price, like stablecoins (e.g., USDT, USDC, DAI) or tokens pegged to the same value (e.g., stETH/ETH).
+* **Key Benefit:** They allow very large swaps with extremely low "slippage" (meaning you get very close to the price you expect). This is because the assets are meant to be stable.
+* **Risk Note:** Generally have lower risk of impermanent loss because asset prices don't change much relative to each other.
+
+### Cryptoswap Pools
+
+* **For:** Assets whose prices are expected to change against each other, like volatile cryptocurrencies (e.g., ETH/CRV, wBTC/ETH). These are also known as Curve V2 pools.
+* **Key Benefit:** They are designed to handle bigger price swings between the assets in the pool while still trying to offer good swap prices.
+* **Risk Note:** Due to the volatility of the assets, these pools can have a higher risk of impermanent loss.
+
+---

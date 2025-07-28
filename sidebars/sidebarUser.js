@@ -99,7 +99,7 @@ export default {
                 {
                     type: 'doc',
                     id: 'dex/earning-yield',
-                    label: 'Understanding Yield & Returns',
+                    label: 'Understanding Rewards',
                 },
                 {
                     type: 'doc',
@@ -127,8 +127,8 @@ export default {
                         },
                         {
                             type: 'doc',
-                            id: 'dex/guides/how-to-earn-crv',
-                            label: 'How to Earn CRV',
+                            id: 'dex/guides/how-to-claim-rewards',
+                            label: 'How to Claim Rewards',
                         },
                     ],
                 },
@@ -175,6 +175,11 @@ export default {
                                     type: 'doc',
                                     id: 'lending/guides/beginner/open-and-close',
                                     label: 'Open & Close Loan',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'lending/guides/beginner/lending',
+                                    label: 'Lending',
                                 },
                                 {
                                     type: 'doc',
