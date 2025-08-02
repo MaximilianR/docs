@@ -20,6 +20,12 @@ $$veCRV = \frac{CRV_{locked} \times {locktime_{left}}}{4}$$
 
 As time passes, your veCRV balance decays linearly, reflecting the decreasing time left on your lock. You can **only have one active lock per address**, but you are free to **add more CRV or extend the lock duration** at any time. Once the lock expires, your veCRV balance reaches zero and you can withdraw all your originally locked CRV tokens.
 
+import VecrvDecayChart from '@site/src/components/Charts/VecrvDecayChart';
+
+<VecrvDecayChart />
+
+This chart demonstrates the linear decay of veCRV over time. Hover over the chart to see the exact veCRV balance and time remaining at any point.
+
 ## What are the benefits of holding veCRV?
 
 Holding veCRV unlocks several important benefits:
