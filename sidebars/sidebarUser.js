@@ -240,7 +240,7 @@ export default {
                 {
                     type: 'doc',
                     id: 'vecrv/faq',
-                    label: 'veCRV FAQ',
+                    label: 'FAQ',
                 },
             ],
         },
