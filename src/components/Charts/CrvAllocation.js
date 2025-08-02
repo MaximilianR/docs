@@ -1,118 +1,140 @@
 // src/components/Charts/CrvAllocation.js
 
-import React, { useEffect, useRef } from 'react';
-import { Chart, registerables } from 'chart.js';
-import { useColorMode } from '@docusaurus/theme-common';
-
-Chart.register(...registerables);
+import React, { useState } from 'react';
 
 export default function CrvAllocationChart() {
-  const canvasRef = useRef(null);
-  const chartRef = useRef(null);
-  const { colorMode } = useColorMode();
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  
+  const data = [
+    { label: 'Community (Emissions)', percentage: 57.0, amount: '1,879M CRV', color: '#3b82f6' },
+    { label: 'Core Team', percentage: 26.4, amount: '801M CRV', color: '#f59e0b' },
+    { label: 'Early Users', percentage: 5.0, amount: '152M CRV', color: '#ef4444' },
+    { label: 'Community Reserve', percentage: 5, amount: '152M CRV', color: '#f97316' },
+    { label: 'Investors', percentage: 3.6, amount: '108M CRV', color: '#8b5cf6' },
+    { label: 'Employees', percentage: 3, amount: '91M CRV', color: '#10b981' },
+  ];
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      // --- BULLETPROOF THEME COLOR FETCHING ---
-      const textColor = getComputedStyle(document.documentElement).getPropertyValue('--ifm-font-color-base').trim();
-      const gridColor = getComputedStyle(document.documentElement).getPropertyValue('--ifm-color-emphasis-300').trim();
+  // Calculate SVG circle parameters
+  const radius = 120;
+  const circumference = 2 * Math.PI * radius;
+  let currentOffset = 0;
 
-      // --- NEW: Bulletproof Tooltip Background Logic ---
-      let tooltipBackgroundColor;
-      // First, try to get the semantic color for cards, which is most reliable.
-      const cardBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--ifm-card-background-color').trim();
-
-      // If the fetched color is not transparent, use it.
-      if (cardBackgroundColor && cardBackgroundColor !== 'transparent') {
-        tooltipBackgroundColor = cardBackgroundColor;
-      } else {
-        // Otherwise, provide a hardcoded fallback based on the current theme.
-        // This guarantees a solid background color.
-        tooltipBackgroundColor = colorMode === 'light' ? '#ffffff' : '#242526';
-      }
-      // --- End of new logic ---
-
-
-      const data = [1727272729 + 151515152, 800961153, 108129756, 90909091, 151515152];
-      const totalSum = data.reduce((a, b) => a + b, 0);
-      const percentages = data.map(value => ((value / totalSum) * 100).toFixed(2));
-      const labels = ['Community', 'Core Team', 'Investors', 'Employees', 'Community Reserve'];
-
-      const chartConfig = {
-        type: 'pie',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            backgroundColor: ['#FF6384', '#FFCE56', '#8E5EA2', '#3cba9f', '#e8c3b9'],
-            borderColor: gridColor,
-            borderWidth: 1,
-            hoverOffset: 4
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'top',
-              labels: {
-                color: textColor,
-              }
-            },
-            title: {
-              display: true,
-              text: 'CRV Supply Allocation',
-              font: { size: 18 },
-              color: textColor,
-            },
-            tooltip: {
-              titleColor: textColor,
-              bodyColor: textColor,
-              backgroundColor: tooltipBackgroundColor, // Apply our new bulletproof color
-              borderColor: gridColor,
-              borderWidth: 1,
-              callbacks: {
-                label: function(context) {
-                  const value = context.raw;
-                  const percentage = percentages[context.dataIndex];
-                  const formattedValue = value.toLocaleString();
-                  return `${formattedValue} (${percentage}%)`;
-                }
-              }
-            }
-          }
-        }
-      };
-
-      if (canvasRef.current) {
-        const ctx = canvasRef.current.getContext('2d');
-        if (chartRef.current) {
-          chartRef.current.destroy();
-        }
-        chartRef.current = new Chart(ctx, chartConfig);
-      }
-    }, 10);
-
-    return () => {
-      clearTimeout(timeoutId);
-      if (chartRef.current) {
-        chartRef.current.destroy();
-      }
-    };
-  }, [colorMode]);
+  const getHoverColor = (baseColor, isHovered) => {
+    if (!isHovered) return baseColor;
+    // Lighten the color on hover
+    return baseColor + '80'; // Add transparency for hover effect
+  };
 
   return (
-    <div style={{
-      position: 'relative',
-      height: '40vh',
-      width: '100%',
-      maxWidth: '500px',
+    <div style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      gap: '2rem', 
+      margin: '2rem 0',
+      maxWidth: '800px',
       marginLeft: 'auto',
-      marginRight: 'auto',
-      marginBottom: '2rem'
+      marginRight: 'auto'
     }}>
-      <canvas ref={canvasRef}></canvas>
+      <div style={{ flex: 1, position: 'relative' }}>
+        <svg width="300" height="300" viewBox="0 0 300 300">
+          {data.map((item, index) => {
+            const strokeDasharray = (item.percentage / 100) * circumference;
+            const strokeDashoffset = -currentOffset;
+            currentOffset += strokeDasharray;
+            const isHovered = hoveredIndex === index;
+            
+            return (
+              <circle
+                key={index}
+                cx="150"
+                cy="150"
+                r={radius}
+                fill="none"
+                stroke={getHoverColor(item.color, isHovered)}
+                strokeWidth={isHovered ? "65" : "60"}
+                strokeDasharray={`${strokeDasharray} ${circumference}`}
+                strokeDashoffset={strokeDashoffset}
+                style={{
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease-in-out',
+                  filter: isHovered ? 'drop-shadow(0 0 8px rgba(0,0,0,0.3))' : 'none',
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              />
+            );
+          })}
+        </svg>
+        
+        {/* Tooltip */}
+        {hoveredIndex !== null && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+              color: 'white',
+              padding: '0.5rem 1rem',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              pointerEvents: 'none',
+              zIndex: 10,
+              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            }}
+          >
+            {data[hoveredIndex].label}
+            <br />
+            {data[hoveredIndex].percentage}% ({data[hoveredIndex].amount})
+          </div>
+        )}
+      </div>
+      
+      <div style={{ flex: 1 }}>
+        <div style={{ marginBottom: '1rem' }}>
+          {data.map((item, index) => {
+            const isHovered = hoveredIndex === index;
+            return (
+              <div 
+                key={index} 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  marginBottom: '0.75rem',
+                  padding: '0.5rem',
+                  borderRadius: '6px',
+                  backgroundColor: isHovered ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
+                  transition: 'background-color 0.2s ease-in-out',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                <div
+                  style={{
+                    width: '16px',
+                    height: '16px',
+                    backgroundColor: item.color,
+                    borderRadius: '50%',
+                    marginRight: '0.75rem',
+                    transform: isHovered ? 'scale(1.2)' : 'scale(1)',
+                    transition: 'transform 0.2s ease-in-out',
+                  }}
+                />
+                <span style={{ 
+                  fontWeight: isHovered ? '600' : '400',
+                  fontSize: '0.95rem',
+                  color: 'var(--ifm-color-emphasis-700)'
+                }}>
+                  <strong style={{ color: 'var(--ifm-color-emphasis-900)' }}>{item.label}:</strong> {item.percentage}% ({item.amount})
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

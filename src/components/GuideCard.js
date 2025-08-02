@@ -1,13 +1,12 @@
 import React from 'react';
-import styles from './GuideCard.module.css';
 
 export default function GuideCard({ title, description, image, link }) {
   return (
-    <a href={link} className={styles.card}>
-      {image && <img src={require(`@site/static/img/${image}`).default} alt={title} className={styles.cardImage} />}
-      <div className={styles.cardContent}>
-        <h3 className={styles.cardTitle}>{title}</h3>
-        <p className={styles.cardDescription}>{description}</p>
+    <a href={link} className="guide-card">
+      {image && <img src={require(`@site/static/img/${image}`).default} alt={title} className="guide-card-image" />}
+      <div className="guide-card-content">
+        <h3 className="guide-card-title">{title}</h3>
+        <p className="guide-card-description">{description}</p>
       </div>
     </a>
   );
