@@ -95,6 +95,9 @@ Yes, you can vote on all active proposals with your veCRV balance. Your voting p
 - **Trading fees:** A portion of every swap fee on Curve
 - **crvUSD interest:** Parts of the interest from Curve's stablecoin markets
 
+### I locked last week, why didn't I receive any revenue?
+You have to be locked for a FULL week before you are eligible, Thursday-Thursday. The system takes a snapshot on Thursday at 00:00 UTC to see who has veCRV, then distributes the weekly revenue to those users the following Thursday at 00:00 UTC.
+
 ### How is my revenue share calculated?
 Your revenue share depends on your veCRV balance relative to the total veCRV supply at the time of distribution. The more veCRV you hold, the larger your share.
 
