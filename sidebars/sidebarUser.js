@@ -313,32 +313,48 @@ export default {
         },
         {
             type: 'category',
-            label: 'Risks & Security',
+            label: 'Audits & Security',
             items: [
                 {
                     type: 'doc',
-                    id: 'risks/overview',
-                    label: 'Overview',
+                    id: 'security/audits',
+                    label: 'Audits',
+                },
+                {
+                    type: 'category',
+                    label: 'Risk Disclaimers',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'risks/pools',
+                            label: 'Liquidity Pool Risks',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'risks/crvusd',
+                            label: 'crvUSD Risks',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'risks/lending',
+                            label: 'Lending Risks',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'risks/scrvusd',
+                            label: 'scrvUSD Risks',
+                        },
+                    ],
                 },
                 {
                     type: 'doc',
-                    id: 'risks/pools',
-                    label: 'Liquidity Pool Risks',
+                    id: 'security/bug-bounty',
+                    label: 'Bug Bounty',
                 },
                 {
                     type: 'doc',
-                    id: 'risks/lending',
-                    label: 'Lending & crvUSD Risks',
-                },
-                {
-                    type: 'doc',
-                    id: 'risks/scrvusd',
-                    label: 'scrvUSD Risks',
-                },
-                {
-                    type: 'doc',
-                    id: 'risks/audits',
-                    label: 'Security Practices & Audits',
+                    id: 'security/practices',
+                    label: 'Security Practices',
                 },
             ],
         },
