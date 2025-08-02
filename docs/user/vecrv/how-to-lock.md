@@ -36,7 +36,7 @@ After locking, you will receive veCRV in your wallet. But remember: Unlike other
 
 ## Dashboard
 
-The dashboard section (Curve Dashboard) provides a full overview on the users veCRV holdings such as their veCRV balance, total amount of CRV locked, unlock time and the claimable rewards.
+The dashboard section ([Curve Dashboard](https://www.curve.finance/dex/ethereum/dashboard/)) provides a full overview on the users veCRV holdings such as their veCRV balance, total amount of CRV locked, unlock time and the claimable rewards.
 
 <figure>
 <ThemedImage
