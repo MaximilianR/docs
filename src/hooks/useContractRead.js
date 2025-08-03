@@ -1,6 +1,6 @@
 // src/hooks/useContractRead.js
 
-import { useState, useEffect }_from_ 'react';
+import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
 const RPC_URL = 'https://eth.llamarpc.com';

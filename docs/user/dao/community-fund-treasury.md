@@ -3,11 +3,16 @@ title: Community Fund & Treasury
 hide_title: true
 ---
 
+import CommunityFundBalance from '@site/src/components/LiveComponents/CommunityFundBalance';
+import TreasuryBalance from '@site/src/components/LiveComponents/TreasuryBalance';
+
 ## Community Fund
 
-Curve initially distributed around 151M CRV to a community fund fully controlled by the DAO, intended for use in emergencies or as rewards for community-led initiatives such as grants. Funds can be allocated via a governance proposal and can only be distributed through a linear vesting over a minimum duration of one year.
+Curve initially distributed around 151M CRV to a Community Fund fully controlled by the DAO, intended for use in emergencies or as rewards for community-led initiatives such as grants. Funds can be allocated via a governance proposal and can only be distributed through a linear vesting over a minimum duration of one year.
 
-The community fund is deployed on Ethereum at [`0xe3997288987e6297ad550a69b31439504f513267`](https://etherscan.io/address/0xe3997288987e6297ad550a69b31439504f513267) and as of June 2025, around 24.5M CRV tokens remain.
+The Community Fund is deployed on Ethereum at [`0xe3997288987e6297ad550a69b31439504f513267`](https://etherscan.io/address/0xe3997288987e6297ad550a69b31439504f513267).
+
+<CommunityFundBalance />
 
 :::info Looking for a Grant?
     If you are building something which in our view deserves a grant from Curve, please feel free to reach out in the dedicated Telegram channel: [Curve Ecosystem Grants](https://t.me/curve_grants) or create a proposal on the [Governance Forum].
@@ -20,3 +25,5 @@ On June 27, 2025, the Curve DAO voted to establish a dedicated Treasury, allocat
 In comparison to the community fund, assets do not require a one-year vesting period, which makes the usage of these funds much more convenient.
 
 The Treasury is deployed on Ethereum at [`0x6508ef65b0bd57eabd0f1d52685a70433b2d290b`](https://etherscan.io/address/0x6508ef65b0bd57eabd0f1d52685a70433b2d290b).
+
+<TreasuryBalance />
