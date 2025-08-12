@@ -59,9 +59,9 @@ const config: Config = {
           label: 'Developers',
         },
         {
-          to: 'asset-issuer/overview/why-curve',
-          label: 'Asset Issuers',
-          activeBasePath: '/asset-issuer',
+          to: 'protocol/introduction',
+          label: 'Build On Curve',
+          activeBasePath: '/protocol',
         },
         // {
         //   to: 'advanced/intro',
@@ -132,11 +132,11 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'asset-issuer',
-        path: 'docs/asset-issuer',
-        routeBasePath: 'asset-issuer',
+        id: 'protocol',
+        path: 'docs/protocol',
+        routeBasePath: 'protocol',
         includeCurrentVersion: true,
-        sidebarPath: './sidebars/sidebarAssetIssuer.js',
+        sidebarPath: './sidebars/sidebarProtocol.js',
         sidebarCollapsed: true,
         breadcrumbs: false,
         remarkPlugins: [remarkMath],
