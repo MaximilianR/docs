@@ -140,27 +140,27 @@ export default {
             items: [
                 {
                     type: 'doc',
-                    id: 'lending/primitives',
+                    id: 'llamalend/overview',
                     label: 'Overview',
                 },
                 {
                     type: 'doc',
-                    id: 'lending/liquidations',
+                    id: 'llamalend/borrowing',
+                    label: 'Borrowing',
+                },
+                {
+                    type: 'doc',
+                    id: 'llamalend/supplying',
+                    label: 'Supplying',
+                },
+                {
+                    type: 'doc',
+                    id: 'llamalend/liquidations',
                     label: 'Liquidations',
                 },
                 {
                     type: 'doc',
-                    id: 'lending/loan-health',
-                    label: 'Loan Health',
-                },
-                {
-                    type: 'doc',
-                    id: 'lending/borrow-rate',
-                    label: 'Borrow Rate',
-                },
-                {
-                    type: 'doc',
-                    id: 'lending/faq',
+                    id: 'llamalend/faq',
                     label: 'FAQ',
                 },
                 {
@@ -169,43 +169,48 @@ export default {
                     items: [
                         {
                             type: 'category',
-                            label: 'Beginner Guides',
+                            label: 'Borrow',
                             items: [
                                 {
                                     type: 'doc',
-                                    id: 'lending/guides/beginner/open-and-close',
+                                    id: 'llamalend/guides/borrow/open-and-close',
                                     label: 'Open & Close Loan',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'lending/guides/beginner/lending',
-                                    label: 'Lending',
-                                },
-                                {
-                                    type: 'doc',
-                                    id: 'lending/guides/beginner/loan-management',
+                                    id: 'llamalend/guides/borrow/loan-management',
                                     label: 'Manage Loan',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'lending/guides/beginner/liquidation',
+                                    id: 'llamalend/guides/borrow/liquidation',
                                     label: 'Loan in Liquidation',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'llamalend/guides/borrow/custom-bands',
+                                    label: 'Custom Bands',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'llamalend/guides/borrow/leveraged-loans',
+                                    label: 'Leveraged Loans',
                                 },
                             ],
                         },
                         {
                             type: 'category',
-                            label: 'Intermediate Guides',
+                            label: 'Supply',
                             items: [
                                 {
                                     type: 'doc',
-                                    id: 'lending/guides/intermediate/custom-bands',
-                                    label: 'Custom Bands',
+                                    id: 'llamalend/guides/supply/deposit',
+                                    label: 'Deposit',
                                 },
                                 {
                                     type: 'doc',
-                                    id: 'lending/guides/intermediate/leveraged-loans',
-                                    label: 'Leveraged Loans',
+                                    id: 'llamalend/guides/supply/withdraw',
+                                    label: 'Withdraw',
                                 },
                             ],
                         },

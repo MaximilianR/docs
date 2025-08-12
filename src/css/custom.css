@@ -1302,3 +1302,128 @@ code, pre {
     font-size: 0.9rem;
   }
 }
+
+/* Custom Admonition Styles */
+.admonition {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+  background: var(--ifm-color-emphasis-0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.admonition-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.admonition-content {
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.admonition-content p {
+  margin: 0 0 0.5rem 0;
+}
+
+.admonition-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Info Admonition */
+.admonition-info {
+  border-left-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.admonition-info .admonition-title {
+  color: #1e40af;
+}
+
+/* Warning Admonition */
+.admonition-warning {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.admonition-warning .admonition-title {
+  color: #92400e;
+}
+
+/* Important Admonition */
+.admonition-important {
+  border-left-color: #ef4444;
+  background: #fef2f2;
+}
+
+.admonition-important .admonition-title {
+  color: #991b1b;
+}
+
+/* Dark mode admonitions */
+[data-theme='dark'] .admonition {
+  background: var(--ifm-color-surface);
+  border-color: var(--ifm-color-border);
+}
+
+[data-theme='dark'] .admonition-info {
+  background: rgba(59, 130, 246, 0.1);
+  border-left-color: #3b82f6;
+}
+
+[data-theme='dark'] .admonition-info .admonition-title {
+  color: #60a5fa;
+}
+
+[data-theme='dark'] .admonition-info .admonition-content {
+  color: var(--ifm-color-text-secondary);
+}
+
+[data-theme='dark'] .admonition-warning {
+  background: rgba(245, 158, 11, 0.1);
+  border-left-color: #f59e0b;
+}
+
+[data-theme='dark'] .admonition-warning .admonition-title {
+  color: #fbbf24;
+}
+
+[data-theme='dark'] .admonition-warning .admonition-content {
+  color: var(--ifm-color-text-secondary);
+}
+
+[data-theme='dark'] .admonition-important {
+  background: rgba(239, 68, 68, 0.1);
+  border-left-color: #ef4444;
+}
+
+[data-theme='dark'] .admonition-important .admonition-title {
+  color: #f87171;
+}
+
+[data-theme='dark'] .admonition-important .admonition-content {
+  color: var(--ifm-color-text-secondary);
+}
+
+/* Responsive admonitions */
+@media (max-width: 768px) {
+  .admonition {
+    padding: 0.875rem 1rem;
+    margin: 1rem 0;
+  }
+  
+  .admonition-title {
+    font-size: 0.8rem;
+  }
+  
+  .admonition-content {
+    font-size: 0.85rem;
+  }
+}
