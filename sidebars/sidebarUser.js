@@ -286,11 +286,6 @@ export default {
             items: [
                 {
                     type: 'doc',
-                    id: 'cross-chain/overview',
-                    label: 'Overview',
-                },
-                {
-                    type: 'doc',
                     id: 'cross-chain/supported-chains',
                     label: 'Supported Chains & Features',
                 },
@@ -307,12 +302,7 @@ export default {
                 {
                     type: 'doc',
                     id: 'cross-chain/dao-on-l2',
-                    label: 'Curve DAO & Voting on L2s',
-                },
-                {
-                    type: 'doc',
-                    id: 'cross-chain/faq',
-                    label: 'Cross-Chain FAQ',
+                    label: 'Cross-Chain DAO Operations',
                 },
             ],
         },
