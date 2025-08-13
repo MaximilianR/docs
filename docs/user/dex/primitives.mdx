@@ -1,0 +1,88 @@
+---
+title: DEX Primitives
+---
+
+import ThemedImage from '@theme/ThemedImage';
+import GuideCardGrid from '@site/src/components/GuideCardGrid';
+import ButtonGrid from '@site/src/components/ButtonGrid';
+
+Welcome to Curve's DEX.  To get started, it helps to understand a few basic concepts that power the platform.
+
+## What is a DEX?
+
+A **D**ecentralized **Ex**change (DEX) is a trading platform that operates without a central company or authority. Unlike traditional exchanges like Coinbase or the New York Stock Exchange, a DEX allows users to trade digital assets directly with each other (peer-to-peer) on a public blockchain like Ethereum.
+
+This approach gives you complete control over your money. Here’s what that means for you:
+
+  * **You're in Control:** You always hold your funds in your own personal wallet. When you trade your assets are never held by Curve, which protects you from issues like exchange hacks or companies halting trading. This is known as being **non-custodial**.
+  * **Automated and Transparent:** Trades on Curve are handled by **smart contracts**. These are programs that run on the blockchain and automatically execute trades according to their code. Every action is public and verifiable on the blockchain, ensuring a transparent and secure process.
+
+
+## How Do Swaps Work? Liquidity Pools
+
+To allow anyone to trade instantly, 24/7, Curve uses Pools, sometimes called Liquidity Pools. Instead of matching individual buyers and sellers, users trade against a large pool of assets.  All the pools available are shown on the [Pools page](https://www.curve.finance/dex/ethereum/pools/) for each network.
+
+Each pool contains two or more tokens. When you want to swap one token for another, you add your token to the pool and take out the token you want. This system means there's always liquidity ready for your trade, so you don't have to wait for a buyer or seller to appear.  In the example below Alice swaps 1 ETH for 0.99 stETH through the stETH/ETH pool.
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="An example of a user swapping ETH for stETH through a liquidity pool."
+    sources={{
+      light: require('@site/static/img/user/dex/swap-light.png').default,
+      dark: require('@site/static/img/user/dex/swap-light.png').default,
+    }}
+    style={{
+      maxWidth: '600px',
+      width: '100%'
+    }}
+  />
+  <figcaption>*Note: that in real pools Alice would get much more than 0.99 stETH, probably closer to 0.9999 stETH.* </figcaption>
+</figure>
+
+
+## Who Provides the Assets? Liquidity Providers (LPs)
+
+The assets in these pools are supplied by other users, called **Liquidity Providers** (or LPs). Anyone can become an LP by depositing their assets into a pool.  When the assets deposited to a pool increases, swappers get better prices, which usually means more swaps.
+
+In return for providing liquidity, LPs earn fees from every swap that happens in their pool, and many pools also offer CRV or other token rewards. This incentivizes users to fill the pools with assets, which in turn provides a better trading experience for everyone.
+
+
+## Types of Pools - Stableswap and Cryptoswap Pools
+
+Curve uses two different kinds of pools, each designed for specific combination of assets:
+
+  * **Stableswap Pools:** For assets that should trade at a similar price (e.g., USDC and USDT, or stETH and ETH, or even [scrvUSD](../curve-tokens/scrvusd.mdx) and USDT).
+  * **Cryptoswap Pools:** For assets whose prices move independently of each other (e.g., ETH and WBTC, or ETH and USDT).
+
+To learn more about how about how they work, see the [Stableswap vs. Cryptoswap page](./stableswap-vs-cryptoswap.mdx)
+
+
+## Basepools and Metapools
+
+Within Curve's Stableswap pools, there are also pool designs which are known as Basepools and Metapools:
+
+- **Basepools**: These are foundational pools of liquidity on Curve.  When you deposit to pool you get back an LP token representing your share of assets in that pool.  For certain pools, think [3pool](https://www.curve.finance/dex/ethereum/pools/3pool/deposit/) (DAI/USDC/USDT) and [Curve.fi Strategic USD Reserves](https://curve.finance/dex/ethereum/pools/factory-stable-ng-355/deposit/?ref=news.curve.finance) (USDT/USDC) these LP tokens are approved to be used as an asset in other pools.  Any Stableswap pool can be approved to be a Basepool, with a successful DAO vote.
+- **Metapools**: Metapools contain a Basepool LP token as one of their assets, as well as one or more different assets which aren't in the Basepool.
+
+See the image below for a visual representation of the [Curve.fi Strategic USD Reserves Basepool](https://curve.finance/dex/ethereum/pools/factory-stable-ng-355/deposit/?ref=news.curve.finance) and the [DOLA Strategic Reserves Metapool](https://curve.finance/dex/ethereum/pools/factory-stable-ng-396/deposit/?ref=news.curve.finance):
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Basepools and Metapools"
+    sources={{
+      light: require('@site/static/img/user/dex/basepools-metapools.png').default,
+      dark: require('@site/static/img/user/dex/basepools-metapools.png').default,
+    }}
+    style={{
+      maxWidth: '600px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+## Pool Fees
+
+Each **Stableswap** pool has its own set fee, with most ranging from **0.005% to 0.02%**. However, some pools, such as the Strategic Reserve pools, have a much lower fee of around **0.001%**. Most current and all new pools now feature **dynamic fees**. This mechanism automatically increases the fee when a swap would make an imbalanced pool even more so, thereby increasing liquidity providers' (LPs) profits during market volatility.
+
+**Cryptoswap** pools have a broader fee range, typically higher than Stableswap pools, to account for impermanent loss and rebalancing costs. Fees can be as low as **0.05%** and go up to around **0.4%**.  Cryptoswap pools also feature dynamic fees, which automatically increases the fee when swaps make the imbalances worse.  

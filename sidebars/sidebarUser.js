@@ -88,6 +88,11 @@ export default {
                 },
                 {
                     type: 'doc',
+                    id: 'dex/philosophy',
+                    label: 'DEX Philosophy',
+                },
+                {
+                    type: 'doc',
                     id: 'dex/swap',
                     label: 'Swap Tokens on Curve',
                 },
