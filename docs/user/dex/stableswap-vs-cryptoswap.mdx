@@ -79,7 +79,7 @@ The magic of Stableswap is its liquidity concentration. Let's visualize a crvUSD
 In this example most of the pool's liquidity (e.g., \$40M out of \$80M total) is concentrated in a very tight range around the \$1.00 price.
 
 1.  A user wants to swap \$20M USDC for crvUSD.
-2.  The swap executes with extremely low slippage, and the user receives nearly \$19.98M crvUSD.
+2.  The swap executes with extremely low slippage, and the user receives back about 19.98M crvUSD
 3.  The pool collects trading fees on the swap. With a 0.01% fee, the total fee is 20,000,000 * 0.0001 = 2,000 crvUSD. This is typically split 50/50 between LPs and the Curve DAO.
 4.  The pool is now imbalanced. This creates an **arbitrage opportunity**: traders are now incentivized to swap crvUSD back into the pool to get USDC at a slight discount, which naturally pushes the pool back toward a 50/50 balance.
 
@@ -117,7 +117,7 @@ At its core, a Cryptoswap pool functions like a Stableswap pool concentrated aro
 However, when the market price of the assets drifts significantly, the pool must move its liquidity concentration to match the new price. This is called **rebalancing**. To ensure this process is always profitable for LPs, it only happens if two conditions are met:
 
 1.  **Minimum Step**: The price must move more than a set minimum amount (e.g., 0.5%). This prevents constant, unnecessary rebalancing in a choppy market. It is set by the `adjustment_step` parameter.
-2.  **Profitability Check**: The pool must have accrued enough trading fees to ensure the rebalancing cost is less than half of the generated profits. This guarantees the rebalancing action itself doesn't cause a net loss for LPs.
+2.  **Profitability Check**: The pool must have accrued enough trading fees to ensure the recent profits from swaps are more than double the cost of rebalancing.  This guarantees that rebalancing doesn't cause a net loss for LPs.
 
 Let's look at a simple USD/EUR forex pool example:
 
@@ -135,10 +135,3 @@ Let's look at a simple USD/EUR forex pool example:
   />
   <figcaption></figcaption>
 </figure>
-
-In this example the pool was last balanced around the price of \$1.17, and the pool has a minimum step of \$0.01, the current price is \$1.175.  Because the Euro goes up in value to \$1.18, this is equal to the price movement threshold, and the pool rebalances around this new price, assuming it generated enough profits.
-
-1.  **Initial State**: The pool's current price is \$1.175. It was last balanced around the price of \$1.17, and it has a minimum step of \$0.01.
-2.  **Price Movement**: The market price of the Euro strengthens to \$1.18. The internal oracle in the Curve pool detects this change.
-3.  **Rebalancing Trigger**: The new price is equal or greater than the minimum step, and in this example, we assume the pool has accumulated sufficient fees.
-4.  **Automatic Rebalancing**: The algorithm uses a portion of the accrued fees to rebalance the pool's liquidity, centering it around the new \$1.18 price.
