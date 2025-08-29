@@ -6,8 +6,238 @@ import ThemedImage from '@theme/ThemedImage';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 import ButtonGrid from '@site/src/components/ButtonGrid';
 
-<ButtonGrid buttonKeys={['gotoDex']} />
+Providing liquidity in pools is a great way to earn interest (yield) on your assets, and help Curve and DeFi at the same time.  
 
-to do
+Pools are groups of two or more assets.  When you provide liquidity to a pool, you deposit your assets into that pool.  This is called being an **LP** or **Liquidity Provider**.  Traders can then trade between the assets within the pool.  For example, if you are an LP in a `crvUSD/USDC` pool, the pool will have two assets: `crvUSD` and `USDC`.  Traders can trade between `crvUSD` to `USDC` freely within the pool, and as an LP you earn fees from these swaps and other rewards.  
+
+If you're interested in all the different rewards you can earn as an LP, or what the numbers mean, see the page about understanding rewards: [Understanding Rewards](earning-yield.mdx).
+
+The rest of this page will be a guide on how to use the UI to deposit, withdraw, stake and claim your rewards.
 
 ---
+
+# Depositing to a Pool
+
+#### 1. Go to the pools overview
+
+First of all go to the pools overview page here:
+
+<ButtonGrid buttonKeys={['gotoDex']} />
+
+You will then all the different pools on the network you are currently connected to, if you would like to see the pools for a different network, you can change this in the top right hand corner.  You should see a screen like the following:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Pools Overview"
+    sources={{
+      light: require('@site/static/img/ui/dex/pools-overview-light.png').default,
+      dark: require('@site/static/img/ui/dex/pools-overview-dark.png').default,
+    }}
+    style={{
+      maxWidth: '1200px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+#### 2. Choose your desired pool
+
+The pools overview above shows a list of all the available pools on that network, you can also search for an asset you would like to deposit, e.g., `crvUSD`, `CRV`, etc.
+
+In this example we will be depositing to the `crvUSD/USDC` pool.  You can search for it on the overview page and click it to see the details of this pool and deposit, or click here: [`crvUSD/USDC` Pool](https://www.curve.finance/dex/ethereum/pools/factory-crvusd-0/deposit)
+
+#### 3. Deposit & Stake - Choose Amounts
+
+In this example we will be doing `Deposit & Stake` as a single transaction.  However, depositing and staking are two different actions, and can be done separately:
+
+- **Deposit**: Depositing is depositing your assets into the pool.  When you do this you receive LP tokens in return, and start earning trading fees from swaps.
+- **Staking**: Stake your LP tokens in the pool's reward gauge, this means you can earn CRV or other token rewards, if available.
+
+More info on how each of these actions work in the [Understanding Rewards](./earning-yield.mdx#summary-how-to-earn-different-rewards) page.
+
+Now on the `crvUSD/USDC` pool page, we can see the deposit menu to the left and choose `deposit & stake` and choose how much we'd like to deposit, here we are depositing $10k `crvUSD`:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Blank Deposit"
+    sources={{
+      light: require('@site/static/img/ui/dex/deposit-blank-light.png').default,
+      dark: require('@site/static/img/ui/dex/deposit-blank-dark.png').default,
+    }}
+    style={{
+      maxWidth: '300px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+Note that we don't have to deposit both `crvUSD` and `USDC` to the pool.
+
+#### 4. Deposit & Stake - Complete Transactions
+
+To complete the `Deposit & Stake`, you'll likely need to perform two separate transactions:
+
+1.  **Approve**: Before swapping a token for the first time, you must grant the Curve smart contract permission to interact with it. This is a standard security step in DeFi. Click `Approve` and confirm the transaction in your wallet. You only need to do this once per token.
+2.  **Deposit & Stake**: Once the approval transaction is confirmed, the button will change to `Deposit & Stake`. Click it and confirm the final transaction in your wallet to execute the trade.
+
+#### 5. Confirmation
+
+After a few seconds, the transactions should be confirmed on the blockchain. The interface will confirm to show your transactions were successful:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Deposit Success"
+    sources={{
+      light: require('@site/static/img/ui/dex/deposit-success-small-light.png').default,
+      dark: require('@site/static/img/ui/dex/deposit-success-small-dark.png').default,
+    }}
+    style={{
+      maxWidth: '300px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+Then underneath the chart, where it shows the Pool Details, there will be a new tab called `Your Details`, click on this to see your deposit details:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Deposit Success"
+    sources={{
+      light: require('@site/static/img/ui/dex/deposit-details-light.png').default,
+      dark: require('@site/static/img/ui/dex/deposit-details-dark.png').default,
+    }}
+    style={{
+      maxWidth: '600px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+Here we can see our details
+- **9,805 LP Tokens**: Our $10k `crvUSD` was converted to 9,805 LP tokens, which are currently staked.
+- **We now have `USDC` and `crvUSD`**: We own a share of assets in the pool, so that means we have 4,606 `USDC` and 5,392 `crvUSD`.  As users swap in this pool, these numbers will change, and the total should increase because of earned swap fees, becoming worth more than $10k in time.
+- **Earning 3.41% `CRV` APR**: This means we will earn $341 of `CRV` if we stake for a year and the interest rate stays the same.
+- **Boost is 1x**: we don't have any [veCRV](../vecrv/what-is-vecrv.md), so our boost is 1x.
+
+---
+
+# Claiming Rewards
+
+To claim your earned `CRV` and other token rewards, go to your pool's page, and then the `Withdraw/Claim` tab on the left, then `Claim Rewards`, you should see a box like the following:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Claim Rewards"
+    sources={{
+      light: require('@site/static/img/ui/dex/claim-light.png').default,
+      dark: require('@site/static/img/ui/dex/claim-dark.png').default,
+    }}
+    style={{
+      maxWidth: '300px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+You may see 2 claim buttons, or just a single one, depending on the rewards you have to claim:
+
+- `Claim CRV`: This will claim ***only*** `CRV` rewards.
+- `Claim Rewards`: This will claim everything ***except*** any `CRV` rewards.
+
+By confirming the transactions within your wallet, you will claim each separate reward.  Congratulations on your earnings!
+
+---
+
+# Unstaking & Withdrawing
+
+To withdraw from a pool, you may have to first `Unstake` your tokens if you have staked them.  These are two separate actions, and unfortunately cannot be done together like `Deposit & Stake`.  
+
+## Unstaking
+
+To unstake, go to the `Withdraw/Claim` tab on the left, then click `Unstake`:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Unstake"
+    sources={{
+      light: require('@site/static/img/ui/dex/unstake-light.png').default,
+      dark: require('@site/static/img/ui/dex/unstake-dark.png').default,
+    }}
+    style={{
+      maxWidth: '300px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+You can choose to unstake a portion or all of your LP tokens.  After choosing your desired amount, click the `Unstake` button and confirm the transaction within your wallet.  Once successful you will receive confirmation that your tokens are now unstaked:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Unstake"
+    sources={{
+      light: require('@site/static/img/ui/dex/unstake-success-light.png').default,
+      dark: require('@site/static/img/ui/dex/unstake-success-dark.png').default,
+    }}
+    style={{
+      maxWidth: '300px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+### Withdrawing
+
+To withdraw, go to the `Withdraw/Claim` tab on the left, then click `withdraw`.  You should then a menu like this:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Unstake"
+    sources={{
+      light: require('@site/static/img/ui/dex/withdraw-light.png').default,
+      dark: require('@site/static/img/ui/dex/withdraw-dark.png').default,
+    }}
+    style={{
+      maxWidth: '300px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+Above we have chosen to withdraw all our LP tokens by clicking `MAX`, then we chose what assets we wanted:
+
+- **One Coin**: Withdraw everything as just `crvUSD` or `USDC`
+- **Balanced**: Each LP token is worth an equal share of the all the `crvUSD` and `USDC` in the pool.  In our case, each LP token was worth 0.61 `USDC` and 0.41 `crvUSD`, so in total our balanced withdrawal of 9805 LP tokens would be 5989 `USDC` and 4047 `crvUSD`
+- **Custom**: This lets you withdraw in any ratio you wish, for example, receiving 1000 `crvUSD` and the rest as `USDC`
+
+Above we are going to withdraw our LP tokens as solely `crvUSD`, because that is what we initially deposited.
+
+Click on `Withdraw` and confirm the withdrawal within your wallet.  Once this is successful the UI will show a confirmation:
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Withdraw"
+    sources={{
+      light: require('@site/static/img/ui/dex/withdraw-success-light.png').default,
+      dark: require('@site/static/img/ui/dex/withdraw-success-dark.png').default,
+    }}
+    style={{
+      maxWidth: '300px',
+      width: '100%'
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+Congratulations you successfully provided liquidity to a Curve DEX pool!
+
+You can see here that we initially deposited 10,000 `crvUSD`, but were able to withdraw 10,034 `crvUSD`, a profit of 34 `crvUSD` which was earned from swap fees.
