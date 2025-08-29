@@ -116,27 +116,6 @@ export default {
                     id: 'dex/faq',
                     label: 'FAQ',
                 },
-                {
-                    type: 'category',
-                    label: 'Guides',
-                    items: [
-                        {
-                            type: 'doc',
-                            id: 'dex/guides/how-to-swap',
-                            label: 'How to Swap',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'dex/guides/how-to-lp',
-                            label: 'How to LP',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'dex/guides/how-to-claim-rewards',
-                            label: 'How to Claim Rewards',
-                        },
-                    ],
-                },
             ],
         },
         {
