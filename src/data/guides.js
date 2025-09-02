@@ -114,4 +114,16 @@ export const ALL_GUIDES = {
     image: '',
     link: '/user/dao/proposals#voting-on-proposals',
   },
+  deployStableswapPool: {
+    title: 'How to Deploy a Stableswap Pool',
+    description: 'This guide teaches you how to deploy a Stableswap pool.',
+    image: '',
+    link: '/protocol/pool/guides/deploy-stableswap',
+  },
+  deployCryptoswapPool: {
+    title: 'How to Deploy a Cryptoswap Pool',
+    description: 'This guide teaches you how to deploy a Cryptoswap pool.',
+    image: '',
+    link: '/protocol/pool/guides/deploy-cryptoswap',
+  },
 };

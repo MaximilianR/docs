@@ -3,7 +3,7 @@ title: Curve Pool Parameters
 ---
 
 
-## StableSwap (v1) Parameters
+## Stableswap Parameters
 
 | Name | Symbol | Role in invariant |
 |------|--------|-------------------|
@@ -11,7 +11,7 @@ title: Curve Pool Parameters
 
 > On-chain the contract stores `A × nⁿ` (where *n* is the number of coins) to preserve precision when working with integers.
 
-## CryptoSwap (v2) Parameters
+## Cryptoswap Parameters
 
 CryptoSwap extends StableSwap by keeping **A** and adding parameters that adapt the curve and the fees to volatile assets.
 
@@ -41,3 +41,5 @@ CryptoSwap extends StableSwap by keeping **A** and adding parameters that adapt 
 ### Parameter interaction
 
 When the pool is balanced, the dynamic leverage factor simplifies to **A**; as imbalance grows, the factor collapses approximately with `γ²`, causing the invariant to converge to constant-product.
+
+## FXSwap Parameters
