@@ -4,19 +4,19 @@ title: Post Deployment
 
 After deploying a pool, there are a few important steps to ensure it’s visible, functional, and capable of attracting liquidity and rewards.
 
----
-
 ## **Seed Initial Liquidity**
-
 Before your pool can process any trades, it must be seeded with initial liquidity.
 
 On the frontend, there is a filter enabled by default that hides low-TVL pools. If your pool has less than **$10,000 TVL**, it will not appear unless users manually disable that filter.
 
 To kickstart your pool, it's recommended to add liquidity in **proportional balances**.
 
----
 
-## **Submit Token Logo**
+## **Integrations**
+Pools deployed from Curve Factories are automatically picked up by major aggregators like 1inch, Odos or CowSwap. No need to hustle for integrations!
+
+
+## **Token Logo Submission**
 
 If your pool includes a token that does not yet have a logo on Curve, you can submit one:
 

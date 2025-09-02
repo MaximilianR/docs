@@ -3,6 +3,7 @@ title: Curve Pool Factory
 ---
 
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
+import ThemedImage from '@theme/ThemedImage';
 
 # Curve Pool Factory
 
@@ -10,21 +11,19 @@ Curve offers a **permissionless** system for deploying liquidity pools — no DA
 
 To get started quickly, follow one of the deployment guides:
 
-<GuideCardGrid guideKeys={['lockingCrv', 'claimingCrvRewards']} />
-
-- [Guide — Deploy a Stableswap Pool](guides/deploy-stableswap.md)
-- [Guide — Deploy a Cryptoswap Pool](guides/deploy-cryptoswap.md)
+<GuideCardGrid guideKeys={['deployStableswapPool', 'deployCryptoswapPool']} />
 
 Factories make launching pools on Curve fast, flexible, and accessible to any project—whether you're a stablecoin issuer, LST protocol, synthetic-asset platform, or any other DeFi team looking to bootstrap deep, reliable liquidity.
 
-## What Is a Pool Factory?
+## How are Pools Deployed?
 
-A **Pool Factory** is a smart contract that deploys new pools. Each factory contains the logic and configuration for a specific pool type. The two algorithms currently supported are:
+In the background, new liquidity pools are deployed by making use of a **Pool Factory**, which essentually is a smart contract for deploying new pools. Each factory contains the logic and configuration for a specific pool type. Factories support a few diffrent pool types:
 
 - **Stableswap** — for pegged or correlated assets (e.g., USDC/USDT, stETH/ETH)  
 - **Cryptoswap** — for more volatile or uncorrelated assets (e.g., ETH/USDC)
+- **FXSwap** - for volatile and uncorrelated assets with some additional features (todo)
 
-Once a factory is deployed, anyone can create a new pool of that type—either through the Curve UI or directly on-chain.
+Once a factory is deployed, anyone can create a new pool of that type — either through the Curve UI or directly on-chain.
 
 Pools deployed via a factory appear automatically on the Curve frontend after a short propagation period and are picked up by aggregators such as 1inch and CowSwap. You don’t need to chase integrations.
 
@@ -32,18 +31,57 @@ Pools deployed via a factory appear automatically on the Curve frontend after a 
 
 Curve supports multiple pool designs to fit different kinds of assets. Selecting the correct type is essential to ensure low slippage, efficient trading, and capital-efficient liquidity.
 
-- Choose a **Stableswap pool** when your assets are expected to stay close in price—e.g., stablecoins (USDC/USDT), LSTs (wstETH/stETH), or yield-bearing stable assets like sDAI.  
-- Choose a **Cryptoswap pool** when your assets are more volatile or uncorrelated—e.g., ETH/USDC or BTC/USDC. Cryptoswap pools use dynamic pricing that handles larger price swings while still retaining Curve’s efficiency advantages.
+
+### Stableswap Pool
+Choose a **Stableswap pool** when your assets are expected to stay close or correlated in price — e.g., stablecoins (USDC/USDT), LSTs (wstETH/stETH), or yield-bearing stable assets like sDAI. 
+
+Stableswap-NG pools support a wide variety of token types beyond standard ERC-20 tokens. This flexibility allows you to create pools with yield-bearing tokens, rebasing tokens, and oracle-enabled tokens.
+
+**Supported Asset Types:**
+
+| Type | Description | Use Cases | Examples |
+|------|-------------|-----------|----------|
+| **0** | Standard ERC-20 | Basic tokens with no special features | USDC, USDT, DAI |
+| **1** | Oracle-enabled | Tokens with rate oracles for accurate pricing | wstETH, cbETH |
+| **2** | Rebasing | Tokens that change supply over time | stETH |
+| **3** | ERC4626 Vault | Yield-bearing vault tokens | sDAI |
+
+**Technical Requirements:**
+- All tokens must be ERC-20 compatible (return True/revert, True/False, or None)
+- Maximum 18 decimals supported
+- Oracle tokens must have precision ≤18
+- ERC4626 vaults support arbitrary precision for both vault and underlying tokens
+
+
+### Cryptoswap
+Choose a **Cryptoswap pool** when your assets are more volatile or uncorrelated—e.g., ETH/USDC or BTC/USDC. Cryptoswap pools use dynamic pricing that handles larger price swings while still retaining Curve’s efficiency advantages.
+
+
+### FXSwap
+todo
 
 Not sure which to use? Reach out in the official Curve channels.
+
+---
 
 ## Base Pools and Metapools
 
 Stableswap pools on Curve support a powerful structure of **base pools** and **metapools**.
 
-- A **base pool** is a regular Curve pool that the DAO has approved for use in metapools.  
-- A **metapool** pairs a new token against an existing base pool rather than against a single token.
+- A **base pool** is a regular Curve pool that the DAO has specifically approved to be used in metapools.  
+- A **metapool** pairs a token against an existing base pool rather than against a single token.
 
-For example, the USDC/USDT pool might begin as a normal Stableswap pool. If the DAO designates it as a base pool, it can then be reused in other pools. A protocol such as MIM can create a metapool that pairs MIM against the base pool, resulting in a MIM–USDC/USDT market.
+<figure>
+<ThemedImage
+    alt="`create_from_pool` function interface"
+    sources={{
+        light: require('@site/static/img/protocol/deploy-pool/basepool-metapool.png').default,
+        dark: require('@site/static/img/protocol/deploy-pool/basepool-metapool.png').default,
+    }}
+    style={{ width: '600px', display: 'block', margin: '0 auto' }}
+/>
+</figure>
 
-This approach gives new tokens a major advantage: they can **tap into the deep, established liquidity of the base pool** instead of needing to attract all liquidity themselves. The result is better pricing, faster adoption, and more efficient routing from day one.
+For example, the USDC/USDT pool might begin as a normal Stableswap pool. If the DAO adds it as a base pool, it can then be reused in other pools. A protocol such as Inverse can create a metapool that pairs their stablecoin $DOLA against the base pool, resulting in a DOLA–USDC/USDT market. Users can directly swap DOLA/USDT or DOLA/USDC through this pool.
+
+This approach gives new tokens a major advantage: they can **tap into the deep, established liquidity of the base pool** instead of needing to attract all liquidity themselves because they pair their token against an already existing and established pool with TVL.

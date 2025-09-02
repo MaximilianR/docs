@@ -2,43 +2,22 @@ export default {
     protocol: [
         {
             type: 'doc',
-            id: 'introduction',
-            label: 'Introduction',
+            id: 'why-curve',
+            label: 'Why Build on Curve?',
         },
         {
             type: 'category',
-            label: 'Why Curve?',
-            items: [
-                {
-                    type: 'doc',
-                    id: 'why-curve/why-curve',
-                    label: 'Why Launch on Curve?',
-                },
-                {
-                    type: 'doc',
-                    id: 'why-curve/compare-amm',
-                    label: 'How Curve Compares to Other AMMs',
-                },
-                {
-                    type: 'doc',
-                    id: 'why-curve/compare-lending',
-                    label: 'How Curve Compares to Other Lending Markets',
-                },
-                {
-                    type: 'doc',
-                    id: 'why-curve/product-types',
-                    label: 'Curve Pool Types & Tradeoffs',
-                },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Liquidity Pools',
+            label: 'Liquidity Pools (DEX)',
             items: [
                 {
                     type: 'doc',
                     id: 'pool/overview',
                     label: 'Overview & Pool Types',
+                },
+                {
+                    type: 'doc',
+                    id: 'pool/compare-amm',
+                    label: 'How Curve Compares to Other AMMs',
                 },
                 {
                     type: 'doc',
@@ -64,7 +43,7 @@ export default {
         },
         {
             type: 'category',
-            label: 'Lending Markets',
+            label: 'Lending Markets (Llamalend)',
             items: [
                 {
                     type: 'doc',
@@ -73,13 +52,13 @@ export default {
                 },
                 {
                     type: 'doc',
-                    id: 'lending/parameters',
-                    label: 'Choosing Lending Parameters',
+                    id: 'lending/oracles-and-parameters',
+                    label: 'Oracles & Parameters',
                 },
                 {
                     type: 'doc',
                     id: 'lending/guides/deploy-lending-market',
-                    label: 'Guide: Deploy a Lending Market',
+                    label: 'Guide: Deploy a Lending Market via Etherscan',
                 },
                 {
                     type: 'doc',
@@ -144,11 +123,6 @@ export default {
                     label: 'Examples of Successful Deployments',
                 },
             ],
-        },
-        {
-            type: 'doc',
-            id: 'resources/branding',
-            label: 'Branding & Icon Submission',
         },
     ],
 };

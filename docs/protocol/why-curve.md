@@ -2,8 +2,6 @@
 title: Why Launch On Curve
 ---
 
-# Why Launch on Curve?
-
 Curve is one of the most battle-tested and widely integrated protocols in DeFi — a permissionless platform for building liquidity and lending markets without the need for asking for approval.
 
 Whether you're launching a new stablecoin, scaling a already existing one, or designing yield strategies, Curve gives you access to the same infrastructure used by major protocols across the ecosystem. It's not just a venue for trading — it's a base layer for serious DeFi builders.
@@ -14,10 +12,8 @@ Curve covers the full spectrum:
 
 - **Algorithms for every pair** – specialised math for both stable (near-peg) and volatile assets, so almost any token can list and trade efficiently.  
 - **Set-and-forget LPing** – deposit once and earn; no range-setting, rebalancing, or manual upkeep required.  
-- **Permissionless markets** – anyone can spin up a lending market with any collateral, no gatekeepers.  
+- **Permissionless markets** – anyone can spin up a liquidity pool or lending market with any collateral, no gatekeepers.
 - **Comfort-first liquidations** – Curve’s LLAMMA mechanism unwinds positions gradually, enabling some of the highest LTVs in DeFi while giving borrowers time to react.  
-
-
 
 
 ## Liquidity Flywheel — Simple, Modular, Effective

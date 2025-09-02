@@ -1,3 +1,0 @@
----
-title: Choosing Lending Parameters
----

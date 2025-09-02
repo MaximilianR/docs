@@ -59,7 +59,7 @@ const config: Config = {
           label: 'Developers',
         },
         {
-          to: 'protocol/introduction',
+          to: 'protocol/why-curve',
           label: 'Build On Curve',
           activeBasePath: '/protocol',
         },
