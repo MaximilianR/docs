@@ -74,6 +74,16 @@ export const ALL_BUTTONS = {
       </>
     ),
   },
+  gotoSwap: {
+    link: 'https://www.curve.finance/dex/ethereum/swap/',
+    line1: 'Go to',
+    line2Content: (
+      <>
+        <ButtonIcon src="/img/logos/CRV_s.png" alt="Curve" />
+        Curve Swap
+      </>
+    ),
+  },
   gotoLend: {
     link: 'https://www.curve.finance/lend/ethereum/markets/',
     line1: 'Go to',

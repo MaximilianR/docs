@@ -88,6 +88,11 @@ export default {
                 },
                 {
                     type: 'doc',
+                    id: 'dex/philosophy',
+                    label: 'DEX Philosophy',
+                },
+                {
+                    type: 'doc',
                     id: 'dex/swap',
                     label: 'Swap Tokens on Curve',
                 },
@@ -110,27 +115,6 @@ export default {
                     type: 'doc',
                     id: 'dex/faq',
                     label: 'FAQ',
-                },
-                {
-                    type: 'category',
-                    label: 'Guides',
-                    items: [
-                        {
-                            type: 'doc',
-                            id: 'dex/guides/how-to-swap',
-                            label: 'How to Swap',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'dex/guides/how-to-lp',
-                            label: 'How to LP',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'dex/guides/how-to-claim-rewards',
-                            label: 'How to Claim Rewards',
-                        },
-                    ],
                 },
             ],
         },
