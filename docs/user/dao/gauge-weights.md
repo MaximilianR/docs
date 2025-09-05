@@ -170,6 +170,19 @@ You previously allocated **80%** of your voting power to the reUSD/scrvUSD gauge
 However, if you later want to reduce your vote on reUSD/scrvUSD again (e.g., from 60% to 38%), you'll need to wait 10 days from your last change to that specific gauge.
 :::
 
+## Gauge Weights on L2s
+
+While gauge voting takes place only on Ethereum, Curve has built a permissionless system to allow gauges on other chains (L2s and sidechains) to receive gauge weights and CRV emissions. Here's how it works:
+
+1. **Proxy Gauges**: A "proxy" gauge is deployed on Ethereum for each L2/sidechain gauge
+2. **Voting**: veCRV holders vote on these proxy gauges just like regular gauges
+3. **Bridging**: When the proxy gauge receives CRV emissions, they are automatically bridged to the corresponding chain
+4. **Distribution**: The bridged CRV is then distributed to users who have staked LP tokens in the actual L2/sidechain gauge
+
+:::info **Important Note**
+Due to the bridging mechanism, gauge emissions on L2 and sidechain gauges are **delayed by one week** compared to Ethereum gauges. This means CRV rewards earned on these chains will be distributed one week after the gauge weight snapshot.
+:::
+
 ---
 
 ## FAQ

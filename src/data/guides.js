@@ -96,6 +96,12 @@ export const ALL_GUIDES = {
     image: '',
     link: '/user/lending/guides/beginner/lending',
   },
+  howToBorrow: {
+    title: 'How to Borrow with Llamalend',
+    description: "This guide teaches you how to Borrow or repay your assets from Llamalend and claim any earned rewards.",
+    image: '',
+    link: '/user/lending/guides/beginner/borrowing',
+  },
   gaugeWeights: {
     title: '⚖️ Voting for Gauge Weights',
     description: 'A guide which teaches you how to vote for gauge weights in the Curve DAO.',
@@ -107,5 +113,17 @@ export const ALL_GUIDES = {
     description: 'A guide which teaches you how to vote on proposals in the Curve DAO.',
     image: '',
     link: '/user/dao/proposals#voting-on-proposals',
+  },
+  deployStableswapPool: {
+    title: 'How to Deploy a Stableswap Pool',
+    description: 'This guide teaches you how to deploy a Stableswap pool.',
+    image: '',
+    link: '/protocol/pool/guides/deploy-stableswap',
+  },
+  deployCryptoswapPool: {
+    title: 'How to Deploy a Cryptoswap Pool',
+    description: 'This guide teaches you how to deploy a Cryptoswap pool.',
+    image: '',
+    link: '/protocol/pool/guides/deploy-cryptoswap',
   },
 };
