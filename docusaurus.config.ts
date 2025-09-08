@@ -37,6 +37,26 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     // image: 'img/docusaurus-social-card.jpg',
+    algolia: {
+      // The application ID provided by Algolia
+      appId: '0JUF43T81Z',
+      // Public API key: it is safe to commit it
+      apiKey: '18363e734245d7765a7adae5adf5d04f',
+      indexName: 'curve-docs',
+      // Optional: see doc section below
+      contextualSearch: true,
+      // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+      externalUrlRegex: 'external\\.com|domain\\.com',
+      // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
+      replaceSearchResultPathname: {
+        from: '/docs/', // or as RegExp: /\/docs\//
+        to: '/',
+      },
+      // Optional: Algolia search parameters
+      searchParameters: {},
+      // Optional: path for search page that enabled by default (`false` to disable it)
+      searchPagePath: 'search',
+    },
     navbar: {
       hideOnScroll: false,
       logo: {
@@ -49,11 +69,6 @@ const config: Config = {
           label: 'Users',
           activeBasePath: '/user',
         },
-        // {
-          //   to: 'guides/intro',
-          //   label: 'Guides',
-          //   activeBasePath: '/guides',
-          // },
         {
           href: 'https://docs.curve.finance/documentation-overview/',
           label: 'Developers',
@@ -63,16 +78,6 @@ const config: Config = {
           label: 'Build On Curve',
           activeBasePath: '/protocol',
         },
-        // {
-        //   to: 'advanced/intro',
-        //   label: 'Advanced',
-        //   activeBasePath: '/advanced',
-        // },
-        {
-          label: 'News',
-          position: 'right',
-          href: 'https://news.curve.finance/',
-        },
         {
           href: 'https://github.com/curvefi',
           position: 'right',
@@ -80,10 +85,13 @@ const config: Config = {
           'aria-label': 'GitHub repository',
         },
         {
-          href: 'https://curve.finance/',
+          type: 'search',
           position: 'right',
-          className: 'header-curve-link',
-          'aria-label': 'curve.finance',
+        },
+        {
+          label: 'Blog',
+          position: 'right',
+          href: 'https://news.curve.finance/',
         },
         {
           type: 'dropdown',
@@ -91,13 +99,29 @@ const config: Config = {
           position: 'right',
           items: [
             {
-              label: 'curve.finance',
+              label: 'Curve',
               href: 'https://curve.finance',
+              className: 'dropdown-item-with-icon',
+              'data-icon': 'dapp',
             },
             {
               label: 'Discord',
-              href: 'https://discord.com/invite/twUngQYz85'
-            }
+              href: 'https://discord.com/invite/twUngQYz85',
+              className: 'dropdown-item-with-icon',
+              'data-icon': 'discord',
+            },
+            {
+              label: 'Telegram',
+              href: 'https://t.me/curvefi',
+              className: 'dropdown-item-with-icon',
+              'data-icon': 'telegram',
+            },
+            {
+              label: 'Twitter',
+              href: 'https://x.com/curvefinance',
+              className: 'dropdown-item-with-icon',
+              'data-icon': 'twitter',
+            },
           ],
         },
       ],
