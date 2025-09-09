@@ -124,5 +124,10 @@ export default {
                 },
             ],
         },
+        {
+            type: 'link',
+            href: 'https://quiver-meadow-354.notion.site/Brand-Assets-1a6599aae064802fba11ce6a9e642d74?source=copy_link',
+            label: 'Brand Assets',
+        },
     ],
 };
