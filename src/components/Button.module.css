@@ -3,35 +3,92 @@
   flex-direction: column; 
   align-items: center;
   justify-content: center;
-  color: var(--ifm-color-emphasis-900);
-  border: 1px solid var(--ifm-color-curve-blue);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: var(--Text-TextColors-Primary);
+  border: 1px solid var(--Layer-2-Outline);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   text-decoration: none;
-  transition: all 0.2s ease-out;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--ifm-card-border-radius);
-  background-color: var(--ifm-color-emphasis-100);
+  transition: all 0.2s ease;
+  padding: var(--Spacing-sm) var(--Spacing-md);
+  border-radius: var(--Radius-md);
+  background-color: var(--Layer-2-Fill);
   cursor: pointer;
   width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .button:hover,
 .button:focus {
-  border-color: var(--ifm-color-curve-blue);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  background-color: var(--ifm-color-curve-blue);
-  color: #ffffff;
+  border-color: var(--Color-Primary-300);
+  background-color: var(--Layer-1-Fill);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  color: var(--Text-TextColors-Primary);
   text-decoration: none;
 }
 
+.button::after {
+  content: "↗";
+  position: absolute;
+  bottom: var(--Spacing-sm);
+  right: var(--Spacing-sm);
+  font-size: 0.9rem;
+  color: var(--Text-TextColors-Tertiary);
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.button:hover::after {
+  color: var(--Color-Primary-500);
+  opacity: 1;
+  transform: translateX(1px) translateY(-1px);
+}
+
 .secondLine {
-  font-size: 1.25rem;
+  font-size: var(--Typography-FontSize-md);
   display: flex;
   align-items: center;
-  font-weight: bold;
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  color: var(--Text-TextColors-Primary);
+  line-height: var(--Typography-LineHeight-tight);
 }
 
 .firstLine {
-  margin-bottom: 0rem;
+  margin-bottom: 0;
+  font-size: var(--Typography-FontSize-xs);
+  color: var(--Text-TextColors-Secondary);
+  font-weight: var(--Typography-FontWeight-Normal);
+  line-height: var(--Typography-LineHeight-tight);
+}
+
+/* Dark mode support */
+[data-theme='dark'] .button {
+  background-color: var(--Layer-2-Fill);
+  border: 1px solid var(--Layer-2-Outline);
+  color: var(--Text-TextColors-Primary);
+}
+
+[data-theme='dark'] .button:hover,
+[data-theme='dark'] .button:focus {
+  border-color: var(--Color-Primary-400);
+  background-color: var(--Layer-1-Fill);
+  color: var(--Text-TextColors-Primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] .button::after {
+  color: var(--Text-TextColors-Tertiary);
+}
+
+[data-theme='dark'] .button:hover::after {
+  color: var(--Color-Primary-500);
+}
+
+[data-theme='dark'] .secondLine {
+  color: var(--Text-TextColors-Primary);
+}
+
+[data-theme='dark'] .firstLine {
+  color: var(--Text-TextColors-Secondary);
 }
