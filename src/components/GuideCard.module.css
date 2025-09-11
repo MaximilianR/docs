@@ -1,7 +1,8 @@
 .card {
-  border: 1px solid var(--ifm-color-emphasis-200);
-  /* border-radius: var(--ifm-card-border-radius); */
-  color: inherit;
+  background: var(--Layer-2-Fill);
+  border: 1px solid var(--Layer-2-Outline);
+  border-radius: var(--Radius-md);
+  color: var(--Text-TextColors-Primary);
   display: block;
   margin-bottom: 0.25rem;
   text-decoration: none;
@@ -9,33 +10,98 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Force dark mode styling */
+:global(html[data-theme='dark']) .card {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  color: #1f2937 !important;
 }
 
 .card:hover {
-  border-color: var(--ifm-color-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  background-color: var(--ifm-color-emphasis-100);
+  border-color: var(--Color-Primary-300);
+  background: var(--Layer-1-Fill);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   text-decoration: none;
+  color: var(--Text-TextColors-Primary);
+}
+
+/* Force dark mode hover styling */
+:global(html[data-theme='dark']) .card:hover {
+  background: #f9fafb !important;
+  background-color: #f9fafb !important;
+  border-color: var(--ifm-color-primary) !important;
+  color: #111827 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card::after {
+  content: "→";
+  position: absolute;
+  bottom: var(--Spacing-md);
+  right: var(--Spacing-md);
+  font-size: 1.1rem;
+  color: var(--Text-TextColors-Primary);
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.card:hover::after {
+  color: var(--Color-Primary-500);
+  opacity: 1;
+  transform: translateX(2px);
 }
 
 .cardImage {
-  border-top-left-radius: var(--ifm-card-border-radius);
-  border-top-right-radius: var(--ifm-card-border-radius);
+  border-top-left-radius: var(--Radius-md);
+  border-top-right-radius: var(--Radius-md);
   display: block;
   width: 100%;
+  height: auto;
 }
 
 .cardContent {
-  padding: 1.25rem;
+  padding: var(--Spacing-sm);
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardTitle {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
+  font-size: var(--Typography-FontSize-lg);
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  margin: 0 0 var(--Spacing-sm) 0;
+  color: var(--Text-TextColors-Primary);
+  line-height: var(--Typography-LineHeight-tight);
 }
 
 .cardDescription {
-  margin-bottom: 0;
+  margin: 0;
+  font-size: var(--Typography-FontSize-sm);
+  color: var(--Text-TextColors-Secondary);
+  line-height: var(--Typography-LineHeight-relaxed);
+}
+
+/* Force dark mode text colors */
+:global(html[data-theme='dark']) .cardTitle {
+  color: #1f2937 !important;
+}
+
+:global(html[data-theme='dark']) .cardDescription {
+  color: #4b5563 !important;
+}
+
+:global(html[data-theme='dark']) .card::after {
+  color: #6b7280 !important;
+}
+
+:global(html[data-theme='dark']) .card:hover::after {
+  color: var(--ifm-color-primary) !important;
 }

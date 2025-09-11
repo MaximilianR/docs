@@ -100,6 +100,34 @@
   color: var(--ifm-color-text);
 }
 
+/* Ensure consistent dark mode background throughout the entire page */
+[data-theme='dark'] .main-wrapper,
+[data-theme='dark'] .main-wrapper .container,
+[data-theme='dark'] .main-wrapper .row,
+[data-theme='dark'] .main-wrapper .col,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown > *,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown h1,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown h2,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown h3,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown h4,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown h5,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown h6,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown p,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown ul,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown ol,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown li,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown blockquote,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown table,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown thead,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown tbody,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown tr,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown td,
+[data-theme='dark'] .main-wrapper .theme-doc-markdown th {
+  background-color: var(--Layer-App-Background) !important;
+  background: var(--Layer-App-Background) !important;
+}
+
 [data-theme='dark'] .theme-doc-sidebar {
   background: var(--ifm-color-surface);
   border-right: none;
@@ -367,6 +395,26 @@ body {
   line-height: var(--Typography-LineHeight-md);
   color: var(--Text-TextColors-Primary);
   background-color: var(--Layer-App-Background);
+}
+
+/* Ensure consistent background for all main content areas */
+.main-wrapper,
+.main-wrapper .container,
+.main-wrapper .row,
+.main-wrapper .col,
+.theme-doc-markdown {
+  background-color: var(--Layer-App-Background);
+  background: var(--Layer-App-Background);
+}
+
+/* Dark mode specific background consistency */
+[data-theme='dark'] .main-wrapper,
+[data-theme='dark'] .main-wrapper .container,
+[data-theme='dark'] .main-wrapper .row,
+[data-theme='dark'] .main-wrapper .col,
+[data-theme='dark'] .theme-doc-markdown {
+  background-color: var(--Layer-App-Background) !important;
+  background: var(--Layer-App-Background) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1091,6 +1139,15 @@ code, pre {
   transform: translateX(2px);
 }
 
+/* Dark mode arrow styling */
+[data-theme='dark'] .guide-card::after {
+  color: #6b7280 !important;
+}
+
+[data-theme='dark'] .guide-card:hover::after {
+  color: var(--Color-Primary-500) !important;
+}
+
 .guide-card h3,
 .guide-card h4 {
   margin: 0 0 var(--Spacing-sm) 0;
@@ -1152,41 +1209,6 @@ code, pre {
   height: auto;
 }
 
-/* Dark mode guide cards */
-[data-theme='dark'] .guide-card {
-  background: var(--Layer-2-Fill);
-  border: 1px solid var(--Layer-2-Outline);
-  color: var(--Text-TextColors-Primary);
-}
-
-[data-theme='dark'] .guide-card:hover {
-  border-color: var(--Color-Primary-400);
-  background: var(--Layer-1-Fill);
-  color: var(--Text-TextColors-Primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-[data-theme='dark'] .guide-card h3,
-[data-theme='dark'] .guide-card h4 {
-  color: var(--Text-TextColors-Primary);
-}
-
-[data-theme='dark'] .guide-card p {
-  color: var(--Text-TextColors-Secondary);
-}
-
-[data-theme='dark'] .guide-card .guide-meta {
-  color: var(--Text-TextColors-Tertiary);
-}
-
-/* Dark mode guide card content elements */
-[data-theme='dark'] .guide-card-title {
-  color: var(--Text-TextColors-Primary);
-}
-
-[data-theme='dark'] .guide-card-description {
-  color: var(--Text-TextColors-Secondary);
-}
 
 /* Guide card grid layout */
 .guide-cards-grid {
@@ -1347,6 +1369,93 @@ code, pre {
 }
 
 /* Additional responsive improvements */
+
+
+/* Force dark mode styling for guide cards */
+[data-theme='dark'] .guide-cards-grid .guide-card {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  color: #1f2937 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme='dark'] .guide-cards-grid .guide-card:hover {
+  background: #f9fafb !important;
+  background-color: #f9fafb !important;
+  border-color: var(--ifm-color-primary) !important;
+  color: #111827 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme='dark'] .guide-card h3,
+[data-theme='dark'] .guide-card h4,
+[data-theme='dark'] .guide-card-title {
+  color: #1f2937 !important;
+}
+
+[data-theme='dark'] .guide-card p,
+[data-theme='dark'] .guide-card-description {
+  color: #4b5563 !important;
+}
+
+[data-theme='dark'] .guide-card::after {
+  color: #6b7280 !important;
+}
+
+[data-theme='dark'] .guide-card:hover::after {
+  color: var(--ifm-color-primary) !important;
+}
+
+/* Dark mode table styling for supply components */
+[data-theme='dark'] .metric-table {
+  background-color: var(--Layer-2-Fill) !important;
+  border: 1px solid var(--Layer-2-Outline) !important;
+  border-radius: var(--Radius-md) !important;
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] .metric-table thead {
+  background-color: var(--Layer-1-Fill) !important;
+}
+
+[data-theme='dark'] .metric-table thead th {
+  background-color: var(--Layer-1-Fill) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  border-bottom: 1px solid var(--Layer-2-Outline) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+}
+
+[data-theme='dark'] .metric-table tbody tr {
+  background-color: var(--Layer-2-Fill) !important;
+  border-bottom: 1px solid var(--Layer-2-Outline) !important;
+}
+
+[data-theme='dark'] .metric-table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+[data-theme='dark'] .metric-table tbody tr:nth-child(even) {
+  background-color: var(--Layer-1-Fill) !important;
+}
+
+[data-theme='dark'] .metric-table tbody tr:hover {
+  background-color: var(--Layer-1-Fill) !important;
+}
+
+[data-theme='dark'] .metric-table td {
+  color: var(--Text-TextColors-Primary) !important;
+  border-bottom: 1px solid var(--Layer-2-Outline) !important;
+}
+
+[data-theme='dark'] .metric-table .subheading-inline-logo {
+  filter: brightness(1.2) !important;
+}
+
+/* Dark mode for inline spans in tables */
+[data-theme='dark'] .metric-table span {
+  color: var(--Text-TextColors-Secondary) !important;
+}
 @media (max-width: 1024px) {
   .theme-doc-markdown {
     padding: var(--Spacing-xl);
