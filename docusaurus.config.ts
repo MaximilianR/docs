@@ -144,6 +144,7 @@ const config: Config = {
           breadcrumbs: false,
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
+          admonitions: true,
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -165,6 +166,7 @@ const config: Config = {
         breadcrumbs: false,
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
+        admonitions: true,
       },
     ],
     //[
