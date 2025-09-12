@@ -300,32 +300,6 @@ export default {
                     label: 'Audits',
                 },
                 {
-                    type: 'category',
-                    label: 'Risk Disclaimers',
-                    items: [
-                        {
-                            type: 'doc',
-                            id: 'risks/pools',
-                            label: 'Liquidity Pool Risks',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'risks/crvusd',
-                            label: 'crvUSD Risks',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'risks/lending',
-                            label: 'Lending Risks',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'risks/scrvusd',
-                            label: 'scrvUSD Risks',
-                        },
-                    ],
-                },
-                {
                     type: 'doc',
                     id: 'security/bug-bounty',
                     label: 'Bug Bounty',
@@ -335,6 +309,32 @@ export default {
                     id: 'security/practices',
                     label: 'Security Practices',
                 },
+                {
+                    type: 'category',
+                    label: 'Risk Disclaimers',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'security/risks/pools',
+                            label: 'Liquidity Pool Risks',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'security/risks/crvusd',
+                            label: 'crvUSD Risks',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'security/risks/lending',
+                            label: 'Lending Risks',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'security/risks/scrvusd',
+                            label: 'scrvUSD Risks',
+                        },
+                    ],
+                },
             ],
         },
         {
@@ -342,19 +342,24 @@ export default {
             label: 'Reference',
             items: [
                 {
+                    type: 'link',
+                    href: 'https://quiver-meadow-354.notion.site/Brand-Assets-1a6599aae064802fba11ce6a9e642d74?source=copy_link',
+                    label: 'Branding Assets',
+                },
+                {
                     type: 'doc',
                     id: 'reference/glossary',
                     label: 'Glossary',
                 },
                 {
                     type: 'doc',
-                    id: 'reference/branding',
-                    label: 'Branding & Icons',
+                    id: 'reference/links',
+                    label: 'Useful Links',
                 },
                 {
                     type: 'doc',
-                    id: 'reference/links',
-                    label: 'Useful Links',
+                    id: 'reference/whitepapers',
+                    label: 'Whitepapers',
                 },
             ],
         },

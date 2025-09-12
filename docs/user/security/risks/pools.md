@@ -7,14 +7,7 @@ sidebar_label: Liquidity Pools Risks
 Providing liquidity on Curve doesn't come without risks. Before making a deposit, it is best to research and understand the risks involved.
 
 :::info
-info "Audits & Whitepapers"
-    **Liquidity Pool Audits** are available here: [https://docs.curve.finance/security/security/#security-audits](https://docs.curve.finance/security/security/#security-audits)
-
-    **Curve Stableswap Whitepaper** available here: [https://docs.curve.finance/assets/pdf/whitepaper_stableswap.pdf](https://docs.curve.finance/assets/pdf/whitepaper_stableswap.pdf)
-
-    **Curve Cryptoswap Whitepaper** available here: [https://docs.curve.finance/assets/pdf/whitepaper_cryptoswap.pdf](https://docs.curve.finance/assets/pdf/whitepaper_cryptoswap.pdf)
-
-    **Curve DAO Whitepaper** available here: [https://docs.curve.finance/assets/pdf/whitepaper_curvedao.pdf](https://docs.curve.finance/assets/pdf/whitepaper_curvedao.pdf)
+**Liquidity Pool Audits** are available here: [Security Audits](../audits.md#dex)
 :::
 
 ---

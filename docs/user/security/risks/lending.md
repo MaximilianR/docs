@@ -8,8 +8,8 @@ Curve Lending enables users to permissionlessly create and interact with isolate
 
 Users wishing to acquaint themselves with a broader range of general risk disclosures are encouraged to read the [Curve Risk Disclosures for Liquidity Providers](./pool.md). Users are also advised to review the public [audit reports](https://docs.curve.finance/references/audits/) to assess the security and reliability of the platform before engaging in any lending or borrowing activities.
 
-:::info "Audits"
-    **Audits** are available here: [https://docs.curve.finance/security/security/#security-audits](https://docs.curve.finance/security/security/#security-audits).
+:::info
+**Lending Audits** are available here: [Security Audits](../audits.md#stablecoin-and-lending).
 :::
 
 ---
