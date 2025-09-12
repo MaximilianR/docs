@@ -305,22 +305,22 @@ export default {
                     items: [
                         {
                             type: 'doc',
-                            id: 'risks/pools',
+                            id: 'security/risks/pools',
                             label: 'Liquidity Pool Risks',
                         },
                         {
                             type: 'doc',
-                            id: 'risks/crvusd',
+                            id: 'security/risks/crvusd',
                             label: 'crvUSD Risks',
                         },
                         {
                             type: 'doc',
-                            id: 'risks/lending',
+                            id: 'security/risks/lending',
                             label: 'Lending Risks',
                         },
                         {
                             type: 'doc',
-                            id: 'risks/scrvusd',
+                            id: 'security/risks/scrvusd',
                             label: 'scrvUSD Risks',
                         },
                     ],
