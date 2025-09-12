@@ -343,18 +343,23 @@ export default {
             items: [
                 {
                     type: 'doc',
-                    id: 'reference/glossary',
-                    label: 'Glossary',
-                },
-                {
-                    type: 'doc',
                     id: 'reference/branding',
                     label: 'Branding & Icons',
                 },
                 {
                     type: 'doc',
+                    id: 'reference/glossary',
+                    label: 'Glossary',
+                },
+                {
+                    type: 'doc',
                     id: 'reference/links',
                     label: 'Useful Links',
+                },
+                {
+                    type: 'doc',
+                    id: 'reference/whitepapers',
+                    label: 'Whitepapers',
                 },
             ],
         },
