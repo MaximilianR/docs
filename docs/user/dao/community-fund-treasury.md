@@ -1,6 +1,7 @@
 ---
+id: community-fund-treasury
 title: Community Fund & Treasury
-hide_title: true
+sidebar_label: Community Fund & Treasury
 ---
 
 import CommunityFundBalance from '@site/src/components/LiveComponents/CommunityFundBalance';

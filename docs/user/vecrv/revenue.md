@@ -9,9 +9,6 @@ import RevenueStats from '@site/src/components/RevenueStats';
 
 Holding veCRV not only gives you voting power in Curve governance, but also entitles you to a share of protocol revenue.
 
-<RevenueStats />
-
-
 ## How is Revenue Generated?
 
 Curve collects fees from several sources:

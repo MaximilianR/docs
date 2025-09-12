@@ -1,5 +1,7 @@
 ---
+id: liquidity
 title: Providing Liquidity in Pools
+sidebar_label: Provide & Withdraw Liquidity
 ---
 
 import ThemedImage from '@theme/ThemedImage';
@@ -16,9 +18,9 @@ The rest of this page will be a guide on how to use the UI to deposit, withdraw,
 
 ---
 
-# Depositing to a Pool
+## Depositing to a Pool
 
-#### 1. Go to the pools overview
+### 1. Go to the pools overview
 
 First of all go to the pools overview page here:
 
@@ -41,13 +43,13 @@ You will then all the different pools on the network you are currently connected
   <figcaption></figcaption>
 </figure>
 
-#### 2. Choose your desired pool
+### 2. Choose your desired pool
 
 The pools overview above shows a list of all the available pools on that network, you can also search for an asset you would like to deposit, e.g., `crvUSD`, `CRV`, etc.
 
 In this example we will be depositing to the `crvUSD/USDC` pool.  You can search for it on the overview page and click it to see the details of this pool and deposit, or click here: [`crvUSD/USDC` Pool](https://www.curve.finance/dex/ethereum/pools/factory-crvusd-0/deposit)
 
-#### 3. Deposit & Stake - Choose Amounts
+### 3. Deposit & Stake - Choose Amounts
 
 In this example we will be doing `Deposit & Stake` as a single transaction.  However, depositing and staking are two different actions, and can be done separately:
 
@@ -75,14 +77,14 @@ Now on the `crvUSD/USDC` pool page, we can see the deposit menu to the left and 
 
 Note that we don't have to deposit both `crvUSD` and `USDC` to the pool.
 
-#### 4. Deposit & Stake - Complete Transactions
+### 4. Deposit & Stake - Complete Transactions
 
 To complete the `Deposit & Stake`, you'll likely need to perform two separate transactions:
 
 1.  **Approve**: Before swapping a token for the first time, you must grant the Curve smart contract permission to interact with it. This is a standard security step in DeFi. Click `Approve` and confirm the transaction in your wallet. You only need to do this once per token.
 2.  **Deposit & Stake**: Once the approval transaction is confirmed, the button will change to `Deposit & Stake`. Click it and confirm the final transaction in your wallet to execute the trade.
 
-#### 5. Confirmation
+### 5. Confirmation
 
 After a few seconds, the transactions should be confirmed on the blockchain. The interface will confirm to show your transactions were successful:
 
@@ -126,7 +128,7 @@ Here we can see our details
 
 ---
 
-# Claiming Rewards
+## Claiming Rewards
 
 To claim your earned `CRV` and other token rewards, go to your pool's page, and then the `Withdraw/Claim` tab on the left, then `Claim Rewards`, you should see a box like the following:
 
@@ -154,11 +156,11 @@ By confirming the transactions within your wallet, you will claim each separate 
 
 ---
 
-# Unstaking & Withdrawing
+## Unstaking & Withdrawing
 
 To withdraw from a pool, you may have to first `Unstake` your tokens if you have staked them.  These are two separate actions, and unfortunately cannot be done together like `Deposit & Stake`.  
 
-## Unstaking
+### Unstaking
 
 To unstake, go to the `Withdraw/Claim` tab on the left, then click `Unstake`:
 

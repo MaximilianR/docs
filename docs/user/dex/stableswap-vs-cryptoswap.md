@@ -1,5 +1,7 @@
 ---
+id: stableswap-vs-cryptoswap
 title: Stableswap and Cryptoswap Pools
+sidebar_label: Stableswap vs Cryptoswap
 ---
 
 import ThemedImage from '@theme/ThemedImage';

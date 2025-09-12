@@ -1,5 +1,7 @@
 ---
+id: what-is-vecrv
 title: What is veCRV?
+sidebar_label: What is veCRV?
 ---
 
 import ThemedImage from '@theme/ThemedImage';

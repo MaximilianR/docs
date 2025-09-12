@@ -1,5 +1,7 @@
 ---
+id: philosophy
 title: Curve's DEX Philosophy
+sidebar_label: Philosophy
 ---
 
 import ThemedImage from '@theme/ThemedImage';

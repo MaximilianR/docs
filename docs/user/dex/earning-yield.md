@@ -1,5 +1,7 @@
 ---
-title: Understanding Rewards
+id: earning-yield
+title: Earning Yield
+sidebar_label: Earning Yield
 ---
 
 import ThemedImage from '@theme/ThemedImage';
