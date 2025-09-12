@@ -24,6 +24,7 @@ export default function AuditCardGrid({ category }) {
           date={audit.date}
           reportUrl={audit.reportUrl}
           logo={audit.logo}
+          info={audit.info}
         />
       ))}
     </div>
