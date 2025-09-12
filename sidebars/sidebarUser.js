@@ -300,6 +300,16 @@ export default {
                     label: 'Audits',
                 },
                 {
+                    type: 'doc',
+                    id: 'security/bug-bounty',
+                    label: 'Bug Bounty',
+                },
+                {
+                    type: 'doc',
+                    id: 'security/practices',
+                    label: 'Security Practices',
+                },
+                {
                     type: 'category',
                     label: 'Risk Disclaimers',
                     items: [
@@ -324,16 +334,6 @@ export default {
                             label: 'scrvUSD Risks',
                         },
                     ],
-                },
-                {
-                    type: 'doc',
-                    id: 'security/bug-bounty',
-                    label: 'Bug Bounty',
-                },
-                {
-                    type: 'doc',
-                    id: 'security/practices',
-                    label: 'Security Practices',
                 },
             ],
         },
