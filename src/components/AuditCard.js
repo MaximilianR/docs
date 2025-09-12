@@ -67,8 +67,8 @@ export default function AuditCard({
     }
     
     // For TrailOfBits, use theme-specific logos
-    if (logo === 'tob.svg') {
-      const path = isDarkMode ? '/img/auditors/tob_dark.svg' : '/img/auditors/tob.svg';
+    if (logo === 'tob_light.svg') {
+      const path = isDarkMode ? '/img/auditors/tob_dark.svg' : '/img/auditors/tob_light.svg';
       console.log('TrailOfBits logo path:', path);
       return path;
     }
