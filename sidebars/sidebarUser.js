@@ -342,9 +342,9 @@ export default {
             label: 'Reference',
             items: [
                 {
-                    type: 'doc',
-                    id: 'reference/branding',
-                    label: 'Branding & Icons',
+                    type: 'link',
+                    href: 'https://quiver-meadow-354.notion.site/Brand-Assets-1a6599aae064802fba11ce6a9e642d74?source=copy_link',
+                    label: 'Branding Assets',
                 },
                 {
                     type: 'doc',
