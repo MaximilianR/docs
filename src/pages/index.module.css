@@ -25,43 +25,43 @@
 /******** Manifesto Landing Page Styles ********/
 
 .manifestoMain {
-  background: #18191a;
-  color: #eaeaea;
-  font-family: 'Mona Sans Mono', 'Mona Sans', monospace, sans-serif;
+  background: var(--Layer-App-Background);
+  color: var(--Text-TextColors-Primary);
+  font-family: var(--Text-FontFamily-Body);
   min-height: 100vh;
-  padding-bottom: 4rem;
+  padding-bottom: var(--Spacing-3xl);
 }
 
 .identityBlock {
   display: flex;
   align-items: flex-start;
-  gap: 2rem;
-  padding: 2.5rem 0 1.5rem 0;
-  border-bottom: 4px solid #2e8555;
-  background: #111;
+  gap: var(--Spacing-xxl);
+  padding: var(--Spacing-3xl) 0 var(--Spacing-xl) 0;
+  border-bottom: 4px solid var(--Color-Secondary-500);
+  background: var(--Layer-1-Fill);
 }
 .rainbowLogo {
-  width: 64px;
-  height: 64px;
-  margin-left: 2rem;
-  margin-top: 0.2rem;
+  width: var(--Sizing-700);
+  height: var(--Sizing-700);
+  margin-left: var(--Spacing-xxl);
+  margin-top: var(--Spacing-xxs);
 }
 .identityText {
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.3;
+  font-size: var(--Typography-FontSize-xl);
+  font-weight: var(--Typography-FontWeight-Bold);
+  line-height: var(--Typography-LineHeight-xl);
   letter-spacing: -0.01em;
-  font-family: 'Mona Sans Mono', monospace;
-  color: #fff;
+  font-family: var(--Text-FontFamily-Heading);
+  color: var(--Text-TextColors-Primary);
   background: none;
-  padding: 0.5rem 0 0 0;
+  padding: var(--Spacing-sm) 0 0 0;
 }
 .terminalPrompt {
-  color: #25c2a0;
-  font-weight: 900;
-  font-size: 1.6rem;
-  margin-right: 0.5rem;
-  font-family: 'Mona Sans Mono', monospace;
+  color: var(--Color-Secondary-500);
+  font-weight: var(--Typography-FontWeight-Extra-Bold);
+  font-size: var(--Typography-FontSize-xxl);
+  margin-right: var(--Spacing-sm);
+  font-family: var(--Text-FontFamily-Mono);
 }
 
 .manifestoSection {
@@ -267,5 +267,197 @@
   }
   .rainbowLogo {
     margin-left: 0;
+  }
+}
+
+/* Simplified Homepage Styles */
+.homepageMain {
+  min-height: 100vh;
+  background: var(--Layer-App-Background);
+  color: var(--Text-TextColors-Primary);
+  font-family: var(--Text-FontFamily-Body);
+  line-height: var(--Typography-LineHeight-md);
+  overflow-x: hidden;
+}
+
+/* Hero Section */
+.heroSection {
+  text-align: center;
+  padding: var(--Spacing-xl) var(--Spacing-xxl) var(--Spacing-lg) var(--Spacing-xxl);
+  background: linear-gradient(135deg, var(--Layer-2-Fill) 0%, var(--Layer-1-Fill) 100%);
+  border-bottom: 1px solid var(--Layer-2-Outline);
+}
+
+.heroContent {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: var(--Typography-FontSize-xxl);
+  font-weight: var(--Typography-FontWeight-Extra-Bold);
+  color: var(--Text-TextColors-Primary);
+  margin: 0 0 var(--Spacing-sm) 0;
+  font-family: var(--Text-FontFamily-Heading);
+  letter-spacing: -0.02em;
+  line-height: var(--Typography-LineHeight-xxl);
+}
+
+.heroSubtitle {
+  font-size: var(--Typography-FontSize-lg);
+  color: var(--Color-Secondary-500);
+  margin: 0;
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  line-height: var(--Typography-LineHeight-lg);
+}
+
+.heroDescription {
+  font-size: var(--Typography-FontSize-md);
+  color: var(--Text-TextColors-Secondary);
+  margin: 0 auto;
+  font-weight: var(--Typography-FontWeight-Normal);
+  line-height: var(--Typography-LineHeight-md);
+  max-width: 700px;
+}
+
+/* Metrics Section */
+.metricsSection {
+  padding: var(--Spacing-lg) var(--Spacing-xxl);
+  background: var(--Layer-1-Fill);
+}
+
+.metricsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.metricsHeader {
+  text-align: center;
+  margin-bottom: var(--Spacing-xl);
+}
+
+.metricsTitle {
+  font-size: var(--Typography-FontSize-xl);
+  font-weight: var(--Typography-FontWeight-Extra-Bold);
+  color: var(--Text-TextColors-Primary);
+  margin: 0 0 var(--Spacing-sm) 0;
+  font-family: var(--Text-FontFamily-Heading);
+}
+
+.metricsSubtitle {
+  font-size: var(--Typography-FontSize-md);
+  color: var(--Text-TextColors-Secondary);
+  margin: 0;
+  font-weight: var(--Typography-FontWeight-Normal);
+  line-height: var(--Typography-LineHeight-md);
+}
+
+.metricsContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Posts Section */
+.postsSection {
+  padding: var(--Spacing-lg) var(--Spacing-xxl);
+  background: var(--Layer-2-Fill);
+}
+
+.postsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.postsHeader {
+  text-align: center;
+  margin-bottom: var(--Spacing-xl);
+}
+
+.postsTitle {
+  font-size: var(--Typography-FontSize-xl);
+  font-weight: var(--Typography-FontWeight-Extra-Bold);
+  color: var(--Text-TextColors-Primary);
+  margin: 0 0 var(--Spacing-sm) 0;
+  font-family: var(--Text-FontFamily-Heading);
+}
+
+.postsSubtitle {
+  font-size: var(--Typography-FontSize-md);
+  color: var(--Text-TextColors-Secondary);
+  margin: 0;
+  font-weight: var(--Typography-FontWeight-Normal);
+  line-height: var(--Typography-LineHeight-md);
+}
+
+/* Responsive Design for Simplified Homepage */
+@media (max-width: 768px) {
+  .heroSection {
+    padding: var(--Spacing-xxl) var(--Spacing-lg) var(--Spacing-xl) var(--Spacing-lg);
+  }
+  
+  .heroTitle {
+    font-size: var(--Typography-FontSize-xl);
+    line-height: var(--Typography-LineHeight-xl);
+  }
+  
+  .heroSubtitle {
+    font-size: var(--Typography-FontSize-md);
+  }
+  
+  .heroDescription {
+    font-size: var(--Typography-FontSize-sm);
+  }
+  
+  .metricsSection {
+    padding: var(--Spacing-xl) var(--Spacing-lg);
+  }
+  
+  .metricsTitle {
+    font-size: var(--Typography-FontSize-lg);
+  }
+  
+  .metricsSubtitle {
+    font-size: var(--Typography-FontSize-sm);
+  }
+  
+  .postsSection {
+    padding: var(--Spacing-xl) var(--Spacing-lg);
+  }
+  
+  .postsTitle {
+    font-size: var(--Typography-FontSize-lg);
+  }
+  
+  .postsSubtitle {
+    font-size: var(--Typography-FontSize-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .heroSection {
+    padding: 1.5rem 1rem 1rem 1rem;
+  }
+  
+  .heroTitle {
+    font-size: 1.75rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+  
+  .heroDescription {
+    font-size: 0.9rem;
+  }
+  
+  .metricsSection,
+  .postsSection {
+    padding: 1rem;
+  }
+  
+  .metricsTitle,
+  .postsTitle {
+    font-size: 1.25rem;
   }
 }

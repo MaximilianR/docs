@@ -1,0 +1,165 @@
+/* Theme-specific Design Tokens */
+
+/* Light Theme */
+:root {
+  /* Color Mappings */
+  --Color-Neutral-25: var(--Grays-25);
+  --Color-Neutral-50: var(--Grays-50);
+  --Color-Neutral-75: var(--Grays-75);
+  --Color-Neutral-100: var(--Grays-100);
+  --Color-Neutral-150: var(--Grays-150);
+  --Color-Neutral-200: var(--Grays-200);
+  --Color-Neutral-300: var(--Grays-300);
+  --Color-Neutral-400: var(--Grays-400);
+  --Color-Neutral-500: var(--Grays-500);
+  --Color-Neutral-600: var(--Grays-600);
+  --Color-Neutral-700: var(--Grays-700);
+  --Color-Neutral-750: var(--Grays-750);
+  --Color-Neutral-800: var(--Grays-800);
+  --Color-Neutral-850: var(--Grays-850);
+  --Color-Neutral-900: var(--Grays-900);
+  --Color-Neutral-950: var(--Grays-950);
+  --Color-Neutral-975: var(--Grays-975);
+
+  /* Text Colors */
+  --Text-TextColors-Primary: var(--Grays-950);
+  --Text-TextColors-Secondary: var(--Grays-700);
+  --Text-TextColors-Tertiary: var(--Grays-500);
+  --Text-TextColors-Highlight: var(--Blues-500);
+  --Text-TextColors-Disabled: var(--Grays-400);
+
+  /* Font Families */
+  --Text-FontFamily-Heading: 'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --Text-FontFamily-Body: 'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --Text-FontFamily-Mono: 'Mona Sans', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  --Text-FontFamily-Button: 'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+
+  /* Layer Colors */
+  --Layer-App-Background: #F0EDEBFF;
+  --Layer-1-Fill: var(--Grays-50);
+  --Layer-1-Outline: var(--Grays-300);
+  --Layer-2-Fill: var(--Grays-100);
+  --Layer-2-Outline: var(--Grays-200);
+  --Layer-3-Fill: var(--Grays-50);
+  --Layer-3-Outline: var(--Grays-300);
+
+  /* Primary Colors */
+  --Color-Primary-50: var(--Blues-50);
+  --Color-Primary-100: var(--Blues-100);
+  --Color-Primary-200: var(--Blues-200);
+  --Color-Primary-300: var(--Blues-300);
+  --Color-Primary-400: var(--Blues-400);
+  --Color-Primary-500: var(--Blues-500);
+  --Color-Primary-600: var(--Blues-600);
+  --Color-Primary-700: var(--Blues-700);
+  --Color-Primary-800: var(--Blues-800);
+  --Color-Primary-900: var(--Blues-900);
+  --Color-Primary-950: var(--Blues-950);
+
+  /* Secondary Colors */
+  --Color-Secondary-100: var(--Greens-100);
+  --Color-Secondary-200: var(--Greens-200);
+  --Color-Secondary-300: var(--Greens-300);
+  --Color-Secondary-400: var(--Greens-400);
+  --Color-Secondary-500: var(--Greens-500);
+  --Color-Secondary-600: var(--Greens-600);
+  --Color-Secondary-700: var(--Greens-700);
+  --Color-Secondary-800: var(--Greens-800);
+
+  /* Tertiary Colors */
+  --Color-Tertiary-200: var(--Reds-200);
+  --Color-Tertiary-300: var(--Reds-300);
+  --Color-Tertiary-400: var(--Reds-400);
+  --Color-Tertiary-600: var(--Reds-500);
+
+  /* Feedback Colors */
+  --Feedback-Success: var(--Greens-300);
+  --Feedback-Warning: var(--Reds-300);
+  --Feedback-Danger: var(--Reds-400);
+  --Feedback-Error: var(--Reds-500);
+
+  /* Border Radius */
+  --Radius-square: 0px;
+  --Radius-xs: var(--Radius-xs);
+  --Radius-sm: var(--Radius-sm);
+  --Radius-md: var(--Radius-md);
+  --Radius-xl: var(--Radius-lg);
+  --Radius-rounded: var(--Radius-round);
+
+  /* Button Focus */
+  --Button-Focus-Outline-Width: 2px;
+  --Button-Focus-Outline: var(--Color-Primary-500);
+}
+
+/* Dark Theme */
+[data-theme='dark'] {
+  /* Color Mappings */
+  --Color-Neutral-25: var(--Grays-975);
+  --Color-Neutral-50: var(--Grays-950);
+  --Color-Neutral-75: var(--Grays-900);
+  --Color-Neutral-100: var(--Grays-850);
+  --Color-Neutral-150: var(--Grays-800);
+  --Color-Neutral-200: var(--Grays-750);
+  --Color-Neutral-300: var(--Grays-700);
+  --Color-Neutral-400: var(--Grays-600);
+  --Color-Neutral-500: var(--Grays-500);
+  --Color-Neutral-600: var(--Grays-400);
+  --Color-Neutral-700: var(--Grays-300);
+  --Color-Neutral-750: var(--Grays-200);
+  --Color-Neutral-800: var(--Grays-150);
+  --Color-Neutral-850: var(--Grays-100);
+  --Color-Neutral-900: var(--Grays-75);
+  --Color-Neutral-950: var(--Grays-50);
+  --Color-Neutral-975: var(--Grays-25);
+
+  /* Text Colors */
+  --Text-TextColors-Primary: var(--Grays-50);
+  --Text-TextColors-Secondary: var(--Grays-300);
+  --Text-TextColors-Tertiary: var(--Grays-400);
+  --Text-TextColors-Highlight: var(--Blues-400);
+  --Text-TextColors-Disabled: var(--Grays-500);
+
+  /* Layer Colors */
+  --Layer-App-Background: #12110FFF;
+  --Layer-1-Fill: var(--Grays-950);
+  --Layer-1-Outline: var(--Grays-900);
+  --Layer-2-Fill: var(--Grays-900);
+  --Layer-2-Outline: var(--Grays-800);
+  --Layer-3-Fill: var(--Grays-800);
+  --Layer-3-Outline: var(--Grays-700);
+
+  /* Primary Colors (inverted for dark theme) */
+  --Color-Primary-50: var(--Blues-950);
+  --Color-Primary-100: var(--Blues-900);
+  --Color-Primary-200: var(--Blues-800);
+  --Color-Primary-300: var(--Blues-700);
+  --Color-Primary-400: var(--Blues-600);
+  --Color-Primary-500: var(--Blues-500);
+  --Color-Primary-600: var(--Blues-400);
+  --Color-Primary-700: var(--Blues-300);
+  --Color-Primary-800: var(--Blues-200);
+  --Color-Primary-900: var(--Blues-100);
+  --Color-Primary-950: var(--Blues-50);
+
+  /* Secondary Colors (inverted for dark theme) */
+  --Color-Secondary-100: var(--Greens-800);
+  --Color-Secondary-200: var(--Greens-700);
+  --Color-Secondary-300: var(--Greens-600);
+  --Color-Secondary-400: var(--Greens-500);
+  --Color-Secondary-500: var(--Greens-400);
+  --Color-Secondary-600: var(--Greens-300);
+  --Color-Secondary-700: var(--Greens-200);
+  --Color-Secondary-800: var(--Greens-100);
+
+  /* Tertiary Colors (inverted for dark theme) */
+  --Color-Tertiary-200: var(--Reds-500);
+  --Color-Tertiary-300: var(--Reds-400);
+  --Color-Tertiary-400: var(--Reds-300);
+  --Color-Tertiary-600: var(--Reds-200);
+
+  /* Feedback Colors */
+  --Feedback-Success: var(--Greens-400);
+  --Feedback-Warning: var(--Reds-300);
+  --Feedback-Danger: var(--Reds-400);
+  --Feedback-Error: var(--Reds-500);
+}

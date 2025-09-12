@@ -1,0 +1,272 @@
+/* Design System Tokens - Base Primitives */
+:root {
+  /* Grays */
+  --Grays-10: #FDFCFCFF;
+  --Grays-25: #FAFAFAFF;
+  --Grays-50: #F8F7F7FF;
+  --Grays-75: #F6F4F4FF;
+  --Grays-100: #EEECEBFF;
+  --Grays-150: #E7E4E2FF;
+  --Grays-200: #DEDBD8FF;
+  --Grays-300: #D4D0CCFF;
+  --Grays-400: #BBB6AFFF;
+  --Grays-500: #968E84FF;
+  --Grays-600: #746E66FF;
+  --Grays-700: #5A554FFF;
+  --Grays-750: #494540FF;
+  --Grays-800: #3B3834FF;
+  --Grays-850: #302E2AFF;
+  --Grays-900: #252420FF;
+  --Grays-950: #1F1E1BFF;
+  --Grays-975: #191815FF;
+
+  /* Greens */
+  --Greens-100: #D4F7E3FF;
+  --Greens-200: #A8EFC6FF;
+  --Greens-300: #32CE79FF;
+  --Greens-400: #27B86CFF;
+  --Greens-500: #1FA25EFF;
+  --Greens-600: #167D4AFF;
+  --Greens-700: #0F5C38FF;
+  --Greens-800: #0B3D26FF;
+
+  /* Reds */
+  --Reds-200: #FFD88BFF;
+  --Reds-300: #FFC300FF;
+  --Reds-400: #F77F00FF;
+  --Reds-500: #ED242FFF;
+  --Reds-600: #D41E26FF;
+  --Reds-700: #B0151FFF;
+  --Reds-800: #8C111CFF;
+
+  /* Blues */
+  --Blues-50: #FEFAEFFF;
+  --Blues-100: #D5DBF0FF;
+  --Blues-200: #ACBEF1FF;
+  --Blues-300: #839FF2FF;
+  --Blues-400: #5A81F3FF;
+  --Blues-500: #3162F4FF;
+  --Blues-600: #2C55D5FF;
+  --Blues-700: #2747B5FF;
+  --Blues-800: #223995FF;
+  --Blues-900: #1D2C75FF;
+  --Blues-950: #171E55FF;
+
+  /* Violet */
+  --Violet-50: #EFEDFCFF;
+  --Violet-100: #DBD9F7FF;
+  --Violet-200: #C6C4F2FF;
+  --Violet-300: #B0AEEEFF;
+  --Violet-400: #9997E2FF;
+  --Violet-500: #6A68B7FF;
+  --Violet-600: #5F5CAEFF;
+  --Violet-700: #554FA5FF;
+  --Violet-800: #4A4395FF;
+  --Violet-900: #3E3684FF;
+  --Violet-950: #2F2862FF;
+
+  /* Spacing */
+  --Spacing-50: 0px;
+  --Spacing-100: 2px;
+  --Spacing-200: 4px;
+  --Spacing-300: 8px;
+  --Spacing-350: 14px;
+  --Spacing-400: 16px;
+  --Spacing-500: 24px;
+  --Spacing-600: 32px;
+  --Spacing-700: 48px;
+  --Spacing-800: 64px;
+
+  /* Sizing */
+  --Sizing-50: 4px;
+  --Sizing-100: 8px;
+  --Sizing-125: 12px;
+  --Sizing-150: 14px;
+  --Sizing-200: 16px;
+  --Sizing-250: 20px;
+  --Sizing-300: 24px;
+  --Sizing-350: 28px;
+  --Sizing-400: 32px;
+  --Sizing-420: 42px;
+  --Sizing-500: 40px;
+  --Sizing-600: 48px;
+  --Sizing-650: 56px;
+  --Sizing-700: 64px;
+  --Sizing-800: 88px;
+
+  /* Typography - Font Sizes (sm) */
+  --Typography-FontSize-xs: var(--Sizing-125);
+  --Typography-FontSize-sm: var(--Sizing-150);
+  --Typography-FontSize-md: var(--Sizing-200);
+  --Typography-FontSize-lg: var(--Sizing-250);
+  --Typography-FontSize-xl: var(--Sizing-350);
+  --Typography-FontSize-xxl: var(--Sizing-500);
+  --Typography-FontSize-xxxl: var(--Sizing-420);
+
+  /* Typography - Font Weights */
+  --Typography-FontWeight-Extra-Light: 200;
+  --Typography-FontWeight-Light: 300;
+  --Typography-FontWeight-Normal: 400;
+  --Typography-FontWeight-Medium: 500;
+  --Typography-FontWeight-Semi-Bold: 600;
+  --Typography-FontWeight-Bold: 700;
+  --Typography-FontWeight-Extra-Bold: 800;
+
+  /* Typography - Line Heights (sm) */
+  --Typography-LineHeight-xs: 12px;
+  --Typography-LineHeight-sm: 14px;
+  --Typography-LineHeight-md: 24px;
+  --Typography-LineHeight-lg: 24px;
+  --Typography-LineHeight-xl: 32px;
+  --Typography-LineHeight-xxl: 40px;
+  --Typography-LineHeight-xxxl: 48px;
+
+  /* Spacing Scale (sm) */
+  --Spacing-xxs: var(--Spacing-100);
+  --Spacing-xs: var(--Spacing-100);
+  --Spacing-sm: var(--Spacing-200);
+  --Spacing-md: var(--Spacing-300);
+  --Spacing-lg: var(--Spacing-400);
+  --Spacing-xl: var(--Spacing-500);
+  --Spacing-xxl: var(--Spacing-600);
+  --Spacing-3xl: var(--Spacing-700);
+
+  /* Sizing Scale (sm) */
+  --Sizing-xxs: var(--Sizing-50);
+  --Sizing-xs: var(--Sizing-150);
+  --Sizing-sm: var(--Sizing-200);
+  --Sizing-md: var(--Sizing-300);
+  --Sizing-lg: var(--Sizing-400);
+  --Sizing-xl: var(--Sizing-500);
+  --Sizing-xxl: var(--Sizing-600);
+  --Sizing-3xl: var(--Sizing-700);
+
+  /* Border Radius */
+  --Radius-round: 9999px;
+  --Radius-xs: var(--Spacing-100);
+  --Radius-sm: var(--Spacing-200);
+  --Radius-md: var(--Spacing-400);
+  --Radius-lg: var(--Spacing-600);
+  --Radius-xl: var(--Spacing-700);
+
+  /* Icon Sizes */
+  --IconSize-xxs: var(--Sizing-100);
+  --IconSize-xs: var(--Sizing-125);
+  --IconSize-sm: var(--Sizing-150);
+  --IconSize-md: var(--Sizing-250);
+  --IconSize-lg: var(--Sizing-300);
+  --IconSize-xl: var(--Sizing-400);
+  --IconSize-xxl: var(--Sizing-500);
+  --IconSize-3xl: var(--Sizing-600);
+  --IconSize-4xl: var(--Sizing-700);
+
+  /* Button Heights */
+  --ButtonHeight-XXS: var(--Sizing-150);
+  --ButtonHeight-XS: var(--Sizing-300);
+  --ButtonHeight-S: var(--Sizing-500);
+  --ButtonHeight-M: var(--Sizing-600);
+  --ButtonHeight-L: var(--Sizing-650);
+
+  /* Grid */
+  --Grid-Column-Spacing: var(--Spacing-300);
+  --Grid-Row-Spacing: var(--Spacing-300);
+
+  /* Modal Widths */
+  --ModalWidth-xs: 384px;
+  --ModalWidth-sm: 384px;
+  --ModalWidth-md: 448px;
+  --ModalWidth-lg: 512px;
+  --ModalWidth-xl: 576px;
+
+  /* Typography Paragraph Spacing */
+  --Typography-ParagraphSpacing-sm: var(--Spacing-sm);
+  --Typography-ParagraphSpacing-md: var(--Spacing-md);
+  --Typography-ParagraphSpacing-lg: var(--Spacing-lg);
+}
+
+/* Medium Breakpoint (md) */
+@media (min-width: 768px) {
+  :root {
+    --Typography-FontSize-lg: var(--Sizing-300);
+    --Typography-FontSize-xl: var(--Sizing-400);
+    --Typography-FontSize-xxl: var(--Sizing-600);
+    --Typography-FontSize-xxxl: var(--Sizing-500);
+    --Typography-LineHeight-xs: 12px;
+    --Typography-LineHeight-sm: 14px;
+    --Typography-LineHeight-md: 24px;
+    --Typography-LineHeight-lg: 24px;
+    --Typography-LineHeight-xl: 32px;
+    --Typography-LineHeight-xxl: 40px;
+    --Typography-LineHeight-xxxl: 48px;
+    --Spacing-xs: var(--Spacing-200);
+    --Spacing-sm: var(--Spacing-300);
+    --Spacing-md: var(--Spacing-400);
+    --Spacing-lg: var(--Spacing-500);
+    --Spacing-xl: var(--Spacing-600);
+    --Spacing-xxl: var(--Spacing-700);
+    --Spacing-3xl: var(--Spacing-800);
+    --Sizing-xs: var(--Sizing-200);
+    --Sizing-sm: var(--Sizing-300);
+    --Sizing-md: var(--Sizing-400);
+    --Sizing-lg: var(--Sizing-500);
+    --Sizing-xl: var(--Sizing-600);
+    --Sizing-xxl: var(--Sizing-700);
+    --Sizing-3xl: var(--Sizing-800);
+    --Radius-xs: var(--Spacing-200);
+    --Radius-sm: var(--Spacing-300);
+    --Radius-md: var(--Spacing-500);
+    --Radius-lg: var(--Spacing-700);
+    --Radius-xl: var(--Spacing-800);
+    --IconSize-xs: var(--Sizing-150);
+    --IconSize-sm: var(--Sizing-200);
+    --IconSize-md: var(--Sizing-250);
+    --IconSize-lg: var(--Sizing-350);
+    --IconSize-xl: var(--Sizing-500);
+    --IconSize-xxl: var(--Sizing-600);
+    --IconSize-3xl: var(--Sizing-700);
+    --IconSize-4xl: var(--Sizing-800);
+    --Grid-Column-Spacing: var(--Spacing-400);
+    --Grid-Row-Spacing: var(--Spacing-400);
+    --ModalWidth-xs: 304px;
+  }
+}
+
+/* Large Breakpoint (lg) */
+@media (min-width: 1024px) {
+  :root {
+    --Typography-FontSize-lg: var(--Sizing-300);
+    --Typography-FontSize-xl: var(--Sizing-400);
+    --Typography-FontSize-xxl: var(--Sizing-700);
+    --Typography-FontSize-xxxl: var(--Sizing-600);
+    --Typography-LineHeight-xs: 14px;
+    --Typography-LineHeight-sm: 16px;
+    --Typography-LineHeight-md: 24px;
+    --Typography-LineHeight-lg: 32px;
+    --Typography-LineHeight-xl: 40px;
+    --Typography-LineHeight-xxl: 64px;
+    --Typography-LineHeight-xxxl: 72px;
+    --Grid-Column-Spacing: var(--Spacing-500);
+    --Grid-Row-Spacing: var(--Spacing-500);
+  }
+}
+
+/* Extra Large Breakpoint (xl) */
+@media (min-width: 1280px) {
+  :root {
+    --Typography-FontSize-xxl: var(--Sizing-800);
+    --Spacing-3xl: var(--Spacing-800);
+    --Spacing-xxl: var(--Spacing-700);
+  }
+}
+
+/* Mobile-first responsive adjustments */
+@media (max-width: 480px) {
+  :root {
+    --Typography-FontSize-xxl: var(--Sizing-500);
+    --Typography-FontSize-xl: var(--Sizing-400);
+    --Typography-FontSize-lg: var(--Sizing-300);
+    --Spacing-xxl: var(--Spacing-500);
+    --Spacing-xl: var(--Spacing-400);
+    --Spacing-lg: var(--Spacing-300);
+  }
+}

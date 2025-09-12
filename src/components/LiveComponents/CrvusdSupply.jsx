@@ -19,11 +19,31 @@ const CrvusdSupply = () => {
         setLoading(true);
         setError(null);
 
+        // Try to fetch data with CORS proxy for development
+        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+        const isDevelopment = window.location.hostname === 'localhost';
+        
+        const marketsUrl = isDevelopment ? `${corsProxy}${MARKETS_API_URL}` : MARKETS_API_URL;
+        const pegkeepersUrl = isDevelopment ? `${corsProxy}${PEGKEEPERS_API_URL}` : PEGKEEPERS_API_URL;
+        const priceUrl = isDevelopment ? `${corsProxy}${PRICE_API_URL}` : PRICE_API_URL;
+
         // Fetch all data points concurrently
         const [marketsRes, pegkeepersRes, priceRes] = await Promise.all([
-          fetch(MARKETS_API_URL),
-          fetch(PEGKEEPERS_API_URL),
-          fetch(PRICE_API_URL),
+          fetch(marketsUrl, {
+            headers: isDevelopment ? {
+              'X-Requested-With': 'XMLHttpRequest'
+            } : {}
+          }),
+          fetch(pegkeepersUrl, {
+            headers: isDevelopment ? {
+              'X-Requested-With': 'XMLHttpRequest'
+            } : {}
+          }),
+          fetch(priceUrl, {
+            headers: isDevelopment ? {
+              'X-Requested-With': 'XMLHttpRequest'
+            } : {}
+          }),
         ]);
 
         if (!marketsRes.ok || !pegkeepersRes.ok || !priceRes.ok) {
@@ -61,7 +81,20 @@ const CrvusdSupply = () => {
 
       } catch (err) {
         console.error("Failed to fetch crvUSD data:", err);
-        setError("Could not retrieve crvUSD supply data.");
+        
+        // Fallback to static data for development
+        if (window.location.hostname === 'localhost') {
+          console.log("Using fallback data for development");
+          setSupplyData({
+            totalSupply: 150000000, // Example fallback data
+            borrowed: 120000000,
+            pegkeeperReserves: 30000000,
+            peg: 0.9998,
+          });
+          setError(null); // Clear error for fallback data
+        } else {
+          setError("Could not retrieve crvUSD supply data.");
+        }
       } finally {
         setLoading(false);
       }
