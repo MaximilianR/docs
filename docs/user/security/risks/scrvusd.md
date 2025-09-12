@@ -7,7 +7,7 @@ sidebar_label: scrvUSD Risks
 Curve stablecoin infrastructure enables users to mint crvUSD using a selection of crypto-tokenized collaterals (adding new ones is subject to DAO approval). Interacting with crvUSD doesn't come without risks. Before minting or taking exposure of crvUSD, it is best to research and understand the risks involved.
 
 :::info "Audits"
-    **scrvUSD smart contract audits** are available here: [https://docs.curve.finance/security/security/#security-audits](https://docs.curve.finance/security/security/#security-audits)
+    **scrvUSD Audits** are available here: [Security Audits](../audits.md#stablecoin-and-lending)
 :::
 
 ---
