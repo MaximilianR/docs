@@ -1,5 +1,7 @@
 ---
-title: DEX Primitives
+id: primitives
+title: Primitives
+sidebar_label: Primitives
 ---
 
 import ThemedImage from '@theme/ThemedImage';

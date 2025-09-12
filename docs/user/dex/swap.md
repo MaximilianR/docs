@@ -1,5 +1,7 @@
 ---
+id: swap
 title: Swapping on Curve
+sidebar_label: Swap Tokens on Curve
 ---
 
 import ThemedImage from '@theme/ThemedImage';

@@ -1,9 +1,8 @@
 ---
-title: Curve DAO
-hide_title: true
+id: overview
+title: Overview
+sidebar_label: Overview
 ---
-
-## Overview
 
 The Curve DAO is the decentralized governance system that controls all aspects of Curve Finance. All contracts and decisions on Curve are in the hands of the DAO, governed solely by its holders through a system pioneered by Curve called **veTokenomics**. Members receive governance power by locking CRV for veCRV tokens. The longer a user locks their tokens up for, the more voting power they receive. This reduces governance attacks and helps align incentives so the DAO passes proposals which benefit the protocol long term.
 

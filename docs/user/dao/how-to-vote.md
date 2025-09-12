@@ -1,5 +1,7 @@
 ---
+id: how-to-vote
 title: Voting
+sidebar_label: Voting
 ---
 
 import ThemedImage from '@theme/ThemedImage';

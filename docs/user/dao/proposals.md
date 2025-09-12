@@ -1,7 +1,7 @@
 ---
+id: proposals
 title: Governance Proposals
-hide_title: true
-description: How on-chain proposals are created, voted on and executed in the Curve DAO.
+sidebar_label: Governance Proposals
 ---
 
 import ThemedImage from '@theme/ThemedImage';

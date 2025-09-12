@@ -1,6 +1,7 @@
 ---
+id: gauge-weights
 title: Gauge Weights
-hide_title: true
+sidebar_label: Gauge Weights
 ---
 
 import ThemedImage from '@theme/ThemedImage';
