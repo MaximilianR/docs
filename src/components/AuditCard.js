@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 export default function AuditCard({ 
   auditor, 
@@ -7,75 +8,49 @@ export default function AuditCard({
   logo,
   info
 }) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipTimeout, setTooltipTimeout] = useState(null);
+  const [logoPath, setLogoPath] = useState(`/img/auditors/${logo}`); // Set an initial default path
 
   useEffect(() => {
-    // Check initial theme
-    const checkTheme = () => {
+    // This function will only run in the browser
+    const checkThemeAndSetLogo = () => {
       const theme = document.documentElement.getAttribute('data-theme');
-      const htmlClass = document.documentElement.className;
-      const bodyClass = document.body.className;
-      
-      // Multiple ways to detect dark mode
-      const isDark = theme === 'dark' || 
-                    htmlClass.includes('dark') || 
-                    bodyClass.includes('dark') ||
-                    document.documentElement.classList.contains('dark');
-      
-      console.log('Theme check:', { theme, htmlClass, bodyClass, isDark });
-      setIsDarkMode(isDark);
+      const isDark = theme === 'dark';
+
+      let newPath;
+      if (logo === 'mixbytes_light.svg') {
+        newPath = isDark ? '/img/auditors/mixbytes_dark.svg' : '/img/auditors/mixbytes_light.svg';
+      } else if (logo === 'statemind_light.svg') {
+        newPath = isDark ? '/img/auditors/statemind_dark.svg' : '/img/auditors/statemind_light.svg';
+      } else if (logo === 'tob_light.svg') {
+        newPath = isDark ? '/img/auditors/tob_dark.svg' : '/img/auditors/tob_light.svg';
+      } else {
+        newPath = `/img/auditors/${logo}`;
+      }
+      setLogoPath(newPath);
     };
 
-    checkTheme();
+    checkThemeAndSetLogo(); // Run once on mount
 
     // Listen for theme changes
-    const observer = new MutationObserver(checkTheme);
+    const observer = new MutationObserver(checkThemeAndSetLogo);
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['data-theme']
+      attributeFilter: ['data-theme', 'class']
     });
 
+    return () => observer.disconnect();
+  }, [logo]); // Re-run if the logo prop changes
+
+  // Tooltip logic can stay separate
+  const [tooltipTimeout, setTooltipTimeout] = useState(null);
+  useEffect(() => {
     return () => {
-      observer.disconnect();
       if (tooltipTimeout) {
         clearTimeout(tooltipTimeout);
       }
     };
   }, [tooltipTimeout]);
-
-  // Get the appropriate logo based on theme
-  const getLogoPath = () => {
-    if (!logo) return null;
-    
-    // Debug logging
-    console.log('AuditCard Debug:', { logo, isDarkMode, theme: document.documentElement.getAttribute('data-theme') });
-    
-    // For MixBytes, use theme-specific logos
-    if (logo === 'mixbytes_light.svg') {
-      const path = isDarkMode ? '/img/auditors/mixbytes_dark.svg' : '/img/auditors/mixbytes_light.svg';
-      console.log('MixBytes logo path:', path);
-      return path;
-    }
-    
-    // For StateMind, use theme-specific logos
-    if (logo === 'statemind_light.svg') {
-      const path = isDarkMode ? '/img/auditors/statemind_dark.svg' : '/img/auditors/statemind_light.svg';
-      console.log('StateMind logo path:', path);
-      return path;
-    }
-    
-    // For TrailOfBits, use theme-specific logos
-    if (logo === 'tob_light.svg') {
-      const path = isDarkMode ? '/img/auditors/tob_dark.svg' : '/img/auditors/tob_light.svg';
-      console.log('TrailOfBits logo path:', path);
-      return path;
-    }
-    
-    // For other logos, use the same file for both themes
-    return `/img/auditors/${logo}`;
-  };
 
   return (
     <div className="audit-card">
@@ -83,9 +58,7 @@ export default function AuditCard({
         <div 
           className="audit-card-info-icon" 
           onMouseEnter={() => {
-            if (tooltipTimeout) {
-              clearTimeout(tooltipTimeout);
-            }
+            if (tooltipTimeout) clearTimeout(tooltipTimeout);
             setShowTooltip(true);
           }}
           onMouseLeave={() => {
@@ -107,16 +80,16 @@ export default function AuditCard({
       )}
       <div className="audit-card-header">
         <div className="audit-card-logo">
-          {logo ? (
+          {logo && (
             <img 
-              src={getLogoPath()} 
+              src={logoPath} // Use the state variable here
               alt={auditor} 
               onError={(e) => {
                 e.target.style.display = 'none';
                 e.target.nextSibling.style.display = 'block';
               }}
             />
-          ) : null}
+          )}
           <div className="audit-card-logo-fallback" style={{ display: logo ? 'none' : 'block' }}>
             {auditor.charAt(0)}
           </div>

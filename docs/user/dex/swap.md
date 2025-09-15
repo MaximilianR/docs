@@ -16,7 +16,7 @@ Here are the main ways you can swap on Curve:
 
 1.  **Use Curve Swap (Swap Router)**: This is the easiest and most recommended method. The Swap Router automatically finds the best possible price across all Curve pools. It also handles convenient extras, like:
 
-      * Depositing/withdrawing from the [scrvUSD savings vault](../curve-tokens/scrvusd.mdx).
+      * Depositing/withdrawing from the [scrvUSD savings vault](../curve-tokens/scrvusd.md).
       * Wrapping/unwrapping `ETH` and `WETH` automatically.
 
     Best of all, Curve charges **no frontend fee** for this service, meaning you often get a better final price here than anywhere else.

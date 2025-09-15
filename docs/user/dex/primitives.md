@@ -53,10 +53,10 @@ In return for providing liquidity, LPs earn fees from every swap that happens in
 
 Curve uses two different kinds of pools, each designed for specific combination of assets:
 
-  * **Stableswap Pools:** For assets that should trade at a similar price (e.g., USDC and USDT, or stETH and ETH, or even [scrvUSD](../curve-tokens/scrvusd.mdx) and USDT).
+  * **Stableswap Pools:** For assets that should trade at a similar price (e.g., USDC and USDT, or stETH and ETH, or even [scrvUSD](../curve-tokens/scrvusd.md) and USDT).
   * **Cryptoswap Pools:** For assets whose prices move independently of each other (e.g., ETH and WBTC, or ETH and USDT).
 
-To learn more about how about how they work, see the [Stableswap vs. Cryptoswap page](./stableswap-vs-cryptoswap.mdx)
+To learn more about how about how they work, see the [Stableswap vs. Cryptoswap page](./stableswap-vs-cryptoswap.md)
 
 
 ## Basepools and Metapools
