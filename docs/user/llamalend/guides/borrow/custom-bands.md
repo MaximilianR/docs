@@ -51,11 +51,11 @@ Ultimately, it's a trade-off between **risk** and **borrowing power**, and you s
 Maximum LTV is calculated using the following formula:
 
 ```math
-Maximum LTV = 100 - LoanDiscount - 100 × (N / (2 × A))
+\text{Maximum LTV} = 100\% - \text{Loan Discount} - \frac{100\% \times N}{2 \times \text{Band Width Factor}}
 ```
 
 Where:
 
-- `loan_discount` is a protocol-defined parameter, typically set to **7%**
-- `A` is the **band width factor**, which varies by market and is visible in the UI
+- `Loan Discount` is different for each market based on the volatility of the underlying collateral asset, e.g., for the ETH minting market its **9%**, for sreUSD lending market its **2%**.
+- `Band Width Factor` varies by market and is visible in the UI, it controls how large bands are, a larger `Band Width Factor` means narrower bands
 - `N` is the **number of bands** selected for the loan

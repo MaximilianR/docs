@@ -26,9 +26,11 @@ Llamalend's lending markets operate through a traditional lending model where yo
 
 ### Supplying Yield
 
-Supply yields are directly tied to the borrow rates in each market. When borrowers pay interest on their loans, that interest is distributed to suppliers based on their share of the total supplied assets.
+Supply yields are directly tied to the borrow rates in each market. When borrowers pay interest on their loans, that interest is distributed to suppliers equally based on their share of the total supplied assets.
 
-$\text{supply yield} = \frac{total borrowed}{total supplied} \times \text{borrowing interest rate}$
+$$
+\text{supply yield} = \frac{\text{total borrowed}}{\text{total supplied}} \times \text{borrowing interest rate}
+$$
 
 In many lending markets the borrowing and supplying interest rates are solely based on the utilization, as more of the supply is borrowed, interest rates for borrowers and suppliers increase. When utilization is low, yields are lower and it's more attractive for borrowers to borrow.
 

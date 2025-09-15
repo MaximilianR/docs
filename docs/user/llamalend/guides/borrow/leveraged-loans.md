@@ -42,7 +42,7 @@ Of course, you can also adjust the number of **bands (N)** used for the position
         light: require('@site/static/img/user/llamalend/guides/borrow/leverage/borrow_light.png').default,
         dark: require('@site/static/img/user/llamalend/guides/borrow/leverage/borrow_dark.png').default,
     }}
-    style={{ width: '350px', display: 'block', margin: '0 auto' }}
+    style={{ minWidth: '350px', width: '60%', display: 'block', margin: '0 auto' }}
 />
 </figure>
 
@@ -55,19 +55,38 @@ After setting these parameters, the UI will display an overview containing all r
         light: require('@site/static/img/user/llamalend/guides/borrow/leverage/borrow_overview_light.png').default,
         dark: require('@site/static/img/user/llamalend/guides/borrow/leverage/borrow_overview_dark.png').default,
     }}
-    style={{ width: '300px', display: 'block', margin: '0 auto' }}
+    style={{ minWidth: '300px', width: '50%', display: 'block', margin: '0 auto' }}
 />
 </figure>
 
 The overview includes:
 
 - **Total leverage** used in the position  
-- **Estimated** collateral amount after looping, including aggregator route, **average swap price**, and **price impact**
-- **Loan details** – Standard information such as **Health**, **Band range**, **Number of bands (N)**, **Post-loan borrow rate** and **Loan-to-Value ratio (LTV)**
+- **Expected** collateral amount after looping, including aggregator route, **average swap price**, and **price impact**
+- **Loan details** – Standard information such as **Health**, and the following extra information if `Advanced Mode` is enabled: **Band range**, **Number of bands (N)**, **Post-loan borrow rate** and **Loan-to-Value ratio (LTV)**
+
+After opening a loan, you will see the details of your loan in the loan details tab:
+
+<figure>
+<ThemedImage
+    alt="Leveraged loan details"
+    sources={{
+        light: require('@site/static/img/user/llamalend/guides/borrow/leverage/loan_details_light.png').default,
+        dark: require('@site/static/img/user/llamalend/guides/borrow/leverage/loan_details_dark.png').default,
+    }}
+    style={{ minWidth: '450px', width: '80%', display: 'block', margin: '0 auto' }}
+/>
+</figure>
 
 ## Leveraging Up
 
+To increase your leverage you can simply go back to the `LEVERAGE` tab and borrow more using the `BORROW AMOUNT` box.
+
 ## Leveraging Down
+
+To reduce your leverage you need to repay debt from your wallet in the `LOAN` tab under `REPAY`.  
+
+Otherwise, you must fully [close your loan](leveraged-loans.md#closing-a-leveraged-loan), and [open a new loan](./leveraged-loans.md#opening-a-leveraged-loan).
 
 ## Closing a Leveraged Loan
 
@@ -80,7 +99,7 @@ To repay (or **deleverage**) your loan, you can either use your **collateral bal
         light: require('@site/static/img/user/llamalend/guides/borrow/leverage/repay_light.png').default,
         dark: require('@site/static/img/user/llamalend/guides/borrow/leverage/repay_dark.png').default,
     }}
-    style={{ width: '300px', display: 'block', margin: '0 auto' }}
+    style={{ minWidth: '300px', width: '50%', display: 'block', margin: '0 auto' }}
 />
 </figure>
 
@@ -93,6 +112,14 @@ Once the repayment parameters are selected, the UI will update to show the lates
         light: require('@site/static/img/user/llamalend/guides/borrow/leverage/repay_overview_light.png').default,
         dark: require('@site/static/img/user/llamalend/guides/borrow/leverage/repay_overview_dark.png').default,
     }}
-    style={{ width: '300px', display: 'block', margin: '0 auto' }}
+    style={{ minWidth: '300px', width: '50%', display: 'block', margin: '0 auto' }}
 />
 </figure>
+
+:::info Closing a Leveraged Loan
+When closing a leveraged loan by repaying with collateral, you will receive your collateral back in the borrowed token (crvUSD above), instead of your original collateral (sDOLA above).
+
+This is because the system swaps all collateral (sDOLA above) to repay the debt (crvUSD), and sends you back all remaining assets.
+
+To receive back your original collateral (sDOLA above) you must repay your debt from your wallet. 
+:::
