@@ -1376,7 +1376,7 @@ admonition[type="info"],
 .admonition.info {
   background: var(--Layer-2-Fill) !important;
   border: 1px solid var(--Color-Primary-200) !important;
-  border-radius: var(--Radius-md) !important;
+  border-radius: 0 !important;
   padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
   margin: var(--Spacing-lg) 0 !important;
   position: relative;
@@ -1395,7 +1395,7 @@ admonition[type="info"]::before,
   bottom: 0;
   width: 3px;
   background: var(--Color-Primary-500);
-  border-radius: var(--Radius-md) 0 0 var(--Radius-md);
+  border-radius: 0;
 }
 
 admonition[type="info"]::after,
@@ -1542,7 +1542,7 @@ admonition[type="warning"],
 .admonition.warning {
   background: var(--Layer-2-Fill) !important;
   border: 1px solid #f59e0b !important;
-  border-radius: var(--Radius-md) !important;
+  border-radius: 0 !important;
   padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
   margin: var(--Spacing-lg) 0 !important;
   position: relative;
@@ -1563,7 +1563,7 @@ admonition[type="warning"]::before,
   bottom: 0;
   width: 3px;
   background: #f59e0b;
-  border-radius: var(--Radius-md) 0 0 var(--Radius-md);
+  border-radius: 0;
 }
 
 admonition[type="warning"]::after,
@@ -1656,7 +1656,7 @@ admonition[type="danger"],
 .admonition.danger {
   background: var(--Layer-2-Fill) !important;
   border: 1px solid #ef4444 !important;
-  border-radius: var(--Radius-md) !important;
+  border-radius: 0 !important;
   padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
   margin: var(--Spacing-lg) 0 !important;
   position: relative;
@@ -1677,7 +1677,7 @@ admonition[type="danger"]::before,
   bottom: 0;
   width: 3px;
   background: #ef4444;
-  border-radius: var(--Radius-md) 0 0 var(--Radius-md);
+  border-radius: 0;
 }
 
 admonition[type="danger"]::after,
@@ -1770,7 +1770,7 @@ admonition[type="success"],
 .admonition.success {
   background: var(--Layer-2-Fill) !important;
   border: 1px solid #10b981 !important;
-  border-radius: var(--Radius-md) !important;
+  border-radius: 0 !important;
   padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
   margin: var(--Spacing-lg) 0 !important;
   position: relative;
@@ -1791,7 +1791,7 @@ admonition[type="success"]::before,
   bottom: 0;
   width: 3px;
   background: #10b981;
-  border-radius: var(--Radius-md) 0 0 var(--Radius-md);
+  border-radius: 0;
 }
 
 admonition[type="success"]::after,
@@ -1884,7 +1884,7 @@ admonition[type="note"],
 .admonition.note {
   background: var(--Layer-2-Fill) !important;
   border: 1px solid #6b7280 !important;
-  border-radius: var(--Radius-md) !important;
+  border-radius: 0 !important;
   padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
   margin: var(--Spacing-lg) 0 !important;
   position: relative;
@@ -1905,7 +1905,7 @@ admonition[type="note"]::before,
   bottom: 0;
   width: 3px;
   background: #6b7280;
-  border-radius: var(--Radius-md) 0 0 var(--Radius-md);
+  border-radius: 0;
 }
 
 admonition[type="note"]::after,
@@ -2167,245 +2167,11 @@ admonition[type="info"] .admonition-content a:hover,
   color: var(--ifm-color-primary) !important;
 }
 
-/* Audit Cards Styling */
-.audit-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--Spacing-xl);
-  margin: 2rem 0;
-  max-width: 100%;
-}
-
-.audit-card {
-  background: var(--Layer-2-Fill);
-  border: 1px solid var(--Layer-2-Outline);
-  border-radius: var(--Radius-md);
-  padding: var(--Spacing-md);
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: visible;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.audit-card:hover {
-  border-color: var(--Color-Primary-300);
-  background: var(--Layer-1-Fill);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.audit-card-header {
-  display: flex;
-  align-items: center;
-  gap: var(--Spacing-sm);
-  margin-bottom: var(--Spacing-sm);
-}
-
-.audit-card-logo {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.audit-card-logo img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.audit-card-logo-fallback {
-  font-size: 16px;
-  font-weight: var(--Typography-FontWeight-Semi-Bold);
-  color: var(--Color-Primary-500);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-.audit-card-info-icon {
-  position: absolute;
-  top: var(--Spacing-md);
-  right: var(--Spacing-md);
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--Text-TextColors-Secondary);
-  cursor: help;
-  transition: color 0.2s ease;
-  z-index: 10;
-}
-
-.audit-card-info-icon:hover {
-  color: var(--Color-Primary-500);
-}
-
-.audit-card-info-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-.audit-card-tooltip {
-  position: absolute;
-  bottom: 100%;
-  right: 0;
-  margin-bottom: var(--Spacing-xs);
-  background: var(--Layer-1-Fill);
-  border: 1px solid var(--Layer-2-Outline);
-  border-radius: var(--Radius-sm);
-  padding: var(--Spacing-sm);
-  font-size: var(--Typography-FontSize-sm);
-  color: var(--Text-TextColors-Primary);
-  line-height: var(--Typography-LineHeight-relaxed);
-  max-width: 280px;
-  min-width: 200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  white-space: normal;
-  word-wrap: break-word;
-  word-break: normal;
-  text-align: left;
-  display: block;
-  overflow-wrap: break-word;
-}
-
-.audit-card-tooltip::before {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  right: 12px;
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid var(--Layer-1-Fill);
-}
-
-.audit-card-tooltip::after {
-  content: '';
-  position: absolute;
-  bottom: -7px;
-  right: 11px;
-  width: 0;
-  height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 7px solid var(--Layer-2-Outline);
-  z-index: -1;
-}
-
-.audit-card-title {
-  font-size: var(--Typography-FontSize-lg);
-  font-weight: var(--Typography-FontWeight-Semi-Bold);
-  color: var(--Text-TextColors-Primary);
-  line-height: var(--Typography-LineHeight-tight);
-  flex: 1;
-}
-
-.audit-card-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--Spacing-sm);
-}
-
-.audit-card-date {
-  font-size: var(--Typography-FontSize-sm);
-  color: var(--Text-TextColors-Secondary);
-  line-height: var(--Typography-LineHeight-relaxed);
-}
-
-.audit-card-link {
-  color: var(--Color-Primary-500);
-  text-decoration: none;
-  font-size: var(--Typography-FontSize-sm);
-  font-weight: var(--Typography-FontWeight-Medium);
-  transition: color 0.2s ease;
-  align-self: flex-start;
-}
-
-.audit-card-link:hover {
-  color: var(--Color-Primary-600);
-  text-decoration: none;
-}
-
-/* Dark mode audit cards */
-[data-theme='dark'] .audit-card {
-  background: var(--Layer-2-Fill) !important;
-  border: 1px solid var(--Layer-2-Outline) !important;
-  color: var(--Text-TextColors-Primary) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
-}
-
-[data-theme='dark'] .audit-card:hover {
-  background: var(--Layer-1-Fill) !important;
-  border-color: var(--Color-Primary-300) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-}
-
-[data-theme='dark'] .audit-card-title {
-  color: var(--Text-TextColors-Primary) !important;
-}
-
-[data-theme='dark'] .audit-card-date {
-  color: var(--Text-TextColors-Secondary) !important;
-}
-
-[data-theme='dark'] .audit-card-link {
-  color: var(--Color-Primary-500) !important;
-}
-
-[data-theme='dark'] .audit-card-link:hover {
-  color: var(--Color-Primary-400) !important;
-}
-
-[data-theme='dark'] .audit-card-logo {
-  background: transparent !important;
-  border: none !important;
-}
-
-[data-theme='dark'] .audit-card-logo-fallback {
-  color: var(--Color-Primary-500) !important;
-}
-
-[data-theme='dark'] .audit-card-info-icon {
-  color: var(--Text-TextColors-Secondary) !important;
-}
-
-[data-theme='dark'] .audit-card-info-icon:hover {
-  color: var(--Color-Primary-400) !important;
-}
-
-[data-theme='dark'] .audit-card-tooltip {
-  background: var(--Layer-1-Fill) !important;
-  border: 1px solid var(--Layer-2-Outline) !important;
-  color: var(--Text-TextColors-Primary) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-}
-
-[data-theme='dark'] .audit-card-tooltip::before {
-  border-top-color: var(--Layer-1-Fill) !important;
-}
-
-[data-theme='dark'] .audit-card-tooltip::after {
-  border-top-color: var(--Layer-2-Outline) !important;
-}
-
 /* Dark mode table styling for supply components */
 [data-theme='dark'] .metric-table {
   background-color: var(--Layer-2-Fill) !important;
   border: 1px solid var(--Layer-2-Outline) !important;
-  border-radius: var(--Radius-md) !important;
+  border-radius: 0 !important;
   color: var(--Text-TextColors-Primary) !important;
 }
 
