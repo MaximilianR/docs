@@ -126,4 +126,22 @@ export const ALL_GUIDES = {
     image: '',
     link: '/protocol/pool/guides/deploy-cryptoswap',
   },
+  howToOpenAndCloseLoan: {
+    title: 'How to Open and Close a Loan',
+    description: "This guide teaches you how to Borrow or repay your assets from Llamalend and claim any earned rewards.",
+    image: '',
+    link: '/user/llamalend/guides/borrow/open-and-close',
+  },
+  howToManageLoan: {
+    title: 'How to Manage a Loan',
+    description: "This guide teaches you how to Manage your assets from Llamalend and claim any earned rewards.",
+    image: '',
+    link: '/user/llamalend/guides/borrow/loan-management',
+  },
+  whatToDoIfLoanInLiquidation: {
+    title: 'What to Do if Your Loan is in Liquidation',
+    description: "This guide teaches you what to do if your loan is in liquidation.",
+    image: '',
+    link: '/user/llamalend/guides/borrow/liquidation',
+  },
 };

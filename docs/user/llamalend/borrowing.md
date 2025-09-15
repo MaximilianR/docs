@@ -8,7 +8,6 @@ import LendingRateChart from '@site/src/components/LendingRateChart';
 import ThemedImage from '@theme/ThemedImage';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 
-
 ## Why Borrow on Llamalend?
 
 Borrowing on Llamalend allows you to access liquidity while maintaining exposure to your crypto assets. Instead of selling your holdings, you can use them as collateral to borrow crvUSD or other assets.
