@@ -1,51 +1,46 @@
+---
+id: loan-management
+title: Managing a Loan
+sidebar_label: Managing a Loan
+---
 
 import ThemedImage from '@theme/ThemedImage';
 
-# Managing a Loan
+Prerequisite for this page is that you already have an existing loan: [Open and Close Loan](open-and-close.md)
 
-To perform the actions on this page, you must have an existing loan. The options below are only available for active loans.
+## Loan Management Overview
 
-Users can manage their loans in the following ways:
+The actions available to you depend on whether your loan is in **liquidation protection** or not. Understanding this distinction is crucial for effective loan management.
 
-- [Add](#adding-collateral) or [remove](#removing-collateral) collateral
-- [Borrow more](#borrow-more) crvUSD
-- [Repay](#partial-repayment) (partially or fully)
+| Action | Available When | Effect on Liquidation Range |
+|--------|----------------|----------------------------|
+| **Add collateral** | Only when NOT in liquidation | ⬇️ Moves range DOWN (safer) |
+| **Remove collateral** | Only when NOT in liquidation | ⬆️ Moves range UP (riskier) |
+| **Borrow more** | Only when NOT in liquidation | ⬆️ Moves range UP (riskier) |
+| **Repay debt (NOT in liquidation)** | When NOT in liquidation | ⬇️ Moves range DOWN (safer) |
+| **Repay debt (IN liquidation)** | When IN liquidation | ➖ NO effect on range (only improves health) |
+| **Self-liquidate** | Only when IN liquidation | ➖ No effect (closes loan) |
+
+:::info Key Understanding
+- **Liquidation range changes** only happen when your loan is NOT in liquidation protection
+- **Repaying debt** behaves differently: it moves the liquidation range when NOT in liquidation, but has NO effect on the range when IN liquidation
+- **Collateral and borrowing actions** are only possible when NOT in liquidation, so they always affect the liquidation range
+:::
 
 
-!!!warning "Loan Management in Liquidation"
-    When a loan is in liquidation, you cannot add or remove collateral. The only available actions are repaying debt (partially or fully) or self-liquidating your loan. For more information on managing a loan in liquidation, see here.
+## Adding More Collateral
+:::warning Adding Collateral while being in Liquidation is not possible
+Adding collateral is not possible when your loan is in liquidation. To get out of liquidation, see [here].
+:::
 
-
-To manage your loan, navigate to the [Markets Overview](https://curve.fi/crvusd/ethereum/markets/), connect your wallet and select the according market. The UI displays your current loans health and debt in the overview.
-
-<figure>
-<ThemedImage
-    alt="Mint and Lend Markets"
-    sources={{
-        light: require('@site/static/img/user/llamalend/guides/loan-management/active_markets_light.png').default,
-        dark: require('@site/static/img/user/llamalend/guides/loan-management/active_markets_dark.png').default,
-    }}
-    style={{ width: '800px', display: 'block', margin: '0 auto' }}
-/>
-</figure>
-
----
-
-## **Adding Collateral**
-
-Go to the [Markets Dashboard](https://curve.fi/crvusd/ethereum/markets/) and select the market where you want to add more collateral.
-
-!!!warning "Adding Collateral while being in Liquidation is not possible"
-    Adding collateral is not possible when your loan is in liquidation. To get out of liquidation, see [here].
-
-Switch from the `Loan` to the `Collateral` tab and specify the amount of collateral you want to add and confirm the transaction.
+To add more collateral to your loan, navigate to the `Collateral` and `Add collateral` tab and select the amount of collateral tokens to add:
 
 <figure>
 <ThemedImage
-    alt="Mint and Lend Markets"
+    alt="Add collateral interface"
     sources={{
-        light: require('@site/static/img/user/llamalend/guides/loan-management/add_light.png').default,
-        dark: require('@site/static/img/user/llamalend/guides/loan-management/add_dark.png').default,
+        light: require('@site/static/img/user/llamalend/guides/borrow/loan-management/adding-collateral-light.png').default,
+        dark: require('@site/static/img/user/llamalend/guides/borrow/loan-management/adding-collateral-dark.png').default,
     }}
     style={{ width: '400px', display: 'block', margin: '0 auto' }}
 />
@@ -53,36 +48,26 @@ Switch from the `Loan` to the `Collateral` tab and specify the amount of collate
 
 **Effect of Adding More Collateral**
 
-Adding more collateral to your loan has a **positive effect on its health and liquidation range**. It increases your loan's health and moves the liquidation range further down, keeping you further away from liquidation.
+Adding more collateral to your loan has a **positive effect on its health and liquidation range**. It increases your loan's health and moves the liquidation range further down, keeping your position further away from liquidation.
+
+:::info Important
+This action is only possible when NOT in liquidation, so it will always change your liquidation range.
+:::
+
+
+## Removing Collateral
+:::warning Removing Collateral while being in Liquidation is not possible
+Removing collateral from your loan is not possible when you are in liquidation. To get out of liquidation, see [here].
+:::
+
+To remove collateral from your loan, navigate to the `Collateral` and `Remove collateral` tab and select the amount of collateral tokens to remove. The UI will show you how much collateral you can remove to still support the current debt.
 
 <figure>
 <ThemedImage
-    alt="Mint and Lend Markets"
+    alt="Remove collateral interface"
     sources={{
-        light: require('@site/static/img/user/llamalend/guides/loan-management/new_range_add_light.png').default,
-        dark: require('@site/static/img/user/llamalend/guides/loan-management/new_range_add_dark.png').default,
-    }}
-    style={{ width: '700px', display: 'block', margin: '0 auto' }}
-/>
-</figure>
-
---- 
-
-## **Removing Collateral**
-
-Go to the [Markets Dashboard](https://curve.fi/crvusd/ethereum/markets/) and select the market where you want to remove collateral from.
-
-!!!warning "Removing Collateral while being in Liquidation is not possible"
-    Removing collateral from your loan is not possible when you are in liquidation. To get out of liquidation, see [here].
-
-Switch from the `Loan` to the `Collateral` tab and select "Remove". Then specify the amount of collateral you want to remove and confirm the transaction.
-
-<figure>
-<ThemedImage
-    alt="Mint and Lend Markets"
-    sources={{
-        light: require('@site/static/img/user/llamalend/guides/loan-management/remove_light.png').default,
-        dark: require('@site/static/img/user/llamalend/guides/loan-management/remove_dark.png').default,
+        light: require('@site/static/img/user/llamalend/guides/borrow/loan-management/removing-collateral-light.png').default,
+        dark: require('@site/static/img/user/llamalend/guides/borrow/loan-management/removing-collateral-dark.png').default,
     }}
     style={{ width: '400px', display: 'block', margin: '0 auto' }}
 />
@@ -90,36 +75,28 @@ Switch from the `Loan` to the `Collateral` tab and select "Remove". Then specify
 
 **Effect of Removing Collateral**
 
-Removing collateral from your loan has a **negative effect on its health and liquidation range**. It decreases your loan's health and moves the liquidation range further up, bringing your closer to liquidation.
+Removing collateral from your loan has a **negative effect on its health and liquidation range**. It decreases your loan's health and moves the liquidation range further up, bringing you closer to liquidation.
 
-<figure>
-<ThemedImage
-    alt="Mint and Lend Markets"
-    sources={{
-        light: require('@site/static/img/user/llamalend/guides/loan-management/new_range_remove_light.png').default,
-        dark: require('@site/static/img/user/llamalend/guides/loan-management/new_range_remove_dark.png').default,
-    }}
-    style={{ width: '400px', display: 'block', margin: '0 auto' }}
-/>
-</figure>
+:::info Important
+This action is only possible when NOT in liquidation, so it will always change your liquidation range.
+:::
 
 ---
 
-## **Borrow More**
+## Borrow More
 
-Go to the [Markets Dashboard](https://curve.fi/crvusd/ethereum/markets/) and select the market where you want to borrow more crvUSD.
+:::warning Borrowing more in Liquidation
+Borrowing more crvUSD in liquidation is not possible. To get out of liquidation, see [here].
+:::
 
-!!!warning "Borrowing more in Liquidation"
-    Borrowing more crvUSD in liquidation is not possible. To get out of liquidation, see [here].
-
-Specify the amount of crvUSD you want to borrow. You also have the option to add more collateral at the same time — allowing you to increase both your loan amount and your collateral in a single step.
+To borrow more assets, specify the amountyou want to borrow. You also have the option to add more collateral at the same time — allowing you to increase both your debt and your collateral in a single transaction.
 
 <figure>
 <ThemedImage
-    alt="Mint and Lend Markets"
+    alt="Borrow more interface"
     sources={{
-        light: require('@site/static/img/user/llamalend/guides/loan-management/borrow_more_light.png').default,
-        dark: require('@site/static/img/user/llamalend/guides/loan-management/borrow_more_dark.png').default,
+        light: require('@site/static/img/user/llamalend/guides/borrow/loan-management/borrow-more-light.png').default,
+        dark: require('@site/static/img/user/llamalend/guides/borrow/loan-management/borrow-more-dark.png').default,
     }}
     style={{ width: '400px', display: 'block', margin: '0 auto' }}
 />
@@ -127,60 +104,44 @@ Specify the amount of crvUSD you want to borrow. You also have the option to add
 
 **Effect of Borrowing More**
 
-Borrowing more crvUSD is only possible if the loan is not in liquidation. Borrowing more crvUSD will decrease the loans health and move up the liquidation range, bringing you closer to liquidation.
+Borrowing more crvUSD is only possible if the loan is not in liquidation. Borrowing more crvUSD will decrease the loan's health and move up the liquidation range, bringing you closer to liquidation.
 
-<figure>
-<ThemedImage
-    alt="Mint and Lend Markets"
-    sources={{
-        light: require('@site/static/img/user/llamalend/guides/loan-management/new_range_more_light.png').default,
-        dark: require('@site/static/img/user/llamalend/guides/loan-management/new_range_more_dark.png').default,
-    }}
-    style={{ width: '700px', display: 'block', margin: '0 auto' }}
-/>
-</figure>
+:::info Important
+This action is only possible when NOT in liquidation, so it will always change your liquidation range.
+:::
 
----
 
-## **Partial Repayment**
+## Repaying Debt
 
 Debt can be repaid fully or partially. Repayment is always possible, whether the loan is in liquidation or not, but it will have different effects on the liquidation range.
 
-Go to the [Markets Dashboard](https://curve.fi/crvusd/ethereum/markets/) and select the market where you want to partially repay some debt.
-
 <figure>
 <ThemedImage
-    alt="Mint and Lend Markets"
+    alt="Partial repayment interface"
     sources={{
-        light: require('@site/static/img/user/llamalend/guides/loan-management/partial_repay_light.png').default,
-        dark: require('@site/static/img/user/llamalend/guides/loan-management/partial_repay_dark.png').default,
+        light: require('@site/static/img/user/llamalend/guides/borrow/loan-management/partial-repay-light.png').default,
+        dark: require('@site/static/img/user/llamalend/guides/borrow/loan-management/partial-repay-dark.png').default,
     }}
     style={{ width: '400px', display: 'block', margin: '0 auto' }}
 />
 </figure>
 
-- ### **Not in Liquidation**
+### Partial Repayment while NOT in Liquidation
 
-    Repaying debt when the loan is not in liquidation improves the health of the loan and moves the liquidation range down, brining the loan further away from liquidation.
+Repaying debt when the loan is not in liquidation improves the health of the loan and **moves the liquidation range down**, bringing the loan further away from liquidation.
 
-    todo: image not displaying properly
+:::info Important
+When NOT in liquidation, repaying debt will change your liquidation range.
+:::
 
-    <figure>
-    <ThemedImage
-        alt="Mint and Lend Markets"
-        sources={{
-            light: require('@site/static/img/user/llamalend/guides/loan-management/new_range_partial_light.png').default,
-            dark: require('@site/static/img/user/llamalend/guides/loan-management/new_range_partial_dark.png').default,
-        }}
-        style={{ width: '00px', display: 'block', margin: '0 auto' }}
-    />
-    </figure>
+### Partial Repayment while IN Liquidation
 
+Repaying debt while being in liquidation will increase your health, but **NOT move the liquidation range**. No matter how much you repay, it will never move your liquidation range up or down but will only increase your health.
 
-- ### **In Liquidation**
+:::warning Liquidation Range will NOT move!
+Your liquidation range will not move if you repay debt while you're in liquidation — not even if you repay 99% of your debt. This is a key difference from repaying when NOT in liquidation.
+:::
 
-    Repaying debt while being in liquidation will increase your health, but NOT move the liquidation range. No matter how much you repay, it will never move your liquidation range up or down but will only increase your health.
+### Full Repayment
 
-    !!!warning "Liquidation Range will NOT move!"
-        Your liquidation range will not move if you repay debt while you're in it — not even if you repay 99% of your debt.
-
+see here: [Close Loan](./open-and-close.md#fully-repaying).
