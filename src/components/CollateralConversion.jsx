@@ -173,14 +173,14 @@ const CollateralConversion = () => {
             type="number" 
             value={bottomRange}
             onChange={(e) => setBottomRange(Number(e.target.value))}
-            style={{ border: '1px solid #ccc', padding: '4px 8px', borderRadius: '4px', backgroundColor: '#f8f9fa', width: '100px' }}
+            style={{ border: '1px solid #ccc', padding: '4px 8px', borderRadius: '4px', backgroundColor: '#f8f9fa', width: '100px', color: '#000000' }}
           />
           <span style={{ fontWeight: 'bold' }}>${currentPrice.toFixed(2)}</span>
           <input 
             type="number" 
             value={topRange}
             onChange={(e) => setTopRange(Number(e.target.value))}
-            style={{ border: '1px solid #ccc', padding: '4px 8px', borderRadius: '4px', backgroundColor: '#f8f9fa', width: '100px' }}
+            style={{ border: '1px solid #ccc', padding: '4px 8px', borderRadius: '4px', backgroundColor: '#f8f9fa', width: '100px', color: '#000000'}}
           />
         </div>
         <input 
