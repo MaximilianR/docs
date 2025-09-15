@@ -1,6 +1,7 @@
 import React from 'react';
 import AuditCard from './AuditCard';
 import { ALL_AUDITS } from '@site/src/data/audits';
+import styles from './AuditCard.module.css';
 
 export default function AuditCardGrid({ category }) {
   if (!category) {
@@ -16,7 +17,7 @@ export default function AuditCardGrid({ category }) {
   }
 
   return (
-    <div className="audit-cards-grid">
+    <div className={styles.auditCardsGrid}>
       {audits.map((audit, index) => (
         <AuditCard
           key={audit.id || index}

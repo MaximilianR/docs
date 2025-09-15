@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './AuditCard.module.css';
 
 export default function AuditCard({ 
   auditor, 
@@ -81,10 +82,10 @@ export default function AuditCard({
   };
 
   return (
-    <div className="audit-card">
+    <div className={styles.auditCard}>
       {info && (
         <div 
-          className="audit-card-info-icon" 
+          className={styles.auditCardInfoIcon} 
           onMouseEnter={() => {
             if (tooltipTimeout) {
               clearTimeout(tooltipTimeout);
@@ -102,14 +103,14 @@ export default function AuditCard({
             <circle cx="12" cy="8" r="1" fill="currentColor"/>
           </svg>
           {showTooltip && (
-            <div className="audit-card-tooltip">
+            <div className={styles.auditCardTooltip}>
               {info}
             </div>
           )}
         </div>
       )}
-      <div className="audit-card-header">
-        <div className="audit-card-logo">
+      <div className={styles.auditCardHeader}>
+        <div className={styles.auditCardLogo}>
           {logo ? (
             <img 
               src={getLogoPath()} 
@@ -120,19 +121,19 @@ export default function AuditCard({
               }}
             />
           ) : null}
-          <div className="audit-card-logo-fallback" style={{ display: logo ? 'none' : 'block' }}>
+          <div className={styles.auditCardLogoFallback} style={{ display: logo ? 'none' : 'block' }}>
             {auditor.charAt(0)}
           </div>
         </div>
-        <div className="audit-card-title">
+        <div className={styles.auditCardTitle}>
           {auditor}
         </div>
       </div>
-      <div className="audit-card-content">
-        <div className="audit-card-date">
+      <div className={styles.auditCardContent}>
+        <div className={styles.auditCardDate}>
           <strong>Date:</strong> {date}
         </div>
-        <a href={reportUrl} className="audit-card-link" target="_blank" rel="noopener noreferrer">
+        <a href={reportUrl} className={styles.auditCardLink} target="_blank" rel="noopener noreferrer">
           View Full Report →
         </a>
       </div>
