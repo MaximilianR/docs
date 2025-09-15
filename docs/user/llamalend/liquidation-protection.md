@@ -40,6 +40,8 @@ Below is a simple animation showing this process. The user's protection range is
 
 It's important to remember that the protective swapping of collateral is what incurs small losses. These losses reduce your loan's health, so you must continue to monitor your position.
 
+<CollateralConversion />
+
 ---
 
 ## What is the Liquidation Protection Range?
