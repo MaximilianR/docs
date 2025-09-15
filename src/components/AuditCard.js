@@ -12,6 +12,9 @@ export default function AuditCard({
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
 
   useEffect(() => {
+    // Only run on client side
+    if (typeof window === 'undefined') return;
+
     // Check initial theme
     const checkTheme = () => {
       const theme = document.documentElement.getAttribute('data-theme');
@@ -50,7 +53,7 @@ export default function AuditCard({
     if (!logo) return null;
     
     // Debug logging
-    console.log('AuditCard Debug:', { logo, isDarkMode, theme: document.documentElement.getAttribute('data-theme') });
+    console.log('AuditCard Debug:', { logo, isDarkMode });
     
     // For MixBytes, use theme-specific logos
     if (logo === 'mixbytes_light.svg') {
