@@ -19,8 +19,8 @@ When you **deposit assets into a liquidity pool on Curve**, you become a **liqui
 As a liquidity provider, you can earn in several ways:
 
 * **Trading Fees:** Every time someone swaps coins in the pool, a fee is collected from this trade. You get a share of these fees, which makes your LP tokens more valuable over time.
-* **CRV Rewards:** If you stake your LP tokens in something called a [gauge](lp.mdx#what-is-a-gauge), you can earn extra CRV tokens. You can claim these rewards whenever you want and you can unstake at any point in time. There is no lockup period.
-* **Other Token Rewards:** Sometimes, projects or asset issuers give out additional token rewards to the LP's of their pools. You can earn these too by staking your LP tokens in the same [gauge](lp.mdx#what-is-a-gauge).
+* **CRV Rewards:** If you stake your LP tokens in something called a [gauge](lp.md#what-is-a-gauge), you can earn extra CRV tokens. You can claim these rewards whenever you want and you can unstake at any point in time. There is no lockup period.
+* **Other Token Rewards:** Sometimes, projects or asset issuers give out additional token rewards to the LP's of their pools. You can earn these too by staking your LP tokens in the same [gauge](lp.md#what-is-a-gauge).
 * **Points:** Some pools give you points for adding or staking your crypto. These points might get you extra perks or airdrops in the future, but check each project's rules to be sure.
 
 All these rewards can add up, making liquidity providing potentially a great way to earn more from your crypto.

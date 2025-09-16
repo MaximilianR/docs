@@ -120,7 +120,7 @@ export default {
         },
         {
             type: 'category',
-            label: 'Lending & crvUSD (LlamaLend)',
+            label: 'Lending & crvUSD (Llamalend)',
             items: [
                 {
                     type: 'doc',
@@ -139,13 +139,8 @@ export default {
                 },
                 {
                     type: 'doc',
-                    id: 'llamalend/liquidations',
+                    id: 'llamalend/liquidation-protection',
                     label: 'Liquidations',
-                },
-                {
-                    type: 'doc',
-                    id: 'llamalend/faq',
-                    label: 'FAQ',
                 },
                 {
                     type: 'category',
@@ -163,7 +158,6 @@ export default {
                                 {
                                     type: 'doc',
                                     id: 'llamalend/guides/borrow/loan-management',
-                                    label: 'Manage Loan',
                                 },
                                 {
                                     type: 'doc',
@@ -178,7 +172,6 @@ export default {
                                 {
                                     type: 'doc',
                                     id: 'llamalend/guides/borrow/leveraged-loans',
-                                    label: 'Leveraged Loans',
                                 },
                             ],
                         },
@@ -195,6 +188,11 @@ export default {
                                     type: 'doc',
                                     id: 'llamalend/guides/supply/withdraw',
                                     label: 'Withdraw',
+                                },
+                                {
+                                    type: 'doc',
+                                    id: 'llamalend/guides/supply/claim-rewards',
+                                    label: 'Claim Rewards',
                                 },
                             ],
                         },

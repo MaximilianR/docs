@@ -42,9 +42,9 @@ Here's how it works:
 ### How Much Will You Earn?
 
 The interest rate (or yield) for scrvUSD is variable and adjusts regularly, typically every few days. You can view the current and historical rates directly on the [scrvUSD UI](https://www.curve.finance/crvusd/ethereum/scrvUSD/).  
-For a detailed explanation of the different rate numbers you see on the interface, please refer to our FAQ: [What do the different APR/APY numbers on the UI mean?](scrvusd.mdx#what-do-the-different-aprapy-numbers-on-the-ui-mean)
+For a detailed explanation of the different rate numbers you see on the interface, please refer to our FAQ: [What do the different APR/APY numbers on the UI mean?](scrvusd.md#what-do-the-different-aprapy-numbers-on-the-ui-mean)
 
-Generally, the interest rate earned by scrvUSD holders is set to roughly match the average crvUSD borrowing rate from the previous week across all [crvUSD minting markets](https://www.curve.finance/crvusd/ethereum/markets/). However, if more than 50% of the total crvUSD supply is held as scrvUSD, the yield may be slightly diluted. You can see the current amount of crvUSD held as scrvUSD on our [Current scrvUSD Stats](../curve-tokens/scrvusd.mdx#current-scrvusd-stats) page.
+Generally, the interest rate earned by scrvUSD holders is set to roughly match the average crvUSD borrowing rate from the previous week across all [crvUSD minting markets](https://www.curve.finance/crvusd/ethereum/markets/). However, if more than 50% of the total crvUSD supply is held as scrvUSD, the yield may be slightly diluted. You can see the current amount of crvUSD held as scrvUSD on our [Current scrvUSD Stats](../curve-tokens/scrvusd.md#current-scrvusd-stats) page.
 
 ### Where Does the Interest Come From?
 
@@ -288,7 +288,7 @@ No, your scrvUSD is **never locked up**. You can take it out or swap it back to 
 
 However, if you decide to trade your scrvUSD for crvUSD (or another token) on a decentralized exchange (DEX) on any network, the actual price you get might be slightly less than its perfect theoretical value. This can happen because of how much crvUSD is available to trade at that moment (liquidity) or general market activity.
 
-Also, it's always important to remember that while Curve uses the highest standards when creating its smart contracts, using any decentralized finance (DeFi) application, including scrvUSD, involves some risks. You can learn more about these risks here: [scrvUSD risks](../risks/scrvusd.md).
+Also, it's always important to remember that while Curve uses the highest standards when creating its smart contracts, using any decentralized finance (DeFi) application, including scrvUSD, involves some risks. You can learn more about these risks here: [scrvUSD risks](../security/risks/scrvusd.md).
 
 ### I have scrvUSD on an L2, does it still earn interest?
 

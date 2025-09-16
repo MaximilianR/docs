@@ -10,38 +10,31 @@ Supplying assets means lending out your crypto assets to other users who can bor
 
 ## Why Supply to Llamalend?
 
-Supplying assets to Llamalend allows you to earn yield on your crypto holdings by providing liquidity to borrowers. By depositing your assets into lending markets, you can generate passive income through interest payments from borrowers based on the borrow rate of the market.
+Supplying crypto to Llamalend is a way to earn a return on your holdings. When you provide liquidity, or "supply assets," you’re essentially lending your crypto to borrowers. As a lender, you **earn passive income from the interest borrowers pay**. 
 
-Llamalend markets are **isolated markets**, meaning each market only has one collateral token and one borrowable token. This design keeps risk contained within each market, making supplying assets more comfortable because you exactly know what risk you have. Unlike some other protocols where risks can spread across multiple assets, Llamalend's isolation ensures that problems in one market don't affect others.
+Llamalend markets are **isolated and one-way**, which makes them safer. This means each market is self-contained with just one type of collateral and one type of borrowable token. Because markets are separate, a problem in one won't spread to another. This design helps reduce risk, making it more comfortable to supply your assets, and importantly, it means it's safe to allow the creation of lending markets by anyone.
 
 ## How Supplying Works
 
-Llamalend's lending markets operate through a traditional lending model where you supply assets to earn yield:
+Llamalend's lending markets operate through a traditional lending model where you supply assets to earn yield. Here's how it all works:
 
-- **Vaults**: Vaults are the smart contracts where users can deposit (lend) their assets and borrowers borrow from. Each market has its own vault that manages the specific collateral and debt token pair.
-- **Supply Process**: You deposit your assets (like crvUSD) into lending market vaults. These assets become available for borrowers to use as collateral or debt tokens.
-- **Yield Generation**: You earn interest from borrowers who pay rates based on market utilization and demand. Higher utilization typically means higher yields for suppliers.
-- **Liquidity Provision**: Your supplied assets provide the liquidity that enables borrowing on the platform. The more assets supplied, the more borrowing capacity available.
-- **Flexible Withdrawal**: You can withdraw your supplied assets at any time (subject to market conditions), making it a flexible way to earn yield without long-term commitments.
+* **Vaults**: Vaults are the smart contracts where you can deposit (lend) your assets and where borrowers take loans from. Each market has its own vault that manages a specific debt token, keeping everything organized and separate.
+* **Supply Process**: You deposit your crypto assets (like crvUSD) into the lending market vaults. These assets become available for other users to borrow.
+* **Yield Generation**: You earn interest from borrowers who pay rates based on how much of the market is being used (the ratio of supplied assets to borrowed assets, called utilization). If most of the supplied assets are being borrowed, the yield for suppliers goes up. The fees borrowers pay are split evenly among all the people who supplied assets.
+* **Liquidity Provision**: Your supplied assets provide the liquidity that makes borrowing within each market possible. The more assets supplied, the more borrowing capacity is available for everyone.
+* **Flexible Withdrawal**: You can withdraw your supplied assets at any time, as long as there are enough unborrowed assets available in the vault. This makes it a flexible way to earn yield without any long-term commitments.
 
-## Supply Yields
+### Supplying Yield
 
-When you supply assets to Llamalend markets, you earn **supply yield** based on the borrow rates paid by borrowers. Your yield is calculated from the interest payments made by borrowers in that market.
+Supply yields are directly tied to the borrow rates in each market. When borrowers pay interest on their loans, that interest is distributed to suppliers equally based on their share of the total supplied assets.
 
-### How Supply Yields Work
+$$
+\text{supply yield} = \frac{\text{total borrowed}}{\text{total supplied}} \times \text{borrowing interest rate}
+$$
 
-Supply yields are directly tied to the borrow rates in each market. When borrowers pay interest on their loans, that interest is distributed to suppliers based on their share of the total supplied assets.
+In many lending markets the borrowing and supplying interest rates are solely based on the utilization, as more of the supply is borrowed, interest rates for borrowers and suppliers increase. When utilization is low, yields are lower and it's more attractive for borrowers to borrow.
 
-$\text{supply yield} = \frac{supplied amount}{total supplied} \times \text{interest paid by borrowers}$
-
-### Yield Factors
-
-Several factors affect your supply yield:
-
-- **Market Utilization**: Higher utilization typically means higher yields because more borrowers are paying interest. When utilization is low, yields are lower but there's more liquidity available.
-- **Borrow Rates**: The higher the borrow rates in a market, the higher your supply yield will be. Borrow rates fluctuate based on market conditions and utilization.
-- **Your Supply Share**: The more assets you supply relative to the total market supply, the more yield you earn from the total interest pool.
-- **Market Type**: Supply yields are only available in **Lend Markets**. Mint markets don't offer supply yields because crvUSD is minted rather than borrowed from existing liquidity.
+---
 
 ## Market Overview
 
