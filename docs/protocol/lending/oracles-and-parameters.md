@@ -11,7 +11,9 @@ When deploying a Llamalend lending market, two critical components must be caref
 For Llamalend's liquidation engine to work optimally, the system requires a smooth price oracle for the collateral asset. **Spot oracles are not recommended** as they can cause significant losses due to price jumps during liquidations. Proper parameter selection is equally important for market security and efficiency.
 
 :::info
-**Parameter paralysis?** Don't let uncertainty hold you back! The Llamarisk wizards are here to save the day! 🦙✨ Jump into their <a href="https://t.me/llamarisk" target="_blank" rel="noopener noreferrer">Telegram</a> and let them work their risk management magic. From oracles to liquidation thresholds, they've got your back!
+**Parameter paralysis and oracle confusion?** Don't let uncertainty hold you back! The [LlamaRisk](https://www.llamarisk.com/) wizards are here to save the day!
+
+Jump into their <a href="https://t.me/llamarisk" target="_blank" rel="noopener noreferrer">Telegram</a> and let them work their risk management magic. From oracles to liquidation thresholds, they've got your back!
 :::
 
 ## Oracles

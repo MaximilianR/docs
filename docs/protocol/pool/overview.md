@@ -31,6 +31,7 @@ Pools deployed via a factory appear automatically on the Curve frontend after a 
 
 Curve supports multiple pool designs to fit different kinds of assets. Selecting the correct type is essential to ensure low slippage, efficient trading, and capital-efficient liquidity.
 
+Not sure which to use? Reach out in the official Curve channels.
 
 ### Stableswap Pool
 Choose a **Stableswap pool** when your assets are expected to stay close or correlated in price â€” e.g., stablecoins (USDC/USDT), LSTs (wstETH/stETH), or yield-bearing stable assets like sDAI. 
@@ -59,8 +60,6 @@ Choose a **Cryptoswap pool** when your assets are more volatile or uncorrelatedâ
 
 ### FXSwap
 todo
-
-Not sure which to use? Reach out in the official Curve channels.
 
 ---
 
