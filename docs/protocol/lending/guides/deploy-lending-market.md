@@ -1,6 +1,6 @@
 ---
 id: deploy-lending-market
-title: Deploying a Lending Market via Etherscan
+title: Deploying a Lending Market
 sidebar_label: Deploying a Lending Market
 ---
 

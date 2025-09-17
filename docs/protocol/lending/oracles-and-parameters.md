@@ -10,17 +10,21 @@ When deploying a Llamalend lending market, two critical components must be caref
 
 For Llamalend's liquidation engine to work optimally, the system requires a smooth price oracle for the collateral asset. **Spot oracles are not recommended** as they can cause significant losses due to price jumps during liquidations. Proper parameter selection is equally important for market security and efficiency.
 
+:::info
+**Parameter paralysis?** Don't let uncertainty hold you back! The Llamarisk wizards are here to save the day! 🦙✨ Jump into their <a href="https://t.me/llamarisk" target="_blank" rel="noopener noreferrer">Telegram</a> and let them work their risk management magic. From oracles to liquidation thresholds, they've got your back!
+:::
 
 ## Oracles
 
-Each Llamalend market requires a smooth (exponential moving average) oracle for the collateral asset. The easiest way to obtain this is through **Curve liquidity pools**, which include built-in oracles that can be used for lending markets.
+Llamalend markets require smooth (exponential moving average) oracles to price the collateral asset. Spot oracles do not work well as the liquidation mechanism of Llamalend requires smooth price feeds to ensure maximum efficiency. The easiest way to obtain this is through deploying a **liquidity pool** on Curve, which already comes with built-in oracles that can be used for lending markets.
 
-Every Curve pool includes a direct built-in oracle that can be used for lending markets, provided the pool has sufficient TVL. Curve offers pools for various asset types including stable assets (e.g., USDT/USDC), two-token volatile assets (e.g., ETH/USDC), and three-token volatile assets (e.g., ETH/BTC/USDT).
+Every Curve pool includes a direct built-in oracle that can be used for lending markets, provided the pool has sufficient TVL. Curve offers pools for all sorts of assets. Learn more here: [Curve Liquidity Pool Oracles](../pool/compare-amm.md#built-in-price-oracles).
 
+:::important
 **Critical**: The collateral asset oracle must be priced against **crvUSD**, not other stablecoins. If the Curve pool contains crvUSD (e.g., ETH/crvUSD), the oracle can be used directly. If the pool doesn't contain crvUSD (e.g., ETH/USDC), the oracle must be chained with a USDC/crvUSD oracle to create an ETH/crvUSD price feed.
+:::
 
 For assets without suitable Curve pools, you can deploy custom oracles using the [custom oracle deployment guide](https://paragraph.com/@curvefi/llamalend_market_deploy#h-deploying-a-custom-priceoracle-contract). If this sounds complicated, the Curve team is happy to help with deployment - simply reach out on Telegram.
-
 
 ## Parameters
 
@@ -28,34 +32,35 @@ Parameter selection when creating a new lending market is the foundation for an 
 
 ### A, fee, loan- and liquidation discount
 
-The following parameters need to be simulated:
+The following parameters need to be simulated and set at market deployment:
 - **Band width (A)**: Determines the range of prices where liquidations can occur
-- **Fee**: Transaction fees for liquidations
+- **Fee**: Fee for exchanging tokens inside the AMM (LLAMMA)
 - **Liquidation discount**: Price discount applied during liquidations
 - **Loan discount**: Collateral discount for loan-to-value calculations
 
-A dedicated GitHub repository was set up for running these simulations: [Llamma Simulator](https://github.com/curvefi/llamma-simulator). An in-depth explainer can be found here: [Parameter Analysis Guide](https://paragraph.com/@curvefi/llamma-simulator).
+A dedicated GitHub repository was set up for running these simulations: [LLAMMA Simulator](https://github.com/curvefi/llamma-simulator). An in-depth explainer can be found here: [Parameter Analysis Guide](https://paragraph.com/@curvefi/llamma-simulator).
 
 ### Borrow Rate Parameters
 
-Each market needs minimum and maximum borrow rate values that are charged depending on the utilization of the market. The minimum rate is charged when nothing (0% utilization) is borrowed, and 100% of the maximum rate is charged at 100% utilization.
+Each lending market requires configurable minimum and maximum borrow rate values that adjust dynamically based on market utilization. The interest rate model ensures efficient capital allocation by charging:
 
-**Rate Limits**: Rates are bounded by MIN_RATE at 1% and MAX_RATE at 1000%.
+- **Minimum rate** when utilization is 0% (no borrowing activity)
+- **Maximum rate** when utilization reaches 100% (fully utilized market)
+- **Semi-Logarithmic scaling** between these bounds based on current utilization
 
-**Rate Structure:**
-- **0% utilization**: Minimum rate charged
-- **100% utilization**: Maximum rate charged  
-- **Target utilization**: Typically 80%, where the "market rate" is achieved
+Rates are bounded by system constants: `MIN_RATE` at 1% and `MAX_RATE` at 1000%.
 
-**Setting Optimal Rates:**
-When setting rates, a target utilization (usually 80%) is chosen where the "market rate" should be charged. For example, if the current global rate for borrowing crvUSD is 10%, minimum and maximum borrow rates should be configured so that the borrow rate at 80% utilization equals 10%. This ensures that lenders have a buffer to withdraw their supplied assets without facing fully utilized markets.
+**Optimal Rate Configuration:**
+Most markets target approximately 80% utilization as the optimal point where competitive market rates should be charged. This provides lenders with sufficient buffer to withdraw assets while maintaining healthy utilization levels.
+
+For example, if the current market rate for borrowing crvUSD is 10%, configure minimum and maximum rates so that the 80% utilization point equals 10%. This ensures lenders can exit positions without facing fully utilized markets.
 
 **Rate Calculation:**
-Rates are charged per second. When deploying a new market, borrow rates must be denominated in seconds using this formula:
+Borrow rates are calculated per second and must be converted from annual percentage rates (APR) using this formula:
 
 $APR = \frac{rate}{10^{18}} \times (60 \times 60 \times 24 \times 365)$
 
-**Example**: For a 1% APR, the rate parameter would be `317097919`.
+**Example**: To achieve 1% APR, set the rate parameter to `317097919`.
 
 
 ## Name
