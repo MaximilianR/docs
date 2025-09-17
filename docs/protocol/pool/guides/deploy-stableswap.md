@@ -5,12 +5,17 @@ sidebar_label: "Deploying a Stableswap Pool"
 ---
 
 import ThemedImage from '@theme/ThemedImage';
+import ButtonGrid from '@site/src/components/ButtonGrid';
 
 The Stableswap pool creation is appropriate for assets expected to hold a price peg very close to each other, like a pair of dollarcoins. The creation wizard will guide you through the process of creating a pool, but if you have questions throughout you are encouraged to speak with a member of the Curve team in the [**Telegram**](https://t.me/curvefi) or [**Discord**](https://discord.gg/rgrfS7W).
 
 Stableswap pools are liquidity pools containing **up to eight tokens** using the StableSwap algorithm (Curve V1). For a better understanding of StableSwap, please see here: [**Understanding Curve Pools**](../pools/overview.md).
 
-## **Step 1: Choose Pool Type**
+<ButtonGrid buttonKeys={['gotoPoolDeployment']} />
+
+---
+
+## Step 1: Choose Pool Type
 
 Make sure your wallet is connected (top right corner) and your network is set to the chain where you want to deploy the pool. Curve supports pool deployment on all networks where Curve is live — just switch chains in your wallet, and the UI will follow automatically.
 
@@ -32,7 +37,7 @@ Select Stableswap as the pool type. This is used for assets that should maintain
   <figcaption></figcaption>
 </figure>
 
-## **Step 2: Select Tokens**
+## Step 2: Select Tokens
 
 In this step, you'll define which assets your pool will support. The interface allows you to choose **between two and eight tokens**, with support for standard **ERC-20s, tokens using oracles, rebasing assets, and ERC‑4626 vault tokens**.
 
@@ -177,7 +182,7 @@ To add a metapool, simply tick on "View Metapools" when selecting a the token an
 
 Once you've selected and configured all your tokens, click **Next →** to continue to the pool parameters.
 
-## **Step 3: Set Pool Parameters**
+## Step 3: Set Pool Parameters
 
 You can choose a preset configuration or switch to advanced mode to fine-tune the pool's behavior.
 
@@ -248,7 +253,7 @@ To choose your own parameters, simply toggle on the "Advanced" toggle:
 
 Once you're satisfied with the parameter settings, click **Next →** to continue.
 
-## **Step 4: Enter Pool Info**
+## Step 4: Enter Pool Info
 
 After configuring your parameters, you’ll be prompted to set the **Pool Name** and **Pool Symbol**.
 
@@ -275,7 +280,7 @@ These values will be used as the ERC‑20 metadata for the pool’s LP token and
 
 > 💡 **Tip:** Use short, clear names that reflect the assets in the pool. For metapools, it’s common to include the base pool symbol (e.g. `sDAI3CRV` for a sDAI/3CRV pool). These fields are immutable after deployment — double-check for typos.
 
-## **Step 5: Deploy the Pool**
+## Step 5: Deploy the Pool
 
 Before deploying, review all your settings in the **Summary panel** on the right. This includes:
 
@@ -298,7 +303,7 @@ Once everything looks correct, click the blue **Create Pool** button at the bott
 
 ---
 
-## **What to do after deployment**
+## What to do after deployment
 
 ✅ **Seed initial liquidity** — a pool with zero balance cannot process trades.  
 ✅ (Optional) **[Create a gauge](../reward-gauges/creating-a-pool-gauge.md)** to distribute CRV or other incentives to LPs.

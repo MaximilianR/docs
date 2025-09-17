@@ -97,7 +97,16 @@ export const ALL_BUTTONS = {
         Llamalend
       </>
     ),
-  }
+  },
+  gotoPoolDeployment: {
+    link: 'https://www.curve.finance/dex/ethereum/create-pool',
+    line1: 'Go to',
+    line2Content: (
+      <>
+        Pool Creation UI
+      </>
+    ),
+  },
   // --- Add any other buttons you want to reuse here ---
   // example: {
   //   link: '...',

@@ -5,12 +5,17 @@ sidebar_label: "Deploying a Cryptoswap Pool"
 ---
 
 import ThemedImage from '@theme/ThemedImage';
+import ButtonGrid from '@site/src/components/ButtonGrid';
 
 Cryptoswap pools are appropriate for **two or three volatile assets** that are not pegged to each other — such as ETH/USDC or BTC/ETH. The creation wizard will guide you through the process, but if you have questions at any point, feel free to reach out to the Curve team in the [**Telegram**](https://t.me/curvefi) or [**Discord**](https://discord.gg/rgrfS7W).
 
 For a basic explanation of Cryptoswap mechanics, see: [**Understanding Curve Pools**](../pools/overview.md).
 
-## **Step 1: Choose Pool Type**
+<ButtonGrid buttonKeys={['gotoPoolDeployment']} />
+
+---
+
+## Step 1: Choose Pool Type
 
 Make sure your wallet is connected (top right corner) and your network is set to the chain where you want to deploy the pool. Curve supports pool deployment on all networks where Curve is live — just switch chains in your wallet, and the UI will follow automatically.
 
@@ -32,7 +37,7 @@ Select **Cryptoswap** as the pool type. This is used for volatile assets that do
   <figcaption></figcaption>
 </figure>
 
-## **Step 2: Select Tokens**
+## Step 2: Select Tokens
 
 In this step, you'll define which assets your pool will support. Cryptoswap pools support **two or three tokens**. To add a third token, click the blue **Add token** button.
 
@@ -56,7 +61,7 @@ In this step, you'll define which assets your pool will support. Cryptoswap pool
 Due to safety reasons, **plain ETH cannot be used** in Cryptoswap pools. Please use WETH instead.
 :::
 
-## **Step 3: Set Pool Parameters**
+## Step 3: Set Pool Parameters
 
 You can choose a preset configuration or switch to advanced mode to fine-tune the pool's behavior.
 
@@ -144,7 +149,7 @@ To fine-tune the pool, enable the **Advanced** toggle:
 
 > 📖 **Further reading**: [Deep Dive: Curve V2 Parameters](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters?s=curve)
 
-## **Step 4: Enter Pool Info**
+## Step 4: Enter Pool Info
 
 After configuring your parameters, you’ll be prompted to set the **Pool Name** and **Pool Symbol**.
 
@@ -171,7 +176,7 @@ These values will be used as the ERC‑20 metadata for the pool’s LP token and
 
 > 💡 **Tip:** Use short, clear names that reflect the assets in the pool. These fields are immutable after deployment — double-check for typos.
 
-## **Step 5: Deploy the Pool**
+## Step 5: Deploy the Pool
 
 Before deploying, review all your settings in the **Summary panel** on the right. This includes:
 
@@ -199,7 +204,7 @@ Once everything looks correct, click the blue **Create Pool** button at the bott
 
 ---
 
-## **What to do after deployment**
+## What to do after deployment
 
 ✅ **Seed initial liquidity** — a pool with zero balance cannot process trades.  
 ✅ (Optional) **[Create a gauge](../reward-gauges/creating-a-pool-gauge.md)** to distribute CRV or other incentives to LPs.
