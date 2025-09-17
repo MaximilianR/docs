@@ -1,0 +1,193 @@
+/* Protocol Cards Styling */
+.protocolCardsGrid {
+  display: flex;
+  gap: var(--Spacing-sm);
+  margin: 2rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  justify-content: center;
+}
+
+.protocolCard {
+  background: var(--Layer-2-Fill);
+  border: 1px solid var(--Layer-2-Outline);
+  border-radius: 0;
+  padding: var(--Spacing-sm);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  flex: 1;
+  max-width: 160px;
+}
+
+.protocolCard:hover {
+  border-color: var(--Color-Primary-300);
+  background: var(--Layer-1-Fill);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.protocolCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--Spacing-sm);
+  text-align: center;
+  height: 100%;
+  justify-content: center;
+}
+
+.protocolCardLogo {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.protocolCardLogo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.protocolCardLogoFallback {
+  font-size: 20px;
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  color: var(--Color-Primary-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--Layer-1-Fill);
+  border-radius: 50%;
+  border: 1px solid var(--Layer-2-Outline);
+}
+
+.protocolCardTitle {
+  font-size: var(--Typography-FontSize-sm);
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  color: var(--Text-TextColors-Primary);
+  line-height: var(--Typography-LineHeight-tight);
+  text-align: center;
+}
+
+/* Multiple logos side by side */
+.protocolCardMultipleLogos {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.protocolCardOverlappingLogo {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--Layer-1-Fill);
+  border-radius: 50%;
+  border: 1px solid var(--Layer-2-Outline);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.protocolCardOverlappingLogo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  background: var(--Layer-1-Fill);
+  border: 1px solid var(--Layer-2-Outline);
+  padding: 1px;
+  display: block;
+  min-width: 20px;
+  min-height: 20px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Text logo for "100+" */
+.protocolCardTextLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: var(--Typography-FontWeight-Bold);
+  color: var(--Text-TextColors-Primary);
+  flex-shrink: 0;
+}
+
+/* Hover effect for side-by-side logos */
+.protocolCard:hover .protocolCardOverlappingLogo {
+  transform: scale(1.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.protocolCard:hover .protocolCardTextLogo {
+  color: var(--Color-Primary-500);
+}
+
+/* Dark mode protocol cards */
+[data-theme='dark'] .protocolCard {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid var(--Layer-2-Outline) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 0 !important;
+}
+
+[data-theme='dark'] .protocolCard:hover {
+  background: var(--Layer-1-Fill) !important;
+  border-color: var(--Color-Primary-300) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 0 !important;
+}
+
+[data-theme='dark'] .protocolCardTitle {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] .protocolCardDescription {
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+[data-theme='dark'] .protocolCardLogo {
+  background: transparent !important;
+  border: none !important;
+}
+
+[data-theme='dark'] .protocolCardLogoFallback {
+  color: var(--Color-Primary-500) !important;
+  background: var(--Layer-1-Fill) !important;
+  border: 1px solid var(--Layer-2-Outline) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .protocolCardsGrid {
+    flex-direction: column;
+    gap: var(--Spacing-sm);
+  }
+  
+  .protocolCard {
+    min-width: unset;
+    max-width: unset;
+  }
+}
+
+@media (max-width: 1200px) {
+  .protocolCardsGrid {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

@@ -1,11 +1,11 @@
 ---
-title: Curve Pool Factory
+id: overview
+title: Overview & Pool Types
+sidebar_label: Overview & Pool Types
 ---
 
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 import ThemedImage from '@theme/ThemedImage';
-
-# Curve Pool Factory
 
 Curve offers a **permissionless** system for deploying liquidity pools — no DAO vote, no approval process, and no technical barrier beyond the gas cost to deploy. A full-featured interface is available in the Curve app, so you can launch a custom pool without writing any code.
 
@@ -31,6 +31,7 @@ Pools deployed via a factory appear automatically on the Curve frontend after a 
 
 Curve supports multiple pool designs to fit different kinds of assets. Selecting the correct type is essential to ensure low slippage, efficient trading, and capital-efficient liquidity.
 
+Not sure which to use? Reach out in the official Curve channels.
 
 ### Stableswap Pool
 Choose a **Stableswap pool** when your assets are expected to stay close or correlated in price — e.g., stablecoins (USDC/USDT), LSTs (wstETH/stETH), or yield-bearing stable assets like sDAI. 
@@ -59,8 +60,6 @@ Choose a **Cryptoswap pool** when your assets are more volatile or uncorrelated�
 
 ### FXSwap
 todo
-
-Not sure which to use? Reach out in the official Curve channels.
 
 ---
 

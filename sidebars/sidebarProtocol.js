@@ -3,7 +3,6 @@ export default {
         {
             type: 'doc',
             id: 'why-curve',
-            label: 'Why Build on Curve?',
         },
         {
             type: 'category',
@@ -21,6 +20,11 @@ export default {
                 },
                 {
                     type: 'doc',
+                    id: 'pool/pool-parameters',
+                    label: 'Understanding Pool Parameters',
+                },
+                {
+                    type: 'doc',
                     id: 'pool/guides/deploy-stableswap',
                     label: 'Guide: Deploy a Stableswap Pool',
                 },
@@ -28,11 +32,6 @@ export default {
                     type: 'doc',
                     id: 'pool/guides/deploy-cryptoswap',
                     label: 'Guide: Deploy a Cryptoswap Pool',
-                },
-                {
-                    type: 'doc',
-                    id: 'pool/pool-parameters',
-                    label: 'Understanding Pool Parameters',
                 },
                 {
                     type: 'doc',
@@ -88,7 +87,7 @@ export default {
                 },
                 {
                     type: 'doc',
-                    id: 'gauge/guides/get-crv-emissions',
+                    id: 'gauge/guides/getting-crv-emissions',
                     label: 'Getting CRV Emissions',
                 },
                 {

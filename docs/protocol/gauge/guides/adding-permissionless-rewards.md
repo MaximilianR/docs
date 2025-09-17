@@ -1,16 +1,14 @@
 ---
-title: How to Add Permissionless Rewards
+id: adding-permissionless-rewards
+title: Adding Permissionless Rewards
+sidebar_label: Adding Permissionless Rewards
 ---
 
-Permissionless rewards are third-party incentives that can be added to a Curve gauge without DAO approval. While conceptually permissionless, only the **gauge manager** (typically the deployer) can authorize and deposit these rewards.
+Permissionless rewards are third-party incentives that can simply be added to a Curve gauge. They don't require any DAO approval as they are not based on gauge weights and CRV emissions but rather use external rewards provided by someone else. While conceptually permissionless, only the **gauge manager** (typically the deployer) can authorize and deposit these rewards. This is done to prevent malicious actors from spamming the gauge with fake scam tokens. 
 
-This guide explains how to add permissionless rewards using **Etherscan**. Currently, there is no UI for this process.
+Currently, there is no UI for this process. This guide explains how to add permissionless rewards using **Etherscan**.
 
-> ⚠️ **Note:** Curve has deployed multiple versions of gauge contracts. If you're unsure which version you're using or encounter issues, please reach out to the Curve team.
-
----
-
-## **Before You Start**
+## Before You Start
 
 To add permissionless rewards:
 
@@ -23,9 +21,7 @@ You can check the `manager` or `admin` address under the **Read Contract** tab o
 
 Only a maximum of **8 unique reward tokens** can be added to a single gauge. Once added, a reward token cannot be removed.
 
----
-
-## **Understanding the Gauge Manager Role**
+## Understanding the Gauge Manager Role
 
 The gauge deployer is automatically assigned as the **manager**. This role allows:
 
@@ -36,9 +32,7 @@ For example, if you want to add USDC as a permissionless reward, the `manager` w
 
 Only the **manager** can call `add_reward`, and only the assigned **distributor** can deposit rewards.
 
----
-
-## **Step 1: Set Distributor for a Token**
+## Step 1: Set Distributor for a Token
 
 Go to your **Gauge Contract** on [Etherscan](https://etherscan.io), connect your wallet, and open the **Write Contract** tab. Make sure you are connected with the `manager` wallet.
 
@@ -49,9 +43,7 @@ Call `add_reward` and input:
 
 This function can only be called once per reward token.
 
----
-
-## **Step 2: Approve the Reward Token**
+## Step 2: Approve the Reward Token
 
 Go to the **reward token's contract** (e.g. USDC) on Etherscan. Under **Write Contract**, call `approve`:
 
@@ -60,9 +52,7 @@ Go to the **reward token's contract** (e.g. USDC) on Etherscan. Under **Write Co
 
 This grants the gauge permission to transfer the reward tokens from the distributor.
 
----
-
-## **Step 3: Deposit the Reward Tokens**
+## Step 3: Deposit the Reward Tokens
 
 Return to the gauge contract's **Write Contract** tab and call `deposit_reward_token`:
 
@@ -73,15 +63,13 @@ Return to the gauge contract's **Write Contract** tab and call `deposit_reward_t
 
 Rewards are streamed evenly over the specified time period. If more tokens are added during an ongoing epoch, the remaining balance and the new deposit are combined, and a new epoch begins.
 
-To ensure a smooth distribution, consider topping up rewards near the end of an epoch, rather than mid-cycle.
-
----
-
-## **Claiming and Viewing Rewards**
-
-Once the tokens are deposited, Curve LPs will:
+Once the reward tokens are deposited, Curve LPs will:
 
 - See the reward token listed in the Curve UI
 - Receive the reward automatically when claiming CRV or other incentives
 
 There is no additional setup needed on the user side.
+
+## Claiming and Viewing Rewards
+
+From a user side, rewards can simply be claimed via the UI. More here: [Claiming Rewards](../../../user/dex/liquidity.md#claiming-rewards).
