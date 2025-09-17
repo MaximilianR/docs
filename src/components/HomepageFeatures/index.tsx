@@ -43,7 +43,7 @@ const FeatureList: FeatureItem[] = [
         incentivize liquidity on Curve.
       </>
     ),
-    link: '/asset-issuer/overview/why-curve',
+    link: '/protocol/overview',
   },
 ];
 
