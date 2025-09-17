@@ -12,7 +12,7 @@ Providing liquidity in pools is a great way to earn interest (yield) on your ass
 
 Pools are groups of two or more assets.  When you provide liquidity to a pool, you deposit your assets into that pool.  This is called being an **LP** or **Liquidity Provider**.  Traders can then trade between the assets within the pool.  For example, if you are an LP in a `crvUSD/USDC` pool, the pool will have two assets: `crvUSD` and `USDC`.  Traders can trade between `crvUSD` to `USDC` freely within the pool, and as an LP you earn fees from these swaps and other rewards.  
 
-If you're interested in all the different rewards you can earn as an LP, or what the numbers mean, see the page about understanding rewards: [Understanding Rewards](earning-yield.mdx).
+If you're interested in all the different rewards you can earn as an LP, or what the numbers mean, see the page about understanding rewards: [Understanding Rewards](earning-yield.md).
 
 The rest of this page will be a guide on how to use the UI to deposit, withdraw, stake and claim your rewards.
 
@@ -56,7 +56,7 @@ In this example we will be doing `Deposit & Stake` as a single transaction.  How
 - **Deposit**: Depositing is depositing your assets into the pool.  When you do this you receive LP tokens in return, and start earning trading fees from swaps.
 - **Staking**: Stake your LP tokens in the pool's reward gauge, this means you can earn CRV or other token rewards, if available.
 
-More info on how each of these actions work in the [Understanding Rewards](./earning-yield.mdx#summary-how-to-earn-different-rewards) page.
+More info on how each of these actions work in the [Understanding Rewards](./earning-yield.md#summary-how-to-earn-different-rewards) page.
 
 Now on the `crvUSD/USDC` pool page, we can see the deposit menu to the left and choose `deposit & stake` and choose how much we'd like to deposit, here we are depositing $10k `crvUSD`:
 

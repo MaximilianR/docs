@@ -49,4 +49,4 @@ Theoretically, no. scrvUSD is designed to **increase in value compared to crvUSD
 
 However, if you swap scrvUSD back to crvUSD on a decentralized exchange (DEX), the exchange rate might be slightly lower than its theoretical value due to current market conditions or the amount of liquidity available in the trading pool.
 
-It's also important to remember that while the best possible practices have been used in its creation, there are always risks when interacting with smart contracts, including scrvUSD. You can find more information about these risks here: [scrvUSD risks](../risks/scrvusd.md).
+It's also important to remember that while the best possible practices have been used in its creation, there are always risks when interacting with smart contracts, including scrvUSD. You can find more information about these risks here: [scrvUSD risks](../security/risks/scrvusd.md).

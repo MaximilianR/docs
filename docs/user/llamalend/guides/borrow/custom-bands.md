@@ -1,4 +1,10 @@
-# Opening a Loan with a Custom Number of Bands
+---
+id: custom-bands
+title: Opening a Loan with Custom Bands
+sidebar_label: Custom Bands
+---
+
+import ThemedImage from '@theme/ThemedImage';
 
 To follow this guide, make sure **"Advanced Mode"** is enabled in your user settings.
 
@@ -10,24 +16,21 @@ Make sure you understand the **consequences and benefits** of using more or fewe
 
 ## Customizing Bands
 
-Simply **enter the amount of collateral** you want to use and choose **how much crvUSD to borrow**. Additionally, you can adjust the number of bands for the loan by moving the slider left or right.
+Enter the amount of collateral you want to use and choose how much crvUSD to borrow. Additionally, you can adjust the number of bands for the loan by moving the slider left or right.
 
 - **Minimum bands:** 4  
 - **Maximum bands:** 50
 
-import ThemedImage from '@theme/ThemedImage';
-
 <figure>
 <ThemedImage
-    alt="Mint and Lend Markets"
+    alt="Custom bands interface"
     sources={{
-        light: require('@site/static/img/user/llamalend/guides/bands/bands_light.png').default,
-        dark: require('@site/static/img/user/llamalend/guides/bands/bands_dark.png').default,
+        light: require('@site/static/img/user/llamalend/guides/borrow/bands/bands_light.png').default,
+        dark: require('@site/static/img/user/llamalend/guides/borrow/bands/bands_dark.png').default,
     }}
     style={{ width: '800px', display: 'block', margin: '0 auto' }}
 />
 </figure>
-
 
 ## Effects of Number of Bands
 
@@ -48,11 +51,11 @@ Ultimately, it's a trade-off between **risk** and **borrowing power**, and you s
 Maximum LTV is calculated using the following formula:
 
 ```math
-Maximum LTV = 100 - loan_discount - 100 × (N / (2 × A))
+\text{Maximum LTV} = 100\% - \text{Loan Discount} - \frac{100\% \times N}{2 \times \text{Band Width Factor}}
 ```
 
 Where:
 
-- `loan_discount` is a protocol-defined parameter, typically set to **7%**
-- `A` is the **maximum allowed number of bands**, which varies by market and is visible in the UI
+- `Loan Discount` is different for each market based on the volatility of the underlying collateral asset, e.g., for the ETH minting market its **9%**, for sreUSD lending market its **2%**.
+- `Band Width Factor` varies by market and is visible in the UI, it controls how large bands are, a larger `Band Width Factor` means narrower bands
 - `N` is the **number of bands** selected for the loan
