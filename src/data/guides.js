@@ -179,6 +179,7 @@ export const ALL_GUIDES = {
     description: 'Learn more about how to get CRV emissions for a gauge.',
     image: '',
     link: '/protocol/gauge/how-to-get-a-gauge',
+  },
   howToOpenAndCloseLoan: {
     title: 'How to Open and Close a Loan',
     description: "This guide teaches you how to Borrow or repay your assets from Llamalend and claim any earned rewards.",
