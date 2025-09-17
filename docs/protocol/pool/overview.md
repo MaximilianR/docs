@@ -1,11 +1,11 @@
 ---
-title: Curve Pool Factory
+id: overview
+title: Overview & Pool Types
+sidebar_label: Overview & Pool Types
 ---
 
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 import ThemedImage from '@theme/ThemedImage';
-
-# Curve Pool Factory
 
 Curve offers a **permissionless** system for deploying liquidity pools — no DAO vote, no approval process, and no technical barrier beyond the gas cost to deploy. A full-featured interface is available in the Curve app, so you can launch a custom pool without writing any code.
 

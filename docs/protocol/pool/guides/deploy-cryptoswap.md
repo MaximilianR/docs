@@ -1,14 +1,14 @@
 ---
-title: Deploying a Cryptoswap Pool
+id: deploy-cryptoswap
+title: "Deploying a Cryptoswap Pool"
+sidebar_label: "Deploying a Cryptoswap Pool"
 ---
 
 import ThemedImage from '@theme/ThemedImage';
 
-Cryptoswap pools (Curve V2) are appropriate for **two or three volatile assets** that are not pegged to each other — such as ETH/USDC or BTC/ETH. The creation wizard will guide you through the process, but if you have questions at any point, feel free to reach out to the Curve team in the [**Telegram**](https://t.me/curvefi) or [**Discord**](https://discord.gg/rgrfS7W).
+Cryptoswap pools are appropriate for **two or three volatile assets** that are not pegged to each other — such as ETH/USDC or BTC/ETH. The creation wizard will guide you through the process, but if you have questions at any point, feel free to reach out to the Curve team in the [**Telegram**](https://t.me/curvefi) or [**Discord**](https://discord.gg/rgrfS7W).
 
 For a basic explanation of Cryptoswap mechanics, see: [**Understanding Curve Pools**](../pools/overview.md).
-
----
 
 ## **Step 1: Choose Pool Type**
 
@@ -31,8 +31,6 @@ Select **Cryptoswap** as the pool type. This is used for volatile assets that do
   />
   <figcaption></figcaption>
 </figure>
-
----
 
 ## **Step 2: Select Tokens**
 
@@ -57,8 +55,6 @@ In this step, you'll define which assets your pool will support. Cryptoswap pool
 :::warning
 Due to safety reasons, **plain ETH cannot be used** in Cryptoswap pools. Please use WETH instead.
 :::
-
----
 
 ## **Step 3: Set Pool Parameters**
 
@@ -116,8 +112,6 @@ Presets vary depending on whether your pool contains two or three tokens.
 
 You can use these as-is or switch to **Advanced** mode to adjust parameters manually.
 
----
-
 ### Advanced Parameters
 
 To fine-tune the pool, enable the **Advanced** toggle:
@@ -150,8 +144,6 @@ To fine-tune the pool, enable the **Advanced** toggle:
 
 > 📖 **Further reading**: [Deep Dive: Curve V2 Parameters](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters?s=curve)
 
----
-
 ## **Step 4: Enter Pool Info**
 
 After configuring your parameters, you’ll be prompted to set the **Pool Name** and **Pool Symbol**.
@@ -177,11 +169,7 @@ These values will be used as the ERC‑20 metadata for the pool’s LP token and
   <figcaption></figcaption>
 </figure>
 
-> 💡 **Tip:** Use short, clear names that reflect the assets in the pool.
-
-> These fields are immutable after deployment — double-check for typos.
-
----
+> 💡 **Tip:** Use short, clear names that reflect the assets in the pool. These fields are immutable after deployment — double-check for typos.
 
 ## **Step 5: Deploy the Pool**
 
