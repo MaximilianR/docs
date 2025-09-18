@@ -9,7 +9,6 @@ import CrvSupply from '@site/src/components/LiveComponents/CrvSupply';
 import InlinePill from '@site/src/components/InlinePill';
 import CrvAllocationChart from '@site/src/components/Charts/CrvAllocation';
 import CrvReleaseScheduleChart from '@site/src/components/Charts/CrvReleaseSchedule';
-
 import CrvLogo from '@site/static/img/logos/CRV_s.png';
 
 # <img src={CrvLogo} className="heading-inline-logo" alt="CRV" /> The CRV Token
