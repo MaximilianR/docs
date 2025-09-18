@@ -29,11 +29,6 @@ export default {
                     id: 'curve-tokens/scrvusd',
                     label: 'scrvUSD',
                 },
-                {
-                    type: 'doc',
-                    id: 'curve-tokens/faq',
-                    label: 'FAQ',
-                },
             ],
         },
         {
@@ -110,11 +105,6 @@ export default {
                     type: 'doc',
                     id: 'dex/stableswap-vs-cryptoswap',
                     label: 'Stableswap vs Cryptoswap',
-                },
-                {
-                    type: 'doc',
-                    id: 'dex/faq',
-                    label: 'FAQ',
                 },
             ],
         },
