@@ -28,12 +28,7 @@ export default {
                     type: 'doc',
                     id: 'curve-tokens/scrvusd',
                     label: 'scrvUSD',
-                },
-                {
-                    type: 'doc',
-                    id: 'curve-tokens/faq',
-                    label: 'FAQ',
-                },
+                }
             ],
         },
         {
@@ -57,11 +52,6 @@ export default {
                 },
                 {
                     type: 'doc',
-                    id: 'yield/scrvusd',
-                    label: 'Savings Vault (scrvUSD)',
-                },
-                {
-                    type: 'doc',
                     id: 'yield/boosting',
                     label: 'Boosting with veCRV',
                 },
@@ -72,8 +62,29 @@ export default {
                 },
                 {
                     type: 'doc',
-                    id: 'yield/faq',
-                    label: 'Yield FAQ',
+                    id: 'yield/scrvusd',
+                    label: 'Savings Vault (scrvUSD)',
+                },
+                {
+                    type: 'category',
+                    label: 'scrvUSD Guides',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'yield/guides/deposit-scrvusd',
+                            label: 'Deposit',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'yield/guides/check-earnings',
+                            label: 'Check Earnings',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'yield/guides/withdraw-scrvusd',
+                            label: 'Withdraw',
+                        }
+                    ],
                 },
             ],
         },
@@ -83,8 +94,8 @@ export default {
             items: [
                 {
                     type: 'doc',
-                    id: 'dex/primitives',
-                    label: 'Primitives',
+                    id: 'dex/overview',
+                    label: 'Overview',
                 },
                 {
                     type: 'doc',
@@ -103,7 +114,7 @@ export default {
                 },
                 {
                     type: 'doc',
-                    id: 'dex/earning-yield',
+                    id: 'dex/understanding-rewards',
                     label: 'Understanding Rewards',
                 },
                 {
@@ -112,9 +123,30 @@ export default {
                     label: 'Stableswap vs Cryptoswap',
                 },
                 {
-                    type: 'doc',
-                    id: 'dex/faq',
-                    label: 'FAQ',
+                    type: 'category',
+                    label: 'Guides',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'dex/guides/swap',
+                            label: 'How to Swap',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'dex/guides/deposit',
+                            label: 'Deposit',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'dex/guides/claim-rewards',
+                            label: 'Claim Rewards',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'dex/guides/withdraw',
+                            label: 'Unstake & Withdraw',
+                        },
+                    ],
                 },
             ],
         },

@@ -18,7 +18,9 @@ Locking CRV for veCRV is designed to align incentives within Curve's governance 
 
 When you lock your CRV, the amount of veCRV you receive depends on both the quantity of CRV locked and the length of the lock. For example, locking 1 CRV for the maximum period of 4 years grants you 1 veCRV, while locking the same amount for just 1 year gives you 0.25 veCRV. This relationship is defined by a simple formula:
 
-$$veCRV = \frac{CRV_{locked} \times {locktime_{left}}}{4}$$
+$$
+\text{veCRV} = \frac{\text{CRV locked} \times \text{Years until unlock}}{4}
+$$
 
 As time passes, your veCRV balance decays linearly, reflecting the decreasing time left on your lock. You can **only have one active lock per address**, but you are free to **add more CRV or extend the lock duration** at any time. Once the lock expires, your veCRV balance reaches zero and you can withdraw all your originally locked CRV tokens.
 

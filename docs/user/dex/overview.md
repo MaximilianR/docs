@@ -1,7 +1,7 @@
 ---
-id: primitives
-title: Primitives
-sidebar_label: Primitives
+id: overview
+title: Overview
+sidebar_label: Overview
 ---
 
 import ThemedImage from '@theme/ThemedImage';
@@ -48,6 +48,9 @@ The assets in these pools are supplied by other users, called **Liquidity Provid
 
 In return for providing liquidity, LPs earn fees from every swap that happens in their pool, and many pools also offer CRV or other token rewards. This incentivizes users to fill the pools with assets, which in turn provides a better trading experience for everyone.
 
+## Guides
+
+<GuideCardGrid guideKeys={['howToSwap', 'howToDexDeposit']} />
 
 ## Types of Pools - Stableswap and Cryptoswap Pools
 

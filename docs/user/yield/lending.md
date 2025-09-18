@@ -33,6 +33,6 @@ As a lender on Llamalend, your primary sources of yield comes from:
 
 ## Guides
 
-<GuideCardGrid guideKeys={['learnLlamalend', 'howToLend']} />
+<GuideCardGrid guideKeys={['learnLlamalend', 'learnLlamalendSupplying']} />
 
 ---

@@ -1,6 +1,6 @@
 ---
-title: CRV
-sidebar_label: CRV
+title: crvUSD
+sidebar_label: crvUSD
 hide_title: true
 ---
 

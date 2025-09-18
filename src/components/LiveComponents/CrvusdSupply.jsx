@@ -19,31 +19,11 @@ const CrvusdSupply = () => {
         setLoading(true);
         setError(null);
 
-        // Try to fetch data with CORS proxy for development
-        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-        const isDevelopment = window.location.hostname === 'localhost';
-        
-        const marketsUrl = isDevelopment ? `${corsProxy}${MARKETS_API_URL}` : MARKETS_API_URL;
-        const pegkeepersUrl = isDevelopment ? `${corsProxy}${PEGKEEPERS_API_URL}` : PEGKEEPERS_API_URL;
-        const priceUrl = isDevelopment ? `${corsProxy}${PRICE_API_URL}` : PRICE_API_URL;
-
         // Fetch all data points concurrently
         const [marketsRes, pegkeepersRes, priceRes] = await Promise.all([
-          fetch(marketsUrl, {
-            headers: isDevelopment ? {
-              'X-Requested-With': 'XMLHttpRequest'
-            } : {}
-          }),
-          fetch(pegkeepersUrl, {
-            headers: isDevelopment ? {
-              'X-Requested-With': 'XMLHttpRequest'
-            } : {}
-          }),
-          fetch(priceUrl, {
-            headers: isDevelopment ? {
-              'X-Requested-With': 'XMLHttpRequest'
-            } : {}
-          }),
+          fetch(MARKETS_API_URL),
+          fetch(PEGKEEPERS_API_URL),
+          fetch(PRICE_API_URL),
         ]);
 
         if (!marketsRes.ok || !pegkeepersRes.ok || !priceRes.ok) {
@@ -71,30 +51,20 @@ const CrvusdSupply = () => {
 
         // 4. Get the current peg price
         const peg = priceData.data.usd_price;
+        const lastUpdated = new Date();
 
         setSupplyData({
           totalSupply,
           borrowed,
           pegkeeperReserves,
           peg,
+          lastUpdated,
         });
 
       } catch (err) {
         console.error("Failed to fetch crvUSD data:", err);
-        
-        // Fallback to static data for development
-        if (window.location.hostname === 'localhost') {
-          console.log("Using fallback data for development");
-          setSupplyData({
-            totalSupply: 150000000, // Example fallback data
-            borrowed: 120000000,
-            pegkeeperReserves: 30000000,
-            peg: 0.9998,
-          });
-          setError(null); // Clear error for fallback data
-        } else {
-          setError("Could not retrieve crvUSD supply data.");
-        }
+        // Always set the error state on failure, for any environment
+        setError("Could not retrieve crvUSD supply data.");
       } finally {
         setLoading(false);
       }
@@ -107,6 +77,7 @@ const CrvusdSupply = () => {
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
   return (
+    <div>
     <table className="metric-table">
       <thead>
         <tr>
@@ -133,7 +104,18 @@ const CrvusdSupply = () => {
         </tr>
       </tbody>
     </table>
+    <div style={{
+      fontSize: '0.8rem',
+      color: 'var(--ifm-color-emphasis-600)',
+      fontStyle: 'italic',
+      textAlign: 'center',
+      marginBottom: '1.5rem'
+    }}>
+      Last updated: {supplyData?.lastUpdated?.toLocaleString()}
+    </div>
+    </div>
   );
 };
 
 export default CrvusdSupply;
+

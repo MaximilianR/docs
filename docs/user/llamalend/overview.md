@@ -36,8 +36,6 @@ All lending markets must include crvUSD as either a collateral token or the borr
 
 From a user interface and usage perspective, both products function identically. The primary operational difference is in how borrow rates are calculated between mint markets and lending markets.
 
-<GuideCardGrid guideKeys={['howToBorrow', 'howToLend']} />
-
 ## Key Advantages
 
 Llamalend rebuilt DeFi lending from the ground up with a focus on borrower safety.  The core of Llamalend is the unique **LLAMMA (Lending-Liquidating AMM)** system that provides enhanced flexibility and liquidation protection during market volatility.

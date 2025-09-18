@@ -26,7 +26,7 @@ Here’s a quick comparison:
 
 The Stableswap algorithm is Curve's original innovation and the foundation of the protocol. It's designed to facilitate swaps between assets that are pegged to the same value, like two different stablecoins or a liquid staking derivative and its underlying asset.
 
-The primary advantage is **incredibly deep liquidity** around the peg. This means traders can execute massive swaps with minimal price impact (slippage). For instance, in a healthy $20M USDC/USDT pool, a $1M swap would likely incur less than 0.01% slippage (receive $999.9k after swapping), making it one of the most capital-efficient platforms for stable assets.
+The primary advantage is **incredibly deep liquidity** around the peg. This means traders can execute massive swaps with minimal price impact (slippage). For instance, in a healthy \$20M USDC/USDT pool, a \$1M swap would likely incur less than 0.01% slippage (receive \$999.9k after swapping), making it one of the most capital-efficient platforms for stable assets.
 
 A key feature of Stableswap pools is that they are **fully passive**. Unlike most other AMMs where LPs must actively manage their price ranges, Curve LPs can simply deposit their assets and earn fees without further intervention. The pool provides liquidity across all possible prices, though it's most concentrated at the peg.
 

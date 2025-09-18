@@ -1,7 +1,7 @@
 ---
-id: earning-yield
-title: Earning Yield
-sidebar_label: Earning Yield
+id: understanding-rewards
+title: Understanding Rewards
+sidebar_label: Understanding Rewards
 ---
 
 import ThemedImage from '@theme/ThemedImage';
@@ -10,7 +10,13 @@ import ButtonGrid from '@site/src/components/ButtonGrid';
 
 One of the primary ways to earn yield on Curve is by providing liquidity to a pool. When you deposit your assets, you become a liquidity provider (LP) and receive LP tokens in return. These tokens represent your share of the pool and are your key to earning rewards.
 
-This page explains the different types of rewards you can earn and how they are displayed on the pool page.
+This page explains the different types of rewards you can earn and how they are displayed on the pool page.  However, if you're looking for a guide on how to claim your earned rewards, see below.
+
+## Guides
+
+If you are just looking for how to claim your earned CRV or other token rewards, see the guide below.
+
+<GuideCardGrid guideKeys={['howToDexClaim']} />
 
 ---
 

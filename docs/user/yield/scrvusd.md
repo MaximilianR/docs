@@ -5,28 +5,36 @@ hide_title: true
 import ButtonGrid from '@site/src/components/ButtonGrid';
 import ThemedImage from '@theme/ThemedImage';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 import ScrvusdLogo from '@site/static/img/logos/scrvUSD_s.png';
+import InlinePill from '@site/src/components/InlinePill';
+import ScrvusdSupply from '@site/src/components/LiveComponents/ScrvusdSupply';
+import ScrvusdVaultAnimation from '@site/src/components/ScrvusdVaultAnimation';
 
 # <img src={ScrvusdLogo} className="heading-inline-logo" alt="scrvUSD" /> Savings Vault (scrvUSD)
-
-
 
 scrvUSD stands for “savings-crvUSD,” and works like a bank savings account for crvUSD. It is similar to other staked versions of USD stablecoins, such as sDAI, sUSDS, sUSDe, etc. Users can either stake their crvUSD to receive scrvUSD, or buy it directly on the market. Yield accrues automatically, increasing the value of their tokens over time.
 
 scrvUSD is designed with minimal risk in mind. The underlying crvUSD deposited into the vault is not loaned out or deployed into other liquidity pools. Instead, it remains securely within the vault, minimizing risk for scrvUSD holders.
 
+<ScrvusdVaultAnimation />
+
+### Quick Links
+
 <ButtonGrid buttonKeys={['gotoScrvusd']} />
 
 ---
 
-### Quick Links
+## Guides
 
-<GuideCardGrid guideKeys={['depositScrvusd', 'withdrawScrvusd']} />
-
+<GuideCardGrid guideKeys={['depositScrvusd', 'checkEarningsScrvusd', 'withdrawScrvusd']} />
 
 ---
+
+## Current scrvUSD Stats
+
+The following table pulls current data from <InlinePill icon="/img/logos/ethereum.png" label="Ethereum" />
+
+<ScrvusdSupply />
 
 ## How scrvUSD Works: Earn Savings on Your crvUSD
 
@@ -70,175 +78,6 @@ scrvUSD plays a crucial role in maintaining crvUSD's peg to $1. Its mechanics ar
   />
   <figcaption></figcaption>
 </figure>
-
----
-
-## Guides
-
-
-:::info Important Note
-While scrvUSD tokens exist and earn interest on all deployed networks, the deposit and withdrawal functions for the scrvUSD vault are exclusively available on the Ethereum mainnet. You can simply buy and sell scrvUSD from a curve pool and it will essentially have the same effect.
-:::
-
-### Depositing into the Savings Vault
-
-Before you can start earning interest by depositing into the scrvUSD savings vault, you'll **need to have crvUSD tokens on the Ethereum mainnet**. If you have scrvUSD on any other chain, it will still earn interest, but you can't directly interact with the scrvUSD vault.
-
-#### Step 1: Navigate to the scrvUSD Vault and Connect Your Wallet
-
-Go to the official [scrvUSD vault page on Curve.finance](https://www.curve.finance/crvusd/ethereum/scrvUSD/):
-
-<ButtonGrid buttonKeys={['gotoScrvusd']} />
-
-Once on the page, connect your Web3 wallet by clicking the "Connect Wallet" button in the top right corner of the interface.  After successfully connecting your wallet, you should see an interface similar to the following:
-
-<figure style={{ textAlign: 'center' }}>
-  <ThemedImage
-    alt="scrvUSD Whole UI"
-    sources={{
-      light: require('@site/static/img/ui/savings/no-deposit-whole-ui-light.png').default,
-      dark: require('@site/static/img/ui/savings/no-deposit-whole-ui-dark.png').default,
-    }}
-    style={{
-      maxWidth: '1684px',
-      width: '100%'
-    }}
-  />
-  <figcaption>*Here we have 1000 crvUSD we can deposit, which can earn 6.9% APY*</figcaption>
-</figure>
-
-#### Step 2: Choose Your Deposit Amount
-
-On the left you'll see the `Deposit` tab. Here, enter the amount of crvUSD you wish to deposit, or click `Max` to deposit all your crvUSD from your wallet.
-
-After entering your amount, you'll see how many scrvUSD vault tokens you'll receive. In the example below, if we deposit **1,000 crvUSD**, we would receive **953 scrvUSD**. This is because scrvUSD is designed to continuously grow in value against crvUSD (1 scrvUSD = 1.049 crvUSD).
-
-<figure style={{ textAlign: 'center' }}>
-  <ThemedImage
-    alt="Deposit Amount"
-    sources={{
-      light: require('@site/static/img/ui/savings/deposit-amount-light.png').default,
-      dark: require('@site/static/img/ui/savings/deposit-amount-dark.png').default,
-    }}
-    style={{
-      maxWidth: '400px',
-      width: '100%'
-    }}
-  />
-  <figcaption></figcaption>
-</figure>
-
-#### Step 3: Approve & Deposit Your crvUSD
-
-If this is your **first time depositing crvUSD into the scrvUSD vault**, you'll need to complete two separate transactions:
-
-1.  **Approve:** This transaction gives the scrvUSD vault permission to access and transfer your crvUSD tokens from your wallet.
-2.  **Deposit:** This second transaction actually sends your crvUSD into the vault, and in return, you'll receive scrvUSD tokens.
-
-However, if you've deposited into the scrvUSD vault before, you'll only need to complete the **Deposit** transaction.
-
-These transactions will appear sequentially in your Web3 wallet for you to review and sign. Once you've approved and sent both transactions, you'll see their progress displayed just below the deposit box on the interface:
-
-<figure style={{ textAlign: 'center' }}>
-  <ThemedImage
-    alt="Deposit Success"
-    sources={{
-      light: require('@site/static/img/ui/savings/deposit-success-light.png').default,
-      dark: require('@site/static/img/ui/savings/deposit-success-dark.png').default,
-    }}
-    style={{
-      maxWidth: '400px',
-      width: '100%'
-    }}
-  />
-  <figcaption></figcaption>
-</figure>
-
-#### Congratulations! Your Deposit is Complete.
-
-You've successfully deposited your crvUSD! In our example, you now hold **953.2 scrvUSD**. Remember, the scrvUSD token balance will not change, but the value of each scrvUSD token will automatically become worth *more* crvUSD over time, reflecting your earned interest.
-
----
-
-### Checking Your Earned Interest
-
-You can easily see how much interest you've earned directly on the scrvUSD UI:
-
-1.  Navigate to the `Position Details` section.
-2.  Hover your mouse over the `Your crvUSD Staked` box.
-
-This will reveal the current crvUSD value of your scrvUSD holdings. For instance, here we see our initial **953 scrvUSD (which acquired by depositing 1,000 crvUSD)** is now worth **1,016 crvUSD after 3 months**, representing a gain of **16 crvUSD, or 1.6%**.
-
-<figure style={{ textAlign: 'center' }}>
-  <ThemedImage
-    alt="Position Details"
-    sources={{
-      light: require('@site/static/img/ui/savings/position-details-light.png').default,
-      dark: require('@site/static/img/ui/savings/position-details-dark.png').default,
-    }}
-    style={{
-      maxWidth: '1000px',
-      width: '100%'
-    }}
-  />
-  <figcaption>*Value of 953 scrvUSD after 3 months*</figcaption>
-</figure>
-
----
-
-### Withdrawing from the Savings Vault
-
-#### Step 1: Go to the scrvUSD Vault
-
-You can withdraw your crvUSD from the vault at any time, there are **no delays or lock-ups**. Whenever you're ready to withdraw, simply navigate to the [scrvUSD vault page](https://www.curve.finance/crvusd/ethereum/scrvUSD/) on Curve.finance:
-
-<ButtonGrid buttonKeys={['gotoScrvusd']} />
-
-#### Step 2: Select Your Withdrawal Amount
-
-Once on the scrvUSD vault page, click on the `Withdraw` tab located on the left side of the interface.
-
-Here, you'll see your current scrvUSD balance. Enter the amount of scrvUSD you wish to withdraw, or click `Max`:
-
-<figure style={{ textAlign: 'center' }}>
-  <ThemedImage
-    alt="Withdrawal Amount"
-    sources={{
-      light: require('@site/static/img/ui/savings/withdraw-amount-light.png').default,
-      dark: require('@site/static/img/ui/savings/withdraw-amount-dark.png').default,
-    }}
-    style={{
-      maxWidth: '400px',
-      width: '100%'
-    }}
-  />
-  <figcaption></figcaption>
-</figure>
-
-Notice that the amount of scrvUSD tokens remains the same (e.g., **953 scrvUSD** from our example). However, because scrvUSD continuously grows in value, the initial **1,000 crvUSD** deposit can now be withdrawn as **1,022 crvUSD** after a few months, a profit of **22 crvUSD**!
-
-#### Step 3: Confirm and Complete Your Withdrawal
-
-After you've selected your withdrawal amount, click the `Withdraw` button and confirm the transaction in your Web3 wallet.
-
-Once this transaction is successfully confirmed on the blockchain, your crvUSD and earned interest will back in your wallet:
-
-<figure style={{ textAlign: 'center' }}>
-  <ThemedImage
-    alt="Withdrawal Success"
-    sources={{
-      light: require('@site/static/img/ui/savings/withdrawal-success-light.png').default,
-      dark: require('@site/static/img/ui/savings/withdrawal-success-dark.png').default,
-    }}
-    style={{
-      maxWidth: '400px',
-      width: '100%'
-    }}
-  />
-  <figcaption></figcaption>
-</figure>
-
-Congratulations on successfully withdrawing your crvUSD and realizing your earned yield!
 
 ---
 

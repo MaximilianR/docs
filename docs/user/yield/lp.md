@@ -36,6 +36,6 @@ todo: link to gauge section
 
 ## Guides
 
-<GuideCardGrid guideKeys={['learnToLP', 'learnLPRewards', 'lpInPool', 'claimPoolRewards']} />
+<GuideCardGrid guideKeys={['learnAboutPools', 'learnDexPoolRewards', 'howToDexDeposit', 'howToDexClaim']} />
 
 ---
