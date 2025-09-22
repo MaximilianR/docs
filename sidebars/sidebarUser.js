@@ -28,6 +28,7 @@ export default {
                     type: 'doc',
                     id: 'curve-tokens/scrvusd',
                     label: 'scrvUSD',
+                }
             ],
         },
         {
