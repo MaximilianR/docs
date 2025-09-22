@@ -1536,7 +1536,7 @@ admonition[type="info"] > p:last-child,
   margin-block-end: 0 !important;
 }
 
-/* Custom Warning Admonition */
+/* Custom Warning Admonition - PERFECT COPY of info admonition with warning colors */
 admonition[type="warning"],
 .admonition[type="warning"],
 .admonition.warning {
@@ -1547,9 +1547,7 @@ admonition[type="warning"],
   margin: var(--Spacing-lg) 0 !important;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-  display: flex !important;
-  align-items: center;
-  gap: 0 !important;
+  display: block !important;
   min-height: 48px;
 }
 
@@ -1569,7 +1567,7 @@ admonition[type="warning"]::before,
 admonition[type="warning"]::after,
 .admonition[type="warning"]::after,
 .admonition.warning::after {
-  content: '⚠';
+  content: '!';
   position: absolute;
   top: 50%;
   left: -10.5px;
@@ -1596,9 +1594,7 @@ admonition[type="warning"] .admonition-content,
   line-height: var(--Typography-LineHeight-md);
   font-size: var(--Typography-FontSize-md);
   padding-left: 40px;
-  display: flex;
-  align-items: center;
-  height: 100%;
+  display: block;
   margin: 0 !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
@@ -1621,13 +1617,25 @@ admonition[type="warning"] .admonition-content p,
   line-height: var(--Typography-LineHeight-md) !important;
 }
 
-admonition[type="warning"] p[style],
-.admonition[type="warning"] p[style],
-.admonition.warning p[style] {
+/* Add spacing between paragraphs in warning admonitions */
+admonition[type="warning"] .admonition-content p:not(:last-child),
+.admonition[type="warning"] .admonition-content p:not(:last-child),
+.admonition.warning .admonition-content p:not(:last-child) {
+  margin-bottom: var(--Spacing-sm) !important;
+}
+
+admonition[type="warning"] .admonition-content p[style*="margin-bottom"],
+.admonition[type="warning"] .admonition-content p[style*="margin-bottom"],
+.admonition.warning .admonition-content p[style*="margin-bottom"] {
   margin-bottom: 0 !important;
 }
 
-/* Nuclear option for warning admonitions */
+admonition[type="warning"] .admonition-content p[style*="margin-bottom: 24px"],
+.admonition[type="warning"] .admonition-content p[style*="margin-bottom: 24px"],
+.admonition.warning .admonition-content p[style*="margin-bottom: 24px"] {
+  margin-bottom: 0 !important;
+}
+
 admonition[type="warning"] p[style],
 .admonition[type="warning"] p[style],
 .admonition.warning p[style] {
@@ -1648,6 +1656,96 @@ admonition[type="warning"] > p,
   margin-inline-start: 0 !important;
   margin-inline-end: 0 !important;
 }
+
+admonition[type="warning"] > p:first-child,
+.admonition[type="warning"] > p:first-child,
+.admonition.warning > p:first-child {
+  margin-top: 0 !important;
+  margin-block-start: 0 !important;
+}
+
+admonition[type="warning"] > p:last-child,
+.admonition[type="warning"] > p:last-child,
+.admonition.warning > p:last-child {
+  margin-bottom: 0 !important;
+  margin-block-end: 0 !important;
+}
+
+
+/* Hide br elements in warning admonitions */
+admonition[type="warning"] br,
+.admonition[type="warning"] br,
+.admonition.warning br {
+  display: none;
+}
+
+/* Hide empty paragraphs in warning admonitions */
+admonition[type="warning"] .admonition-content p:empty,
+.admonition[type="warning"] .admonition-content p:empty,
+.admonition.warning .admonition-content p:empty {
+  display: none;
+}
+
+/* Hide paragraphs with only whitespace in warning admonitions */
+admonition[type="warning"] .admonition-content p:blank,
+.admonition[type="warning"] .admonition-content p:blank,
+.admonition.warning .admonition-content p:blank {
+  display: none;
+}
+
+/* Force consistent paragraph spacing in warning admonitions */
+admonition[type="warning"] .admonition-content p {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+admonition[type="warning"] .admonition-content p:not(:last-child),
+admonition[type="warning"] .admonition-content p:not(:last-child),
+.admonition.warning .admonition-content p:not(:last-child) {
+  margin-bottom: var(--Spacing-sm) !important;
+}
+
+/* Dark mode styling for warning admonition */
+[data-theme='dark'] admonition[type="warning"],
+[data-theme='dark'] .admonition[type="warning"],
+[data-theme='dark'] .admonition.warning {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid #f59e0b !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme='dark'] admonition[type="warning"]::before,
+[data-theme='dark'] .admonition[type="warning"]::before,
+[data-theme='dark'] .admonition.warning::before {
+  background: #f59e0b;
+}
+
+[data-theme='dark'] admonition[type="warning"]::after,
+[data-theme='dark'] .admonition[type="warning"]::after,
+[data-theme='dark'] .admonition.warning::after {
+  background: #f59e0b;
+  color: white;
+}
+
+[data-theme='dark'] admonition[type="warning"] .admonition-content,
+[data-theme='dark'] .admonition[type="warning"] .admonition-content,
+[data-theme='dark'] .admonition.warning .admonition-content {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] admonition[type="warning"] .admonition-content p,
+[data-theme='dark'] .admonition[type="warning"] .admonition-content p,
+[data-theme='dark'] .admonition.warning .admonition-content p {
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Add spacing between paragraphs in warning admonitions (dark mode) */
+[data-theme='dark'] admonition[type="warning"] .admonition-content p:not(:last-child),
+[data-theme='dark'] .admonition[type="warning"] .admonition-content p:not(:last-child),
+[data-theme='dark'] .admonition.warning .admonition-content p:not(:last-child) {
+  margin-bottom: var(--Spacing-sm) !important;
+}
+
 
 
 /* Custom Error Admonition */
@@ -2374,4 +2472,308 @@ svg.iconExternalLink_nPIU,
 .dropdown__link svg,
 .dropdown__link .iconExternalLink_nPIU {
   display: none !important;
+}
+
+/* Custom Green Tip Admonition */
+admonition[type="tip-green"],
+.admonition[type="tip-green"],
+.admonition.tip-green {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid #10b981 !important;
+  border-radius: 0 !important;
+  padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
+  margin: var(--Spacing-lg) 0 !important;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  display: flex !important;
+  align-items: center;
+  gap: 0 !important;
+  min-height: 48px;
+}
+
+admonition[type="tip-green"]::before,
+.admonition[type="tip-green"]::before,
+.admonition.tip-green::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background: #10b981;
+  border-radius: 0;
+}
+
+admonition[type="tip-green"]::after,
+.admonition[type="tip-green"]::after,
+.admonition.tip-green::after {
+  content: '💡';
+  position: absolute;
+  top: 50%;
+  left: -10.5px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: #10b981;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: var(--Typography-FontWeight-Bold);
+  font-family: var(--Text-FontFamily-Body);
+  z-index: 1;
+}
+
+admonition[type="tip-green"] .admonition-content,
+.admonition[type="tip-green"] .admonition-content,
+.admonition.tip-green .admonition-content {
+  flex: 1;
+  color: var(--Text-TextColors-Primary) !important;
+  line-height: var(--Typography-LineHeight-md);
+  font-size: var(--Typography-FontSize-md);
+  padding-left: 40px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+admonition[type="tip-green"] .admonition-content p,
+.admonition[type="tip-green"] .admonition-content p,
+.admonition.tip-green .admonition-content p {
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
+  color: var(--Text-TextColors-Secondary) !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-md) !important;
+}
+
+admonition[type="tip-green"] p[style],
+.admonition[type="tip-green"] p[style],
+.admonition.tip-green p[style] {
+  margin-bottom: 0 !important;
+}
+
+/* Target p elements directly within tip-green admonition */
+admonition[type="tip-green"] > p,
+.admonition[type="tip-green"] > p,
+.admonition.tip-green > p {
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
+}
+
+/* Dark mode styling for tip-green admonition */
+[data-theme='dark'] admonition[type="tip-green"],
+[data-theme='dark'] .admonition[type="tip-green"],
+[data-theme='dark'] .admonition.tip-green {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid #10b981 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme='dark'] admonition[type="tip-green"]::before,
+[data-theme='dark'] .admonition[type="tip-green"]::before,
+[data-theme='dark'] .admonition.tip-green::before {
+  background: #10b981;
+}
+
+[data-theme='dark'] admonition[type="tip-green"]::after,
+[data-theme='dark'] .admonition[type="tip-green"]::after,
+[data-theme='dark'] .admonition.tip-green::after {
+  background: #10b981;
+  color: white;
+}
+
+[data-theme='dark'] admonition[type="tip-green"] .admonition-content,
+[data-theme='dark'] .admonition[type="tip-green"] .admonition-content,
+[data-theme='dark'] .admonition.tip-green .admonition-content {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] admonition[type="tip-green"] .admonition-content p,
+[data-theme='dark'] .admonition[type="tip-green"] .admonition-content p,
+[data-theme='dark'] .admonition.tip-green .admonition-content p {
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Custom Important Admonition */
+admonition[type="important"],
+.admonition[type="important"],
+.admonition.important {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid #f59e0b !important;
+  border-radius: 0 !important;
+  padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
+  margin: var(--Spacing-lg) 0 !important;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  display: block !important;
+  min-height: 48px;
+}
+
+admonition[type="important"]::before,
+.admonition[type="important"]::before,
+.admonition.important::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background: #f59e0b;
+  border-radius: 0;
+}
+
+admonition[type="important"]::after,
+.admonition[type="important"]::after,
+.admonition.important::after {
+  content: '●';
+  position: absolute;
+  top: 50%;
+  left: -10.5px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: #f59e0b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: var(--Typography-FontWeight-Bold);
+  font-family: var(--Text-FontFamily-Body);
+  z-index: 1;
+}
+
+admonition[type="important"] .admonition-content,
+.admonition[type="important"] .admonition-content,
+.admonition.important .admonition-content {
+  flex: 1;
+  color: var(--Text-TextColors-Primary) !important;
+  line-height: var(--Typography-LineHeight-md);
+  font-size: var(--Typography-FontSize-md);
+  padding-left: 40px;
+  display: block;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+admonition[type="important"] .admonition-content p,
+.admonition[type="important"] .admonition-content p,
+.admonition.important .admonition-content p {
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
+  color: var(--Text-TextColors-Secondary) !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-md) !important;
+}
+
+/* Add spacing between paragraphs in important admonitions */
+admonition[type="important"] .admonition-content p:not(:last-child),
+.admonition[type="important"] .admonition-content p:not(:last-child),
+.admonition.important .admonition-content p:not(:last-child) {
+  margin-bottom: var(--Spacing-sm) !important;
+}
+
+/* Handle empty lines in important admonitions */
+admonition[type="important"] .admonition-content p + p,
+.admonition[type="important"] .admonition-content p + p,
+.admonition.important .admonition-content p + p {
+  margin-top: var(--Spacing-sm) !important;
+}
+
+admonition[type="important"] p[style],
+.admonition[type="important"] p[style],
+.admonition.important p[style] {
+  margin-bottom: 0 !important;
+}
+
+/* Target p elements directly within important admonition */
+admonition[type="important"] > p,
+.admonition[type="important"] > p,
+.admonition.important > p {
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
+}
+
+/* Dark mode styling for important admonition */
+[data-theme='dark'] admonition[type="important"],
+[data-theme='dark'] .admonition[type="important"],
+[data-theme='dark'] .admonition.important {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid #f59e0b !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme='dark'] admonition[type="important"]::before,
+[data-theme='dark'] .admonition[type="important"]::before,
+[data-theme='dark'] .admonition.important::before {
+  background: #f59e0b;
+}
+
+[data-theme='dark'] admonition[type="important"]::after,
+[data-theme='dark'] .admonition[type="important"]::after,
+[data-theme='dark'] .admonition.important::after {
+  background: #f59e0b;
+  color: white;
+}
+
+[data-theme='dark'] admonition[type="important"] .admonition-content,
+[data-theme='dark'] .admonition[type="important"] .admonition-content,
+[data-theme='dark'] .admonition.important .admonition-content {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] admonition[type="important"] .admonition-content p,
+[data-theme='dark'] .admonition[type="important"] .admonition-content p,
+[data-theme='dark'] .admonition.important .admonition-content p {
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Add spacing between paragraphs in important admonitions (dark mode) */
+[data-theme='dark'] admonition[type="important"] .admonition-content p:not(:last-child),
+[data-theme='dark'] .admonition[type="important"] .admonition-content p:not(:last-child),
+[data-theme='dark'] .admonition.important .admonition-content p:not(:last-child) {
+  margin-bottom: var(--Spacing-sm) !important;
+}
+
+/* Handle empty lines in important admonitions (dark mode) */
+[data-theme='dark'] admonition[type="important"] .admonition-content p + p,
+[data-theme='dark'] .admonition[type="important"] .admonition-content p + p,
+[data-theme='dark'] .admonition.important .admonition-content p + p {
+  margin-top: var(--Spacing-sm) !important;
 }

@@ -1,5 +1,7 @@
 ---
-title: Deploying a Stableswap Pool
+id: deploy-stableswap
+title: "Deploying a Stableswap Pool"
+sidebar_label: "Deploying a Stableswap Pool"
 ---
 
 import ThemedImage from '@theme/ThemedImage';
@@ -7,8 +9,6 @@ import ThemedImage from '@theme/ThemedImage';
 The Stableswap pool creation is appropriate for assets expected to hold a price peg very close to each other, like a pair of dollarcoins. The creation wizard will guide you through the process of creating a pool, but if you have questions throughout you are encouraged to speak with a member of the Curve team in the [**Telegram**](https://t.me/curvefi) or [**Discord**](https://discord.gg/rgrfS7W).
 
 Stableswap pools are liquidity pools containing **up to eight tokens** using the StableSwap algorithm (Curve V1). For a better understanding of StableSwap, please see here: [**Understanding Curve Pools**](../pools/overview.md).
-
----
 
 ## **Step 1: Choose Pool Type**
 
@@ -31,9 +31,6 @@ Select Stableswap as the pool type. This is used for assets that should maintain
   />
   <figcaption></figcaption>
 </figure>
-
-
----
 
 ## **Step 2: Select Tokens**
 
@@ -85,8 +82,6 @@ To add a metapool, simply tick on "View Metapools" when selecting a the token an
     <figcaption></figcaption>
   </figure>
 
----
-
 - ### Oracle-Based Tokens
 
   Check the **Oracle** box if a token requires an external price feed. You'll be asked to enter:
@@ -132,9 +127,6 @@ To add a metapool, simply tick on "View Metapools" when selecting a the token an
     <figcaption></figcaption>
   </figure>
 
-
----
-
 - ### Rebasing Tokens
 
   Enable the **Rebasing** option for tokens whose balances adjust automatically (e.g. stETH). These behave differently from standard ERC‑20s and require special handling in the AMM.
@@ -158,8 +150,6 @@ To add a metapool, simply tick on "View Metapools" when selecting a the token an
     />
     <figcaption></figcaption>
   </figure>
-
----
 
 - ### ERC‑4626 Vault Tokens
 
@@ -185,12 +175,7 @@ To add a metapool, simply tick on "View Metapools" when selecting a the token an
     <figcaption></figcaption>
   </figure>
 
----
-
 Once you've selected and configured all your tokens, click **Next →** to continue to the pool parameters.
-
----
-
 
 ## **Step 3: Set Pool Parameters**
 
@@ -234,8 +219,6 @@ The UI offers three default parameter sets optimized for typical use cases. Thes
 
 You can use these as-is or switch to **Advanced** mode to adjust parameters manually.
 
----
-
 ### Advanced Parameters
 
 To choose your own parameters, simply toggle on the "Advanced" toggle:
@@ -263,13 +246,7 @@ To choose your own parameters, simply toggle on the "Advanced" toggle:
 | **Off-peg Fee Multiplier** | `0` to `12.5`   | Dynamically increases the fee when the pool becomes imbalanced. Try the [Desmos Simulator](https://www.desmos.com/calculator/zhrwbvcipo) to visualize how this works. |
 | **Moving Average Time**  | `60` to `3600s`  | Smooths the oracle price over time to reduce short-term volatility. |
 
----
-
 Once you're satisfied with the parameter settings, click **Next →** to continue.
-
-
----
-
 
 ## **Step 4: Enter Pool Info**
 
@@ -296,11 +273,7 @@ These values will be used as the ERC‑20 metadata for the pool’s LP token and
   <figcaption></figcaption>
 </figure>
 
-> 💡 **Tip:** Use short, clear names that reflect the assets in the pool. For metapools, it’s common to include the base pool symbol (e.g. `sDAI3CRV` for a sDAI/3CRV pool).
-
-> These fields are immutable after deployment — double-check for typos.
-
----
+> 💡 **Tip:** Use short, clear names that reflect the assets in the pool. For metapools, it’s common to include the base pool symbol (e.g. `sDAI3CRV` for a sDAI/3CRV pool). These fields are immutable after deployment — double-check for typos.
 
 ## **Step 5: Deploy the Pool**
 
@@ -329,4 +302,3 @@ Once everything looks correct, click the blue **Create Pool** button at the bott
 
 ✅ **Seed initial liquidity** — a pool with zero balance cannot process trades.  
 ✅ (Optional) **[Create a gauge](../reward-gauges/creating-a-pool-gauge.md)** to distribute CRV or other incentives to LPs.
-

@@ -8,8 +8,7 @@ import GuideCardGrid from '@site/src/components/GuideCardGrid';
 import CrvSupply from '@site/src/components/LiveComponents/CrvSupply';
 import InlinePill from '@site/src/components/InlinePill';
 import CrvAllocationChart from '@site/src/components/Charts/CrvAllocation';
-import CrvReleaseScheduleChart from '@site/src/components/Charts/CrvReleaseSchedule';
-
+import CrvInflationCumulative from '@site/src/components/Charts/CrvInflationCumulative';
 import CrvLogo from '@site/static/img/logos/CRV_s.png';
 
 # <img src={CrvLogo} className="heading-inline-logo" alt="CRV" /> The CRV Token
@@ -34,7 +33,7 @@ The following table pulls current data from <InlinePill icon="/img/logos/ethereu
 
 <CrvSupply />
 
-## Allocation
+## Tokenomics
 
 The chart below illustrates the initial distribution of the CRV token at launch.
 
@@ -42,15 +41,15 @@ The chart below illustrates the initial distribution of the CRV token at launch.
 
 The Community allocation represents a dedicated supply that is emitted over time as rewards for liquidity providers. Allocations for the Core Team, Investors, and Employees have all fully unlocked.
 
-## Release Schedule
+## Emission Schedule
 
 The chart below shows the cumulative release of CRV tokens over time, including vesting schedules for different allocation categories.
 
-todo: fix chart
+<CrvInflationCumulative />
 
-<CrvReleaseScheduleChart />
-
-The chart shows the cumulative release of CRV tokens over time. Community Reserve has no vesting period and is fully available for liquidity provider rewards.
+:::info
+The chart shows the cumulative release of CRV tokens over time. Community emissions decrease by 16% each August, while all vesting schedules have completed as of August 2024. The majority of remaining CRV will be emitted to liquidity providers over the next ~200 years.
+:::
 
 ## FAQ
 
