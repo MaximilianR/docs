@@ -164,6 +164,7 @@ export default function CrvInflationCumulative() {
       alignItems: 'flex-start', 
       gap: '2rem', 
       margin: '2rem 0',
+      marginTop: '3rem', // Increased top margin for more space from admonition
       maxWidth: '1000px',
       marginLeft: 'auto',
       marginRight: 'auto'
@@ -503,22 +504,7 @@ export default function CrvInflationCumulative() {
         </div>
 
         {/* Bottom spacing - 50px to match chart's bottom margin */}
-        <div style={{ 
-          height: '50px',
-          display: 'flex',
-          alignItems: 'flex-start',
-          paddingTop: '0.5rem'
-        }}>
-          <p style={{
-            fontSize: '0.7rem',
-            color: 'var(--ifm-color-emphasis-500)',
-            margin: '0',
-            fontStyle: 'italic',
-            lineHeight: '1.3'
-          }}>
-            * Chart shows first 10 years. CRV inflation continues for ~200 years total.
-          </p>
-        </div>
+        <div style={{ height: '50px' }}></div>
       </div>
     </div>
   );

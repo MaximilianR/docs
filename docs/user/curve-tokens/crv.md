@@ -47,7 +47,9 @@ The chart below shows the cumulative release of CRV tokens over time, including 
 
 <CrvInflationCumulative />
 
+:::info
 The chart shows the cumulative release of CRV tokens over time. Community emissions decrease by 16% each August, while all vesting schedules have completed as of August 2024. The majority of remaining CRV will be emitted to liquidity providers over the next ~200 years.
+:::
 
 ## FAQ
 
