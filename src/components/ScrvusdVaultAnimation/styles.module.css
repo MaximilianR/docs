@@ -1,0 +1,14 @@
+.svgContainer {
+  width: 100%;
+  max-width: 1400px;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.svgContainer svg {
+  width: 80%;
+  min-width: 300px;
+  height: auto;
+  display: block;
+}

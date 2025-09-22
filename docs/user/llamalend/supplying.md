@@ -5,6 +5,7 @@ sidebar_label: Supplying
 ---
 
 import ThemedImage from '@theme/ThemedImage';
+import GuideCardGrid from '@site/src/components/GuideCardGrid';
 
 Supplying assets means lending out your crypto assets to other users who can borrow them, earning interest in return.
 
@@ -13,6 +14,12 @@ Supplying assets means lending out your crypto assets to other users who can bor
 Supplying crypto to Llamalend is a way to earn a return on your holdings. When you provide liquidity, or "supply assets," you’re essentially lending your crypto to borrowers. As a lender, you **earn passive income from the interest borrowers pay**. 
 
 Llamalend markets are **isolated and one-way**, which makes them safer. This means each market is self-contained with just one type of collateral and one type of borrowable token. Because markets are separate, a problem in one won't spread to another. This design helps reduce risk, making it more comfortable to supply your assets, and importantly, it means it's safe to allow the creation of lending markets by anyone.
+
+## Guides
+
+See the guides below for how to use the UI to supply, withdraw or claim rewards from a Llamalend market.
+
+<GuideCardGrid guideKeys={['howToLlamalendSupplyDeposit', 'howToLlamalendSupplyClaim', 'howToLlamalendSupplyWithdraw']} />
 
 ## How Supplying Works
 

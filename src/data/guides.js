@@ -7,9 +7,9 @@ export const ALL_GUIDES = {
   },
   claimingVecrvRevenue: {
     title: 'Claiming Revenue Share',
-    description: 'Learn how to claim your revenue share from your veCRV tokens.',
+    description: 'Learn more about veCRV revenue, including statistics, eligibility and how to claim.',
     image: '',
-    link: '/user/yield/revenue',
+    link: '/user/vecrv/revenue',
   },
   claimingCrvRewards: {
     title: 'How to Claim CRV Rewards',
@@ -35,36 +35,35 @@ export const ALL_GUIDES = {
     image: '',
     link: '/user/lending/guides/beginner/open-and-close',
   },
-  swapping: {
-    title: "How to Swap on Curve's DEX",
-    description: "This guide teaches you how to swap a token you own for a different asset through Curve's Decentralized Exchange (DEX).",
-    image: '',
-    link: '/user/dex/guides/how-to-swap',
-  },
   scrvusd: {
-    title: 'How to earn with scrvUSD',
-    description: "This guide teaches you how to earn yield in crvUSD with Curve's Savings Vault (scrvUSD).",
+    title: 'Learn more about scrvUSD',
+    description: "Learn about how scrvUSD works, current statistics, and guides for depositing and withdrawing.",
     image: '',
     link: '/user/yield/scrvusd',
   },
-  
   depositScrvusd: {
-    title: 'How to Deposit crvUSD to the scrvUSD Savings Vault',
+    title: 'How to Deposit to the Savings Vault',
     description: "Learn how to use the UI to deposit your crvUSD to the Savings Vault.",
     image: '',
-    link: '/user/yield/scrvusd#depositing-into-the-savings-vault',
+    link: '/user/yield/guides/deposit-scrvusd',
   },
   withdrawScrvusd: {
-    title: 'How to Withdraw your crvUSD from the scrvUSD Savings Vault',
+    title: 'How to Withdraw from the Savings Vault',
     description: "Learn how to use the UI to redeem your scrvUSD for the underlying crvUSD.",
     image: '',
-    link: '/user/yield/scrvusd#withdrawing-from-the-savings-vault',
+    link: '/user/yield/guides/withdraw-scrvusd',
   },
-  lpInPool: {
-    title: 'How to Deposit and Withdraw from a Pool',
-    description: "Learn how to use the UI to deposit, withdraw and stake your assets.",
+  checkEarningsScrvusd: {
+    title: 'Check Your scrvUSD Earnings',
+    description: "Learn how to check your earned crvUSD from the Savings Vault (Ethereum Only).",
     image: '',
-    link: '/user/dex/guides/how-to-lp',
+    link: '/user/yield/guides/check-earnings',
+  },
+  learnAboutPools: {
+    title: 'Learn More about DEX Pools',
+    description: "Learn about the types of Pools within Curve, and how providing liquidity works",
+    image: '',
+    link: '/user/dex/overview',
   },
   claimPoolRewards: {
     title: 'How to Claim Pool Rewards',
@@ -72,11 +71,11 @@ export const ALL_GUIDES = {
     image: '',
     link: '/user/dex/guides/how-to-claim-rewards',
   },
-  learnLPRewards: {
-    title: 'Learn about LP Rewards',
+  learnDexPoolRewards: {
+    title: 'Learn about DEX Pool Rewards',
     description: "Learn more about how pool LP rewards are earned, accrue and are claimed.",
     image: '',
-    link: '/user/dex/earning-yield',
+    link: '/user/dex/understanding-rewards',
   },
   learnToLP: {
     title: 'Learn about Providing Liquidity to Pools',
@@ -84,17 +83,59 @@ export const ALL_GUIDES = {
     image: '',
     link: '/user/dex/liquidity',
   },
+  howToSwap: {
+    title: 'How to Swap Assets',
+    description: "Learn how to swap/trade assets using Curve's Swap Router",
+    image: '',
+    link: '/user/dex/guides/swap',
+  },
+  howToDexDeposit: {
+    title: 'How to Deposit into a DEX Pool',
+    description: "Learn how to become a liquidity provider by depositing into a Curve DEX pool",
+    image: '',
+    link: '/user/dex/guides/deposit',
+  },
+  howToDexWithdraw: {
+    title: 'How to Unstake & Withdraw from a DEX Pool',
+    description: "Learn how to unstake your LP tokens and withdraw from a Curve DEX pool",
+    image: '',
+    link: '/user/dex/guides/withdraw',
+  },
+  howToDexClaim: {
+    title: 'How to Claim Rewards',
+    description: "Learn how to claim your earned LP rewards from a Curve DEX pool",
+    image: '',
+    link: '/user/dex/guides/claim-rewards',
+  },
   learnLlamalend: {
     title: 'Learn how Llamalend Works',
     description: "Learn more about Lending, borrowing and risks involved with Llamalend.",
     image: '',
-    link: '/user/lending/primitives',
+    link: '/user/llamalend/overview',
   },
-  howToLend: {
-    title: 'How to Lend with Llamalend',
-    description: "This guide teaches you how to Lend or withdraw your assets from Llamalend and claim any earned rewards.",
+  learnLlamalendSupplying: {
+    title: 'Learn more about how Supplying works',
+    description: "Learn more about supplying (lending) your assets to llamalend markets and earning yield.",
     image: '',
-    link: '/user/lending/guides/beginner/lending',
+    link: '/user/llamalend/supplying',
+  },
+  howToLlamalendSupplyDeposit: {
+    title: 'Supply to a Llamalend Market',
+    description: "Learn how to use the UI to deposit (lend) your assets to Llamalend markets and earn yield.",
+    image: '',
+    link: '/user/llamalend/guides/supply/deposit',
+  },
+  howToLlamalendSupplyWithdraw: {
+    title: 'Withdraw from a Llamalend Market',
+    description: "Learn how to use the UI to withdraw your supplied assets from a Llamalend markets.",
+    image: '',
+    link: '/user/llamalend/guides/supply/withdraw',
+  },
+  howToLlamalendSupplyClaim: {
+    title: 'How to Claim Rewards',
+    description: "Learn how to use the UI to claim your earned token rewards from a Llamalend market.",
+    image: '',
+    link: '/user/llamalend/guides/supply/claim-rewards',
   },
   howToBorrow: {
     title: 'How to Borrow with Llamalend',
@@ -197,5 +238,11 @@ export const ALL_GUIDES = {
     description: "This guide teaches you what to do if your loan is in liquidation.",
     image: '',
     link: '/user/llamalend/guides/borrow/liquidation',
+  },
+  learnBoosting:  {
+    title: 'Learn more about Boosting',
+    description: "Learn more about how boosting works, including calculators and the boosting formula.",
+    image: '',
+    link: '/user/vecrv/boosting',
   },
 };

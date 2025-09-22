@@ -54,6 +54,7 @@ const CrvSupply = () => {
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
   return (
+    <div>
     <table className="metric-table" >
       <thead>
         <tr>
@@ -84,6 +85,16 @@ const CrvSupply = () => {
         </tr>
       </tbody>
     </table>
+    <div style={{ 
+      fontSize: '0.8rem', 
+      color: 'var(--ifm-color-emphasis-600)',
+      fontStyle: 'italic',
+      textAlign: 'center',
+      marginBottom: '1.5rem'
+    }}>
+      Last updated: {supplyData?.lastUpdated?.toLocaleString()}
+    </div>
+    </div>
   );
 };
 

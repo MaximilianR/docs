@@ -22,34 +22,14 @@ Boosting is a mechanism tied to [**veCRV**](../vecrv/what-is-vecrv.md) (vote-esc
 
 Think of veCRV as your long-term commitment to the Curve ecosystem. In return for this commitment, the protocol rewards you with increased CRV emissions on your supplied liquidity. Essentially, with enough veCRV, you can earn up to **2.5 times** the CRV rewards you would normally receive from your LP tokens!
 
-## How Boosting Works
-
-1.  [**Lock CRV for veCRV**](../vecrv/how-to-lock.md): The first step is to take your CRV tokens lock them on Curve. This converts your CRV into non-transferable veCRV. Remember, as your CRV unlock date approaches, your veCRV balance will decrease.
-2.  **Provide Liqidity & Stake:** Provide liquidity to your chosen pool or lending market and stake your LP tokens in its gauge.
-3.  **Apply Your Boost:** Usually this happens automatically, but sometimes you may need to "apply" your boost by claiming any available CRV rewards.
-4. **Your Boost is Applied**: 
-
-## What will my Boost Mutliplier be?
-
-You can calculate the boost you will receive with the Boost Caculator, link below:
-
-<ButtonGrid buttonKeys={['boostCalculator']} />
-
-Your boost multiplier can be between 1 and 2.5.  It depends on the following factors:
-
-    * **Your veCRV balance:** More veCRV means a higher potential boost.
-    * **The amount of liquidity you provide:** Your boost is calculated relative to your liquidity.
-    * **The total veCRV and liquidity in the gauge:** The boost mechanism balances your veCRV power against everyone else's in the Pool or Lending market's gauge.
-
-By boosting, you're essentially getting a larger share of the new CRV tokens distributed. This incentivizes users to lock CRV, which in turn strengthens the Curve DAO's governance and promotes long-term alignment with the protocol.
-
 **Why Boost?**
+
 Boosting is a key incentive for long-term participation in the Curve ecosystem. It allows active liquidity providers to significantly increase their CRV farming efficiency, making their contributions even more profitable.
 
 ---
 
-## Guides
+## More Information
 
-<GuideCardGrid guideKeys={['lockingCrv', 'claimingCrvRewards']} />
+For more information about Boosting or How to Lock CRV, check out the guides below.
 
----
+<GuideCardGrid guideKeys={['learnBoosting', 'lockingCrv']} />

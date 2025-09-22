@@ -113,6 +113,3 @@ No, rewards accumulate and can be claimed at any time without forfeiting any rew
 
 ### What was the original reward token before crvUSD?
 Previously, revenue was distributed using 3CRV tokens (LP tokens of the 3pool). The DAO later decided to switch to crvUSD.
-
-
-

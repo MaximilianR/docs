@@ -20,25 +20,10 @@ const ScrvusdSupply = () => {
         setLoading(true);
         setError(null);
 
-        // Try to fetch data with CORS proxy for development
-        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-        const isDevelopment = window.location.hostname === 'localhost';
-        
-        const marketsUrl = isDevelopment ? `${corsProxy}${MARKETS_API_URL}` : MARKETS_API_URL;
-        const pegkeepersUrl = isDevelopment ? `${corsProxy}${PEGKEEPERS_API_URL}` : PEGKEEPERS_API_URL;
-
         // --- Step 1: Fetch and calculate the total crvUSD supply ---
         const [marketsRes, pegkeepersRes] = await Promise.all([
-          fetch(marketsUrl, {
-            headers: isDevelopment ? {
-              'X-Requested-With': 'XMLHttpRequest'
-            } : {}
-          }),
-          fetch(pegkeepersUrl, {
-            headers: isDevelopment ? {
-              'X-Requested-With': 'XMLHttpRequest'
-            } : {}
-          }),
+          fetch(MARKETS_API_URL),
+          fetch(PEGKEEPERS_API_URL),
         ]);
 
         if (!marketsRes.ok || !pegkeepersRes.ok) {
@@ -49,7 +34,6 @@ const ScrvusdSupply = () => {
         const pegkeepersData = await pegkeepersRes.json();
         
         const borrowed = marketsData.chains.ethereum.data.reduce((acc, market) => acc + market.total_debt, 0);
-        // const pegkeeperReserves = pegkeepersData.keepers.reduce((acc, keeper) => acc + keeper.total_debt, 0);
         const crvusdTotalSupply = borrowed;
 
 
@@ -57,13 +41,8 @@ const ScrvusdSupply = () => {
         const endTime = Math.floor(Date.now() / 1000);
         const startTime = endTime - (86400 * 7); // 7 days ago
         const savingsApiUrl = `https://prices.curve.finance/v1/crvusd/savings/yield?agg_number=1&agg_units=hour&start=${startTime}&end=${endTime}`;
-        const savingsUrl = isDevelopment ? `${corsProxy}${savingsApiUrl}` : savingsApiUrl;
 
-        const savingsRes = await fetch(savingsUrl, {
-          headers: isDevelopment ? {
-            'X-Requested-With': 'XMLHttpRequest'
-          } : {}
-        });
+        const savingsRes = await fetch(savingsApiUrl);
         if (!savingsRes.ok) {
           throw new Error('Failed to fetch scrvUSD savings data.');
         }
@@ -79,8 +58,9 @@ const ScrvusdSupply = () => {
         const totalStaked = latestData.assets;
         const scrvusdTotalSupply = latestData.supply;
         const stakedRatio = crvusdTotalSupply > 0 ? (totalStaked / crvusdTotalSupply) * 100 : 0;
-        const yieldApy = latestData.proj_apy; // Convert to percentage
+        const yieldApy = latestData.proj_apy;
         const price = latestData.price;
+        const lastUpdated = new Date();
 
         setSupplyData({
           crvusdTotalSupply,
@@ -89,26 +69,13 @@ const ScrvusdSupply = () => {
           stakedRatio,
           yieldApy,
           price,
+          lastUpdated,
         });
 
       } catch (err) {
         console.error("Failed to fetch scrvUSD data:", err);
-        
-        // Fallback to static data for development
-        if (window.location.hostname === 'localhost') {
-          console.log("Using fallback data for development");
-          setSupplyData({
-            crvusdTotalSupply: 120000000, // Example fallback data
-            totalStaked: 80000000,
-            scrvusdTotalSupply: 75000000,
-            stakedRatio: 66.67,
-            yieldApy: 8.5,
-            price: 1.067,
-          });
-          setError(null); // Clear error for fallback data
-        } else {
-          setError("Could not retrieve scrvUSD supply data.");
-        }
+        // Always set the error state on failure
+        setError("Could not retrieve scrvUSD supply data.");
       } finally {
         setLoading(false);
       }
@@ -121,6 +88,7 @@ const ScrvusdSupply = () => {
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
   return (
+    <div>
     <table className="metric-table">
       <thead>
         <tr>
@@ -145,7 +113,7 @@ const ScrvusdSupply = () => {
         </tr>
         <tr>
           <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> crvUSD per <img src={ScrvusdLogo} className="subheading-inline-logo" alt="scrvUSD" /> scrvUSD</td>
-          <td>{formatNumber(supplyData?.price, 4)}</td>
+          <td>{formatNumber(supplyData?.price, 5)}</td>
         </tr>
         <tr>
           <td><img src={ScrvusdLogo} className="subheading-inline-logo" alt="scrvUSD" /> scrvUSD Yield (APY)</td>
@@ -153,6 +121,16 @@ const ScrvusdSupply = () => {
         </tr>
       </tbody>
     </table>
+    <div style={{ 
+      fontSize: '0.8rem', 
+      color: 'var(--ifm-color-emphasis-600)',
+      fontStyle: 'italic',
+      textAlign: 'center',
+      marginBottom: '1.5rem'
+    }}>
+      Last updated: {supplyData?.lastUpdated?.toLocaleString()}
+    </div>
+    </div>
   );
 };
 

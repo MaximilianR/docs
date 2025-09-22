@@ -5,11 +5,12 @@ sidebar_label: Boosting Rewards
 ---
 
 import ThemedImage from '@theme/ThemedImage';
+import ButtonGrid from '@site/src/components/ButtonGrid';
 
 # Boosting CRV Rewards
 
 :::info Prerequisites
-This guide assumes you have already provided liquidity and are currently staking LP tokens on the DAO gauge. If you haven't done this yet, see our [liquidity provision guide](todo).
+This guide assumes you have already provided liquidity and are currently staking LP tokens on the DAO gauge. If you haven't done this yet, see our [DEX liquidity provision guide](../dex/liquidity.md) or [Llamalend supplying guide](../llamalend/supplying.md).
 :::
 
 One of the main incentives for holding CRV is the ability to boost rewards on provided liquidity. By locking CRV for veCRV, you not only gain voting power in the DAO and revenue share, but also earn a boost of up to **2.5x** on your liquidity rewards across Curve pools and lending markets.
@@ -40,7 +41,9 @@ The first step to getting rewards boosted is to determine how much veCRV you nee
 - The total value locked (TVL) in the gauge
 - Your own liquidity position
 
-Use the [boost calculator](https://dao-old.curve.finance/minter/calc) to determine your specific requirements.
+Use the [boost calculator](https://dao-old.curve.finance/minter/calc) to determine your specific requirements:
+
+<ButtonGrid buttonKeys={['boostCalculator']} />
 
 ## Step 2: Lock CRV for veCRV
 
@@ -73,11 +76,19 @@ Boosts are only updated when you make a withdrawal, deposit, or claim from a liq
 
 ## How the Boost Formula Works
 
-The boost mechanism calculates the earning weight of your liquidity in pools and vaults. With enough veCRV, you can boost your earning weight by up to **2.5x**. This means if you have a 2.5x boost and deposit \$10,000, your rewards are calculated as if you deposited $25,000.
+Your boost multiplier can be between 1 and 2.5.  This means if you have a 2.5x boost and deposit \$10,000, your rewards are calculated as if you deposited $25,000.  It depends on the following factors:
+
+    * **Your veCRV balance:** More veCRV means a higher potential boost.
+    * **The amount of liquidity you provide:** Your boost is calculated relative to your liquidity.
+    * **The total veCRV and liquidity in the gauge:** The boost mechanism balances your veCRV power against everyone else's in the Pool or Lending market's gauge.
+
+By boosting, you're essentially getting a larger share of the new CRV tokens distributed. This incentivizes users to lock CRV, which in turn strengthens the Curve DAO's governance and promotes long-term alignment with the protocol.
 
 ### The Boost Formula
 
-$$B = \min\left(2.5, 0.4 + 2.5 \times \frac{\text{veCRV}_\text{user}}{\text{veCRV}_\text{total}} \times \frac{\text{Value}_\text{pool}}{\text{Value}_\text{user}}\right)$$
+$$
+B = \min\left(2.5, 0.4 + 2.5 \times \frac{\text{veCRV}_\text{user}}{\text{veCRV}_\text{total}} \times \frac{\text{Value}_\text{pool}}{\text{Value}_\text{user}}\right)
+$$
 
 **Formula Variables:**
 
