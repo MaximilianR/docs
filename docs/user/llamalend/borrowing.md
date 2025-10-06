@@ -22,11 +22,11 @@ Borrowing on Llamalend allows you to access liquidity while maintaining exposure
 
 For detailed information about liquidation protection and loan health monitoring, see [Liquidation Protection & Loan Health](./liquidations.md).
 
-## Getting Started with Guides
-
 Ready to start borrowing? Check out our step-by-step guides:
 
 <GuideCardGrid guideKeys={['howToOpenAndCloseLoan', 'howToManageLoan', 'whatToDoIfLoanInLiquidation']} />
+
+---
 
 ## Borrow Rates
 

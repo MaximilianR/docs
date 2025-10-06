@@ -16,11 +16,11 @@ scrvUSD is short for savings-crvUSD, and it functions like a bank savings accoun
 
 The yield comes from receiving a share of the crvUSD borrowing revenue.  The underlying crvUSD is not deployed to external pools or lending markets. It remains safely within the vault, minimizing risk.
 
-## Quick Links
-
 See the link below for more information about scrvUSD and how the vault works.
 
 <GuideCardGrid guideKeys={['scrvusd']} />
+
+---
 
 ## Current scrvUSD Stats
 

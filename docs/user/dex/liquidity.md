@@ -18,10 +18,6 @@ If you're interested in all the different rewards you can earn as an LP, or what
 It's important to remember that providing liquidity to pools comes with risks.  See the disclaimer here: [Pool Risks](../security/risks/pools.md)
 :::
 
----
-
-## Guides
-
 Below are links with guides on how to use the UI to deposit, withdraw, stake and claim your rewards.
 
 <GuideCardGrid guideKeys={['howToDexDeposit', 'howToDexWithdraw', 'howToDexClaim']} />

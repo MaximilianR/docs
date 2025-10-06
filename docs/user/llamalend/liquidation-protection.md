@@ -17,8 +17,6 @@ Curve's liquidation mechanism works differently from other protocols. Instead of
 
 The key takeaway is your **health factor**. As long as it remains above zero, your position is protected from a full liquidation. This system replaces the instant liquidations common elsewhere, giving you a crucial window to manage your loan and maintain control.
 
----
-
 ## How Does Liquidation Protection Work?
 
 When your collateral price drops into the [liquidation protection range](#what-is-the-liquidation-protection-range), the system automatically starts protecting your position by gradually converting your volatile collateral (e.g., ETH) into stable crvUSD. This creates a safety buffer that reduces your exposure to price volatility. The further down the price goes, the more of your collateral will be converted into crvUSD.
@@ -42,8 +40,6 @@ It's important to remember that the protective swapping of collateral is what in
 
 <CollateralConversion />
 
----
-
 ## What is the Liquidation Protection Range?
 
 Your **liquidation protection range** is a price zone for your collateral defined by a high and a low point. Your loan enters protection mode if the market price of your collateral drops into this zone.
@@ -60,7 +56,7 @@ The range's position and size are determined by can be each controlled with a ke
 * **More bands** (e.g., 20-50) = **Wider** protection range = Lower risk.
 * **Fewer bands** (e.g., 4-10) = **Narrower** protection range = Higher risk.
 
-### **What are Bands?**
+## What are Bands?
 
 Bands are small price ranges where all user collateral is grouped together.  Using bands makes Llamalend more efficient, because it can convert one piece of collateral for all users at single time, instead of each user requiring their own separate conversion.  Bands are only shown under the `Advanced view` on Llamalend:
 
@@ -75,8 +71,6 @@ Bands are small price ranges where all user collateral is grouped together.  Usi
 />
 </figure>
 
----
-
 ## What is Loan Health and How Does It Decrease?
 
 **Health is the most important metric to monitor** because it determines when your loan will be fully liquidated. You should always keep track of your loan's health, regardless of market conditions.
@@ -90,15 +84,13 @@ Bands are small price ranges where all user collateral is grouped together.  Usi
 
 For tips on monitoring and preventing health issues, see [How Can I Monitor and Prevent Problems?](#how-can-i-monitor-and-prevent-problems).
 
----
-
 ## What are the Losses During Liquidation Protection?
 
 When your position enters the liquidation protection zone, losses occur due to the constant change of your collateral composition. The system gradually converts your volatile collateral into stable crvUSD by offering it for sale at a discount to the current price. This results in losses.
 
 The exact amount of loss is hard to predict as it depends on external factors like market volatility and liquidity. However, the most significant factor is one you can control: **the number of bands you select for your loan.**
 
-### **Band Choice Impact:**
+## Band Choice Impact
 
 - **More bands = Bigger Range = Fewer losses**: Spreading your collateral across many bands creates a wide protection range. This gives the system more time to gradually convert your collateral during a price drop, which typically results in **smaller losses**.
 - **Fewer bands = Smaller Range = Higher losses**: Less bands concentrates your collateral over a very small protection range.  This works fine when prices move very slowly.  However, a sudden price drop can force the system to sell your collateral very quickly, leading to **higher losses** and increasing the risk of full liquidation.
@@ -112,8 +104,6 @@ No. Losses occur **only** when your position is within the liquidation protectio
 :::warning Important Note
 These losses are not temporary - they are permanent reductions in your collateral value that occur during the liquidation protection process. The key is to monitor your position's health and take action before losses accumulate too much.
 :::
-
----
 
 ## When Does My Loan Enter Liquidation Protection?
 
@@ -130,8 +120,6 @@ A loan enters liquidation protection when the price of the collateral asset fall
 />
 </figure>
 
----
-
 ## What Can I Do When My Loan is in Liquidation Protection?
 
 While a loan is in liquidation protection, the actions a user can take are limited. The most important metric to watch is the loan's health. If a loan is NOT in liquidation protection, users have all possibilities and there are no restrictions at all.
@@ -145,8 +133,6 @@ While a loan is in liquidation protection, the actions a user can take are limit
 
 **Important Understanding:**
 Only repaying all of the debt and therefore fully closing the loan will get the user out of liquidation protection. Repaying some debt (even if it's 99% of all the their debt) will only increase the health of the loan, but will not get the loan out of liquidation nor change the liquidation range.
-
----
 
 ## Can My Position Recover from Liquidation Protection?
 
@@ -169,8 +155,6 @@ Only repaying all of the debt and therefore fully closing the loan will get the 
 
 Note that above, when your collateral is swapped, you lose health, regardless if prices are increasing or decreasing.  So your health can go to 0 even if prices are increasing.  
 
----
-
 ## What happens underneath the Liquidation Protection Range?
 
 If the price goes lower than your Liquidation Protection range with positive health and fully converted collateral, you are completely safe from further price declines.  While underneath the range, your health will only decline from debt increasing from interest on your loan.
@@ -188,8 +172,6 @@ If the price goes lower than your Liquidation Protection range with positive hea
 
 If you get here, it's normally best to repay your loan and reopen it, because there is a very high chance of liquidation from collateral conversion losses if you go back up through the Liquidation Protection range.
 
----
-
 ## How Do I Get Out of Liquidation Protection?
 
 Because user actions during liquidation protection are partially restricted, the only way to get a loan out of liquidation protection mode is to fully repay the loan and open up a new one.
@@ -199,15 +181,11 @@ Because user actions during liquidation protection are partially restricted, the
 - Even repaying 99% of the debt will not get the loan out of liquidation protection
 - Only full debt repayment and loan closure will exit liquidation protection mode
 
----
-
 ## What Happens When My Loan's Health Reaches 0?
 
 **Important**: Full Liquidation only occurs when health reaches 0. As long as your health stays above 0, even by a tiny amount, your position remains protected and can potentially recover if market conditions improve.
 
 When health reaches 0, your loan becomes eligible for liquidation, meaning anyone repay your debt and claim your collateral in return.
-
----
 
 ## How Can I Change My Liquidation Protection Range?
 
@@ -224,13 +202,9 @@ The liquidation protection range can only be changed if a loan is currently not 
 
 **Rule of Thumb**: The higher the LTV of the loan gets, the closer the liquidation range gets to the current market price.
 
----
-
 ## Why Are Actions Restricted in Liquidation Protection Mode?
 
 Users are not able to add or remove collateral because the loan is already in liquidation protection and the collateral is currently being protected through Llamalend. The nature of the system does not allow any collateral actions when the position is in liquidation range, as this is a unique situation where the collateral is being actively protected.
-
----
 
 ## How Can I Monitor and Prevent Problems?
 

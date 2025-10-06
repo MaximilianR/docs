@@ -22,11 +22,11 @@ Holding veCRV has 4 main benefits:
 3. [**Boosting**](../vecrv/boosting): Boosting your own CRV rewards by up to 2.5x if you LP in a pool or Llamalend market
 4. [**Fee Revenue**](../vecrv/revenue): Receiving a share of the weekly fee revenue Curve generates
 
-## Guides
-
 See the guides below for how to lock your CRV for veCRV, and how to claim your earned share of DAO revenue.
 
 <GuideCardGrid guideKeys={['lockingCrv', 'claimingVecrvRevenue']} />
+
+---
 
 ## Current veCRV Stats
 

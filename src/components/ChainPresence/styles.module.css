@@ -26,7 +26,7 @@
 .card {
   background: var(--Layer-2-Fill);
   border: 1px solid var(--Layer-2-Outline);
-  border-radius: var(--Radius-md);
+  border-radius: 0 !important;
   padding: var(--Spacing-md);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
@@ -53,6 +53,21 @@
   margin-top: var(--Spacing-md);
   padding-top: var(--Spacing-xs);
   border-top: 1px dashed var(--Layer-2-Outline);
+}
+
+/* Dark mode divider visibility */
+:global(html[data-theme='dark']) .groupDivider {
+  border-top: 1px dashed var(--Color-Neutral-400) !important;
+}
+
+/* Dark mode hr element styling */
+:global(html[data-theme='dark']) .groupDivider hr {
+  border: none !important;
+  border-top: 1px dashed var(--Color-Neutral-400) !important;
+  background: none !important;
+  color: var(--Color-Neutral-400) !important;
+  height: 1px !important;
+  margin: 0 !important;
 }
 
 .badgeWrap {

@@ -16,11 +16,11 @@ crvUSD is a decentralized stablecoin created by Curve. It’s designed to closel
 
 You can borrow crvUSD by depositing crypto like ETH or BTC-backed tokens as collateral. This means you’re borrowing against your crypto and receiving a stable USD token in return.  This lets you access liquidity without selling your crypto, so you can benefit if the price increases while using stablecoins for real-life expenses, trading, or earning yield.
 
-## Guides
-
 See the guides below to learn how to borrow crvUSD using Llamalend (Curve’s lending platform), or how to obtain it by swapping on Curve’s DEX.
 
 <GuideCardGrid guideKeys={['borrowCrvusd', 'swapping']} />
+
+---
 
 ## Current crvUSD Stats
 

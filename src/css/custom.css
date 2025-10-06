@@ -2370,6 +2370,16 @@ admonition[type="info"] .admonition-content a:hover,
 [data-theme='dark'] .metric-table span {
   color: var(--Text-TextColors-Secondary) !important;
 }
+
+/* Dark mode hr element styling */
+[data-theme='dark'] .theme-doc-markdown hr {
+  border: none !important;
+  border-top: 1px solid var(--Color-Neutral-400) !important;
+  background: none !important;
+  color: var(--Color-Neutral-400) !important;
+  height: 1px !important;
+  margin: var(--Spacing-lg) 0 !important;
+}
 @media (max-width: 1024px) {
   .theme-doc-markdown {
     padding: var(--Spacing-xl);

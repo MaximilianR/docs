@@ -22,7 +22,7 @@ function ensureStyles() {
   const style = document.createElement('style');
   style.id = 'latest-popup-styles';
   style.textContent = `
-  .latest-popup{position:fixed;left:16px;bottom:16px;width:300px;max-width:calc(100% - 32px);background:var(--Layer-2-Fill);border:1px solid var(--Layer-2-Outline);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.22);overflow:hidden;z-index:1000}
+  .latest-popup{position:fixed;right:16px;bottom:16px;width:300px;max-width:calc(100% - 32px);background:var(--Layer-2-Fill);border:1px solid var(--Layer-2-Outline);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.22);overflow:hidden;z-index:1000}
   .latest-popup__img{display:block;width:100%;height:120px;object-fit:cover}
   .latest-popup__body{padding:10px}
   .latest-popup__kicker{font-size:.75rem;color:var(--Color-Primary-500);font-weight:700;font-family:'Mona Sans Mono',monospace;margin-bottom:4px}
@@ -30,7 +30,7 @@ function ensureStyles() {
   .latest-popup__title:hover{color:var(--Color-Primary-500)}
   .latest-popup__meta{color:var(--Text-TextColors-Secondary);font-size:.9rem;margin-top:2px}
   .latest-popup__close{position:absolute;top:8px;right:8px;border:1px solid var(--Layer-2-Outline);background:var(--Layer-1-Fill);width:28px;height:28px;border-radius:6px;cursor:pointer}
-  @media (max-width:768px){.latest-popup{left:8px;right:8px;bottom:12px;width:auto}}
+  @media (max-width:768px){.latest-popup{right:8px;left:8px;bottom:12px;width:auto}}
   `;
   document.head.appendChild(style);
 }

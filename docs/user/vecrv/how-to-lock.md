@@ -12,8 +12,6 @@ Locking your CRV tokens is the first step to participating in Curve governance a
 Locking CRV is **not reversible**. veCRV is **non-transferable**, and you can only reclaim your CRV after the lock period ends. You can only have one active lock per address, but you can extend the lock or add more CRV at any time.
 :::
 
----
-
 ## How to Lock CRV
 
 Visit the official Curve Locker UI at [CRV Locker](https://curve.fi/dao/ethereum/vecrv/create/) and connect your wallet on the top right.

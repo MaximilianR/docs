@@ -20,12 +20,11 @@ CRV is the native token of the Curve ecosystem. It was launched in August 2020 o
 
 New CRV is constantly slowly created and distributed to Liquidity Providers (LPs). The issuance rate decreases over time, reducing by 16% each August (see [table](#current-crv-stats) below for this year's exact date). A portion of the initial supply (1.3B) was distributed with vesting schedules that have now finished as of August 2024.  The majority of the other 1.7B CRV is emitted to liquidity providers gradually over the next approx. 200 years.
 
-
-## Guides
-
 See the guides below for how to lock your CRV for veCRV, and how to claim your earned CRV rewards from providing liquidity to a pool or Llamalend market.
 
 <GuideCardGrid guideKeys={['lockingCrv', 'claimingCrvRewards']} />
+
+---
 
 ## Current CRV Stats
 

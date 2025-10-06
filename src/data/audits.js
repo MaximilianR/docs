@@ -7,7 +7,6 @@ export const ALL_AUDITS = [
     date: '31. January, 2020',
     reportUrl: '/pdf/audits/00-ToB.pdf',
     logo: 'tob_light.svg',
-    info: 'Example text: e.g. what was the scope of the audit?'
   },
   {
     id: 'dao-2',

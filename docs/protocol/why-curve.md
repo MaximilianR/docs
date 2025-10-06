@@ -2,7 +2,7 @@
 id: why-curve
 title: The Backbone of DeFi
 sidebar_label: Why Curve
----
+--- 
 
 import GuideCardGrid from '@site/src/components/GuideCardGrid'
 import ProtocolCardGrid from '@site/src/components/ProtocolCardGrid'

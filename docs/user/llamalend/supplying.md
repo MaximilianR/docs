@@ -15,11 +15,11 @@ Supplying crypto to Llamalend is a way to earn a return on your holdings. When y
 
 Llamalend markets are **isolated and one-way**, which makes them safer. This means each market is self-contained with just one type of collateral and one type of borrowable token. Because markets are separate, a problem in one won't spread to another. This design helps reduce risk, making it more comfortable to supply your assets, and importantly, it means it's safe to allow the creation of lending markets by anyone.
 
-## Guides
-
 See the guides below for how to use the UI to supply, withdraw or claim rewards from a Llamalend market.
 
 <GuideCardGrid guideKeys={['howToLlamalendSupplyDeposit', 'howToLlamalendSupplyClaim', 'howToLlamalendSupplyWithdraw']} />
+
+---
 
 ## How Supplying Works
 
@@ -65,4 +65,3 @@ The same Llamalend Markets interface shows both borrowing and lending opportunit
 Note: Supplying assets to a "Mint" market is not possible because the crvUSD are minted from that market (more on ["Mint vs Lend"](overview.md#mint-vs-lend-markets)).
 
 The interface allows you to filter markets by the same criteria as borrowers: chain, collateral tokens, debt tokens, liquidity ranges, and utilization percentages. You can also save favorite markets and track your supplied positions through the "My Markets" filter.
-
