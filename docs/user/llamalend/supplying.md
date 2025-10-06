@@ -65,4 +65,3 @@ The same Llamalend Markets interface shows both borrowing and lending opportunit
 Note: Supplying assets to a "Mint" market is not possible because the crvUSD are minted from that market (more on ["Mint vs Lend"](overview.md#mint-vs-lend-markets)).
 
 The interface allows you to filter markets by the same criteria as borrowers: chain, collateral tokens, debt tokens, liquidity ranges, and utilization percentages. You can also save favorite markets and track your supplied positions through the "My Markets" filter.
-
