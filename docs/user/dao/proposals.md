@@ -50,16 +50,9 @@ Voting decay is a safety measure to stop manipulation of proposals at the last m
 
 > *Note: Gauge-weight votes are exempt from this decay and retain full power for the entire weekly epoch.*
 
-<figure>
-<ThemedImage
-    alt="Voting power decay chart showing linear decrease from 100% to 0% over final 3.5 days"
-    sources={{
-        light: require('@site/static/img/user/dao/voting-power-light.png').default,
-        dark:  require('@site/static/img/user/dao/voting-power-dark.png').default,
-    }}
-    style={{ width: '600px', display: 'block', margin: '0 auto' }}
-/>
-</figure>
+import VecrvDecayChart from '@site/src/components/Charts/VecrvDecayChart';
+
+<VecrvDecayChart />
 
 ### How to Vote
 
