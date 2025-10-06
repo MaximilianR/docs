@@ -26,7 +26,7 @@
 .card {
   background: var(--Layer-2-Fill);
   border: 1px solid var(--Layer-2-Outline);
-  border-radius: var(--Radius-md);
+  border-radius: 0 !important;
   padding: var(--Spacing-md);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
