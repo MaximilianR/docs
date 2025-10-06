@@ -7,6 +7,7 @@ sidebar_label: Why Curve
 import GuideCardGrid from '@site/src/components/GuideCardGrid'
 import ProtocolCardGrid from '@site/src/components/ProtocolCardGrid'
 import ThemedImage from '@theme/ThemedImage'
+import ChainPresence from '@site/src/components/ChainPresence'
 
 Curve allows endless possibilities to be used or built on top of. Whether it is simply deploying a liquidity pool or lending market, or building an entirely new stack on top of Curve. Its incredible neutrality and permissionless nature do not discriminate or restrict against any market participants and welcome everyone to use, build and improve Curve.
 
@@ -26,7 +27,11 @@ Curve allows endless possibilities to be used or built on top of. Whether it is 
   <figcaption></figcaption>
 </figure>
 
-Available across 25+ blockchains, Curve provides universal access to deep liquidity infrastructure.
+## Curve's Chain Presence
+
+Curve runs on dozens of networks to meet users and builders where they are. Full DEX deployments deliver the complete Curve experience (gauges, CRV emissions and frontend analytics). Curve Lite exists so new rollups have the possibility to launch with production‑grade swapping from day one — automatically rolling out Curve’s core DEX stack (permissionless Stableswap/Cryptoswap factories), direct frontend integration and CurveDAO ownership/fees/CRV emissions. Llamalend adds credit markets on selected networks.
+
+<ChainPresence />
 
 ## The Right Place for Onchain Liquidity
 
@@ -69,7 +74,7 @@ Why Curve over other protocols? Because Curve is your swiss army knife providing
 
 - **Passive Liquidity Provision** - no range-setting, rebalancing, or manual upkeep required; the LP's liquidity is always in range and used for trading, and therefore LPs always earn trading fees.
 - **Specialized and suitable algorithms** for every asset type - not only from pegged stablecoins to volatile crypto pairs but also different token standards like ERC-20, ERC-4626, Rebasing and more. While other AMMs rob the LPs of the rebases, Curve gives them where they belong: the LPs.
-- **Fully Permissionless** - deploy pools instantly without DAO approvals
+- **Fully Permissionless** - deploy pools instantly without DAO approvals and no fees
 - **Fully Onchain Built-in Oracles** - liquidity pools on Curve come with built-in EMA oracles; no need to pay extra for centralized, issue-prone oracles
 - **Routing Integration from Day 1** - liquidity pools are automatically picked up by leading aggregators like 1inch, CowSwap, and Paraswap.
 
