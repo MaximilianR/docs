@@ -154,6 +154,14 @@ const config: Config = {
   ],
 
   plugins: [
+    function latestAnnouncement() {
+      return {
+        name: 'latest-announcement-client-module',
+        getClientModules() {
+          return [require.resolve('./src/clientModules/latestPopup.js')];
+        },
+      };
+    },
     [
       '@docusaurus/plugin-content-docs',
       {
