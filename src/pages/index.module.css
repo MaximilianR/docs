@@ -284,8 +284,7 @@
 .heroSection {
   text-align: center;
   padding: var(--Spacing-xl) var(--Spacing-xxl) var(--Spacing-lg) var(--Spacing-xxl);
-  background: linear-gradient(135deg, var(--Layer-2-Fill) 0%, var(--Layer-1-Fill) 100%);
-  border-bottom: 1px solid var(--Layer-2-Outline);
+  background: var(--Layer-App-Background);
 }
 
 .heroContent {
@@ -297,15 +296,16 @@
   font-size: var(--Typography-FontSize-xxl);
   font-weight: var(--Typography-FontWeight-Extra-Bold);
   color: var(--Text-TextColors-Primary);
-  margin: 0 0 var(--Spacing-sm) 0;
+  margin: 0 0 var(--Spacing-md) 0;
   font-family: var(--Text-FontFamily-Heading);
   letter-spacing: -0.02em;
   line-height: var(--Typography-LineHeight-xxl);
+  white-space: nowrap;
 }
 
 .heroSubtitle {
   font-size: var(--Typography-FontSize-lg);
-  color: var(--Color-Secondary-500);
+  color: var(--Color-Primary-500);
   margin: 0;
   font-weight: var(--Typography-FontWeight-Semi-Bold);
   line-height: var(--Typography-LineHeight-lg);
@@ -323,7 +323,7 @@
 /* Metrics Section */
 .metricsSection {
   padding: var(--Spacing-lg) var(--Spacing-xxl);
-  background: var(--Layer-1-Fill);
+  background: transparent;
 }
 
 .metricsContainer {
@@ -361,7 +361,7 @@
 /* Posts Section */
 .postsSection {
   padding: var(--Spacing-lg) var(--Spacing-xxl);
-  background: var(--Layer-2-Fill);
+  background: transparent;
 }
 
 .postsContainer {
@@ -390,6 +390,82 @@
   line-height: var(--Typography-LineHeight-md);
 }
 
+/* Easter Egg styles */
+.easterEgg {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--Layer-2-Outline);
+  border-radius: 8px;
+  background: var(--Layer-2-Fill);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+
+.easterEgg:hover {
+  background: var(--Layer-1-Fill);
+  border-color: var(--Color-Primary-300);
+  transform: translateY(-1px);
+}
+
+.easterEgg img {
+  width: 24px;
+  height: 24px;
+}
+
+.easterEggPopup {
+  position: fixed;
+  right: 16px;
+  bottom: 64px;
+  width: 560px;
+  max-width: calc(100% - 32px);
+  background: var(--Layer-2-Fill);
+  border: 1px solid var(--Layer-2-Outline);
+  border-radius: var(--Radius-md);
+  padding: var(--Spacing-lg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.easterEggTitle {
+  font-family: var(--Text-FontFamily-Heading);
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  color: var(--Text-TextColors-Primary);
+  margin-bottom: var(--Spacing-xs);
+}
+
+.easterEggText {
+  margin: 0 0 var(--Spacing-xs) 0;
+  color: var(--Text-TextColors-Secondary);
+  font-size: var(--Typography-FontSize-sm);
+}
+
+.easterEggImage {
+  width: 100%;
+  height: auto;
+  border-radius: var(--Radius-sm);
+  margin-top: var(--Spacing-sm);
+}
+
+.easterEggClose {
+  margin-top: var(--Spacing-sm);
+  background: var(--Color-Primary-500);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: var(--Typography-FontSize-sm);
+  cursor: pointer;
+}
+
 /* Responsive Design for Simplified Homepage */
 @media (max-width: 768px) {
   .heroSection {
@@ -399,6 +475,7 @@
   .heroTitle {
     font-size: var(--Typography-FontSize-xl);
     line-height: var(--Typography-LineHeight-xl);
+    white-space: normal;
   }
   
   .heroSubtitle {

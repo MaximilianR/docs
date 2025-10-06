@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './AuditCard.module.css';
 
 export default function WhitepaperCard({ 
   title, 
@@ -19,10 +20,10 @@ export default function WhitepaperCard({
   }, [tooltipTimeout]);
 
   return (
-    <div className="audit-card">
+    <div className={styles.auditCard}>
       {info && (
         <div 
-          className="audit-card-info-icon" 
+          className={styles.auditCardInfoIcon}
           onMouseEnter={() => {
             if (tooltipTimeout) {
               clearTimeout(tooltipTimeout);
@@ -40,26 +41,26 @@ export default function WhitepaperCard({
             <circle cx="12" cy="8" r="1" fill="currentColor"/>
           </svg>
           {showTooltip && (
-            <div className="audit-card-tooltip">
+            <div className={styles.auditCardTooltip}>
               {info}
             </div>
           )}
         </div>
       )}
-      <div className="audit-card-header" style={{ display: 'block' }}>
-        <div className="audit-card-logo" style={{ display: 'none' }}>
-          <div className="audit-card-logo-fallback" style={{ display: 'none' }}>
+      <div className={styles.auditCardHeader} style={{ display: 'block' }}>
+        <div className={styles.auditCardLogo} style={{ display: 'none' }}>
+          <div className={styles.auditCardLogoFallback} style={{ display: 'none' }}>
           </div>
         </div>
-        <div className="audit-card-title" style={{ marginLeft: '0', marginTop: '0' }}>
+        <div className={styles.auditCardTitle} style={{ marginLeft: '0', marginTop: '0' }}>
           {title}
         </div>
       </div>
-      <div className="audit-card-content">
-        <div className="audit-card-date">
+      <div className={styles.auditCardContent}>
+        <div className={styles.auditCardDate}>
           <strong>Published:</strong> {date}
         </div>
-        <a href={pdfUrl} className="audit-card-link" target="_blank" rel="noopener noreferrer">
+        <a href={pdfUrl} className={styles.auditCardLink} target="_blank" rel="noopener noreferrer">
           View Whitepaper →
         </a>
       </div>

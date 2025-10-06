@@ -15,12 +15,11 @@
   overflow: hidden;
 }
 
-/* Force dark mode styling */
+/* Dark mode styling (use design tokens) */
 :global(html[data-theme='dark']) .card {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  border: 1px solid #e5e7eb !important;
-  color: #1f2937 !important;
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid var(--Layer-2-Outline) !important;
+  color: var(--Text-TextColors-Primary) !important;
 }
 
 .card:hover {
@@ -32,13 +31,12 @@
   color: var(--Text-TextColors-Primary);
 }
 
-/* Force dark mode hover styling */
+/* Dark mode hover styling */
 :global(html[data-theme='dark']) .card:hover {
-  background: #f9fafb !important;
-  background-color: #f9fafb !important;
-  border-color: var(--ifm-color-primary) !important;
-  color: #111827 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  background: var(--Layer-1-Fill) !important;
+  border-color: var(--Color-Primary-300) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
 }
 
 .card::after {
@@ -80,6 +78,7 @@
   margin: 0 0 var(--Spacing-sm) 0;
   color: var(--Text-TextColors-Primary);
   line-height: var(--Typography-LineHeight-tight);
+  background: transparent !important;
 }
 
 .cardDescription {
@@ -87,15 +86,16 @@
   font-size: var(--Typography-FontSize-sm);
   color: var(--Text-TextColors-Secondary);
   line-height: var(--Typography-LineHeight-relaxed);
+  background: transparent !important;
 }
 
-/* Force dark mode text colors */
+/* Dark mode text colors */
 :global(html[data-theme='dark']) .cardTitle {
-  color: #1f2937 !important;
+  color: var(--Text-TextColors-Primary) !important;
 }
 
 :global(html[data-theme='dark']) .cardDescription {
-  color: #4b5563 !important;
+  color: var(--Text-TextColors-Secondary) !important;
 }
 
 :global(html[data-theme='dark']) .card::after {

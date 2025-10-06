@@ -1,6 +1,7 @@
 import React from 'react';
 import WhitepaperCard from './WhitepaperCard';
 import { ALL_WHITEPAPERS } from '@site/src/data/whitepapers';
+import styles from './AuditCard.module.css';
 
 export default function WhitepaperCardGrid() {
   if (ALL_WHITEPAPERS.length === 0) {
@@ -8,13 +9,7 @@ export default function WhitepaperCardGrid() {
   }
 
   return (
-    <div className="audit-cards-grid" style={{ 
-      display: 'grid', 
-      gridTemplateColumns: 'repeat(2, 1fr)', 
-      gap: '1.5rem',
-      maxWidth: '800px',
-      margin: '0 auto'
-    }}>
+    <div className={styles.auditCardsGrid}>
       {ALL_WHITEPAPERS.map((whitepaper, index) => (
         <WhitepaperCard
           key={whitepaper.id || index}

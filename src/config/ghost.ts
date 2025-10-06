@@ -15,6 +15,21 @@ export const GHOST_CONFIG = {
   
   // Number of posts to display
   postLimit: 3,
+  pinnedLimit: 3,
+  // Posts tagged with this will be treated as pinned
+  pinnedTag: 'pinned',
+  // Explicit slugs to always pin (highest priority)
+  pinnedSlugs: [
+    'curve-finance-the-rise-of-the-home-of-stablecoins',
+    'liquid-lockers-and-community-boosts',
+    'crv-emission-rate-gets-a-cut-as-programmed',
+  ],
+  // For landing page "Interesting Reads":
+  // first card: dynamic latest article; next cards: these static slugs (order preserved)
+  featuredStaticSlugs: [
+    'curve-finance-the-rise-of-the-home-of-stablecoins',
+    'crv-emission-rate-gets-a-cut-as-programmed',
+  ],
   
   // API version - use v6.0 for latest features
   // See: https://docs.ghost.org/content-api/versioning
@@ -27,10 +42,14 @@ export const getGhostApiUrl = () => {
 };
 
 // Helper function to get API parameters
-export const getGhostApiParams = (limit?: number) => {
-  return new URLSearchParams({
+export const getGhostApiParams = (limit?: number, extra?: Record<string, string>) => {
+  const params = new URLSearchParams({
     key: GHOST_CONFIG.contentApiKey,
     limit: (limit || GHOST_CONFIG.postLimit).toString(),
     include: 'tags'
   });
+  if (extra) {
+    Object.entries(extra).forEach(([k, v]) => params.set(k, v));
+  }
+  return params;
 };

@@ -25,7 +25,11 @@ In the background, new liquidity pools are deployed by making use of a **Pool Fa
 
 Once a factory is deployed, anyone can create a new pool of that type — either through the Curve UI or directly on-chain.
 
-Pools deployed via a factory appear automatically on the Curve frontend after a short propagation period and are picked up by aggregators such as 1inch and CowSwap. You don’t need to chase integrations.
+:::info
+**Pool deployment is completely free of charge** beyond standard gas costs. There are no additional fees, no protocol charges, and no hidden costs associated with deploying a new pool on Curve.
+:::
+
+Pools deployed via a factory appear automatically on the Curve frontend after a short propagation period and are picked up by aggregators such as 1inch and CowSwap. You don't need to chase integrations.
 
 ## Choosing the Right Pool Type
 

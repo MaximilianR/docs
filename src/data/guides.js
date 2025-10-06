@@ -156,16 +156,22 @@ export const ALL_GUIDES = {
     link: '/user/dao/proposals#voting-on-proposals',
   },
   deployStableswapPool: {
-    title: 'How to Deploy a Stableswap Pool',
+    title: 'Deploying a Stableswap Pool',
     description: 'This guide teaches you how to deploy a Stableswap pool.',
     image: '',
     link: '/protocol/pool/guides/deploy-stableswap',
   },
   deployCryptoswapPool: {
-    title: 'How to Deploy a Cryptoswap Pool',
+    title: 'Deploying a Cryptoswap Pool',
     description: 'This guide teaches you how to deploy a Cryptoswap pool.',
     image: '',
     link: '/protocol/pool/guides/deploy-cryptoswap',
+  },
+  deployFXSwapPool: {
+    title: 'Deploying a FXSwap Pool',
+    description: 'This guide teaches you how to deploy a FXSwap pool.',
+    image: '',
+    link: '/protocol/pool/guides/deploy-fxswap',
   },
   deployLendingMarket: {
     title: 'How to Deploy a Lending Market',

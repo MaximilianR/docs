@@ -14,9 +14,9 @@ const StatList: StatItem[] = [
     description: 'Total value locked in Curve protocols',
   },
   {
-    label: 'Total Revenue Generated',
+    label: 'Fees Distributed to veCRV',
     value: 'Loading...',
-    description: 'Total protocol revenue generated to date',
+    description: 'Total protocol fees paid to veCRV holders',
   },
   {
     label: 'Total Governance Votes',
@@ -41,17 +41,26 @@ export default function HomepageStats(): React.ReactNode {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // Placeholder for TVL (replace with real endpoint if available)
-        const mockData = {
-          tvl: '$4.2B',
+        const formatCompact = (num: number): string => {
+          const abs = Math.abs(num);
+          if (abs >= 1e12) return `${(num / 1e12).toFixed(2)}T`;
+          if (abs >= 1e9) return `${(num / 1e9).toFixed(2)}B`;
+          if (abs >= 1e6) return `${(num / 1e6).toFixed(2)}M`;
+          if (abs >= 1e3) return `${(num / 1e3).toFixed(2)}K`;
+          return `${Math.round(num).toLocaleString()}`;
         };
+        // Fetch latest TVL from DefiLlama
+        const tvlResponse = await fetch('https://api.llama.fi/tvl/curve-finance');
+        const tvlRaw = await tvlResponse.json();
+        const tvlNumber = typeof tvlRaw === 'number' ? tvlRaw : (tvlRaw?.tvl ?? tvlRaw?.value ?? 0);
+        const formattedTvl = tvlNumber ? `$${formatCompact(tvlNumber)}` : 'N/A';
 
-        // Fetch total revenue from Curve API
+        // Fetch cumulative fees distributed to veCRV from Curve API
         const revenueResponse = await fetch('https://api.curve.finance/api/getWeeklyFees');
         const revenueData = await revenueResponse.json();
         const totalRevenue = revenueData?.data?.totalFees?.fees ?? 0;
         const formattedRevenue = totalRevenue
-          ? `$${totalRevenue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+          ? `${formatCompact(totalRevenue)}`
           : 'N/A';
 
         // Fetch total governance votes (count)
@@ -63,13 +72,13 @@ export default function HomepageStats(): React.ReactNode {
         setStats([
           {
             label: 'Total Value Locked',
-            value: mockData.tvl,
+            value: formattedTvl,
             description: 'Total value locked in Curve protocols',
           },
           {
-            label: 'Total Revenue Generated',
-            value: formattedRevenue,
-            description: 'Real yield paid out to token holders',
+            label: 'Fees Distributed to veCRV',
+            value: formattedRevenue ? `$${formattedRevenue}` : 'N/A',
+            description: 'Total protocol fees paid to veCRV holders',
           },
           {
             label: 'Total Governance Votes',
@@ -88,7 +97,7 @@ export default function HomepageStats(): React.ReactNode {
   return (
     <section className={styles.stats}>
       <div className="container">
-        <div className="row">
+        <div className="row guide-card-row">
           {stats.map((stat, idx) => (
             <div key={idx} className="col col--4">
               <Stat {...stat} />
