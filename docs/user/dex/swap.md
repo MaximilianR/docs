@@ -23,8 +23,6 @@ Here are the main ways you can swap on Curve:
 2. **Swap Directly Within a Pool**: For advanced users looking to minimize gas fees, you can trade directly inside a specific liquidity pool. For example, the [crvUSD/USDC pool's swap tab](https://www.curve.finance/dex/ethereum/pools/factory-crvusd-0/swap/). This doesn't search all pools for the best price, but can be cheaper for simple, direct swaps.
 3. **Use a Swap Aggregator**: Curve is integrated into all popular swap aggregators like CoWSwap, 1inch, and Odos. If you frequently use an aggregator, you're likely already benefiting from Curve's liquidity without even knowing it\!
 
----
-
 For a quick guide showing how to make a swap using the **Curve Swap Router**, see below.
 
 <GuideCardGrid guideKeys={['howToSwap']} />

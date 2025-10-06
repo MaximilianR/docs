@@ -12,8 +12,6 @@ One of the primary ways to earn yield on Curve is by providing liquidity to a po
 
 This page explains the different types of rewards you can earn and how they are displayed on the pool page.  However, if you're looking for a guide on how to claim your earned rewards, see below.
 
-## Guides
-
 If you are just looking for how to claim your earned CRV or other token rewards, see the guide below.
 
 <GuideCardGrid guideKeys={['howToDexClaim']} />

@@ -18,8 +18,6 @@ scrvUSD is designed with minimal risk in mind. The underlying crvUSD deposited i
 
 <ScrvusdVaultAnimation />
 
-### Quick Links
-
 <ButtonGrid buttonKeys={['gotoScrvusd']} />
 
 ---

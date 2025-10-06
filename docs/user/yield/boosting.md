@@ -16,6 +16,8 @@ Your current pool boosts can be seen on the DEX Dashboard, and you can calculate
 
 <ButtonGrid buttonKeys={['vecrvDashboard', 'boostCalculator']} />
 
+---
+
 ## What is Boosting?
 
 Boosting is a mechanism tied to [**veCRV**](../vecrv/what-is-vecrv.md) (vote-escrowed CRV). To get veCRV, you **lock your CRV tokens** for a set period, ranging from one week to four years. The longer you lock your CRV, the more veCRV you receive.

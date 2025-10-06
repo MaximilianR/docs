@@ -24,8 +24,6 @@ Governance proposals are the primary mechanism for making changes to the Curve p
 
 To view all current and past proposals, visit the [Curve DAO Proposals page](https://www.curve.finance/dao/ethereum/proposals/) and connect your wallet to see your voting options.
 
----
-
 ## Proposal Types
 
 [Curve DAO proposals](https://www.curve.finance/dao/ethereum/proposals/) fall into three main categories:
@@ -37,8 +35,6 @@ To view all current and past proposals, visit the [Curve DAO Proposals page](htt
 :::info Quorum 
     In the Curve DAO, only "Yes" votes count towards quorum.
 :::
-
----
 
 ## Voting on Proposals
 
@@ -78,8 +74,6 @@ To cast your vote:
 1. Click **"Vote For"** or **"Vote Against"** depending on your preference
 2. Sign the transaction in your wallet
 3. Your vote is now recorded on-chain
-
----
 
 ## Creating Proposals
 

@@ -6,9 +6,7 @@ sidebar_label: What is veCRV?
 
 import ThemedImage from '@theme/ThemedImage';
 
-
 **veCRV** stands for **vote-escrowed CRV**. It is a token you receive when you lock your CRV tokens for a period of time, which can range from a minimum of 1 week up to a maximum of 4 years. The longer you choose to lock your CRV, the more veCRV you receive in return. Unlike regular tokens, **veCRV is not transferrable**, and the **amount you hold gradually decreases** as your lock approaches its expiry date.
-
 
 ## Why lock CRV?
 

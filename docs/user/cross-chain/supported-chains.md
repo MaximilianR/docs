@@ -5,6 +5,7 @@ sidebar_label: Supported Chains & Assets
 ---
 
 import ThemedImage from '@theme/ThemedImage';
+import ChainPresence from '@site/src/components/ChainPresence'
 
 While Ethereum remains Curve's primary network, Curve products and assets are available across multiple blockchains. Each network offers unique advantages in terms of transaction speed and costs. To use Curve on alternate networks, you'll typically need to bridge your funds from Ethereum using the target network's bridge.
 
@@ -21,24 +22,11 @@ The Curve ecosystem consists of five key components with varying cross-chain ava
 
 See the linked pages above for more details on how this works.
 
-## Checking Network Availability
+## Curve's Chain Presence
 
-To verify product availability on a specific network:
+Curve runs on dozens of networks to meet users and builders where they are. Full DEX deployments deliver the complete Curve experience (gauges, CRV emissions and frontend analytics). Curve Lite exists so new rollups have the possibility to launch with production‑grade swapping from day one — automatically rolling out Curve’s core DEX stack (permissionless Stableswap/Cryptoswap factories), direct frontend integration and CurveDAO ownership/fees/CRV emissions. Llamalend adds credit markets on selected networks.
 
-1. Visit the specific product page (e.g., [Curve Swap](https://curve.fi/#/ethereum/swap))
-2. Connect your wallet
-3. Click the network dropdown menu on the top right to see all supported networks
-
-<figure>
-    <ThemedImage
-        alt="Weekly gauge weight cycle showing the voting and distribution timeline"
-        sources={{
-            light: require('@site/static/img/user/cross-chain/networks_light.png').default,
-            dark: require('@site/static/img/user/cross-chain/networks_light.png').default,
-        }}
-        style={{ width: '300px', display: 'block', margin: '0 auto' }}
-    />
-</figure>
+<ChainPresence />
 
 ---
 
