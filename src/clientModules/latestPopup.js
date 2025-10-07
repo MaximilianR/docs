@@ -56,11 +56,14 @@ function renderPopup(post){
   `;
   wrap.querySelector('.latest-popup__close').addEventListener('click',()=>{localStorage.setItem(key,'1');wrap.remove();});
   document.body.appendChild(wrap);
+  // signal presence to avoid overlapping UI
+  document.body.classList.add('has-latest-popup');
 }
 
 function removePopup(){
   const el = document.querySelector('.latest-popup');
   if (el) el.remove();
+  document.body.classList.remove('has-latest-popup');
 }
 
 async function init(){

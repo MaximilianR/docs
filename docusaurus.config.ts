@@ -162,6 +162,22 @@ const config: Config = {
         },
       };
     },
+    // Inject feedback endpoint to window; set to your Formspree Endpoint
+    function feedbackEndpoint() {
+      return {
+        name: 'feedback-endpoint-runtime',
+        injectHtmlTags() {
+          return {
+            headTags: [
+              {
+                tagName: 'script',
+                innerHTML: "window.__FEEDBACK_ENDPOINT__='https://formspree.io/f/xgvnlvzp';",
+              },
+            ],
+          };
+        },
+      };
+    },
     [
       '@docusaurus/plugin-content-docs',
       {
