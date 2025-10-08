@@ -15,10 +15,10 @@ veCRV holders vote to assign weights to different gauges, which are smart contra
 <ThemedImage
     alt="Weekly gauge weight cycle showing the voting and distribution timeline"
     sources={{
-        light: require('@site/static/img/user/dao/gauge-weight-cycle-light.png').default,
-        dark: require('@site/static/img/user/dao/gauge-weight-cycle-dark.png').default,
+        light: require('@site/static/img/user/dao/cycle-light.png').default,
+        dark: require('@site/static/img/user/dao/cycle-dark.png').default,
     }}
-    style={{ width: '800px', display: 'block', margin: '0 auto' }}
+    style={{ width: '650px', display: 'block', margin: '0 auto' }}
 />
 </figure>
 
