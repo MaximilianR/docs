@@ -1,0 +1,473 @@
+/**
+ * Homepage Components Styling
+ * Styling for homepage-specific components like manifesto, entry cards, ecosystem sections, etc.
+ */
+
+/* Homepage Override Styles */
+.manifestoMain {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif !important;
+  min-height: 100vh;
+  padding-bottom: 4rem;
+  line-height: 1.6;
+}
+
+.identityBlock {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 3rem 0 2rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fafafa;
+  margin-bottom: 2rem;
+}
+
+.identityText {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #1a1a1a;
+  background: none;
+  padding: 0.5rem 0 0 0;
+  max-width: 800px;
+}
+
+.manifestoSection {
+  margin: 2.5rem auto 2rem auto;
+  max-width: 800px;
+}
+
+.manifestoBlock {
+  border-left: 4px solid #3b82f6;
+  background: #ffffff;
+  padding: 2rem 2rem 1.5rem 2rem;
+  font-size: 1.1rem;
+  color: #374151;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-radius: 0 8px 8px 0;
+}
+
+.manifestoBlock p {
+  margin: 0 0 1em 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.manifestoBlock b {
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+.entryPointsSection {
+  margin: 3rem auto 2.5rem auto;
+  max-width: 1000px;
+}
+
+.entryPointsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.entryCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  min-height: 160px;
+}
+
+.entryCard:hover {
+  background: #f8fafc;
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.entryLabel {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #3b82f6;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.entryDesc {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #1a1a1a;
+}
+
+.entryText {
+  font-size: 0.95rem;
+  color: #6b7280;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.ecosystemSection {
+  margin: 3rem auto 2.5rem auto;
+  max-width: 900px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.ecosystemTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ecosystemMap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ecosystemAscii {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.ecosystemLegend {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.ecosystemLegend span {
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.differentiatorsSection {
+  margin: 3rem auto 2.5rem auto;
+  max-width: 1000px;
+}
+
+.differentiatorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.diffCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  font-size: 1rem;
+  color: #374151;
+  font-weight: 500;
+  min-height: 100px;
+  display: flex;
+  align-items: flex-start;
+  transition: all 0.2s ease;
+}
+
+.diffCard:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+.diffCard b {
+  color: #3b82f6;
+  font-weight: 700;
+  margin-right: 0.2em;
+}
+
+.statsSection {
+  margin: 3rem auto 2.5rem auto;
+  max-width: 1000px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.statsTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.daoSection {
+  margin: 3rem auto 2.5rem auto;
+  max-width: 900px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.daoTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.daoDesc {
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.daoLink {
+  color: #3b82f6;
+  font-weight: 600;
+  margin-left: 1rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.daoLink:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* HomepageStats Component Styles */
+.stats {
+  padding: 0;
+}
+
+.statCard {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  text-align: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.statCard:hover {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15) !important;
+  transform: translateY(-2px);
+}
+
+.statLabel {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: #6b7280 !important;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statValue {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.statDescription {
+  font-size: 0.875rem !important;
+  color: #6b7280 !important;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Responsive adjustments for homepage */
+@media (max-width: 900px) {
+  .entryPointsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .identityBlock {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 2rem 1rem 1.5rem 1rem;
+  }
+  
+  .manifestoBlock {
+    margin: 0 1rem;
+  }
+  
+  .ecosystemSection,
+  .differentiatorsSection,
+  .statsSection,
+  .daoSection {
+    margin: 2rem 1rem;
+  }
+  
+  .differentiatorsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .statCard {
+    padding: 1.25rem !important;
+  }
+  
+  .statValue {
+    font-size: 1.75rem !important;
+  }
+}
+
+/* Dark mode homepage overrides */
+[data-theme='dark'] .manifestoMain {
+  background: var(--ifm-color-background) !important;
+  color: var(--ifm-color-text) !important;
+}
+
+[data-theme='dark'] .identityBlock {
+  background: var(--ifm-color-surface);
+  border-bottom: 1px solid var(--ifm-color-border);
+}
+
+[data-theme='dark'] .identityText {
+  color: var(--ifm-color-text);
+}
+
+[data-theme='dark'] .manifestoBlock {
+  background: var(--ifm-color-surface);
+  color: var(--ifm-color-text-secondary);
+  border-left: 4px solid #3b82f6;
+}
+
+[data-theme='dark'] .manifestoBlock b {
+  color: #60a5fa;
+}
+
+[data-theme='dark'] .entryCard {
+  background: var(--ifm-color-surface);
+  border: 1px solid var(--ifm-color-border);
+  color: var(--ifm-color-text);
+}
+
+[data-theme='dark'] .entryCard:hover {
+  background: var(--ifm-color-surface-secondary);
+  border-color: #3b82f6;
+}
+
+[data-theme='dark'] .entryLabel {
+  color: #60a5fa;
+}
+
+[data-theme='dark'] .entryDesc {
+  color: var(--ifm-color-text);
+}
+
+[data-theme='dark'] .entryText {
+  color: var(--ifm-color-text-secondary);
+}
+
+[data-theme='dark'] .ecosystemSection,
+[data-theme='dark'] .differentiatorsSection,
+[data-theme='dark'] .statsSection,
+[data-theme='dark'] .daoSection {
+  background: var(--ifm-color-surface);
+  border: 1px solid var(--ifm-color-border);
+}
+
+[data-theme='dark'] .ecosystemTitle,
+[data-theme='dark'] .statsTitle,
+[data-theme='dark'] .daoTitle {
+  color: var(--ifm-color-text);
+}
+
+[data-theme='dark'] .ecosystemAscii {
+  background: var(--ifm-color-surface-secondary);
+  color: var(--ifm-color-text);
+  border: 1px solid var(--ifm-color-border);
+}
+
+[data-theme='dark'] .ecosystemLegend {
+  color: var(--ifm-color-text-secondary);
+}
+
+[data-theme='dark'] .ecosystemLegend span {
+  color: #60a5fa;
+}
+
+[data-theme='dark'] .diffCard {
+  background: var(--ifm-color-surface);
+  border: 1px solid var(--ifm-color-border);
+  color: var(--ifm-color-text-secondary);
+}
+
+[data-theme='dark'] .diffCard:hover {
+  border-color: #3b82f6;
+}
+
+[data-theme='dark'] .diffCard b {
+  color: #60a5fa;
+}
+
+[data-theme='dark'] .daoDesc {
+  color: var(--ifm-color-text-secondary);
+}
+
+[data-theme='dark'] .daoLink {
+  color: #60a5fa;
+}
+
+[data-theme='dark'] .daoLink:hover {
+  color: #93c5fd;
+}
+
+[data-theme='dark'] .statCard {
+  background: var(--ifm-color-surface) !important;
+  border: 1px solid var(--ifm-color-border) !important;
+}
+
+[data-theme='dark'] .statCard:hover {
+  border-color: #3b82f6 !important;
+}
+
+[data-theme='dark'] .statLabel {
+  color: var(--ifm-color-text-secondary) !important;
+}
+
+[data-theme='dark'] .statValue {
+  color: var(--ifm-color-text) !important;
+}
+
+[data-theme='dark'] .statDescription {
+  color: var(--ifm-color-text-secondary) !important;
+}
