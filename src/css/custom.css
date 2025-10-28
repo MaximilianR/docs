@@ -631,6 +631,42 @@ code, pre {
   margin-bottom: 0.2em;
 }
 
+/* ---SIDEBAR STYLING (Inspired by Yearn's clean approach)--- */
+
+/* Consistent font sizing across all sidebar elements */
+.menu__link {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.menu__link--sublist-caret::after {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.5rem 1.5rem;
+}
+
+.menu__list-item--collapsed .menu__link--sublist:after {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.5rem 1.5rem;
+}
+
+.menu__caret:before {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.5rem 1.5rem;
+}
+
+/* Active state styling */
+.menu__list-item-collapsible--active {
+  background-color: var(--ifm-menu-color-background-active);
+}
+
+/* Ensure consistent spacing and alignment */
+.theme-doc-sidebar-item-link,
+.theme-doc-sidebar-item-link-level-1 {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.theme-doc-sidebar-item-link-level-1 {
+  font-weight: 500;
+}
+
 .menu__link, .menu__caret, .menu__list-item-collapsible {
   border-radius: 6px;
 }
@@ -2394,7 +2430,9 @@ admonition[type="info"] .admonition-content a:hover,
   }
 }
 
+/* ---MOBILE RESPONSIVE STYLING (Clean approach inspired by Yearn)--- */
 @media (max-width: 768px) {
+  /* Mobile sidebar adjustments */
   .theme-doc-sidebar-item-link {
     margin: 2px 12px;
     padding: 10px 12px;
@@ -2418,26 +2456,37 @@ admonition[type="info"] .admonition-content a:hover,
     padding: 10px 12px;
   }
   
+  /* Mobile menu links */
+  .menu__link {
+    font-size: 14px;
+  }
+  
+  /* Mobile navbar brand adjustment (inspired by Yearn) */
+  .navbar__items .navbar__brand {
+    min-width: calc(var(--doc-sidebar-width) - (768px - 100vw));
+  }
+  
+  /* Mobile content spacing - minimal approach */
   .theme-doc-markdown {
     padding: var(--Spacing-lg);
   }
   
+  /* Mobile heading sizes - maintain proper hierarchy */
   .theme-doc-markdown h1 {
-    font-size: var(--Typography-FontSize-lg);
+    font-size: var(--Typography-FontSize-xl);
   }
   
   .theme-doc-markdown h2 {
-    font-size: var(--Typography-FontSize-sm);
-    margin-top: var(--Spacing-lg);
+    font-size: var(--Typography-FontSize-lg);
   }
   
   .theme-doc-markdown h3 {
-    font-size: var(--Typography-FontSize-xs);
-    margin-top: var(--Spacing-md);
+    font-size: var(--Typography-FontSize-md);
   }
 }
 
 @media (max-width: 480px) {
+  /* Extra small screens - minimal adjustments */
   .theme-doc-markdown {
     padding: var(--Spacing-md);
   }
@@ -2446,6 +2495,23 @@ admonition[type="info"] .admonition-content a:hover,
     margin: var(--Spacing-xxs) var(--Spacing-sm);
     padding: var(--Spacing-xs);
     font-size: var(--Typography-FontSize-xs);
+  }
+  
+  .menu__link {
+    font-size: 13px;
+  }
+  
+  /* Small mobile heading hierarchy */
+  .theme-doc-markdown h1 {
+    font-size: var(--Typography-FontSize-lg);
+  }
+  
+  .theme-doc-markdown h2 {
+    font-size: var(--Typography-FontSize-md);
+  }
+  
+  .theme-doc-markdown h3 {
+    font-size: var(--Typography-FontSize-sm);
   }
   
   .breadcrumbs {
