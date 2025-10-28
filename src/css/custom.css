@@ -656,15 +656,23 @@ code, pre {
   background-color: var(--ifm-menu-color-background-active);
 }
 
-/* Ensure consistent spacing and alignment */
+/* Ensure consistent spacing and alignment for all sidebar items */
 .theme-doc-sidebar-item-link,
-.theme-doc-sidebar-item-link-level-1 {
+.theme-doc-sidebar-item-link-level-1,
+.theme-doc-sidebar-item-category-level-1 > .theme-doc-sidebar-item-link {
   font-size: 15px;
   font-weight: 400;
 }
 
-.theme-doc-sidebar-item-link-level-1 {
+.theme-doc-sidebar-item-link-level-1,
+.theme-doc-sidebar-item-category-level-1 > .theme-doc-sidebar-item-link {
   font-weight: 500;
+}
+
+/* Ensure consistent alignment for layer2 items */
+.theme-doc-sidebar-item-category-level-2 > .theme-doc-sidebar-item-link {
+  font-size: 15px;
+  font-weight: 400;
 }
 
 .menu__link, .menu__caret, .menu__list-item-collapsible {
@@ -2432,28 +2440,21 @@ admonition[type="info"] .admonition-content a:hover,
 
 /* ---MOBILE RESPONSIVE STYLING (Clean approach inspired by Yearn)--- */
 @media (max-width: 768px) {
-  /* Mobile sidebar adjustments */
-  .theme-doc-sidebar-item-link {
+  /* Mobile sidebar adjustments - ensure consistent alignment for layer1 items */
+  .theme-doc-sidebar-item-link,
+  .theme-doc-sidebar-item-category-level-1 > .theme-doc-sidebar-item-link,
+  .theme-doc-sidebar-item-category .menu__list-item-collapsible {
     margin: 2px 12px;
     padding: 10px 12px;
     font-size: 14px;
   }
   
-  .theme-doc-sidebar-item-category-level-2 > .theme-doc-sidebar-item-link {
-    margin: 0px 12px;
-    padding: 4px 10px;
-    font-size: 13px;
-  }
-  
+  /* Ensure consistent alignment for layer2 items */
+  .theme-doc-sidebar-item-category-level-2 > .theme-doc-sidebar-item-link,
   .theme-doc-sidebar-item-category .menu__list .menu__list-item .menu__link {
     margin: 0px 12px;
     padding: 4px 10px;
     font-size: 13px;
-  }
-  
-  .theme-doc-sidebar-item-category .menu__list-item-collapsible {
-    margin: 2px 12px;
-    padding: 10px 12px;
   }
   
   /* Mobile menu links */
@@ -2486,12 +2487,15 @@ admonition[type="info"] .admonition-content a:hover,
 }
 
 @media (max-width: 480px) {
-  /* Extra small screens - minimal adjustments */
+  /* Extra small screens - minimal adjustments with consistent alignment */
   .theme-doc-markdown {
     padding: var(--Spacing-md);
   }
   
-  .theme-doc-sidebar-item-link {
+  /* Ensure consistent alignment for layer1 items on extra small screens */
+  .theme-doc-sidebar-item-link,
+  .theme-doc-sidebar-item-category-level-1 > .theme-doc-sidebar-item-link,
+  .theme-doc-sidebar-item-category .menu__list-item-collapsible {
     margin: var(--Spacing-xxs) var(--Spacing-sm);
     padding: var(--Spacing-xs);
     font-size: var(--Typography-FontSize-xs);
