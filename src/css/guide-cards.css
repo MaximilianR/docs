@@ -1,0 +1,492 @@
+/**
+ * Guide Cards and Grid Components Styling
+ * Styling for guide cards, grid layouts, and related components
+ */
+
+/* Guide Cards Styling */
+.guide-card {
+  display: block;
+  background: var(--Layer-2-Fill);
+  border: 1px solid var(--Layer-2-Outline);
+  border-radius: var(--Radius-md);
+  padding: var(--Spacing-xs) var(--Spacing-sm);
+  text-decoration: none;
+  color: var(--Text-TextColors-Primary);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.guide-card:hover {
+  border-color: var(--Color-Primary-300);
+  background: var(--Layer-1-Fill);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  color: var(--Text-TextColors-Primary);
+}
+
+.guide-card::after {
+  content: "→";
+  position: absolute;
+  bottom: var(--Spacing-xs);
+  right: var(--Spacing-xs);
+  font-size: 1.1rem;
+  color: var(--Text-TextColors-Primary);
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.guide-card:hover::after {
+  color: var(--Color-Primary-500);
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+/* Dark mode arrow styling */
+[data-theme='dark'] .guide-card::after {
+  color: #6b7280 !important;
+}
+
+[data-theme='dark'] .guide-card:hover::after {
+  color: var(--Color-Primary-500) !important;
+}
+
+.guide-card h3,
+.guide-card h4 {
+  margin: 0 0 var(--Spacing-sm) 0;
+  font-size: var(--Typography-FontSize-lg);
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  color: var(--Text-TextColors-Primary);
+  line-height: var(--Typography-LineHeight-tight);
+  background: transparent !important;
+}
+
+.guide-card p {
+  margin: 0;
+  font-size: var(--Typography-FontSize-sm);
+  color: var(--Text-TextColors-Secondary);
+  line-height: var(--Typography-LineHeight-relaxed);
+  background: transparent !important;
+}
+
+.guide-card .guide-meta {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-500);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guide-card .guide-meta::before {
+  content: "⏱️";
+  font-size: 0.75rem;
+}
+
+/* Guide card content elements */
+.guide-card-content {
+  padding: var(--Spacing-sm);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background: transparent !important;
+}
+
+.guide-card-title {
+  font-size: var(--Typography-FontSize-lg);
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  margin: 0 0 var(--Spacing-xs) 0;
+  color: var(--Text-TextColors-Primary);
+  line-height: var(--Typography-LineHeight-tight);
+  background: transparent !important;
+}
+
+/* Override global markdown heading margins inside guide cards */
+.theme-doc-markdown .guide-card-title {
+  margin-top: 0 !important;
+  margin-block-start: 0 !important;
+}
+
+/* Ensure no unexpected top margins inside guide cards */
+.guide-card > *:first-child {
+  margin-top: 0 !important;
+}
+
+.guide-card-description {
+  margin: 0;
+  font-size: var(--Typography-FontSize-sm);
+  color: var(--Text-TextColors-Secondary);
+  line-height: var(--Typography-LineHeight-relaxed);
+  background: transparent !important;
+}
+
+.guide-card-image {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Guide card grid layout */
+.guide-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--Spacing-sm);
+  margin: 0.5rem 0;
+  max-width: 100%;
+}
+
+/* Specific layouts for different numbers of cards */
+.guide-cards-grid:has(.guide-card:nth-child(1):last-child) {
+  grid-template-columns: 1fr;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.guide-cards-grid:has(.guide-card:nth-child(2):last-child) {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  /* Slightly larger gap when exactly 2 cards are present */
+  gap: var(--Spacing-md);
+}
+
+.guide-cards-grid:has(.guide-card:nth-child(3):last-child) {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 100%;
+}
+
+.guide-cards-grid:has(.guide-card:nth-child(4):last-child) {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 100%;
+}
+
+.guide-cards-grid:has(.guide-card:nth-child(5):last-child),
+.guide-cards-grid:has(.guide-card:nth-child(6):last-child) {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 100%;
+}
+
+.guide-cards-grid .guide-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Guide card with icon */
+.guide-card-with-icon {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.guide-card-with-icon .guide-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: var(--ifm-color-primary-lightest);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--ifm-color-primary);
+}
+
+[data-theme='dark'] .guide-card-with-icon .guide-icon {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+.guide-card-with-icon .guide-content {
+  flex: 1;
+}
+
+/* Guide card variants */
+.guide-card.primary {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest);
+}
+
+.guide-card.primary:hover {
+  background: var(--ifm-color-primary-lighter);
+  color: var(--ifm-color-primary-darkest);
+}
+
+[data-theme='dark'] .guide-card.primary {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: var(--ifm-color-primary);
+}
+
+[data-theme='dark'] .guide-card.primary:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.guide-card.success {
+  border-color: #10b981;
+  background: #ecfdf5;
+}
+
+.guide-card.success:hover {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+[data-theme='dark'] .guide-card.success {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+}
+
+[data-theme='dark'] .guide-card.success:hover {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.guide-card.warning {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.guide-card.warning:hover {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+[data-theme='dark'] .guide-card.warning {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: #f59e0b;
+}
+
+[data-theme='dark'] .guide-card.warning:hover {
+  background: rgba(245, 158, 11, 0.2);
+}
+
+/* Responsive guide cards */
+@media (max-width: 768px) {
+  .guide-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--Spacing-sm);
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .guide-card {
+    padding: var(--Spacing-xs) var(--Spacing-sm);
+  }
+  
+  .guide-card h3,
+  .guide-card h4 {
+    font-size: var(--Typography-FontSize-md);
+  }
+  
+  .guide-card p {
+    font-size: var(--Typography-FontSize-sm);
+  }
+}
+
+/* Dark mode styling for guide cards (use design tokens) */
+[data-theme='dark'] .guide-cards-grid .guide-card {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid var(--Layer-2-Outline) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme='dark'] .guide-cards-grid .guide-card:hover {
+  background: var(--Layer-1-Fill) !important;
+  border-color: var(--Color-Primary-300) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme='dark'] .guide-card h3,
+[data-theme='dark'] .guide-card h4,
+[data-theme='dark'] .guide-card-title {
+  color: var(--Text-TextColors-Primary) !important;
+  background: transparent !important;
+}
+
+[data-theme='dark'] .guide-card p,
+[data-theme='dark'] .guide-card-description {
+  color: var(--Text-TextColors-Secondary) !important;
+  background: transparent !important;
+}
+
+[data-theme='dark'] .guide-card-content {
+  background: transparent !important;
+}
+
+[data-theme='dark'] .guide-card-content * {
+  background: transparent !important;
+}
+
+/* Force override any possible conflicting styles */
+[data-theme='dark'] .guide-cards-grid .guide-card .guide-card-content,
+[data-theme='dark'] .guide-cards-grid .guide-card .guide-card-content *,
+[data-theme='dark'] .guide-cards-grid .guide-card h3,
+[data-theme='dark'] .guide-cards-grid .guide-card h4,
+[data-theme='dark'] .guide-cards-grid .guide-card p,
+[data-theme='dark'] .guide-cards-grid .guide-card .guide-card-title,
+[data-theme='dark'] .guide-cards-grid .guide-card .guide-card-description {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Nuclear option - force inherit from parent */
+[data-theme='dark'] .guide-cards-grid .guide-card .guide-card-content {
+  background: inherit !important;
+  background-color: inherit !important;
+}
+
+[data-theme='dark'] .guide-cards-grid .guide-card .guide-card-content * {
+  background: inherit !important;
+  background-color: inherit !important;
+}
+
+[data-theme='dark'] .guide-card::after {
+  color: #6b7280 !important;
+}
+
+[data-theme='dark'] .guide-card:hover::after {
+  color: var(--ifm-color-primary) !important;
+}
+
+/* Guide card row styling */
+.guide-card-row .col {
+  margin-bottom: 1.5rem;
+}
+
+/* Metric table styling */
+.metric-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.markdown table.metric-table {
+  display: table;
+}
+
+.metric-table th,
+.metric-table td {
+  padding: 0.75em 1em;
+  text-align: left;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.metric-table td {
+  background-color: var(--ifm-color-emphasis-0);
+}
+
+.metric-table thead th {
+  background-color: var(--ifm-color-emphasis-100);
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.metric-table td:nth-child(2) {
+  font-weight: bold;
+}
+
+/* Dark mode table styling for supply components */
+[data-theme='dark'] .metric-table {
+  background-color: var(--Layer-2-Fill) !important;
+  border: 1px solid var(--Layer-2-Outline) !important;
+  border-radius: 0 !important;
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] .metric-table thead {
+  background-color: var(--Layer-1-Fill) !important;
+}
+
+[data-theme='dark'] .metric-table thead th {
+  background-color: var(--Layer-1-Fill) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  border-bottom: 1px solid var(--Layer-2-Outline) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+}
+
+[data-theme='dark'] .metric-table tbody tr {
+  background-color: var(--Layer-2-Fill) !important;
+  border-bottom: 1px solid var(--Layer-2-Outline) !important;
+}
+
+[data-theme='dark'] .metric-table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+[data-theme='dark'] .metric-table tbody tr:nth-child(even) {
+  background-color: var(--Layer-1-Fill) !important;
+}
+
+[data-theme='dark'] .metric-table tbody tr:hover {
+  background-color: var(--Layer-1-Fill) !important;
+}
+
+[data-theme='dark'] .metric-table td {
+  color: var(--Text-TextColors-Primary) !important;
+  border-bottom: 1px solid var(--Layer-2-Outline) !important;
+}
+
+[data-theme='dark'] .metric-table .subheading-inline-logo {
+  filter: brightness(1.2) !important;
+}
+
+/* Dark mode for inline spans in tables */
+[data-theme='dark'] .metric-table span {
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Center table styling */
+.table-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Inline pill styling */
+.inline-pill {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-decoration: none !important;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background-color: var(--Layer-2-Fill);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  font-weight: 500;
+  font-size: 0.85em;
+  color: var(--Text-TextColors-Secondary);
+  border: 1px solid var(--Layer-2-Outline);
+}
+
+[data-theme='dark'] .inline-pill {
+  background: var(--Layer-2-Fill);
+  color: var(--Text-TextColors-Secondary);
+  border: 1px solid var(--Layer-2-Outline);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Inline icon styling */
+.inline-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
