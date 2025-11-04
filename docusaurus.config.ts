@@ -43,7 +43,9 @@ const config: Config = {
     locales: ['en'],
   },
 
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: [
+    '@docusaurus/theme-mermaid'],
+
   themeConfig: {
     // Replace with your project's social card
     // image: 'img/docusaurus-social-card.jpg',
@@ -72,6 +74,19 @@ const config: Config = {
         apiKey: '924b8a275700d8f67826ed2ed67671bb',
         appId: '0JUF43T81Z',
       },
+      translations: {
+        button: {
+          buttonText: 'Search & Ask AI',
+          buttonAriaLabel: 'Search & Ask AI',
+        },
+        modal: {
+          searchBox: {
+            placeholderTextAskAi: 'Ask another question...',
+            placeholderTextAskAiStreaming: 'Answering...',
+          },
+        },
+      },
+      placeholder: 'Search docs or ask AI a question',
     },
     navbar: {
       hideOnScroll: false,
