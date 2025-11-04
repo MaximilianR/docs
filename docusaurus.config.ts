@@ -51,8 +51,8 @@ const config: Config = {
       // The application ID provided by Algolia
       appId: '0JUF43T81Z',
       // Public API key: it is safe to commit it
-      apiKey: '18363e734245d7765a7adae5adf5d04f',
-      indexName: 'curve-docs',
+      apiKey: '924b8a275700d8f67826ed2ed67671bb',
+      indexName: 'algolia branch',
       // Optional: see doc section below
       contextualSearch: true,
       // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
@@ -66,7 +66,12 @@ const config: Config = {
       searchParameters: {},
       // Optional: path for search page that enabled by default (`false` to disable it)
       searchPagePath: 'search',
-      askAi: 'IYRY71AZnunB',
+      askAi: {
+        assistantId: 'IYRY71AZnunB',
+        indexName: 'markdown-index',
+        apiKey: '924b8a275700d8f67826ed2ed67671bb',
+        appId: '0JUF43T81Z',
+      },
     },
     navbar: {
       hideOnScroll: false,
