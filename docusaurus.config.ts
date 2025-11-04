@@ -11,6 +11,16 @@ const config: Config = {
   tagline: 'Everything you need to know about Curve',
   favicon: 'img/favicon.png',
 
+  headTags: [
+      {
+        tagName: 'meta',
+        attributes: {
+          name: 'algolia-site-verification',
+          content: '7413F5538D3EDA81',
+        },
+      },
+    ],
+
   // Set the production url of your site here
   url: 'https://docs.curve.finance',
   // Set the /<baseUrl>/ pathname under which your site is served
@@ -56,6 +66,7 @@ const config: Config = {
       searchParameters: {},
       // Optional: path for search page that enabled by default (`false` to disable it)
       searchPagePath: 'search',
+      askAi: 'IYRY71AZnunB',
     },
     navbar: {
       hideOnScroll: false,
