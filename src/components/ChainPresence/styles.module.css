@@ -23,6 +23,10 @@
   gap: var(--Spacing-xl);
 }
 
+.gridFour {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .card {
   background: var(--Layer-2-Fill);
   border: 1px solid var(--Layer-2-Outline);
@@ -31,12 +35,29 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
+.card a {
+  transition: opacity 0.2s ease;
+}
+
+.card a:hover {
+  opacity: 0.8;
+}
+
 .cardTitle {
   font-weight: var(--Typography-FontWeight-Semi-Bold);
   color: var(--Text-TextColors-Primary);
   margin-bottom: var(--Spacing-sm);
   padding-bottom: 6px;
   border-bottom: 1px solid var(--Layer-2-Outline);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardTitleLogo {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
 }
 
 .groupLabel {
@@ -178,6 +199,11 @@
 
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr; }
+  .gridFour { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .gridFour { grid-template-columns: 1fr; }
 }
 
 
