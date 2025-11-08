@@ -26,6 +26,8 @@ See the guides below for how to lock your CRV for veCRV, and how to claim your e
 
 <GuideCardGrid guideKeys={['lockingCrv', 'claimingVecrvRevenue']} />
 
+For more on how locking works and how rewards and boosting are calculated, see the [main veCRV documentation](../vecrv/what-is-vecrv).
+
 ---
 
 ## Current veCRV Stats
@@ -34,9 +36,7 @@ The following table pulls current data from <InlinePill icon="/img/logos/ethereu
 
 <VecrvSupply />
 
-## More Information
-
-For more on how locking works and how rewards and boosting are calculated, see the [main veCRV documentation](../vecrv/what-is-vecrv).
+---
 
 ## FAQ
 

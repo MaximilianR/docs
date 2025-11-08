@@ -28,6 +28,8 @@ The following table pulls current data from <InlinePill icon="/img/logos/ethereu
 
 <CrvusdSupply />
 
+---
+
 ## FAQ
 
 ### Can I earn money with crvUSD?

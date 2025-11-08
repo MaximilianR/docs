@@ -23,6 +23,10 @@
   gap: var(--Spacing-xl);
 }
 
+.gridThree {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .gridFour {
   grid-template-columns: repeat(4, 1fr);
 }
@@ -33,14 +37,18 @@
   border-radius: 0 !important;
   padding: var(--Spacing-md);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card a {
-  transition: opacity 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
-.card a:hover {
-  opacity: 0.8;
+.cardClickable:hover {
+  border-color: var(--Color-Primary-400);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
 }
 
 .cardTitle {
@@ -199,10 +207,12 @@
 
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr; }
+  .gridThree { grid-template-columns: repeat(2, 1fr); }
   .gridFour { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 600px) {
+  .gridThree { grid-template-columns: 1fr; }
   .gridFour { grid-template-columns: 1fr; }
 }
 

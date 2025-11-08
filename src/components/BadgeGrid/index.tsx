@@ -1,4 +1,5 @@
 import React from 'react';
+import {useColorMode} from '@docusaurus/theme-common';
 import styles from '../ChainPresence/styles.module.css';
 
 /**
@@ -39,7 +40,7 @@ type BadgeItem = {
 
 type Card = {
   title: string;
-  logo?: string; // Optional logo image path (e.g., "/img/logos/curve-monitor.png")
+  logo?: string | { light: string; dark: string }; // Optional logo image path(s) - can be a single path or an object with light/dark paths
   description?: string; // Optional description text
   href?: string; // Optional link URL (makes the card clickable)
   badges?: BadgeItem[]; // Optional badges/chips to display (e.g., chain names)
@@ -82,18 +83,39 @@ function Badge({ label, icon }: { label: string; icon?: string }) {
 }
 
 export default function BadgeGrid({ cards }: BadgeGridProps): React.ReactNode {
-  const hasMoreThanTwo = cards.length > 2;
+  const {colorMode} = useColorMode();
+  const cardCount = cards.length;
+  let gridClass = '';
+  
+  if (cardCount === 3) {
+    gridClass = styles.gridThree;
+  } else if (cardCount > 3) {
+    gridClass = styles.gridFour;
+  }
+  
+  const getLogoPath = (logo: string | { light: string; dark: string } | undefined): string | null => {
+    if (!logo) return null;
+    
+    if (typeof logo === 'string') {
+      return logo;
+    }
+    
+    // Logo is an object with light/dark paths
+    return colorMode === 'dark' ? logo.dark : logo.light;
+  };
   
   return (
     <section className={styles.section}>
-      <div className={`${styles.grid} ${hasMoreThanTwo ? styles.gridFour : ''}`}>
+      <div className={`${styles.grid} ${gridClass}`}>
         {cards.map((card, cardIdx) => {
+          const logoPath = getLogoPath(card.logo);
+          
           const CardContent = (
             <>
               <div className={styles.cardTitle}>
-                {card.logo && (
+                {logoPath && (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={card.logo} alt="" className={styles.cardTitleLogo} />
+                  <img src={logoPath} alt="" className={styles.cardTitleLogo} />
                 )}
                 {card.title}
               </div>
@@ -115,7 +137,7 @@ export default function BadgeGrid({ cards }: BadgeGridProps): React.ReactNode {
           );
 
           return (
-            <div key={cardIdx} className={styles.card}>
+            <div key={cardIdx} className={`${styles.card} ${card.href ? styles.cardClickable : ''}`}>
               {card.href ? (
                 <a href={card.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
                   {CardContent}

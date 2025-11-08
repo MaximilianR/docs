@@ -647,10 +647,11 @@ code, pre {
   /* Mobile heading sizes - maintain proper hierarchy */
   .theme-doc-markdown h1 {
     font-size: var(--Typography-FontSize-xl);
+    line-height: var(--Typography-LineHeight-xxl);
   }
   
   .theme-doc-markdown h2 {
-    font-size: var(--Typography-FontSize-lg);
+    font-size: var(--Typography-FontSize-xl);
   }
   
   .theme-doc-markdown h3 {
@@ -680,14 +681,15 @@ code, pre {
   /* Small mobile heading hierarchy */
   .theme-doc-markdown h1 {
     font-size: var(--Typography-FontSize-lg);
+    line-height: var(--Typography-LineHeight-xl);
   }
   
   .theme-doc-markdown h2 {
-    font-size: var(--Typography-FontSize-md);
+    font-size: var(--Typography-FontSize-lg);
   }
   
   .theme-doc-markdown h3 {
-    font-size: var(--Typography-FontSize-sm);
+    font-size: var(--Typography-FontSize-md);
   }
   
   .breadcrumbs {
