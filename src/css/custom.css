@@ -341,7 +341,7 @@ code, pre {
 }
 
 .theme-doc-markdown p {
-  margin-bottom: var(--Typography-ParagraphSpacing-lg);
+  margin-bottom: var(--Spacing-md);
   color: var(--Text-TextColors-Secondary);
   line-height: var(--Typography-LineHeight-md);
   font-size: var(--Typography-FontSize-md);
