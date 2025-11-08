@@ -310,10 +310,32 @@ admonition[type="info"] .admonition-content a:hover,
   }
   
   /* Warning admonition */
+  admonition[type="warning"],
+  .admonition[type="warning"],
+  .admonition.warning {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0;
+    gap: var(--Spacing-sm);
+  }
+  
+  .admonition.warning .admonition-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+  }
+  
+  .admonition.warning .admonition-title {
+    font-size: var(--Typography-FontSize-sm);
+  }
+  
   admonition[type="warning"] .admonition-content,
   .admonition[type="warning"] .admonition-content,
   .admonition.warning .admonition-content {
     padding-left: 60px !important;
+  }
+  
+  .admonition.warning .admonition-content p {
+    font-size: var(--Typography-FontSize-sm);
   }
   
   /* Danger admonition */
@@ -402,6 +424,39 @@ admonition[type="warning"]::after,
   z-index: 1;
 }
 
+admonition[type="warning"] .admonition-icon,
+.admonition[type="warning"] .admonition-icon,
+.admonition.warning .admonition-icon {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #f59e0b !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+  font-size: 12px;
+  font-weight: var(--Typography-FontWeight-Bold);
+  border: none !important;
+  z-index: 1;
+}
+
+admonition[type="warning"] .admonition-icon::before,
+.admonition[type="warning"] .admonition-icon::before,
+.admonition.warning .admonition-icon::before {
+  content: '!' !important;
+  font-family: var(--Text-FontFamily-Body) !important;
+  font-style: normal !important;
+  font-weight: var(--Typography-FontWeight-Bold) !important;
+  background: none !important;
+  mask: none !important;
+  -webkit-mask: none !important;
+}
+
 admonition[type="warning"] .admonition-content,
 .admonition[type="warning"] .admonition-content,
 .admonition.warning .admonition-content {
@@ -433,13 +488,7 @@ admonition[type="warning"] .admonition-content p,
   line-height: var(--Typography-LineHeight-md) !important;
 }
 
-/* Add spacing between paragraphs in warning admonitions */
-admonition[type="warning"] .admonition-content p:not(:last-child),
-.admonition[type="warning"] .admonition-content p:not(:last-child),
-.admonition.warning .admonition-content p:not(:last-child) {
-  margin-bottom: var(--Spacing-sm) !important;
-}
-
+/* Override inline styles with higher specificity */
 admonition[type="warning"] .admonition-content p[style*="margin-bottom"],
 .admonition[type="warning"] .admonition-content p[style*="margin-bottom"],
 .admonition.warning .admonition-content p[style*="margin-bottom"] {
@@ -458,21 +507,22 @@ admonition[type="warning"] p[style],
   margin-bottom: 0 !important;
 }
 
-/* Target p elements directly within warning admonition */
+/* Target p elements directly within admonition (not in .admonition-content) */
 admonition[type="warning"] > p,
 .admonition[type="warning"] > p,
 .admonition.warning > p {
   margin: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  margin-block-start: 0 !important;
-  margin-block-end: 0 !important;
   margin-inline-start: 0 !important;
   margin-inline-end: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.5em !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0.5em !important;
 }
 
+/* First paragraph should have no top margin */
 admonition[type="warning"] > p:first-child,
 .admonition[type="warning"] > p:first-child,
 .admonition.warning > p:first-child {
@@ -480,11 +530,63 @@ admonition[type="warning"] > p:first-child,
   margin-block-start: 0 !important;
 }
 
+/* Last paragraph should have no bottom margin */
 admonition[type="warning"] > p:last-child,
 .admonition[type="warning"] > p:last-child,
 .admonition.warning > p:last-child {
   margin-bottom: 0 !important;
   margin-block-end: 0 !important;
+}
+
+admonition[type="warning"] .admonition-title,
+.admonition[type="warning"] .admonition-title,
+.admonition.warning .admonition-title {
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  margin: 0 0 var(--Spacing-xs) 0 !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-tight) !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+admonition[type="warning"] .admonition-content p,
+admonition[type="warning"] .admonition-content p,
+.admonition.warning .admonition-content p {
+  margin: 0 !important;
+  color: var(--Text-TextColors-Secondary) !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-md) !important;
+}
+
+admonition[type="warning"] .admonition-content p:not(:last-child),
+admonition[type="warning"] .admonition-content p:not(:last-child),
+.admonition.warning .admonition-content p:not(:last-child) {
+  margin-bottom: var(--Spacing-sm) !important;
+}
+
+admonition[type="warning"] .admonition-content strong,
+admonition[type="warning"] .admonition-content strong,
+.admonition.warning .admonition-content strong {
+  color: var(--Text-TextColors-Primary) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+}
+
+admonition[type="warning"] .admonition-content a,
+admonition[type="warning"] .admonition-content a,
+.admonition.warning .admonition-content a {
+  color: var(--Text-TextColors-Highlight) !important;
+  text-decoration: none !important;
+  font-weight: var(--Typography-FontWeight-Medium) !important;
+  transition: color 0.2s ease;
+}
+
+admonition[type="warning"] .admonition-content a:hover,
+admonition[type="warning"] .admonition-content a:hover,
+.admonition.warning .admonition-content a:hover {
+  color: #f59e0b !important;
+  text-decoration: underline !important;
 }
 
 /* Hide br elements in warning admonitions */
@@ -542,6 +644,17 @@ admonition[type="warning"] .admonition-content p:not(:last-child),
   color: white;
 }
 
+[data-theme='dark'] .admonition[type="warning"] .admonition-icon,
+[data-theme='dark'] .admonition.warning .admonition-icon {
+  background: #f59e0b !important;
+  color: white !important;
+}
+
+[data-theme='dark'] .admonition[type="warning"] .admonition-title,
+[data-theme='dark'] .admonition.warning .admonition-title {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
 [data-theme='dark'] admonition[type="warning"] .admonition-content,
 [data-theme='dark'] .admonition[type="warning"] .admonition-content,
 [data-theme='dark'] .admonition.warning .admonition-content {
@@ -554,11 +667,43 @@ admonition[type="warning"] .admonition-content p:not(:last-child),
   color: var(--Text-TextColors-Secondary) !important;
 }
 
+[data-theme='dark'] .admonition[type="warning"] .admonition-content strong,
+[data-theme='dark'] .admonition.warning .admonition-content strong {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] .admonition[type="warning"] .admonition-content a,
+[data-theme='dark'] .admonition.warning .admonition-content a {
+  color: var(--Text-TextColors-Highlight) !important;
+}
+
+[data-theme='dark'] .admonition[type="warning"] .admonition-content a:hover,
+[data-theme='dark'] .admonition.warning .admonition-content a:hover {
+  color: #f59e0b !important;
+}
+
 /* Add spacing between paragraphs in warning admonitions (dark mode) */
 [data-theme='dark'] admonition[type="warning"] .admonition-content p:not(:last-child),
 [data-theme='dark'] .admonition[type="warning"] .admonition-content p:not(:last-child),
 [data-theme='dark'] .admonition.warning .admonition-content p:not(:last-child) {
   margin-bottom: var(--Spacing-sm) !important;
+}
+
+/* Ensure mobile styles override desktop for warning - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="warning"],
+  .admonition[type="warning"],
+  .admonition.warning {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="warning"] .admonition-content,
+  .admonition[type="warning"] .admonition-content,
+  .admonition.warning .admonition-content {
+    padding-left: 60px !important;
+  }
 }
 
 /* Custom Error Admonition */
@@ -674,6 +819,23 @@ admonition[type="danger"] > p,
   margin-inline-end: 0 !important;
 }
 
+/* Ensure mobile styles override desktop for danger - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="danger"],
+  .admonition[type="danger"],
+  .admonition.danger {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="danger"] .admonition-content,
+  .admonition[type="danger"] .admonition-content,
+  .admonition.danger .admonition-content {
+    padding-left: 60px !important;
+  }
+}
+
 /* Custom Success Admonition */
 admonition[type="success"],
 .admonition[type="success"],
@@ -787,6 +949,23 @@ admonition[type="success"] > p,
   margin-inline-end: 0 !important;
 }
 
+/* Ensure mobile styles override desktop for success - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="success"],
+  .admonition[type="success"],
+  .admonition.success {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="success"] .admonition-content,
+  .admonition[type="success"] .admonition-content,
+  .admonition.success .admonition-content {
+    padding-left: 60px !important;
+  }
+}
+
 /* Custom Note Admonition */
 admonition[type="note"],
 .admonition[type="note"],
@@ -898,6 +1077,23 @@ admonition[type="note"] > p,
   margin-block-end: 0 !important;
   margin-inline-start: 0 !important;
   margin-inline-end: 0 !important;
+}
+
+/* Ensure mobile styles override desktop for note - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="note"],
+  .admonition[type="note"],
+  .admonition.note {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="note"] .admonition-content,
+  .admonition[type="note"] .admonition-content,
+  .admonition.note .admonition-content {
+    padding-left: 60px !important;
+  }
 }
 
 /* Custom Green Tip Admonition */
@@ -1038,6 +1234,23 @@ admonition[type="tip-green"] > p,
 [data-theme='dark'] .admonition[type="tip-green"] .admonition-content p,
 [data-theme='dark'] .admonition.tip-green .admonition-content p {
   color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Ensure mobile styles override desktop for tip-green - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="tip-green"],
+  .admonition[type="tip-green"],
+  .admonition.tip-green {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="tip-green"] .admonition-content,
+  .admonition[type="tip-green"] .admonition-content,
+  .admonition.tip-green .admonition-content {
+    padding-left: 60px !important;
+  }
 }
 
 /* Custom Important Admonition */
@@ -1202,4 +1415,21 @@ admonition[type="important"] > p,
 [data-theme='dark'] .admonition[type="important"] .admonition-content p + p,
 [data-theme='dark'] .admonition.important .admonition-content p + p {
   margin-top: var(--Spacing-sm) !important;
+}
+
+/* Ensure mobile styles override desktop for important - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="important"],
+  .admonition[type="important"],
+  .admonition.important {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="important"] .admonition-content,
+  .admonition[type="important"] .admonition-content,
+  .admonition.important .admonition-content {
+    padding-left: 60px !important;
+  }
 }
