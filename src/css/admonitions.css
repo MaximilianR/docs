@@ -278,10 +278,13 @@ admonition[type="info"] .admonition-content a:hover,
   color: var(--Color-Primary-400) !important;
 }
 
-/* Responsive adjustments for custom info admonition */
+/* Responsive adjustments for custom admonitions */
 @media (max-width: 768px) {
+  /* Info admonition */
+  admonition[type="info"],
+  .admonition[type="info"],
   .admonition.info {
-    padding: var(--Spacing-md);
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
     margin: var(--Spacing-md) 0;
     gap: var(--Spacing-sm);
   }
@@ -296,8 +299,56 @@ admonition[type="info"] .admonition-content a:hover,
     font-size: var(--Typography-FontSize-sm);
   }
   
+  admonition[type="info"] .admonition-content,
+  .admonition[type="info"] .admonition-content,
+  .admonition.info .admonition-content {
+    padding-left: 60px !important;
+  }
+  
   .admonition.info .admonition-content p {
     font-size: var(--Typography-FontSize-sm);
+  }
+  
+  /* Warning admonition */
+  admonition[type="warning"] .admonition-content,
+  .admonition[type="warning"] .admonition-content,
+  .admonition.warning .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  /* Danger admonition */
+  admonition[type="danger"] .admonition-content,
+  .admonition[type="danger"] .admonition-content,
+  .admonition.danger .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  /* Success admonition */
+  admonition[type="success"] .admonition-content,
+  .admonition[type="success"] .admonition-content,
+  .admonition.success .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  /* Note admonition */
+  admonition[type="note"] .admonition-content,
+  .admonition[type="note"] .admonition-content,
+  .admonition.note .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  /* Tip admonition */
+  admonition[type="tip"] .admonition-content,
+  .admonition[type="tip"] .admonition-content,
+  .admonition.tip .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  /* Important admonition */
+  admonition[type="important"] .admonition-content,
+  .admonition[type="important"] .admonition-content,
+  .admonition.important .admonition-content {
+    padding-left: 60px !important;
   }
 }
 
