@@ -60,6 +60,26 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  position: relative;
+}
+
+.guideIcon {
+  flex-shrink: 0;
+  color: var(--Color-Primary-500);
+  opacity: 0.8;
+}
+
+.arrowIcon {
+  flex-shrink: 0;
+  color: var(--Text-TextColors-Secondary);
+  opacity: 0.6;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.cardClickable:hover .arrowIcon {
+  transform: translateX(2px);
+  opacity: 1;
+  color: var(--Color-Primary-500);
 }
 
 .cardTitleLogo {
