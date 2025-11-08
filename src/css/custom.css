@@ -659,6 +659,149 @@ code, pre {
   }
 }
 
+/* Math formula code blocks - prevent horizontal scrolling on mobile */
+@media (max-width: 768px) {
+  /* Target all possible math code block structures */
+  .theme-doc-markdown pre[class*="language-math"],
+  .theme-doc-markdown pre code[class*="language-math"],
+  .theme-doc-markdown code[class*="language-math"],
+  .theme-doc-markdown pre[class*="math"],
+  .theme-doc-markdown pre code[class*="math"] {
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    max-width: 100%;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-all;
+    /* Always show scrollbar - Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
+    /* Force scrollbar to always be visible */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Webkit scrollbar styling - always visible */
+  .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar,
+  .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar,
+  .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar,
+  .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar,
+  .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar {
+    height: 6px;
+    display: block;
+  }
+  
+  .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-track,
+  .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-track,
+  .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-track,
+  .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-track,
+  .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+  
+  .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-thumb,
+  .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-thumb,
+  .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-thumb,
+  .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-thumb,
+  .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+  }
+  
+  .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-thumb:hover,
+  .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Dark mode scrollbar */
+  [data-theme='dark'] .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  [data-theme='dark'] .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  [data-theme='dark'] .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-thumb:hover,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown pre[class*="language-math"],
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="language-math"],
+  [data-theme='dark'] .theme-doc-markdown code[class*="language-math"],
+  [data-theme='dark'] .theme-doc-markdown pre[class*="math"],
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="math"] {
+    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+  }
+  
+  /* KaTeX and MathJax rendered math - also add scrollbar */
+  .theme-doc-markdown .katex-display,
+  .theme-doc-markdown .katex,
+  .theme-doc-markdown .MathJax,
+  .theme-doc-markdown .MathJax_Display {
+    max-width: 100%;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
+  }
+  
+  .theme-doc-markdown .katex-display::-webkit-scrollbar,
+  .theme-doc-markdown .katex::-webkit-scrollbar {
+    height: 6px;
+    display: block;
+  }
+  
+  .theme-doc-markdown .katex-display::-webkit-scrollbar-track,
+  .theme-doc-markdown .katex::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+  
+  .theme-doc-markdown .katex-display::-webkit-scrollbar-thumb,
+  .theme-doc-markdown .katex::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown .katex-display::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown .katex::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown .katex-display::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown .katex::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown .katex-display,
+  [data-theme='dark'] .theme-doc-markdown .katex {
+    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Math formula containers */
+  .theme-doc-markdown pre[class*="language-math"],
+  .theme-doc-markdown pre[class*="math"] {
+    padding: var(--Spacing-md);
+    font-size: var(--Typography-FontSize-xs);
+  }
+}
+
 @media (max-width: 480px) {
   /* Extra small screens - minimal adjustments with consistent alignment */
   .theme-doc-markdown {
