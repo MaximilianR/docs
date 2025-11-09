@@ -19,9 +19,30 @@ export default {
                     label: 'How Curve Compares to Other AMMs',
                 },
                 {
-                    type: 'doc',
-                    id: 'pool/pool-parameters',
-                    label: 'Understanding Pool Parameters',
+                    type: 'category',
+                    label: 'Understanding Algorithms',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'pool/understanding-stableswap',
+                            label: 'Understanding Stableswap',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'pool/understanding-cryptoswap',
+                            label: 'Understanding Cryptoswap',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'pool/understanding-fxswap',
+                            label: 'Understanding FXSwap',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'pool/pool-parameters',
+                            label: 'Understanding Pool Parameters',
+                        },
+                    ],
                 },
                 {
                     type: 'doc',
