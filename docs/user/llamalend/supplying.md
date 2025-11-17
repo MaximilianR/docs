@@ -7,61 +7,37 @@ sidebar_label: Supplying
 import ThemedImage from '@theme/ThemedImage';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 
-Supplying assets means lending out your crypto assets to other users who can borrow them, earning interest in return.
-
 ## Why Supply to Llamalend?
 
-Supplying crypto to Llamalend is a way to earn a return on your holdings. When you provide liquidity, or "supply assets," you’re essentially lending your crypto to borrowers. As a lender, you **earn passive income from the interest borrowers pay**. 
+Supplying assets to Llamalend allows users to earn yield by lending their crypto assets to borrowers. Users supply assets to lending market vaults, where they become available for other users to borrow. Users supplying to Llamalend benefit from:
 
-Llamalend markets are **isolated and one-way**, which makes them safer. This means each market is self-contained with just one type of collateral and one type of borrowable token. Because markets are separate, a problem in one won't spread to another. This design helps reduce risk, making it more comfortable to supply your assets, and importantly, it means it's safe to allow the creation of lending markets by anyone.
-
-See the guides below for how to use the UI to supply, withdraw or claim rewards from a Llamalend market.
+- **Passive & Uncomplicated Yield**: Earn interest from borrowers who pay rates based on market utilization. The interest borrowers pay is distributed to suppliers based on their share of the total supplied assets. The supply rate accumulates automatically, so no need to spend transaction fees on claiming it. Users may also earn staking incentives such as CRV rewards or external token rewards in addition to the supply rate, though these additional rewards need to be claimed.
+- **Isolated Markets**: All markets are isolated and one-way, meaning each market is self-contained with just one type of collateral and one borrowable token. Because markets are separate, problems in one market won't spread to others, reducing risk
+- **No Lockups**: Users can withdraw their supplied assets at any time, as long as there are enough unborrowed assets available in the vault.
+- **Permissionless Markets**: The isolated market design makes it safe to allow anyone to create lending markets, providing more opportunities for suppliers
 
 <GuideCardGrid guideKeys={['howToLlamalendSupplyDeposit', 'howToLlamalendSupplyClaim', 'howToLlamalendSupplyWithdraw']} />
 
----
+## Supply Yields
 
-## How Supplying Works
+When users supply assets to Llamalend lending markets, they earn yield from multiple potential sources: **supply rate** and **staking incentives**.
 
-Llamalend's lending markets operate through a traditional lending model where you supply assets to earn yield. Here's how it all works:
+### Supply Rate
 
-* **Vaults**: Vaults are the smart contracts where you can deposit (lend) your assets and where borrowers take loans from. Each market has its own vault that manages a specific debt token, keeping everything organized and separate.
-* **Supply Process**: You deposit your crypto assets (like crvUSD) into the lending market vaults. These assets become available for other users to borrow.
-* **Yield Generation**: You earn interest from borrowers who pay rates based on how much of the market is being used (the ratio of supplied assets to borrowed assets, called utilization). If most of the supplied assets are being borrowed, the yield for suppliers goes up. The fees borrowers pay are split evenly among all the people who supplied assets.
-* **Liquidity Provision**: Your supplied assets provide the liquidity that makes borrowing within each market possible. The more assets supplied, the more borrowing capacity is available for everyone.
-* **Flexible Withdrawal**: You can withdraw your supplied assets at any time, as long as there are enough unborrowed assets available in the vault. This makes it a flexible way to earn yield without any long-term commitments.
+The supply rate is always earned when supplying assets to lending markets. This rate is **dynamic** and directly tied to the borrow rates in each market. When borrowers pay interest on their loans, that interest is distributed to suppliers based on their share of the total supplied assets. The supply rate is calculated and accrued every second, automatically growing the user's supplied balance over time.
 
-### Supplying Yield
+Supply rates in lending markets depend on market utilization — the percentage of supplied assets that are being borrowed. Each market has a minimum and maximum rate range. The higher the utilization, the higher both the borrow rate and the supply rate.
 
-Supply yields are directly tied to the borrow rates in each market. When borrowers pay interest on their loans, that interest is distributed to suppliers equally based on their share of the total supplied assets.
+The supply rate is calculated as:
 
 $$
-\text{supply yield} = \frac{\text{total borrowed}}{\text{total supplied}} \times \text{borrowing interest rate}
+\text{supply rate} = \frac{\text{total borrowed}}{\text{total supplied}} \times \text{borrow rate}
 $$
 
-In many lending markets the borrowing and supplying interest rates are solely based on the utilization, as more of the supply is borrowed, interest rates for borrowers and suppliers increase. When utilization is low, yields are lower and it's more attractive for borrowers to borrow.
+When utilization is low, supply rates are lower and there's plenty of liquidity available for borrowers. As utilization increases, both borrow rates and supply rates increase, providing higher returns for suppliers. At full utilization (100%), the supply rate reaches its maximum.
 
----
+### Staking Incentives
 
-## Market Overview
+In addition to the supply rate, users may also earn **staking incentives** when supplying to lending markets. Staking incentives can include CRV rewards distributed via gauge weights every week. If a lending market has gauge weight allocated to it, CRV tokens are emitted to that market, and users who supply assets there earn a share of these rewards based on their supply share.
 
-The same Llamalend Markets interface shows both borrowing and lending opportunities. When viewing markets from a supplier's perspective, you'll focus on:
-
-<figure>
-<ThemedImage
-    alt="Llamalend Markets interface showing mint and lend markets with filtering options"
-    sources={{
-        light: require('@site/static/img/user/llamalend/market_overview_light.png').default,
-        dark: require('@site/static/img/user/llamalend/market_overview_dark.png').default,
-    }}
-    style={{ width: '800px', display: 'block', margin: '0 auto' }}
-/>
-</figure>
-
-- **Supply Yield**: The interest rate you'll earn on your supplied assets
-- **Market Utilization**: How much of the available liquidity is being used (higher utilization often means higher yields)
-- **Available Liquidity**: Total assets available for borrowing in the market
-
-Note: Supplying assets to a "Mint" market is not possible because the crvUSD are minted from that market (more on ["Mint vs Lend"](overview.md#mint-vs-lend-markets)).
-
-The interface allows you to filter markets by the same criteria as borrowers: chain, collateral tokens, debt tokens, liquidity ranges, and utilization percentages. You can also save favorite markets and track your supplied positions through the "My Markets" filter.
+Some lending markets may also offer additional staking incentives such as protocol points or external token rewards, depending on the specific market and its partnerships.
