@@ -18,21 +18,19 @@ scrvUSD is designed with minimal risk in mind. The underlying crvUSD deposited i
 
 <ScrvusdVaultAnimation />
 
+<GuideCardGrid guideKeys={['depositScrvusd', 'checkEarningsScrvusd', 'withdrawScrvusd']} />
+
 <ButtonGrid buttonKeys={['gotoScrvusd']} />
 
----
-
-## Guides
-
-<GuideCardGrid guideKeys={['depositScrvusd', 'checkEarningsScrvusd', 'withdrawScrvusd']} />
 
 ---
 
 ## Current scrvUSD Stats
 
-The following table pulls current data from <InlinePill icon="/img/logos/ethereum.png" label="Ethereum" />
+Current CRV stats directly fetched from <InlinePill icon="/img/logos/ethereum.png" label="Ethereum" />
 
 <ScrvusdSupply />
+
 
 ## How scrvUSD Works: Earn Savings on Your crvUSD
 

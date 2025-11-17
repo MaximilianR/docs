@@ -6,7 +6,11 @@ import ThemedImage from '@theme/ThemedImage';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 import ButtonGrid from '@site/src/components/ButtonGrid';
 
-Llamalend lets you **earn yield by lending out your assets** by supplying them to a lending market. As users borrow your assets, you'll earn the interest they pay. Some lending markets also offer additional rewards, like CRV or other tokens and points.
+Llamalend (Curve's lending infrastructure) lets you **earn yield by supplying assets** to lending markets. Doing so, other users can borrow your lent out assets and you'll earn interest on it.
+
+Some lending markets also offer additional rewards, like CRV emissions, other tokens or points.
+
+<GuideCardGrid guideKeys={['learnLlamalend', 'learnLlamalendSupplying']} />
 
 <ButtonGrid buttonKeys={['gotoLend']} />
 
@@ -29,8 +33,3 @@ As a lender on Llamalend, your primary sources of yield comes from:
 * **Other Token Rewards and Points:** Protocols or asset issuers might also provide other tokens or points as additional rewards for lenders in specific markets. They often do so for bootstrapping their lending markets.
 
 
----
-
-## Guides
-
-<GuideCardGrid guideKeys={['learnLlamalend', 'learnLlamalendSupplying']} />

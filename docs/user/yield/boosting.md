@@ -14,6 +14,8 @@ While providing liquidity to Curve pools and lending to Llamalend markets alread
 
 Your current pool boosts can be seen on the DEX Dashboard, and you can calculate the boost your potential boost with the boost calculator, links below.
 
+<GuideCardGrid guideKeys={['learnBoosting', 'lockingCrv']} />
+
 <ButtonGrid buttonKeys={['vecrvDashboard', 'boostCalculator']} />
 
 ---
@@ -28,10 +30,3 @@ Think of veCRV as your long-term commitment to the Curve ecosystem. In return fo
 
 Boosting is a key incentive for long-term participation in the Curve ecosystem. It allows active liquidity providers to significantly increase their CRV farming efficiency, making their contributions even more profitable.
 
----
-
-## More Information
-
-For more information about Boosting or How to Lock CRV, check out the guides below.
-
-<GuideCardGrid guideKeys={['learnBoosting', 'lockingCrv']} />
