@@ -87,7 +87,9 @@ export default function BadgeGrid({ cards }: BadgeGridProps): React.ReactNode {
   const cardCount = cards.length;
   let gridClass = '';
   
-  if (cardCount === 3) {
+  if (cardCount === 1) {
+    gridClass = styles.gridOne;
+  } else if (cardCount === 3) {
     gridClass = styles.gridThree;
   } else if (cardCount > 3) {
     gridClass = styles.gridFour;
@@ -117,8 +119,8 @@ export default function BadgeGrid({ cards }: BadgeGridProps): React.ReactNode {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={logoPath} alt="" className={styles.cardTitleLogo} />
                 )}
-                {/* Guide icon for clickable cards */}
-                {card.href && (
+                {/* Guide icon for clickable cards (only show when no custom logo) */}
+                {card.href && !logoPath && (
                   <svg 
                     className={styles.guideIcon}
                     width="18" 

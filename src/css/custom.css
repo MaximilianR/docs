@@ -188,8 +188,18 @@
   color: #60a5fa;
 }
 
+[data-theme='dark'] .theme-doc-markdown a strong,
+[data-theme='dark'] .theme-doc-markdown a b {
+  color: inherit;
+}
+
 [data-theme='dark'] .theme-doc-markdown a:hover {
   color: #93c5fd;
+}
+
+[data-theme='dark'] .theme-doc-markdown a:hover strong,
+[data-theme='dark'] .theme-doc-markdown a:hover b {
+  color: inherit;
 }
 
 [data-theme='dark'] .theme-doc-pagination {
@@ -244,6 +254,10 @@
 
 [data-theme='dark'] .breadcrumbs__link:hover {
   color: #93c5fd;
+}
+
+html {
+  scroll-padding-top: 80px; /* Account for fixed navbar height */
 }
 
 body {
@@ -371,9 +385,20 @@ code, pre {
   font-weight: var(--Typography-FontWeight-Medium);
 }
 
+.theme-doc-markdown a strong,
+.theme-doc-markdown a b {
+  color: inherit;
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+}
+
 .theme-doc-markdown a:hover {
   color: var(--Color-Primary-600);
   text-decoration: underline;
+}
+
+.theme-doc-markdown a:hover strong,
+.theme-doc-markdown a:hover b {
+  color: inherit;
 }
 
 /* Navigation improvements */

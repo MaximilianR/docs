@@ -152,7 +152,7 @@ export default {
         },
         {
             type: 'category',
-            label: 'Lending & crvUSD (Llamalend)',
+            label: 'Llamalend',
             items: [
                 {
                     type: 'doc',
@@ -173,6 +173,11 @@ export default {
                     type: 'doc',
                     id: 'llamalend/liquidation-protection',
                     label: 'Liquidations',
+                },
+                {
+                    type: 'doc',
+                    id: 'llamalend/faq',
+                    label: 'FAQ',
                 },
                 {
                     type: 'category',

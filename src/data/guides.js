@@ -144,13 +144,13 @@ export const ALL_GUIDES = {
     link: '/user/lending/guides/beginner/borrowing',
   },
   gaugeWeights: {
-    title: '⚖️ Voting for Gauge Weights',
+    title: 'Voting for Gauge Weights',
     description: 'Learn how to vote for gauge weights in the Curve DAO.',
     image: '',
     link: '/user/dao/gauge-weights#voting-for-gauge-weights',
   },
   votingProposals: {
-    title: '🗳️ Voting on Proposals',
+    title: 'Voting on Proposals',
     description: 'Learn how to vote on proposals in the Curve DAO.',
     image: '',
     link: '/user/dao/proposals#voting-on-proposals',
