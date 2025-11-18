@@ -14,7 +14,7 @@ While Curve implements extensive security measures, users should always conduct 
 
 ## Comprehensive Security Audits
 
-Curve conducts extensive security audits across all protocol components:
+Curve conducts [extensive security audits](audits.md) across all protocol components:
 
 - **Immutable contracts**: Core pool contracts are intentionally immutable
 - **Multiple audit firms**: Trail of Bits, MixBytes, QuantStamp, ChainSecurity, and others
@@ -22,7 +22,7 @@ Curve conducts extensive security audits across all protocol components:
 
 ## Bug Bounty Program
 
-Curve maintains a bug bounty program:
+Curve maintains a [bug bounty program](bug-bounty.md):
 
 - **Up to $250,000** for critical vulnerabilities
 - **Clear scope**: Focus on smart contract vulnerabilities that could lead to substantial loss of funds
