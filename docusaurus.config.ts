@@ -144,7 +144,9 @@ const config: Config = {
           breadcrumbs: false,
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
-          admonitions: true,
+          admonitions: {
+            keywords: ['note', 'tip', 'info', 'caution', 'danger', 'example'],
+          },
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -190,7 +192,9 @@ const config: Config = {
         breadcrumbs: false,
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
-        admonitions: true,
+        admonitions: {
+          keywords: ['note', 'tip', 'info', 'caution', 'danger', 'example'],
+        },
       },
     ],
     //[
