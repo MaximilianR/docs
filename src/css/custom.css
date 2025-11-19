@@ -306,7 +306,7 @@ h2 {
 }
 
 h3 {
-  font-size: var(--Typography-FontSize-md);
+  font-size: calc(var(--Typography-FontSize-md) + 2px);
   font-weight: var(--Typography-FontWeight-Semi-Bold);
 }
 
@@ -346,7 +346,7 @@ code, pre {
 }
 
 .theme-doc-markdown h3 {
-  font-size: var(--Typography-FontSize-md);
+  font-size: calc(var(--Typography-FontSize-md) + 2px);
   margin-top: var(--Spacing-xl);
   margin-bottom: var(--Spacing-sm);
   color: var(--Text-TextColors-Primary);
