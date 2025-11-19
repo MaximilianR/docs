@@ -1,6 +1,6 @@
 /**
  * Admonition Components Styling
- * Custom styling for info, warning, danger, success, note, tip-green, and important admonitions
+ * Custom styling for info, example, warning, danger, success, note, tip-green, and important admonitions
  */
 
 /* Custom Info Admonition - Override default info styling */
@@ -278,10 +278,288 @@ admonition[type="info"] .admonition-content a:hover,
   color: var(--Color-Primary-400) !important;
 }
 
-/* Responsive adjustments for custom info admonition */
+/* Custom Example Admonition - Same style as info with purple color and E symbol */
+admonition[type="example"],
+.admonition[type="example"],
+.admonition.example {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid #c4b5fd !important;
+  border-radius: 0 !important;
+  padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
+  margin: var(--Spacing-lg) 0 !important;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  display: block !important;
+  min-height: 48px;
+}
+
+admonition[type="example"]::before,
+.admonition[type="example"]::before,
+.admonition.example::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background: #8b5cf6;
+  border-radius: 0;
+}
+
+admonition[type="example"]::after,
+.admonition[type="example"]::after,
+.admonition.example::after {
+  content: '◆';
+  position: absolute;
+  top: 50%;
+  left: -10.5px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: #8b5cf6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: var(--Typography-FontWeight-Bold);
+  font-family: var(--Text-FontFamily-Body);
+  z-index: 1;
+}
+
+admonition[type="example"] .admonition-icon,
+.admonition[type="example"] .admonition-icon,
+.admonition.example .admonition-icon {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #8b5cf6 !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+  font-size: 12px;
+  font-weight: var(--Typography-FontWeight-Bold);
+  border: none !important;
+  z-index: 1;
+}
+
+admonition[type="example"] .admonition-icon::before,
+.admonition[type="example"] .admonition-icon::before,
+.admonition.example .admonition-icon::before {
+  content: '◆' !important;
+  font-family: var(--Text-FontFamily-Body) !important;
+  font-style: normal !important;
+  font-weight: var(--Typography-FontWeight-Bold) !important;
+  background: none !important;
+  mask: none !important;
+  -webkit-mask: none !important;
+}
+
+admonition[type="example"] .admonition-content,
+.admonition[type="example"] .admonition-content,
+.admonition.example .admonition-content {
+  flex: 1;
+  color: var(--Text-TextColors-Primary) !important;
+  line-height: var(--Typography-LineHeight-md);
+  font-size: var(--Typography-FontSize-md);
+  padding-left: 40px;
+  display: block;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+admonition[type="example"] .admonition-content p,
+.admonition[type="example"] .admonition-content p,
+.admonition.example .admonition-content p {
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
+  color: var(--Text-TextColors-Secondary) !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-md) !important;
+}
+
+/* Override inline styles with higher specificity */
+admonition[type="example"] .admonition-content p[style*="margin-bottom"],
+.admonition[type="example"] .admonition-content p[style*="margin-bottom"],
+.admonition.example .admonition-content p[style*="margin-bottom"] {
+  margin-bottom: 0 !important;
+}
+
+/* Even more specific selector to override inline styles */
+admonition[type="example"] .admonition-content p[style*="margin-bottom: 24px"],
+.admonition[type="example"] .admonition-content p[style*="margin-bottom: 24px"],
+.admonition.example .admonition-content p[style*="margin-bottom: 24px"] {
+  margin-bottom: 0 !important;
+}
+
+/* Nuclear option - target any p with inline margin-bottom in example admonitions */
+admonition[type="example"] p[style],
+.admonition[type="example"] p[style],
+.admonition.example p[style] {
+  margin-bottom: 0 !important;
+}
+
+/* Target p elements directly within admonition (not in .admonition-content) */
+admonition[type="example"] > p,
+.admonition[type="example"] > p,
+.admonition.example > p {
+  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.5em !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0.5em !important;
+}
+
+/* First paragraph should have no top margin */
+admonition[type="example"] > p:first-child,
+.admonition[type="example"] > p:first-child,
+.admonition.example > p:first-child {
+  margin-top: 0 !important;
+  margin-block-start: 0 !important;
+}
+
+/* Last paragraph should have no bottom margin */
+admonition[type="example"] > p:last-child,
+.admonition[type="example"] > p:last-child,
+.admonition.example > p:last-child {
+  margin-bottom: 0 !important;
+  margin-block-end: 0 !important;
+}
+
+admonition[type="example"] .admonition-title,
+.admonition[type="example"] .admonition-title,
+.admonition.example .admonition-title {
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  margin: 0 0 var(--Spacing-xs) 0 !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-tight) !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+admonition[type="example"] .admonition-content p,
+admonition[type="example"] .admonition-content p,
+.admonition.example .admonition-content p {
+  margin: 0 !important;
+  color: var(--Text-TextColors-Secondary) !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-md) !important;
+}
+
+admonition[type="example"] .admonition-content p:not(:last-child),
+admonition[type="example"] .admonition-content p:not(:last-child),
+.admonition.example .admonition-content p:not(:last-child) {
+  margin-bottom: var(--Spacing-sm) !important;
+}
+
+admonition[type="example"] .admonition-content strong,
+admonition[type="example"] .admonition-content strong,
+.admonition.example .admonition-content strong {
+  color: var(--Text-TextColors-Primary) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+}
+
+admonition[type="example"] .admonition-content a,
+admonition[type="example"] .admonition-content a,
+.admonition.example .admonition-content a {
+  color: var(--Text-TextColors-Highlight) !important;
+  text-decoration: none !important;
+  font-weight: var(--Typography-FontWeight-Medium) !important;
+  transition: color 0.2s ease;
+}
+
+admonition[type="example"] .admonition-content a:hover,
+admonition[type="example"] .admonition-content a:hover,
+.admonition.example .admonition-content a:hover {
+  color: #7c3aed !important;
+  text-decoration: underline !important;
+}
+
+/* Dark mode styling for custom example admonition */
+[data-theme='dark'] admonition[type="example"],
+[data-theme='dark'] .admonition[type="example"],
+[data-theme='dark'] .admonition.example {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid #a78bfa !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme='dark'] admonition[type="example"]::before,
+[data-theme='dark'] .admonition[type="example"]::before,
+[data-theme='dark'] .admonition.example::before {
+  background: #8b5cf6;
+}
+
+[data-theme='dark'] admonition[type="example"]::after,
+[data-theme='dark'] .admonition[type="example"]::after,
+[data-theme='dark'] .admonition.example::after {
+  background: #8b5cf6;
+  color: white;
+}
+
+[data-theme='dark'] .admonition[type="example"] .admonition-icon,
+[data-theme='dark'] .admonition.example .admonition-icon {
+  background: #8b5cf6 !important;
+  color: white !important;
+}
+
+[data-theme='dark'] .admonition[type="example"] .admonition-title,
+[data-theme='dark'] .admonition.example .admonition-title {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] .admonition[type="example"] .admonition-content,
+[data-theme='dark'] .admonition.example .admonition-content {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] .admonition[type="example"] .admonition-content p,
+[data-theme='dark'] .admonition.example .admonition-content p {
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+[data-theme='dark'] .admonition[type="example"] .admonition-content strong,
+[data-theme='dark'] .admonition.example .admonition-content strong {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] .admonition[type="example"] .admonition-content a,
+[data-theme='dark'] .admonition.example .admonition-content a {
+  color: var(--Text-TextColors-Highlight) !important;
+}
+
+[data-theme='dark'] .admonition[type="example"] .admonition-content a:hover,
+[data-theme='dark'] .admonition.example .admonition-content a:hover {
+  color: #a78bfa !important;
+}
+
+/* Responsive adjustments for custom admonitions */
 @media (max-width: 768px) {
+  /* Info admonition */
+  admonition[type="info"],
+  .admonition[type="info"],
   .admonition.info {
-    padding: var(--Spacing-md);
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
     margin: var(--Spacing-md) 0;
     gap: var(--Spacing-sm);
   }
@@ -296,8 +574,107 @@ admonition[type="info"] .admonition-content a:hover,
     font-size: var(--Typography-FontSize-sm);
   }
   
+  admonition[type="info"] .admonition-content,
+  .admonition[type="info"] .admonition-content,
+  .admonition.info .admonition-content {
+    padding-left: 60px !important;
+  }
+  
   .admonition.info .admonition-content p {
     font-size: var(--Typography-FontSize-sm);
+  }
+  
+  /* Example admonition */
+  admonition[type="example"],
+  .admonition[type="example"],
+  .admonition.example {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0;
+    gap: var(--Spacing-sm);
+  }
+  
+  .admonition.example .admonition-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+  }
+  
+  .admonition.example .admonition-title {
+    font-size: var(--Typography-FontSize-sm);
+  }
+  
+  admonition[type="example"] .admonition-content,
+  .admonition[type="example"] .admonition-content,
+  .admonition.example .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  .admonition.example .admonition-content p {
+    font-size: var(--Typography-FontSize-sm);
+  }
+  
+  /* Warning admonition */
+  admonition[type="warning"],
+  .admonition[type="warning"],
+  .admonition.warning {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0;
+    gap: var(--Spacing-sm);
+  }
+  
+  .admonition.warning .admonition-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+  }
+  
+  .admonition.warning .admonition-title {
+    font-size: var(--Typography-FontSize-sm);
+  }
+  
+  admonition[type="warning"] .admonition-content,
+  .admonition[type="warning"] .admonition-content,
+  .admonition.warning .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  .admonition.warning .admonition-content p {
+    font-size: var(--Typography-FontSize-sm);
+  }
+  
+  /* Danger admonition */
+  admonition[type="danger"] .admonition-content,
+  .admonition[type="danger"] .admonition-content,
+  .admonition.danger .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  /* Success admonition */
+  admonition[type="success"] .admonition-content,
+  .admonition[type="success"] .admonition-content,
+  .admonition.success .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  /* Note admonition */
+  admonition[type="note"] .admonition-content,
+  .admonition[type="note"] .admonition-content,
+  .admonition.note .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  /* Tip admonition */
+  admonition[type="tip"] .admonition-content,
+  .admonition[type="tip"] .admonition-content,
+  .admonition.tip .admonition-content {
+    padding-left: 60px !important;
+  }
+  
+  /* Important admonition */
+  admonition[type="important"] .admonition-content,
+  .admonition[type="important"] .admonition-content,
+  .admonition.important .admonition-content {
+    padding-left: 60px !important;
   }
 }
 
@@ -351,6 +728,39 @@ admonition[type="warning"]::after,
   z-index: 1;
 }
 
+admonition[type="warning"] .admonition-icon,
+.admonition[type="warning"] .admonition-icon,
+.admonition.warning .admonition-icon {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #f59e0b !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+  font-size: 12px;
+  font-weight: var(--Typography-FontWeight-Bold);
+  border: none !important;
+  z-index: 1;
+}
+
+admonition[type="warning"] .admonition-icon::before,
+.admonition[type="warning"] .admonition-icon::before,
+.admonition.warning .admonition-icon::before {
+  content: '!' !important;
+  font-family: var(--Text-FontFamily-Body) !important;
+  font-style: normal !important;
+  font-weight: var(--Typography-FontWeight-Bold) !important;
+  background: none !important;
+  mask: none !important;
+  -webkit-mask: none !important;
+}
+
 admonition[type="warning"] .admonition-content,
 .admonition[type="warning"] .admonition-content,
 .admonition.warning .admonition-content {
@@ -382,13 +792,7 @@ admonition[type="warning"] .admonition-content p,
   line-height: var(--Typography-LineHeight-md) !important;
 }
 
-/* Add spacing between paragraphs in warning admonitions */
-admonition[type="warning"] .admonition-content p:not(:last-child),
-.admonition[type="warning"] .admonition-content p:not(:last-child),
-.admonition.warning .admonition-content p:not(:last-child) {
-  margin-bottom: var(--Spacing-sm) !important;
-}
-
+/* Override inline styles with higher specificity */
 admonition[type="warning"] .admonition-content p[style*="margin-bottom"],
 .admonition[type="warning"] .admonition-content p[style*="margin-bottom"],
 .admonition.warning .admonition-content p[style*="margin-bottom"] {
@@ -407,21 +811,22 @@ admonition[type="warning"] p[style],
   margin-bottom: 0 !important;
 }
 
-/* Target p elements directly within warning admonition */
+/* Target p elements directly within admonition (not in .admonition-content) */
 admonition[type="warning"] > p,
 .admonition[type="warning"] > p,
 .admonition.warning > p {
   margin: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  margin-block-start: 0 !important;
-  margin-block-end: 0 !important;
   margin-inline-start: 0 !important;
   margin-inline-end: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.5em !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0.5em !important;
 }
 
+/* First paragraph should have no top margin */
 admonition[type="warning"] > p:first-child,
 .admonition[type="warning"] > p:first-child,
 .admonition.warning > p:first-child {
@@ -429,11 +834,63 @@ admonition[type="warning"] > p:first-child,
   margin-block-start: 0 !important;
 }
 
+/* Last paragraph should have no bottom margin */
 admonition[type="warning"] > p:last-child,
 .admonition[type="warning"] > p:last-child,
 .admonition.warning > p:last-child {
   margin-bottom: 0 !important;
   margin-block-end: 0 !important;
+}
+
+admonition[type="warning"] .admonition-title,
+.admonition[type="warning"] .admonition-title,
+.admonition.warning .admonition-title {
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  margin: 0 0 var(--Spacing-xs) 0 !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-tight) !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+admonition[type="warning"] .admonition-content p,
+admonition[type="warning"] .admonition-content p,
+.admonition.warning .admonition-content p {
+  margin: 0 !important;
+  color: var(--Text-TextColors-Secondary) !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-md) !important;
+}
+
+admonition[type="warning"] .admonition-content p:not(:last-child),
+admonition[type="warning"] .admonition-content p:not(:last-child),
+.admonition.warning .admonition-content p:not(:last-child) {
+  margin-bottom: var(--Spacing-sm) !important;
+}
+
+admonition[type="warning"] .admonition-content strong,
+admonition[type="warning"] .admonition-content strong,
+.admonition.warning .admonition-content strong {
+  color: var(--Text-TextColors-Primary) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+}
+
+admonition[type="warning"] .admonition-content a,
+admonition[type="warning"] .admonition-content a,
+.admonition.warning .admonition-content a {
+  color: var(--Text-TextColors-Highlight) !important;
+  text-decoration: none !important;
+  font-weight: var(--Typography-FontWeight-Medium) !important;
+  transition: color 0.2s ease;
+}
+
+admonition[type="warning"] .admonition-content a:hover,
+admonition[type="warning"] .admonition-content a:hover,
+.admonition.warning .admonition-content a:hover {
+  color: #f59e0b !important;
+  text-decoration: underline !important;
 }
 
 /* Hide br elements in warning admonitions */
@@ -491,6 +948,17 @@ admonition[type="warning"] .admonition-content p:not(:last-child),
   color: white;
 }
 
+[data-theme='dark'] .admonition[type="warning"] .admonition-icon,
+[data-theme='dark'] .admonition.warning .admonition-icon {
+  background: #f59e0b !important;
+  color: white !important;
+}
+
+[data-theme='dark'] .admonition[type="warning"] .admonition-title,
+[data-theme='dark'] .admonition.warning .admonition-title {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
 [data-theme='dark'] admonition[type="warning"] .admonition-content,
 [data-theme='dark'] .admonition[type="warning"] .admonition-content,
 [data-theme='dark'] .admonition.warning .admonition-content {
@@ -503,11 +971,43 @@ admonition[type="warning"] .admonition-content p:not(:last-child),
   color: var(--Text-TextColors-Secondary) !important;
 }
 
+[data-theme='dark'] .admonition[type="warning"] .admonition-content strong,
+[data-theme='dark'] .admonition.warning .admonition-content strong {
+  color: var(--Text-TextColors-Primary) !important;
+}
+
+[data-theme='dark'] .admonition[type="warning"] .admonition-content a,
+[data-theme='dark'] .admonition.warning .admonition-content a {
+  color: var(--Text-TextColors-Highlight) !important;
+}
+
+[data-theme='dark'] .admonition[type="warning"] .admonition-content a:hover,
+[data-theme='dark'] .admonition.warning .admonition-content a:hover {
+  color: #f59e0b !important;
+}
+
 /* Add spacing between paragraphs in warning admonitions (dark mode) */
 [data-theme='dark'] admonition[type="warning"] .admonition-content p:not(:last-child),
 [data-theme='dark'] .admonition[type="warning"] .admonition-content p:not(:last-child),
 [data-theme='dark'] .admonition.warning .admonition-content p:not(:last-child) {
   margin-bottom: var(--Spacing-sm) !important;
+}
+
+/* Ensure mobile styles override desktop for warning - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="warning"],
+  .admonition[type="warning"],
+  .admonition.warning {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="warning"] .admonition-content,
+  .admonition[type="warning"] .admonition-content,
+  .admonition.warning .admonition-content {
+    padding-left: 60px !important;
+  }
 }
 
 /* Custom Error Admonition */
@@ -623,6 +1123,23 @@ admonition[type="danger"] > p,
   margin-inline-end: 0 !important;
 }
 
+/* Ensure mobile styles override desktop for danger - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="danger"],
+  .admonition[type="danger"],
+  .admonition.danger {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="danger"] .admonition-content,
+  .admonition[type="danger"] .admonition-content,
+  .admonition.danger .admonition-content {
+    padding-left: 60px !important;
+  }
+}
+
 /* Custom Success Admonition */
 admonition[type="success"],
 .admonition[type="success"],
@@ -736,6 +1253,23 @@ admonition[type="success"] > p,
   margin-inline-end: 0 !important;
 }
 
+/* Ensure mobile styles override desktop for success - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="success"],
+  .admonition[type="success"],
+  .admonition.success {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="success"] .admonition-content,
+  .admonition[type="success"] .admonition-content,
+  .admonition.success .admonition-content {
+    padding-left: 60px !important;
+  }
+}
+
 /* Custom Note Admonition */
 admonition[type="note"],
 .admonition[type="note"],
@@ -847,6 +1381,23 @@ admonition[type="note"] > p,
   margin-block-end: 0 !important;
   margin-inline-start: 0 !important;
   margin-inline-end: 0 !important;
+}
+
+/* Ensure mobile styles override desktop for note - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="note"],
+  .admonition[type="note"],
+  .admonition.note {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="note"] .admonition-content,
+  .admonition[type="note"] .admonition-content,
+  .admonition.note .admonition-content {
+    padding-left: 60px !important;
+  }
 }
 
 /* Custom Green Tip Admonition */
@@ -987,6 +1538,23 @@ admonition[type="tip-green"] > p,
 [data-theme='dark'] .admonition[type="tip-green"] .admonition-content p,
 [data-theme='dark'] .admonition.tip-green .admonition-content p {
   color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Ensure mobile styles override desktop for tip-green - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="tip-green"],
+  .admonition[type="tip-green"],
+  .admonition.tip-green {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="tip-green"] .admonition-content,
+  .admonition[type="tip-green"] .admonition-content,
+  .admonition.tip-green .admonition-content {
+    padding-left: 60px !important;
+  }
 }
 
 /* Custom Important Admonition */
@@ -1151,4 +1719,21 @@ admonition[type="important"] > p,
 [data-theme='dark'] .admonition[type="important"] .admonition-content p + p,
 [data-theme='dark'] .admonition.important .admonition-content p + p {
   margin-top: var(--Spacing-sm) !important;
+}
+
+/* Ensure mobile styles override desktop for important - duplicate mobile query after desktop styles */
+@media (max-width: 768px) {
+  admonition[type="important"],
+  .admonition[type="important"],
+  .admonition.important {
+    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
+    margin: var(--Spacing-md) 0 !important;
+    gap: var(--Spacing-sm) !important;
+  }
+  
+  admonition[type="important"] .admonition-content,
+  .admonition[type="important"] .admonition-content,
+  .admonition.important .admonition-content {
+    padding-left: 60px !important;
+  }
 }

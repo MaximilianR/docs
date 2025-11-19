@@ -35,14 +35,22 @@ export default function ThemedVideo({ sources, style, ...props }) {
     };
   }, [TdSource]);
 
+  const handleClick = () => {
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      videoElement.currentTime = 0;
+      videoElement.play();
+    }
+  };
+
   return (
     <video
       ref={videoRef}
-      loop
       muted
       playsInline
-      style={style}
+      style={{ ...style, cursor: 'pointer' }}
       key={TdSource}
+      onClick={handleClick}
       {...props}
     >
       <source src={TdSource} type="video/mp4" />

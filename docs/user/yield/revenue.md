@@ -18,12 +18,6 @@ Users who lock their CRV for veCRV will earn a portion of the revenue generated 
 
 You can check the current veCRV metrics, estimated earnings, and historical data using the button below, or here: [veCRV Analytics](https://www.curve.finance/dao/ethereum/analytics/)
 
-<ButtonGrid buttonKeys={['gotoVecrvAnalytics', 'claimVecrvRevenue']} />
-
----
-
-## Claiming Guide
-
-See below for more information about veCRV revenue, statistics, eligibility and a guide for how to claim veCRV revenue.
-
 <GuideCardGrid guideKeys={['claimingVecrvRevenue']} />
+
+<ButtonGrid buttonKeys={['gotoVecrvAnalytics', 'claimVecrvRevenue']} />
