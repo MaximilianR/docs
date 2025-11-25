@@ -1,5 +1,5 @@
 ---
-id: liquidation-protection
+id: how-it-works
 title: Liquidation Protection & Loan Health
 sidebar_label: Liquidation Protection & Health
 ---
@@ -208,29 +208,6 @@ Being below the protection range does NOT mean you're "safe". It means your enti
 - ❌ Your loan is fully liquidated
 - ❌ Loan is closed, collateral used to repay debt
 - ❌ Cannot recover the position
-
----
-
-## Best Practices
-
-### Conservative Approach: Treat Entry as Your Liquidation Price
-
-This approach is **recommended for most users**: Treat the entry point into liquidation protection as your effective liquidation price. This gives you a comfortable safety buffer and you will almost never face unexpected full liquidation.
-
-**What to do:**
-- **Before entering protection**: Repay some debt or add more collateral to push the range further away
-- **If already in protection**: Fully repay and open a new position.
-
-### Aggressive Approach: Stay in Protection
-
-This approach includes **higher risk and requires active monitoring**: Remain in liquidation protection and wait for prices to recover.
-
-**What to know:**
-- Losses occur while in protection (see [Understanding Losses](#understanding-losses))
-- You're betting on price recovery
-- **The system will automatically help restore your position** if prices recover (crvUSD converts back to collateral)
-- Must actively monitor health
-- Be prepared to repay if health approaches zero
 
 ---
 
