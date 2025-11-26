@@ -43,13 +43,3 @@ This strategy requires constant vigilance. You must continuously monitor your lo
     This loan continuously entered and exited liquidation protection and stayed in it for quite some time (around 4 hours). The user constantly monitored its health and repaid some debt as soon as health got closer to 0%.
   </figcaption>
 </figure>
-
----
-
-## Llama Guard (provisional name)
-
-Llama Guard is a significant improvement coming with Llamalend V2 that implements a "liquidation brake" mechanism. It's an opt-in module that offers the same "Liquidation Break" functionality as the f(x) protocol, automatically reducing your position size as health decreases to effectively prevent full liquidations.
-
-Users can configure automatic debt repayment rules, for example: "as soon as health drops below 2%, repay 2% of my debt". This allows you to set up automated protection that triggers based on your loan's health level.
-
-This mechanism makes using liquidation protection much more convenient. Previously, users had to actively monitor their positions and manually: 1) repay debt or add more collateral once the loan got closer to the liquidation protection range, or 2) repay debt once the health of the loan gets close to 0%. With Llama Guard, all of this can be automated, given the market is efficient enough and arbitrage traders take the opportunity as they usually do. 

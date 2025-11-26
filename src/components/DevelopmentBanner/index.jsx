@@ -53,7 +53,7 @@ export default function DevelopmentBanner() {
             onClick={handleDismiss}
             aria-label="Dismiss popup"
           >
-            Dive In!
+            Let Me In!
           </button>
         </div>
       </div>
