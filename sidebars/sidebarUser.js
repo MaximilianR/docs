@@ -170,9 +170,20 @@ export default {
                     label: 'Supplying',
                 },
                 {
-                    type: 'doc',
-                    id: 'llamalend/liquidation-protection',
-                    label: 'Liquidations',
+                    type: 'category',
+                    label: 'Liquidation Protection',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'llamalend/liquidation-protection/how-it-works',
+                            label: 'How it Works',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'llamalend/liquidation-protection/how-to-use',
+                            label: 'Guide: Best Practices',
+                        },
+                    ],
                 },
                 {
                     type: 'doc',
