@@ -3,10 +3,19 @@ import styles from './styles.module.css';
 import favicon from '@site/static/img/favicon.png';
 
 export default function DevelopmentBanner() {
-  // Popup starts visible on every initial page load
-  const [isVisible, setIsVisible] = useState(true);
+  // Popup starts visible on every initial page load (only on client)
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // Only run on client side
+    setIsMounted(true);
+    setIsVisible(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    
     if (isVisible) {
       // Prevent body scroll when modal is open
       document.body.style.overflow = 'hidden';
@@ -15,9 +24,11 @@ export default function DevelopmentBanner() {
     }
 
     return () => {
-      document.body.style.overflow = '';
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = '';
+      }
     };
-  }, [isVisible]);
+  }, [isVisible, isMounted]);
 
   const handleDismiss = () => {
     setIsVisible(false);
@@ -31,7 +42,8 @@ export default function DevelopmentBanner() {
     }
   };
 
-  if (!isVisible) {
+  // Don't render until mounted on client to avoid hydration issues
+  if (!isMounted || !isVisible) {
     return null;
   }
 
