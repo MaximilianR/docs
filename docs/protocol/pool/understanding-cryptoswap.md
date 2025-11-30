@@ -1,5 +1,4 @@
 ---
-id: understanding-cryptoswap
 title: Understanding Cryptoswap
 sidebar_label: Understanding Cryptoswap
 ---
@@ -130,7 +129,7 @@ For Cryptoswap pools, this works as follows:
       dark: require('@site/static/img/protocol/amm/cryptoswap-dynamic-fees.png').default,
     }}
     style={{ 
-      width: "1000px",
+      width: "500px",
       display: "block",
       margin: "0 auto"
     }}

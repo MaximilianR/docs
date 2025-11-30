@@ -11,12 +11,10 @@ export default {
                 {
                     type: 'doc',
                     id: 'pool/overview',
-                    label: 'Overview & Pool Types',
                 },
                 {
                     type: 'doc',
                     id: 'pool/compare-amm',
-                    label: 'How Curve Compares to Other AMMs',
                 },
                 {
                     type: 'category',
@@ -25,39 +23,32 @@ export default {
                         {
                             type: 'doc',
                             id: 'pool/understanding-stableswap',
-                            label: 'Understanding Stableswap',
                         },
                         {
                             type: 'doc',
                             id: 'pool/understanding-cryptoswap',
-                            label: 'Understanding Cryptoswap',
                         },
                         {
                             type: 'doc',
                             id: 'pool/understanding-fxswap',
-                            label: 'Understanding FXSwap',
                         },
                         {
                             type: 'doc',
                             id: 'pool/pool-parameters',
-                            label: 'Understanding Pool Parameters',
                         },
                     ],
                 },
                 {
                     type: 'doc',
                     id: 'pool/guides/deploy-stableswap',
-                    label: 'Guide: Deploy a Stableswap Pool',
                 },
                 {
                     type: 'doc',
                     id: 'pool/guides/deploy-cryptoswap',
-                    label: 'Guide: Deploy a Cryptoswap Pool',
                 },
                 {
                     type: 'doc',
                     id: 'pool/post-deployment',
-                    label: 'Post Deployment',
                 },
             ],
         },
@@ -68,22 +59,18 @@ export default {
                 {
                     type: 'doc',
                     id: 'lending/overview',
-                    label: 'Overview',
                 },
                 {
                     type: 'doc',
                     id: 'lending/oracles-and-parameters',
-                    label: 'Oracles & Parameters',
                 },
                 {
                     type: 'doc',
                     id: 'lending/guides/deploy-lending-market',
-                    label: 'Guide: Deploy a Lending Market via Etherscan',
                 },
                 {
                     type: 'doc',
                     id: 'lending/post-deployment',
-                    label: 'Post Deployment',
                 },
             ],
         },
@@ -94,27 +81,22 @@ export default {
                 {
                     type: 'doc',
                     id: 'gauge/overview',
-                    label: 'What is a Gauge & How it Works',
                 },
                 {
                     type: 'doc',
                     id: 'gauge/incentives',
-                    label: 'Incentives: CRV Emissions vs Permissionless Rewards',
                 },
                 {
                     type: 'doc',
                     id: 'gauge/whitelisting-gauge',
-                    label: 'Whitelisting a Gauge',
                 },
                 {
                     type: 'doc',
                     id: 'gauge/guides/getting-crv-emissions',
-                    label: 'Getting CRV Emissions',
                 },
                 {
                     type: 'doc',
                     id: 'gauge/guides/adding-permissionless-rewards',
-                    label: 'Adding Permissionless Rewards',
                 },
             ],
         },

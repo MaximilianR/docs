@@ -1,7 +1,7 @@
 ---
 id: deploy-cryptoswap
 title: "Deploying a Cryptoswap Pool"
-sidebar_label: "Deploying a Cryptoswap Pool"
+sidebar_label: "Guide: Deploying a Cryptoswap Pool"
 ---
 
 import ThemedImage from '@theme/ThemedImage';
