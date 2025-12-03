@@ -78,9 +78,9 @@ This configuration creates a highly efficient Stableswap pool. The integration p
 
 ## Parameters
 
-### Amplification Coefficient
+### Amplification Factor (`A`)
 
-The shape of this liquidity bonding curve and the degree to which a pool can become imbalanced before the price significantly deviates from 1:1 is controlled by the **Amplification Coefficient** (`A`).
+The shape of this liquidity bonding curve and the degree to which a pool can become imbalanced before the price significantly deviates from 1:1 is controlled by the **Amplification Factor** (`A`).  Mathematically, `A` is the effective amplification of liquidity compared to that of the constant product formula `x*y=k`, so `A`=100 means there is 100 times more liquidity at the balanced price than `x*y=k`.
 
 <figure>
   <ThemedImage

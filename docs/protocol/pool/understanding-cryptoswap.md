@@ -4,6 +4,7 @@ sidebar_label: Understanding Cryptoswap
 ---
 
 import ThemedImage from '@theme/ThemedImage'
+import ThemedVideo from '@site/src/components/ThemedVideo';
 
 ## Historical Background
 
@@ -14,7 +15,6 @@ It was introduced in late 2021, alongside the launch of Curve’s “TriCrypto�
 CryptoSwap extended the StableSwap formula by introducing a dynamic amplification coefficient (A) that automatically adjusts based on market volatility. This made it possible to offer tight spreads and deep liquidity when prices are stable, but also greater resilience and arbitrage opportunities during large price moves.
 
 The underlying math was formalized in the paper [“CryptoSwap: Constant Product and Constant Sum Market Maker with Dynamic Parameters”](../../../static/pdf/whitepapers/whitepaper_cryptoswap.pdf), published by Curve in 2021, and it marked Curve’s transition from being a purely stablecoin-focused AMM to a generalized DEX capable of efficiently trading volatile crypto pairs.
-
 
 ## How it Works
 
@@ -79,7 +79,20 @@ Let's look at an example using a forex pool trading Euros (EUR) against US Dolla
   />
 </figure>
 
-In this scenario, the pool performs a rebalance once the price hits the adjustment step, using up to 50% of its collected fees to cover the cost.  
+In this scenario, the pool performs a rebalance once the price hits the adjustment step, using up to 50% of its collected fees to cover the cost.
+
+To make this clearer, here's how the [CVX/WETH pool](https://www.curve.finance/dex/ethereum/pools/cvxeth/deposit)'s liquidity changed over a month period, notice how the center of liquidity (last rebalance price) updates frequently when it's close to the oracle price, and much more slowly otherwise.  Note that we've put the liquidity into discrete 0.5% range buckets below, so we can see a USD value for the liquidity available.
+
+<figure>
+  <ThemedVideo
+    alt="CVX-WETH Pool"
+    sources={{
+      light: require('@site/static/img/protocol/amm/cryptoswap-cvx-weth-discrete-buckets.mp4').default,
+      dark: require('@site/static/img/protocol/amm/cryptoswap-cvx-weth-discrete-buckets.mp4').default,
+    }}
+    style={{ maxWidth: '960px', width: '100%', display: 'block', margin: '0 auto' }}
+  />
+</figure>
 
 ## Why Does Rebalancing Cost?
 
