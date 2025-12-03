@@ -11,6 +11,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import fxData from '../../data/data_fxswap_a.json';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 // Register ChartJS components
 ChartJS.register(
@@ -23,8 +24,9 @@ ChartJS.register(
   Legend
 );
 
-const FXSwapAmplificationChart = () => {
+const ChartContent = () => {
   const css = getComputedStyle(document.documentElement);
+  
   const primaryColor = css.getPropertyValue('--ifm-color-primary-light').trim() || '#3eaf7c';
   const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#000';
   const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim() || '#e5e7eb';
@@ -44,6 +46,7 @@ const FXSwapAmplificationChart = () => {
   const [selectedA, setSelectedA] = useState(availableAValues[0]);
 
   const assetName = selectedAsset.slice(0, 3);
+  
   // Filter data based on BOTH Asset and A
   const chartData = useMemo(() => {
     const filtered = fxData.filter(
@@ -141,7 +144,6 @@ const FXSwapAmplificationChart = () => {
       padding: '16px',
       backgroundColor: 'var(--ifm-background-color, #ffffff)'
     }}>
-      {/* Controls Header */}
       <div style={{ 
         display: 'flex', 
         justifyContent: 'flex-end', 
@@ -150,7 +152,6 @@ const FXSwapAmplificationChart = () => {
         marginBottom: '16px' 
       }}>
         
-        {/* Market Selector */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <label htmlFor="asset-select" style={{ fontSize: '14px', fontWeight: 600, color: 'var(--ifm-color-emphasis-800)' }}>
             Market:
@@ -172,7 +173,6 @@ const FXSwapAmplificationChart = () => {
           </select>
         </div>
 
-        {/* Amplification Selector */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <label htmlFor="amp-select" style={{ fontSize: '14px', fontWeight: 600, color: 'var(--ifm-color-emphasis-800)' }}>
             Amplification:
@@ -195,7 +195,6 @@ const FXSwapAmplificationChart = () => {
         </div>
       </div>
 
-      {/* Chart Canvas */}
       <div style={{ position: 'relative', height: '320px', width: '100%' }}>
         <Line data={chartData} options={options} />
       </div>
@@ -203,4 +202,19 @@ const FXSwapAmplificationChart = () => {
   );
 };
 
-export default FXSwapAmplificationChart;
+export default function FXSwapAmplificationChart() {
+  return (
+    <BrowserOnly fallback={
+      <div style={{
+        height: '320px', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+      }}>
+        Loading Chart...
+      </div>
+    }>
+      {() => <ChartContent />}
+    </BrowserOnly>
+  );
+}

@@ -10,8 +10,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
-// Register ChartJS components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -22,46 +22,41 @@ ChartJS.register(
   Legend
 );
 
-const StableswapDynamicFeeChart = () => {
-  // Safe retrieval of CSS variables with fallbacks
-  const css = typeof document !== 'undefined' ? getComputedStyle(document.documentElement) : null;
-  const primaryColor = css ? css.getPropertyValue('--ifm-color-primary-light').trim() : '#3b82f6';
-  const txtColor = css ? css.getPropertyValue('--ifm-color-emphasis-800').trim() : '#1f2937';
-  const gridColor = css ? css.getPropertyValue('--ifm-color-emphasis-200').trim() : '#e5e7eb';
+const ChartContent = () => {
+  const css = getComputedStyle(document.documentElement);
+  const primaryColor = css.getPropertyValue('--ifm-color-primary-light').trim() || '#3b82f6';
+  const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#1f2937';
+  const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim() || '#e5e7eb';
 
   // Configuration Options
   const baseFeeOptions = [0.001, 0.01, 0.1, 1]; // In Percent
   const multiplierOptions = [1, 2, 5, 10, 20, 50, 100];
 
-  const [baseFee, setBaseFee] = useState(0.01); // Default 0.01%
-  const [multiplier, setMultiplier] = useState(10); // Default 2x
+  const [baseFee, setBaseFee] = useState(0.01); 
+  const [multiplier, setMultiplier] = useState(10); 
 
-  // Dynamic Fee Calculation Logic
-  // Formula derived from Curve's _dynamic_fee:
-  // Fee = (K * Base) / ( (K-1)*4*p*(1-p) + 1 )
-  // where K = multiplier, p = balance ratio (0 to 1)
+  // Curve Stableswap dynamic fee calculation
+  // Formula: Fee = (K * Base) / ( (K-1)*4*p*(1-p) + 1 )
   const calculateFee = (pct, bFee, mult) => {
-    if (pct == 100) {
-        return mult * bFee
-    }
+    if (pct === 100) return mult * bFee;
+    
     const p = pct / 100;
-    // Safe guard for edges
+    
+    // Boundary guard
     if (p <= 0 || p >= 1) return mult * bFee; 
     
-    // 4 * xpi * xpj / (sum)^2  is equivalent to 4 * p * (1-p)
+    // 4 * p * (1-p) represents the balance ratio (1 at equilibrium, <1 otherwise)
     const ratio = 4 * p * (1 - p);
     
-    // Denominator term: ((fee_mult - FEE_DENOMINATOR) * ratio) + FEE_DENOMINATOR
-    // Normalized by FEE_DENOMINATOR: (K - 1) * ratio + 1
+    // Denominator normalized by FEE_DENOMINATOR: (K - 1) * ratio + 1
     const denominator = (mult - 1) * ratio + 1;
     
     return (mult * bFee) / denominator;
   };
 
-  // Generate Chart Data
   const chartData = useMemo(() => {
-    // Generate points from 20% to 99%
     const dataPoints = [];
+    // Plot from 20% to 100% pool composition
     for (let i = 20; i <= 100; i += 1) {
       const fee = calculateFee(i, baseFee, multiplier);
       dataPoints.push({ x: i, y: fee });
@@ -77,7 +72,7 @@ const StableswapDynamicFeeChart = () => {
           borderWidth: 2,
           pointRadius: 0,
           pointHoverRadius: 6,
-          tension: 0.4, // Smooth curve
+          tension: 0.4,
         },
       ],
     };
@@ -125,10 +120,8 @@ const StableswapDynamicFeeChart = () => {
         }
       },
       y: {
-        // Dynamic min/max based on data range could be better, 
-        // but standard linear scale works. Let's start at 0.
         min: 0, 
-        suggestedMax: baseFee * multiplier * 1.1, // Give some headroom
+        suggestedMax: baseFee * multiplier * 1.1,
         title: {
           display: true,
           text: 'Dynamic Fee (%)',
@@ -165,7 +158,6 @@ const StableswapDynamicFeeChart = () => {
         marginBottom: '16px' 
       }}>
         
-        {/* Base Fee Selector */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <label htmlFor="base-fee-select" style={{ fontSize: '14px', fontWeight: 600, color: txtColor }}>
             Base Fee:
@@ -182,14 +174,11 @@ const StableswapDynamicFeeChart = () => {
             }}
           >
             {baseFeeOptions.map((val) => (
-              <option key={val} value={val}>
-                {val}%
-              </option>
+              <option key={val} value={val}>{val}%</option>
             ))}
           </select>
         </div>
 
-        {/* Multiplier Selector */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <label htmlFor="mult-select" style={{ fontSize: '14px', fontWeight: 600, color: txtColor }}>
             Offpeg Multiplier:
@@ -206,15 +195,12 @@ const StableswapDynamicFeeChart = () => {
             }}
           >
             {multiplierOptions.map((val) => (
-              <option key={val} value={val}>
-                {val}
-              </option>
+              <option key={val} value={val}>{val}</option>
             ))}
           </select>
         </div>
       </div>
 
-      {/* Chart Canvas */}
       <div style={{ position: 'relative', height: '320px', width: '100%' }}>
         <Line data={chartData} options={options} />
       </div>
@@ -222,4 +208,19 @@ const StableswapDynamicFeeChart = () => {
   );
 };
 
-export default StableswapDynamicFeeChart;
+export default function StableswapDynamicFeeChart() {
+  return (
+    <BrowserOnly fallback={
+      <div style={{
+        height: '320px', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+      }}>
+        Loading Chart...
+      </div>
+    }>
+      {() => <ChartContent />}
+    </BrowserOnly>
+  );
+}

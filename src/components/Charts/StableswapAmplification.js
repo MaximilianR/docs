@@ -10,9 +10,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import curveData from '../../data/data_stableswap_a.json'
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import curveData from '../../data/data_stableswap_a.json';
 
-// Register ChartJS components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,20 +23,19 @@ ChartJS.register(
   Legend
 );
 
-const StableswapAmplificationChart = () => {
+const ChartContent = () => {
   const css = getComputedStyle(document.documentElement);
-  const primaryColor = css.getPropertyValue('--ifm-color-primary-light').trim();
-  const bgColor = css.getPropertyValue('--ifm-background-color').trim();
-  const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim();
-  const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim();
-  // Extract unique A values
+  const primaryColor = css.getPropertyValue('--ifm-color-primary-light').trim() || '#3eaf7c';
+  const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#1f2937';
+  const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim() || '#e5e7eb';
+
+  // Extract and sort unique A values
   const availableAValues = useMemo(() => {
     return [...new Set(curveData.map((d) => d.A))].sort((a, b) => a - b);
   }, []);
 
   const [selectedA, setSelectedA] = useState(100);
 
-  // Filter data
   const chartData = useMemo(() => {
     const filtered = curveData.filter((d) => d.A === selectedA);
     return {
@@ -44,7 +43,7 @@ const StableswapAmplificationChart = () => {
         {
           label: `Price (A = ${selectedA})`,
           data: filtered.map((d) => ({ x: d.pct_yourusd, y: d.price_yourusd })),
-          borderColor: primaryColor, // Blue color
+          borderColor: primaryColor,
           backgroundColor: primaryColor,
           borderWidth: 2,
           pointRadius: 0,
@@ -53,7 +52,7 @@ const StableswapAmplificationChart = () => {
         },
       ],
     };
-  }, [selectedA]);
+  }, [selectedA, primaryColor]);
 
   const options = {
     responsive: true,
@@ -70,7 +69,7 @@ const StableswapAmplificationChart = () => {
               `Balance crvUSD: ${100 - context.parsed.x}%`
             ];
           },
-          title: (context) => ``,
+          title: () => ``,
         },
         displayColors: false,
         backgroundColor: '#1f2937',
@@ -128,14 +127,10 @@ const StableswapAmplificationChart = () => {
       <div style={{ 
         display: 'flex', 
         justifyContent: 'flex-end', 
-        flexWrap: 'wrap',
-        gap: '16px', 
         marginBottom: '16px' 
       }}>
-      {/* Header / Selector */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <label htmlFor="amp-select" style={{ fontSize: '14px', fontWeight: 600, color: '--ifm-color-emphasis-800' }}>
+          <label htmlFor="amp-select" style={{ fontSize: '14px', fontWeight: 600, color: txtColor }}>
             Select A:
           </label>
           <select
@@ -145,21 +140,17 @@ const StableswapAmplificationChart = () => {
             style={{ 
               padding: '4px 8px', 
               borderRadius: '6px', 
-              border: '1px solid --ifm-color-emphasis-200',
+              border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
               fontSize: '14px'
             }}
           >
             {availableAValues.map((val) => (
-              <option key={val} value={val}>
-                {val}
-              </option>
+              <option key={val} value={val}>{val}</option>
             ))}
           </select>
         </div>
       </div>
-    </div>
 
-      {/* Chart Canvas */}
       <div style={{ position: 'relative', height: '320px', width: '100%' }}>
         <Line data={chartData} options={options} />
       </div>
@@ -167,4 +158,19 @@ const StableswapAmplificationChart = () => {
   );
 };
 
-export default StableswapAmplificationChart;
+export default function StableswapAmplificationChart() {
+  return (
+    <BrowserOnly fallback={
+      <div style={{
+        height: '320px', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+      }}>
+        Loading Chart...
+      </div>
+    }>
+      {() => <ChartContent />}
+    </BrowserOnly>
+  );
+}
