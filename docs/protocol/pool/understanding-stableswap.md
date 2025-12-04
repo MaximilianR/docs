@@ -80,19 +80,16 @@ This configuration creates a highly efficient Stableswap pool. The integration p
 
 ### Amplification Factor (`A`)
 
-The shape of this liquidity bonding curve and the degree to which a pool can become imbalanced before the price significantly deviates from 1:1 is controlled by the **Amplification Factor** (`A`).  Mathematically, `A` is the effective amplification of liquidity compared to that of the constant product formula `x*y=k`, so `A`=100 means there is 100 times more liquidity at the balanced price than `x*y=k`.
+The shape of this liquidity bonding curve and the degree to which a pool can become imbalanced before the price significantly deviates from 1:1 is controlled by the **Amplification Factor** (`A`).
 
 <figure>
-  <ThemedImage
+  <ThemedVideo
+    alt="changing A"
     sources={{
-      light: require('@site/static/img/protocol/amm/stableswap-a.png').default,
-      dark: require('@site/static/img/protocol/amm/stableswap-a.png').default,
+      light: require('@site/static/img/protocol/amm/stableswap-A-buckets.mp4').default,
+      dark: require('@site/static/img/protocol/amm/stableswap-A-buckets.mp4').default,
     }}
-    style={{ 
-      width: "500px",
-      display: "block",
-      margin: "0 auto"
-    }}
+    style={{ maxWidth: '1024px', width: '100%', display: 'block', margin: '0 auto' }}
   />
 </figure>
 
@@ -101,7 +98,7 @@ For a high-level understanding of `A`:
 - **High `A` values** (e.g., 500–10,000) concentrate liquidity tightly around the peg. This provides deeper liquidity for swaps and allows pools to become very imbalanced before the price deviates significantly. The trade-off is that if an asset moves far from the peg, liquidity and pricing drop off sharply.
 - **Lower `A` values** (e.g., 10–100) distribute liquidity more evenly. The price deviates more gradually from the peg as the pool becomes imbalanced, avoiding sharp cliffs.
 
-By definition, the `A` parameter is a multiplier; it amplifies liquidity around the fair price (usually 1:1) compared to the [constant product formula (`x*y=k`)](https://www.reddit.com/r/ethereum/comments/55m04x/lets_run_onchain_decentralized_exchanges_the_way/). 
+By definition, the `A` parameter is a multiplier; it amplifies liquidity around the fair price (usually 1:1) compared to the [constant product formula (`x*y=k`)](https://www.reddit.com/r/ethereum/comments/55m04x/lets_run_onchain_decentralized_exchanges_the_way/)
 
 We can observe this behavior in a theoretical pool containing **crvUSD** (pegged at exactly $1.00) and **newUSD**, where the price of newUSD fluctuates based on the ratio of assets in the pool:
 
