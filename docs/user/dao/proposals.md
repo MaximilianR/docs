@@ -46,9 +46,9 @@ Voting decay is a safety measure to stop manipulation of proposals at the last m
 
 > *Note: Gauge-weight votes are exempt from this decay and retain full power for the entire weekly epoch.*
 
-import VecrvDecayChart from '@site/src/components/Charts/VecrvDecayChart';
+import VecrvVotingDecayChart from '@site/src/components/Charts/VecrvVotingDecay';
 
-<VecrvDecayChart />
+<VecrvVotingDecayChart />
 
 ### How to Vote
 

@@ -43,7 +43,7 @@ The dashboard section ([Curve Dashboard](https://www.curve.finance/dex/ethereum/
         light: require('@site/static/img/user/vecrv/dashboard_light.png').default,
         dark: require('@site/static/img/user/vecrv/dashboard_dark.png').default,
     }}
-    style={{ width: '700px', display: 'block', margin: '0 auto' }}
+    style={{ width: '100%', display: 'block', margin: '0 auto' }}
 />
 </figure>
 

@@ -204,7 +204,7 @@ const ChartContent = () => {
       fontFamily: 'system-ui, -apple-system, sans-serif', 
       marginBottom: '2rem', 
       border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)', 
-      borderRadius: '8px', 
+      borderRadius: '0px', 
       padding: '16px',
       backgroundColor: 'var(--ifm-background-color, #ffffff)'
     }}>
@@ -227,7 +227,7 @@ const ChartContent = () => {
             onChange={(e) => setSelectedMarket(e.target.value)}
             style={{ 
               padding: '4px 8px', 
-              borderRadius: '6px', 
+              borderRadius: '0px', 
               border: '1px solid var(--ifm-color-emphasis-200)',
               fontSize: '14px'
             }}
@@ -249,7 +249,7 @@ const ChartContent = () => {
             onChange={(e) => setSelectedA(e.target.value)}
             style={{ 
               padding: '4px 8px', 
-              borderRadius: '6px', 
+              borderRadius: '0px', 
               border: '1px solid var(--ifm-color-emphasis-200)',
               fontSize: '14px'
             }}
@@ -271,7 +271,7 @@ const ChartContent = () => {
             onChange={(e) => setSelectedGamma(e.target.value)}
             style={{ 
               padding: '4px 8px', 
-              borderRadius: '6px', 
+              borderRadius: '0px', 
               border: '1px solid var(--ifm-color-emphasis-200)',
               fontSize: '14px'
             }}

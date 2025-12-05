@@ -34,12 +34,12 @@ FXSwap was created to provide efficient, fully passive forex-style liquidity on-
 
 Let's look at how an FXSwap pool prioritizes these resources while moving liquidity:
 
-<figure>
+<figure style={{ textAlign: 'center' }}>
   <ThemedVideo
     alt="crvUSD-wBTC YB Pool"
     sources={{
-      light: require('@site/static/img/protocol/amm/fxswap-crvusd-wbtc-donations-buckets.mp4').default,
-      dark: require('@site/static/img/protocol/amm/fxswap-crvusd-wbtc-donations-buckets.mp4').default,
+      light: '/img/protocol/amm/fxswap-crvusd-wbtc-donations-buckets-light.mp4',
+      dark: '/img/protocol/amm/fxswap-crvusd-wbtc-donations-buckets-dark.mp4',
     }}
     style={{ maxWidth: '960px', width: '100%', display: 'block', margin: '0 auto' }}
   />
@@ -55,19 +55,10 @@ It is generally not recommended to use FXSwap for primary price discovery. For e
 
 ## Refuels (Donations)
 
-Refuels (called donations within the contracts) are LP tokens that sit within the pool and are used for the sole purpose of rebalancing the pool.  The idea is, that LPs make money money and pools see more trades when liqudity is balanced, so refuels are an expense that can be offset by higher returns for LPs in the pool.  Here are some quick details:
-
-- Refuels can be added by anyone
-- They are initially locked when deposited, and then slowly unlocked over a period of time (usually 7 days, configurable by the `donation_duration` parameter) so they aren't all used at once
-- Unlocked Refuels are used to rebalance the pool if the pool needs rebalancing, and are the first line of defense.  They are used before taking any profit from LPs, allowing liquidity to be efficiently centered, and the pool quickly once again offer efficient swap rates, generating more profit for LPs.
-- With the introduction of Refuels, the minimum price movement to trigger a rebalance and minimum rebalance cost has also been safely significantly decreased
-
-
-## Refuels (Donations)
-
 Refuels (termed `donations` in the smart contracts) are LP tokens deposited into the pool specifically to subsidize rebalancing. The core premise is that liquidity is deepest when it's balanced, therefore, more balanced liquidity attracts higher volumes and profits for LPs; therefore, Refuels are an expense that is offset by higher aggregate returns for LPs.
 
 **Key Mechanics:**
+
 - **Open Access:** Refuels can be added by anyone.
 - **Vesting Period:** Deposits are initially locked and unlock linearly over a set duration (default is 7 days, configurable via `donation_duration`) to prevent immediate depletion.
 - **Priority Usage:** Unlocked Refuels are the "first line of defense." They are consumed to recenter liquidity before the protocol taps into LP trading fees. This ensures the pool offers optimal swap rates faster, generating more volume and profits.
@@ -95,14 +86,16 @@ In this scenario, Refuels represent only **3.6% of TVL per year** (approx. 23% o
 <figure>
   <ThemedImage
     sources={{
-      light: require('@site/static/img/protocol/amm/fxswap-liquidity-cycle.png').default,
-      dark: require('@site/static/img/protocol/amm/fxswap-liquidity-cycle.png').default,
+      light: '/img/protocol/amm/fxswap-liquidity-cycle-light.svg',
+      dark: '/img/protocol/amm/fxswap-liquidity-cycle-dark.svg',
     }}
     style={{ 
       width: "80%",
       minWidth: "600px",
       display: "block",
-      margin: "0 auto"
+      margin: "0 auto",
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
 </figure>

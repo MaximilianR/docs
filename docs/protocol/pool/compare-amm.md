@@ -6,7 +6,17 @@ sidebar_label: Curve vs. Other AMMs
 
 import ThemedImage from '@theme/ThemedImage'
 
-Curve's automated market makers (AMMs) solve a fundamental problem that other protocols struggle with: **providing deep, concentrated liquidity without requiring constant user intervention**. While other AMMs force liquidity providers (LPs) to actively manage positions by constantly moving their liquidity to active price bands, Curve pools deliver concentrated liquidity benefits automatically. No need for setting ranges, constantly monitoring LP positions, or hustling for optimal liquidity concentration to earn fees.
+Curve's automated market makers (AMMs) solve a fundamental problem that other protocols struggle with: **providing deep, concentrated liquidity without requiring constant user intervention**. Here are Curve's benefits:
+
+| Feature / Requirement | Curve Pools (Stableswap/Cryptoswap) | CLAMMs (e.g., Uniswap v3) |
+| :--- | :--- | :--- |
+| **Passive Liquidity Provision** | ✅ Anyone can earn, not just market makers | ❌ Requires constant monitoring/rebalancing |
+| **Liquidity is Always "In-Range"** | ✅ Liquidity is governed by the algorithm automatically, there's always some liquidity in range | ❌ Capital cannot be used as soon as price moves out of range |
+| **Consistent Liquidity** | ✅ Liquidity remains deep regardless of volatility | ❌ Liquidity gaps can form during rapid price movement |
+| **High TVL Retention** | ✅ LPs don't abandon passive positions, passive liquidity is sticky | ❌ LPs frequently exit or move positions |
+| **ERC20 LP Tokens** | ✅ A simple ERC20 token represents LP positions and has a defined $ value | ❌ LP positions are complex and based on ranges, requiring unique NFTs for representation |
+
+While other AMMs force liquidity providers (LPs) to actively manage positions by constantly moving their liquidity to active price bands, Curve pools deliver concentrated liquidity benefits automatically. No need for setting ranges, constantly monitoring LP positions, or hustling for optimal liquidity concentration to earn fees.
 
 For protocols, Curve offers lower maintenance requirements with no need to educate users on range management. It provides better user experience through consistent liquidity regardless of market conditions, higher TVL retention as LPs don't abandon positions during volatility, and proven reliability across multiple market cycles.
 
@@ -48,15 +58,19 @@ The Stableswap invariant intelligently **combines two AMM invariants**: **consta
 
 This approach delivers lower slippage for normal trading volumes, better capital efficiency than constant-product AMMs, and automatic adaptation to market conditions without any manual intervention required.
 
+Learn more here: [Understanding Stableswap](understanding-stableswap.md)
+
 ## Cryptoswap: Intelligent Adaptive Liquidity
 
-For volatile asset pairs like ETH/USDT or BTC/ETH, Cryptoswap represents a different approach to automated market making. Unlike other AMMs that require manual rebalancing or external oracles, Cryptoswap automatically tracks market prices and rebalances accordingly.
+For volatile asset pairs like ETH/USDT or BTC/ETH, Cryptoswap represents a different approach to automated market making. Unlike other AMMs that require manual rebalancing or external oracles, **Cryptoswap automatically tracks market prices and rebalances accordingly**, protecting LP profitability in the process.
 
 Cryptoswap uses an internal price oracle based on an Exponential Moving Average of recent trades to track market price. It only rebalances when the price moves beyond a minimum threshold and when trading fees exceed 50% of the rebalancing cost. This profit-aware approach ensures that rebalancing only occurs when it benefits LPs.
 
 Compared to range-based AMMs like Uniswap v3, Cryptoswap eliminates liquidity gaps and provides automatic optimization without requiring manual position adjustments. Unlike oracle-based solutions, it has no external dependencies and prevents manipulation through internal price discovery. The controlled rebalancing minimizes impermanent loss while maintaining professional execution.
 
-Cryptoswap uses two parameters to optimize liquidity distribution: `A` (amplification) controls liquidity concentration around the current price, while `gamma` controls the overall breadth of the liquidity curve. These can be tuned to balance capital efficiency with resilience to volatility.
+Cryptoswap uses two parameters to optimize liquidity distribution: `A` (amplification) controls liquidity concentration around the balanced price, while `gamma` controls the overall breadth of the liquidity curve. These can be tuned to balance capital efficiency with resilience to volatility.
+
+Learn more here: [Understanding Cryptoswap](understanding-cryptoswap.md)
 
 ## Built-in Price Oracles
 

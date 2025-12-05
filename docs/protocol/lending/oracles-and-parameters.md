@@ -35,7 +35,7 @@ Parameter selection when creating a new lending market is the foundation for an 
 ### A, fee, loan- and liquidation discount
 
 The following parameters need to be simulated and set at market deployment:
-- **Band width (A)**: Determines the range of prices where liquidations can occur
+- **Band width factor (A)**: Determines the range of prices where liquidations can occur
 - **Fee**: Fee for exchanging tokens inside the AMM (LLAMMA)
 - **Liquidation discount**: Price discount applied during liquidations
 - **Loan discount**: Collateral discount for loan-to-value calculations
@@ -60,7 +60,9 @@ For example, if the current market rate for borrowing crvUSD is 10%, configure m
 **Rate Calculation:**
 Borrow rates are calculated per second and must be converted from annual percentage rates (APR) using this formula:
 
-$APR = \frac{rate}{10^{18}} \times (60 \times 60 \times 24 \times 365)$
+$$
+APR = \frac{rate}{10^{18}} \times (60 \times 60 \times 24 \times 365)
+$$
 
 **Example**: To achieve 1% APR, set the rate parameter to `317097919`.
 
@@ -72,7 +74,6 @@ The market name can be chosen freely. While the UI currently doesn't use the nam
 **Naming Convention**: Usually follows the pattern of the collateral token name appended by the market direction (long/short).
 
 **Examples**:
+
 - **ETH-long**: ETH as collateral token, crvUSD as borrowable token
 - **BTC-short**: crvUSD as collateral token, BTC as borrowable token
-
-

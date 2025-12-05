@@ -18,7 +18,7 @@ export default {
                 },
                 {
                     type: 'category',
-                    label: 'Understanding Algorithms',
+                    label: 'Understanding Pools',
                     items: [
                         {
                             type: 'doc',

@@ -71,31 +71,39 @@ Assets within Cryptoswap pools are volatile, so prices and exchange rates are co
 
 Let's look at an example using a forex pool trading Euros (EUR) against US Dollars (USD):
 
-<figure>
+<figure style={{ textAlign: 'center' }}>
   <ThemedImage
-    alt=""
+    alt="Cryptoswap Rebalances"
     sources={{
-      light: require('@site/static/img/protocol/amm/cryptoswap-rebalances.png').default,
-      dark: require('@site/static/img/protocol/amm/cryptoswap-rebalances.png').default,
+      light: '/img/user/dex/cryptoswap-rebalances-light.svg',
+      dark: '/img/user/dex/cryptoswap-rebalances-dark.svg',
     }}
-    style={{ 
-      width: "1000px",
-      display: "block",
-      margin: "0 auto"
+    style={{
+      maxWidth: '1200px',
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
+  <figcaption></figcaption>
 </figure>
+
+
+1. Liquidity is initially balanced around the price of $1.10, which is also the current price.  It looks and functions like a normal Stableswap pool.
+2. A user swaps USD for EUR, and the EUR/USD price increases to $1.105, because of the slight imbalance.  While price stays within Minimum Step range, it will continue functioning like Stableswap.
+3. Another swap happens, generating more profit for LPs.  This increases price to $1.11, outside adjustment step range.  A rebalance can now occur, assuming the pool has enough profit to rebalance.
+4. The pool can use up to half the generated profit from swaps to move to balance liquidity around around the new price of $1.11, automatically.
 
 In this scenario, the pool performs a rebalance once the price hits the adjustment step, using up to 50% of its collected fees to cover the cost.
 
-To make this clearer, here's how the [CVX/WETH pool](https://www.curve.finance/dex/ethereum/pools/cvxeth/deposit)'s liquidity changed over a month period, notice how the center of liquidity (last rebalance price) updates frequently when it's close to the oracle price, and much more slowly otherwise.  Note that we've put the liquidity into discrete 0.5% range buckets below, so we can see a USD value for the liquidity available.
+To make this clearer, here's how the [CVX/WETH pool](https://www.curve.finance/dex/ethereum/pools/cvxeth/deposit)'s liquidity changed over a month period, notice how the center of liquidity (`price_scale`) updates frequently when it's close to the oracle price, and much more slowly otherwise.  Note that we've put the liquidity into discrete 0.5% range buckets below, so we can see a USD value for the liquidity available.
 
-<figure>
+<figure style={{ textAlign: 'center' }}>
   <ThemedVideo
     alt="CVX-WETH Pool"
     sources={{
-      light: require('@site/static/img/protocol/amm/cryptoswap-cvx-weth-discrete-buckets.mp4').default,
-      dark: require('@site/static/img/protocol/amm/cryptoswap-cvx-weth-discrete-buckets.mp4').default,
+      light: '/img/protocol/amm/cryptoswap-cvx-weth-discrete-buckets-light.mp4',
+      dark: '/img/protocol/amm/cryptoswap-cvx-weth-discrete-buckets-dark.mp4',
     }}
     style={{ maxWidth: '960px', width: '100%', display: 'block', margin: '0 auto' }}
   />
@@ -105,17 +113,17 @@ To make this clearer, here's how the [CVX/WETH pool](https://www.curve.finance/d
 
 Rebalancing costs because you are offering your assets to be swapped in return for trading fees.  As price increases, you are selling your assets.  When you rebalance, you are rebuying your assets, but at a higher price, causing a loss.  Let's look at a very simple example of a concentrated liquidity range AMM:
 
-<figure>
+<figure style={{ textAlign: 'center' }}>
   <ThemedImage
     alt=""
     sources={{
-      light: require('@site/static/img/protocol/amm/rebalancing-loss.png').default,
-      dark: require('@site/static/img/protocol/amm/rebalancing-loss.png').default,
+      light: '/img/protocol/amm/rebalancing-loss-light.svg',
+      dark: '/img/protocol/amm/rebalancing-loss-dark.svg',
     }}
     style={{ 
-      width: "1000px",
-      display: "block",
-      margin: "0 auto"
+      maxWidth: '1200px',
+      width: '100%',
+      height: 'auto',
     }}
   />
 </figure>
@@ -125,7 +133,8 @@ This example highlights two important takeaways about rebalancing:
 * If the user had not rebalanced, they would have kept their initial asset value.
 * If the price continued to increase without a rebalance, the user's impermanent loss would have been larger, as they would need to buy back assets at an even higher price to re-enter the liquidity range.
 
-!!! info "Cryptoswap Rebalancing"
+:::info "Cryptoswap Rebalancing"
+
     Rebalancing is necessary, but both frequent and infrequent rebalancing can lead to significant losses. 
     
     Cryptoswap automates this process to strike a balance, only rebalancing when two conditions are met:
@@ -134,27 +143,11 @@ This example highlights two important takeaways about rebalancing:
     2. The rebalance costs less than 50% of the profit earned from swaps  
   
     This ensures LPs remain profitable and minimizes rebalances, while maintaining high liquidity depth for swappers.
+:::
 
 ## Dynamic Fees
 
 Cryptoswap and all new Stableswap pools feature **dynamic fees** that adjust to increase returns for LPs when their liquidity is in high demand.
-
-For Cryptoswap pools, this works as follows:
-
-<figure>
-  <ThemedImage
-    alt=""
-    sources={{
-      light: require('@site/static/img/protocol/amm/cryptoswap-dynamic-fees.png').default,
-      dark: require('@site/static/img/protocol/amm/cryptoswap-dynamic-fees.png').default,
-    }}
-    style={{ 
-      width: "500px",
-      display: "block",
-      margin: "0 auto"
-    }}
-  />
-</figure>
 
 Have a play below to see how the fee changes with the pool balance.  Note: For an ETH/USD pool, a 70/30 value ratio means 70% of the total value is in ETH (e.g., \$700k) and 30% is in USD (e.g., \$300k), or vice versa.
 
@@ -176,25 +169,27 @@ This efficiency stands in contrast to classic AMMs with the `x*y=k` invariant, w
 
 ## Stale Pools - How Cryptoswap Pools Can Become Stuck
 
-A Cryptoswap pool's main safety feature is its refusal to rebalance at a loss to LPs. However, this can sometimes cause a pool to become **stuck**, meaning it has a **stale liquidity concentration** because the last rebalance price (`price_scale`) is very different from the current price. This can trigger a negative feedback loop during periods of high volatility:
+A Cryptoswap pool's main safety feature is its refusal to rebalance at a loss to LPs. However, this can sometimes cause a pool to become **stuck**, meaning it has a **stale liquidity concentration** because the center of liquidity (`price_scale`) is very different from the current price. This can trigger a negative feedback loop during periods of high volatility:
 
-As the market price moves away from the pool's last rebalance price, the available liquidity for traders decreases. This leads to fewer swaps and, consequently, lower fee generation. Without enough profit from fees, the pool cannot afford to rebalance and follow the price, leaving its liquidity stranded.
+As the market price moves away from the pool's center of liquidity, the available liquidity for traders decreases. This leads to fewer swaps and, consequently, lower fee generation. Without enough profit from fees, the pool cannot afford to rebalance and follow the price, leaving its liquidity stranded.
 
-<figure>
+<figure style={{ textAlign: 'center' }}>
   <ThemedImage
     alt=""
     sources={{
-      light: require('@site/static/img/protocol/amm/cryptoswap-stale-pools.png').default,
-      dark: require('@site/static/img/protocol/amm/cryptoswap-stale-pools.png').default,
+      light: '/img/protocol/amm/cryptoswap-stale-pools-light.svg',
+      dark: '/img/protocol/amm/cryptoswap-stale-pools-dark.svg',
     }}
     style={{ 
       width: "1000px",
-      display: "block",
-      margin: "0 auto"
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
 </figure>
 
+1. Another swap happens, generating more profit for LPs.  This increases **price to $1.11, outside adjustment step range**.  However, if the **pool hasn’t generated enough profit, a rebalance cannot occur**.
+2. **Rebalances must cost less than 50% of profit** generated from swaps.  So if the price continues increasing, there’s less liquidity available, and so less swaps happen and less profit is generated.  Also, rebalancing becomes more expensive.  So **rebalancing is unlikely unless price decreases or enough profit is generated.**
 
 ## Monitoring Liquidity Balance within Pools
 
@@ -217,7 +212,7 @@ To see how balanced liquidity is within a pool, navigate to the pool's page, for
 
 In the image above, you can see two key parameters:
 
-- **Price Scale**: This is the price at which liquidity was last rebalanced.
+- **Price Scale**: This is the price at which liquidity was last rebalanced, also called the center of liquidity.
 - **Price Oracle**: This is an Exponential Moving Average (EMA) of recent market prices. Rebalances are triggered by this price, not the current market price, which helps prevent manipulation of the rebalancing mechanism.
 
 ## How to Prevent Stale Liquidity within Pools

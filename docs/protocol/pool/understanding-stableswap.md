@@ -24,34 +24,47 @@ In October 2023, the initial Stableswap implementation was reworked into **Stabl
 
 Stableswap was designed for pools of similarly priced assets, such as stablecoins of the same denomination (e.g., USD), to concentrate liquidity around their pegged price (e.g., USDC/USDT at 1.0). Unlike concentrated liquidity AMMs (CLAMMs) where liquidity providers must actively set price ranges, **Stableswap's liquidity concentration is fully passive** — users simply deposit tokens, and the protocol automatically concentrates liquidity around the peg through a **single continuous bonding curve**. No range management or active position adjustments are required.
 
-<figure>
+<figure style={{ textAlign: 'center' }}>
   <ThemedImage
     sources={{
-      light: require('@site/static/img/protocol/amm/stableswap-swap.png').default,
-      dark: require('@site/static/img/protocol/amm/stableswap-swap.png').default,
+      light: '/img/protocol/amm/stableswap-swap-light.svg',
+      dark: '/img/protocol/amm/stableswap-swap-dark.svg',
     }}
     style={{ 
       width: "1000px",
-      display: "block",
-      margin: "0 auto"
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
 </figure>
+
+In this example most of the pool's liquidity (e.g., \$40M out of \$80M total) is concentrated in a very tight range around the \$1.00 price.  Each block represents 1 million tokens (1M) of either crvUSD or USDC.
+
+**Swap Example**:
+
+1. A Stableswap pool has 40M of both crvUSD and USDC, the pool is perfectly balanced, so each asset is $1.
+2. A user wants to swap \$20M USDC for crvUSD:
+
+    - The user's 20M USDC is deposited to the pool
+    - Approx. 19.98M crvUSD is withdrawn
+    - The price increases to 1.002 USDC per crvUSD
+
+3.  The pool is now imbalanced, it would only take a user selling 9M USDC to push the price up another 0.002.  The imbalance also creates an **arbitrage opportunity**: traders are now incentivized to swap crvUSD back into the pool to get USDC at a slight discount, which naturally pushes the pool back toward a 50/50 balance.
 
 Stableswap pools function effectively even when heavily imbalanced. Depending on the **Amplification Coefficient** (`A`), pools can maintain close to 1:1 pricing even under significant imbalance. If the imbalance causes a price deviation from the peg, it creates an arbitrage opportunity. This incentivizes traders to rebalance the pool, with each swap generating fees for liquidity providers (LPs).
 
 While the blocks offer a helpful visual, Stableswap's liquidity is more accurately represented by a bonding curve:
 
-<figure>
+<figure style={{ textAlign: 'center' }}>
   <ThemedImage
     sources={{
-      light: require('@site/static/img/protocol/amm/stableswap-liquidity-curve.png').default,
-      dark: require('@site/static/img/protocol/amm/stableswap-liquidity-curve.png').default,
+      light: '/img/protocol/amm/stableswap-liquidity-curve-light.svg',
+      dark: '/img/protocol/amm/stableswap-liquidity-curve-dark.svg',
     }}
     style={{ 
       width: "1000px",
-      display: "block",
-      margin: "0 auto"
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
 </figure>
@@ -82,14 +95,14 @@ This configuration creates a highly efficient Stableswap pool. The integration p
 
 The shape of this liquidity bonding curve and the degree to which a pool can become imbalanced before the price significantly deviates from 1:1 is controlled by the **Amplification Factor** (`A`).
 
-<figure>
+<figure style={{ textAlign: 'center' }}>
   <ThemedVideo
     alt="changing A"
     sources={{
-      light: require('@site/static/img/protocol/amm/stableswap-A-buckets.mp4').default,
-      dark: require('@site/static/img/protocol/amm/stableswap-A-buckets.mp4').default,
+      light: '/img/protocol/amm/stableswap-a-buckets-light.mp4',
+      dark: '/img/protocol/amm/stableswap-a-buckets-dark.mp4',
     }}
-    style={{ maxWidth: '1024px', width: '100%', display: 'block', margin: '0 auto' }}
+    style={{ maxWidth: '1280px', width: '100%', display: 'block', margin: '0 auto' }}
   />
 </figure>
 
@@ -125,12 +138,12 @@ These asset types are to allow the assets with underlying accruing interest to b
 
 Tho achieve this, the Stablswap pool needs to shift it's center of liquidity (balanced price) over time as the oracle or vault asset accrues interest.  Let's have a look at how Stableswap deals with this in practice.  Here is the live [crvUSD/sUSDe pool](https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-169/deposit) over the past year, note how as the fundamental value of sUSDe increases, Stableswap changes the center of liquidity to this new price:
 
-<figure>
+<figure style={{ textAlign: 'center' }}>
   <ThemedVideo
     alt="crvUSD-sUSDe Pool"
     sources={{
-      light: require('@site/static/img/protocol/amm/stableswap-changing-center.mp4').default,
-      dark: require('@site/static/img/protocol/amm/stableswap-changing-center.mp4').default,
+      light: '/img/protocol/amm/stableswap-changing-center-light.mp4',
+      dark: '/img/protocol/amm/stableswap-changing-center-dark.mp4',
     }}
     style={{ maxWidth: '960px', width: '100%', display: 'block', margin: '0 auto' }}
   />
@@ -169,6 +182,66 @@ Every time the oracle pushes a new price, the center of liquidity changes, creat
 #### **Oracle Dependency**
 
 This design requires a high-quality oracle. A malfunctioning, manipulated, or delayed oracle could report an incorrect price, leading to substantial losses for LPs.
+
+---
+
+## Basepools and Metapools
+
+
+Basepools form a foundational liquidity layer on Curve, composed of widely-used, highly-liquid stablecoins. Anyone can permissionlessly build new liquidity pools - called Metapools - on top of a Basepool.
+
+A **Metapool combines a asset with the LP tokens of an existing Basepool**. This structure allows Metapools to instantly benefit from the liquidity and stability provided by the underlying Basepool.
+
+See the image below for a visual representation of the [Curve.fi Strategic USD Reserves Basepool](https://curve.finance/dex/ethereum/pools/factory-stable-ng-355/deposit/?ref=news.curve.finance) and the [DOLA Strategic Reserves Metapool](https://curve.finance/dex/ethereum/pools/factory-stable-ng-396/deposit/?ref=news.curve.finance):
+
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="Basepools and Metapools"
+    sources={{
+      light: '/img/user/dex/dex-basepools-light.svg',
+      dark: '/img/user/dex/dex-basepools-dark.svg',
+    }}
+    style={{
+      maxWidth: '600px',
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
+
+In the above structure:
+
+- **Basepool**: When USDC and USDT have equal value, liquidity will naturally balance to 50% USDC and 50% USDT.
+- **Metapool**: When DOLA, USDC, and USDT all have equal value, liquidity will naturally balance to 50% DOLA, 25% USDC, and 25% USDT (via Basepool LP tokens).
+
+#### Benefits of Basepools and Metapools
+
+Curve’s Basepool-Metapool architecture offers distinct benefits for liquidity providers (LPs), stablecoin issuers, and traders:
+
+- **Deep Liquidity & Low Slippage**: Metapools directly benefit from the liquidity of Basepools, resulting in lower slippage even for newly issued or less liquid stablecoins.
+- **Risk Isolation**: LPs in Basepools aren’t directly exposed to tokens within the Metapools, minimizing their risk. Metapools are also isolated from each other; the only shared risk is de-pegging risk of Basepool assets, which is why adding new Basepools requires a DAO vote.
+- **Positive Liquidity Loop (Reflexivity)**: Deposits into Metapools also increase liquidity within Basepools. This creates a positive feedback loop that enhances overall liquidity and trading efficiency across all pools.
+- **Built-in Yield Generation**: Basepool LP tokens continuously earn trading fees. Since Metapools hold these LP tokens, Metapool LPs automatically receive a portion of the Basepool’s trading yield, providing immediate organic returns even before trading volumes pick up.
+- **Seamless Stablecoin Integration**: Stablecoin issuers can permissionlessly pair their tokens with a Basepool, accelerating their token’s liquidity and adoption within the Curve ecosystem.
+
+#### Basepool List
+
+| Network | Basepool |
+| :--- | :--- |
+| <img src="/img/logos/ethereum.svg" alt="ETH" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Ethereum** | [**DAI/USDC/USDT**](https://curve.finance/dex/#/ethereum/pools/3pool/deposit) |
+| <img src="/img/logos/ethereum.svg" alt="ETH" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Ethereum** | [**PYUSD/USDC**](https://curve.finance/dex/#/ethereum/pools/factory-stable-ng-43/deposit) |
+| <img src="/img/logos/ethereum.svg" alt="ETH" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Ethereum** | [**FRAX/USDC**](https://curve.finance/dex/#/ethereum/pools/fraxusdc/deposit) |
+| <img src="/img/logos/ethereum.svg" alt="ETH" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Ethereum** | [**USDC/USDT**](https://curve.finance/dex/#/ethereum/pools/factory-stable-ng-355/deposit) |
+| <img src="/img/logos/arbitrum.svg" alt="ARB" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Arbitrum** | [**USDC.e/USD₮**](https://curve.finance/dex/#/arbitrum/pools/2pool/deposit) |
+| <img src="/img/logos/arbitrum.svg" alt="ARB" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Arbitrum** | [**FRAX/USDC.e**](https://curve.finance/dex/#/arbitrum/pools/factory-v2-41/deposit) |
+| <img src="/img/logos/optimism.svg" alt="OP" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Optimism** | [**DAI/USDC.e/USDT**](https://curve.finance/dex/#/optimism/pools/3pool/deposit) |
+| <img src="/img/logos/polygon.svg" alt="MATIC" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Polygon** | [**amDAI/amUSDC/amUSDT**](https://curve.finance/dex/#/polygon/pools/aave/deposit) |
+| <img src="/img/logos/avalanche.svg" alt="AVAX" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Avalanche** | [**avDAI/avUSDC/avUSDT**](https://curve.finance/dex/#/avalanche/pools/aave/deposit) |
+| <img src="/img/logos/gnosis.svg" alt="GNO" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Gnosis** | [**WXDAI/USDC/USDT**](https://curve.finance/dex/xdai/pools/3pool/deposit/) |
+| <img src="/img/logos/fantom.svg" alt="FTM" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Fantom** | [**gDAI/gUSDC/gfUSDT**](https://curve.finance/dex/#/fantom/pools/geist/deposit) |
+| <img src="/img/logos/fantom.svg" alt="FTM" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Fantom** | [**DAI/USDC**](https://curve.finance/dex/#/fantom/pools/2pool/deposit) |
 
 ---
 

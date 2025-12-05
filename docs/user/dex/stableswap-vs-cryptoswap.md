@@ -126,11 +126,11 @@ Like their Stableswap counterparts, Cryptoswap pools are **fully passive and ful
 
 ### How Cryptoswap Works: Concentrating and Rebalancing
 
-At its core, a Cryptoswap pool functions like a Stableswap pool concentrated around the last rebalance price. As traders swap back and forth, the pool earns fees.
+At its core, a Cryptoswap pool functions like a Stableswap pool concentrated around the `price_scale` (center of liquidity). As traders swap back and forth, the pool earns fees.
 
 However, when the market price of the assets drifts significantly, the pool must move its liquidity concentration to match the new price. This is called **rebalancing**. To ensure this process is always profitable for LPs, it only happens if two conditions are met:
 
-1.  **Minimum Step**: The price must move more than a set minimum amount (e.g., 0.5%). This prevents constant, unnecessary rebalancing in a choppy market. It is set by the `adjustment_step` parameter.
+1.  **Adjustment Step**: The price must move more than a set minimum amount (e.g., 0.5%). This prevents constant, unnecessary rebalancing in a choppy market. It is set by the `adjustment_step` parameter.
 2.  **Profitability Check**: The pool must have accrued enough trading fees to ensure the recent profits from swaps are more than double the cost of rebalancing.  This guarantees that rebalancing doesn't cause a net loss for LPs.
 
 Let's look at a simple USD/EUR forex pool example:
@@ -155,5 +155,5 @@ Let's look at a simple USD/EUR forex pool example:
 
 1. Liquidity is initially balanced around the price of $1.10, which is also the current price.  It looks and functions like a normal Stableswap pool.
 2. A user swaps USD for EUR, and the EUR/USD price increases to $1.105, because of the slight imbalance.  While price stays within Minimum Step range, it will continue functioning like Stableswap.
-3. Another swap happens, generating more profit for LPs.  This increases price to $1.11, outside min step range.  A rebalance can now occur, assuming the pool has enough profit to rebalance.
+3. Another swap happens, generating more profit for LPs.  This increases price to $1.11, outside adjustment step range.  A rebalance can now occur, assuming the pool has enough profit to rebalance.
 4. The pool can use up to half the generated profit from swaps to move to balance liquidity around around the new price of $1.11, automatically.
