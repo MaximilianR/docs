@@ -18,18 +18,11 @@ scrvUSD is designed with minimal risk in mind. The underlying crvUSD deposited i
 
 <ScrvusdVaultAnimation />
 
-<<<<<<< HEAD
 ---
 
 ## Guides
 
 <GuideCardGrid guideKeys={['depositScrvusd', 'checkEarningsScrvusd', 'withdrawScrvusd']} />
-=======
-<GuideCardGrid guideKeys={['depositScrvusd', 'checkEarningsScrvusd', 'withdrawScrvusd']} />
-
-<ButtonGrid buttonKeys={['gotoScrvusd']} />
-
->>>>>>> 5e706138b27a64fdc8f4f051c8a20f054477ee0a
 
 ---
 
