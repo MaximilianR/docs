@@ -40,6 +40,11 @@ It's important to remember that the protective swapping of collateral is what in
 
 <CollateralConversion />
 
+:::warning
+The above visualizer is a theoretical perfect scenario with no losses.  Keep in mind that when collateral is converted in reality, losses occur, and so amounts will be lower than those shown above
+:::
+
+
 ## What is the Liquidation Protection Range?
 
 Your **liquidation protection range** is a price zone for your collateral defined by a high and a low point. Your loan enters protection mode if the market price of your collateral drops into this zone.

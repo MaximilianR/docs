@@ -5,6 +5,9 @@ sidebar_label: Understanding Cryptoswap
 
 import ThemedImage from '@theme/ThemedImage'
 import ThemedVideo from '@site/src/components/ThemedVideo';
+import CryptoswapParamsChart from '@site/src/components/Charts/CryptoswapParams';
+import FXSwapDynamicFeeChart from '@site/src/components/Charts/FXSwapDynamicFee';
+
 
 ## Historical Background
 
@@ -28,10 +31,10 @@ This article from Nagaking goes into detail about each of Cryptoswap's parameter
 
 The shape of the Liquidity Bonding Curve is governed by two parameters: `A` which is also present in Stableswap, as well as a new parameter called `gamma`:
 
-- **`A`**: controls liquidity concentration in the center of the bonding curve
-- **`gamma`**: controls whether liquidity drops off gradually or sharply away from the center of the bonding curve
+- **`A`**: controls liquidity concentration in the center of the bonding curve (the same as Stableswap, however `A` values are scaled up in Cryptoswap. An `A` of 10,000 in Cryptoswap is equivalent to an `A` of 1 in Stableswap
+- **`gamma`**: controls whether liquidity drops off gradually or sharply away from the center of the bonding curve.  In Stableswap `gamma` is equal to 1.  Higher `gamma` pulls more liquidity in around the center of liquidity.
 
-Here is how they affect the curve in practice (note that orange curve are equal in both charts):
+Below you can see how they affect the shape of the liquidity curve in practice (note that orange curve are equal in both charts):
 
 <figure>
   <ThemedImage
@@ -48,7 +51,11 @@ Here is how they affect the curve in practice (note that orange curve are equal 
   />
 </figure>
 
-As the image shows, a higher `A` means more liquidity is concentrated around the price at which it's balanced, called the `price_scale`.  Whereas a higher `gamma` means liquidity is spread wider.
+As the image shows, a higher `A` means more liquidity is concentrated around the price at which it's center of liquidity, called the `price_scale`.  Whereas a higher `gamma` means liquidity is spread wider.
+
+Pricing is all about the balance of the pool, so let's look at how balance affects the value of the assets in the pool, based on `A` and `gamma`:
+
+<CryptoswapParamsChart />
 
 ## Rebalancing
 
@@ -148,6 +155,10 @@ For Cryptoswap pools, this works as follows:
     }}
   />
 </figure>
+
+Have a play below to see how the fee changes with the pool balance.  Note: For an ETH/USD pool, a 70/30 value ratio means 70% of the total value is in ETH (e.g., \$700k) and 30% is in USD (e.g., \$300k), or vice versa.
+
+<FXSwapDynamicFeeChart />
 
 ## Cryptoswap Benefits
 

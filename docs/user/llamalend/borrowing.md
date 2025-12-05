@@ -66,7 +66,9 @@ In lending markets, the rate depends only on how much of the supplied crvUSD is 
 
 The markets utilization is calculated as: 
 
-$\text{utilization} = \frac{\text{amount borrowed}}{total supplied} \times 100$
+$$
+\text{utilization} = \frac{\text{amount borrowed}}{total supplied} \times 100
+$$
 
 When utilization is low, the rate stays close to the minimum and there's plenty of crvUSD available to borrow. As utilization increases (around 80%), the rate increases toward the maximum and there's less crvUSD available. At very high utilization (around 95%), the rate reaches the maximum and there's very little crvUSD left to borrow.
 

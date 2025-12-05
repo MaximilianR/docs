@@ -11,6 +11,8 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import { useColorMode } from '@docusaurus/theme-common';
+
 
 ChartJS.register(
   CategoryScale,
@@ -23,15 +25,16 @@ ChartJS.register(
 );
 
 const ChartContent = () => {
+  const { colorMode } = useColorMode();
   const css = getComputedStyle(document.documentElement);
   const primaryColor = css.getPropertyValue('--ifm-color-primary-light').trim() || '#3b82f6';
   const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#1f2937';
   const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim() || '#e5e7eb';
 
   // Fee configuration options
-  const midFeeOptions = [0.03, 0.1, 0.2, 0.5];
-  const outFeeOptions = [0.1, 0.2, 0.4, 1.0];
-  const gammaOptions = [0.0005, 0.003, 0.01, 0.02, 0.05];
+  const midFeeOptions = [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1];
+  const outFeeOptions = [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1];
+  const gammaOptions = [0.0005, 0.002, 0.01, 0.05, 0.2, 1];
 
   const [midFee, setMidFee] = useState(0.1); 
   const [outFee, setOutFee] = useState(0.2); 
@@ -70,7 +73,7 @@ const ChartContent = () => {
           data: dataPoints,
           borderColor: primaryColor,
           backgroundColor: primaryColor,
-          borderWidth: 2,
+          borderWidth: 4,
           pointRadius: 0,
           pointHoverRadius: 6,
           tension: 0.4,
@@ -92,8 +95,8 @@ const ChartContent = () => {
             return [
               `Dynamic Fee: ${currentFee.toFixed(4)}%`,
               `Relative Increase: ${effectiveMult.toFixed(2)}x`,
-              `Pool newUSD: ${context.parsed.x}%`,
-              `Pool crvUSD: ${100 - context.parsed.x}%`
+              `Asset 1: ${context.parsed.x}%`,
+              `Asset 2: ${100 - context.parsed.x}%`
             ];
           },
           title: () => ``,
@@ -147,7 +150,7 @@ const ChartContent = () => {
       fontFamily: 'system-ui, -apple-system, sans-serif', 
       marginBottom: '2rem', 
       border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)', 
-      borderRadius: '8px', 
+      borderRadius: '0px', 
       padding: '16px',
       backgroundColor: 'var(--ifm-background-color, #ffffff)'
     }}>
@@ -169,7 +172,7 @@ const ChartContent = () => {
             onChange={(e) => setMidFee(Number(e.target.value))}
             style={{ 
               padding: '4px 8px', 
-              borderRadius: '6px', 
+              borderRadius: '0px', 
               border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
               fontSize: '14px'
             }}
@@ -190,7 +193,7 @@ const ChartContent = () => {
             onChange={(e) => setOutFee(Number(e.target.value))}
             style={{ 
               padding: '4px 8px', 
-              borderRadius: '6px', 
+              borderRadius: '0px', 
               border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
               fontSize: '14px'
             }}
@@ -211,7 +214,7 @@ const ChartContent = () => {
             onChange={(e) => setGamma(Number(e.target.value))}
             style={{ 
               padding: '4px 8px', 
-              borderRadius: '6px', 
+              borderRadius: '0px', 
               border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
               fontSize: '14px'
             }}

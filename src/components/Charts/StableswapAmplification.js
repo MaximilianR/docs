@@ -12,6 +12,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import curveData from '../../data/data_stableswap_a.json';
+import { useColorMode } from '@docusaurus/theme-common';
 
 ChartJS.register(
   CategoryScale,
@@ -24,10 +25,62 @@ ChartJS.register(
 );
 
 const ChartContent = () => {
+  const { colorMode } = useColorMode();
   const css = getComputedStyle(document.documentElement);
   const primaryColor = css.getPropertyValue('--ifm-color-primary-light').trim() || '#3eaf7c';
   const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#1f2937';
   const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim() || '#e5e7eb';
+
+  const centerLinePlugin = {
+    id: 'centerLine',
+    beforeDatasetsDraw(chart) {
+      const cssPlugin = getComputedStyle(document.documentElement);
+      const txtPluginColor = cssPlugin.getPropertyValue('--ifm-color-emphasis-800').trim() || '#000';
+
+      const { ctx, chartArea: { top, bottom, left, right }, scales: { x, y } } = chart;      
+      
+      const dataset = chart.data.datasets[0].data;
+      const midpoint = dataset.find(d => d.x === 50);
+      
+      const xPos = x.getPixelForValue(50);
+      const yPos = y.getPixelForValue(midpoint.y);      
+      ctx.save();
+      
+      // 1. Draw the vertical dashed line
+      ctx.beginPath();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#D41E26'; 
+      ctx.setLineDash([4, 4]);
+      ctx.moveTo(xPos, top);
+      ctx.lineTo(xPos, bottom);
+      ctx.stroke();
+
+      // 2. Draw the vertical label
+      ctx.font = '12px system-ui';
+      ctx.fillStyle = txtPluginColor;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillText('perfect balance', xPos+5, top + 5); 
+      
+      // 1. Draw the vertical dashed line
+      ctx.beginPath();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#FFC300'; 
+      ctx.setLineDash([4, 4]);
+      ctx.moveTo(left, yPos);
+      ctx.lineTo(right, yPos);
+      ctx.stroke();
+
+      // 2. Draw the vertical label
+      ctx.font = '12px system-ui';
+      ctx.fillStyle = txtPluginColor;
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'top';
+      ctx.fillText('center of liquidity', right -5, yPos - 15); 
+
+      ctx.restore();
+    }
+  };
 
   // Extract and sort unique A values
   const availableAValues = useMemo(() => {
@@ -45,7 +98,7 @@ const ChartContent = () => {
           data: filtered.map((d) => ({ x: d.pct_yourusd, y: d.price_yourusd })),
           borderColor: primaryColor,
           backgroundColor: primaryColor,
-          borderWidth: 2,
+          borderWidth: 4,
           pointRadius: 0,
           pointHoverRadius: 6,
           tension: 0.4,
@@ -98,7 +151,7 @@ const ChartContent = () => {
         max: 2,
         title: {
           display: true,
-          text: 'Price (USD)',
+          text: 'Price (crvUSD / newUSD)',
           color: txtColor,
           font: { weight: 'bold' }
         },
@@ -120,7 +173,7 @@ const ChartContent = () => {
       fontFamily: 'system-ui, -apple-system, sans-serif', 
       marginBottom: '2rem', 
       border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)', 
-      borderRadius: '8px', 
+      borderRadius: '0px', 
       padding: '16px',
       backgroundColor: 'var(--ifm-background-color, #ffffff)'
     }}>
@@ -139,7 +192,7 @@ const ChartContent = () => {
             onChange={(e) => setSelectedA(Number(e.target.value))}
             style={{ 
               padding: '4px 8px', 
-              borderRadius: '6px', 
+              borderRadius: '0px', 
               border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
               fontSize: '14px'
             }}
@@ -152,7 +205,7 @@ const ChartContent = () => {
       </div>
 
       <div style={{ position: 'relative', height: '320px', width: '100%' }}>
-        <Line data={chartData} options={options} />
+        <Line data={chartData} options={options} plugins={[centerLinePlugin]} />
       </div>
     </div>
   );

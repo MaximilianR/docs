@@ -104,7 +104,7 @@ We can observe this behavior in a theoretical pool containing **crvUSD** (pegged
 
 <StableswapAmplificationChart />
 
-### Offpeg Fee Multiplier & Dynamic Fees
+### Offpeg Fee Multiplier and Dynamic Fees
 
 The **Offpeg Fee Multiplier increases the pool swapping fee if the pool becomes imbalanced** (e.g., 90% newUSD and 10% crvUSD). The concept is straightforward:
 

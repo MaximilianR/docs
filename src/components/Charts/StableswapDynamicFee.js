@@ -11,6 +11,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import { useColorMode } from '@docusaurus/theme-common';
 
 ChartJS.register(
   CategoryScale,
@@ -23,6 +24,7 @@ ChartJS.register(
 );
 
 const ChartContent = () => {
+  const { colorMode } = useColorMode();
   const css = getComputedStyle(document.documentElement);
   const primaryColor = css.getPropertyValue('--ifm-color-primary-light').trim() || '#3b82f6';
   const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#1f2937';
@@ -69,7 +71,7 @@ const ChartContent = () => {
           data: dataPoints,
           borderColor: primaryColor,
           backgroundColor: primaryColor,
-          borderWidth: 2,
+          borderWidth: 4,
           pointRadius: 0,
           pointHoverRadius: 6,
           tension: 0.4,
@@ -146,7 +148,7 @@ const ChartContent = () => {
       fontFamily: 'system-ui, -apple-system, sans-serif', 
       marginBottom: '2rem', 
       border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)', 
-      borderRadius: '8px', 
+      borderRadius: '0px', 
       padding: '16px',
       backgroundColor: 'var(--ifm-background-color, #ffffff)'
     }}>
@@ -168,7 +170,7 @@ const ChartContent = () => {
             onChange={(e) => setBaseFee(Number(e.target.value))}
             style={{ 
               padding: '4px 8px', 
-              borderRadius: '6px', 
+              borderRadius: '0px', 
               border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
               fontSize: '14px'
             }}
@@ -189,7 +191,7 @@ const ChartContent = () => {
             onChange={(e) => setMultiplier(Number(e.target.value))}
             style={{ 
               padding: '4px 8px', 
-              borderRadius: '6px', 
+              borderRadius: '0px', 
               border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
               fontSize: '14px'
             }}

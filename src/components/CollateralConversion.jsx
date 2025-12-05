@@ -1,207 +1,295 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Chart, registerables } from 'chart.js';
-import 'chartjs-adapter-date-fns';
+import React, { useState, useMemo } from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import { useColorMode } from '@docusaurus/theme-common';
 
 // Register Chart.js components
-Chart.register(...registerables);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-const CollateralConversion = () => {
-  const chartRef = useRef(null);
-  const chartInstance = useRef(null);
-  
+const ChartContent = () => {
+  const { colorMode } = useColorMode();
+  const css = getComputedStyle(document.documentElement);
+  const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#1f2937';
+  const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim() || '#e5e7eb';
+  const bgColor = css.getPropertyValue('--ifm-background-color').trim() || '#ffffff';
+
+  // Logic State
   const [bottomRange, setBottomRange] = useState(2311.92);
   const [topRange, setTopRange] = useState(2556.35);
   const [sliderValue, setSliderValue] = useState(50);
-  const [collateral, setCollateral] = useState(1);
+  const [collateral] = useState(1);
 
-  useEffect(() => {
-    if (chartRef.current) {
-      const ctx = chartRef.current.getContext('2d');
-      
-      chartInstance.current = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Collateral'],
-          datasets: [
-            {
-              label: 'ETH',
-              data: [0],
-              backgroundColor: 'rgba(54, 162, 235, 0.8)',
-              yAxisID: 'y'
-            },
-            {
-              label: 'crvUSD',
-              data: [0],
-              backgroundColor: 'rgba(58, 124, 73, 255)',
-              yAxisID: 'y1'
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            x: {
-              stacked: false,
-              categoryPercentage: 0.8,
-              barPercentage: 0.9,
-              title: {
-                display: false,
-                text: 'Collateral'
-              }
-            },
-            y: {
-              type: 'linear',
-              display: true,
-              position: 'left',
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'ETH Collateral'
-              },
-              ticks: {
-                callback: function(value) {
-                  return value.toFixed(2) + ' ETH';
-                }
-              }
-            },
-            y1: {
-              type: 'linear',
-              display: true,
-              position: 'right',
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'crvUSD Collateral'
-              },
-              ticks: {
-                callback: function(value) {
-                  return value.toFixed(0) + ' crvUSD';
-                }
-              },
-              grid: {
-                drawOnChartArea: false,
-              },
-            }
-          },
-          plugins: {
-            legend: {
-              display: true
-            },
-            title: {
-              display: false,
-              text: 'Soft-Liquidation Collateral Conversion'
-            },
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  const label = context.dataset.label || '';
-                  if (label === 'ETH') {
-                    return context.parsed.y.toFixed(2) + ' ETH';
-                  } else {
-                    return context.parsed.y.toFixed(2) + ' crvUSD';
-                  }
-                }
-              }
-            }
-          }
-        }
-      });
-
-      // Initial update
-      updateChart();
-    }
-
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-    };
-  }, []);
-
-  const updateChart = () => {
-    if (!chartInstance.current) return;
-
+  // Calculations
+  const calculations = useMemo(() => {
+    const currentPrice = bottomRange + (topRange - bottomRange) * (sliderValue / 100);
     const ethPercentage = sliderValue;
     const crvUSDPercentage = 100 - ethPercentage;
-    const currentPrice = bottomRange + (topRange - bottomRange) * (sliderValue / 100);
     const avgSellPrice = (topRange + currentPrice) / 2;
-    const eth = (ethPercentage / 100) * collateral;
+    const ethAmount = (ethPercentage / 100) * collateral;
     const crvUSDEth = (crvUSDPercentage / 100) * collateral;
     const crvUSDValue = crvUSDEth * avgSellPrice;
 
-    chartInstance.current.data.datasets[0].data = [eth];
-    chartInstance.current.data.datasets[1].data = [crvUSDValue];
-
-    chartInstance.current.options.scales.y.max = Math.ceil(collateral);
-    chartInstance.current.options.scales.y1.max = Math.ceil(topRange * collateral);
-
-    chartInstance.current.update();
-  };
-
-  useEffect(() => {
-    updateChart();
+    return {
+      currentPrice,
+      ethPercentage,
+      crvUSDPercentage,
+      avgSellPrice,
+      ethAmount,
+      crvUSDValue
+    };
   }, [bottomRange, topRange, sliderValue, collateral]);
 
-  const currentPrice = bottomRange + (topRange - bottomRange) * (sliderValue / 100);
-  const ethPercentage = sliderValue;
-  const crvUSDPercentage = 100 - ethPercentage;
-  const avgSellPrice = (topRange + currentPrice) / 2;
-  const eth = (ethPercentage / 100) * collateral;
-  const crvUSDEth = (crvUSDPercentage / 100) * collateral;
-  const crvUSDValue = crvUSDEth * avgSellPrice;
+  const chartData = useMemo(() => {
+    return {
+      labels: ['Collateral Composition'],
+      datasets: [
+        {
+          label: 'ETH Amount',
+          data: [calculations.ethAmount],
+          backgroundColor: '#ACBEF1',
+          borderColor: '#ACBEF1',
+          borderWidth: 1,
+          yAxisID: 'y'
+        },
+        {
+          label: 'crvUSD Value',
+          data: [calculations.crvUSDValue],
+          backgroundColor: '#A8EFC6',
+          borderColor: '#A8EFC6',
+          borderWidth: 1,
+          yAxisID: 'y1'
+        }
+      ]
+    };
+  }, [calculations]);
 
-  return (
-    <div style={{ width: '80%', margin: '0 auto', border: '1px solid #ddd', borderRadius: '8px', padding: '15px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-      <h3 style={{ margin: '5px 0 10px', fontWeight: 'bold' }}>Visualisation of the Liquidation Process</h3>
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { 
+        display: true,
+        labels: { color: txtColor }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            const label = context.dataset.label || '';
+            if (label === 'ETH Amount') {
+              return context.parsed.y.toFixed(2) + ' ETH';
+            } else {
+              return context.parsed.y.toFixed(2) + ' crvUSD';
+            }
+          }
+        },
+        backgroundColor: '#1f2937',
+        padding: 12,
+        cornerRadius: 8,
+        titleFont: { weight: 'bold' },
+        bodyFont: { weight: 'bold' },
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { display: false } 
+      },
+      y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+        beginAtZero: true,
+        max: Math.ceil(collateral),
+        title: {
+          display: true,
+          text: 'ETH Amount',
+          color: txtColor,
+          font: { weight: 'bold' }
+        },
+        ticks: {
+          color: txtColor,
+          callback: (value) => value.toFixed(2) + ' ETH'
+        },
+        grid: { color: gridColor }
+      },
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        beginAtZero: true,
+        max: Math.ceil(topRange * collateral),
+        title: {
+          display: true,
+          text: 'crvUSD Value',
+          color: txtColor,
+          font: { weight: 'bold' }
+        },
+        ticks: {
+          color: txtColor,
+          callback: (value) => value.toFixed(0) + ' crvUSD'
+        },
+        grid: { display: false }
+      }
+    }
+  };
+
+return (
+    <div style={{ 
+      fontFamily: 'system-ui, -apple-system, sans-serif', 
+      marginBottom: '2rem', 
+      border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)', 
+      borderRadius: '0px', 
+      padding: '16px',
+      backgroundColor: bgColor
+    }}>
       
-      <div style={{ marginTop: '5px' }}>
-        <input 
-          type="hidden" 
-          value={collateral} 
-          min="0" 
-          step="0.1"
-        />
-      </div>
-      
-      <div style={{ position: 'relative', marginTop: '10px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3px' }}>
-          <span>Bottom of Liquidation Range</span>
-          <span>Top of Liquidation Range</span>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '3px' }}>
-          <input 
-            type="number" 
+      {/* Title */}
+      <h3 style={{ 
+        margin: '0 0 16px 0', 
+        fontSize: '1.1rem', 
+        fontWeight: 'bold', 
+        color: txtColor 
+      }}>
+        Liquidation Progress Visualizer
+      </h3>
+
+      {/* Controls Row: Bottom Range | Price | Top Range */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'flex-end',
+        gap: '10px',
+        marginBottom: '12px' 
+      }}>
+        
+        {/* Left: Bottom Range */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <label style={{ fontSize: '13px', fontWeight: 600, color: txtColor }}>
+            Bottom of Range
+          </label>
+          <input
+            type="number"
             value={bottomRange}
             onChange={(e) => setBottomRange(Number(e.target.value))}
-            style={{ border: '1px solid #ccc', padding: '4px 8px', borderRadius: '4px', backgroundColor: '#f8f9fa', width: '100px', color: '#000000' }}
-          />
-          <span style={{ fontWeight: 'bold' }}>${currentPrice.toFixed(2)}</span>
-          <input 
-            type="number" 
-            value={topRange}
-            onChange={(e) => setTopRange(Number(e.target.value))}
-            style={{ border: '1px solid #ccc', padding: '4px 8px', borderRadius: '4px', backgroundColor: '#f8f9fa', width: '100px', color: '#000000'}}
+            style={{ 
+              padding: '6px 8px', 
+              borderRadius: '0px', 
+              border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
+              fontSize: '14px',
+              width: '90px',
+              color: txtColor,
+            }}
           />
         </div>
+
+        {/* Center: Current Price */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <label style={{ fontSize: '13px', fontWeight: 600, color: txtColor, textAlign: 'center'}}>
+            Current Price
+          </label>
+        <div style={{ 
+          fontSize: '18px', 
+          fontWeight: 'bold', 
+          color: txtColor,
+          marginBottom: '6px',
+          textAlign: 'center'
+        }}>
+          ${calculations.currentPrice.toFixed(2)}
+        </div>
+        </div>
+
+        {/* Right: Top Range */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
+          <label style={{ fontSize: '13px', fontWeight: 600, color: txtColor }}>
+            Top of Range
+          </label>
+          <input
+            type="number"
+            value={topRange}
+            onChange={(e) => setTopRange(Number(e.target.value))}
+            style={{ 
+              padding: '6px 8px', 
+              borderRadius: '0px', 
+              border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
+              fontSize: '14px',
+              width: '90px',
+              color: txtColor,
+              textAlign: 'right'
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Slider Control */}
+      <div style={{ marginBottom: '20px' }}>
         <input 
           type="range" 
-          style={{ width: '100%' }} 
+          style={{ width: '100%', cursor: 'pointer' }} 
           min="0" 
           max="100" 
           value={sliderValue}
           onChange={(e) => setSliderValue(Number(e.target.value))}
         />
       </div>
-      
-      <canvas ref={chartRef}></canvas>
-      
-      <div style={{ textAlign: 'center', marginTop: '5px' }}>
-        Collateral: {eth.toFixed(2)} ETH, {crvUSDValue.toFixed(2)} crvUSD<br/>
-        Average Swap Price: {avgSellPrice.toFixed(2)} crvUSD/ETH<br/>
-        ETH Swapped to crvUSD: {crvUSDPercentage}%
+
+      {/* Chart Area */}
+      <div style={{ position: 'relative', height: '320px', width: '100%' }}>
+        <Bar data={chartData} options={options} />
+      </div>
+
+      {/* Footer Info */}
+      <div style={{ 
+        marginTop: '1rem', 
+        padding: '0.75rem', 
+        fontSize: '0.85rem',
+        color: txtColor,
+        borderTop: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)'
+      }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          <div>
+            <strong>Collateral State:</strong><br/>
+            {calculations.ethAmount.toFixed(2)} ETH + {calculations.crvUSDValue.toFixed(2)} crvUSD
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <strong>Stats:</strong><br/>
+            Avg Swap Price: {calculations.avgSellPrice.toFixed(2)}<br/>
+            Swapped: {calculations.crvUSDPercentage}%
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default CollateralConversion;
+export default function CollateralConversion() {
+  return (
+    <BrowserOnly fallback={
+      <div style={{
+        height: '320px', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+      }}>
+        Loading Chart...
+      </div>
+    }>
+      {() => <ChartContent />}
+    </BrowserOnly>
+  );
+}
