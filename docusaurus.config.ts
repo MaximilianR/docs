@@ -11,6 +11,16 @@ const config: Config = {
   tagline: 'Everything you need to know about Curve',
   favicon: 'img/favicon.png',
 
+  headTags: [
+      {
+        tagName: 'meta',
+        attributes: {
+          name: 'algolia-site-verification',
+          content: '7413F5538D3EDA81',
+        },
+      },
+    ],
+
   // Set the production url of your site here
   url: 'https://docs.curve.finance',
   // Set the /<baseUrl>/ pathname under which your site is served
@@ -33,7 +43,9 @@ const config: Config = {
     locales: ['en'],
   },
 
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: [
+    '@docusaurus/theme-mermaid'],
+
   themeConfig: {
     // Replace with your project's social card
     // image: 'img/docusaurus-social-card.jpg',
@@ -41,8 +53,8 @@ const config: Config = {
       // The application ID provided by Algolia
       appId: '0JUF43T81Z',
       // Public API key: it is safe to commit it
-      apiKey: '18363e734245d7765a7adae5adf5d04f',
-      indexName: 'curve-docs',
+      apiKey: '924b8a275700d8f67826ed2ed67671bb',
+      indexName: 'algolia branch',
       // Optional: see doc section below
       contextualSearch: true,
       // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
@@ -56,6 +68,25 @@ const config: Config = {
       searchParameters: {},
       // Optional: path for search page that enabled by default (`false` to disable it)
       searchPagePath: 'search',
+      askAi: {
+        assistantId: 'IYRY71AZnunB',
+        indexName: 'markdown-index',
+        apiKey: '924b8a275700d8f67826ed2ed67671bb',
+        appId: '0JUF43T81Z',
+      },
+      translations: {
+        button: {
+          buttonText: 'Search & Ask AI',
+          buttonAriaLabel: 'Search & Ask AI',
+        },
+        modal: {
+          searchBox: {
+            placeholderTextAskAi: 'Ask another question...',
+            placeholderTextAskAiStreaming: 'Answering...',
+          },
+        },
+      },
+      placeholder: 'Search docs or ask AI a question',
     },
     navbar: {
       hideOnScroll: false,
@@ -144,7 +175,9 @@ const config: Config = {
           breadcrumbs: false,
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
-          admonitions: true,
+          admonitions: {
+            keywords: ['note', 'tip', 'info', 'caution', 'danger', 'example'],
+          },
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -190,7 +223,9 @@ const config: Config = {
         breadcrumbs: false,
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
-        admonitions: true,
+        admonitions: {
+          keywords: ['note', 'tip', 'info', 'caution', 'danger', 'example'],
+        },
       },
     ],
     //[

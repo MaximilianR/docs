@@ -8,21 +8,18 @@ import ThemedImage from '@theme/ThemedImage';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 import ButtonGrid from '@site/src/components/ButtonGrid';
 
-Welcome to Curve's DEX.  To get started, it helps to understand a few basic concepts that power the platform.
-
-## What is a DEX?
-
-A **D**ecentralized **Ex**change (DEX) is a trading platform that operates without a central company or authority. Unlike traditional exchanges like Coinbase or the New York Stock Exchange, a DEX allows users to trade digital assets directly with each other (peer-to-peer) on a public blockchain like Ethereum.
+A **D**ecentralized **Ex**change (DEX) is a trading platform that operates without a central company or authority, instead it runs on smart contracts with clear rules and behaviour. Unlike traditional exchanges like Coinbase or the New York Stock Exchange, a DEX allows users to trade digital assets on a blockchain like Ethereum.
 
 This approach gives you complete control over your money. Here’s what that means for you:
 
-  * **You're in Control:** You always hold your funds in your own personal wallet. When you trade your assets are never held by Curve, which protects you from issues like exchange hacks or companies halting trading. This is known as being **non-custodial**.
+  * **You're in Control:** You are always in control of your assets. Even when you buy or sell them, your assets are never held by Curve, which protects you from issues like exchange hacks or companies halting trading. This is known as being **non-custodial**.
   * **Automated and Transparent:** Trades on Curve are handled by **smart contracts**. These are programs that run on the blockchain and automatically execute trades according to their code. Every action is public and verifiable on the blockchain, ensuring a transparent and secure process.
 
+<GuideCardGrid guideKeys={['howToSwap', 'howToDexDeposit']} />
 
 ## How Do Swaps Work? Liquidity Pools
 
-To allow anyone to trade instantly, 24/7, Curve uses Pools, sometimes called Liquidity Pools. Instead of matching individual buyers and sellers, users trade against a large pool of assets.  All the pools available are shown on the [Pools page](https://www.curve.finance/dex/ethereum/pools/) for each network.
+To allow anyone to trade instantly, 24/7, Curve uses Pools, sometimes called Liquidity Pools. Instead of matching individual buyers and sellers (orderbook), users trade against a large pool of assets. All the pools available are shown on the [Pools page](https://www.curve.finance/dex/ethereum/pools/) for each network.
 
 Each pool contains two or more tokens. When you want to swap one token for another, you add your token to the pool and take out the token you want. This system means there's always liquidity ready for your trade, so you don't have to wait for a buyer or seller to appear.  In the example below Alice swaps 1 ETH for 0.99 stETH through the stETH/ETH pool.
 
@@ -46,19 +43,15 @@ Each pool contains two or more tokens. When you want to swap one token for anoth
 
 ## Who Provides the Assets? Liquidity Providers (LPs)
 
-The assets in these pools are supplied by other users, called **Liquidity Providers** (or LPs). Anyone can become an LP by depositing their assets into a pool.  When there's more assets in a pool, swappers get better prices, which usually means more swaps.
+The assets in these pools are supplied by other users, called **Liquidity Providers** (or LPs). Anyone can become an LP by depositing their assets into a pool.  When there's more assets in a pool, traders get better prices.
 
 In return for providing liquidity, LPs earn fees from every swap that happens in their pool, and many pools also offer CRV or other token rewards. This incentivizes users to fill the pools with assets, which in turn provides a better trading experience for everyone.
-
-## Guides
-
-<GuideCardGrid guideKeys={['howToSwap', 'howToDexDeposit']} />
 
 ## Types of Pools - Stableswap and Cryptoswap Pools
 
 Curve uses two different kinds of pools, each designed for specific combination of assets:
 
-  * **Stableswap Pools:** For assets that should trade at a similar price (e.g., USDC and USDT, or stETH and ETH, or even [scrvUSD](../curve-tokens/scrvusd.md) and USDT).
+  * **Stableswap Pools:** For assets that should trade at a similar price (e.g., USDC and USDT, or stETH and ETH).
   * **Cryptoswap Pools:** For assets whose prices move independently of each other (e.g., ETH and WBTC, or ETH and USDT).
 
 To learn more about how about how they work, see the [Stableswap vs. Cryptoswap page](./stableswap-vs-cryptoswap.md)

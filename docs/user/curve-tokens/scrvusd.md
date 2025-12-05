@@ -10,13 +10,11 @@ import GuideCardGrid from '@site/src/components/GuideCardGrid';
 
 import ScrvusdLogo from '@site/static/img/logos/scrvUSD_s.png';
 
-# <img src={ScrvusdLogo} className="heading-inline-logo" alt="scrvUSD" /> The scrvUSD Token 
+# <img src={ScrvusdLogo} className="heading-inline-logo" alt="scrvUSD" /> scrvUSD
 
-scrvUSD is short for savings-crvUSD, and it functions like a bank savings account for crvUSD.  It is similar to other staked versions of USD stablecoins like sDOLA, sUSDS, sUSDe, etc.  Users can stake their crvUSD to receive scrvUSD, or swap for it directly.  Yield accrues automatically to scrvUSD holders, increasing the value of their tokens over time.
+scrvUSD is short for **savings-crvUSD**, and it functions like a **bank savings account for crvUSD**. It is similar to other staked versions of USD stablecoins like sDAI, sUSDS, sUSDe, etc. Users can "stake" their crvUSD to receive scrvUSD, or buy it directly from the market.
 
-The yield comes from receiving a share of the crvUSD borrowing revenue.  The underlying crvUSD is not deployed to external pools or lending markets. It remains safely within the vault, minimizing risk.
-
-See the link below for more information about scrvUSD and how the vault works.
+The yield comes from receiving a share of the crvUSD borrowing revenue. Yield accrues automatically to scrvUSD holders, increasing the value of their tokens over time. It's important to understand that the underlying crvUSD is not rehypothecated elsewhere—they remain idle within the vault, minimizing risk.
 
 <GuideCardGrid guideKeys={['scrvusd']} />
 
@@ -24,6 +22,26 @@ See the link below for more information about scrvUSD and how the vault works.
 
 ## Current scrvUSD Stats
 
-The following table pulls current data from <InlinePill icon="/img/logos/ethereum.png" label="Ethereum" />
+Current scrvUSD stats directly fetched from <InlinePill icon="/img/logos/ethereum.png" label="Ethereum" />
 
 <ScrvusdSupply />
+
+---
+
+## FAQ
+
+### What is scrvUSD?
+
+scrvUSD is the savings version of crvUSD. By staking crvUSD, you receive scrvUSD tokens that automatically accrue yield over time from crvUSD borrowing revenue.
+
+### How does scrvUSD earn yield?
+
+scrvUSD earns yield from a share of the crvUSD borrowing revenue. The yield accrues automatically to scrvUSD holders, increasing the value of their tokens over time.
+
+### Is my crvUSD safe when staked as scrvUSD?
+
+Yes. The underlying crvUSD is not rehypothecated elsewhere—they remain idle within the vault, minimizing risk.
+
+### Can I convert scrvUSD back to crvUSD?
+
+Yes, you can convert scrvUSD back to crvUSD at any time. The exchange rate reflects the accrued yield.

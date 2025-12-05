@@ -10,34 +10,38 @@ import GuideCardGrid from '@site/src/components/GuideCardGrid';
 
 import CrvusdLogo from '@site/static/img/logos/crvUSD_s.png';
 
-# <img src={CrvusdLogo} className="heading-inline-logo" alt="crvUSD" /> The crvUSD Token 
+# <img src={CrvusdLogo} className="heading-inline-logo" alt="crvUSD" /> crvUSD
 
-crvUSD is a decentralized stablecoin created by Curve. It’s designed to closely track the value of 1 US dollar. Unlike centralized stablecoins like USDC or USDT, crvUSD is backed entirely by crypto assets and is controlled by smart contracts, not a company or bank.
+crvUSD is a fully **decentralized, censorship-resistant, and un-freezable** USD stablecoin created by Curve. Unlike centralized stablecoins like USDC or USDT, which are mostly backed by t-bills, crvUSD is fully backed by crypto assets and is controlled by smart contracts and the Curve DAO. Its home is Ethereum, but crvUSD can be bridged to most EVM-compatible chains.
 
-You can borrow crvUSD by depositing crypto like ETH or BTC-backed tokens as collateral. This means you’re borrowing against your crypto and receiving a stable USD token in return.  This lets you access liquidity without selling your crypto, so you can benefit if the price increases while using stablecoins for real-life expenses, trading, or earning yield.
+crvUSD can be obtained in two ways: by borrowing it using crypto assets like ETH or BTC as collateral (which lets you access liquidity without selling your crypto) or by simply buying it.
 
-See the guides below to learn how to borrow crvUSD using Llamalend (Curve’s lending platform), or how to obtain it by swapping on Curve’s DEX.
-
-<GuideCardGrid guideKeys={['borrowCrvusd', 'swapping']} />
+<GuideCardGrid guideKeys={['borrowCrvusd']} />
 
 ---
 
 ## Current crvUSD Stats
 
-The following table pulls current data from <InlinePill icon="/img/logos/ethereum.png" label="Ethereum" />
+Current crvUSD stats directly fetched from <InlinePill icon="/img/logos/ethereum.png" label="Ethereum" />
 
 <CrvusdSupply />
 
+---
+
 ## FAQ
 
-### Can I earn money with crvUSD?
+### What can I do with crvUSD?
+
+You can do many things with crvUSD: from simply holding it to earning yield or spending it for real-life expenses. 
+
+### Can I earn yield with crvUSD?
 
 Yes, you can earn rewards with your crvUSD on Curve in a few ways:
 
-  * **Deposit into scrvUSD**: Earn rewards simply, like a bank savings account.
-  * **Lend it in a lending market**: Provide your crvUSD to borrowers and earn interest.
-  * **Add it to a crvUSD trading pool**: Contribute crvUSD to a liquidity pool and earn trading fees.
+- **Deposit into [scrvUSD](./scrvusd.md)**: Earn yield with the savings version of crvUSD
+- **Supply it to a lending market**: Provide your crvUSD to borrowers and earn interest on it
+- **Provide liquidity to a crvUSD trading pool**: Add crvUSD to a liquidity pool and earn trading fees
 
 ### What chains is crvUSD available on?
 
-crvUSD is only minted on Ethereum, but it can be bridged and used on many other chains.  See here for a full list: [crvUSD Chain Deployment Addresses](https://docs.curve.finance/deployments/crvusd/#crvusd-crosschain)
+crvUSD is primarily minted on Ethereum, but it can be bridged and used on many other chains. See [crvUSD Chain Deployment Addresses](https://docs.curve.finance/deployments/crvusd/#crvusd-crosschain) for a full list.

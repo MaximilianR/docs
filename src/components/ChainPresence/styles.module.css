@@ -23,12 +23,39 @@
   gap: var(--Spacing-xl);
 }
 
+.gridOne {
+  grid-template-columns: 1fr;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gridThree {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.gridFour {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .card {
   background: var(--Layer-2-Fill);
   border: 1px solid var(--Layer-2-Outline);
   border-radius: 0 !important;
   padding: var(--Spacing-md);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.cardClickable:hover {
+  border-color: var(--Color-Primary-400);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
 }
 
 .cardTitle {
@@ -37,6 +64,35 @@
   margin-bottom: var(--Spacing-sm);
   padding-bottom: 6px;
   border-bottom: 1px solid var(--Layer-2-Outline);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.guideIcon {
+  flex-shrink: 0;
+  color: var(--Color-Primary-500);
+  opacity: 0.8;
+}
+
+.arrowIcon {
+  flex-shrink: 0;
+  color: var(--Text-TextColors-Secondary);
+  opacity: 0.6;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.cardClickable:hover .arrowIcon {
+  transform: translateX(2px);
+  opacity: 1;
+  color: var(--Color-Primary-500);
+}
+
+.cardTitleLogo {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
 }
 
 .groupLabel {
@@ -178,6 +234,13 @@
 
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr; }
+  .gridThree { grid-template-columns: repeat(2, 1fr); }
+  .gridFour { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .gridThree { grid-template-columns: 1fr; }
+  .gridFour { grid-template-columns: 1fr; }
 }
 
 

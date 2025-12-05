@@ -5,33 +5,56 @@ sidebar_label: What is veCRV?
 ---
 
 import ThemedImage from '@theme/ThemedImage';
+import GhostArticle from '@site/src/components/GhostArticle';
 
-**veCRV** stands for **vote-escrowed CRV**. It is a token you receive when you lock your CRV tokens for a period of time, which can range from a minimum of 1 week up to a maximum of 4 years. The longer you choose to lock your CRV, the more veCRV you receive in return. Unlike regular tokens, **veCRV is not transferrable**, and the **amount you hold gradually decreases** as your lock approaches its expiry date.
+**veCRV** stands for **vote-escrowed CRV**. It is a token users receive when they lock their CRV tokens for a period of time, which can range from a minimum of 1 week up to a maximum of 4 years. The longer users choose to lock their CRV, the more veCRV they receive in return. 
 
-## Why lock CRV?
+:::warning
+Unlike regular tokens, **veCRV is not transferrable**, and the **amount users hold gradually decreases** as their lock approaches its expiry date. The initial locked CRV can be withdrawn after the lock has ended.
+:::
 
-Locking CRV for veCRV is designed to align incentives within Curve's governance system. By requiring users to commit their tokens for a set period, the protocol ensures that only those with a long-term interest can influence important decisions. This mechanism helps prevent short-term manipulation, as voting power is directly tied to the duration of your commitment. In short, the longer you lock your CRV, the greater your influence in governance and other aspects.
+## Benefits of Holding veCRV
 
-## How does veCRV work?
+Holding veCRV unlocks several important benefits:
 
-When you lock your CRV, the amount of veCRV you receive depends on both the quantity of CRV locked and the length of the lock. For example, locking 1 CRV for the maximum period of 4 years grants you 1 veCRV, while locking the same amount for just 1 year gives you 0.25 veCRV. This relationship is defined by a simple formula:
+- [Earn Protocol Fees:](./revenue.md) veCRV holders receive a share of trading fees and a portion of interest from Curve's stablecoin markets.
+- [Boosted CRV Rewards:](./boosting.md) If users provide liquidity to Curve pools, holding veCRV can boost their CRV rewards.
+- [Governance:]((./faq.md)) veCRV gives users voting power in the Curve DAO, including on proposals and gauge weight votes that determine CRV emissions.
+
+
+## How veCRV Works
+
+When users lock their CRV, the amount of veCRV they receive depends on both the quantity of CRV locked and the length of the lock. For example, locking 1 CRV for the maximum period of 4 years grants users 1 veCRV, while locking the same amount for just 1 year gives users 0.25 veCRV. This relationship is defined by a simple formula:
 
 $$
 \text{veCRV} = \frac{\text{CRV locked} \times \text{Years until unlock}}{4}
 $$
 
-As time passes, your veCRV balance decays linearly, reflecting the decreasing time left on your lock. You can **only have one active lock per address**, but you are free to **add more CRV or extend the lock duration** at any time. Once the lock expires, your veCRV balance reaches zero and you can withdraw all your originally locked CRV tokens.
+As time passes, users' veCRV balance decays linearly, reflecting the decreasing time left on their lock. Users can **only have one active lock per address**, but they are free to **add more CRV or extend the lock duration** at any time. Once the lock expires, users' veCRV balance reaches zero and they can withdraw all their originally locked CRV tokens.
 
-import VecrvDecayChart from '@site/src/components/Charts/VecrvDecayChart';
+<figure style={{ textAlign: 'center' }}>
+  <ThemedImage
+    alt="veCRV Decay"
+    sources={{
+      light: require('@site/static/img/user/vecrv/vecrv_decay1.png').default,
+      dark: require('@site/static/img/user/vecrv/vecrv_decay1.png').default,
+    }}
+    style={{
+      maxWidth: '500px',
+      width: '100%'
+    }}
+  />
+</figure>
 
-<VecrvDecayChart />
 
-This chart demonstrates the linear decay of veCRV over time. Hover over the chart to see the exact veCRV balance and time remaining at any point.
+## The Idea Behind Vote-Escrow 
 
-## What are the benefits of holding veCRV?
+Curve pioneered the vote-escrow (ve) tokenomics model with the launch of veCRV in 2020, setting the standard for commitment-based governance in DeFi. This innovative approach has since been adopted by many other protocols, establishing ve-tokenomics as a dominant framework for aligning long-term incentives in decentralized systems.
 
-Holding veCRV unlocks several important benefits:
+The veCRV model builds sustainable value through commitment, not scarcity. By locking tokens for governance and rewards, veCRV creates a governance-driven ecosystem where long-term users are incentivized to participate, vote, and contribute to protocol success. Unlike buyback-and-burn models that treat holders as passive beneficiaries, veCRV empowers users to shape the protocol's direction while rewarding them in line with their commitment. The longer users lock their CRV, the greater their voting power, boosted rewards, and share of protocol revenue.
 
-- **Earn Protocol Fees:** veCRV holders receive a share of trading fees and a portion of interest from Curve's stablecoin markets. See [Revenue](./revenue.md) for details.
-- **Boosted CRV Rewards:** If you provide liquidity to Curve pools, holding veCRV can boost your CRV rewards. See [Boosting](./boosting.md) for more info.
-- **Governance:** veCRV gives you voting power in the Curve DAO, including on proposals and gauge weight votes that determine CRV emissions. See [FAQ](./faq.md) for more.
+<GhostArticle 
+  slug="beyond-burn-why-vecrv-unlocks-sustainable-tokenomics-for-curve"
+  showTitle={true}
+  showMeta={false}
+/>

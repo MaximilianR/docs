@@ -1,8 +1,10 @@
 // src/components/Charts/CrvAllocation.js
 
 import React, { useState } from 'react';
+import { useMobile } from '@site/src/hooks/useMobile';
 
 export default function CrvAllocationChart() {
+  const isMobile = useMobile();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   
   const data = [
@@ -17,7 +19,6 @@ export default function CrvAllocationChart() {
   // Calculate SVG circle parameters
   const radius = 120;
   const circumference = 2 * Math.PI * radius;
-  let currentOffset = 0;
 
   const getHoverColor = (baseColor, isHovered) => {
     if (!isHovered) return baseColor;
@@ -25,6 +26,92 @@ export default function CrvAllocationChart() {
     return baseColor + '80'; // Add transparency for hover effect
   };
 
+  // Helper function to render circles
+  const renderCircles = (onHover = null) => {
+    let currentOffset = 0;
+    return data.map((item, index) => {
+      const strokeDasharray = (item.percentage / 100) * circumference;
+      const strokeDashoffset = -currentOffset;
+      currentOffset += strokeDasharray;
+      const isHovered = hoveredIndex === index;
+      
+      return (
+        <circle
+          key={index}
+          cx="150"
+          cy="150"
+          r={radius}
+          fill="none"
+          stroke={onHover ? getHoverColor(item.color, isHovered) : item.color}
+          strokeWidth={onHover && isHovered ? "65" : "60"}
+          strokeDasharray={`${strokeDasharray} ${circumference}`}
+          strokeDashoffset={strokeDashoffset}
+          style={onHover ? {
+            cursor: 'pointer',
+            transition: 'all 0.2s ease-in-out',
+            filter: isHovered ? 'drop-shadow(0 0 8px rgba(0,0,0,0.3))' : 'none',
+          } : {}}
+          onMouseEnter={onHover ? () => setHoveredIndex(index) : undefined}
+          onMouseLeave={onHover ? () => setHoveredIndex(null) : undefined}
+        />
+      );
+    });
+  };
+
+  // Mobile: simplified static version
+  if (isMobile) {
+    return (
+      <div style={{ 
+        margin: '2rem 0',
+        maxWidth: '100%'
+      }}>
+        {/* Static donut chart - smaller for mobile */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center',
+          marginBottom: '1.5rem'
+        }}>
+          <svg width="250" height="250" viewBox="0 0 300 300">
+            {renderCircles()}
+          </svg>
+        </div>
+        
+        {/* Legend - simplified, no hover */}
+        <div>
+          {data.map((item, index) => (
+            <div 
+              key={index} 
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                marginBottom: '0.5rem',
+                padding: '0.4rem',
+              }}
+            >
+              <div
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  backgroundColor: item.color,
+                  borderRadius: '50%',
+                  marginRight: '0.75rem',
+                  flexShrink: 0,
+                }}
+              />
+              <span style={{ 
+                fontSize: '0.9rem',
+                color: 'var(--ifm-color-emphasis-700)'
+              }}>
+                <strong style={{ color: 'var(--ifm-color-emphasis-900)' }}>{item.label}:</strong> {item.percentage}% ({item.amount})
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop: full interactive version
   return (
     <div style={{ 
       display: 'flex', 
@@ -37,33 +124,7 @@ export default function CrvAllocationChart() {
     }}>
       <div style={{ flex: 1, position: 'relative' }}>
         <svg width="300" height="300" viewBox="0 0 300 300">
-          {data.map((item, index) => {
-            const strokeDasharray = (item.percentage / 100) * circumference;
-            const strokeDashoffset = -currentOffset;
-            currentOffset += strokeDasharray;
-            const isHovered = hoveredIndex === index;
-            
-            return (
-              <circle
-                key={index}
-                cx="150"
-                cy="150"
-                r={radius}
-                fill="none"
-                stroke={getHoverColor(item.color, isHovered)}
-                strokeWidth={isHovered ? "65" : "60"}
-                strokeDasharray={`${strokeDasharray} ${circumference}`}
-                strokeDashoffset={strokeDashoffset}
-                style={{
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease-in-out',
-                  filter: isHovered ? 'drop-shadow(0 0 8px rgba(0,0,0,0.3))' : 'none',
-                }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              />
-            );
-          })}
+          {renderCircles(true)}
         </svg>
         
         {/* Tooltip */}
@@ -124,7 +185,7 @@ export default function CrvAllocationChart() {
                   }}
                 />
                 <span style={{ 
-                  fontWeight: isHovered ? '600' : '400',
+                  fontWeight: '400',
                   fontSize: '0.95rem',
                   color: 'var(--ifm-color-emphasis-700)'
                 }}>

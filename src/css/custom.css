@@ -188,8 +188,18 @@
   color: #60a5fa;
 }
 
+[data-theme='dark'] .theme-doc-markdown a strong,
+[data-theme='dark'] .theme-doc-markdown a b {
+  color: inherit;
+}
+
 [data-theme='dark'] .theme-doc-markdown a:hover {
   color: #93c5fd;
+}
+
+[data-theme='dark'] .theme-doc-markdown a:hover strong,
+[data-theme='dark'] .theme-doc-markdown a:hover b {
+  color: inherit;
 }
 
 [data-theme='dark'] .theme-doc-pagination {
@@ -246,6 +256,10 @@
   color: #93c5fd;
 }
 
+html {
+  scroll-padding-top: 80px; /* Account for fixed navbar height */
+}
+
 body {
   font-family: var(--Text-FontFamily-Body);
   font-size: var(--Typography-FontSize-md);
@@ -292,7 +306,7 @@ h2 {
 }
 
 h3 {
-  font-size: var(--Typography-FontSize-md);
+  font-size: calc(var(--Typography-FontSize-md) + 2px);
   font-weight: var(--Typography-FontWeight-Semi-Bold);
 }
 
@@ -332,7 +346,7 @@ code, pre {
 }
 
 .theme-doc-markdown h3 {
-  font-size: var(--Typography-FontSize-md);
+  font-size: calc(var(--Typography-FontSize-md) + 2px);
   margin-top: var(--Spacing-xl);
   margin-bottom: var(--Spacing-sm);
   color: var(--Text-TextColors-Primary);
@@ -371,9 +385,20 @@ code, pre {
   font-weight: var(--Typography-FontWeight-Medium);
 }
 
+.theme-doc-markdown a strong,
+.theme-doc-markdown a b {
+  color: inherit;
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+}
+
 .theme-doc-markdown a:hover {
   color: var(--Color-Primary-600);
   text-decoration: underline;
+}
+
+.theme-doc-markdown a:hover strong,
+.theme-doc-markdown a:hover b {
+  color: inherit;
 }
 
 /* Navigation improvements */
@@ -647,14 +672,158 @@ code, pre {
   /* Mobile heading sizes - maintain proper hierarchy */
   .theme-doc-markdown h1 {
     font-size: var(--Typography-FontSize-xl);
+    line-height: var(--Typography-LineHeight-xxl);
   }
   
   .theme-doc-markdown h2 {
-    font-size: var(--Typography-FontSize-lg);
+    font-size: var(--Typography-FontSize-xl);
   }
   
   .theme-doc-markdown h3 {
     font-size: var(--Typography-FontSize-md);
+  }
+}
+
+/* Math formula code blocks - prevent horizontal scrolling on mobile */
+@media (max-width: 768px) {
+  /* Target all possible math code block structures */
+  .theme-doc-markdown pre[class*="language-math"],
+  .theme-doc-markdown pre code[class*="language-math"],
+  .theme-doc-markdown code[class*="language-math"],
+  .theme-doc-markdown pre[class*="math"],
+  .theme-doc-markdown pre code[class*="math"] {
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    max-width: 100%;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-all;
+    /* Always show scrollbar - Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
+    /* Force scrollbar to always be visible */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Webkit scrollbar styling - always visible */
+  .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar,
+  .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar,
+  .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar,
+  .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar,
+  .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar {
+    height: 6px;
+    display: block;
+  }
+  
+  .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-track,
+  .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-track,
+  .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-track,
+  .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-track,
+  .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+  
+  .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-thumb,
+  .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-thumb,
+  .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-thumb,
+  .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-thumb,
+  .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+  }
+  
+  .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-thumb:hover,
+  .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Dark mode scrollbar */
+  [data-theme='dark'] .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown pre[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  [data-theme='dark'] .theme-doc-markdown code[class*="language-math"]::-webkit-scrollbar-thumb:hover,
+  [data-theme='dark'] .theme-doc-markdown pre[class*="math"]::-webkit-scrollbar-thumb:hover,
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="math"]::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown pre[class*="language-math"],
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="language-math"],
+  [data-theme='dark'] .theme-doc-markdown code[class*="language-math"],
+  [data-theme='dark'] .theme-doc-markdown pre[class*="math"],
+  [data-theme='dark'] .theme-doc-markdown pre code[class*="math"] {
+    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+  }
+  
+  /* KaTeX and MathJax rendered math - also add scrollbar */
+  .theme-doc-markdown .katex-display,
+  .theme-doc-markdown .katex,
+  .theme-doc-markdown .MathJax,
+  .theme-doc-markdown .MathJax_Display {
+    max-width: 100%;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
+  }
+  
+  .theme-doc-markdown .katex-display::-webkit-scrollbar,
+  .theme-doc-markdown .katex::-webkit-scrollbar {
+    height: 6px;
+    display: block;
+  }
+  
+  .theme-doc-markdown .katex-display::-webkit-scrollbar-track,
+  .theme-doc-markdown .katex::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+  
+  .theme-doc-markdown .katex-display::-webkit-scrollbar-thumb,
+  .theme-doc-markdown .katex::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown .katex-display::-webkit-scrollbar-track,
+  [data-theme='dark'] .theme-doc-markdown .katex::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown .katex-display::-webkit-scrollbar-thumb,
+  [data-theme='dark'] .theme-doc-markdown .katex::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  [data-theme='dark'] .theme-doc-markdown .katex-display,
+  [data-theme='dark'] .theme-doc-markdown .katex {
+    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Math formula containers */
+  .theme-doc-markdown pre[class*="language-math"],
+  .theme-doc-markdown pre[class*="math"] {
+    padding: var(--Spacing-md);
+    font-size: var(--Typography-FontSize-xs);
   }
 }
 
@@ -680,14 +849,15 @@ code, pre {
   /* Small mobile heading hierarchy */
   .theme-doc-markdown h1 {
     font-size: var(--Typography-FontSize-lg);
+    line-height: var(--Typography-LineHeight-xl);
   }
   
   .theme-doc-markdown h2 {
-    font-size: var(--Typography-FontSize-md);
+    font-size: var(--Typography-FontSize-lg);
   }
   
   .theme-doc-markdown h3 {
-    font-size: var(--Typography-FontSize-sm);
+    font-size: var(--Typography-FontSize-md);
   }
   
   .breadcrumbs {

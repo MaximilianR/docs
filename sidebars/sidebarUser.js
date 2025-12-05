@@ -152,7 +152,7 @@ export default {
         },
         {
             type: 'category',
-            label: 'Lending & crvUSD (Llamalend)',
+            label: 'Llamalend',
             items: [
                 {
                     type: 'doc',
@@ -170,9 +170,25 @@ export default {
                     label: 'Supplying',
                 },
                 {
+                    type: 'category',
+                    label: 'Liquidation Protection',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'llamalend/liquidation-protection/how-it-works',
+                            label: 'How it Works',
+                        },
+                        {
+                            type: 'doc',
+                            id: 'llamalend/liquidation-protection/how-to-use',
+                            label: 'Guide: Best Practices',
+                        },
+                    ],
+                },
+                {
                     type: 'doc',
-                    id: 'llamalend/liquidation-protection',
-                    label: 'Liquidations',
+                    id: 'llamalend/faq',
+                    label: 'FAQ',
                 },
                 {
                     type: 'category',

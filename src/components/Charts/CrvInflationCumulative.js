@@ -1,8 +1,10 @@
 // src/components/Charts/CrvInflationCumulative.js
 
 import React, { useState, useEffect } from 'react';
+import { useMobile } from '@site/src/hooks/useMobile';
 
 export default function CrvInflationCumulative() {
+  const isMobile = useMobile();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [hoveredPoint, setHoveredPoint] = useState(null);
 
@@ -158,6 +160,212 @@ export default function CrvInflationCumulative() {
     { name: 'Community (Emissions)', color: '#3b82f6', key: 'emissionsTotal' }
   ];
 
+  // Mobile: simplified static version
+  if (isMobile) {
+    // Get final year data for static display
+    const getFinalYearData = () => {
+      if (!datasets || !datasets[categories[0].key] || datasets[categories[0].key].length === 0) {
+        return {};
+      }
+      const lastIndex = datasets[categories[0].key].length - 1;
+      const finalData = {};
+      categories.forEach(category => {
+        if (datasets[category.key] && datasets[category.key][lastIndex]) {
+          finalData[category.key] = datasets[category.key][lastIndex].y;
+        }
+      });
+      return finalData;
+    };
+
+    const finalData = getFinalYearData();
+    const totalEmitted = Object.values(finalData).reduce((sum, val) => sum + val, 0);
+
+    return (
+      <div style={{ 
+        margin: '2rem 0',
+        maxWidth: '100%'
+      }}>
+        {/* Simplified static chart */}
+        <div style={{ 
+          marginBottom: '1.5rem',
+          width: '100%',
+          overflow: 'hidden'
+        }}>
+          <svg 
+            width="100%" 
+            viewBox="0 0 600 400"
+            preserveAspectRatio="xMidYMid meet"
+            style={{ display: 'block', aspectRatio: '600 / 400' }}
+          >
+            {/* Grid lines - reduced for mobile */}
+            {[0, 1000, 2000, 3000].map((value, index) => (
+              <line
+                key={index}
+                x1="50"
+                y1={50 + (3000 - value) / 3000 * 300}
+                x2="550"
+                y2={50 + (3000 - value) / 3000 * 300}
+                stroke="var(--ifm-color-emphasis-200)"
+                strokeWidth="1"
+              />
+            ))}
+            
+            {/* Y-axis labels - smaller font for mobile */}
+            {[0, 1000, 2000, 3000].map((value, index) => (
+              <text
+                key={index}
+                x="40"
+                y={50 + (3000 - value) / 3000 * 300 + 4}
+                fontSize="10"
+                fill="var(--ifm-color-emphasis-600)"
+                textAnchor="end"
+              >
+                {value}M
+              </text>
+            ))}
+            
+            {/* X-axis labels - fewer on mobile, smaller font */}
+            {[0, 2, 4, 6, 8, 10].map((year, index) => {
+              const x = 50 + (year / 10) * 500;
+              return (
+                <text
+                  key={index}
+                  x={x}
+                  y="380"
+                  fontSize="8"
+                  fill="var(--ifm-color-emphasis-600)"
+                  textAnchor="middle"
+                >
+                  {2020 + year}
+                </text>
+              );
+            })}
+            
+            {/* Stacked areas - static, no hover */}
+            {categories.slice().reverse().map((category, reverseIndex) => {
+              const categoryIndex = categories.length - 1 - reverseIndex;
+              const points = datasets[category.key];
+              if (points.length < 2) return null;
+              
+              const stackedPoints = points.map((point, pointIndex) => {
+                let bottomStack = 0;
+                
+                for (let i = 0; i < categoryIndex; i++) {
+                  const currentCategory = categories[i];
+                  const currentPoints = datasets[currentCategory.key];
+                  if (currentPoints[pointIndex]) {
+                    bottomStack += currentPoints[pointIndex].y / 1000000;
+                  }
+                }
+                
+                const topStack = bottomStack + (point.y / 1000000);
+                
+                return {
+                  x: point.x,
+                  bottomY: bottomStack,
+                  topY: topStack
+                };
+              });
+              
+              const topPath = stackedPoints.map((point, index) => {
+                const x = 50 + (index / (stackedPoints.length - 1)) * 500;
+                const y = 50 + (3000 - point.topY) / 3000 * 300;
+                return `${index === 0 ? 'M' : 'L'} ${x} ${y}`;
+              }).join(' ');
+              
+              const bottomPath = stackedPoints.map((point, index) => {
+                const x = 50 + (index / (stackedPoints.length - 1)) * 500;
+                const y = 50 + (3000 - point.bottomY) / 3000 * 300;
+                return `L ${x} ${y}`;
+              }).reverse().join(' ');
+              
+              const areaPath = `${topPath} ${bottomPath} Z`;
+              
+              return (
+                <path
+                  key={categoryIndex}
+                  d={areaPath}
+                  fill={category.color}
+                  opacity={0.6}
+                />
+              );
+            })}
+          </svg>
+        </div>
+        
+        {/* Simplified legend - static, no hover */}
+        <div>
+          <h4 style={{ 
+            margin: '0 0 1rem 0', 
+            color: 'var(--ifm-color-emphasis-900)',
+            fontSize: '0.95rem',
+            lineHeight: '1.2'
+          }}>
+            Cumulative CRV Emitted by 2030
+          </h4>
+          {categories.map((category, index) => {
+            const value = finalData[category.key];
+            const percentage = totalEmitted > 0 && value ? ` (${((value / totalEmitted) * 100).toFixed(1)}%)` : '';
+            const currentValue = value ? `${roundAmount(value).toLocaleString()} CRV` : '';
+            
+            return (
+              <div 
+                key={index} 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'flex-start', 
+                  marginBottom: '0.5rem',
+                  padding: '0.3rem',
+                }}
+              >
+                <div
+                  style={{
+                    width: '12px',
+                    height: '12px',
+                    backgroundColor: category.color,
+                    borderRadius: '50%',
+                    marginRight: '0.5rem',
+                    marginTop: '2px',
+                    flexShrink: 0,
+                  }}
+                />
+                <div style={{ 
+                  fontSize: '0.85rem',
+                  color: 'var(--ifm-color-emphasis-700)',
+                  lineHeight: '1.3'
+                }}>
+                  <div style={{ marginBottom: '1px' }}>
+                    <strong style={{ color: 'var(--ifm-color-emphasis-900)' }}>{category.name}</strong>
+                  </div>
+                  {currentValue && (
+                    <div style={{ 
+                      fontSize: '0.75rem', 
+                      color: 'var(--ifm-color-emphasis-600)', 
+                      fontWeight: 'normal',
+                      marginBottom: '0px'
+                    }}>
+                      {currentValue}
+                    </div>
+                  )}
+                  {percentage && (
+                    <div style={{ 
+                      fontSize: '0.7rem', 
+                      color: 'var(--ifm-color-emphasis-500)', 
+                      fontWeight: 'normal'
+                    }}>
+                      {percentage}
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop: full interactive version
   return (
     <div style={{ 
       display: 'flex', 
@@ -362,17 +570,16 @@ export default function CrvInflationCumulative() {
       {/* Legend */}
       <div style={{ 
         flex: '0 0 220px', 
-        height: '400px', // Fixed height to match chart
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        minHeight: '400px'
       }}>
         {/* Header section - top 50px to match chart's top margin */}
         <div style={{ 
-          height: '50px',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'flex-end',
-          paddingBottom: '0.5rem'
+          paddingBottom: '0.75rem',
+          flexShrink: 0
         }}>
           <h4 style={{ 
             margin: '0 0 0.25rem 0', 
@@ -395,10 +602,12 @@ export default function CrvInflationCumulative() {
 
         {/* Legend items section - middle 300px to match chart's plot area */}
         <div style={{ 
-          height: '300px',
+          flex: '1',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between'
+          justifyContent: 'flex-start',
+          gap: '0.15rem',
+          overflowY: 'auto'
         }}>
           {categories.map((category, index) => {
             const isHovered = hoveredIndex === index;
@@ -445,13 +654,11 @@ export default function CrvInflationCumulative() {
                 style={{ 
                   display: 'flex', 
                   alignItems: 'flex-start', 
-                  marginBottom: '0.5rem',
-                  padding: '0.4rem',
+                  padding: '0.25rem 0.3rem',
                   borderRadius: '4px',
                   backgroundColor: isHovered ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
                   transition: 'background-color 0.2s ease-in-out',
                   cursor: 'pointer',
-                  minHeight: '45px'
                 }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -473,9 +680,9 @@ export default function CrvInflationCumulative() {
                   fontWeight: isHovered ? '600' : '400',
                   fontSize: '0.85rem',
                   color: 'var(--ifm-color-emphasis-700)',
-                  lineHeight: '1.3'
+                  lineHeight: '1.2'
                 }}>
-                  <div style={{ marginBottom: '1px' }}>
+                  <div style={{ marginBottom: '0px' }}>
                     <strong style={{ color: 'var(--ifm-color-emphasis-900)' }}>{category.name}</strong>
                   </div>
                   {currentValue && (
@@ -483,7 +690,7 @@ export default function CrvInflationCumulative() {
                       fontSize: '0.75rem', 
                       color: 'var(--ifm-color-emphasis-600)', 
                       fontWeight: 'normal',
-                      marginBottom: '1px'
+                      marginBottom: '0px'
                     }}>
                       {currentValue}
                     </div>
@@ -504,7 +711,7 @@ export default function CrvInflationCumulative() {
         </div>
 
         {/* Bottom spacing - 50px to match chart's bottom margin */}
-        <div style={{ height: '50px' }}></div>
+        <div style={{ flexShrink: 0, minHeight: '20px' }}></div>
       </div>
     </div>
   );

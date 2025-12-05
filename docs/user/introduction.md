@@ -1,13 +1,47 @@
 ---
 id: introduction
-title: Introduction
+title: What is Curve?
 sidebar_label: Introduction
 ---
 
-Welcome to the Curve Finance User Documentation.
+import BadgeGrid from '@site/src/components/BadgeGrid'
 
-These docs focus on the basics of how Curve products work and how to navigate the UI, without getting overly technical. It's the perfect way to jump into the Curve Ecosystem and build a solid foundation before going deeper.
+Curve is a decentralized exchange (DEX) powered by automated market makers (AMMs) designed for efficient trading of stablecoins and volatile assets. Built on Ethereum and EVM-compatible chains, Curve delivers deep liquidity for traders and peace of mind for liquidity providers through passive and fully automated concentrated liquidity.
 
-Choose a menu item on the left to get started. On most pages, you'll find explanations of how things work, as well as links to guides on using Curve's products.
+Additionally, Curve developed crvUSD, a decentralized CDP USD stablecoin, and LlamaLend, a fully permissionless lending protocol, both powered by an innovative liquidation mechanism (LLAMMA) that carefully protects collateral in liquidation and provides more peace of mind for borrowers.
 
-If you'd like to learn more about any topic, the Developer Documentation provides in-depth details on everything, including every function of every smart contract within Curve.
+<BadgeGrid
+  cards={[
+    {
+      title: "DEX",
+      description: "The core liquidity engine of DeFi — delivering deep, decentralized markets for stable and correlated assets with unmatched efficiency.",
+    },
+    {
+      title: "LlamaLend",
+      logo: {
+        light: "/img/logos/llamalend-light.svg",
+        dark: "/img/logos/llamalend-dark.svg"
+      },
+      description: "Advanced onchain lending with built-in liquidation protection — enabling safer leverage and borrowing powered by Curve.",
+    },
+  ]}
+/>
+
+---
+
+Check out the other sections of the documentation for more non-user stuff:
+
+<BadgeGrid
+  cards={[
+    {
+      title: "Build On Curve",
+      description: "Learn everything about how to build on Curve: From deploying pools or lending markets to establishing, growing and maintaining deep on-chain liquidity for assets through the core mechanics of Curve.",
+      href: "/protocol/why-curve"
+    },
+    {
+      title: "Developer Documentation",
+      description: "Comprehensive documentation of all smart contracts — learn how they work, what they do, and how to integrate them into your applications.",
+      href: "https://docs.curve.finance/documentation-overview/"
+    },
+  ]}
+/>
