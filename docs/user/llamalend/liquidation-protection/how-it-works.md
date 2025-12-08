@@ -7,6 +7,23 @@ import ThemedImage from '@theme/ThemedImage';
 import CollateralConversion from '@site/src/components/CollateralConversion';
 import ThemedVideo from '@site/src/components/ThemedVideo';
 
+## Making Volatile Markets Manageable
+
+Volatile markets are one of the biggest risks when taking out onchain loans. Prices can collapse in seconds, and on many lending platforms, a single sharp move can liquidate a user before they even have time to respond.
+
+Llamalend's **liquidation protection** solves this problem.
+
+Instead of liquidating a position the moment it reaches a specific price, Llamalend gives borrowers **time, flexibility, and breathing room**. Even during the extremest market swings, the system often manages to keep a loan alive automatically.
+
+This turns the liquidation experience on its head. A sudden, irreversible liquidation becomes a **gradual and predictable process**. With Llamalend, borrowers can:
+
+- navigate extreme conditions with much higher resilience
+- increase their odds of surviving flash crashes and sudden volatility
+- adjust or repay their loan before it is too late
+- remain safe even when the market briefly dips below their "liquidation price"
+- potentially avoiding surprise liquidation spikes
+
+---
 
 ## Quick Reference
 
@@ -26,38 +43,19 @@ import ThemedVideo from '@site/src/components/ThemedVideo';
 For answers to common questions, see the [FAQ](./faq.md).
 :::
 
----
-
-## Making Volatile Markets Manageable
-
-Volatile markets are one of the biggest risks when taking out onchain loans. Prices can collapse in seconds, and on many lending platforms, a single sharp move can liquidate a user before they even have time to respond.
-
-Llamalend's **liquidation protection** solves this problem.
-
-Instead of liquidating a position the moment it reaches a specific price, Llamalend gives borrowers **time, flexibility, and breathing room**. Even during the extremest market swings, the system often manages to keep a loan alive automatically.
-
-This turns the liquidation experience on its head. A sudden, irreversible liquidation becomes a **gradual and predictable process**. With Llamalend, borrowers can:
-
-- navigate extreme conditions with much higher resilience
-- increase their odds of surviving flash crashes and sudden volatility
-- adjust or repay their loan before it is too late
-- remain safe even when the market briefly dips below their "liquidation price"
-- avoid surprise liquidation spikes
 
 ## The Simple Idea
 
 :::info
 **Analogy for Liquidation Protection:**  
-Other protocols are like a trapdoor: if your collateral price hits a certain point, the floor drops out and you instantly lose everything with no warning. Curve is like a safety net that gradually activates as you fall, catching you over a range of prices and giving you time to react and recover.
+Other protocols are like a trapdoor: if your collateral price hits a certain point, the floor drops out and you instantly lose everything with no warning. Liquidation protection on Curve acts like a safety net that gradually activates as you fall, catching you over a range of prices and giving you time to react and recover.
 
-Think of the safety net as having two parts: the **liquidation protection range** is the net itself (the price zone where protection activates), and **health** is how strong and intact the net remains. As long as your health stays above 0, the net is there to catch you. When health reaches 0, the net is gone and you're fully liquidated.
+Think of the safety net as having two parts: the **liquidation protection range** is the net itself (the price zone where liquidation protection activates), and **health** is how strong and intact the net remains. As long as your health stays above 0, the net is there to catch you. When health reaches 0, the net is gone and you're fully liquidated.
 :::
 
-Liquidation protection in Llamalend works differently from systems that use a fixed liquidation price. There is **no single price** at which your loan suddenly disappears. A position is only liquidated when its **health reaches 0**.
+Liquidation protection in Llamalend works differently from systems that use a fixed liquidation price. There is **no single price** at which your loan suddenly disappears. A position is only liquidated when its **health reaches 0**. Important notice: in Llamalend, health is not a direct correlation of LTV.
 
-**Important notice:** in Llamalend, health is not a direct correlation of LTV.
-
-To prevent health from collapsing instantly during volatility, every loan is given a **liquidation range**, defined by two price points. When the market price enters this range, the system begins **gradually adjusting your collateral** to keep the loan stable.
+To prevent health from collapsing to zero during volatility, every loan is given a **liquidation range**, defined by two price points. When the market price enters this range, the system begins **gradually adjusting your collateral** to keep the loan stable.
 
 The liquidation range is defined by:
 
@@ -77,12 +75,12 @@ The liquidation range is defined by:
 </figure>
 
 So, what happens when the price of the collateral falls within the liquidation range?
-- **When prices fall**, the system automatically and gradually sells off parts of your collateral asset (for example ETH) for crvUSD. This reduces exposure to the falling asset and helps preserve the value supporting loans.
-- **When prices rise** again, the system uses the previously obtained crvUSD to buy back the initial collateral, restoring part of the original asset balance.
+- **When prices fall**, the system automatically and **gradually sells off parts of your collateral asset (for example ETH) for crvUSD**. This reduces exposure to the falling asset and helps preserve the value supporting loans.
+- **When prices rise** again, the system uses the **previously obtained crvUSD to buy back the initial collateral**, restoring part of the original asset balance.
 
-These adjustments happen continuously and automatically while the price moves up and down inside the range. Instead of a sudden liquidation at a single price, the loan is stabilized through **small, ongoing conversions** that give users more time to act.
+These adjustments happen continuously and automatically (no need for user interaction) while the price moves up and down inside the liquidation range. Instead of a sudden liquidation at a single price, the loan is stabilized through **small, ongoing conversions** that give users more time to act.
 
-However, these **conversions come with a cost**. Because the system needs to incentivize arbitrage traders to perform them, each conversion incurs a slight **loss**. When the market moves up and down inside the range, these **losses accumulate and gradually reduce your health**. **These losses happen in both directions, on the way down and on the way back up**. The more volatility and the less liquidity in the liquidation zone, the faster health gets eroded.
+However, these **conversions come with a cost**. Because the system needs to incentivize arbitrage traders to perform them, each conversion incurs a slight **loss**. When the market moves up and down inside the range, these **losses accumulate and gradually reduce your health**. **These losses happen in both directions, on the way down and on the way back up**. The more volatility and the less liquidity in the liquidation zone, the faster health gets eroded. More about these losses here: [Understanding Losses](#understanding-losses).
 
 But as long as **health stays above 0**, the loan survives. Only when health reaches 0 — regardless of the current price — is the position fully liquidated.
 
@@ -95,17 +93,15 @@ The good news is that users have full control over the health of the loan. For d
 
 Health is like a fuel gauge for your loan. It shows how much buffer you have before full liquidation.
 
-- **High health (e.g., 1.2 or higher)**: You have a large safety buffer
-- **Medium health (e.g., 1.0)**: Moderate risk. Consider taking action
-- **Low health (e.g., 0.5)**: Critical: immediate action needed
+- **High health (e.g., 10 or higher)**: You have a large safety buffer
+- **Medium health (e.g., 5)**: Moderate risk. Consider taking action
+- **Low health (e.g., sub 2)**: Critical: immediate action needed
 - **0 health**: Full liquidation occurs
-
-### How Health Decreases
 
 Health decreases from four main factors:
 
 1. **Price drops**: When your collateral becomes less valuable
-2. **Losses in liquidation protection**: When you're in liquidation protection and collateral swaps occur
+2. [**Losses in liquidation protection**](#understanding-losses): When you're in liquidation protection and collateral swaps occur
 3. **Interest**: Charged continuously every second (very slowly)
 4. **Borrowing more or removing collateral**: Taking on additional debt or removing collateral obviously decreases your health as well
 
@@ -113,12 +109,10 @@ Health decreases from four main factors:
 Even if price is rising, health can still fall while you're inside the protection range because losses from conversions continue until you exit the range completely. A rising price does not guarantee improving health unless price moves above the full protection range.
 :::
 
-### How to Monitor Health
+Health can be monitored:
 
 - **In the UI**: View your health in the [Llamalend UI](https://www.curve.finance/llamalend/ethereum/markets)
 - **Telegram Bot**: Get automated alerts via the [Llamalend Telegram Bot](https://news.curve.fi/llamalend-telegram-bot/)
-
-For the technical health calculation formula, see the [FAQ](../faq.md#how-is-health-calculated).
 
 ---
 
