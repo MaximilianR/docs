@@ -1,5 +1,4 @@
 ---
-id: how-it-works
 title: Liquidation Protection & Loan Health
 sidebar_label: Liquidation Protection & Health
 ---

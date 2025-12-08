@@ -17,11 +17,11 @@ Factories make launching pools on Curve fast, flexible, and accessible to any pr
 
 ## How are Pools Deployed?
 
-In the background, new liquidity pools are deployed by making use of a **Pool Factory**, which essentually is a smart contract for deploying new pools. Each factory contains the logic and configuration for a specific pool type. Factories support a few diffrent pool types:
+In the background, new liquidity pools are deployed by making use of a **Pool Factory**, which essentially is a smart contract for deploying new pools. Each factory contains the logic and configuration for a specific pool type. Factories support a few different pool types:
 
 - **Stableswap** — for pegged or correlated assets (e.g., USDC/USDT, stETH/ETH)  
 - **Cryptoswap** — for more volatile or uncorrelated assets (e.g., ETH/USDC)
-- **FXSwap** - for volatile and uncorrelated assets with some additional features (todo)
+- **FXSwap** - for lower-volatililty assets like Forex pairs, or lower volatility Crypto pairs like BTC/ETH.
 
 Once a factory is deployed, anyone can create a new pool of that type — either through the Curve UI or directly on-chain.
 
@@ -38,6 +38,7 @@ Curve supports multiple pool designs to fit different kinds of assets. Selecting
 Not sure which to use? Reach out in the official Curve channels.
 
 ### Stableswap Pool
+
 Choose a **Stableswap pool** when your assets are expected to stay close or correlated in price — e.g., stablecoins (USDC/USDT), LSTs (wstETH/stETH), or yield-bearing stable assets like sDAI. 
 
 Stableswap-NG pools support a wide variety of token types beyond standard ERC-20 tokens. This flexibility allows you to create pools with yield-bearing tokens, rebasing tokens, and oracle-enabled tokens.
@@ -52,9 +53,10 @@ Stableswap-NG pools support a wide variety of token types beyond standard ERC-20
 | **3** | ERC4626 Vault | Yield-bearing vault tokens | sDAI |
 
 **Technical Requirements:**
+
 - All tokens must be ERC-20 compatible (return True/revert, True/False, or None)
 - Maximum 18 decimals supported
-- Oracle tokens must have precision ≤18
+- Oracle tokens must have precision $\le 18$
 - ERC4626 vaults support arbitrary precision for both vault and underlying tokens
 
 
@@ -63,7 +65,7 @@ Choose a **Cryptoswap pool** when your assets are more volatile or uncorrelated�
 
 
 ### FXSwap
-todo
+**FXSwap** is designed for volatile and uncorrelated assets with some additional features. (todo)
 
 ---
 
@@ -85,6 +87,6 @@ Stableswap pools on Curve support a powerful structure of **base pools** and **m
 />
 </figure>
 
-For example, the USDC/USDT pool might begin as a normal Stableswap pool. If the DAO adds it as a base pool, it can then be reused in other pools. A protocol such as Inverse can create a metapool that pairs their stablecoin $DOLA against the base pool, resulting in a DOLA–USDC/USDT market. Users can directly swap DOLA/USDT or DOLA/USDC through this pool.
+For example, the USDC/USDT pool might begin as a normal Stableswap pool. If the DAO adds it as a base pool, it can then be reused in other pools. A protocol such as Inverse can create a metapool that pairs their stablecoin $DOLA$ against the base pool, resulting in a DOLA–USDC/USDT market. Users can directly swap DOLA/USDT or DOLA/USDC through this pool.
 
-This approach gives new tokens a major advantage: they can **tap into the deep, established liquidity of the base pool** instead of needing to attract all liquidity themselves because they pair their token against an already existing and established pool with TVL.
+This approach gives new tokens a major advantage: they can **tap into the deep, established liquidity of the base pool** instead of needing to attract all liquidity themselves **by** pairing their token against an already existing and established pool with TVL.

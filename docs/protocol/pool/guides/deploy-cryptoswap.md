@@ -19,7 +19,7 @@ For a basic explanation of Cryptoswap mechanics, see: [**Understanding Curve Poo
 
 Make sure your wallet is connected (top right corner) and your network is set to the chain where you want to deploy the pool. Curve supports pool deployment on all networks where Curve is live — just switch chains in your wallet, and the UI will follow automatically.
 
-Select **Cryptoswap** as the pool type. This is used for volatile assets that do not share a common price peg — such as ETH, BTC, or volatile stablecoin pairs.
+Select **Cryptoswap** as the pool type. This is used for volatile assets that do not share a common price peg — such as ETH, BTC, or volatile non-pegged pairs.
 
 <figure>
   <ThemedImage
@@ -139,15 +139,15 @@ To fine-tune the pool, enable the **Advanced** toggle:
 
 | Parameter | Description |
 |----------|-------------|
-| **Mid Fee / Out Fee** | The base and maximum fee range, charged depending on pool imbalance. |
-| **Amplification (A)** | Higher = flatter curve = tighter prices near balance. Use lower for volatile pairs. |
-| **Gamma** | Shapes the bonding curve. Suggested: `0.000145` (volatile) or `0.0001` (less volatile). |
+| **Mid Fee / Out Fee** | The base and maximum fee range, charged depending on pool imbalance. More here: [Cryptoswap Dynamic Fees](../understanding-cryptoswap.md#dynamic-fees)|
+| **Fee Gamma** | Controls how fee ramps up with imbalance. Suggested: `0.0023` (volatile) or `0.005` (less volatile). More here: [Cryptoswap Dynamic Fees](../understanding-cryptoswap.md#dynamic-fees)|
+| **Amplification (A)** | Higher = flatter curve = tighter prices near balance. Use lower for volatile pairs. More here: [Cryptoswap Parameters](../understanding-cryptoswap.md#parameters)|
+| **Gamma** | Shapes the bonding curve. Suggested: `0.000145` (volatile) or `0.0001` (less volatile).  More here: [Cryptoswap Parameters](../understanding-cryptoswap.md#parameters)|
 | **Allowed Extra Profit** | Sets profit-taking buffer. Suggested: `0.000002` (volatile) or `0.00000001` (less volatile). |
-| **Fee Gamma** | Controls how fee ramps up with imbalance. Suggested: `0.0023` (volatile) or `0.005` (less volatile). |
 | **Adjustment Step** | Step size for rebalancing. Suggested: `0.000146` (volatile) or `0.0000055` (less volatile). |
 | **Moving Average Time** | Smooths price changes over time using an EMA (in seconds). |
 
-> 📖 **Further reading**: [Deep Dive: Curve V2 Parameters](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters?s=curve)
+> 📖 **Further reading**: [Deep Dive: Curve V2 Parameters](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters?s=curve),  [Cryptoswap Explainer](../understanding-cryptoswap.md)
 
 ## Step 4: Enter Pool Info
 

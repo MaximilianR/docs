@@ -18,10 +18,11 @@ scrvUSD is designed with minimal risk in mind. The underlying crvUSD deposited i
 
 <ScrvusdVaultAnimation />
 
+---
+
+## Guides
+
 <GuideCardGrid guideKeys={['depositScrvusd', 'checkEarningsScrvusd', 'withdrawScrvusd']} />
-
-<ButtonGrid buttonKeys={['gotoScrvusd']} />
-
 
 ---
 
@@ -78,6 +79,12 @@ scrvUSD plays a crucial role in maintaining crvUSD's peg to $1. Its mechanics ar
 ---
 
 ## FAQ
+
+### Where do I go to deposit?
+
+Click below:
+
+<ButtonGrid buttonKeys={['gotoScrvusd']} />
 
 ### What do the different APR/APY numbers on the UI mean?
 

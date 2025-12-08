@@ -1,5 +1,4 @@
 ---
-id: how-to-use
 title: How to properly use Liquidation Protection
 sidebar_label: How to properly use Liquidation Protection
 ---

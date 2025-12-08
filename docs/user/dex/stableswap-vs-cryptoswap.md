@@ -48,12 +48,14 @@ It's important to note that Stableswap pools are designed for these specific typ
   <ThemedImage
     alt="Being an LP in a Stableswap pool"
     sources={{
-      light: require('@site/static/img/user/dex/dex-stableswap-depositing-withdrawing-light.png').default,
-      dark: require('@site/static/img/user/dex/dex-stableswap-depositing-withdrawing-dark.png').default,
+      light: '/img/user/dex/dex-stableswap-depositing-withdrawing-light.svg',
+      dark: '/img/user/dex/dex-stableswap-depositing-withdrawing-dark.svg',
     }}
     style={{
       maxWidth: '800px',
-      width: '100%'
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption></figcaption>
@@ -67,23 +69,31 @@ The magic of Stableswap is its liquidity concentration. Let's visualize a crvUSD
   <ThemedImage
     alt="Swapping in a Stableswap pool"
     sources={{
-      light: require('@site/static/img/user/dex/stableswap-swap-light.png').default,
-      dark: require('@site/static/img/user/dex/stableswap-swap-dark.png').default,
+      light: '/img/user/dex/stableswap-swap-light.svg',
+      dark: '/img/user/dex/stableswap-swap-dark.svg',
     }}
     style={{
       maxWidth: '1400px',
-      width: '100%'
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption></figcaption>
 </figure>
 
-In this example most of the pool's liquidity (e.g., \$40M out of \$80M total) is concentrated in a very tight range around the \$1.00 price.
+In this example most of the pool's liquidity (e.g., \$40M out of \$80M total) is concentrated in a very tight range around the \$1.00 price.  Each block represents 1 million tokens (1M) of either crvUSD or USDC.
 
-1.  A user wants to swap \$20M USDC for crvUSD.
-2.  The swap executes with extremely low slippage, and the user receives back about 19.98M crvUSD
-3.  The pool collects trading fees on the swap. With a 0.01% fee, the total fee is 20,000,000 * 0.0001 = 2,000 crvUSD. This is typically split 50/50 between LPs and the Curve DAO.
-4.  The pool is now imbalanced. This creates an **arbitrage opportunity**: traders are now incentivized to swap crvUSD back into the pool to get USDC at a slight discount, which naturally pushes the pool back toward a 50/50 balance.
+**Swap Example**:
+
+1. A Stableswap pool has 40M of both crvUSD and USDC, the pool is perfectly balanced, so each asset is $1.
+2. A user wants to swap \$20M USDC for crvUSD:
+
+  - The user's 20M USDC is deposited to the pool
+  - Approx. 19.98M crvUSD is withdrawn
+  - The price increases to 1.002 USDC per crvUSD
+
+3.  The pool is now imbalanced, it would only take a user selling 9M USDC to push the price up another 0.002.  The imbalance also creates an **arbitrage opportunity**: traders are now incentivized to swap crvUSD back into the pool to get USDC at a slight discount, which naturally pushes the pool back toward a 50/50 balance.
 
 ---
 
@@ -101,12 +111,14 @@ Like their Stableswap counterparts, Cryptoswap pools are **fully passive and ful
   <ThemedImage
     alt="Being an LP in a Cryptoswap pool"
     sources={{
-      light: require('@site/static/img/user/dex/dex-cryptoswap-depositing-withdrawing-light.png').default,
-      dark: require('@site/static/img/user/dex/dex-cryptoswap-depositing-withdrawing-dark.png').default,
+      light: '/img/user/dex/dex-cryptoswap-depositing-withdrawing-light.svg',
+      dark: '/img/user/dex/dex-cryptoswap-depositing-withdrawing-dark.svg',
     }}
     style={{
       maxWidth: '800px',
-      width: '100%'
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption></figcaption>
@@ -114,11 +126,11 @@ Like their Stableswap counterparts, Cryptoswap pools are **fully passive and ful
 
 ### How Cryptoswap Works: Concentrating and Rebalancing
 
-At its core, a Cryptoswap pool functions like a Stableswap pool concentrated around the last rebalance price. As traders swap back and forth, the pool earns fees.
+At its core, a Cryptoswap pool functions like a Stableswap pool concentrated around the `price_scale` (center of liquidity). As traders swap back and forth, the pool earns fees.
 
 However, when the market price of the assets drifts significantly, the pool must move its liquidity concentration to match the new price. This is called **rebalancing**. To ensure this process is always profitable for LPs, it only happens if two conditions are met:
 
-1.  **Minimum Step**: The price must move more than a set minimum amount (e.g., 0.5%). This prevents constant, unnecessary rebalancing in a choppy market. It is set by the `adjustment_step` parameter.
+1.  **Adjustment Step**: The price must move more than a set minimum amount (e.g., 0.5%). This prevents constant, unnecessary rebalancing in a choppy market. It is set by the `adjustment_step` parameter.
 2.  **Profitability Check**: The pool must have accrued enough trading fees to ensure the recent profits from swaps are more than double the cost of rebalancing.  This guarantees that rebalancing doesn't cause a net loss for LPs.
 
 Let's look at a simple USD/EUR forex pool example:
@@ -127,13 +139,21 @@ Let's look at a simple USD/EUR forex pool example:
   <ThemedImage
     alt="Cryptoswap Rebalances"
     sources={{
-      light: require('@site/static/img/user/dex/cryptoswap-rebalances-light.png').default,
-      dark: require('@site/static/img/user/dex/cryptoswap-rebalances-dark.png').default,
+      light: '/img/user/dex/cryptoswap-rebalances-light.svg',
+      dark: '/img/user/dex/cryptoswap-rebalances-dark.svg',
     }}
     style={{
       maxWidth: '1200px',
-      width: '100%'
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption></figcaption>
 </figure>
+
+
+1. Liquidity is initially balanced around the price of $1.10, which is also the current price.  It looks and functions like a normal Stableswap pool.
+2. A user swaps USD for EUR, and the EUR/USD price increases to $1.105, because of the slight imbalance.  While price stays within Minimum Step range, it will continue functioning like Stableswap.
+3. Another swap happens, generating more profit for LPs.  This increases price to $1.11, outside adjustment step range.  A rebalance can now occur, assuming the pool has enough profit to rebalance.
+4. The pool can use up to half the generated profit from swaps to move to balance liquidity around around the new price of $1.11, automatically.

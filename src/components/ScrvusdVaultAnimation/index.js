@@ -121,22 +121,23 @@ export default function ScrvusdVaultAnimation() {
     return (
         <div className={styles.svgContainer}>
             <svg viewBox="0 0 1400 500" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                <a href="https://www.curve.finance/crvusd/ethereum/scrvUSD/" target="_blank">
                 <rect width="1400" height="500" fill="none"/>
 
                 <g filter="url(#filter0_d_304_657)">
-                    <rect x="42" y="97" width="853" height="306" fill="#EEECEB"/>
+                    <rect x="42" y="97" width="853" height="306" fill="var(--Layer-2-Fill)" stroke="var(--Layer-2-Outline)" strokeWidth="3"/>
                 </g>
-                <rect x="42" y="298" width="853" height="105" fill="#D4D0CC"/>
-                <text fill="#5A554F" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="36" fontWeight="500" letterSpacing="0em"><tspan x="83.8242" y="368.36">scrvUSD</tspan></text>
-                <text fill="#5A554F" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="36" fontWeight="bold" letterSpacing="0em"><tspan x="61.043" y="368.36">1 </tspan></text>
-                <text fill="#5A554F" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="36" fontWeight="500" letterSpacing="0em"><tspan x="315" y="368.36">=                                       crvUSD</tspan></text>
+                <rect x="42" y="298" width="853" height="105" fill="var(--ifm-color-emphasis-200)"/>
+                <text fill="var(--ifm-color-emphasis-700)" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="36" fontWeight="500" letterSpacing="0em"><tspan x="83.8242" y="368.36">scrvUSD</tspan></text>
+                <text fill="var(--ifm-color-emphasis-700)" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="36" fontWeight="bold" letterSpacing="0em"><tspan x="61.043" y="368.36">1 </tspan></text>
+                <text fill="var(--ifm-color-emphasis-700)" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="36" fontWeight="500" letterSpacing="0em"><tspan x="315" y="368.36">=                                       crvUSD</tspan></text>
                 
                 {/* Dynamic Price Display */}
-                <text fill="#5A554F" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="36" fontWeight="bold" letterSpacing="0em">
+                <text fill="var(--ifm-color-emphasis-700)" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="36" fontWeight="bold" letterSpacing="0em">
                     <tspan id="dynamic-price" x="361" y="368.36">{price}</tspan>
                 </text>
 
-                <text fill="#5A554F" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="64" fontWeight="600" letterSpacing="0em"><tspan x="323.75" y="230.64">scrvUSD Vault</tspan></text>
+                <text fill="var(--ifm-color-emphasis-700)" xmlSpace="preserve" style={{whiteSpace: 'pre'}} fontFamily="Mona Sans" fontSize="64" fontWeight="600" letterSpacing="0em"><tspan x="323.75" y="230.64">scrvUSD Vault</tspan></text>
 
                 <circle id="vault-logo" cx="842" cy="354" r="25" fill="url(#pattern_crvusd_logo_vault)" filter="url(#glow-shadow)" stroke="#FFC300" strokeWidth="5" strokeOpacity="1" />
 
@@ -189,6 +190,7 @@ export default function ScrvusdVaultAnimation() {
                     <image id="img_scrvusd_logo_small" width="50" height="50" preserveAspectRatio="none" xlinkHref={scrvUsdLogoSmall}/>
                     <image id="img_crvusd_logo" width="50" height="50" preserveAspectRatio="none" xlinkHref={crvUsdLogo}/>
                 </defs>
+                </a>
             </svg>
         </div>
     );

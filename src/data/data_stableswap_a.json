@@ -1,0 +1,5267 @@
+[
+    {
+        "A": 1,
+        "pct_yourusd": 20,
+        "price_yourusd": 2.227667631989307
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 21,
+        "price_yourusd": 2.133469875405359
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 22,
+        "price_yourusd": 2.0480052428934217
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.9700551615445232
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.8986500598074767
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.8329789574015691
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.7723268879712175
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.71609006040637
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.6637827765206974
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.6149870801033592
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.5692920923371467
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.526414604734938
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.486038666726108
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.4479113878230652
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.4118311449950585
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.377581242853797
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.3450080027976166
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.3139568496570573
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.2842740640852757
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.2558396543929269
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.2285465066280084
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.2022987952966069
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.1769967750288364
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.1525650334820141
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.1289102629232002
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.1059744741091375
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.083693661475774
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.0620108112700586
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.0408751678411208
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.0202207757758779
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9802095688058108
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.9607624610891203
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9416373189702255
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9227901482923769
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9042081848924897
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.8858415938061955
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.8676639017110332
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.8496465470364328
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.8317668391196579
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.8139941880814971
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.7963051441312311
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.7786767167874914
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.7610871368662999
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.7435110076804687
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.725931733379793
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.7083256598053521
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.6906745127291313
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.6729520387082013
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.6551491447027916
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.6372430317474478
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.6192180514446357
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.6010554533761285
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.5827403949814397
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.564251294956722
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.5455805249575811
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.5267066612591449
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.5076167899329438
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.4882955555338535
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.46873535202024935
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.4489176595228903
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.428834855697071
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.408473371620904
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.38782688958956285
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.36688630927048327
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.3456440212225429
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.3240986815665634
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.30224538093496583
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.28008772347499233
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.25762771249777794
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.23487410747839157
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.21184017082791376
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.1885444182367703
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.16501323406137172
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.1412832474802133
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.11740355004854636
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.093442224672485
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.06949449012935009
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.04570342135812287
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.022312901855362412
+    },
+    {
+        "A": 1,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.8329789574015691
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.7651939065506346
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.704187187920721
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.6490221298769827
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.598899956829701
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.5531567911780693
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.5112360399570808
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.4726456078344745
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.4370087226429462
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.4039619807095625
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.3732302495159363
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.3445378151260503
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.317661940652506
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.2924238116163052
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.2686491423931796
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.246183562838806
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.224874756556142
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.204630600026502
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.1853256682273454
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.166874759332081
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.149187524420235
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.1321822813472968
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.11579746044498
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0999648011263639
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0846104621525179
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.0697017671473192
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.0551751063088919
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.040983521230859
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.0270842106344298
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.013448461078512
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9867674485154084
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.9736529511420948
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9606609347230894
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9477415319294122
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9348677629549301
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.9220158955540393
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9091487640122553
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.8962420570547694
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.8832751843836948
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.8702008423544154
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.8570155291213876
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.8436753874579217
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.8301579790634157
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.8164331667809673
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.8024780522252716
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.788264320792048
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.7737602426512121
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.7589383969703178
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.7437764505500227
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.7282366477810629
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.7122912986494957
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.6959135953679991
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.6790710308298249
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.6617301596754875
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.6438652518800865
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.6254456300113831
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.6064354934565611
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.586806248312932
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.566530510500643
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.5455745718603547
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.5239168020118405
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.5015296654797131
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.4783910751361023
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.45448347952551926
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.4297951166678844
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.40431484805848006
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.3780461065031491
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.35099788699272033
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.3231936705751554
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.2946679828503234
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.2654766234559216
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.23569396552740057
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.20542317173377156
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.17479981051700538
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.144000092160059
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.11325567014512582
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.08287372944213549
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.05327925843796936
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.025129069181583908
+    },
+    {
+        "A": 2,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.440071427542806
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.4009919022668047
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.3662882048339278
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.335291761249833
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.3074459044257045
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.2823143208863355
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.2595410232511273
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.2387889599127893
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.219809709685289
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.2023855328972681
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.186324056279213
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.1714540087156178
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.1576485841957813
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.14476726881425
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.132733739607168
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.121415675148307
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.1107655396098992
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.1006912340950117
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.0911312849162011
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0820285871952735
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.0733298986776574
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.064996751759907
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.056970721911003
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0492298652788852
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0417209229647377
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.034425686858656
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.0272952343774078
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.020324871439066
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.0134690030505418
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.006704652988906
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9933643263003139
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.9867382380802022
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9801134971429692
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9734539118245448
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9667533522172489
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.9599784964816788
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9531162134599072
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9461275001419192
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.939002403846154
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.9317059536010436
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.9242144177449167
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9165062780680048
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.908545781621936
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9003088059204307
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.8917504168933198
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.8828540907044293
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.8735608085678843
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.8638487919074644
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.8536647829130458
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.8429641993104552
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.8317045785337048
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.8198199675351292
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.8072653884964682
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.7939658594680429
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.7798608728202888
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.7648710045050903
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.7489234225800412
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.7319304666056725
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.713796253997259
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.6944347995166733
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.6737364073679813
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.6515973910040463
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.6279079989199983
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.6025584632348954
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.5754369004666793
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.546442115386717
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.5154798602018619
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.4824811108645096
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.44739926805479746
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.4102345310814193
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.3710396158997896
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.3299502435032797
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.287202816885228
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.2431616854995392
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.1983560252626234
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.15351244141581455
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.10960225342233035
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.06791286779062462
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.03022696825926517
+    },
+    {
+        "A": 5,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.2498281486295635
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.2264822037432235
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.2058944118852954
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.1876625613130798
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.1713991191078623
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.1568182869834807
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.1436936730866005
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.1318106707110034
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.1210008295406138
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.1111358030178446
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.1020862492698678
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.093756835980225
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.0860475471616147
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.0788999536073018
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.0722365782786314
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.0660071635681392
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.0601530861056336
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.0546409474894272
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.04942806170637
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0444736897077562
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.0397496282895078
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.0352181204579805
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.0308746971805578
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0266835042761366
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0226308200476546
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.0186826396104556
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.0148266168725073
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.0110507850809345
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.0073333870577805
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.003663371305264
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9963831292408557
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.9927529038022436
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9891001167138137
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9854158454867955
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9816914543758896
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.9778994719342852
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9740322989110319
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9700732405296599
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.9660062404003129
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.9618066576256842
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.9574508827697139
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9529345619836286
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.9482178245986668
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9432894389314418
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.9381127048603618
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9326531183257011
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.9268957334989387
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.9207933555551463
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.9143107925245949
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9073998457420263
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.900009000090001
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.8920845339304352
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.8835717504439948
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.8743857440148297
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.8644611381495345
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.8537085097664254
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.8420201748033883
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.8292836647703714
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.8153680571409935
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.8001344225829939
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.7834166366356956
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.7650289945988953
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.7447680047665153
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.7223919843385418
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.6976614388569515
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.6702817194066666
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.6399672336776356
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.6064097510687972
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.5693010122171998
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.528368082340882
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.48339303237283143
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.4342822400277941
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.38113387327298714
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.3243362458728213
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.2646959173301711
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.20357560187126691
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.14303532400361593
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.08595414690079431
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.036195321537519344
+    },
+    {
+        "A": 10,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.1345844017336448
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.1215791834903543
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.1101736311559127
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.1001221135546047
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.091202723641998
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.0832358421075436
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.0761019283746556
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.0696674403927817
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.063841104692603
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.0585371017254155
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.053696366854927
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.0492518834071307
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.0451505016722407
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.041352091555676
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.0378288620206528
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.034543404268526
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.0314595152140278
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.028563200065828
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.0258198865443204
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0232272587741738
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.020751885839109
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.0183921624539176
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.0161259183237987
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0139416983523446
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0118180346446495
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.0097644219603565
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.0077495943807881
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.0057832537088258
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.003844725297891
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.0019236934915037
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9981135653614669
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.9962044610035763
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9942828734775044
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9923391418251102
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9903637606092718
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.9883473843386473
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9862808336045604
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9841647885521952
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.9819710122157195
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.9797006034955716
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.977326035965598
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9748584018171361
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.9722613827501386
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9695277430363669
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.966641211781423
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9635767970707265
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.9603195943610033
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.9568279240661359
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.95308896132365
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9490727559174686
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.9447241877733795
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.9400174843252085
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.9348939830223253
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.9293075729274117
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.9231820237996325
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.9164558818138495
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.9090247981964948
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.9007872880897906
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.8916311500258574
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.8814067251333129
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.8699358857252221
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.8570228739405055
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.8424315945545221
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.8258524862289098
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.8069592162812091
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.7853300349471866
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.7604736229723872
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.731807271237047
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.6986704301713839
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.6602839220864972
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.6158166344389294
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.5644137152532807
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.5053210304506454
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.43811610076670315
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.36305020258201304
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.2816052626391482
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.1971608832807571
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.11563634681653137
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.045761040423015056
+    },
+    {
+        "A": 20,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.056579851022241
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.0509721492380453
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.0460798158899525
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.0417860379835189
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.0379904504878554
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.0346183292983218
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.0315978418973146
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.0288912667709276
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.0264411233371653
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.0242123806792576
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.0221917836224432
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.0203352821737222
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.0186307565370627
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.0170456856922012
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.0155892956888235
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.0142296418755135
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.012945442758453
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.0117566118294583
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.0106216333666838
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0095503462757687
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.008542353736145
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.0075668268697922
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.0066337161896899
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0057326762546515
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0048635395313317
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.0040261448408117
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.0032002086656433
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.002385677913434
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.0015925321260803
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.00080064051241
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9992305924438183
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.9984424298094972
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9976455564866915
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9968400171456484
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9960258568312435
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.9951833127662115
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9943224189875808
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9934432743890325
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.9925164261468526
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.9915618090053643
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.9905697757350028
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9895209728970205
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.9884157672083186
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9872447972199186
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.9860085388339463
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9846784040332427
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.983264832549999
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.9817396426467702
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.9801038910124473
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9783204195037959
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.9763813354943908
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.9742695414113268
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.9719495363800711
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.9693961631299862
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.9665664659430306
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.9634282631315272
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.9599139917063431
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.9559772477415038
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.9515291072753915
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.9464856986010941
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.9407249226253751
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.9341080202514619
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.9264577813189053
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.91755746203606
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.9071117561683599
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.8947504988234032
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.8800183043807311
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.862277101369296
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.8407105685725575
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.8142526788913135
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.7814636814754035
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.7404555282409738
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.6887858771343752
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.623464718131601
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.541198755242863
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.4394175081511948
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.31880130708535903
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.1880869488347073
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.06962624630980895
+    },
+    {
+        "A": 50,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.0287960000411518
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.0259146028684571
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.0234052787244277
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.0212105429776457
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.0192744804248335
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.0175527855507505
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.0160123547102333
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.014630978713042
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.0133868401584938
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.0122584498274099
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.0112245929821013
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.0102846982279605
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.0094178687151119
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.0086237329164354
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.0078816343808583
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.0071913462119533
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.0065425264217414
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.0059350165979277
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.0053686686908088
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0048332479225073
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.0043185698503565
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.003824571617864
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.0033511929845684
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0028983763075288
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0024660665236482
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.0020341292824433
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.0016226286584267
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.0012114658737072
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.0008106566318717
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.0004101681689492
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9996201443451488
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.9992206079258179
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9988213907589045
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9984125240867021
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9979940319956886
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.9975758905858764
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9971382133277494
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9966909859267233
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.9962243098656094
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.9957283254836752
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.9952229299363058
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9946883641355164
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.9941247228877335
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9935321059900051
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.9928909011477818
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9922111425311307
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.9914831596585331
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.9906973518659784
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.9898539965355109
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9889240506329113
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.9879275256367194
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.9868258745744314
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.9856100926473488
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.9842713439240929
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.9827816652252536
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.9811231898277148
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.9792592882743493
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.9771541362934589
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.9747728779194449
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.9720440141529609
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.9689077502930946
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.965288235066991
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.9610486963374435
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.9560686457287634
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.9501548752446649
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.9430581489654651
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.9344484418072233
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.9238728750923872
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.9106970475201719
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.894046544063084
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.8726460373143445
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.8446302631023269
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.8072523551587463
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.7564067653021088
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.6860969317745211
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.588155720108456
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.4539058599246516
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.2827198783173644
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.10437411021071044
+    },
+    {
+        "A": 100,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.0145280415550686
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.013078847926734
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.0118077969908836
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.010693133350852
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.0097134433247843
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.008847593394066
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.0080645161290323
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.0073739775154127
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.0067451927917044
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.0061678086671295
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.0056517629075403
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.0051766597979594
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.0047423840527288
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.0043387433713642
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.0039656643742785
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.0036230793163319
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.0032907938036761
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.0029889069426892
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.002707309736288
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0024359192838597
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.002174719140535
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.0019337321029587
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.00169286093498
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0014621347166863
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.001241539508991
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.0010310619938536
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.0008206729518203
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.0006203846384758
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.0004101681689492
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.000210044109263
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.999820032394169
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.9996201443451488
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.999410347894742
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9992106236073501
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9990009990009991
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.99879146233058
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9985720419799686
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9983427510332847
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.9981036031540074
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.9978546125829466
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.9976057462090983
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9973371099165229
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.997048735742203
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9967406580481823
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.99642284199723
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9960754626770524
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.9957084963805996
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.9953120801027162
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.9948763866089638
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9944114078876714
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.9938974695370425
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.9933347240019469
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.9927134830345267
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.992024126026745
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.9912669382738077
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.9904128040567309
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.9894524370213524
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.9883571527407145
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.9871278527994947
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.9857072449482505
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.9840679400505812
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.9821639035122182
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.9799310128566948
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.9772878308119308
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.9741366713749938
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.9703085581214826
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.9656331173533927
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.9598126445717795
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.952462592031698
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.9429958979678439
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.9305528414431014
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.9137844382510166
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.8905115989135759
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.8571257146285646
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.8074413797558297
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.7306149586106625
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.6083909276744865
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.4171794497403058
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.16508624105232575
+    },
+    {
+        "A": 200,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.005854070691424
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.005267602235715
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.0047524792267424
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.0043084833937592
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.0039152695512499
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.0035626473982637
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.0032505317227818
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.0029687876113296
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.0027173640565932
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.0024861656909134
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.0022751646236958
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.0020843354176687
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.0019136550812051
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.0017530678687703
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.001602564102564
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.0014621347166863
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.00133177125577
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.0012114658737072
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.001091189396442
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0009809613421152
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.0008807750820723
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.0007806088749223
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.0006904764287357
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0006003602161297
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0005102602327185
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.000420176474119
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.0003401156393175
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.0002600676175806
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.000180032405833
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.0000900081007291
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9999400035997841
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.9998500224966254
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9997700528878358
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9996900960702182
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9996101520407042
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.999520230289461
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9994303247149126
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9993404353126936
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.9992505620784411
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.9991507218863965
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.9990509016434387
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9989411224102451
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.9988213907589045
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9987016878058523
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.9985720419799686
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9984324610361731
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.9982829533202892
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.9981235277677964
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.9979442348761551
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9977550511349463
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.9975460367495961
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.9973271632026169
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.9970686182623089
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.9967903351209106
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.9964824170677508
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.9961349962146869
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.9957382403313816
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.9953021737399473
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.994787314472166
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.9942136764033327
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.9935419771485345
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.9927529038022436
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.9918273426961834
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.9907366126715214
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.9894230674093935
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.9878201772149399
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.985843290350566
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.9833711931242687
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.9802191770079789
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.9761144787060626
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.9706287733193564
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.9630756784868154
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.9523083955508153
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.9362156291837136
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.9108131740017488
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.8677316626606387
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.7879972262497636
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.6264839839369507
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.30490407717732
+    },
+    {
+        "A": 500,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.002938610127674
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.0026469880484479
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.002385677913434
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.0021646756995108
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.0019638491443228
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.0017932098456237
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.0016326612378177
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.0014922234128851
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.0013618521188816
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.0012515644555695
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.001151324022626
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.0010511036588416
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.0009609224855862
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.0008807750820723
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.0008106566318717
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.000740548005524
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.0006704492009646
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.0006103723271196
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.0005503026664666
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0005002501250626
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.000450202591166
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.0004001600640255
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.00035012254289
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0003100961298002
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0002600676175806
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.0002200484106503
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.000180032405833
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.0001400196027443
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.000100010001
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.0000500025001249
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9999800003999921
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.999930004899657
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9998900120986691
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9998500224966254
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9998100360931423
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.9997700528878358
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9997200783780541
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9996801023672424
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.9996301368493657
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.999580176325943
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.9995302207962258
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.999480270259465
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.999420336205001
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9993604093380237
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.999290503742343
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9992206079258179
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.9991507218863965
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.9990708640963902
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.9989810393398733
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9988812529966438
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.9987814865863647
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.998661793197116
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.9985421284924011
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.998402555910543
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.9982430921578023
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.9980637563127532
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.9978745272569427
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.9976455564866915
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.9973967943667029
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.9970984435293296
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.99676052828308
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.9963632740497186
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.9958969047524201
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.9953418003742485
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.9946784701845129
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.9938579578206682
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.9928613270584498
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.9915913057274314
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.9899813883498991
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.9878689690599438
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.9850372836611866
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.9811039381512077
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.9754289448785103
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.9668281269638695
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.9529345619836286
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.9284361421621421
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.8798247389120087
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.7662717812753828
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.456239763120315
+    },
+    {
+        "A": 1000,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.001482193646597
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.00133177125577
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.001201441730076
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.001091189396442
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.0009909810712605
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.0009008107296566
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.0008206729518203
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.0007505629221916
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.0006904764287357
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.0006303971502046
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.0005803365952253
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.0005302810489558
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.0004902402177067
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.000450202591166
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.0004101681689492
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.0003801444548928
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.0003401156393175
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.0003100961298002
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.000290084124396
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0002600676175806
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.0002300529121697
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.000210044109263
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.000180032405833
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.0001600256040966
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0001400196027443
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.0001200144017282
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.000100010001
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.000080006400512
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.0000600036002159
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.000040001600064
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.9999900000999989
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.999970000899973
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9999500024998749
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.999930004899657
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9999100080992711
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.9998900120986691
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9998700168978033
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9998500224966254
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.999820032394169
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.9998000399920016
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.9997700528878358
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9997400675824286
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.9997200783780541
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9996900960702182
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.9996501224571399
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9996201443451488
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.999580176325943
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.9995402115027089
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.9995002498750625
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9994503023337165
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.9994003597841296
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.9993404353126936
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.9992805180270204
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.9992106236073501
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.9991307562420695
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.9990409207161125
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.9989411224102451
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.9988313673002588
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.9987016878058523
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.9985520994557892
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.9983826201553484
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.9981833063823842
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.9979541939024997
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.9976754162800675
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.9973371099165229
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.9969294572716035
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.9964129135113591
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.9957779016968056
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.9949654746980279
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.9938974695370425
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.9924474747174007
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.990442232456792
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.9875275273298244
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.9830811730124557
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.9758001561280251
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.9626955475330926
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.9356112348197076
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.8663184066671865
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.6211180124223602
+    },
+    {
+        "A": 2000,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.0006003602161297
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.000540291757549
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.0004902402177067
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.000450202591166
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.0004101681689492
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.0003701369506717
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.0003401156393175
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.0003100961298002
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.000290084124396
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.0002600676175806
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.0002400576138273
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.0002200484106503
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.0002000400080016
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.0001900361068603
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.0001700289049138
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.0001600256040966
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.0001500225033755
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.0001300169021972
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.0001200144017282
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.000110012101331
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.000100010001
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.0000900081007291
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.000080006400512
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.000070004900343
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.0000600036002159
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.0000600036002159
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.0000500025001249
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.000040001600064
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.000030000900027
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.99999
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 52,
+        "price_yourusd": 1.0
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 53,
+        "price_yourusd": 0.9999900000999989
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 54,
+        "price_yourusd": 0.9999800003999921
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.999970000899973
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.999970000899973
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9999600015999359
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9999500024998749
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.9999400035997841
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.999930004899657
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.999920006399488
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9999100080992711
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.9999000099990001
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9998800143982723
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.9998700168978033
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9998600195972563
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.9998400255959047
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.999820032394169
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.9998100360931423
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9997900440907409
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.9997700528878358
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.9997400675824286
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.9997200783780541
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.9996900960702182
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.9996601155607093
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.9996201443451488
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.999580176325943
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.9995402115027089
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.9994902599674166
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.9994303247149126
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.9993604093380237
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.9992805180270204
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.9991906555689891
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.9990708640963902
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.9989411224102451
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.998771511041419
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.9985720419799686
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.9983128512813346
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.9979840721742081
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.9975559878298169
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.9969692135906844
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.9961548423086884
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.9949753743594846
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.9931571472554102
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.9901578311582866
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.9846881000443111
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.973093952221087
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.9414777434661444
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.8015839298453744
+    },
+    {
+        "A": 5000,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 20,
+        "price_yourusd": 1.0003100961298002
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 21,
+        "price_yourusd": 1.000280078421958
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 22,
+        "price_yourusd": 1.000250062515629
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 23,
+        "price_yourusd": 1.0002300529121697
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 24,
+        "price_yourusd": 1.000210044109263
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 25,
+        "price_yourusd": 1.0001900361068603
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 26,
+        "price_yourusd": 1.000180032405833
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 27,
+        "price_yourusd": 1.0001600256040966
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 28,
+        "price_yourusd": 1.0001500225033755
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 29,
+        "price_yourusd": 1.0001400196027443
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 30,
+        "price_yourusd": 1.0001300169021972
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 31,
+        "price_yourusd": 1.0001200144017282
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 32,
+        "price_yourusd": 1.000110012101331
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 33,
+        "price_yourusd": 1.000100010001
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 34,
+        "price_yourusd": 1.0000900081007291
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 35,
+        "price_yourusd": 1.0000900081007291
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 36,
+        "price_yourusd": 1.000080006400512
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 37,
+        "price_yourusd": 1.000070004900343
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 38,
+        "price_yourusd": 1.000070004900343
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 39,
+        "price_yourusd": 1.0000600036002159
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 40,
+        "price_yourusd": 1.0000600036002159
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 41,
+        "price_yourusd": 1.0000500025001249
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 42,
+        "price_yourusd": 1.0000500025001249
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 43,
+        "price_yourusd": 1.000040001600064
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 44,
+        "price_yourusd": 1.000040001600064
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 45,
+        "price_yourusd": 1.000040001600064
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 46,
+        "price_yourusd": 1.000030000900027
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 47,
+        "price_yourusd": 1.000030000900027
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 48,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 49,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 50,
+        "price_yourusd": 1.000020000400008
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 51,
+        "price_yourusd": 0.99999
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 52,
+        "price_yourusd": 0.99999
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 53,
+        "price_yourusd": 1.0
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 54,
+        "price_yourusd": 1.0
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 55,
+        "price_yourusd": 0.9999900000999989
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 56,
+        "price_yourusd": 0.9999900000999989
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 57,
+        "price_yourusd": 0.9999900000999989
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 58,
+        "price_yourusd": 0.9999800003999921
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 59,
+        "price_yourusd": 0.9999800003999921
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 60,
+        "price_yourusd": 0.999970000899973
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 61,
+        "price_yourusd": 0.999970000899973
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 62,
+        "price_yourusd": 0.9999600015999359
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 63,
+        "price_yourusd": 0.9999600015999359
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 64,
+        "price_yourusd": 0.9999500024998749
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 65,
+        "price_yourusd": 0.9999400035997841
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 66,
+        "price_yourusd": 0.9999400035997841
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 67,
+        "price_yourusd": 0.999930004899657
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 68,
+        "price_yourusd": 0.999920006399488
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 69,
+        "price_yourusd": 0.9999100080992711
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 70,
+        "price_yourusd": 0.9999000099990001
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 71,
+        "price_yourusd": 0.9998900120986691
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 72,
+        "price_yourusd": 0.9998800143982723
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 73,
+        "price_yourusd": 0.9998700168978033
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 74,
+        "price_yourusd": 0.9998500224966254
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 75,
+        "price_yourusd": 0.9998400255959047
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 76,
+        "price_yourusd": 0.999820032394169
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 77,
+        "price_yourusd": 0.9998000399920016
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 78,
+        "price_yourusd": 0.9997800483893542
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 79,
+        "price_yourusd": 0.9997500624843788
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 80,
+        "price_yourusd": 0.9997200783780541
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 81,
+        "price_yourusd": 0.9996900960702182
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 82,
+        "price_yourusd": 0.9996501224571399
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 83,
+        "price_yourusd": 0.9996001599360256
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 84,
+        "price_yourusd": 0.9995402115027089
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 85,
+        "price_yourusd": 0.999480270259465
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 86,
+        "price_yourusd": 0.9993903718731574
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 87,
+        "price_yourusd": 0.999290503742343
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 88,
+        "price_yourusd": 0.9991607050077935
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 89,
+        "price_yourusd": 0.9990009990009991
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 90,
+        "price_yourusd": 0.9987814865863647
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 91,
+        "price_yourusd": 0.9984922766622402
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 92,
+        "price_yourusd": 0.9980836793356755
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 93,
+        "price_yourusd": 0.9974863344372181
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 94,
+        "price_yourusd": 0.99657179303197
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 95,
+        "price_yourusd": 0.9950545787436442
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 96,
+        "price_yourusd": 0.9922899074193516
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 97,
+        "price_yourusd": 0.986348930797759
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 98,
+        "price_yourusd": 0.9697910100373369
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 99,
+        "price_yourusd": 0.8893948557401544
+    },
+    {
+        "A": 10000,
+        "pct_yourusd": 100,
+        "price_yourusd": 0
+    }
+]

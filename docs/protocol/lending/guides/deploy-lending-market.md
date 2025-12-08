@@ -6,6 +6,10 @@ sidebar_label: Deploying a Lending Market
 
 import ThemedImage from '@theme/ThemedImage';
 
+:::important
+**Deployments Paused**: Currently the Curve team has paused new deployments for any further lending markets, as we await the release of Llamalend v2 in the coming months.
+:::
+
 Currently, there's no UI for deploying lending markets, but you can deploy via Etherscan or contact the Curve team, who are happy to help deploy lending markets with the correct oracles and parameters.
 
 **Important**: You can only deploy lending markets if one of the tokens is crvUSD (either as the borrowable token or as the collateral token).
@@ -13,6 +17,7 @@ Currently, there's no UI for deploying lending markets, but you can deploy via E
 ## Requirements
 
 **Data needed when deploying a new lending market:**
+
 - Token addresses of the collateral and borrowable tokens
 - Simulated parameters (A, fee, loan_discount, liquidation_discount)
 - Minimum and maximum borrow rates (defaults to 0.5% and 50% if not set)

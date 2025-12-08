@@ -31,7 +31,9 @@ Let's look at the standard pools overview page to understand the rewards you can
     }}
     style={{
       maxWidth: '800px',
-      width: '100%'
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption></figcaption>
@@ -82,12 +84,14 @@ When you deposit your assets into a pool, you receive LP tokens.  These tokens i
   <ThemedImage
     alt="Depositing and Earning Rewards"
     sources={{
-      light: require('@site/static/img/user/dex/dex-depositing-light.png').default,
-      dark: require('@site/static/img/user/dex/dex-depositing-dark.png').default,
+      light: '/img/user/dex/dex-depositing-light.svg',
+      dark: '/img/user/dex/dex-depositing-dark.svg',
     }}
     style={{
-      maxWidth: '800px',
-      width: '100%'
+      maxWidth: '700px',
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption></figcaption>
@@ -101,12 +105,14 @@ To earn additional rewards like **CRV** or **Other Tokens**, you must complete t
   <ThemedImage
     alt="Staking and Earning Rewards"
     sources={{
-      light: require('@site/static/img/user/dex/dex-staking-light.png').default,
-      dark: require('@site/static/img/user/dex/dex-staking-dark.png').default,
+      light: '/img/user/dex/dex-staking-light.svg',
+      dark: '/img/user/dex/dex-staking-dark.svg',
     }}
     style={{
-      maxWidth: '800px',
-      width: '100%'
+      maxWidth: '700px',
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption></figcaption>

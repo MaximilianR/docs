@@ -26,7 +26,7 @@ For markets with low liquid tokens, it's crucial to measure the overall liquidit
 
 After deploying your lending market, you can boost liquidity and attract more users through various incentive mechanisms:
 
-- **Gauge Integration** - Put up a DAO vote for your lending vault to be elegible to receive CRV emissions in order to attract more suppliers
+- **Gauge Integration** - Put up a DAO vote for your lending vault to be eligible to receive CRV emissions in order to attract more suppliers
 - **External Rewards** - Add your own token incentives to make borrowing more attractive
 - **Vote Incentives** - Provide rewards to veCRV holders who vote for your gauge
 

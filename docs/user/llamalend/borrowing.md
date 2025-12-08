@@ -51,6 +51,8 @@ In lending markets, the rate depends only on market utilization — the percenta
 
 Market utilization is calculated as: 
 
-$\text{utilization} = \frac{\text{amount borrowed}}{\text{total supplied}} \times 100$
+$$
+\text{utilization} = \frac{\text{amount borrowed}}{total supplied} \times 100
+$$
 
 When utilization is low, the rate stays close to the minimum and there's plenty of crvUSD available to borrow. As utilization increases, the rate increases toward the maximum and less crvUSD becomes available. At full utilization (100%), the rate reaches the maximum and there's no crvUSD left to borrow.

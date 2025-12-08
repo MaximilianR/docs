@@ -63,122 +63,122 @@ To add a metapool, simply tick on "View Metapools" when selecting a the token an
 
 *For the AMM to function correctly, the appropriate asset type needs to be chosen when selecting the assets. The following asset types are supported:*
 
-- ### Standard (ERC‑20)
+### Standard (ERC‑20)
 
-  For most ERC‑20 tokens, no additional configuration is needed. Simply select the token and leave all type boxes unchecked.
+For most ERC‑20 tokens, no additional configuration is needed. Simply select the token and leave all type boxes unchecked.
 
-  :::warning ERC‑20 Token Safety
-  Curve contracts cannot detect malicious or non‑standard ERC‑20 behavior. Double-check that tokens do not charge transfer fees or use reentrancy tricks.
-  :::
+:::warning ERC‑20 Token Safety
+Curve contracts cannot detect malicious or non‑standard ERC‑20 behavior. Double-check that tokens do not charge transfer fees or use reentrancy tricks.
+:::
 
-  <figure>
-    <ThemedImage
-      alt="Standard ERC20"
-      sources={{
-        light: require('@site/static/img/protocol/deploy-pool/standard_light.png').default,
-        dark: require('@site/static/img/protocol/deploy-pool/standard_dark.png').default,
-      }}
-      style={{ 
-        width: "500px",
-        display: "block",
-        margin: "0 auto"
-      }}
-    />
-    <figcaption></figcaption>
-  </figure>
+<figure>
+  <ThemedImage
+    alt="Standard ERC20"
+    sources={{
+      light: require('@site/static/img/protocol/deploy-pool/standard_light.png').default,
+      dark: require('@site/static/img/protocol/deploy-pool/standard_dark.png').default,
+    }}
+    style={{ 
+      width: "500px",
+      display: "block",
+      margin: "0 auto"
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
 
-- ### Oracle-Based Tokens
+### Oracle-Based Tokens
 
-  Check the **Oracle** box if a token requires an external price feed. You'll be asked to enter:
-  - The oracle contract address
-  - The function name used to return the rate (e.g. `getExchangeRate()`)
+Check the **Oracle** box if a token requires an external price feed. You'll be asked to enter:
+- The oracle contract address
+- The function name used to return the rate (e.g. `getExchangeRate()`)
 
-  This is common for wrapped or staked tokens like rETH, where the rate against the underlying asset must be tracked.
+This is common for wrapped or staked tokens like rETH, where the rate against the underlying asset must be tracked.
 
-  :::warning Oracle Requirements
-  - The oracle function must return a value with **1e18 precision**
-  - Oracles may be externally controlled (e.g. by an EOA), so proceed with caution
-  :::
+:::warning Oracle Requirements
+- The oracle function must return a value with **1e18 precision**
+- Oracles may be externally controlled (e.g. by an EOA), so proceed with caution
+:::
 
-  <figure>
-    <ThemedImage
-      alt="Oracle"
-      sources={{
-        light: require('@site/static/img/protocol/deploy-pool/oracle_light.png').default,
-        dark: require('@site/static/img/protocol/deploy-pool/oracle_dark.png').default,
-      }}
-      style={{ 
-        width: "500px",
-        display: "block",
-        margin: "0 auto"
-      }}
-    />
-    <figcaption></figcaption>
-  </figure>
+<figure>
+  <ThemedImage
+    alt="Oracle"
+    sources={{
+      light: require('@site/static/img/protocol/deploy-pool/oracle_light.png').default,
+      dark: require('@site/static/img/protocol/deploy-pool/oracle_dark.png').default,
+    }}
+    style={{ 
+      width: "500px",
+      display: "block",
+      margin: "0 auto"
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
 
-  <figure>
-    <ThemedImage
-      alt="Oracle Input"
-      sources={{
-        light: require('@site/static/img/protocol/deploy-pool/oracle_input_light.png').default,
-        dark: require('@site/static/img/protocol/deploy-pool/oracle_input_dark.png').default,
-      }}
-      style={{ 
-        width: "500px",
-        display: "block",
-        margin: "0 auto"
-      }}
-    />
-    <figcaption></figcaption>
-  </figure>
+<figure>
+  <ThemedImage
+    alt="Oracle Input"
+    sources={{
+      light: require('@site/static/img/protocol/deploy-pool/oracle_input_light.png').default,
+      dark: require('@site/static/img/protocol/deploy-pool/oracle_input_dark.png').default,
+    }}
+    style={{ 
+      width: "500px",
+      display: "block",
+      margin: "0 auto"
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
 
-- ### Rebasing Tokens
+### Rebasing Tokens
 
-  Enable the **Rebasing** option for tokens whose balances adjust automatically (e.g. stETH). These behave differently from standard ERC‑20s and require special handling in the AMM.
+Enable the **Rebasing** option for tokens whose balances adjust automatically (e.g. stETH). These behave differently from standard ERC‑20s and require special handling in the AMM.
 
-  :::warning Rebasing Support
-  Make sure you understand how rebasing affects pool math and accounting. Unexpected results can occur if treated as a standard token.
-  :::
+:::warning Rebasing Support
+Make sure you understand how rebasing affects pool math and accounting. Unexpected results can occur if treated as a standard token.
+:::
 
-  <figure>
-    <ThemedImage
-      alt="Rebasing"
-      sources={{
-        light: require('@site/static/img/protocol/deploy-pool/rebasing_light.png').default,
-        dark: require('@site/static/img/protocol/deploy-pool/rebasing_dark.png').default,
-      }}
-      style={{ 
-        width: "500px",
-        display: "block",
-        margin: "0 auto"
-      }}
-    />
-    <figcaption></figcaption>
-  </figure>
+<figure>
+  <ThemedImage
+    alt="Rebasing"
+    sources={{
+      light: require('@site/static/img/protocol/deploy-pool/rebasing_light.png').default,
+      dark: require('@site/static/img/protocol/deploy-pool/rebasing_dark.png').default,
+    }}
+    style={{ 
+      width: "500px",
+      display: "block",
+      margin: "0 auto"
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
 
-- ### ERC‑4626 Vault Tokens
+### ERC‑4626 Vault Tokens
 
-  Select **ERC‑4626** for tokens that follow the yield-bearing vault standard (e.g. Yearn, Beefy). These represent shares of an underlying asset and must be handled accordingly by the pool.
+Select **ERC‑4626** for tokens that follow the yield-bearing vault standard (e.g. Yearn, Beefy). These represent shares of an underlying asset and must be handled accordingly by the pool.
 
-  :::warning ERC‑4626 Caveats
-  Some ERC‑4626 implementations may be vulnerable to donation/inflation exploits. Only use well-audited and battle-tested vaults.
-  :::
+:::warning ERC‑4626 Caveats
+Some ERC‑4626 implementations may be vulnerable to donation/inflation exploits. Only use well-audited and battle-tested vaults.
+:::
 
-  <figure>
-    <ThemedImage
-      alt="ERC-4626"
-      sources={{
-        light: require('@site/static/img/protocol/deploy-pool/erc4626_light.png').default,
-        dark: require('@site/static/img/protocol/deploy-pool/erc4626_dark.png').default,
-      }}
-      style={{ 
-        width: "500px",
-        display: "block",
-        margin: "0 auto"
-      }}
-    />
-    <figcaption></figcaption>
-  </figure>
+<figure>
+  <ThemedImage
+    alt="ERC-4626"
+    sources={{
+      light: require('@site/static/img/protocol/deploy-pool/erc4626_light.png').default,
+      dark: require('@site/static/img/protocol/deploy-pool/erc4626_dark.png').default,
+    }}
+    style={{ 
+      width: "500px",
+      display: "block",
+      margin: "0 auto"
+    }}
+  />
+  <figcaption></figcaption>
+</figure>
 
 Once you've selected and configured all your tokens, click **Next →** to continue to the pool parameters.
 
@@ -246,9 +246,9 @@ To choose your own parameters, simply toggle on the "Advanced" toggle:
 
 | Parameter                 | Range           | Description                                                                 |
 |--------------------------|------------------|-----------------------------------------------------------------------------|
+| **A (Amplification)**    | `1` to `10,000`   | Controls price stability near the peg. Higher = flatter curve = deeper liquidity. More here: [Stableswap A](../understanding-stableswap.md#amplification-factor-a)|
 | **Swap Fee**             | `0%` to `1%`     | Charged on each swap. Higher fees discourage arbitrage and low-volume trades. |
-| **A (Amplification)**    | `1` to `5,000`   | Controls price stability near the peg. Higher = flatter curve = deeper liquidity. |
-| **Off-peg Fee Multiplier** | `0` to `12.5`   | Dynamically increases the fee when the pool becomes imbalanced. Try the [Desmos Simulator](https://www.desmos.com/calculator/zhrwbvcipo) to visualize how this works. |
+| **Off-peg Fee Multiplier** | `0` to `12.5`   | Dynamically increases the fee when the pool becomes imbalanced. More here: [Offpeg Fee Multipler](../understanding-stableswap.md#offpeg-fee-multiplier-and-dynamic-fees) |
 | **Moving Average Time**  | `60` to `3600s`  | Smooths the oracle price over time to reduce short-term volatility. |
 
 Once you're satisfied with the parameter settings, click **Next →** to continue.

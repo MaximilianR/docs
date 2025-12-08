@@ -22,12 +22,14 @@ Because of these design principles, every pool on Curve is designed to be:
   <ThemedImage
     alt="DEX Philosophy"
     sources={{
-      light: require('@site/static/img/user/dex/dex-philosophy-light.png').default,
-      dark: require('@site/static/img/user/dex/dex-philosophy-dark.png').default,
+      light: '/img/user/dex/dex-philosophy-light.svg',
+      dark: '/img/user/dex/dex-philosophy-dark.svg',
     }}
     style={{
       maxWidth: '800px',
-      width: '100%'
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption></figcaption>

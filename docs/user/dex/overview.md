@@ -27,12 +27,14 @@ Each pool contains two or more tokens. When you want to swap one token for anoth
   <ThemedImage
     alt="An example of a user swapping ETH for stETH through a liquidity pool."
     sources={{
-      light: require('@site/static/img/user/dex/dex-swap-light.png').default,
-      dark: require('@site/static/img/user/dex/dex-swap-dark.png').default,
+      light: '/img/user/dex/dex-swap-light.svg',
+      dark: '/img/user/dex/dex-swap-dark.svg',
     }}
     style={{
       maxWidth: '600px',
-      width: '100%'
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption>*Note: that in real pools Alice would get much more than 0.99 stETH, probably closer to 0.9999 stETH.* </figcaption>
@@ -68,12 +70,14 @@ See the image below for a visual representation of the [Curve.fi Strategic USD R
   <ThemedImage
     alt="Basepools and Metapools"
     sources={{
-      light: require('@site/static/img/user/dex/dex-basepools-light.png').default,
-      dark: require('@site/static/img/user/dex/dex-basepools-dark.png').default,
+      light: '/img/user/dex/dex-basepools-light.svg',
+      dark: '/img/user/dex/dex-basepools-dark.svg',
     }}
     style={{
       maxWidth: '600px',
-      width: '100%'
+      width: '100%',
+      height: 'auto',
+      border: '1px solid var(--Layer-2-Outline)',
     }}
   />
   <figcaption></figcaption>

@@ -12,6 +12,7 @@ This guide explains how to **bridge any of the three tokens from the Ethereum Ma
 
 :::info Contract Addresses
 This guide is applicable for bridging `CRV`, `crvUSD` and `scrvUSD` to other L1 blockchains. When following this guide, one needs to make sure to use the correct contract addresses depending on the token to be bridged. 
+:::
 
 **<img src="/img/logos/crv.svg" alt="CRV" style={{height: '1.3em', verticalAlign: 'middle'}} /> CRV**
 

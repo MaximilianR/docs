@@ -1,10 +1,38 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import { useColorMode } from '@docusaurus/theme-common';
 
-const LendingRateChart = () => {
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const ChartContent = () => {
+  const { colorMode } = useColorMode();
+  const css = getComputedStyle(document.documentElement);
+  const primaryColor = css.getPropertyValue('--ifm-color-primary-light').trim() || '#3b82f6';
+  const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#1f2937';
+  const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim() || '#e5e7eb';
+  const bgColor = css.getPropertyValue('--ifm-background-color').trim() || '#ffffff';
+
   const [minRate, setMinRate] = useState(1);
   const [maxRate, setMaxRate] = useState(66);
-  const [hoverData, setHoverData] = useState(null);
-  const canvasRef = useRef(null);
 
   // Semi-log formula: rate = rate_min * (rate_max / rate_min)^utilization
   const calculateRate = (utilization, min, max) => {
@@ -12,315 +40,176 @@ const LendingRateChart = () => {
     if (utilization === 100) return max;
     
     const util = utilization / 100;
-    const minRate = min / 100;
-    const maxRate = max / 100;
+    const minR = min / 100;
+    const maxR = max / 100;
     
-    return minRate * Math.pow(maxRate / minRate, util) * 100;
+    return minR * Math.pow(maxR / minR, util) * 100;
   };
 
-  const updateChart = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    
-    // Set high DPI for crisp rendering
-    const ctx = canvas.getContext('2d');
-    const dpr = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    canvas.style.width = rect.width + 'px';
-    canvas.style.height = rect.height + 'px';
-    
-    ctx.scale(dpr, dpr);
-    
-    // Clear canvas
-    ctx.clearRect(0, 0, rect.width, rect.height);
-    
-    // Draw chart
-    const width = rect.width;
-    const height = rect.height;
-    const padding = 80;
-    
-    // Draw background
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, width, height);
-    
-    // Draw grid
-    ctx.strokeStyle = '#f3f4f6';
-    ctx.lineWidth = 1;
-    
-    // Vertical grid lines (utilization)
-    for (let i = 0; i <= 10; i++) {
-      const x = padding + (i / 10) * (width - 2 * padding);
-      ctx.beginPath();
-      ctx.moveTo(x, padding);
-      ctx.lineTo(x, height - padding);
-      ctx.stroke();
+  const chartData = useMemo(() => {
+    const dataPoints = [];
+    // Generate points for 0 to 100% utilization
+    for (let i = 0; i <= 100; i += 1) {
+      const rate = calculateRate(i, minRate, maxRate);
+      dataPoints.push({ x: i, y: rate });
     }
-    
-    // Horizontal grid lines (rate)
-    for (let i = 0; i <= 10; i++) {
-      const y = padding + (i / 10) * (height - 2 * padding);
-      ctx.beginPath();
-      ctx.moveTo(padding, y);
-      ctx.lineTo(width - padding, y);
-      ctx.stroke();
-    }
-    
-    // Draw axes
-    ctx.strokeStyle = '#6b7280';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(padding, padding);
-    ctx.lineTo(padding, height - padding);
-    ctx.lineTo(width - padding, height - padding);
-    ctx.stroke();
-    
-    // Draw axis labels
-    ctx.fillStyle = '#374151';
-    ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-    ctx.textAlign = 'center';
-    
-    // X-axis labels (utilization)
-    for (let i = 0; i <= 10; i++) {
-      const x = padding + (i / 10) * (width - 2 * padding);
-      const label = `${i * 10}%`;
-      ctx.fillText(label, x, height - padding + 25);
-    }
-    
-    // Y-axis labels (rate)
-    ctx.textAlign = 'right';
-    for (let i = 0; i <= 10; i++) {
-      const y = height - padding - (i / 10) * (height - 2 * padding);
-      const rate = minRate + (i / 10) * (maxRate - minRate);
-      const label = `${rate.toFixed(1)}%`;
-      ctx.fillText(label, padding - 15, y + 4);
-    }
-    
-    // Draw curve with gradient
-    const gradient = ctx.createLinearGradient(padding, 0, width - padding, 0);
-    gradient.addColorStop(0, '#3b82f6');
-    gradient.addColorStop(1, '#1d4ed8');
-    
-    ctx.strokeStyle = gradient;
-    ctx.lineWidth = 4;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.beginPath();
-    
-    for (let i = 0; i <= 200; i++) {
-      const utilization = (i / 200) * 100;
-      const rate = calculateRate(utilization, minRate, maxRate);
-      const x = padding + (utilization / 100) * (width - 2 * padding);
-      const y = height - padding - (rate / maxRate) * (height - 2 * padding);
-      
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    }
-    
-    ctx.stroke();
-    
-    // Draw hover point if hovering
-    if (hoverData) {
-      // Draw shadow
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
-      ctx.shadowBlur = 8;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 2;
-      
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.arc(hoverData.x, hoverData.y, 8, 0, 2 * Math.PI);
-      ctx.fill();
-      
-      ctx.fillStyle = '#3b82f6';
-      ctx.beginPath();
-      ctx.arc(hoverData.x, hoverData.y, 6, 0, 2 * Math.PI);
-      ctx.fill();
-      
-      // Reset shadow
-      ctx.shadowColor = 'transparent';
-      ctx.shadowBlur = 0;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 0;
-      
-      // Draw tooltip
-      const tooltipWidth = 140;
-      const tooltipHeight = 60;
-      const tooltipX = Math.min(hoverData.x + 15, width - tooltipWidth - 20);
-      const tooltipY = Math.max(hoverData.y - tooltipHeight - 15, padding);
-      
-      // Tooltip background with shadow
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
-      ctx.shadowBlur = 10;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 4;
-      ctx.fillStyle = '#1f2937';
-      ctx.fillRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
-      
-      // Reset shadow
-      ctx.shadowColor = 'transparent';
-      ctx.shadowBlur = 0;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 0;
-      
-      // Tooltip text
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText(`Utilization: ${hoverData.utilization}%`, tooltipX + 12, tooltipY + 20);
-      ctx.fillText(`Rate: ${hoverData.rate.toFixed(2)}%`, tooltipX + 12, tooltipY + 40);
-    }
-    
-    // Draw axis titles
-    ctx.fillStyle = '#374151';
-    ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('Utilization (%)', width / 2, height - 15);
-    ctx.save();
-    ctx.translate(25, height / 2);
-    ctx.rotate(-Math.PI / 2);
-    ctx.fillText('Borrow Rate (%)', 0, 0);
-    ctx.restore();
-  };
 
-  const handleMouseMove = (e) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const padding = 80;
-    const width = rect.width;
-    const height = rect.height;
-    
-    // Check if mouse is within chart area
-    if (x >= padding && x <= width - padding && y >= padding && y <= height - padding) {
-      const utilization = Math.round(((x - padding) / (width - 2 * padding)) * 100);
-      const rate = calculateRate(utilization, minRate, maxRate);
-      const chartY = height - padding - (rate / maxRate) * (height - 2 * padding);
-      
-      setHoverData({
-        x: x,
-        y: chartY,
-        utilization: utilization,
-        rate: rate
-      });
-    } else {
-      setHoverData(null);
-    }
-  };
+    return {
+      datasets: [
+        {
+          label: 'Borrow Rate',
+          data: dataPoints,
+          borderColor: primaryColor,
+          backgroundColor: primaryColor,
+          borderWidth: 4,
+          pointRadius: 0,
+          pointHoverRadius: 6,
+          // Use monotonic cubic interpolation for smooth semi-log curve look
+          cubicInterpolationMode: 'monotone', 
+        },
+      ],
+    };
+  }, [minRate, maxRate, primaryColor]);
 
-  const handleMouseLeave = () => {
-    setHoverData(null);
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const utilization = context.parsed.x;
+            const rate = context.parsed.y;
+            return [
+              `Utilization: ${utilization}%`,
+              `Borrow Rate: ${rate.toFixed(2)}%`
+            ];
+          },
+          title: () => '',
+        },
+        displayColors: false,
+        backgroundColor: '#1f2937',
+        padding: 12,
+        cornerRadius: 8,
+        titleFont: { weight: 'bold' },
+        bodyFont: { weight: 'bold' },
+      },
+    },
+    scales: {
+      x: {
+        type: 'linear',
+        min: 0,
+        max: 100,
+        title: {
+          display: true,
+          text: 'Utilization (%)',
+          color: txtColor,
+          font: { weight: 'bold' }
+        },
+        grid: { color: gridColor },
+        ticks: {
+          callback: (value) => value + '%',
+          stepSize: 10
+        }
+      },
+      y: {
+        min: 0,
+        // Add some headroom to the top of the chart
+        suggestedMax: maxRate * 1.1,
+        title: {
+          display: true,
+          text: 'Borrow Rate (%)',
+          color: txtColor,
+          font: { weight: 'bold' }
+        },
+        grid: { color: gridColor },
+        ticks: {
+          callback: (value) => value.toFixed(1) + '%'
+        }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      axis: 'x',
+      intersect: false,
+    },
   };
-
-  useEffect(() => {
-    updateChart();
-  }, [minRate, maxRate, hoverData]);
 
   return (
     <div style={{ 
-      margin: '0.25rem 0', 
-      padding: '0.5rem', 
-      border: '1px solid #e5e7eb', 
-      borderRadius: '4px', 
-      backgroundColor: 'white',
-      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+      fontFamily: 'system-ui, -apple-system, sans-serif', 
+      marginBottom: '2rem', 
+      border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)', 
+      borderRadius: '0px', 
+      padding: '16px',
+      backgroundColor: bgColor
     }}>
       <div style={{ 
         display: 'flex', 
-        gap: '0.75rem', 
-        marginBottom: '0', 
-        flexWrap: 'wrap', 
-        alignItems: 'center' 
+        justifyContent: 'flex-end', 
+        flexWrap: 'wrap',
+        gap: '16px', 
+        marginBottom: '16px' 
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-          <label htmlFor="minRate" style={{ fontWeight: '600', color: '#374151', fontSize: '13px' }}>
+        
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <label htmlFor="min-rate-input" style={{ fontSize: '14px', fontWeight: 600, color: txtColor }}>
             Min Rate (%):
           </label>
           <input
-            id="minRate"
+            id="min-rate-input"
             type="number"
             value={minRate}
             onChange={(e) => setMinRate(parseFloat(e.target.value) || 0)}
             min="0"
             max="100"
-            step="1"
-            style={{
-              padding: '0.25rem 0.5rem',
-              border: '1px solid #d1d5db',
-              borderRadius: '4px',
-              width: '50px',
-              fontSize: '13px',
-              outline: 'none',
-              transition: 'border-color 0.2s',
+            style={{ 
+              padding: '4px 8px', 
+              borderRadius: '0px', 
+              border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
+              fontSize: '14px',
+              width: '70px',
+              color: txtColor
             }}
-            onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
-            onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
           />
         </div>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-          <label htmlFor="maxRate" style={{ fontWeight: '600', color: '#374151', fontSize: '13px' }}>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <label htmlFor="max-rate-input" style={{ fontSize: '14px', fontWeight: 600, color: txtColor }}>
             Max Rate (%):
           </label>
           <input
-            id="maxRate"
+            id="max-rate-input"
             type="number"
             value={maxRate}
             onChange={(e) => setMaxRate(parseFloat(e.target.value) || 0)}
             min="0"
             max="100"
-            step="1"
-            style={{
-              padding: '0.25rem 0.5rem',
-              border: '1px solid #d1d5db',
-              borderRadius: '4px',
-              width: '50px',
-              fontSize: '13px',
-              outline: 'none',
-              transition: 'border-color 0.2s',
+            style={{ 
+              padding: '4px 8px', 
+              borderRadius: '0px', 
+              border: '1px solid var(--ifm-color-emphasis-200, #e5e7eb)',
+              fontSize: '14px',
+              width: '70px',
+              color: txtColor
             }}
-            onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
-            onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
           />
         </div>
       </div>
 
-      <canvas 
-        ref={canvasRef}
-        style={{ 
-          display: 'block', 
-          margin: '0 auto', 
-          cursor: 'crosshair',
-          borderRadius: '4px',
-          maxWidth: '100%',
-          height: '350px'
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      />
+      <div style={{ position: 'relative', height: '320px', width: '100%' }}>
+        <Line data={chartData} options={options} />
+      </div>
 
       <div style={{ 
-        marginTop: '0.25rem', 
-        padding: '0.5rem', 
-        backgroundColor: '#f9fafb', 
-        borderRadius: '4px',
-        fontSize: '0.8rem',
-        border: '1px solid #f3f4f6'
+        marginTop: '1rem', 
+        padding: '0.75rem', 
+        fontSize: '0.85rem',
+        color: txtColor
       }}>
-        <p style={{ margin: '0 0 0.25rem 0', fontWeight: '600', color: '#374151' }}>
-          How it works:
-        </p>
-        <p style={{ margin: '0', lineHeight: '1.3', color: '#6b7280' }}>
-          The rate follows a semi-logarithmic curve: <strong style={{ color: '#374151' }}>rate = min_rate × (max_rate ÷ min_rate)^utilization</strong>. 
+        <p style={{ margin: 0, lineHeight: '1.4' }}>
+          <strong>How it works:</strong> The rate follows a semi-logarithmic curve. 
           This creates a smooth curve that starts low and increases exponentially as utilization rises, 
           encouraging early borrowing while preventing over-utilization.
         </p>
@@ -329,4 +218,19 @@ const LendingRateChart = () => {
   );
 };
 
-export default LendingRateChart; 
+export default function LendingRateChart() {
+  return (
+    <BrowserOnly fallback={
+      <div style={{
+        height: '320px', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+      }}>
+        Loading Chart...
+      </div>
+    }>
+      {() => <ChartContent />}
+    </BrowserOnly>
+  );
+}

@@ -22,9 +22,9 @@ Monitoring parameters is crucial for optimal pool performance. Depending on fact
 
 | Name | Variable Name | Description |
 | :--: | :-----------: | ----------- |
-| Amplification coefficient | `A` | Controls liquidity concentration around the 1:1 price. Higher values reduce slippage near the peg, lower values spread liquidity more evenly. |
-| Regular fee | `fee` | Trading fee charged on swaps |
-| Off-peg fee multiplier | `offpeg_fee_multiplier` | Multiplier applied to fees when pool is imbalanced. The greater the imbalance, the higher the multiplier. More here: [Dynamic Fees](https://docs.curve.finance/stableswap-exchange/stableswap-ng/pools/overview/#dynamic-fees) |
+| Amplification coefficient | `A` | Controls liquidity concentration around the 1:1 price. Higher values reduce slippage near the peg, lower values spread liquidity more evenly. More here: [Stableswap `A`](understanding-stableswap.md#amplification-factor-a) |
+| Regular fee | `fee` | Regular trading fee charged on swaps when pool is perfectly balanced |
+| Off-peg fee multiplier | `offpeg_fee_multiplier` | Multiplier applied to fees when pool is imbalanced. The greater the imbalance, the higher the multiplier. More here: [Dynamic Fees](understanding-stableswap.md#offpeg-fee-multiplier-and-dynamic-fees) |
 | EMA time | `ma_exp_time` | Time constant for exponential moving average price oracle |
 
 ## Cryptoswap Parameters
@@ -33,14 +33,14 @@ CryptoSwap extends StableSwap by keeping **A** and adding parameters that adapt 
 
 | Name | Variable Name | Role |
 |------|:------:|-------------------|
-| Amplification coefficient | `A` | Same meaning as in StableSwap but now works together with γ to set the width of the "flat" region |
-| Curve-width modifier | `γ` (gamma) | Controls how quickly the invariant transitions from flat to constant-product as balances diverge; smaller γ makes transition steeper |
+| Amplification coefficient | `A` | Same meaning as in Stableswap, sets liquidity depth at balanced price.  However, `A`=10,000 in Cryptoswap is `A`=1 in Stableswap, giving extra precicion for Cryptoswap pools.  More here: [Cryptoswap Parameters](./understanding-cryptoswap.md#parameters)|
+| Curve-width modifier | `γ` (gamma) | Controls how fast prices degrade when pools become unbalanced, lower values mean price declines are more gradual.  More here: [Cryptoswap Parameters](./understanding-cryptoswap.md#parameters) |
 | EMA half-life | `ma_time` | Time constant (in seconds) of the exponential moving average that tracks the market price |
 | Allowed extra profit | `allowed_extra_profit` | Minimum theoretical arbitrage gain (in bp) before the contract updates its internal price scale, preventing micro-adjustments |
-| Adjustment step | `adjustment_step` | Caps how much the price scale may move in a single block |
-| Mid fee | `fee_mid` | Swap fee when the pool is perfectly balanced |
-| Out fee | `out_fee` | Maximum fee charged at total imbalance |
-| Fee gamma | `fee_gamma` | Governs how quickly the fee rises between `fee_mid` and `out_fee` as the pool leaves equilibrium |
+| Adjustment step | `adjustment_step` | The minimum rebalancing step (min movement of `price_scale`) |
+| Mid fee | `fee_mid` | Swap fee when the pool is perfectly balanced.  More here: [Cryptoswap Dynamic Fees](./understanding-cryptoswap.md#dynamic-fees)|
+| Out fee | `out_fee` | Maximum fee charged at total imbalance. More here: [Cryptoswap Dynamic Fees](./understanding-cryptoswap.md#dynamic-fees) |
+| Fee gamma | `fee_gamma` | Governs how quickly the fee rises between `fee_mid` and `out_fee` as the pool leaves equilibrium. More here: [Cryptoswap Dynamic Fees](./understanding-cryptoswap.md#dynamic-fees)|
 
 ## FXSwap Parameters
 
@@ -48,7 +48,14 @@ FXSwap parameters inherit the same ones as the Cryptoswap parameters above. Addi
 
 | Name | Variable Name | Role |
 |------|:------:|-------------------|
-| Donation Duration | `donation_duration` | Time required for donations to fully unlock (default: 7 days) |
+| Amplification coefficient | `A` | Controls liquidity concentration around the balanced price. Higher values reduce slippage near the peg, lower values spread liquidity more evenly. Same as Cryptoswap `A` (Stableswap `A` factored by 10,000).  More here: [FXSwap `A`](understanding-stableswap.md#amplification-factor-a) |
+| EMA half-life | `ma_time` | Time constant (in seconds) of the exponential moving average that tracks the market price |
+| Allowed extra profit | `allowed_extra_profit` | Minimum theoretical arbitrage gain (in bp) before the contract updates its internal price scale, preventing micro-adjustments |
+| Adjustment step | `adjustment_step` | The minimum rebalancing step (min movement of `price_scale`) |
+| Mid fee | `fee_mid` | Swap fee when the pool is perfectly balanced.  More here: [Cryptoswap Dynamic Fees](./understanding-cryptoswap.md#dynamic-fees)|
+| Out fee | `out_fee` | Maximum fee charged at total imbalance. More here: [Cryptoswap Dynamic Fees](./understanding-cryptoswap.md#dynamic-fees) |
+| Fee gamma | `fee_gamma` | Governs how quickly the fee rises between `fee_mid` and `out_fee` as the pool leaves equilibrium. More here: [Cryptoswap Dynamic Fees](./understanding-cryptoswap.md#dynamic-fees)|
+| Donation Duration | `donation_duration` | Time required for refuels (donations) to fully unlock (default: 7 days) |
 | Protection Period | `donation_protection_period` | Maximum duration donation protection can be extended (default: 10 minutes) |
 | Protection LP Threshold | `donation_protection_lp_threshold` | LP addition threshold that triggers protection extension (default: 20%) |
 | Maximum Donation Share Ratio | `donation_shares_max_ratio` | Cap on donation shares as percentage of total supply (default: 10%) |

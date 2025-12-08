@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { useColorMode } from '@docusaurus/theme-common';
 
+// Register Chart.js components
 Chart.register(...registerables);
 
 export default function VecrvDecayChart() {
@@ -12,95 +13,102 @@ export default function VecrvDecayChart() {
   const { colorMode } = useColorMode();
 
   useEffect(() => {
+    // Small timeout ensures CSS variables (theme colors) are loaded before reading them
     const timeoutId = setTimeout(() => {
-      // Get theme colors
-      const textColor = getComputedStyle(document.documentElement).getPropertyValue('--ifm-font-color-base').trim();
-      const gridColor = getComputedStyle(document.documentElement).getPropertyValue('--ifm-color-emphasis-300').trim();
       
-      let tooltipBackgroundColor;
-      const cardBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--ifm-card-background-color').trim();
+      // 1. Theme & Style Setup
+      // ------------------------------------------------
+      const styles = getComputedStyle(document.documentElement);
+      const textColor = styles.getPropertyValue('--ifm-font-color-base').trim();
+      const gridColor = styles.getPropertyValue('--ifm-color-emphasis-300').trim();
       
-      if (cardBackgroundColor && cardBackgroundColor !== 'transparent') {
-        tooltipBackgroundColor = cardBackgroundColor;
-      } else {
-        tooltipBackgroundColor = colorMode === 'light' ? '#ffffff' : '#242526';
-      }
+      // Handle tooltip background based on theme (Dark/Light)
+      const cardBg = styles.getPropertyValue('--ifm-card-background-color').trim();
+      const tooltipBg = (cardBg && cardBg !== 'transparent') 
+        ? cardBg 
+        : (colorMode === 'light' ? '#ffffff' : '#242526');
 
-      // Generate veCRV decay data
-      const data = [];
-      const maxYears = 4;
-      const maxDays = maxYears * 365;
+      // 2. Data Generation
+      // ------------------------------------------------
+      const MAX_LOCK_YEARS = 4;
+      const dataPoints = [];
       
-      // Generate data points for 4 years (1460 days)
-      for (let day = 0; day <= maxDays; day += 7) { // Data point every 7 days
-        const yearsLeft = (maxDays - day) / 365;
-        const veCRV = Math.max(0, yearsLeft / maxYears); // Linear decay from 1 to 0 over 4 years
-        data.push({
-          x: day,
-          y: veCRV * 100 // Convert to percentage
+      // Create 100 points for a smooth line
+      const steps = 100; 
+      
+      for (let i = 0; i <= steps; i++) {
+        // Calculate years remaining (from 4 down to 0)
+        const yearsRemaining = MAX_LOCK_YEARS - (i * (MAX_LOCK_YEARS / steps));
+        
+        // veCRV logic: Linear decay. 
+        // If 4 years remaining = 100% power. 2 years = 50% power.
+        const veCrvBalance = (yearsRemaining / MAX_LOCK_YEARS) * 100;
+
+        dataPoints.push({
+          x: yearsRemaining,
+          y: veCrvBalance
         });
       }
 
+      // 3. Chart Configuration
+      // ------------------------------------------------
       const chartConfig = {
         type: 'line',
         data: {
           datasets: [{
-            label: 'veCRV Balance',
-            data: data,
-            borderColor: '#00D4AA', // Curve green
-            backgroundColor: 'rgba(0, 212, 170, 0.1)',
+            label: 'veCRV Power',
+            data: dataPoints,
+            borderColor: '#00D4AA', // Curve Green
+            backgroundColor: 'rgba(0, 212, 170, 0.1)', // Light Green Fill
             fill: true,
-            pointRadius: 0,
-            pointHoverRadius: 8,
-            pointHitRadius: 10,
+            pointRadius: 0, // Clean line without dots
+            pointHoverRadius: 6,
+            pointHitRadius: 20,
             borderWidth: 3,
-            tension: 0.1
+            tension: 0, // Straight lines (linear decay)
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           interaction: {
+            mode: 'index',
             intersect: false,
-            mode: 'index'
           },
           plugins: {
-            legend: {
-              display: false
-            },
+            legend: { display: false },
             title: {
               display: true,
-              text: 'veCRV Decay Over Time',
-              font: { size: 16 },
+              text: 'veCRV Voting Power Decay',
+              font: { size: 16, weight: 'bold' },
               color: textColor,
+              padding: { bottom: 20 }
             },
             tooltip: {
-              backgroundColor: tooltipBackgroundColor,
+              backgroundColor: tooltipBg,
               titleColor: textColor,
               bodyColor: textColor,
               borderColor: gridColor,
               borderWidth: 1,
+              padding: 12,
               displayColors: false,
               callbacks: {
-                title: (context) => {
-                  if (!context || !context[0] || !context[0].parsed) {
-                    return '';
-                  }
-                  const days = context[0].parsed.x;
-                  const years = days / 365;
-                  return `${years.toFixed(1)} years remaining`;
+                // Tooltip Header
+                title: (items) => {
+                  return '';
                 },
+                // Tooltip Body
                 label: (context) => {
-                  if (!context || !context[0] || !context[0].parsed) {
-                    return '';
-                  }
-                  const veCRV = context[0].parsed.y;
-                  const days = context[0].parsed.x;
-                  const years = days / 365;
+                  const remaining = context.parsed.x;
+                  const balance = context.parsed.y;
+                  
+                  // Calculate elapsed time based on Max Lock
+                  const elapsed = MAX_LOCK_YEARS - remaining;
+
                   return [
-                    `veCRV: ${veCRV.toFixed(1)}%`,
-                    `Time left: ${years.toFixed(1)} years`,
-                    `Days left: ${days.toFixed(0)} days`
+                    `veCRV Power: ${balance.toFixed(1)}%`,
+                    `Time Elapsed: ${elapsed.toFixed(2)} years`,
+                    `Lock Remaining: ${remaining.toFixed(2)} years`
                   ];
                 }
               }
@@ -109,40 +117,39 @@ export default function VecrvDecayChart() {
           scales: {
             x: {
               type: 'linear',
+              reverse: true, // IMPORTANT: Makes axis go 4 -> 0
               title: {
                 display: true,
-                text: 'Time Remaining (days)',
+                text: 'Time Remaining (Years)',
                 color: textColor,
                 font: { size: 12 }
               },
               ticks: {
                 color: textColor,
-                callback: function(value) {
-                  const years = value / 365;
-                  return `${years.toFixed(1)}y`;
-                }
+                stepSize: 1, // Show tick every 1 year
               },
               grid: {
                 color: gridColor,
-                borderColor: gridColor
-              }
+                drawBorder: false,
+              },
+              min: 0,
+              max: 4
             },
             y: {
               title: {
                 display: true,
-                text: 'veCRV Balance (%)',
+                text: 'veCRV Amount (%)',
                 color: textColor,
                 font: { size: 12 }
               },
               ticks: {
                 color: textColor,
-                callback: function(value) {
-                  return `${value}%`;
-                }
+                stepSize: 25,
+                callback: (val) => `${val}%`
               },
               grid: {
                 color: gridColor,
-                borderColor: gridColor
+                drawBorder: false,
               },
               min: 0,
               max: 100
@@ -171,14 +178,12 @@ export default function VecrvDecayChart() {
   return (
     <div style={{
       position: 'relative',
-      height: '40vh',
+      height: '350px', // Fixed height for better consistency
       width: '100%',
-      maxWidth: '600px',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      marginBottom: '2rem'
+      maxWidth: '650px',
+      margin: '0 auto 2rem auto',
     }}>
       <canvas ref={canvasRef}></canvas>
     </div>
   );
-} 
+}
