@@ -278,6 +278,15 @@ body {
   background: var(--Layer-App-Background);
 }
 
+/* Ensure deployment filter component uses full width */
+.deployment-filter-container,
+.deployment-filter-container .container,
+.deployment-filter-container .results,
+.deployment-filter-container .tableContainer {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
 /* Dark mode specific background consistency */
 [data-theme='dark'] .main-wrapper,
 [data-theme='dark'] .main-wrapper .container,

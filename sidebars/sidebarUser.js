@@ -394,6 +394,11 @@ export default {
                 },
                 {
                     type: 'doc',
+                    id: 'reference/deployments',
+                    label: 'Contract Deployments',
+                },
+                {
+                    type: 'doc',
                     id: 'reference/links',
                     label: 'Useful Links',
                 },

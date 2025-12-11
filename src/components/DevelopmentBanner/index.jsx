@@ -3,6 +3,9 @@ import styles from './styles.module.css';
 import favicon from '@site/static/img/favicon.png';
 
 export default function DevelopmentBanner() {
+  // Disabled for now
+  return null;
+  
   // Popup starts visible on every initial page load (only on client)
   const [isVisible, setIsVisible] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
