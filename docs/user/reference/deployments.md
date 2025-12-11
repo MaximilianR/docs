@@ -15,7 +15,7 @@ This page provides a searchable directory of all Curve contract deployments acro
 - Combine multiple search terms: `ethereum "stableswap" math` or `in:category tokens in:chain ethereum`
 
 :::info
-This filter is filtering a raw JSON file. You can find the raw JSON file [here](/deployments.json).
+This filter uses a raw JSON file to cover all contracts across all chains. While this is the best approach to provide comprehensive coverage, some contracts may be outdated or incorrect. You can find the raw JSON file [here](/deployments.json).
 :::
 
 <DeploymentFilter />
