@@ -155,9 +155,9 @@ const config: Config = {
             },
             {
               label: 'Governance Forum',
-              href: 'https://x.com/curvefinance',
+              href: 'https://gov.curve.finance',
               className: 'dropdown-item-with-icon',
-              'data-icon': 'twitter',
+              'data-icon': 'forum',
             },
           ],
         },
