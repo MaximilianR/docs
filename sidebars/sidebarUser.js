@@ -305,6 +305,11 @@ export default {
                 },
                 {
                     type: 'doc',
+                    id: 'dao/emergency-dao',
+                    label: 'Emergency DAO',
+                },
+                {
+                    type: 'doc',
                     id: 'dao/community-fund-treasury',
                     label: 'Community Fund & Treasury',
                 },

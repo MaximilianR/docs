@@ -153,6 +153,12 @@ const config: Config = {
               className: 'dropdown-item-with-icon',
               'data-icon': 'twitter',
             },
+            {
+              label: 'Governance Forum',
+              href: 'https://x.com/curvefinance',
+              className: 'dropdown-item-with-icon',
+              'data-icon': 'twitter',
+            },
           ],
         },
       ],
