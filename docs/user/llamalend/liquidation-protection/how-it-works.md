@@ -198,7 +198,7 @@ You have two options:
 
 Repaying debt improves health but doesn't change the protection range boundaries. The range only adjusts when you're not in protection.
 
-For more details, see the [FAQ](./faq.md#how-to-get-out-of-liquidation-protection).
+For more details, see the [FAQ](/user/llamalend/faq#how-to-get-out-of-liquidation-protection).
 
 ---
 
@@ -263,7 +263,7 @@ While in liquidation protection, you'll incur losses from conversions. This is t
 Losses in liquidation protection only occur when you're inside the protection range. Outside the range, no losses in liquidation protection occur, though health still decreases from price drops and interest. However, once losses have occurred, your total collateral value remains reduced even after exiting protection.
 :::
 
-For more on losses, see the [FAQ](./faq.md#what-are-the-losses-during-liquidation-protection).
+For more on losses, see the [FAQ](/user/llamalend/faq#what-are-the-losses-during-liquidation-protection).
 
 ---
 
@@ -312,4 +312,4 @@ Losses occur because the system offers collateral at a small discount to incenti
 
 ---
 
-For answers to common questions, see the [FAQ](./faq.md).
+For answers to common questions, see the [FAQ](/user/llamalend/faq).

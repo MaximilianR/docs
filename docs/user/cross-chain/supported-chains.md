@@ -13,9 +13,9 @@ While Ethereum remains Curve's primary network, Curve products and assets are av
 
 The Curve ecosystem consists of five key components with varying cross-chain availability:
 
-- [**Curve DEX** (Decentralized Exchange)](dex-llamalend.md) - Available on many chains, and now deployable permissionlessly to any chain.
-- [**Curve Lending (Llamalend)**](dex-llamalend.md) - Available on Ethereum and selected L2s.
-- [**Curve Assets** (CRV, crvUSD, scrvUSD)](curve-assets.md) - Available on most chains through native bridges and LayerZero.
+- [**Curve DEX** (Decentralized Exchange)](/user/dex/overview) - Available on many chains, and now deployable permissionlessly to any chain.
+- [**Curve Lending (Llamalend)**](/user/llamalend/overview) - Available on Ethereum and selected L2s.
+- [**Curve Assets** (CRV, crvUSD, scrvUSD)](/user/curve-tokens/crv) - Available on most chains through native bridges and LayerZero.
 - **crvUSD Minting** - Ethereum-only.
 - **CRV Rewards** - CRV inflation rewards are available to pools and llamalend markets on all chains that Curve supports, but the DAO must vote to add the market to the Gauge Controller (controls which markets can get rewards).
 
@@ -49,7 +49,7 @@ The Curve token can be bridged across various chains, though it does not always 
 
 crvUSD was first introduced in May 2023 on the Ethereum blockchain. For now, this stablecoin can be minted exclusively on the Ethereum mainnet.
 
-[Understanding crvUSD](../crvusd/overview.md)
+[Understanding crvUSD](/user/curve-tokens/crvusd)
 
 *Despite being launched on Ethereum, crvUSD can be bridged to various chains:*
 
@@ -71,7 +71,7 @@ crvUSD was first introduced in May 2023 on the Ethereum blockchain. For now, thi
 
 Savings crvUSD (scrvUSD) was first introduced in November 2024 on Ethereum.
 
-[Understanding scrvUSD](../crvusd/scrvusd.md)
+[Understanding scrvUSD](/user/curve-tokens/scrvusd)
 
 *Despite being launched on Ethereum, scrvUSD can be bridged to various chains:*
 
@@ -81,6 +81,6 @@ Savings crvUSD (scrvUSD) was first introduced in November 2024 on Ethereum.
 | <img src="/img/logos/optimism.svg" alt="CRV" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Optimism** | [0x289f635106d5b822a505b39ac237a0ae9189335b](https://optimistic.etherscan.io/address/0x289f635106d5b822a505b39ac237a0ae9189335b) | [Superbridge](https://superbridge.app/base) |
 | <img src="/img/logos/base.svg" alt="CRV" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Base** | [0x646a737b9b6024e49f5908762b3ff73e65b5160c](https://basescan.org/address/0x646a737b9b6024e49f5908762b3ff73e65b5160c) | [Superbridge](https://superbridge.app/base) |
 | <img src="/img/logos/fraxtal.svg" alt="CRV" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Fraxtal** | [0xaB94C721040b33aA8b0b4D159Da9878e2a836Ed0](https://fraxscan.com/address/0xaB94C721040b33aA8b0b4D159Da9878e2a836Ed0) | [Superbridge](https://superbridge.app/base) |
-| <img src="/img/logos/fantom.svg" alt="CRV" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Fantom** | [`0x5191946500e75f0A74476F146dF7d386e52961d9`](https://ftmscout.com/address/0x5191946500e75f0A74476F146dF7d386e52961d9) | [Guide here](./bridging-curve-eco-tokens.md) |
-| <img src="/img/logos/bsc.svg" alt="CRV" style={{height: '1.2em', verticalAlign: 'middle'}} /> **BSC** | [`0x0094Ad026643994c8fB2136ec912D508B15fe0E5`](https://bscscan.com/address/0x0094Ad026643994c8fB2136ec912D508B15fe0E5) | [Guide here](./bridging-curve-eco-tokens.md) |
-| <img src="/img/logos/avalanche.svg" alt="CRV" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Avalanche** | [`0xA3ea433509F7941df3e33857D9c9f212Ad4A4e64`](https://snowscan.xyz/address/0xA3ea433509F7941df3e33857D9c9f212Ad4A4e64) | [Guide here](./bridging-curve-eco-tokens.md) |
+| <img src="/img/logos/fantom.svg" alt="CRV" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Fantom** | [`0x5191946500e75f0A74476F146dF7d386e52961d9`](https://ftmscout.com/address/0x5191946500e75f0A74476F146dF7d386e52961d9) | [Guide here](/user/cross-chain/bridging-tokens) |
+| <img src="/img/logos/bsc.svg" alt="CRV" style={{height: '1.2em', verticalAlign: 'middle'}} /> **BSC** | [`0x0094Ad026643994c8fB2136ec912D508B15fe0E5`](https://bscscan.com/address/0x0094Ad026643994c8fB2136ec912D508B15fe0E5) | [Guide here](/user/cross-chain/bridging-tokens) |
+| <img src="/img/logos/avalanche.svg" alt="CRV" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Avalanche** | [`0xA3ea433509F7941df3e33857D9c9f212Ad4A4e64`](https://snowscan.xyz/address/0xA3ea433509F7941df3e33857D9c9f212Ad4A4e64) | [Guide here](/user/cross-chain/bridging-tokens) |

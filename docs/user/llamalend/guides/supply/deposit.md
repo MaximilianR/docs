@@ -66,7 +66,7 @@ To stake your assets:
 2. Set the amount of vault shares to stake
 3. Confirm the transaction
 
-After staking, your position will start earning extra rewards like CRV emissions. Learn how to claim rewards in the [Claiming Rewards](claiming-rewards.md) guide.
+After staking, your position will start earning extra rewards like CRV emissions. Learn how to claim rewards in the [Claiming Rewards](/user/llamalend/guides/supply/claim-rewards) guide.
 
 <figure>
 <ThemedImage

@@ -45,7 +45,7 @@ In this example we will be doing `Deposit & Stake` as a single transaction.  How
 - **Deposit**: Depositing is depositing your assets into the pool.  When you do this you receive LP tokens in return, and start earning trading fees from swaps.
 - **Staking**: Stake your LP tokens in the pool's reward gauge, this means you can earn CRV or other token rewards, if available.
 
-More info on how each of these actions work in the [Understanding Rewards](./earning-yield.md#summary-how-to-earn-different-rewards) page.
+More info on how each of these actions work in the [Understanding Rewards](/user/dex/understanding-rewards#summary-how-to-earn-different-rewards) page.
 
 Now on the `crvUSD/USDC` pool page, we can see the deposit menu to the left and choose `deposit & stake` and choose how much we'd like to deposit, here we are depositing $10k `crvUSD`:
 
@@ -113,4 +113,4 @@ Here we can see our details
 - **9,805 LP Tokens**: Our $10k `crvUSD` was converted to 9,805 LP tokens, which are currently staked.
 - **We now have `USDC` and `crvUSD`**: We own a share of assets in the pool, so that means we have 4,606 `USDC` and 5,392 `crvUSD`.  As users swap in this pool, these numbers will change, and the total should increase because of earned swap fees, becoming worth more than $10k in time.
 - **Earning 3.41% `CRV` APR**: This means we will earn $341 of `CRV` if we stake for a year and the interest rate stays the same.
-- **Boost is 1x**: we don't have any [veCRV](../vecrv/what-is-vecrv.md), so our boost is 1x.
+- **Boost is 1x**: we don't have any [veCRV](/user/vecrv/what-is-vecrv), so our boost is 1x.

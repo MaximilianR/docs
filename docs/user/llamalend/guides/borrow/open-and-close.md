@@ -40,7 +40,7 @@ To create a loan, enter the amount of collateral you want to use and choose how 
 />
 </figure>
 
-The UI will provide an overview of the price range ([liquidation protection range](../../liquidation-protection.md)), health of the loan, borrow rate, etc.
+The UI will provide an overview of the price range ([liquidation protection range](/user/llamalend/liquidation-protection/how-it-works)), health of the loan, borrow rate, etc.
 
 Additionally, there is a chart which displays the price of the collateral token (blue line) and your liquidation range (orange area). 
 
