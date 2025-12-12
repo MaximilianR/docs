@@ -306,6 +306,12 @@
   min-height: 24px;
 }
 
+.addressCode {
+  font-family: 'Courier New', Courier, 'Lucida Console', Monaco, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
 .nameLogo {
   width: 18px;
   height: 18px;
