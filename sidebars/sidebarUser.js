@@ -409,5 +409,10 @@ export default {
                 },
             ],
         },
+        {
+            type: 'doc',
+            id: 'deployments',
+            label: 'Contract Deployments',
+        },
     ],
 };
