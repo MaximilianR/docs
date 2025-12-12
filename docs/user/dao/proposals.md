@@ -106,7 +106,7 @@ After the 7-day voting period, if the proposal passes successfully, it needs to 
 :::info
 Need help creating your on-chain vote? Reach out to the Curve community on [Telegram](https://t.me/curvefi) — we're happy to assist.
 
-If you're looking to whitelist a gauge, check out the [Gauge Whitelisting Guide](../../asset-issuer/gauge/request-guide.md) for a step-by-step walkthrough.
+If you're looking to whitelist a gauge, check out the [Gauge Whitelisting Guide](/protocol/gauge/whitelisting-gauge) for a step-by-step walkthrough.
 :::
 
 ---

@@ -9,7 +9,7 @@ import GuideCardGrid from '@site/src/components/GuideCardGrid';
 :::info
 Before diving in, make sure to fully understand how CRV inflation based on gauge weights works. 
 
-Learn more here: [Gauge Weights](../../user/dao/gauge-weights.md).
+Learn more here: [Gauge Weights](/user/dao/gauge-weights).
 :::
 
 A **gauge** is a smart contract that distributes rewards to liquidity providers (LPs) in Curve pools or lending vaults. Pools and lending vaults work perfectly fine without having a gauge; it's simply an additional contract on top that measures the provided liquidity of users.
@@ -52,7 +52,7 @@ For a more detailed explainer see: [Incentives: CRV Emissions vs. Permissionless
 
 Deploying a gauge is fully permissionless — **anyone can create a gauge** for a Curve pool or lending vaults. Once deployed, the gauge can immediately begin distributing **third-party incentives**, such as your project’s native token or other ERC-20 rewards.
 
-However, if a gauge should be eligible to receive **CRV emissions**, it must first be **approved and whitelisted by the Curve DAO** through a governance vote. Only DAO-approved gauges are eligible to receive a share of Curve’s weekly CRV inflation — and emissions are not fixed: they are determined by [veCRV gauge weight voting](../../user/dao/gauge-weights.md), which takes place on a weekly basis.
+However, if a gauge should be eligible to receive **CRV emissions**, it must first be **approved and whitelisted by the Curve DAO** through a governance vote. Only DAO-approved gauges are eligible to receive a share of Curve's weekly CRV inflation — and emissions are not fixed: they are determined by [veCRV gauge weight voting](/user/dao/gauge-weights), which takes place on a weekly basis.
 
 > - Gauges can always and instantly after deployment distribute external (permissionless) incentives.
-> - CRV emissions (via gauge weights) require DAO approval **and** veCRV weight. More here: [Gauge Weights](../../user/dao/gauge-weights.md).
+> - CRV emissions (via gauge weights) require DAO approval **and** veCRV weight. More here: [Gauge Weights](/user/dao/gauge-weights).

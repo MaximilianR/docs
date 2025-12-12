@@ -19,7 +19,7 @@ Borrowing on Llamalend allows users to access liquidity while maintaining exposu
 - **No Minimum Loan Amounts**: Users can open a loan for any amount, there's no minimum
 
 :::info
-The liquidation protection is a very unique and novel feature and integral to understand when using Llamalend. For detailed information about liquidation protection and loan health monitoring, see [Liquidation Protection & Loan Health](./liquidations.md).
+The liquidation protection is a very unique and novel feature and integral to understand when using Llamalend. For detailed information about liquidation protection and loan health monitoring, see [Liquidation Protection & Loan Health](/user/llamalend/guides/borrow/liquidation).
 :::
 
 <GuideCardGrid guideKeys={['howToOpenAndCloseLoan', 'howToManageLoan', 'whatToDoIfLoanInLiquidation']} />

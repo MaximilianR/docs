@@ -35,7 +35,7 @@ Gauge weights — and therefore CRV emissions — are updated **every Thursday a
 Being whitelisted is only the beginning. You still need to get veCRV holders to vote for your gauge. This can be done by:
 
 - **Engaging with the Curve community**
-- **Offering vote incentives** using platforms like Votium (see [Using Bribes](../gauge/using-bribes.md))
+- **Offering vote incentives** using platforms like Votium
 - **Aligning incentives** with veCRV holders (e.g. providing value to Curve’s ecosystem)
 
 ## Where to Track Emissions

@@ -9,7 +9,7 @@ import ButtonGrid from '@site/src/components/ButtonGrid';
 
 The Stableswap pool creation is appropriate for assets expected to hold a price peg very close to each other, like a pair of dollarcoins. The creation wizard will guide you through the process of creating a pool, but if you have questions throughout you are encouraged to speak with a member of the Curve team in the [**Telegram**](https://t.me/curvefi) or [**Discord**](https://discord.gg/rgrfS7W).
 
-Stableswap pools are liquidity pools containing **up to eight tokens** using the StableSwap algorithm. For a better understanding of StableSwap, please see here: [**Understanding Curve Pools**](../pools/overview.md).
+Stableswap pools are liquidity pools containing **up to eight tokens** using the StableSwap algorithm. For a better understanding of StableSwap, please see here: [**Understanding Curve Pools**](../overview).
 
 <ButtonGrid buttonKeys={['gotoPoolDeployment']} />
 
@@ -306,4 +306,4 @@ Once everything looks correct, click the blue **Create Pool** button at the bott
 ## What to do after deployment
 
 ✅ **Seed initial liquidity** — a pool with zero balance cannot process trades.  
-✅ (Optional) **[Create a gauge](../reward-gauges/creating-a-pool-gauge.md)** to distribute CRV or other incentives to LPs.
+✅ (Optional) **[Create a gauge](/protocol/gauge/overview)** to distribute CRV or other incentives to LPs.

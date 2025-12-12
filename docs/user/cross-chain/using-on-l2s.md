@@ -10,7 +10,7 @@ Curve offers these two main products:
 
 ## **DEX (Decentralized Exchange)**
 
-The Curve DEX is available on many chains, with more becoming available all the time. Providing liquidity to pools and creating new pools works the same way across all chains. Both [**Stableswap**](../pools/overview.md#stableswap-curve-v1) and [**Cryptoswap**](../pools/overview.md#cryptoswap-curve-v2) pools are available on all chains where Curve has been deployed.
+The Curve DEX is available on many chains, with more becoming available all the time. Providing liquidity to pools and creating new pools works the same way across all chains. Both [**Stableswap**](/protocol/pool/overview#stableswap-curve-v1) and [**Cryptoswap**](/protocol/pool/overview#cryptoswap-curve-v2) pools are available on all chains where Curve has been deployed.
 
 **Fee Distribution**: Fees from swaps on all chains are split 50/50 between LPs and the Curve DAO. These fees are automatically bridged back to Ethereum for distribution.
 

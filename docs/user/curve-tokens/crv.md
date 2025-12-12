@@ -56,7 +56,7 @@ veCRV stands for vote-escrowed CRV (locked CRV). You can get veCRV by locking yo
 
 ### How is CRV Distributed?
 
-Each week veCRV holders vote for which pools and lending markets they want the weekly minted CRV to be distributed to. The CRV is split based on how many votes each pool/lending market receives. This is called [Gauge voting](../dao/voting-gauges.md). See the page for more information.
+Each week veCRV holders vote for which pools and lending markets they want the weekly minted CRV to be distributed to. The CRV is split based on how many votes each pool/lending market receives. This is called [Gauge voting](/user/dao/gauge-weights). See the page for more information.
 
 ### Are there any upcoming team, investor, or insider unlocks?
 

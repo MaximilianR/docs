@@ -9,7 +9,7 @@ import ButtonGrid from '@site/src/components/ButtonGrid';
 
 Cryptoswap pools are appropriate for **two or three volatile assets** that are not pegged to each other — such as ETH/USDC or BTC/ETH. The creation wizard will guide you through the process, but if you have questions at any point, feel free to reach out to the Curve team in the [**Telegram**](https://t.me/curvefi) or [**Discord**](https://discord.gg/rgrfS7W).
 
-For a basic explanation of Cryptoswap mechanics, see: [**Understanding Curve Pools**](../pools/overview.md).
+For a basic explanation of Cryptoswap mechanics, see: [**Understanding Curve Pools**](../overview).
 
 <ButtonGrid buttonKeys={['gotoPoolDeployment']} />
 
@@ -207,4 +207,4 @@ Once everything looks correct, click the blue **Create Pool** button at the bott
 ## What to do after deployment
 
 ✅ **Seed initial liquidity** — a pool with zero balance cannot process trades.  
-✅ (Optional) **[Create a gauge](../reward-gauges/creating-a-pool-gauge.md)** to distribute CRV or other incentives to LPs.
+✅ (Optional) **[Create a gauge](/protocol/gauge/overview)** to distribute CRV or other incentives to LPs.
