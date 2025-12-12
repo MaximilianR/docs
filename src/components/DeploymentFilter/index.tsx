@@ -211,16 +211,159 @@ function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
 }
 
+function CategorySelect({ 
+  categories, 
+  value, 
+  onChange,
+  onOpenChange,
+  isControlledOpen,
+  onControlledClose
+}: { 
+  categories: string[]; 
+  value: string; 
+  onChange: (value: string) => void;
+  onOpenChange?: (isOpen: boolean) => void;
+  isControlledOpen?: boolean;
+  onControlledClose?: () => void;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const handleToggle = (open: boolean) => {
+    setIsOpen(open);
+    if (onOpenChange) {
+      onOpenChange(open);
+    }
+  };
+  
+  // Handle controlled close from parent (for mobile coordination)
+  React.useEffect(() => {
+    if (isControlledOpen === false && isOpen) {
+      setIsOpen(false);
+      if (onControlledClose) {
+        onControlledClose();
+      }
+    }
+  }, [isControlledOpen, isOpen, onControlledClose]);
+
+  const selectedCategoryName = value === 'all' ? 'All Categories' : formatCategoryName(value);
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(`.${styles.customSelect}`)) {
+        handleToggle(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+
+  return (
+    <div className={styles.customSelect}>
+      <button
+        type="button"
+        className={styles.selectButton}
+        onClick={() => handleToggle(!isOpen)}
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
+      >
+        <div className={styles.selectButtonContent}>
+          <span>{selectedCategoryName}</span>
+        </div>
+        <svg 
+          className={`${styles.selectArrow} ${isOpen ? styles.selectArrowOpen : ''}`}
+          width="16" 
+          height="16" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      {isOpen && (
+        <div className={styles.selectDropdown}>
+          <button
+            type="button"
+            className={`${styles.selectOption} ${value === 'all' ? styles.selectOptionActive : ''}`}
+            onClick={() => {
+              onChange('all');
+              handleToggle(false);
+            }}
+          >
+            <input
+              type="radio"
+              checked={value === 'all'}
+              onChange={() => {}}
+              className={styles.radio}
+            />
+            <span>All Categories</span>
+          </button>
+          {categories.map(category => {
+            const isSelected = value === category;
+            return (
+              <button
+                key={category}
+                type="button"
+                className={`${styles.selectOption} ${isSelected ? styles.selectOptionActive : ''}`}
+                onClick={() => {
+                  onChange(category);
+                  handleToggle(false);
+                }}
+              >
+                <input
+                  type="radio"
+                  checked={isSelected}
+                  onChange={() => {}}
+                  className={styles.radio}
+                />
+                <span>{formatCategoryName(category)}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ChainSelect({ 
   chains, 
   value, 
-  onChange 
+  onChange,
+  onOpenChange,
+  isControlledOpen,
+  onControlledClose
 }: { 
   chains: string[]; 
   value: string[]; 
   onChange: (value: string[]) => void;
+  onOpenChange?: (isOpen: boolean) => void;
+  isControlledOpen?: boolean;
+  onControlledClose?: () => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  
+  const handleToggle = (open: boolean) => {
+    setIsOpen(open);
+    if (onOpenChange) {
+      onOpenChange(open);
+    }
+  };
+  
+  // Handle controlled close from parent (for mobile coordination)
+  React.useEffect(() => {
+    if (isControlledOpen === false && isOpen) {
+      setIsOpen(false);
+      if (onControlledClose) {
+        onControlledClose();
+      }
+    }
+  }, [isControlledOpen, isOpen, onControlledClose]);
 
   const handleToggleChain = (chain: string) => {
     if (chain === 'all') {
@@ -250,7 +393,7 @@ function ChainSelect({
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (!target.closest(`.${styles.customSelect}`)) {
-        setIsOpen(false);
+        handleToggle(false);
       }
     };
 
@@ -265,7 +408,7 @@ function ChainSelect({
       <button
         type="button"
         className={styles.selectButton}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => handleToggle(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
@@ -290,7 +433,10 @@ function ChainSelect({
           <button
             type="button"
             className={`${styles.selectOption} ${isAllSelected ? styles.selectOptionActive : ''}`}
-            onClick={handleSelectAll}
+            onClick={() => {
+              handleSelectAll();
+              handleToggle(false);
+            }}
           >
             <input
               type="checkbox"
@@ -331,6 +477,45 @@ export default function DeploymentFilter(): React.ReactNode {
   const [selectedChains, setSelectedChains] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null);
+  const [chainDropdownOpen, setChainDropdownOpen] = useState(false);
+  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if mobile on mount and resize
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  // Close other dropdown when one opens (mobile only)
+  const handleChainDropdownChange = (isOpen: boolean) => {
+    setChainDropdownOpen(isOpen);
+    // Only close category dropdown on mobile
+    if (isOpen && isMobile) {
+      setCategoryDropdownOpen(false);
+    }
+  };
+  
+  const handleCategoryDropdownChange = (isOpen: boolean) => {
+    setCategoryDropdownOpen(isOpen);
+    // Only close chain dropdown on mobile
+    if (isOpen && isMobile) {
+      setChainDropdownOpen(false);
+    }
+  };
+  
+  const handleChainClose = () => {
+    setChainDropdownOpen(false);
+  };
+  
+  const handleCategoryClose = () => {
+    setCategoryDropdownOpen(false);
+  };
 
   const explorerUrls = useMemo(() => getExplorerUrls(deploymentsData), []);
   const allDeployments = useMemo(() => flattenDeployments(deploymentsData), []);
@@ -506,24 +691,22 @@ export default function DeploymentFilter(): React.ReactNode {
             chains={chains}
             value={selectedChains}
             onChange={setSelectedChains}
+            onOpenChange={handleChainDropdownChange}
+            isControlledOpen={isMobile && categoryDropdownOpen ? false : undefined}
+            onControlledClose={handleChainClose}
           />
         </div>
 
         <div className={styles.filterGroup}>
           <label htmlFor="category" className={styles.label}>Category</label>
-          <select
-            id="category"
-            className={styles.select}
+          <CategorySelect
+            categories={categories}
             value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            <option value="all">All Categories</option>
-            {categories.map(category => (
-              <option key={category} value={category}>
-                {formatCategoryName(category)}
-              </option>
-            ))}
-          </select>
+            onChange={setSelectedCategory}
+            onOpenChange={handleCategoryDropdownChange}
+            isControlledOpen={isMobile && chainDropdownOpen ? false : undefined}
+            onControlledClose={handleCategoryClose}
+          />
         </div>
       </div>
 
@@ -623,3 +806,4 @@ export default function DeploymentFilter(): React.ReactNode {
     </div>
   );
 }
+
