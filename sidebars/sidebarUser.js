@@ -394,11 +394,6 @@ export default {
                 },
                 {
                     type: 'doc',
-                    id: 'reference/deployments',
-                    label: 'Contract Deployments',
-                },
-                {
-                    type: 'doc',
                     id: 'reference/links',
                     label: 'Useful Links',
                 },
@@ -408,6 +403,11 @@ export default {
                     label: 'Whitepapers',
                 },
             ],
+        },
+        {
+            type: 'doc',
+            id: 'deployments',
+            label: 'Contract Deployments',
         },
     ],
 };
