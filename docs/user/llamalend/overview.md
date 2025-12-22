@@ -7,6 +7,7 @@ sidebar_label: Overview
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 import BadgeGrid from '@site/src/components/BadgeGrid'
 import ThemedImage from '@theme/ThemedImage';
+import GhostPosts from '@site/src/components/GhostPosts';
 
 Llamalend is Curve's non-custodial lending infrastructure allowing users to borrow crvUSD against their crypto assets or lend crvUSD to markets. The infrastructure is fully built on crvUSD and therefore each market has to contain crvUSD as a token (either as the borrow token or the collateral token).
 
@@ -34,6 +35,12 @@ Llamalend combines several key features:
 - **Isolated Markets:** All markets are isolated, one-way markets where each market only has one collateral token and one borrowable token. This design eliminates risk of contamination through depegged assets, keeps risk contained within each market, and makes it easier to understand your exposure. Unlike some other protocols where risks can spread across multiple assets, Llamalend's isolation ensures that problems in one market don't affect others. Collateral is not re-hypothecated.
 - **Permissionless Markets**: No gatekeeping. Everyone can deploy lending markets.
 
+## Interesting Reads
+
+This is a collection of articles, news, and explainers about Llamalend covering the latest updates, features, and insights.
+
+<GhostPosts tag="Llamalend" limit={3} sectionTitle="Llamalend Articles" compact={true} enablePagination={true} />
+
 ## Different Market Types
 
 From a user interface and usage perspective, both products function identically. The primary difference is in how borrow rates are calculated between mint markets and lending markets. More here: [Borrowing: Borrow Rates](./borrowing.md#borrow-rates).
@@ -51,18 +58,3 @@ From a user interface and usage perspective, both products function identically.
     },
   ]}
 />
-
-## Navigating the UI
-
-The Llamalend interface displays all lending markets in a comprehensive table with key metrics such as collateral-borrow pairs, borrow rates, supply yields, utilization, liquidity, and TVL. Users can search by market name or contract address, toggle between mint and lending markets, filter by chains or tokens, and customize which data columns are visible.
-
-<figure>
-<ThemedImage
-    alt="Llamalend Markets"
-    sources={{
-        light: require('@site/static/img/user/llamalend/ui/overview-light.png').default,
-        dark: require('@site/static/img/user/llamalend/ui/overview-dark.png').default,
-    }}
-    style={{ width: '1100px', display: 'block', margin: '0 auto' }}
-/>
-</figure>
