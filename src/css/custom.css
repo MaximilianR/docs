@@ -354,6 +354,16 @@ code, pre {
   line-height: var(--Typography-LineHeight-lg);
 }
 
+/* Reduce h2 margin when followed by compact GhostPosts */
+.theme-doc-markdown h2 + :global(.ghostPostsInline) {
+  margin-top: calc(var(--Spacing-md) * -1.5);
+}
+
+/* Reduce spacing between h2 and articles list in compact mode */
+.theme-doc-markdown h2 + :global(.ghostPostsInline) :global(.postsListCompact) {
+  margin-top: 0;
+}
+
 .theme-doc-markdown h3 {
   font-size: calc(var(--Typography-FontSize-md) + 2px);
   margin-top: var(--Spacing-xl);
@@ -361,6 +371,17 @@ code, pre {
   color: var(--Text-TextColors-Primary);
   font-weight: var(--Typography-FontWeight-Semi-Bold);
   line-height: var(--Typography-LineHeight-md);
+}
+
+/* Override h3 and p backgrounds inside GhostPosts article cards */
+.theme-doc-markdown article h3,
+.theme-doc-markdown article p {
+  background: transparent !important;
+}
+
+[data-theme='dark'] .theme-doc-markdown article h3,
+[data-theme='dark'] .theme-doc-markdown article p {
+  background: transparent !important;
 }
 
 .theme-doc-markdown p {

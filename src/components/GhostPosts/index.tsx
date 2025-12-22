@@ -20,17 +20,27 @@ interface GhostPost {
 interface GhostPostsProps {
   limit?: number;
   showPinned?: boolean;
+  tag?: string; // Optional tag to filter posts by
+  sectionTitle?: string; // Optional custom section title
+  compact?: boolean; // Use compact display mode
+  enablePagination?: boolean; // Enable pagination controls
 }
 
 export default function GhostPosts({ 
   limit = GHOST_CONFIG.postLimit,
   showPinned = true,
+  tag,
+  sectionTitle,
+  compact = false,
+  enablePagination = false,
 }: GhostPostsProps): React.ReactNode {
   const [posts, setPosts] = useState<GhostPost[]>([]);
   const [pinned, setPinned] = useState<GhostPost[]>([]);
   const [featured, setFeatured] = useState<GhostPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [meta, setMeta] = useState<{ pagination?: { pages?: number; page?: number; limit?: number } } | null>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -40,8 +50,18 @@ export default function GhostPosts({
 
         const apiUrl = getGhostApiUrl();
 
-        // Fetch latest posts
-        const latestParams = getGhostApiParams(limit);
+        // Fetch latest posts - filter by tag if provided, add pagination if enabled
+        const extraParams: Record<string, string> = {};
+        if (tag) {
+          // Use tags: syntax for Ghost API (supports tag slug or name)
+          extraParams.filter = `tags:${tag}`;
+        }
+        // Always include page parameter when pagination is enabled (even for page 1)
+        if (enablePagination) {
+          extraParams.page = currentPage.toString();
+        }
+        const latestParams = getGhostApiParams(limit, Object.keys(extraParams).length > 0 ? extraParams : undefined);
+        
         const latestResp = await fetch(`${apiUrl}?${latestParams}`, {
           headers: {
             'Accept-Version': `v${GHOST_CONFIG.apiVersion.replace('v', '')}`
@@ -49,31 +69,43 @@ export default function GhostPosts({
         });
         if (!latestResp.ok) throw new Error(`Failed to fetch posts: ${latestResp.status}`);
         const latestData = await latestResp.json();
-        setPosts(latestData.posts || []);
+        
+        // Only set posts for the current page - Ghost API should return only the requested page
+        // But limit it just in case the API returns more than requested
+        const fetchedPosts = latestData.posts || [];
+        setPosts(fetchedPosts.slice(0, limit));
+        // Ghost API returns meta.pagination with pages, page, limit, total, etc.
+        setMeta(latestData.meta || null);
 
         // Build featured (landing hero): first = newest post, next = static slugs
-        try {
-          const newestParams = getGhostApiParams(1, { order: 'published_at DESC' });
-          const newestResp = await fetch(`${apiUrl}?${newestParams}`, { headers: { 'Accept-Version': `v${GHOST_CONFIG.apiVersion.replace('v','')}` } });
-          const newestData = await newestResp.json();
-          const first = newestData?.posts?.[0] as GhostPost | undefined;
-          let list: GhostPost[] = [];
-          if (first) list.push(first);
-          if (GHOST_CONFIG.featuredStaticSlugs?.length) {
-            const slugFilter = GHOST_CONFIG.featuredStaticSlugs.map((s) => `slug:${s}`).join(',');
-            const staticParams = getGhostApiParams(GHOST_CONFIG.featuredStaticSlugs.length, { filter: slugFilter });
-            const staticResp = await fetch(`${apiUrl}?${staticParams}`, { headers: { 'Accept-Version': `v${GHOST_CONFIG.apiVersion.replace('v','')}` } });
-            const staticData = await staticResp.json();
-            const staticPosts: GhostPost[] = staticData?.posts || [];
-            // preserve requested order
-            const orderMap = new Map(GHOST_CONFIG.featuredStaticSlugs.map((s, i) => [s, i]));
-            staticPosts.sort((a, b) => (orderMap.get(a.slug) ?? 0) - (orderMap.get(b.slug) ?? 0));
-            // ensure uniqueness vs newest
-            const seen = new Set(list.map(p => p.id));
-            for (const p of staticPosts) if (!seen.has(p.id)) list.push(p);
-          }
-          setFeatured(list);
-        } catch {}
+        // Only do this if no tag filter is applied (for landing page)
+        if (!tag) {
+          try {
+            const newestParams = getGhostApiParams(1, { order: 'published_at DESC' });
+            const newestResp = await fetch(`${apiUrl}?${newestParams}`, { headers: { 'Accept-Version': `v${GHOST_CONFIG.apiVersion.replace('v','')}` } });
+            const newestData = await newestResp.json();
+            const first = newestData?.posts?.[0] as GhostPost | undefined;
+            let list: GhostPost[] = [];
+            if (first) list.push(first);
+            if (GHOST_CONFIG.featuredStaticSlugs?.length) {
+              const slugFilter = GHOST_CONFIG.featuredStaticSlugs.map((s) => `slug:${s}`).join(',');
+              const staticParams = getGhostApiParams(GHOST_CONFIG.featuredStaticSlugs.length, { filter: slugFilter });
+              const staticResp = await fetch(`${apiUrl}?${staticParams}`, { headers: { 'Accept-Version': `v${GHOST_CONFIG.apiVersion.replace('v','')}` } });
+              const staticData = await staticResp.json();
+              const staticPosts: GhostPost[] = staticData?.posts || [];
+              // preserve requested order
+              const orderMap = new Map(GHOST_CONFIG.featuredStaticSlugs.map((s, i) => [s, i]));
+              staticPosts.sort((a, b) => (orderMap.get(a.slug) ?? 0) - (orderMap.get(b.slug) ?? 0));
+              // ensure uniqueness vs newest
+              const seen = new Set(list.map(p => p.id));
+              for (const p of staticPosts) if (!seen.has(p.id)) list.push(p);
+            }
+            setFeatured(list);
+          } catch {}
+        } else {
+          // When filtering by tag, use the filtered posts as featured
+          setFeatured([]);
+        }
 
         // Fetch pinned posts: prefer explicit slugs, then tagged fallback
         if (showPinned) {
@@ -116,7 +148,7 @@ export default function GhostPosts({
     };
 
     fetchPosts();
-  }, [limit]);
+  }, [limit, tag, currentPage, enablePagination]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -126,11 +158,13 @@ export default function GhostPosts({
     });
   };
 
+  const displayTitle = sectionTitle || 'INTERESTING READS';
+
   if (loading) {
     return (
       <section className={styles.ghostPosts}>
         <div className="container">
-        <div className={styles.sectionTitle}>INTERESTING READS</div>
+        <div className={styles.sectionTitle}>{displayTitle}</div>
           <div className={styles.loading}>Loading latest posts...</div>
         </div>
       </section>
@@ -141,27 +175,31 @@ export default function GhostPosts({
     return (
       <section className={styles.ghostPosts}>
         <div className="container">
-          <div className={styles.sectionTitle}>LATEST FROM CURVE</div>
+          <div className={styles.sectionTitle}>{displayTitle}</div>
           <div className={styles.error}>Unable to load posts: {error}</div>
         </div>
       </section>
     );
   }
 
-  if (posts.length === 0) {
+  // Return null if there's nothing to display
+  if (tag && posts.length === 0) {
+    return null;
+  }
+  if (!tag && featured.length === 0 && posts.length === 0) {
     return null;
   }
 
   return (
-    <section className={styles.ghostPosts}>
+    <section className={`${styles.ghostPosts} ${compact ? styles.ghostPostsInline : ''}`}>
       <div className="container">
-        <div className={styles.sectionTitle}>INTERESTING READS</div>
+        <div className={`${styles.sectionTitle} ${compact ? styles.sectionTitleCompact : ''}`}>{displayTitle}</div>
 
         {/* Featured block for landing: first = latest, next = static slugs */}
         {featured.length > 0 && (
-          <div className={styles.postsList}>
+          <div className={`${styles.postsList} ${compact ? styles.postsListCompact : ''}`}>
             {featured.map((post, idx) => (
-              <article key={`featured-${post.id}-${idx}`} className={styles.postListItem}>
+              <article key={`featured-${post.id}-${idx}`} className={`${styles.postListItem} ${compact ? styles.postListItemCompact : ''}`}>
                 <a href={post.url} target="_blank" rel="noopener noreferrer" className={styles.postListLink}>
                   <div className={styles.postListContent}>
                     {post.feature_image && (
@@ -186,17 +224,100 @@ export default function GhostPosts({
           </div>
         )}
 
+        {/* Display filtered posts when tag is provided */}
+        {tag && posts.length > 0 && (
+          <div className={`${styles.postsList} ${compact ? styles.postsListCompact : ''}`}>
+            {posts.map((post, idx) => (
+              <article key={`tagged-${post.id}-${idx}`} className={`${styles.postListItem} ${compact ? styles.postListItemCompact : ''}`}>
+                <a href={post.url} target="_blank" rel="noopener noreferrer" className={styles.postListLink}>
+                  <div className={styles.postListContent}>
+                    {post.feature_image && (
+                      <div className={styles.postListImage}>
+                        <img src={post.feature_image} alt={post.title} loading="lazy" />
+                      </div>
+                    )}
+                    <div className={styles.postListText}>
+                      <h3 className={styles.postListTitle}>{post.title}</h3>
+                      {post.excerpt && (
+                        <p className={styles.postListExcerpt}>{post.excerpt.replace(/<[^>]*>/g, '')}</p>
+                      )}
+                      <div className={styles.postListMeta}>
+                        <time className={styles.postDate}>{formatDate(post.published_at)}</time>
+                        {post.reading_time && <span className={styles.readingTime}> · {post.reading_time} min read</span>}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        )}
+
+        {/* Pagination controls */}
+        {enablePagination && (() => {
+          const pagination = meta?.pagination;
+          const totalPages = pagination?.pages || 0;
+          const hasMorePages = totalPages > 1;
+          // If we got fewer posts than the limit, we're likely on the last page
+          const isLastPage = posts.length < limit;
+          // Show pagination if we have multiple pages OR if we got a full page (might have more)
+          const shouldShowPagination = hasMorePages || (!isLastPage && currentPage === 1);
+          
+          if (!shouldShowPagination) {
+            return null;
+          }
+          
+          // Determine if we can go to next page
+          const canGoNext = totalPages > 0 
+            ? currentPage < totalPages 
+            : !isLastPage;
+          
+          return (
+            <div className={styles.pagination}>
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                disabled={currentPage === 1 || loading}
+                className={styles.paginationButton}
+              >
+                ← Previous
+              </button>
+              <span className={styles.paginationInfo}>
+                {totalPages > 0 ? (
+                  `Page ${currentPage} of ${totalPages}`
+                ) : (
+                  `Page ${currentPage}`
+                )}
+              </span>
+              <button
+                onClick={() => {
+                  if (totalPages > 0) {
+                    setCurrentPage(prev => Math.min(totalPages, prev + 1));
+                  } else {
+                    setCurrentPage(prev => prev + 1);
+                  }
+                }}
+                disabled={!canGoNext || loading}
+                className={styles.paginationButton}
+              >
+                Next →
+              </button>
+            </div>
+          );
+        })()}
+
         {/* Recent list removed per request */}
-        <div className={styles.viewAll}>
-          <a 
-            href={`${GHOST_CONFIG.url}/`} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className={styles.viewAllLink}
-          >
-            View All Posts →
-          </a>
-        </div>
+        {!enablePagination && (
+          <div className={styles.viewAll}>
+            <a 
+              href={`${GHOST_CONFIG.url}/`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={styles.viewAllLink}
+            >
+              View All Posts →
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
