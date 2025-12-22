@@ -1,106 +1,67 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Link from '@docusaurus/Link';
 import styles from './styles.module.css';
 
-type StatItem = {
-  label: string;
-  value: string;
+type SectionItem = {
+  title: string;
   description: string;
+  link: string;
+  isExternal?: boolean;
 };
 
-const StatList: StatItem[] = [
+const sections: SectionItem[] = [
   {
-    label: 'Total Value Locked',
-    value: 'Loading...',
-    description: 'Total value locked in Curve protocols',
+    title: 'Users',
+    description: 'Learn how to use Curve DEX, provide liquidity, swap tokens, and understand yield opportunities.',
+    link: '/user/introduction',
+    isExternal: false,
   },
   {
-    label: 'Fees Distributed to veCRV',
-    value: 'Loading...',
-    description: 'Total protocol fees paid to veCRV holders',
+    title: 'Developers',
+    description: 'Technical documentation for developers building integrations, understanding smart contracts, and working with Curve APIs.',
+    link: 'https://docs.curve.finance/documentation-overview/',
+    isExternal: true,
   },
   {
-    label: 'Total Governance Votes',
-    value: 'Loading...',
-    description: 'Total number of governance votes',
+    title: 'Build on Curve',
+    description: 'Resources for protocols and projects looking to integrate with Curve, understand the ecosystem, and leverage Curve infrastructure.',
+    link: '/protocol/why-curve',
+    isExternal: false,
   },
 ];
 
-function Stat({label, value, description}: StatItem) {
-  return (
-    <div className={styles.statCard}>
-      <h3 className={styles.statLabel}>{label}</h3>
-      <div className={styles.statValue}>{value}</div>
-      <p className={styles.statDescription}>{description}</p>
+function SectionCard({title, description, link, isExternal}: SectionItem) {
+  const content = (
+    <div className={styles.sectionCard}>
+      <h3 className={styles.sectionTitle}>{title}</h3>
+      <p className={styles.sectionDescription}>{description}</p>
+      <span className={styles.sectionLink}>Learn more →</span>
     </div>
+  );
+
+  if (isExternal) {
+    return (
+      <a href={link} className={styles.sectionLinkWrapper} target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link to={link} className={styles.sectionLinkWrapper}>
+      {content}
+    </Link>
   );
 }
 
 export default function HomepageStats(): React.ReactNode {
-  const [stats, setStats] = useState(StatList);
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const formatCompact = (num: number): string => {
-          const abs = Math.abs(num);
-          if (abs >= 1e12) return `${(num / 1e12).toFixed(2)}T`;
-          if (abs >= 1e9) return `${(num / 1e9).toFixed(2)}B`;
-          if (abs >= 1e6) return `${(num / 1e6).toFixed(2)}M`;
-          if (abs >= 1e3) return `${(num / 1e3).toFixed(2)}K`;
-          return `${Math.round(num).toLocaleString()}`;
-        };
-        // Fetch latest TVL from DefiLlama
-        const tvlResponse = await fetch('https://api.llama.fi/tvl/curve-finance');
-        const tvlRaw = await tvlResponse.json();
-        const tvlNumber = typeof tvlRaw === 'number' ? tvlRaw : (tvlRaw?.tvl ?? tvlRaw?.value ?? 0);
-        const formattedTvl = tvlNumber ? `$${formatCompact(tvlNumber)}` : 'N/A';
-
-        // Fetch cumulative fees distributed to veCRV from Curve API
-        const revenueResponse = await fetch('https://api.curve.finance/api/getWeeklyFees');
-        const revenueData = await revenueResponse.json();
-        const totalRevenue = revenueData?.data?.totalFees?.fees ?? 0;
-        const formattedRevenue = totalRevenue
-          ? `${formatCompact(totalRevenue)}`
-          : 'N/A';
-
-        // Fetch total governance votes (count)
-        const votesResponse = await fetch('https://prices.curve.finance/v1/dao/proposals?pagination=1&page=1&status_filter=all&type_filter=all');
-        const votesData = await votesResponse.json();
-        const totalVotes = votesData?.count ?? 0;
-        const formattedVotes = totalVotes.toLocaleString();
-
-        setStats([
-          {
-            label: 'Total Value Locked',
-            value: formattedTvl,
-            description: 'Total value locked in Curve protocols',
-          },
-          {
-            label: 'Fees Distributed to veCRV',
-            value: formattedRevenue ? `$${formattedRevenue}` : 'N/A',
-            description: 'Total protocol fees paid to veCRV holders',
-          },
-          {
-            label: 'Total Governance Votes',
-            value: formattedVotes,
-            description: 'Total number of governance votes',
-          },
-        ]);
-      } catch (error) {
-        console.error('Error fetching stats:', error);
-      }
-    };
-
-    fetchStats();
-  }, []);
-
   return (
     <section className={styles.stats}>
       <div className="container">
         <div className="row guide-card-row">
-          {stats.map((stat, idx) => (
+          {sections.map((section, idx) => (
             <div key={idx} className="col col--4">
-              <Stat {...stat} />
+              <SectionCard {...section} />
             </div>
           ))}
         </div>

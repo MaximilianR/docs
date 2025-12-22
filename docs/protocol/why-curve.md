@@ -9,11 +9,11 @@ import ProtocolCardGrid from '@site/src/components/ProtocolCardGrid'
 import ThemedImage from '@theme/ThemedImage'
 import ChainPresence from '@site/src/components/ChainPresence'
 
-Curve enables **endless possibilities** to be used or built on top of. Whether it is simply deploying a liquidity pool or lending market, or building an entirely new stack on top of Curve. Its incredible neutrality and permissionless nature do not discriminate or restrict **any** market participants, and they welcome everyone to use, build, and improve Curve.
+Curve enables **endless possibilities** to be used or built on top of. Whether it is simply deploying a liquidity pool or lending market, or building an entirely new stack on top of Curve. Its **incredible neutrality and permissionless nature** do not discriminate or restrict any market participants, and they welcome everyone to use, build, and improve Curve.
 
 <figure>
   <ThemedImage
-    alt="Select Pool Type"
+    alt="Don't worry just ride the Curve"
     sources={{
       light: require('@site/static/img/logos/ride-the-curve.png').default,
       dark: require('@site/static/img/logos/ride-the-curve.png').default,
@@ -67,7 +67,7 @@ Curve is the definitive platform for building deep, sustainable onchain liquidit
 Curve is built on three core pillars that work together seamlessly:
 
 ### Curve DEX
-The core business with which Curve started. It pioneered the exchange of stable-like assets with the **Stableswap algorithm** created back in 2020. To this day, it remains the most efficient, battle-tested, and reliable algorithm, despite other projects calling it a "soon to be obsolete" innovation. Algorithms for volatile pairs came along later in 2021.
+The core business with which Curve started. It pioneered the exchange of stable-like assets with the **Stableswap algorithm** created back in 2020. To this day, it remains the most efficient, battle-tested, and reliable algorithm, despite other projects calling it a "soon to be obsolete" innovation. Algorithms for volatile pairs, the **Cryptoswap algorithm**, came along later in 2021.
 
 Why Curve over other protocols? Because Curve is your swiss army knife providing:
 

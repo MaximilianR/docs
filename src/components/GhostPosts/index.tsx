@@ -159,28 +159,28 @@ export default function GhostPosts({
 
         {/* Featured block for landing: first = latest, next = static slugs */}
         {featured.length > 0 && (
-          <div className={styles.postsGrid}>
+          <div className={styles.postsList}>
             {featured.map((post, idx) => (
-              <article key={`featured-${post.id}-${idx}`} className={styles.postCard}>
-                {post.feature_image && (
-                  <div className={styles.postImage}>
-                    <img src={post.feature_image} alt={post.title} loading="lazy" />
+              <article key={`featured-${post.id}-${idx}`} className={styles.postListItem}>
+                <a href={post.url} target="_blank" rel="noopener noreferrer" className={styles.postListLink}>
+                  <div className={styles.postListContent}>
+                    {post.feature_image && (
+                      <div className={styles.postListImage}>
+                        <img src={post.feature_image} alt={post.title} loading="lazy" />
+                      </div>
+                    )}
+                    <div className={styles.postListText}>
+                      <h3 className={styles.postListTitle}>{post.title}</h3>
+                      {post.excerpt && (
+                        <p className={styles.postListExcerpt}>{post.excerpt.replace(/<[^>]*>/g, '')}</p>
+                      )}
+                      <div className={styles.postListMeta}>
+                        <time className={styles.postDate}>{formatDate(post.published_at)}</time>
+                        {post.reading_time && <span className={styles.readingTime}> · {post.reading_time} min read</span>}
+                      </div>
+                    </div>
                   </div>
-                )}
-                <div className={styles.postContent}>
-                  <div className={styles.postMeta}>
-                    <time className={styles.postDate}>{formatDate(post.published_at)}</time>
-                    {post.reading_time && <span className={styles.readingTime}>{post.reading_time} min read</span>}
-                  </div>
-                  <h3 className={styles.postTitle}>
-                    <a href={post.url} target="_blank" rel="noopener noreferrer" className={styles.postLink}>
-                      {post.title}
-                    </a>
-                  </h3>
-                  {post.excerpt && (
-                    <p className={styles.postExcerpt}>{post.excerpt.replace(/<[^>]*>/g, '')}</p>
-                  )}
-                </div>
+                </a>
               </article>
             ))}
           </div>
