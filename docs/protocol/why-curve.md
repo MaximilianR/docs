@@ -8,32 +8,12 @@ import GuideCardGrid from '@site/src/components/GuideCardGrid'
 import ProtocolCardGrid from '@site/src/components/ProtocolCardGrid'
 import ThemedImage from '@theme/ThemedImage'
 import ChainPresence from '@site/src/components/ChainPresence'
+import GhostPosts from '@site/src/components/GhostPosts';
 
 Curve enables **endless possibilities** to be used or built on top of. Whether it is simply deploying a liquidity pool or lending market, or building an entirely new stack on top of Curve. Its **incredible neutrality and permissionless nature** do not discriminate or restrict any market participants, and they welcome everyone to use, build, and improve Curve.
 
-<figure>
-  <ThemedImage
-    alt="Don't worry just ride the Curve"
-    sources={{
-      light: require('@site/static/img/logos/ride-the-curve.png').default,
-      dark: require('@site/static/img/logos/ride-the-curve.png').default,
-    }}
-    style={{ 
-      width: "200px",
-      display: "block",
-      margin: "0 auto"
-    }}
-  />
-  <figcaption></figcaption>
-</figure>
+<GhostPosts tag="why-curve" limit={3} sectionTitle="Llamalend Articles" compact={true} enablePagination={true} />
 
-## Curve's Chain Presence
-
-Curve runs on **dozens of networks** to meet users and builders where they are. Full DEX deployments deliver the complete Curve experience (gauges, CRV emissions, and frontend analytics). **Curve Lite** exists so new rollups have the possibility to launch with production‑grade swapping from day one — automatically rolling out Curve’s core DEX stack (permissionless Stableswap/Cryptoswap factories), direct frontend integration, and CurveDAO ownership/fees/CRV emissions. Llamalend adds credit markets on selected networks.
-
-<ChainPresence />
-
-## The Right Place for Onchain Liquidity
 
 Curve is the definitive platform for building deep, sustainable onchain liquidity for your asset. Whether you're launching a new token, scaling an existing one, or creating innovative DeFi products, Curve provides the complete infrastructure you need:
 
@@ -51,14 +31,20 @@ Curve is the definitive platform for building deep, sustainable onchain liquidit
     logo: "resupply.svg"
   },
   {
-    name: "Frax",
-    logo: "frax.png"
+    name: "YieldBasis",
+    logo: "yieldbasis.svg"
   },
   {
     name: "more",
     logo: "100+"
   }
 ]} />
+
+## Curve's Chain Presence
+
+Curve runs on **multiple of networks** to meet users and builders where they are. Full DEX deployments deliver the complete Curve experience (gauges, CRV emissions, and full frontend support). **Curve Lite** exists so new rollups have the possibility to launch with production‑grade swapping from day one — automatically rolling out Curve’s core DEX stack (permissionless Stableswap/Cryptoswap factories), direct frontend integration, and CurveDAO ownership/fees/CRV emissions.
+
+<ChainPresence />
 
 ---
 
