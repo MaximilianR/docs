@@ -2,57 +2,73 @@
   padding: 0;
 }
 
-.statCard {
+.sectionLinkWrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.sectionCard {
   background: var(--Layer-2-Fill) !important;
   border: 1px solid var(--Layer-2-Outline) !important;
   border-radius: var(--Radius-md) !important;
   padding: 1.5rem !important;
-  text-align: center;
+  text-align: left;
   transition: all 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  cursor: pointer;
 }
 
-.statCard:hover {
+.sectionCard:hover {
   border-color: var(--Color-Primary-300) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
   background: var(--Layer-1-Fill) !important;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
-.statLabel {
-  font-size: 0.875rem !important;
-  font-weight: 600 !important;
-  color: var(--Text-TextColors-Secondary) !important;
-  margin-bottom: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.statValue {
-  font-size: 2rem !important;
+.sectionTitle {
+  font-size: 1.25rem !important;
   font-weight: 700 !important;
   color: var(--Text-TextColors-Primary) !important;
-  margin-bottom: 0.5rem;
-  line-height: 1.2;
+  margin: 0 0 0.75rem 0;
+  font-family: var(--Text-FontFamily-Heading) !important;
+  line-height: 1.3;
 }
 
-.statDescription {
-  font-size: 0.875rem !important;
+.sectionDescription {
+  font-size: 0.9375rem !important;
   color: var(--Text-TextColors-Secondary) !important;
-  margin: 0;
-  line-height: 1.4;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.sectionLink {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--Color-Primary-500) !important;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.sectionCard:hover .sectionLink {
+  color: var(--Color-Primary-400) !important;
 }
 
 @media (max-width: 768px) {
-  .statCard {
+  .sectionCard {
     padding: 1.25rem !important;
   }
   
-  .statValue {
-    font-size: 1.75rem !important;
+  .sectionTitle {
+    font-size: 1.125rem !important;
+  }
+  
+  .sectionDescription {
+    font-size: 0.875rem !important;
   }
 }

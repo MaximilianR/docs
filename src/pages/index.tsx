@@ -12,11 +12,10 @@ export default function Home() {
         <section className={styles.heroSection}>
           <div className={styles.heroContent}>
             <h1 className={styles.heroTitle}>Curve Knowledge Hub</h1>
-            <p className={styles.heroSubtitle}>For users, developers, and protocols building on Curve.</p>
           </div>
         </section>
 
-        {/* Key Metrics */}
+        {/* Documentation Sections */}
         <section className={styles.metricsSection}>
           <div className={styles.metricsContainer}>
             <HomepageStats />

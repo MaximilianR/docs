@@ -8,7 +8,7 @@ import BadgeGrid from '@site/src/components/BadgeGrid'
 
 Curve is a decentralized exchange (DEX) powered by automated market makers (AMMs) designed for efficient trading of stablecoins and volatile assets. Built on Ethereum and EVM-compatible chains, Curve delivers deep liquidity for traders and peace of mind for liquidity providers through passive and fully automated concentrated liquidity.
 
-Additionally, Curve developed crvUSD, a decentralized CDP USD stablecoin, and LlamaLend, a fully permissionless lending protocol, both powered by an innovative liquidation mechanism (LLAMMA) that carefully protects collateral in liquidation and provides more peace of mind for borrowers.
+Additionally, Curve developed crvUSD, a decentralized CDP USD stablecoin, and Llamalend, a fully permissionless lending protocol, both powered by an innovative liquidation mechanism (LLAMMA) that carefully protects collateral in liquidation and provides more peace of mind for borrowers.
 
 <BadgeGrid
   cards={[
