@@ -104,6 +104,20 @@ export default {
                 },
             ],
         },
+        {
+            type: 'category',
+            label: 'Curve API',
+            items: [
+                {
+                    type: 'doc',
+                    id: 'api/curve-prices',
+                },
+                {
+                    type: 'doc',
+                    id: 'api/curve-api',
+                },
+            ],
+        },
         //{
         //    type: 'category',
         //    label: 'Growing Liquidity',
