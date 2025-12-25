@@ -48,6 +48,10 @@ export default {
                 },
                 {
                     type: 'doc',
+                    id: 'pool/guides/deploy-fxswap',
+                },
+                {
+                    type: 'doc',
                     id: 'pool/post-deployment',
                 },
             ],
