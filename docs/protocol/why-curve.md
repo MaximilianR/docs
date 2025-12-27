@@ -46,8 +46,6 @@ Curve runs on **multiple of networks** to meet users and builders where they are
 
 <ChainPresence />
 
----
-
 ## Three Core Pillars, One Unified Platform
 
 Curve is built on three core pillars that work together seamlessly:

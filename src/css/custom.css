@@ -899,3 +899,16 @@ code, pre {
     padding: var(--Spacing-lg);
   }
 }
+
+/* Swagger UI styles */
+.swagger-ui-wrapper {
+  margin: var(--Spacing-lg) 0;
+}
+
+.swagger-ui-wrapper .swagger-ui {
+  font-family: var(--ifm-font-family-base);
+}
+
+.swagger-ui-wrapper .swagger-ui .topbar {
+  display: none;
+}
