@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { formatNumber } from '../../utils/formatters'; // Make sure the path is correct
+import { formatNumber } from '../../utils/formatters';
 
 import CrvusdLogo from '@site/static/img/logos/crvUSD_xs.png';
 
@@ -8,7 +8,51 @@ const MARKETS_API_URL = 'https://prices.curve.finance/v1/crvusd/markets?fetch_on
 const PEGKEEPERS_API_URL = 'https://prices.curve.finance/v1/crvusd/pegkeepers/ethereum';
 const PRICE_API_URL = 'https://prices.curve.finance/v1/usd_price/ethereum/0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E';
 const YB_API_URL = 'https://prices.curve.finance/v1/crvusd/yield_basis/ethereum/supply';
-const RSUP_MINT_AMT = 15000000;
+
+// --- RPC Configuration for RSUP ---
+const RPC_URL = 'https://eth.llamarpc.com';
+const RSUP_CONTRACT = '0xC32B0Cf36e06c790A568667A17DE80cba95A5Aad';
+const RSUP_HOLDER = '0x21862cA8d044c104ac9EB728c86Bc38B8625BeCD';
+
+// Function selectors (first 4 bytes of keccak256 hash of function signature)
+const PRICE_PER_SHARE_SELECTOR = '0x99530b06'; // keccak256("pricePerShare()")
+const BALANCE_OF_SELECTOR = '0x70a08231';      // keccak256("balanceOf(address)")
+
+// Helper to make eth_call
+const ethCall = async (to, data) => {
+  const response = await fetch(RPC_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'eth_call',
+      params: [{ to, data }, 'latest'],
+      id: 1,
+    }),
+  });
+  const json = await response.json();
+  if (json.error) throw new Error(json.error.message);
+  return json.result;
+};
+
+// Fetch RSUP mint amount from blockchain
+const fetchRsupMintAmt = async () => {
+  // Get pricePerShare
+  const pricePerShareHex = await ethCall(RSUP_CONTRACT, PRICE_PER_SHARE_SELECTOR);
+  const pricePerShare = BigInt(pricePerShareHex);
+
+  // Get balanceOf - pad address to 32 bytes
+  const paddedAddress = RSUP_HOLDER.slice(2).toLowerCase().padStart(64, '0');
+  const balanceOfData = BALANCE_OF_SELECTOR + paddedAddress;
+  const numSharesHex = await ethCall(RSUP_CONTRACT, balanceOfData);
+  const numShares = BigInt(numSharesHex);
+
+  // Calculate: rsup_mint_amt = numShares * pricePerShare / 1e18 / 1e18
+  // (assuming both values are in 18 decimals)
+  const rsupMintAmt = Number((numShares * pricePerShare) / BigInt(10 ** 18) / BigInt(10 ** 18));
+
+  return rsupMintAmt;
+};
 
 const CrvusdSupply = () => {
   const [supplyData, setSupplyData] = useState(null);
@@ -22,11 +66,12 @@ const CrvusdSupply = () => {
         setError(null);
 
         // Fetch all data points concurrently
-        const [marketsRes, pegkeepersRes, priceRes, ybRes] = await Promise.all([
+        const [marketsRes, pegkeepersRes, priceRes, ybRes, rsupMintAmt] = await Promise.all([
           fetch(MARKETS_API_URL),
           fetch(PEGKEEPERS_API_URL),
           fetch(PRICE_API_URL),
           fetch(YB_API_URL),
+          fetchRsupMintAmt(),
         ]);
 
         if (!marketsRes.ok || !pegkeepersRes.ok || !priceRes.ok || !ybRes.ok) {
@@ -50,7 +95,7 @@ const CrvusdSupply = () => {
           0
         );
 
-        const totalSupply = borrowed + pegkeeperReserves + ybDebt + RSUP_MINT_AMT;
+        const totalSupply = borrowed + pegkeeperReserves + ybDebt + rsupMintAmt;
 
         const peg = priceData.data.usd_price;
         const lastUpdated = new Date();
@@ -61,13 +106,12 @@ const CrvusdSupply = () => {
           pegkeeperReserves,
           peg,
           ybDebt,
-          rsupMintAmt: RSUP_MINT_AMT,
+          rsupMintAmt,
           lastUpdated,
         });
 
       } catch (err) {
         console.error("Failed to fetch crvUSD data:", err);
-        // Always set the error state on failure, for any environment
         setError("Could not retrieve crvUSD supply data.");
       } finally {
         setLoading(false);
@@ -130,4 +174,3 @@ const CrvusdSupply = () => {
 };
 
 export default CrvusdSupply;
-
