@@ -6,6 +6,8 @@ import rehypeKatex from 'rehype-katex';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+const SITE_DOMAIN = 'knowledge.curve.finance';
+
 const config: Config = {
   title: 'Curve Knowledge Hub',
   tagline: 'Everything you need to know about Curve',
@@ -22,7 +24,7 @@ const config: Config = {
     ],
 
   // Set the production url of your site here
-  url: 'https://docs.curve.finance',
+  url: `https://${SITE_DOMAIN}`,
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -193,6 +195,10 @@ const config: Config = {
   ],
 
   plugins: [
+    'docusaurus-plugin-plausible',
+    {
+      domain: SITE_URL,
+    },
     function latestAnnouncement() {
       return {
         name: 'latest-announcement-client-module',

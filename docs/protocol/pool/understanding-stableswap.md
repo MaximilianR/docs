@@ -237,11 +237,7 @@ Curve’s Basepool-Metapool architecture offers distinct benefits for liquidity 
 | <img src="/img/logos/arbitrum.svg" alt="ARB" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Arbitrum** | [**USDC.e/USD₮**](https://curve.finance/dex/#/arbitrum/pools/2pool/deposit) |
 | <img src="/img/logos/arbitrum.svg" alt="ARB" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Arbitrum** | [**FRAX/USDC.e**](https://curve.finance/dex/#/arbitrum/pools/factory-v2-41/deposit) |
 | <img src="/img/logos/optimism.svg" alt="OP" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Optimism** | [**DAI/USDC.e/USDT**](https://curve.finance/dex/#/optimism/pools/3pool/deposit) |
-| <img src="/img/logos/polygon.svg" alt="MATIC" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Polygon** | [**amDAI/amUSDC/amUSDT**](https://curve.finance/dex/#/polygon/pools/aave/deposit) |
-| <img src="/img/logos/avalanche.svg" alt="AVAX" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Avalanche** | [**avDAI/avUSDC/avUSDT**](https://curve.finance/dex/#/avalanche/pools/aave/deposit) |
 | <img src="/img/logos/gnosis.svg" alt="GNO" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Gnosis** | [**WXDAI/USDC/USDT**](https://curve.finance/dex/xdai/pools/3pool/deposit/) |
-| <img src="/img/logos/fantom.svg" alt="FTM" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Fantom** | [**gDAI/gUSDC/gfUSDT**](https://curve.finance/dex/#/fantom/pools/geist/deposit) |
-| <img src="/img/logos/fantom.svg" alt="FTM" style={{height: '1.2em', verticalAlign: 'middle'}} /> **Fantom** | [**DAI/USDC**](https://curve.finance/dex/#/fantom/pools/2pool/deposit) |
 
 ---
 
