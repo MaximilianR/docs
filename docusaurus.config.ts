@@ -195,10 +195,12 @@ const config: Config = {
   ],
 
   plugins: [
-    'docusaurus-plugin-plausible',
-    {
-      domain: SITE_URL,
-    },
+    [
+      'docusaurus-plugin-plausible',
+      {
+        domain: SITE_DOMAIN,
+      },
+    ],
     function latestAnnouncement() {
       return {
         name: 'latest-announcement-client-module',
