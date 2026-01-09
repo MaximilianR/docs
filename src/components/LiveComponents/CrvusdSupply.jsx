@@ -13,8 +13,6 @@ const YB_API_URL = 'https://prices.curve.finance/v1/crvusd/yield_basis/ethereum/
 const RPC_URL = 'https://eth.llamarpc.com';
 const RSUP_CONTRACT = '0xC32B0Cf36e06c790A568667A17DE80cba95A5Aad';
 const RSUP_HOLDER = '0x21862cA8d044c104ac9EB728c86Bc38B8625BeCD';
-
-// Function selectors (first 4 bytes of keccak256 hash of function signature)
 const PRICE_PER_SHARE_SELECTOR = '0x99530b06'; // keccak256("pricePerShare()")
 const BALANCE_OF_SELECTOR = '0x70a08231';      // keccak256("balanceOf(address)")
 
@@ -48,7 +46,6 @@ const fetchRsupMintAmt = async () => {
   const numShares = BigInt(numSharesHex);
 
   // Calculate: rsup_mint_amt = numShares * pricePerShare / 1e18 / 1e18
-  // (assuming both values are in 18 decimals)
   const rsupMintAmt = Number((numShares * pricePerShare) / BigInt(10 ** 18) / BigInt(10 ** 18));
 
   return rsupMintAmt;
