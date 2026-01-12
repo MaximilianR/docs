@@ -1,4 +1,5 @@
 {
+    "_instructions": "This is the source of truth for deployments.json. After editing this file, run 'npm run sync-deployments' to sync it to src/data/deployments.json and static/deployments.json",
     "_explorers": {
         "ethereum": "https://etherscan.io/address/",
         "arbitrum": "https://arbiscan.io/address/",
@@ -136,6 +137,7 @@
       "flash-lender": "0x26dE7861e213A5351F6ED767d00e0839930e9eE1",
       "leverage-zap-1inch": "0x3294514B78Df4Bb90132567fcf8E5e99f390B687",
       "leverage-zap-odos": "0xc5898606bdb494a994578453b92e7910a90aa873",
+      "leverage-zap-odos-v3": "0xC8E8430dc7Cb23C32543329acCC68c9055C23e18",
       "pegkeepers": {
         "pegkeeper-regulator": "0x36a04CAffc681fa179558B2Aaba30395CDdd855f",
         "usdc": "0x9201da0D97CaAAff53f01B2fB56767C7072dE340",
@@ -150,7 +152,8 @@
       "vault-implementation": "0xc014F34D5Ba10B6799d76b0F5ACdEEe577805085",
       "gauge-implementation": "0x79D584d2D49eC8CE8Ea379d69364b700bd35874D",
       "pool-price-oracle-implementation": "0xC455e6c7936C2382f04306D329ABc5d36444D3F8",
-      "monetary-policy-implementation": "0x4863c6dF17dD59311B7f67E694DD835ADC87f2d3"
+      "monetary-policy-implementation": "0x4863c6dF17dD59311B7f67E694DD835ADC87f2d3",
+      "leverage-zap-odos-v3": "0xC8E8430dc7Cb23C32543329acCC68c9055C23e18"
     },
     "scrvusd": {
       "vault": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
@@ -234,7 +237,8 @@
       "vault-implementation": "0x104e15102E4Cf33e0e2cB7C304D406B523B04d7a",
       "pool-price-oracle-implementation": "0x57390a776A2312eF8BFc25e8624483303Dd8DfF8",
       "monetary-policy-implementation": "0x0b3536245faDABCF091778C4289caEbDc2c8f5C1",
-      "odos-leverage-zap": "0xb7b240cfa985306563a301bc417bc9715059a117"
+      "odos-leverage-zap": "0xb7b240cfa985306563a301bc417bc9715059a117",
+      "odos-leverage-zap-v3": "0xFE02553d3Ba4c3f39F36a4632F91404DF94b9AE2"
     }
   },
   "aurora": {
@@ -912,7 +916,8 @@
       "vault-implementation": "0xc1DB00a8E5Ef7bfa476395cdbcc98235477cDE4E",
       "pool-price-oracle-implementation": "0x0cD5A1e9E19Af1f1b910Ac3C3452A16B2B37155b",
       "monetary-policy-implementation": "0x86D347cE5f1E6f7Ef4Da00FB7c8d31fBD16996F0",
-      "llamalend-leverage-zap": "0x37c5ab57af7100bdc9b668d766e193ccbf6614fd"
+      "llamalend-leverage-zap": "0x37c5ab57af7100bdc9b668d766e193ccbf6614fd",
+      "odos-leverage-zap-v3": "0x3294514B78Df4Bb90132567fcf8E5e99f390B687"
     }
     },
     "gnosis": {
@@ -1494,7 +1499,8 @@
       "vault-implementation": "0x3B1DF11b96b2F5525aBe75eebeFb1ce0928d2411",
       "pool-price-oracle-implementation": "0x227c9AD884e0E32a698FB38ba0511eE36fA92b7d",
       "monetary-policy-implementation": "0xa2294769e9CFA9Fd029030F7be94E2602821677B",
-      "llamalend-leverage-zap": "0x273e44B9a1841857d9360e8792bB59f9e1FfE9Da"
+      "llamalend-leverage-zap": "0x273e44B9a1841857d9360e8792bB59f9e1FfE9Da",
+      "odos-leverage-zap-v3": "0xBFab8ebc836E1c4D81837798FC076D219C9a1855"
     }
   },
   "plasma": {
@@ -1804,7 +1810,8 @@
       "vault-implementation": "0x837fD0c38792620aC871055B2f43D3F61809e0f2",
       "pool-price-oracle-implementation": "0x271eA597a95aF4f20FA61B0D77cB38E2fBBe8Ed9",
       "monetary-policy-implementation": "0xDa39894132ADC64E7d3B5Ca20B85C9bfb2b494db",
-      "llamalend-leverage-zap": "0x5552b631e2aD801fAa129Aacf4B701071cC9D1f7"
+      "llamalend-leverage-zap": "0x5552b631e2aD801fAa129Aacf4B701071cC9D1f7",
+      "odos-leverage-zap-v3": "0x0fE38dCC905eC14F6099a83Ac5C93BF2601300CF"
     }
   },
   "stable": {
