@@ -14,11 +14,11 @@ As with all Curve AMM pools, providing liquidity in FXSwap is completely passive
 
 ## Why FXSwap?
 
-**Cryptoswap** pools are designed to be entirely self-sufficient, relying on market volatility and trading fees to naturally rebalance liquidity around the market price. This model works exceptionally well for volatile assets (like `ETH/CRV`) where price swings are frequent enough to generate the fees needed to move the center of liquidity.
+**Cryptoswap** pools are designed to be entirely self-sufficient, relying on trading volumes and swap fees to naturally rebalance liquidity around the market price. This model works well for assets where the Cryptoswap pool is the dominant liquidity pool for tokens, and where price discovery happens (e.g., CVX, YB, RSUP, etc).
 
-However, for asset pairs with **lower volatility**, the organic volatility might not be sufficient to rebalance the pool quickly enough.
+However, for asset pairs where price discovery is mostly happening elsewhere, (e.g., forex, BTC, ETH, etc) the pool needs to quickly rebalance and stay balanced around the current market price.  This is why **FXSwap** pools were created.
 
-**FXSwap** solves this by introducing **Refuels** (Donations). This mechanism allows projects to "fast-track" the rebalancing process using external incentives rather than waiting for accumulated trading profits. This ensures the pool remains efficient even during periods of low volatility.
+**FXSwap** does this by introducing **Refuels**. This mechanism allows projects to "fast-track" the rebalancing process using external incentives rather than waiting for accumulated trading profits. This ensures the pool remains efficient and balanced around the current price even during periods of low volatility.
 
 :::info
 **Note:** As FXSwap architecture is derived from these two predecessors, we recommend reviewing their documentation first. See [Stableswap explainer](understanding-stableswap.md) and [Cryptoswap explainer](understanding-cryptoswap.md).
@@ -53,9 +53,11 @@ Because FXSwap pools utilize donations to maintain efficiency, they are best sui
 
 It is generally not recommended to use FXSwap for primary price discovery. For example, YieldBasis utilizes FXSwap for its `BTC/crvUSD` pools (established assets tracking external prices), but uses a standard Cryptoswap pool for `YB/crvUSD` (the primary market for its governance token).
 
-## Refuels (Donations)
+## Refuels
 
-Refuels (termed `donations` in the smart contracts) are LP tokens deposited into the pool specifically to subsidize rebalancing. The core premise is that liquidity is deepest when it's balanced, therefore, more balanced liquidity attracts higher volumes and profits for LPs; therefore, Refuels are an expense that is offset by higher aggregate returns for LPs.
+Refuels are LP tokens deposited into the pool specifically to subsidize rebalancing. The core premise is that liquidity is deepest when it's balanced, therefore, more balanced liquidity attracts higher volumes and profits for LPs; therefore, Refuels are an expense that is offset by higher aggregate returns for LPs.  
+
+Refuels are similar to market making fees, however instead of requiring trusting a third party, refuels are completely transparent for your team and LPs, keeping the pool balanced, and trustlessly optimizing liquidity depth and slippage for traders of your asset.
 
 **Key Mechanics:**
 
@@ -119,9 +121,9 @@ Yes. FXSwap pools track the total refuel amount within an unlock period (default
     -  **New State:** Total remaining is \$400 (old) + \$1400 (new) = \$1800.
 7.  **Day 4-9:** The \$1800 remaining refuels unlock at a rate of \$300/day.
 
-### Can I use FXSwap without Refuels, or use Refuels only as a last resort?
+### Can I use FXSwap without Refuels, or use Refuels only as a last resort instead of a Cryptoswap pool?
 
-Yes, but be aware that FXSwap pools remove the `gamma` parameter for gas optimization. Without Refuels, liquidity may drift out of balance faster than in standard Cryptoswap pools if trading volume is low.
+Yes, but be aware that FXSwap pools use the simpler Stableswap invariant (no `gamma`), so there is less fine tuning of the liquidity bonding curve available.
 
 ---
 
