@@ -49,7 +49,7 @@ In this example most of the pool's liquidity (e.g., \$40M out of \$80M total) is
     - Approx. 19.98M crvUSD is withdrawn
     - The price increases to 1.002 USDC per crvUSD
 
-3.  The pool is now imbalanced, it would only take a user selling 9M USDC to push the price up another 0.002.  The imbalance also creates an **arbitrage opportunity**: traders are now incentivized to swap crvUSD back into the pool to get USDC at a slight discount, which naturally pushes the pool back toward a 50/50 balance.
+3.  The pool is now imbalanced, it would only take a user selling 9M USDC to push the price up another 0.002.  The imbalance also creates an **arbitrage opportunity**: traders are now incentivized to swap crvUSD back into the pool to get USDC at a slight discount, which naturally pushes the pool back toward a 50/50 balance.  *Assuming the USDC can be redeemed for its underlying $1 of value*.
 
 Stableswap pools function effectively even when heavily imbalanced. Depending on the **Amplification Coefficient** (`A`), pools can maintain close to 1:1 pricing even under significant imbalance. If the imbalance causes a price deviation from the peg, it creates an arbitrage opportunity. This incentivizes traders to rebalance the pool, with each swap generating fees for liquidity providers (LPs).
 
@@ -76,7 +76,7 @@ Stableswap pools support up to 8 assets in a single pool. These can be a range o
 - **Standard**: Normal stable assets. For a USD pool, this includes tokens like crvUSD or USDC. For a BTC pool, this includes WBTC, tBTC, or cbBTC.
 - **Rebasing**: Assets where yield is distributed by automatically increasing the token balance in the user's wallet (e.g., stETH).
 - **Oracle**: Assets whose underlying value increases relative to the peg, utilizing an external oracle to track the exchange rate. This is used for yield-bearing assets that are not ERC-4626 vaults (e.g., wstETH).
-- **ERC-4626**: Also known as **Tokenized Vaults**. These tokens increase in value over time and utilize the standard `convertToAssets` function to track value. They function similarly to Oracle assets but require no configuration due to their standardized structure.
+- **ERC-4626**: Also known as **Tokenized Vaults**. These tokens increase in value over time and utilize the standard `convertToAssets` function to track value. They function similarly to Oracle assets but require no configuration due to their standardized structure.  *Note: these vaults should be strictly increasing in value over time.*
 
 Curve allows these different asset types to be integrated into a single pool seamlessly. For example, a valid pool could contain:
 
@@ -163,7 +163,7 @@ For example, in a WETH/wstETH pool, the oracle reads the `stEthPerToken()` funct
 
 **Notable Scenarios:**
 
-- **ERC-4626 + Oracle:** If pairing an ERC-4626 vault (e.g., sfrxETH) with an Oracle asset (e.g., wstETH), the Oracle asset must normalize its price to the underlying base unit (1 ETH) to match the vault's behavior.
+- **ERC-4626 + Oracle:** If pairing an ERC-4626 vault (e.g., sfrxETH) with an Oracle asset (e.g., wstETH), the Oracle asset must normalize its price to the underlying `asset` the vault is configured for (e.g., 1 ETH).
 - **Oracle + Oracle:** If pairing two Oracle assets (e.g., rETH and wstETH), it is best practice to normalize both to the underlying base unit (e.g., 1 ETH, 1 USD, etc), though direct conversion oracles are possible.
 
 ### Oracle Limitations
@@ -176,7 +176,7 @@ While some protocols have attempted this, and it can be successful (e.g., [Spect
 
 Every time the oracle pushes a new price, the center of liquidity changes, creating imbalances in the pool, these imbalances mean assets get sold at discounts, causing losses for LPs. For volatile assets, these frequent changes can accumulate into significant losses for LPs. For LPs to be profitable, you need either:
 
-1. Very low volatility assets (yield-bearing assets), e.g., scrvUSD, sUSDS, wstETH.
+1. Very low volatility pairs, e.g., scrvUSD/USDC, sUSDS/crvUSD, wstETH/WETH, etc.
 2. Extra incentives to offset any LP losses. If considering this route, please look into [FXSwap](understanding-fxswap.md).
 
 #### **Oracle Dependency**
@@ -249,9 +249,8 @@ Curve’s Basepool-Metapool architecture offers distinct benefits for liquidity 
 
 * **Expanded Pool Capacity:** Pools can now support up to **8 tokens** (previously limited to 4 in many factory implementations).
 * **New Asset Types:** Native support was added for **ERC-4626** vaults (e.g., sDAI) and **Oracle-based** tokens (e.g., wstETH), simplifying the integration of yield-bearing assets.
-* **WETH Enforcement:** The protocol removed support for raw ETH to eliminate specific read-only reentrancy vectors. All ETH pools now strictly utilize **WETH** to ensure maximum security.
 * **Dynamic Fees:** The implementation includes the **Offpeg Fee Multiplier** logic natively, allowing fees to scale based on pool imbalance.
-* **EMA Oracles:** Pools now include built-in, manipulation-resistant Exponential Moving Average (EMA) oracles, allowing other protocols to safely query the pool's price.
+* **EMA Oracles:** Pools now include built-in, manipulation-resistant Exponential Moving Average (EMA) oracles, allowing other protocols to safely query the pool's price, if the pool holds sufficient liquidity.
 
 ---
 
