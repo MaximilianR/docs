@@ -33,7 +33,7 @@ This contract contains **view-only external methods** which can be gas-inefficie
             @notice Calculate the current input dx given output dy
             @dev Index values can be found via the `coins` public getter method
             @param i Index value for the coin to send
-            @param j Index valie of the coin to recieve
+            @param j Index value of the coin to receive
             @param dy Amount of `j` being received after exchange
             @return Amount of `i` predicted
             """

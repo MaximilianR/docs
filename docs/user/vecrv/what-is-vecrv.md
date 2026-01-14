@@ -19,7 +19,7 @@ Holding veCRV unlocks several important benefits:
 
 - [Earn Protocol Fees:](./revenue.md) veCRV holders receive a share of trading fees and a portion of interest from Curve's stablecoin markets.
 - [Boosted CRV Rewards:](./boosting.md) If users provide liquidity to Curve pools, holding veCRV can boost their CRV rewards.
-- [Governance:]((./faq.md)) veCRV gives users voting power in the Curve DAO, including on proposals and gauge weight votes that determine CRV emissions.
+- [Governance:](./faq.md) veCRV gives users voting power in the Curve DAO, including on proposals and gauge weight votes that determine CRV emissions.
 
 
 ## How veCRV Works

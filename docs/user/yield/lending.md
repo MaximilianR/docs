@@ -22,7 +22,7 @@ When you lend out your assets on Llamalend, you deposit them into a **lending ma
 
 Interest rates on Llamalend are **dynamic** and change based on supply and demand. High demand for borrowing means higher interest for lenders; low demand means lower interest.
 
-todo maybe a little yield calculator here
+<!-- todo maybe a little yield calculator here -->
 
 ## Earning Yield as a Lender
 

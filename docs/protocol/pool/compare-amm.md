@@ -21,7 +21,7 @@ While other AMMs force liquidity providers (LPs) to actively manage positions by
 For protocols, Curve offers lower maintenance requirements with no need to educate users on range management. It provides better user experience through consistent liquidity regardless of market conditions, higher TVL retention as LPs don't abandon positions during volatility, and proven reliability across multiple market cycles.
 
 :::info
-For a more technical comparison of Stableswap and Cryptoswap algorithms, see: <a href="https://docs.curve.finance/cryptoswap-exchange/in-depth/" target="_blank" rel="noopener noreferrer">Stableswap vs. Cryptoswap</a>
+For a general overview of Stableswap and Cryptoswap algorithms, see: [Stableswap vs. Cryptoswap](/user/dex/stableswap-vs-cryptoswap) or deep dive into how they work: [Understanding Stableswap](./understanding-stableswap.md), [Understanding Cryptoswap](./understanding-cryptoswap.md), [Understanding FXSwap](./understanding-fxswap.md)
 :::
 
 <figure>

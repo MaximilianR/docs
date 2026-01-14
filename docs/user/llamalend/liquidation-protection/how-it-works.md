@@ -40,7 +40,7 @@ This turns the liquidation experience on its head. A sudden, irreversible liquid
 :::important
 **The Golden Rule**: Monitor your health constantly. As long as it's above 0, you're protected from full liquidation.
 
-For answers to common questions, see the [FAQ](./faq.md).
+For answers to common questions, see the [FAQ](../faq.md).
 :::
 
 

@@ -27,7 +27,7 @@ The liquidation protection is a very unique and novel feature and integral to un
 
 ## Borrow Rates
 
-When users borrow crvUSD, they pay interest on their loan's debt based on the current **borrow rate**. Interest rates mechanics are an essential tool to make ensure for the stability of crvUSD.
+When users borrow crvUSD, they pay interest on their loan based on the current **borrow rate**. These dynamic interest rates help maintain the stability of crvUSD.
 
 <!-- could add a chart of crvusd price here -->
 
