@@ -29,7 +29,7 @@ Additionally, Curve developed crvUSD, a decentralized CDP USD stablecoin, and Ll
 
 ---
 
-Check out the other sections of the documentation for more non-user stuff:
+Check out the other sections of the documentation for technical and protocol information:
 
 <BadgeGrid
   cards={[

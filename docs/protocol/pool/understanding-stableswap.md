@@ -256,54 +256,6 @@ Curve’s Basepool-Metapool architecture offers distinct benefits for liquidity 
 
 ## Mathematical Foundation
 
-Stableswap's bonding curve is a sophisticated **combination of a linear invariant and a constant product invariant**. Understanding these building blocks helps explain how Stableswap achieves low slippage for similarly-priced assets.
-
-A linear invariant is described as $x + y = C$, where $x$ and $y$ are pooled tokens and $C$ is the invariant constant. This formula is known as the **constant sum formula** and produces a linear straight line when graphed. The key property is that **the price remains constant regardless of pool balances**, resulting in zero slippage. However, this also means pools can be completely drained of one asset.
-
-The Uniswap AMM uses a constant product invariant: $x \cdot y = k$, where $x$ and $y$ are pooled tokens and $k$ is the invariant constant. This formula ensures there is always liquidity available, but the price changes with each trade, resulting in slippage that increases as the pool becomes more imbalanced.
-
-Stableswap combines both invariants to get the benefits of low slippage near the peg while maintaining liquidity protection. The initial combination is:
-
-$$
-(x + y) + (x \cdot y) = D + \left(\frac{D}{n}\right)^n
-$$
-
-where $D$ is the total value of tokens in the pool and $n$ is the number of tokens (typically 2 for a two-token pool).
-
-
-However, this basic combination doesn't provide enough amplification. To make the curve more effective, the sum invariant needs to be multiplied by an amplification factor $\chi$:
-
-$$
-\chi(x + y) + (x \cdot y) = \chi D + \left(\frac{D}{n}\right)^n
-$$
-
-The multiplier $\chi$ amplifies the low-slippage portion of the equation, making the bonding curve more linear when pools are balanced.
-
-The amplification factor $\chi$ is not constant but dynamically adjusts based on the pool's balance:
-
-$$
-\chi = \frac{A \cdot x \cdot y}{\left(D/n\right)^n}
-$$
-
-where $A$ is the fixed **amplification coefficient** parameter. When pools are **balanced** (e.g., $x = 50$, $y = 50$), $\chi = A$, maximizing the linear behavior. When pools are **unbalanced**, $\chi$ decreases, causing the curve to behave more like the constant product formula. As pools become more unbalanced, $\chi \rightarrow 0$, and the curve approaches $x \cdot y = k$.
-
-Substituting the dynamic $\chi$ into the combined invariant and simplifying, we arrive at the final Stableswap equation:
-
-$$
-\boxed{An^n\sum x_i + D = ADn^n + \frac{D^{n+1}}{n^n \prod x_i}}
-$$
-
-For a two-token pool ($n=2$), this becomes:
-
-$$
-4A(x + y) + D = 4AD + \frac{D^3}{4xy}
-$$
-
-This equation ensures **low slippage** when pools are balanced (high $\chi$), **liquidity protection** when pools are imbalanced (low $\chi$, approaching constant product), and a **smooth transition** between these two behaviors based on the pool's balance. The amplification coefficient $A$ is a protocol parameter that controls how tightly liquidity is concentrated around the peg. Higher values of $A$ create a flatter curve (more linear) when balanced, while lower values create a more gradual transition to the constant product curve.
-
-
-## Mathematical Foundation
-
 Stableswap's bonding curve is a sophisticated **combination of a linear invariant and a constant product invariant**. Understanding these building blocks explains how Stableswap achieves low slippage for similarly-priced assets.
 
 **1. The Constant Sum Invariant (Zero Slippage)**

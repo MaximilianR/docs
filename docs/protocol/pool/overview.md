@@ -21,7 +21,7 @@ In the background, new liquidity pools are deployed by making use of a **Pool Fa
 
 - **Stableswap** — for pegged or correlated assets (e.g., USDC/USDT, stETH/ETH)  
 - **Cryptoswap** — for more volatile or uncorrelated assets (e.g., ETH/USDC)
-- **FXSwap** - for lower-volatililty assets like Forex pairs, or lower volatility Crypto pairs like BTC/ETH.
+- **FXSwap** - for lower-volatility assets like Forex pairs, or lower volatility Crypto pairs like BTC/ETH.
 
 Once a factory is deployed, anyone can create a new pool of that type — either through the Curve UI or directly on-chain.
 
@@ -65,7 +65,7 @@ Choose a **Cryptoswap pool** when your assets are more volatile or uncorrelated�
 
 
 ### FXSwap
-**FXSwap** is designed for volatile and uncorrelated assets with some additional features. (todo)
+**FXSwap** is designed for uncorrelated low-volatility asset pairs like Forex (e.g., crvUSD/EURC) or lower volatility crypto pairs (e.g., BTC/ETH). It combines Stableswap's mathematical efficiency with Cryptoswap's dynamic rebalancing framework, plus a "refueling" mechanism that allows projects to fast-track rebalancing with external incentives. Learn more about [Understanding FXSwap](./understanding-fxswap.md).
 
 ---
 
