@@ -84,7 +84,12 @@ const CrvusdSupply = () => {
           (acc, market) => acc + Number(market.total_debt),
           0
         );
-
+        const collateralUsd = marketsData.chains.ethereum.data.reduce(
+          (acc, market) => acc + Number(market.collateral_amount_usd) + Number(market.stablecoin_amount_usd),
+          0
+        );
+        const collateralRatio =  collateralUsd / borrowed * 100;
+        console.log({ borrowed, collateralUsd, collateralRatio });
         const ybDebt = Number(ybData?.data?.yb_total_amm_debt ?? 0);
 
         const pegkeeperReserves = pegkeepersData.keepers.reduce(
@@ -100,6 +105,8 @@ const CrvusdSupply = () => {
         setSupplyData({
           totalSupply,
           borrowed,
+          collateralUsd,
+          collateralRatio,
           pegkeeperReserves,
           peg,
           ybDebt,
@@ -138,6 +145,15 @@ const CrvusdSupply = () => {
         <tr>
           <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> crvUSD Borrowed (Minted)</td>
           <td>{formatNumber(supplyData?.borrowed, 3)}</td>
+        </tr>
+        <tr>
+          <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> crvUSD Collateralization</td>
+          <td>
+            {supplyData?.collateralRatio.toFixed(1)}%   
+            <span style={{ color: 'var(--ifm-color-emphasis-500)' , marginLeft: '0.4em', fontWeight: 'normal' }}>
+              (${formatNumber(supplyData?.collateralUsd, 3)})
+            </span>
+          </td>
         </tr>
         <tr>
           <td><img src={CrvusdLogo} className="subheading-inline-logo" alt="crvUSD" /> Deployed PegKeeper Reserves</td>
