@@ -227,6 +227,9 @@ For example, in a WETH/wstETH pool, the oracle reads the `stEthPerToken()` funct
 
 When integrating an oracle, the safety of the pool depends entirely on the oracle’s resistance to manipulation and the behavior of its updates.
 
+
+**Best Practices:**
+
 :::tip-green
 
 * **Prefer value-accruing assets**: Assets whose value per token increases slowly and predictably (such as most ERC-4626 vaults or liquid staking derivatives, e.g., wstETH, scrvUSD) are best suited for oraclized Stableswap pools.
@@ -234,6 +237,8 @@ When integrating an oracle, the safety of the pool depends entirely on the oracl
 * **Ensure consistent units**: Oracle outputs must be normalized to the same base unit as the rest of the pool (for example, ETH or USD) and returned with exactly 18 decimals.
 
 :::
+
+**Dangers:**
 
 :::danger
 
