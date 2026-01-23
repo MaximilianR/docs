@@ -256,17 +256,21 @@ Since Stableswap centers liquidity around a specific value `p`, any update to th
 
 ### 1. The Oracle Sandwich (2× Fee Rule)
 
-When an oracle updates the pool’s effective value `p`, the swap curve shifts instantly. If that shift exceeds the cost of trading, an attacker can profit by trading immediately before and after the update.
+The most critical risk in Stableswap-NG oracles is the "Oracle Sandwich." When an oracle updates the price `p` on-chain, the pool's internal exchange rate shifts instantly. 
 
-To prevent this, the following **safe limit rule** must be respected:
+If the price shift is larger than the cost of swapping (fees), an attacker can guarantee a profit and cause a loss for LPs by: 
+
+1. **Front-running:** Buying the asset *before* the oracle update.
+2. **Oracle Update:** The oracle transaction executes, shifting the price up. 
+3. **Back-running:** Selling the asset *after* the update at the new higher price. 
+
+To prevent this, you must adhere to the **Safe Limit Rule**: 
 
 $$
 \Delta P_{oracle} \le 2 \times Fee_{pool}
-$$
+$$ 
 
-The oracle rate used by the pool should never change by more than **2× the pool’s base fee in a single effective update**. Multiple effective updates must not occur within the same block.
-
-If the true value changes by more than this amount, the oracle must apply smoothing so that the pool only converges gradually.
+**The oracle price used by the pool should never change by more than 2x the pool fee in a single block.** For example, if your base pool fee is 0.04%, the oracle should not shift by more than 0.08% per block. If the market moves 5%, your oracle contract should "smooth" this movement over many blocks.
 
 ### 2. Dynamic Fees Do Not Protect Against Oracle Attacks
 
