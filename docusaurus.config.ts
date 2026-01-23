@@ -184,7 +184,7 @@ const config: Config = {
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
           admonitions: {
-            keywords: ['note', 'tip', 'info', 'caution', 'danger', 'example'],
+            keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'danger', 'example'],
           },
         },
         theme: {
@@ -238,7 +238,7 @@ const config: Config = {
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
         admonitions: {
-          keywords: ['note', 'tip', 'info', 'caution', 'danger', 'example'],
+          keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'danger', 'example'],
         },
       },
     ],

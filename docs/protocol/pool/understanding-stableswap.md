@@ -132,59 +132,6 @@ The chart below demonstrates how this mechanism functions. Note that base fees a
 
 ---
 
-## Vault Assets & Assets with Oracles
-
-These asset types are to allow the assets with underlying accruing interest to be added and work natively in a Stableswap pool.  The vault or oracle let's the pool know the true value of the underlying asset against other assets in the pool, so as it accrues interest, the pool stays balanced around the true value price of each asset.
-
-Tho achieve this, the Stablswap pool needs to shift it's center of liquidity (balanced price) over time as the oracle or vault asset accrues interest.  Let's have a look at how Stableswap deals with this in practice.  Here is the live [crvUSD/sUSDe pool](https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-169/deposit) over the past year, note how as the fundamental value of sUSDe increases, Stableswap changes the center of liquidity to this new price:
-
-<figure style={{ textAlign: 'center' }}>
-  <ThemedVideo
-    alt="crvUSD-sUSDe Pool"
-    sources={{
-      light: '/img/protocol/amm/stableswap-changing-center-light.mp4',
-      dark: '/img/protocol/amm/stableswap-changing-center-dark.mp4',
-    }}
-    style={{ maxWidth: '960px', width: '100%', display: 'block', margin: '0 auto' }}
-  />
-</figure>
-
-### Oracle Specification
-
-While ERC-4626 vaults configure their oracles automatically, the **Oracle** asset type requires manual setup. This allows any token to be used, provided an accompanying oracle can be specified that reports the asset's value relative to the pool's base unit (must be 18 decimals).
-
-For example, in a WETH/wstETH pool, the oracle reads the `stEthPerToken()` function. This tells the pool that 1 wstETH is currently worth ~1.12 ETH, ensuring the pool balances liquidity around 1.12 rather than 1.0.
-
-**Configuration Example (wstETH):**
-
-- **Token**: [0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0](https://etherscan.io/token/0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0) - wstETH token contract
-- **Oracle**: [0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0](https://etherscan.io/token/0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0) - also wstETH token contract because the oracle is in the same contract (internal)
-- **Function**: stEthPerToken() - This function shows the value of 1 wstETH as stETH
-
-**Notable Scenarios:**
-
-- **ERC-4626 + Oracle:** If pairing an ERC-4626 vault (e.g., sfrxETH) with an Oracle asset (e.g., wstETH), the Oracle asset must normalize its price to the underlying `asset` the vault is configured for (e.g., 1 ETH).
-- **Oracle + Oracle:** If pairing two Oracle assets (e.g., rETH and wstETH), it is best practice to normalize both to the underlying base unit (e.g., 1 ETH, 1 USD, etc), though direct conversion oracles are possible.
-
-### Oracle Limitations
-
-Since Stableswap is highly efficient around a single price and can be guided by an external oracle, many developers have considered using this design to price volatile asset pairs (e.g., Forex pools like EUR/USD).
-
-While some protocols have attempted this, and it can be successful (e.g., [Spectra](https://www.spectra.finance/)), there are important considerations detailed below. We recommend investigating [Cryptoswap](understanding-cryptoswap.md) and [FXSwap](understanding-fxswap.md) pools, as they were created to directly address these use cases.
-
-#### **Every oracle update changes pool balance**
-
-Every time the oracle pushes a new price, the center of liquidity changes, creating imbalances in the pool, these imbalances mean assets get sold at discounts, causing losses for LPs. For volatile assets, these frequent changes can accumulate into significant losses for LPs. For LPs to be profitable, you need either:
-
-1. Very low volatility pairs, e.g., scrvUSD/USDC, sUSDS/crvUSD, wstETH/WETH, etc.
-2. Extra incentives to offset any LP losses. If considering this route, please look into [FXSwap](understanding-fxswap.md).
-
-#### **Oracle Dependency**
-
-This design requires a high-quality oracle. A malfunctioning, manipulated, or delayed oracle could report an incorrect price, leading to substantial losses for LPs.
-
----
-
 ## Basepools and Metapools
 
 
@@ -241,20 +188,102 @@ Curve’s Basepool-Metapool architecture offers distinct benefits for liquidity 
 
 ---
 
-## Evolution: Stableswap-NG
+## Vault Assets & Assets with Oracles
 
-**Stableswap-NG** ("Next Generation") is the updated implementation of the Stableswap algorithm, deployed in late October 2023. This version introduces several architectural improvements while maintaining the core invariant logic.
+These asset types are to allow the assets with underlying accruing interest to be added and work natively in a Stableswap pool.  The vault or oracle let's the pool know the true value of the underlying asset against other assets in the pool, so as it accrues interest, the pool stays balanced around the true value price of each asset.
 
-**Key Improvements:**
+Tho achieve this, the Stablswap pool needs to shift it's center of liquidity (balanced price) over time as the oracle or vault asset accrues interest.  Let's have a look at how Stableswap deals with this in practice.  Here is the live [crvUSD/sUSDe pool](https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-169/deposit) over the past year, note how as the fundamental value of sUSDe increases, Stableswap changes the center of liquidity to this new price:
 
-* **Expanded Pool Capacity:** Pools can now support up to **8 tokens** (previously limited to 4 in many factory implementations).
-* **New Asset Types:** Native support was added for **ERC-4626** vaults (e.g., sDAI) and **Oracle-based** tokens (e.g., wstETH), simplifying the integration of yield-bearing assets.
-* **Dynamic Fees:** The implementation includes the **Offpeg Fee Multiplier** logic natively, allowing fees to scale based on pool imbalance.
-* **EMA Oracles:** Pools now include built-in, manipulation-resistant Exponential Moving Average (EMA) oracles, allowing other protocols to safely query the pool's price, if the pool holds sufficient liquidity.
+<figure style={{ textAlign: 'center' }}>
+  <ThemedVideo
+    alt="crvUSD-sUSDe Pool"
+    sources={{
+      light: '/img/protocol/amm/stableswap-changing-center-light.mp4',
+      dark: '/img/protocol/amm/stableswap-changing-center-dark.mp4',
+    }}
+    style={{ maxWidth: '960px', width: '100%', display: 'block', margin: '0 auto' }}
+  />
+</figure>
 
 ---
 
-## Mathematical Foundation
+## Oracles
+
+### Specification Example
+
+While ERC-4626 vaults configure their oracles automatically, the **Oracle** asset type requires manual setup. This allows any token to be used, provided an accompanying oracle is specified that reports the asset’s **value per token** relative to the pool’s base unit (must return **18-decimal precision**).
+
+For example, in a WETH/wstETH pool, the oracle reads the `stEthPerToken()` function. This tells the pool that **1 wstETH represents a fixed amount of underlying ETH**, ensuring liquidity is centered around the correct value (for example, ~1.12 ETH) rather than 1.0.
+
+**Configuration Example (wstETH):**
+
+* **Token:** [0x7f39…](https://etherscan.io/token/0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0) (wstETH)
+* **Oracle:** [0x7f39…](https://etherscan.io/token/0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0) (same contract)
+* **Function:** `stEthPerToken()`
+
+---
+
+### Best Practices for Oracles
+
+When integrating an oracle, the safety of the pool depends entirely on the oracle’s resistance to manipulation and the behavior of its updates.
+
+:::tip-green
+
+* **Prefer value-accruing assets**: Assets whose value per token increases slowly and predictably (such as most ERC-4626 vaults or liquid staking derivatives, e.g., wstETH, scrvUSD) are best suited for oraclized Stableswap pools.
+* **Use rate smoothing or limits**: If the underlying asset value can change, the oracle should apply smoothing or enforce a maximum change per update so that large jumps are spread over time.  See [The Sandwich Rule](#1-the-oracle-sandwich-2-fee-rule).
+* **Ensure consistent units**: Oracle outputs must be normalized to the same base unit as the rest of the pool (for example, ETH or USD) and returned with exactly 18 decimals.
+
+:::
+
+:::danger
+
+* **Never Use Spot Prices:** Do not use the spot price from any DeFi pool, these are highly manipulatable.  TWAPs/MAs of the spot price can be OK.
+* **Never use withdrawal simulations**: Functions such as `calc_withdraw_one_coin()` or similar balance-based simulations are easily manipulable and must never be used as oracle inputs.
+* **Never Use Spot Balances:** Do not rely on spot token balances to calculate value.
+* **Avoid low-liquidity sources**: Do not derive an oracle from a market with less value than the Curve pool it secures.
+:::
+
+---
+
+## Oracle Risks & Limitations
+
+Since Stableswap centers liquidity around a specific value `p`, any update to that value directly shifts the pool’s pricing. If oracle updates are too large or too fast, liquidity providers will incur guaranteed losses.
+
+### 1. The Oracle Sandwich (2× Fee Rule)
+
+When an oracle updates the pool’s effective value `p`, the swap curve shifts instantly. If that shift exceeds the cost of trading, an attacker can profit by trading immediately before and after the update.
+
+To prevent this, the following **safe limit rule** must be respected:
+
+$$
+\Delta P_{oracle} \le 2 \times Fee_{pool}
+$$
+
+The oracle rate used by the pool should never change by more than **2× the pool’s base fee in a single effective update**. Multiple effective updates must not occur within the same block.
+
+If the true value changes by more than this amount, the oracle must apply smoothing so that the pool only converges gradually.
+
+### 2. Dynamic Fees Do Not Protect Against Oracle Attacks
+
+Stableswap-NG includes dynamic fees that increase when token balances become imbalanced. These fees are **not designed to protect against oracle-driven price shifts**.
+
+Oracle updates change the **value** of balances, not the **token amounts**. As a result, the pool may appear perfectly balanced to the fee logic while still being exploitable.
+
+### 3. Unsuitability for Volatile Assets
+
+Stableswap-NG is optimized for assets whose relative value changes slowly. It is not recommended for volatile asset pairs.
+
+Frequent oracle updates force the pool to repeatedly re-center its liquidity, which mathematically causes liquidity providers to sell the appreciating asset at a discount. Over time, this leads to persistent LP losses unless offset by higher fee generation or incentives.
+
+For volatile pairs, prefer **[Cryptoswap](understanding-cryptoswap.md)** or **[FXSwap](understanding-fxswap.md)** pools, which are designed specifically for such use cases.
+
+:::info
+Read more about best oracle practices and risks here: [MixBytes: Safe StableSwap-NG Deployment: How to Avoid Risks from Volatile Oracles](https://mixbytes.io/blog/safe-stableswap-ng-deployment-how-to-avoid-risks-from-volatile-oracles)
+:::
+
+---
+
+## Stableswap Mathematical Foundation
 
 Stableswap's bonding curve is a sophisticated **combination of a linear invariant and a constant product invariant**. Understanding these building blocks explains how Stableswap achieves low slippage for similarly-priced assets.
 
