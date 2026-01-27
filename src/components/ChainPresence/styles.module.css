@@ -2,6 +2,11 @@
   padding: var(--Spacing-lg) var(--Spacing-xxl);
 }
 
+/* Compact section for inline grids inside documentation content */
+.sectionCompact {
+  padding: var(--Spacing-md) 0;
+}
+
 /* header removed - handled in markdown */
 
 .title {
@@ -32,10 +37,16 @@
 
 .gridThree {
   grid-template-columns: repeat(3, 1fr);
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .gridFour {
   grid-template-columns: repeat(4, 1fr);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card {
