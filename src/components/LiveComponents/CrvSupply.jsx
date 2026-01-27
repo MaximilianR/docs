@@ -41,7 +41,7 @@ const CrvSupply = () => {
 
       } catch (err) {
         console.error("Failed to fetch CRV data:", err);
-        setError("Could not retrieve data.");
+        setError("Could not retrieve data.  Sometimes an Adblocker is blocking the RPC call.");
       } finally {
         setLoading(false);
       }
