@@ -107,7 +107,7 @@ export default function BadgeGrid({ cards }: BadgeGridProps): React.ReactNode {
   };
   
   return (
-    <section className={styles.section}>
+    <section className={styles.sectionCompact}>
       <div className={`${styles.grid} ${gridClass}`}>
         {cards.map((card, cardIdx) => {
           const logoPath = getLogoPath(card.logo);
