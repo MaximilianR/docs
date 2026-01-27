@@ -11,7 +11,7 @@ Curve offers a **permissionless** system for deploying liquidity pools — no DA
 
 To get started quickly, follow one of the deployment guides:
 
-<GuideCardGrid guideKeys={['deployStableswapPool', 'deployCryptoswapPool']} />
+<GuideCardGrid guideKeys={['deployStableswapPool', 'deployCryptoswapPool', 'deployFXSwapPool']} />
 
 Factories make launching pools on Curve fast, flexible, and accessible to any project—whether you're a stablecoin issuer, LST protocol, synthetic-asset platform, or any other DeFi team looking to bootstrap deep, reliable liquidity.
 
@@ -39,7 +39,7 @@ Not sure which to use? Reach out in the official Curve channels.
 
 ### Stableswap Pool
 
-Choose a **Stableswap pool** when your assets are expected to stay close or correlated in price — e.g., stablecoins (USDC/USDT), LSTs (wstETH/stETH), or yield-bearing stable assets like sDAI. 
+Choose a **Stableswap pool** when your assets are expected to stay close or correlated in price — e.g., stablecoins (USDC/USDT), LSTs (wstETH/stETH), or yield-bearing stable assets like sDAI. Learn more here: [Understanding Stableswap](understanding-stableswap.md).
 
 Stableswap-NG pools support a wide variety of token types beyond standard ERC-20 tokens. This flexibility allows you to create pools with yield-bearing tokens, rebasing tokens, and oracle-enabled tokens.
 
@@ -61,11 +61,11 @@ Stableswap-NG pools support a wide variety of token types beyond standard ERC-20
 
 
 ### Cryptoswap
-Choose a **Cryptoswap pool** when your assets are more volatile or uncorrelated—e.g., ETH/USDC or BTC/USDC. Cryptoswap pools use dynamic pricing that handles larger price swings while still retaining Curve’s efficiency advantages.
+Choose a **Cryptoswap pool** when your assets are more volatile or uncorrelated—e.g., ETH/USDC or BTC/USDC. Cryptoswap pools use dynamic pricing that handles larger price swings while still retaining Curve’s efficiency advantages. Learn more about [Understanding Cryptoswap](understanding-cryptoswap.md).
 
 
 ### FXSwap
-**FXSwap** is designed for uncorrelated low-volatility asset pairs like Forex (e.g., crvUSD/EURC) or lower volatility crypto pairs (e.g., BTC/ETH). It combines Stableswap's mathematical efficiency with Cryptoswap's dynamic rebalancing framework, plus a "refueling" mechanism that allows projects to fast-track rebalancing with external incentives. Learn more about [Understanding FXSwap](./understanding-fxswap.md).
+**FXSwap** is designed for uncorrelated low-volatility asset pairs like Forex (e.g., crvUSD/EURC) or lower volatility crypto pairs (e.g., BTC/ETH). It combines Stableswap's mathematical efficiency with Cryptoswap's dynamic rebalancing framework, plus a "refueling" mechanism that allows projects to fast-track rebalancing with external incentives. Learn more about [Understanding FXSwap](understanding-fxswap.md).
 
 ---
 
@@ -87,6 +87,6 @@ Stableswap pools on Curve support a powerful structure of **base pools** and **m
 />
 </figure>
 
-For example, the USDC/USDT pool might begin as a normal Stableswap pool. If the DAO adds it as a base pool, it can then be reused in other pools. A protocol such as Inverse can create a metapool that pairs their stablecoin $DOLA$ against the base pool, resulting in a DOLA–USDC/USDT market. Users can directly swap DOLA/USDT or DOLA/USDC through this pool.
+For example, the USDC/USDT pool might begin as a normal Stableswap pool. If the DAO adds it as a base pool, it can then be reused in other pools. A protocol such as Inverse can create a metapool that pairs their stablecoin DOLA against the base pool, resulting in a DOLA–USDC/USDT market. Users can directly swap DOLA/USDT or DOLA/USDC through this pool.
 
 This approach gives new tokens a major advantage: they can **tap into the deep, established liquidity of the base pool** instead of needing to attract all liquidity themselves **by** pairing their token against an already existing and established pool with TVL.
