@@ -9,8 +9,6 @@ export default function AuditCard({
   info
 }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipTimeout, setTooltipTimeout] = useState(null);
 
   useEffect(() => {
     // Only run on client side
@@ -43,11 +41,8 @@ export default function AuditCard({
 
     return () => {
       observer.disconnect();
-      if (tooltipTimeout) {
-        clearTimeout(tooltipTimeout);
-      }
     };
-  }, [tooltipTimeout]);
+  }, []);
 
   // Get the appropriate logo based on theme
   const getLogoPath = () => {
@@ -83,32 +78,6 @@ export default function AuditCard({
 
   return (
     <div className={styles.auditCard}>
-      {info && (
-        <div 
-          className={styles.auditCardInfoIcon} 
-          onMouseEnter={() => {
-            if (tooltipTimeout) {
-              clearTimeout(tooltipTimeout);
-            }
-            setShowTooltip(true);
-          }}
-          onMouseLeave={() => {
-            const timeout = setTimeout(() => setShowTooltip(false), 100);
-            setTooltipTimeout(timeout);
-          }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-            <path d="M12 16V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            <circle cx="12" cy="8" r="1" fill="currentColor"/>
-          </svg>
-          {showTooltip && (
-            <div className={styles.auditCardTooltip}>
-              {info}
-            </div>
-          )}
-        </div>
-      )}
       <div className={styles.auditCardHeader}>
         <div className={styles.auditCardLogo}>
           {logo ? (
@@ -129,6 +98,11 @@ export default function AuditCard({
           {auditor}
         </div>
       </div>
+      {info && (
+        <div className={styles.auditCardScope}>
+          {info}
+        </div>
+      )}
       <div className={styles.auditCardContent}>
         <div className={styles.auditCardDate}>
           <strong>Date:</strong> {date}

@@ -142,6 +142,15 @@
   flex: 1;
 }
 
+.auditCardScope {
+  font-size: var(--Typography-FontSize-sm);
+  color: var(--Text-TextColors-Secondary);
+  line-height: var(--Typography-LineHeight-relaxed);
+  margin-bottom: var(--Spacing-sm);
+  padding-top: var(--Spacing-xs);
+  border-top: 1px solid var(--Layer-2-Outline);
+}
+
 .auditCardContent {
   flex: 1;
   display: flex;
@@ -231,5 +240,10 @@
 }
 
 [data-theme='dark'] .auditCardTooltip::after {
+  border-top-color: var(--Layer-2-Outline) !important;
+}
+
+[data-theme='dark'] .auditCardScope {
+  color: var(--Text-TextColors-Secondary) !important;
   border-top-color: var(--Layer-2-Outline) !important;
 }
