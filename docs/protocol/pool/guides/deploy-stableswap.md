@@ -132,6 +132,10 @@ This is common for wrapped or staked tokens like rETH, where the rate against th
   <figcaption></figcaption>
 </figure>
 
+:::tip-green
+Swiss Stake, the service provider developing Curve's technology, offers consulting services to guide protocols and asset issuers in the design and integration of price feed oracles for StableSwap liquidity pools. Additionally, Swiss Stake provides thorough audits of client-implemented oracle solutions to ensure correctness and security. Inquiries: [inquiries@curve.finance](mailto:inquiries@curve.finance).
+:::
+
 ### Rebasing Tokens
 
 Enable the **Rebasing** option for tokens whose balances adjust automatically (e.g. stETH). These behave differently from standard ERC‑20s and require special handling in the AMM.
