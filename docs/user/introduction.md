@@ -41,7 +41,7 @@ Check out the other sections of the documentation for technical and protocol inf
     {
       title: "Developer Documentation",
       description: "Comprehensive documentation of all smart contracts — learn how they work, what they do, and how to integrate them into your applications.",
-      href: "https://docs.curve.finance/documentation-overview/"
+      href: "https://dev.curve.finance/documentation-overview/"
     },
   ]}
 />

@@ -19,7 +19,7 @@ const sections: SectionItem[] = [
   {
     title: 'Developers',
     description: 'Technical documentation for developers building integrations, understanding smart contracts, and working with Curve APIs.',
-    link: 'https://docs.curve.finance/documentation-overview/',
+    link: 'https://dev.curve.finance/documentation-overview/',
     isExternal: true,
   },
   {

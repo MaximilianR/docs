@@ -44,4 +44,4 @@ Yes, you can earn rewards with your crvUSD on Curve in a few ways:
 
 ### What chains is crvUSD available on?
 
-crvUSD is primarily minted on Ethereum, but it can be bridged and used on many other chains. See [crvUSD Chain Deployment Addresses](https://docs.curve.finance/deployments/crvusd/#crvusd-crosschain) for a full list.
+crvUSD is primarily minted on Ethereum, but it can be bridged and used on many other chains. See [crvUSD Chain Deployment Addresses](https://dev.curve.finance/deployments/crvusd/#crvusd-crosschain) for a full list.
