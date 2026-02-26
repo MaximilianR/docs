@@ -12,7 +12,7 @@ type SectionItem = {
 const sections: SectionItem[] = [
   {
     title: 'Users',
-    description: 'Learn how to use Curve DEX, provide liquidity, swap tokens, and understand yield opportunities.',
+    description: 'Swap and provide liquidity on the Curve DEX, borrow and lend with Llamalend, and participate in governance with veCRV and voting rights.',
     link: '/user/introduction',
     isExternal: false,
   },
