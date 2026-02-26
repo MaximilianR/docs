@@ -4,21 +4,13 @@ export const ALL_AUDITS = [
     id: 'dao-1',
     category: 'dao',
     auditor: 'TrailOfBits',
-    date: '31. January, 2020',
-    reportUrl: '/pdf/audits/00-ToB.pdf',
-    logo: 'tob_light.svg',
-  },
-  {
-    id: 'dao-2',
-    category: 'dao',
-    auditor: 'TrailOfBits',
     date: '10. July, 2020',
     reportUrl: '/pdf/audits/curve-dao-ToB-final.pdf',
     logo: 'tob_light.svg',
     info: 'Scope: Curve DAO Contracts'
   },
   {
-    id: 'dao-3',
+    id: 'dao-2',
     category: 'dao',
     auditor: 'MixBytes',
     date: '13. July, 2020',
@@ -27,7 +19,7 @@ export const ALL_AUDITS = [
     info: 'Scope: Curve DAO Voting Forwarder'
   },
   {
-    id: 'dao-4',
+    id: 'dao-3',
     category: 'dao',
     auditor: 'MixBytes',
     date: '22. July, 2020',
@@ -36,7 +28,7 @@ export const ALL_AUDITS = [
     info: 'Scope: Curve Voting (Aragon Voting Fork)'
   },
   {
-    id: 'dao-5',
+    id: 'dao-4',
     category: 'dao',
     auditor: 'Quantstamp',
     date: '5. August, 2020',
@@ -45,13 +37,22 @@ export const ALL_AUDITS = [
     info: 'Scope: Curve DAO Contracts'
   },
   {
-    id: 'dao-6',
+    id: 'dao-5',
     category: 'dao',
     auditor: 'ChainSecurity',
     date: '25. September, 2024',
     reportUrl: '/pdf/audits/ChainSecurity_FeeSplitter.pdf',
     logo: 'chainsecurity.jpg',
     info: 'Scope: FeeSplitter.vy'
+  },
+  {
+    id: 'dao-6',
+    category: 'dao',
+    auditor: 'ChainSecurity',
+    date: '17. September, 2025',
+    reportUrl: '/pdf/audits/ChainSecurity_Curve_Xgov_Audit.pdf',
+    logo: 'chainsecurity.jpg',
+    info: 'Scope: Curve Cross-chain Governance'
   },
 
   // DEX Audits

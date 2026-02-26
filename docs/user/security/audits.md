@@ -7,7 +7,7 @@ sidebar_label: Security Audits
 import AuditCardGrid from '@site/src/components/AuditCardGrid';
 
 
-Audits are categorized into **DAO**, **DEX**, and **Stablecoin (crvUSD) and Lending** sections. Hover over the information icon to view detailed audit scope information.
+Audits are categorized into **DAO**, **DEX**, and **Stablecoin (crvUSD) and Lending** sections.
 
 ## DAO
 
@@ -20,4 +20,3 @@ Audits are categorized into **DAO**, **DEX**, and **Stablecoin (crvUSD) and Lend
 ## Stablecoin and Lending
 
 <AuditCardGrid category="stablecoin" />
-

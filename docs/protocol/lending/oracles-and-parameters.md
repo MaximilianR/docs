@@ -28,6 +28,10 @@ Every Curve pool includes a direct built-in oracle that can be used for lending 
 
 For assets without suitable Curve pools, you can deploy custom oracles using the [custom oracle deployment guide](https://paragraph.com/@curvefi/llamalend_market_deploy#h-deploying-a-custom-priceoracle-contract). If this sounds complicated, the Curve team is happy to help with deployment - simply reach out on Telegram.
 
+:::tip-green
+Llamalend price oracles are particularly complex due to the requirements of the liquidation engine (smooth EMA feeds, crvUSD-denominated pricing, etc.). Swiss Stake, the service provider developing Curve's technology, offers consulting services to guide protocols in the design and integration of these oracles, and thorough audits of client-implemented oracle solutions to ensure correctness and security. Inquiries: [inquiries@curve.finance](mailto:inquiries@curve.finance).
+:::
+
 ## Parameters
 
 Parameter selection when creating a new lending market is the foundation for an optimally working liquidation engine and secure lending market. The process of finding optimal parameters requires a thorough analysis of historical price data for the collateral asset.

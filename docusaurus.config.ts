@@ -6,7 +6,7 @@ import rehypeKatex from 'rehype-katex';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-const SITE_DOMAIN = 'knowledge.curve.finance';
+const SITE_DOMAIN = 'docs.curve.finance';
 
 const config: Config = {
   title: 'Curve Knowledge Hub',
@@ -103,7 +103,7 @@ const config: Config = {
           activeBasePath: '/user',
         },
         {
-          href: 'https://docs.curve.finance/documentation-overview/',
+          href: 'https://dev.curve.finance/documentation-overview/',
           label: 'Developers',
         },
         {

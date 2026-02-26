@@ -192,6 +192,10 @@ Curve’s Basepool-Metapool architecture offers distinct benefits for liquidity 
 
 These asset types are to allow the assets with underlying accruing interest to be added and work natively in a Stableswap pool.  The vault or oracle let's the pool know the true value of the underlying asset against other assets in the pool, so as it accrues interest, the pool stays balanced around the true value price of each asset.
 
+:::tip-green
+Swiss Stake, the service provider developing Curve's technology, offers consulting services to guide protocols and asset issuers in the design and integration of price feed oracles for StableSwap liquidity pools. Additionally, Swiss Stake provides thorough audits of client-implemented oracle solutions to ensure correctness and security. Inquiries: [inquiries@curve.finance](mailto:inquiries@curve.finance).
+:::
+
 Tho achieve this, the Stablswap pool needs to shift it's center of liquidity (balanced price) over time as the oracle or vault asset accrues interest.  Let's have a look at how Stableswap deals with this in practice.  Here is the live [crvUSD/sUSDe pool](https://www.curve.finance/dex/ethereum/pools/factory-stable-ng-169/deposit) over the past year, note how as the fundamental value of sUSDe increases, Stableswap changes the center of liquidity to this new price:
 
 <figure style={{ textAlign: 'center' }}>
@@ -288,4 +292,8 @@ For volatile pairs, prefer **[Cryptoswap](understanding-cryptoswap.md)** or **[F
 
 :::info
 Read more about best oracle practices and risks here: [MixBytes: Safe StableSwap-NG Deployment: How to Avoid Risks from Volatile Oracles](https://mixbytes.io/blog/safe-stableswap-ng-deployment-how-to-avoid-risks-from-volatile-oracles)
+:::
+
+:::tip-green
+Swiss Stake, the service provider developing Curve's technology, offers consulting services to guide protocols and asset issuers in the design and integration of price feed oracles for StableSwap liquidity pools. Additionally, Swiss Stake provides thorough audits of client-implemented oracle solutions to ensure correctness and security. Inquiries: [inquiries@curve.finance](mailto:inquiries@curve.finance).
 :::
