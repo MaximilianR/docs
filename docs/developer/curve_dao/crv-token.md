@@ -1,20 +1,9 @@
 # Curve DAO Token (CRV)
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 
 The Curve DAO Token (CRV) is the protocol's governance token. It is based on the ERC-20 token standard as defined at [EIP-20](https://eips.ethereum.org/EIPS/eip-20).
 
-<details open>
-<summary>`CRV.vy`</summary>
-
-The source code for the `CRV.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-dao-contracts/blob/567927551903f71ce5a73049e077be87111963cc/contracts/ERC20CRV.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.2.4`.
-
-The token is deployed on Ethereum at [`0xD533a949740bb3306d119CC777fa900bA034cd52`](https://etherscan.io/address/0xD533a949740bb3306d119CC777fa900bA034cd52#code).
-
-
-</details>
+<ContractInfo name="CRV.vy" github="https://github.com/curvefi/curve-dao-contracts/blob/567927551903f71ce5a73049e077be87111963cc/contracts/ERC20CRV.vy" vyper="0.2.4" deployments={{"Ethereum": "0xD533a949740bb3306d119CC777fa900bA034cd52"}} />
 
 For a broader understanding of the use case of the CRV token, check out [Understanding CRV](https://resources.curve.fi/crv-token/overview/).
 
@@ -23,7 +12,7 @@ For a broader understanding of the use case of the CRV token, check out [Underst
 ## Transfer and Allowance
 
 ### `approve`
-:::description[`CRV.approve(_spender: address, _value: uint256) -> bool`]
+::::description[`CRV.approve(_spender: address, _value: uint256) -> bool`]
 
 
 :::warning
@@ -44,11 +33,9 @@ Emits: `Approval` event.
 | `_spender` | `address` | Spender address   |
 | `_value`   | `uint256` | Amount to approve |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-```vyper 
+```vyper
 event Approval:
     _owner: indexed(address)
     _spender: indexed(address)
@@ -73,12 +60,9 @@ def approve(_spender : address, _value : uint256) -> bool:
     return True
 ```
 
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example approves the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address to transfer 1 CRV tokens on behalf of the caller (`msg.sender`).
 
@@ -87,15 +71,13 @@ This example approves the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address t
 'True'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `allowance`
-:::description[`CRV.allowance(_owner: address, _spender: address) -> uint256`]
+::::description[`CRV.allowance(_owner: address, _spender: address) -> uint256`]
 
 
 Getter method to check the amount of tokens that `_owner` has allowed `_spender` to use.
@@ -107,9 +89,7 @@ Returns: amount of tokens (`uint256`) that `_owner` has allowed `_spender` to us
 | `_owner`   | `address` | Owner address   |
 | `_spender` | `address` | Spender address |
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 allowances: HashMap[address, HashMap[address, uint256]]
@@ -126,24 +106,13 @@ def allowance(_owner : address, _spender : address) -> uint256:
     return self.allowances[_owner][_spender]
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `transfer`
-:::description[`CRV.transfer(_to: address, _value: uint256) -> bool`]
+::::description[`CRV.transfer(_to: address, _value: uint256) -> bool`]
 
 
 :::warning
@@ -155,7 +124,7 @@ Additionally, transfers to `ZERO_ADDRESS` are not allowed.
 
 :::
 
-Function to transfer `_value` tokens from `msg.sender` to `_to`. 
+Function to transfer `_value` tokens from `msg.sender` to `_to`.
 
 Returns: true (`bool`).
 
@@ -166,11 +135,9 @@ Emits: `Transfer` event.
 | `_to`    | `address` | Receiver address of the tokens |
 | `_value` | `uint256` | Amount of tokens to transfer   |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-```vyper 
+```vyper
 event Transfer:
     _from: indexed(address)
     _to: indexed(address)
@@ -193,12 +160,9 @@ def transfer(_to : address, _value : uint256) -> bool:
     return True
 ```
 
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example transfers 1 CRV token from the `msg.sender` to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`.
 
@@ -207,15 +171,13 @@ This example transfers 1 CRV token from the `msg.sender` to `0xd8dA6BF26964aF9D7
 'True'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `transferFrom`
-:::description[`CRV.transferFrom(_from: address, _to: address, _value: uint256) -> bool`]
+::::description[`CRV.transferFrom(_from: address, _to: address, _value: uint256) -> bool`]
 
 
 :::warning
@@ -239,11 +201,9 @@ Emits: `Transfer` event.
 | `_to`    | `address` | Receiver address of the tokens |
 | `_value` | `uint256` | Amount of tokens to transfer   |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-```vyper 
+```vyper
 event Transfer:
     _from: indexed(address)
     _to: indexed(address)
@@ -268,12 +228,9 @@ def transferFrom(_from : address, _to : address, _value : uint256) -> bool:
     return True
 ```
 
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example transfers 1 CRV token from the `0x7a16fF8270133F063aAb6C9977183D9e72835428` address to the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address.
 
@@ -282,12 +239,10 @@ This example transfers 1 CRV token from the `0x7a16fF8270133F063aAb6C9977183D9e7
 'True'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -308,46 +263,33 @@ The rate can be adjusted by invoking the `update_mining_parameters()` function. 
 
 *Effectively, each rate reduction decreases CRV inflation by approximately 15.9%. The future rate is calculated as follows:*
 
-$$\text\{rate\}_\text\{future\} = \text\{rate\}_\text\{current\} * \frac\{10^\{18\}\}\{2^\{\frac\{1\}\{4\}\} * 10^\{18\}\}$$
+$$\text{rate}_\text{future} = \text{rate}_\text{current} * \frac{10^{18}}{2^{\frac{1}{4}} * 10^{18}}$$
 
 with $\text{rate}_\text{current}$ fetched from the [`rate()`](#rate) function.
 
 ---
 
 ### `minter`
-:::description[`CRV.minter() -> address: view`]
+::::description[`CRV.minter() -> address: view`]
 
 
 Getter for the `Minter` contract address. The minter address can only be set once (at deployment) and not altered after.
 
 Returns: `Minter` contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 minter: public(address)
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `mint`
-:::description[`CRV.mint(_to: address, _value: uint256) -> bool:`]
+::::description[`CRV.mint(_to: address, _value: uint256) -> bool:`]
 
 
 :::guard[Guarded Method]
@@ -368,9 +310,7 @@ Emits: `Transfer` event.
 | `_to`    | `address` | Receiver of the minted tokens |
 | `_value` | `uint256` | Amount to mint                |
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 event Transfer:
@@ -403,12 +343,9 @@ def mint(_to: address, _value: uint256) -> bool:
     return True
 ```
 
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example mints 1 CRV token to the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address.
 
@@ -417,15 +354,13 @@ This example mints 1 CRV token to the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA9604
 'True'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `mintable_in_timeframe`
-:::description[`CRV.mintable_in_timeframe(start: uint256, end: uint256) -> uint256`]
+::::description[`CRV.mintable_in_timeframe(start: uint256, end: uint256) -> uint256`]
 
 
 Getter for the mintable supply between `start` and `end` timestamps. The value is dependent on the current emission `rate` of the token.
@@ -437,9 +372,7 @@ Returns: mintable tokens (`uint256`).
 | `start` | `uint256` | Start timestamp |
 | `end`   | `uint256` | End timestamp   |
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 @external
@@ -487,24 +420,13 @@ def mintable_in_timeframe(start: uint256, end: uint256) -> uint256:
     return to_mint
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `burn`
-:::description[`CRV.burn(_value: uint256) -> bool`]
+::::description[`CRV.burn(_value: uint256) -> bool`]
 
 
 Function to burn `_value` tokens of the function caller by sending them to `ZERO_ADDRESS`.
@@ -517,9 +439,7 @@ Emits: `Transfer` event.
 | -------- | --------- | ------------------------ |
 | `_value` | `uint256` | Amount of tokens to burn |
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 event Transfer:
@@ -542,12 +462,9 @@ def burn(_value: uint256) -> bool:
     return True
 ```
 
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example burns 1 CRV token from `msg.sender`.
 
@@ -556,24 +473,20 @@ This example burns 1 CRV token from `msg.sender`.
 'True'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `mining_epoch`
-:::description[`CRV.mining_epoch() -> int128: view`]
+::::description[`CRV.mining_epoch() -> int128: view`]
 
 
 Getter for the current mining epoch. The mining epoch is incremented by 1 every time [`update_mining_parameters()`](#update_mining_parameters) is successfully called. At deployment, `mining_epoch` was set to -1.
 
 Returns: mining epoch (`int128`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 mining_epoch: public(int128)
@@ -614,33 +527,20 @@ def _update_mining_parameters():
     log UpdateMiningParameters(block.timestamp, _rate, _start_epoch_supply)
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `start_epoch_time`
-:::description[`CRV.start_epoch_time() -> uint256: view`]
+::::description[`CRV.start_epoch_time() -> uint256: view`]
 
 
 Getter for the start timestamp of the current mining epoch.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 start_epoch_time: public(uint256)
@@ -660,24 +560,13 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
     ...
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `rate`
-:::description[`CRV.rate() -> uint256: view`]
+::::description[`CRV.rate() -> uint256: view`]
 
 
 Getter for the current inflation rate of the CRV token emission. The rate is denominated in emissions per second and has a base of 1e18.
@@ -692,41 +581,26 @@ To calculate the CRV emission per day:
 
 Returns: current inflation rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 rate: public(uint256)
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
+::::
 
-
-
-</TabItem>
-</Tabs>
-
-
-:::
-
-### `update_mining_parameters` 
-:::description[`CRV.update_mining_parameters()`]
+### `update_mining_parameters`
+::::description[`CRV.update_mining_parameters()`]
 
 
 Function to update the mining parameters for the token. By updating, the newly decreased inflation rate is applied. This function is callable by anyone. However, the call will revert if `block.timestamp` is less than or equal to `start_epoch_time` + `RATE_REDUCTION_TIME`, indicating that one year has not yet passed and therefore the rate cannot be updated yet.
 
 Emits: `UpdateMiningParameters` event.
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 event UpdateMiningParameters:
@@ -785,12 +659,9 @@ def _update_mining_parameters():
     log UpdateMiningParameters(block.timestamp, _rate, _start_epoch_supply)
 ```
 
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example updates the mining parameters for the CRV token.
 
@@ -798,24 +669,20 @@ This example updates the mining parameters for the CRV token.
 >>> CRV.update_mining_parameters()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `start_epoch_time_write`
-:::description[`CRV.start_epoch_time_write() -> uint256`]
+::::description[`CRV.start_epoch_time_write() -> uint256`]
 
 
 Function to get the current mining epoch start while simultaneously updating mining parameters if possible. If updating is not possible, the function will only return the start timestamp of the current epoch.
 
 Returns: start timestamp of the epoch (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 start_epoch_time: public(uint256)
@@ -835,33 +702,20 @@ def start_epoch_time_write() -> uint256:
         return _start_epoch_time
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `future_epoch_time_write`
-:::description[`CRV.future_epoch_time_write() -> uint256`]
+::::description[`CRV.future_epoch_time_write() -> uint256`]
 
 
 Function to get the next mining epoch start timestamp while simultaneously updating mining parameters if possible. If updating is not possible, the function will only return the start timestamp of the future epoch.
 
 Returns: start timestamp of the future epoch (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 @external
@@ -879,43 +733,30 @@ def future_epoch_time_write() -> uint256:
         return _start_epoch_time + RATE_REDUCTION_TIME
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
 ## Admin Controls and Other Methods
 
-The controls over the Curve DAO Token are strictly limited. The `admin` of the contract can only modify the `name`, `admin`, or `minter`[^1]. 
+The controls over the Curve DAO Token are strictly limited. The `admin` of the contract can only modify the `name`, `admin`, or `minter`[^1].
 
 Since the [`CurveOwnershipAgent`](https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968) is the current admin of the contract, any changes to these parameters would require a successfully passed DAO vote.
 
 [^1]: Although `set_minter` is technically an admin-guarded function, there is **no actual way to change the minter address**because the code checks if the current minter is set to `ZERO_ADDRESS`, which was only true when the contract was initially deployed.
 
 ### `admin`
-:::description[`CRV.admin() -> address: view`]
+::::description[`CRV.admin() -> address: view`]
 
 
 Getter for the current admin of the contract.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 admin: public(address)
@@ -930,27 +771,16 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
     """
     ...
     self.admin = msg.sender
-    ... 
+    ...
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `set_admin`
-:::description[`CRV.set_admin(_admin: address)`]
+::::description[`CRV.set_admin(_admin: address)`]
 
 
 :::guard[Guarded Method]
@@ -968,9 +798,7 @@ Emits: `SetAdmin` event.
 | -------- | --------- | ----------------- |
 | `_admin` | `address` | New Admin Address |
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 event SetAdmin:
@@ -990,34 +818,28 @@ def set_admin(_admin: address):
     log SetAdmin(_admin)
 ```
 
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CRV.set_admin("0x0000000000000000000000000000000000000000")
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `name`
-:::description[`CRV.name() -> String[64]`]
+::::description[`CRV.name() -> String[64]`]
 
 
 Getter for the name of the token. Name of the token can be changed by calling the **`set_name`**function.
 
 Returns: token name (`String[64]`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 name: public(String[64])
@@ -1032,37 +854,24 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
     """
     init_supply: uint256 = INITIAL_SUPPLY * 10 **_decimals
     self.name = _name
-    
+
     ...
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `symbol`
-:::description[`CRV.symbol() -> String[32]`]
+::::description[`CRV.symbol() -> String[32]`]
 
 
 Getter of the token symbol. Symbol of the token can be changed by calling the **`set_name`**function.
 
 Returns: token symbol (`String[32]`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 symbol: public(String[32])
@@ -1075,31 +884,20 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
     @param _symbol Token symbol
     @param _decimals Number of decimals for token
     """
-    ... 
+    ...
 
     self.symbol = _symbol
-    
+
     ...
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `set_name`
-:::description[`CRV.set_name(_name: String[64], _symbol: String[32])`]
+::::description[`CRV.set_name(_name: String[64], _symbol: String[32])`]
 
 
 :::guard[Guarded Method]
@@ -1116,9 +914,7 @@ Function to change the token name and symbol.
 | `_name`   | `String[64]` | New token name.   |
 | `_symbol` | `String[32]` | New token symbol. |
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 name: public(String[64])
@@ -1137,12 +933,9 @@ def set_name(_name: String[64], _symbol: String[32]):
     self.symbol = _symbol
 ```
 
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example changes the name and symbol of the token.
 
@@ -1150,15 +943,13 @@ This example changes the name and symbol of the token.
 >>> CRV.set_name("New Name", "New Symbol")
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_minter`
-:::description[`CRV.set_minter(_minter: address):`]
+::::description[`CRV.set_minter(_minter: address):`]
 
 
 :::warning[Changing the `minter` contract is not possible anymore!]
@@ -1183,9 +974,7 @@ Emits: `SetMinter` event.
 | --------- | --------- | ----------------------- |
 | `_minter` | `address` | Minter contract address |
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 event SetMinter:
@@ -1206,12 +995,9 @@ def set_minter(_minter: address):
     log SetMinter(_minter)
 ```
 
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example tries to change the `minter` contract address of the token. Because the `minter` is already set, the function will revert.
 
@@ -1219,24 +1005,20 @@ This example tries to change the `minter` contract address of the token. Because
 >>> CRV.set_minter("0x0000000000000000000000000000000000000000")
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `avaliable_supply`
-:::description[`CRV.avaliably_supply() -> uint256`]
+::::description[`CRV.avaliably_supply() -> uint256`]
 
 
 Getter for the current number of CRV tokens - claimed of unclaimed - in existence.
 
 Returns: currently existing tokens (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 @internal
@@ -1253,32 +1035,20 @@ def available_supply() -> uint256:
     return self._available_supply()
 ```
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `totalSupply`
-:::description[`CRV.totalSupply() -> uint256`]
+::::description[`CRV.totalSupply() -> uint256`]
 
 
 Getter for the total number of tokens in existence.
 
 Returns: total supply (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 @external
@@ -1290,33 +1060,20 @@ def totalSupply() -> uint256:
     return self.total_supply
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `decimals`
-:::description[`CRV.decimals() -> uint256: view`]
+::::description[`CRV.decimals() -> uint256: view`]
 
 
 Getter of the decimals of the token.
 
-Returns: decimals (`uint256`).    
+Returns: decimals (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 decimals: public(uint256)
@@ -1334,24 +1091,13 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
     ...
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `balanceOf`
-:::description[`CRV.balanceOf(arg0: address) -> address: view`]
+::::description[`CRV.balanceOf(arg0: address) -> address: view`]
 
 
 Getter for the crv token balance of a specific address.
@@ -1362,26 +1108,13 @@ Returns: balance (`uint256`).
 | ----------- | -------| ----|
 | `arg0` |  `address` | wallet to check CRV balance for |
 
-<details>
-<summary>Source code</summary>
-
+<SourceCode>
 
 ```vyper
 balanceOf: public(HashMap[address, uint256])
 ```
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+</SourceCode>
 
 
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::

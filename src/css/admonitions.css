@@ -594,40 +594,106 @@ admonition[type="warning"] .admonition-content p {
    Developer docs: new admonition types
    ========================================================================== */
 
-/* --- description: function signature admonitions (monospace title, subtle) --- */
-admonition[type="description"],
-.admonition[type="description"],
-.admonition.description {
-  --adm-color: #6b7280;
-  --adm-border-color: #d1d5db;
-  --adm-dark-border-color: #4b5563;
-  --adm-icon: 'ƒ';
-  background: var(--Layer-2-Fill) !important;
+/* --- description: function signature admonitions --- */
+/* Matches the mkdocs style: left accent, tinted title bar, plain content */
+/* Use [type] selector for specificity over the "info" fallback */
+.admonition[type="description"].admonition,
+admonition[type="description"] {
+  --adm-color: var(--Color-Primary-500);
+  --adm-border-color: var(--Color-Primary-200);
+  --adm-dark-border-color: var(--Color-Primary-300);
+  background: transparent !important;
   border: 1px solid var(--adm-border-color) !important;
+  border-left: 3px solid var(--Color-Primary-500) !important;
   border-radius: 0 !important;
-  padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
-  margin: var(--Spacing-lg) 0 !important;
+  padding: 0 !important;
+  margin: var(--Spacing-xl) 0 !important;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: none !important;
   min-height: 48px;
   display: block !important;
+  overflow: hidden;
 }
 
-.admonition.description .admonition-heading h5,
-.admonition.description .admonition-title {
+/* Repurpose ::before as the title background band */
+.admonition[type="description"].admonition::before,
+.admonition[type="description"]::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--desc-title-h, 52px) !important;
+  width: 100% !important;
+  bottom: auto !important;
+  background: var(--Color-Primary-50) !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid var(--adm-border-color) !important;
+  z-index: 0 !important;
+}
+
+/* Hide inherited ::after icon circle */
+.admonition[type="description"].admonition::after,
+.admonition[type="description"]::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Restyle the admonition-icon as a <> code icon */
+.admonition[type="description"] .admonition-icon {
+  position: relative !important;
+  z-index: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  background: var(--Color-Primary-500) !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: var(--Typography-FontWeight-Bold) !important;
+  border-radius: 4px !important;
+  margin-right: var(--Spacing-sm) !important;
+  flex-shrink: 0 !important;
+  overflow: visible !important;
+}
+
+.admonition[type="description"] .admonition-icon svg {
+  display: none !important;
+}
+
+.admonition[type="description"] .admonition-icon::before {
+  content: '<>' !important;
+  font-family: var(--Text-FontFamily-Mono) !important;
+  font-style: normal !important;
+  font-size: 11px !important;
+  font-weight: var(--Typography-FontWeight-Bold) !important;
+  line-height: 1 !important;
+}
+
+/* Title = function signature in the tinted bar */
+.admonition[type="description"] .admonition-heading h5,
+.admonition[type="description"] .admonition-title {
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 1 !important;
   font-family: var(--Text-FontFamily-Mono) !important;
   font-size: var(--Typography-FontSize-sm) !important;
   font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
   color: var(--Text-TextColors-Primary) !important;
   background: none !important;
   border: none !important;
-  padding: 0 !important;
-  margin: 0 0 var(--Spacing-xs) 0 !important;
+  padding: var(--Spacing-md) var(--Spacing-lg) !important;
+  margin: 0 !important;
   word-break: break-all;
 }
 
-.admonition.description .admonition-content {
+/* Content area below the title bar */
+.admonition[type="description"] .admonition-content {
   color: var(--Text-TextColors-Secondary) !important;
+  padding: var(--Spacing-lg) !important;
+  padding-left: var(--Spacing-lg) !important;
 }
 
 /* --- deploy: contract deployment info --- */
@@ -876,7 +942,7 @@ admonition[type="description"] .admonition-content, .admonition.description .adm
 [data-theme='dark'] admonition[type="pdf"], [data-theme='dark'] .admonition.pdf,
 [data-theme='dark'] admonition[type="abstract"], [data-theme='dark'] .admonition.abstract,
 [data-theme='dark'] admonition[type="description"], [data-theme='dark'] .admonition.description {
-  background: var(--Layer-2-Fill) !important;
-  border: 1px solid var(--adm-dark-border-color) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+  background: transparent !important;
+  border: 1px solid var(--Layer-2-Outline) !important;
+  box-shadow: none !important;
 }
