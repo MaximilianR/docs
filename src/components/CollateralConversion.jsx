@@ -11,6 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useColorMode } from '@docusaurus/theme-common';
+import { getChartColors } from '../utils/chartTheme';
 
 // Register Chart.js components
 ChartJS.register(
@@ -24,10 +25,7 @@ ChartJS.register(
 
 const ChartContent = () => {
   const { colorMode } = useColorMode();
-  const css = getComputedStyle(document.documentElement);
-  const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#1f2937';
-  const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim() || '#e5e7eb';
-  const bgColor = css.getPropertyValue('--ifm-background-color').trim() || '#ffffff';
+  const { txtColor, gridColor, bgColor } = getChartColors();
 
   // Logic State
   const [bottomRange, setBottomRange] = useState(2311.92);

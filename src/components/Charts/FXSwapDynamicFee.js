@@ -12,7 +12,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useColorMode } from '@docusaurus/theme-common';
-
+import { getChartColors } from '../../utils/chartTheme';
 
 ChartJS.register(
   CategoryScale,
@@ -26,10 +26,7 @@ ChartJS.register(
 
 const ChartContent = () => {
   const { colorMode } = useColorMode();
-  const css = getComputedStyle(document.documentElement);
-  const primaryColor = css.getPropertyValue('--ifm-color-primary-light').trim() || '#3b82f6';
-  const txtColor = css.getPropertyValue('--ifm-color-emphasis-800').trim() || '#1f2937';
-  const gridColor = css.getPropertyValue('--ifm-color-emphasis-200').trim() || '#e5e7eb';
+  const { primaryColor, txtColor, gridColor } = getChartColors();
 
   // Fee configuration options
   const midFeeOptions = [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1];
