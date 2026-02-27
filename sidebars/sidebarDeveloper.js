@@ -3,83 +3,296 @@ export default {
         {
             type: 'doc',
             id: 'documentation-overview',
-            label: 'Documentation Overview',
+            label: 'Overview',
         },
+
+        // --- Curve Pools (all AMM/DEX: pool types, factory, router) ---
         {
             type: 'category',
-            label: 'Curve DAO',
+            label: 'Curve AMM',
             items: [
                 {
-                    type: 'doc',
-                    id: 'curve_dao/crv-token',
-                    label: 'CRV Token',
+                    type: 'category',
+                    label: 'StableSwap-NG',
+                    items: [
+                        { type: 'doc', id: 'stableswap-ng/overview', label: 'Overview' },
+                        {
+                            type: 'category',
+                            label: 'Pools',
+                            items: [
+                                { type: 'doc', id: 'stableswap-ng/pools/overview', label: 'Overview' },
+                                { type: 'doc', id: 'stableswap-ng/pools/plainpool', label: 'Plain Pool' },
+                                { type: 'doc', id: 'stableswap-ng/pools/metapool', label: 'Metapool' },
+                                { type: 'doc', id: 'stableswap-ng/pools/oracles', label: 'Oracles' },
+                                { type: 'doc', id: 'stableswap-ng/pools/admin-controls', label: 'Admin Controls' },
+                                { type: 'doc', id: 'stableswap-ng/pools/lp-token', label: 'LP Token' },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Utility Contracts',
+                            items: [
+                                { type: 'doc', id: 'stableswap-ng/utility-contracts/views', label: 'Views' },
+                                { type: 'doc', id: 'stableswap-ng/utility-contracts/math', label: 'Math' },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Implementations',
+                            items: [
+                                { type: 'doc', id: 'stableswap-ng/implementations/custom1', label: 'Custom Implementation' },
+                            ],
+                        },
+                    ],
                 },
                 {
                     type: 'category',
-                    label: 'Voting Escrow',
+                    label: 'TwoCrypto-NG',
                     items: [
-                        { type: 'doc', id: 'curve_dao/voting-escrow/voting-escrow', label: 'VotingEscrow' },
-                        { type: 'doc', id: 'curve_dao/voting-escrow/admin-controls', label: 'Admin Controls' },
-                        { type: 'doc', id: 'curve_dao/voting-escrow/smartwalletchecker', label: 'SmartWalletChecker' },
+                        { type: 'doc', id: 'twocrypto-ng/overview', label: 'Overview' },
+                        {
+                            type: 'category',
+                            label: 'Pools',
+                            items: [
+                                { type: 'doc', id: 'twocrypto-ng/pools/overview', label: 'Overview' },
+                                { type: 'doc', id: 'twocrypto-ng/pools/twocrypto', label: 'TwoCrypto' },
+                                { type: 'doc', id: 'twocrypto-ng/pools/oracles', label: 'Oracles' },
+                                { type: 'doc', id: 'twocrypto-ng/pools/admin-controls', label: 'Admin Controls' },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Utility Contracts',
+                            items: [
+                                { type: 'doc', id: 'twocrypto-ng/utility-contracts/views', label: 'Views' },
+                                { type: 'doc', id: 'twocrypto-ng/utility-contracts/math', label: 'Math' },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'TriCrypto-NG',
+                    items: [
+                        { type: 'doc', id: 'tricrypto-ng/overview', label: 'Overview' },
+                        {
+                            type: 'category',
+                            label: 'Pools',
+                            items: [
+                                { type: 'doc', id: 'tricrypto-ng/pools/tricrypto', label: 'TriCrypto' },
+                                { type: 'doc', id: 'tricrypto-ng/pools/oracles', label: 'Oracles' },
+                                { type: 'doc', id: 'tricrypto-ng/pools/admin-controls', label: 'Admin Controls' },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Utility Contracts',
+                            items: [
+                                { type: 'doc', id: 'tricrypto-ng/utility-contracts/views', label: 'Views' },
+                                { type: 'doc', id: 'tricrypto-ng/utility-contracts/math', label: 'Math' },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Pool Factory',
+                    items: [
+                        { type: 'doc', id: 'factory/overview', label: 'Overview' },
+                        {
+                            type: 'category',
+                            label: 'StableSwap-NG',
+                            items: [
+                                { type: 'doc', id: 'factory/stableswap-ng/overview', label: 'Overview' },
+                                { type: 'doc', id: 'factory/stableswap-ng/deployer-api', label: 'Deployer API' },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'TwoCrypto-NG',
+                            items: [
+                                { type: 'doc', id: 'factory/twocrypto-ng/overview', label: 'Overview' },
+                                { type: 'doc', id: 'factory/twocrypto-ng/deployer-api', label: 'Deployer API' },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'TriCrypto-NG',
+                            items: [
+                                { type: 'doc', id: 'factory/tricrypto-ng/overview', label: 'Overview' },
+                                { type: 'doc', id: 'factory/tricrypto-ng/deployer-api', label: 'Deployer API' },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Router',
+                    items: [
+                        { type: 'doc', id: 'router/curve-router-ng', label: 'CurveRouter-NG' },
+                        { type: 'doc', id: 'router/curve-registry-exchange', label: 'CurveRegistryExchange' },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Legacy',
+                    items: [
+                        {
+                            type: 'category',
+                            label: 'StableSwap',
+                            items: [
+                                { type: 'doc', id: 'stableswap-overview', label: 'StableSwap Exchange Overview' },
+                                { type: 'doc', id: 'stableswap/overview', label: 'Overview' },
+                                {
+                                    type: 'category',
+                                    label: 'Pools',
+                                    items: [
+                                        { type: 'doc', id: 'stableswap/pools/overview', label: 'Overview' },
+                                        { type: 'doc', id: 'stableswap/pools/plain-pools', label: 'Plain Pools' },
+                                        { type: 'doc', id: 'stableswap/pools/lending-pools', label: 'Lending Pools' },
+                                        { type: 'doc', id: 'stableswap/pools/metapools', label: 'Metapools' },
+                                        { type: 'doc', id: 'stableswap/pools/admin-pool-settings', label: 'Admin Pool Settings' },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'LP Tokens',
+                                    items: [
+                                        { type: 'doc', id: 'stableswap/lp-tokens/overview', label: 'Overview' },
+                                        { type: 'doc', id: 'stableswap/lp-tokens/curve-token-v1', label: 'CurveToken V1' },
+                                        { type: 'doc', id: 'stableswap/lp-tokens/curve-token-v2', label: 'CurveToken V2' },
+                                        { type: 'doc', id: 'stableswap/lp-tokens/curve-token-v3', label: 'CurveToken V3' },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'Deposit Contracts',
+                                    items: [
+                                        { type: 'doc', id: 'stableswap/deposit-contracts/overview', label: 'Overview' },
+                                        { type: 'doc', id: 'stableswap/deposit-contracts/lending-pool-deposits', label: 'Lending Pool Deposits' },
+                                        { type: 'doc', id: 'stableswap/deposit-contracts/metapool-deposits', label: 'Metapool Deposits' },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'Cross-Asset Swaps',
+                                    items: [
+                                        { type: 'doc', id: 'stableswap/cross-asset-swaps/overview', label: 'Overview' },
+                                        { type: 'doc', id: 'stableswap/cross-asset-swaps/synthswap-exchange', label: 'SynthSwap Exchange' },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'CryptoSwap',
+                            items: [
+                                { type: 'doc', id: 'cryptoswap-overview', label: 'CryptoSwap Exchange Overview' },
+                                {
+                                    type: 'category',
+                                    label: 'Pools',
+                                    items: [
+                                        { type: 'doc', id: 'cryptoswap/pools/crypto-pool', label: 'CryptoPool' },
+                                        { type: 'doc', id: 'cryptoswap/pools/admin-controls', label: 'Admin Controls' },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'LP Tokens',
+                                    items: [
+                                        { type: 'doc', id: 'cryptoswap/lp-tokens/overview', label: 'Overview' },
+                                        { type: 'doc', id: 'cryptoswap/lp-tokens/lp-token-v5', label: 'LP Token V5' },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Pool Factory',
+                            items: [
+                                {
+                                    type: 'category',
+                                    label: 'StableSwap',
+                                    items: [
+                                        { type: 'doc', id: 'factory/stableswap/overview', label: 'Overview' },
+                                        { type: 'doc', id: 'factory/stableswap/deployer-api', label: 'Deployer API' },
+                                        { type: 'doc', id: 'factory/stableswap/implementations', label: 'Implementations' },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
+                                    label: 'CryptoSwap',
+                                    items: [
+                                        { type: 'doc', id: 'factory/cryptoswap/overview', label: 'Overview' },
+                                        { type: 'doc', id: 'factory/cryptoswap/deployer-api', label: 'Deployer API' },
+                                        { type: 'doc', id: 'factory/cryptoswap/implementations', label: 'Implementations' },
+                                    ],
+                                },
+                            ],
+                        },
                     ],
                 },
             ],
         },
+
+        // --- crvUSD ---
         {
             type: 'category',
             label: 'crvUSD',
             items: [
-                { type: 'doc', id: 'crvUSD/overview', label: 'Overview' },
-                { type: 'doc', id: 'crvUSD/crvUSD', label: 'crvUSD Token' },
-                { type: 'doc', id: 'crvUSD/controller', label: 'Controller' },
-                { type: 'doc', id: 'crvUSD/amm', label: 'LLAMMA (AMM)' },
-                { type: 'doc', id: 'crvUSD/llamma-explainer', label: 'LLAMMA Explainer' },
-                { type: 'doc', id: 'crvUSD/oracle', label: 'Oracle' },
-                { type: 'doc', id: 'crvUSD/monetarypolicy', label: 'Monetary Policy' },
-                { type: 'doc', id: 'crvUSD/flashlender', label: 'FlashLender' },
-                { type: 'doc', id: 'crvUSD/priceaggregator', label: 'PriceAggregator' },
-                { type: 'doc', id: 'crvUSD/priceaggregator_old', label: 'PriceAggregator (Old)' },
+                { type: 'doc', id: 'crvusd/overview', label: 'Overview' },
+                { type: 'doc', id: 'crvusd/crvusd', label: 'crvUSD Token' },
+                { type: 'doc', id: 'crvusd/controller', label: 'Controller' },
+                { type: 'doc', id: 'crvusd/amm', label: 'LLAMMA (AMM)' },
+                { type: 'doc', id: 'crvusd/llamma-explainer', label: 'LLAMMA Explainer' },
+                { type: 'doc', id: 'crvusd/oracle', label: 'Oracle' },
+                { type: 'doc', id: 'crvusd/monetary-policy', label: 'Monetary Policy' },
+                { type: 'doc', id: 'crvusd/flash-lender', label: 'FlashLender' },
+                { type: 'doc', id: 'crvusd/price-aggregator', label: 'PriceAggregator' },
+                { type: 'doc', id: 'crvusd/price-aggregator-old', label: 'PriceAggregator (Old)' },
                 {
                     type: 'category',
                     label: 'Factory',
                     items: [
-                        { type: 'doc', id: 'crvUSD/factory/overview', label: 'Overview' },
-                        { type: 'doc', id: 'crvUSD/factory/contract-methods', label: 'Contract Methods' },
-                        { type: 'doc', id: 'crvUSD/factory/deployer-api', label: 'Deployer API' },
-                        { type: 'doc', id: 'crvUSD/factory/admin-controls', label: 'Admin Controls' },
-                        { type: 'doc', id: 'crvUSD/factory/factory_full', label: 'Factory (Full)' },
+                        { type: 'doc', id: 'crvusd/factory/overview', label: 'Overview' },
+                        { type: 'doc', id: 'crvusd/factory/contract-methods', label: 'Contract Methods' },
+                        { type: 'doc', id: 'crvusd/factory/deployer-api', label: 'Deployer API' },
+                        { type: 'doc', id: 'crvusd/factory/admin-controls', label: 'Admin Controls' },
+                        { type: 'doc', id: 'crvusd/factory/factory-full', label: 'Factory (Full)' },
                     ],
                 },
                 {
                     type: 'category',
                     label: 'PegKeepers',
                     items: [
-                        { type: 'doc', id: 'crvUSD/pegkeepers/overview', label: 'Overview' },
-                        { type: 'doc', id: 'crvUSD/pegkeepers/PegKeeperV1', label: 'PegKeeperV1' },
-                        { type: 'doc', id: 'crvUSD/pegkeepers/PegKeeperV2', label: 'PegKeeperV2' },
-                        { type: 'doc', id: 'crvUSD/pegkeepers/PegKeeperRegulator', label: 'PegKeeperRegulator' },
-                        { type: 'doc', id: 'crvUSD/pegkeepers/notes', label: 'Notes' },
+                        { type: 'doc', id: 'crvusd/pegkeepers/overview', label: 'Overview' },
+                        { type: 'doc', id: 'crvusd/pegkeepers/peg-keeper-v1', label: 'PegKeeperV1' },
+                        { type: 'doc', id: 'crvusd/pegkeepers/peg-keeper-v2', label: 'PegKeeperV2' },
+                        { type: 'doc', id: 'crvusd/pegkeepers/peg-keeper-regulator', label: 'PegKeeperRegulator' },
+                        { type: 'doc', id: 'crvusd/pegkeepers/notes', label: 'Notes' },
                     ],
                 },
                 {
                     type: 'category',
                     label: 'Leverage',
                     items: [
-                        { type: 'doc', id: 'crvUSD/leverage/overview', label: 'Overview' },
-                        { type: 'doc', id: 'crvUSD/leverage/LeverageZap', label: 'LeverageZap' },
-                        { type: 'doc', id: 'crvUSD/leverage/LeverageZap1inch', label: 'LeverageZap (1inch)' },
-                        { type: 'doc', id: 'crvUSD/leverage/LlamaLendOdosLeverageZap', label: 'LlamaLend Odos Zap' },
+                        { type: 'doc', id: 'crvusd/leverage/overview', label: 'Overview' },
+                        { type: 'doc', id: 'crvusd/leverage/leverage-zap', label: 'LeverageZap' },
+                        { type: 'doc', id: 'crvusd/leverage/leverage-zap-1inch', label: 'LeverageZap (1inch)' },
+                        { type: 'doc', id: 'crvusd/leverage/llamalend-odos-leverage-zap', label: 'LlamaLend Odos Zap' },
                     ],
                 },
             ],
         },
+
+        // --- scrvUSD ---
         {
             type: 'category',
             label: 'scrvUSD',
             items: [
                 { type: 'doc', id: 'scrvusd/overview', label: 'Overview' },
-                { type: 'doc', id: 'scrvusd/RewardsHandler', label: 'RewardsHandler' },
-                { type: 'doc', id: 'scrvusd/StablecoinLens', label: 'StablecoinLens' },
+                { type: 'doc', id: 'scrvusd/rewards-handler', label: 'RewardsHandler' },
+                { type: 'doc', id: 'scrvusd/stablecoin-lens', label: 'StablecoinLens' },
                 {
                     type: 'category',
                     label: 'Cross-chain',
@@ -105,6 +318,8 @@ export default {
                 },
             ],
         },
+
+        // --- Lending ---
         {
             type: 'category',
             label: 'Lending',
@@ -123,9 +338,9 @@ export default {
                             label: 'Oracles',
                             items: [
                                 { type: 'doc', id: 'lending/contracts/oracle-overview', label: 'Overview' },
-                                { type: 'doc', id: 'lending/contracts/cryptofrompool', label: 'CryptoFromPool' },
-                                { type: 'doc', id: 'lending/contracts/cryptofrompoolvault', label: 'CryptoFromPoolVault' },
-                                { type: 'doc', id: 'lending/contracts/cryptofrompoolsrate', label: 'CryptoFromPoolsRate' },
+                                { type: 'doc', id: 'lending/contracts/crypto-from-pool', label: 'CryptoFromPool' },
+                                { type: 'doc', id: 'lending/contracts/crypto-from-pool-vault', label: 'CryptoFromPoolVault' },
+                                { type: 'doc', id: 'lending/contracts/crypto-from-pools-rate', label: 'CryptoFromPoolsRate' },
                             ],
                         },
                         {
@@ -141,344 +356,145 @@ export default {
                 },
             ],
         },
+
+        // --- Curve DAO (merges CRV/veCRV, Governance, Gauges, Fees) ---
         {
             type: 'category',
-            label: 'StableSwap Exchange',
+            label: 'Curve DAO',
             items: [
-                { type: 'doc', id: 'stableswap-exchange/overview', label: 'Overview' },
+                { type: 'doc', id: 'curve-dao/crv-token', label: 'CRV Token' },
                 {
                     type: 'category',
-                    label: 'StableSwap',
+                    label: 'Voting Escrow',
                     items: [
-                        { type: 'doc', id: 'stableswap-exchange/stableswap/overview', label: 'Overview' },
+                        { type: 'doc', id: 'curve-dao/voting-escrow/voting-escrow', label: 'VotingEscrow' },
+                        { type: 'doc', id: 'curve-dao/voting-escrow/admin-controls', label: 'Admin Controls' },
+                        { type: 'doc', id: 'curve-dao/voting-escrow/smart-wallet-checker', label: 'SmartWalletChecker' },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Governance & Voting',
+                    items: [
+                        { type: 'doc', id: 'governance/overview', label: 'Overview' },
+                        { type: 'doc', id: 'governance/curve-dao', label: 'Curve DAO' },
                         {
                             type: 'category',
-                            label: 'Pools',
+                            label: 'Cross-chain Governance',
                             items: [
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/pools/overview', label: 'Overview' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/pools/plain_pools', label: 'Plain Pools' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/pools/lending_pools', label: 'Lending Pools' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/pools/metapools', label: 'Metapools' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/pools/admin_pool_settings', label: 'Admin Pool Settings' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'LP Tokens',
-                            items: [
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/lp_tokens/overview', label: 'Overview' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/lp_tokens/curve_token_v1', label: 'CurveToken V1' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/lp_tokens/curve_token_v2', label: 'CurveToken V2' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/lp_tokens/curve_token_v3', label: 'CurveToken V3' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Deposit Contracts',
-                            items: [
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/deposit_contracts/overview', label: 'Overview' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/deposit_contracts/lending_pool_deposits', label: 'Lending Pool Deposits' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/deposit_contracts/metapool_deposits', label: 'Metapool Deposits' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Cross-Asset Swaps',
-                            items: [
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/cross_asset_swaps/overview', label: 'Overview' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap/cross_asset_swaps/synthswap_exchange', label: 'SynthSwap Exchange' },
+                                { type: 'doc', id: 'governance/x-gov/overview', label: 'Overview' },
+                                { type: 'doc', id: 'governance/x-gov/broadcaster', label: 'Broadcaster' },
+                                { type: 'doc', id: 'governance/x-gov/relayer', label: 'Relayer' },
+                                { type: 'doc', id: 'governance/x-gov/agents', label: 'Agents' },
+                                { type: 'doc', id: 'governance/x-gov/vault', label: 'Vault' },
                             ],
                         },
                     ],
                 },
                 {
                     type: 'category',
-                    label: 'StableSwap-NG',
+                    label: 'Gauges & Emissions',
                     items: [
-                        { type: 'doc', id: 'stableswap-exchange/stableswap-ng/overview', label: 'Overview' },
+                        { type: 'doc', id: 'gauges/overview', label: 'Overview' },
                         {
                             type: 'category',
-                            label: 'Pools',
+                            label: 'Liquidity Gauges',
                             items: [
-                                { type: 'doc', id: 'stableswap-exchange/stableswap-ng/pools/overview', label: 'Overview' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap-ng/pools/plainpool', label: 'Plain Pool' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap-ng/pools/metapool', label: 'Metapool' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap-ng/pools/oracles', label: 'Oracles' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap-ng/pools/admin_controls', label: 'Admin Controls' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap-ng/pools/lp_token', label: 'LP Token' },
+                                { type: 'doc', id: 'gauges/gauges/overview', label: 'Overview' },
+                                { type: 'doc', id: 'gauges/gauges/liquidity-gauge-v6', label: 'LiquidityGaugeV6' },
                             ],
                         },
                         {
                             type: 'category',
-                            label: 'Utility Contracts',
+                            label: 'Gauge Controller',
                             items: [
-                                { type: 'doc', id: 'stableswap-exchange/stableswap-ng/utility_contracts/views', label: 'Views' },
-                                { type: 'doc', id: 'stableswap-exchange/stableswap-ng/utility_contracts/math', label: 'Math' },
+                                { type: 'doc', id: 'gauges/gauge-controller/gauge-controller', label: 'GaugeController' },
                             ],
                         },
                         {
                             type: 'category',
-                            label: 'Implementations',
+                            label: 'Minter',
                             items: [
-                                { type: 'doc', id: 'stableswap-exchange/stableswap-ng/implementations/custom1', label: 'Custom Implementation' },
+                                { type: 'doc', id: 'gauges/minter/minter', label: 'Minter' },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Cross-chain Gauges',
+                            items: [
+                                { type: 'doc', id: 'gauges/xchain-gauges/overview', label: 'Overview' },
+                                { type: 'doc', id: 'gauges/xchain-gauges/root-gauge', label: 'RootGauge' },
+                                { type: 'doc', id: 'gauges/xchain-gauges/root-gauge-factory', label: 'RootGaugeFactory' },
+                                { type: 'doc', id: 'gauges/xchain-gauges/child-gauge', label: 'ChildGauge' },
+                                { type: 'doc', id: 'gauges/xchain-gauges/child-gauge-factory', label: 'ChildGaugeFactory' },
+                                { type: 'doc', id: 'gauges/xchain-gauges/bridgers', label: 'Bridgers' },
+                            ],
+                        },
+                        {
+                            type: 'category',
+                            label: 'Boosting (Sidechains)',
+                            items: [
+                                { type: 'doc', id: 'gauges/boosting-sidechains/l2-voting-escrow-oracle', label: 'L2 VotingEscrow Oracle' },
+                                { type: 'doc', id: 'gauges/boosting-sidechains/updater', label: 'Updater' },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Fee System',
+                    items: [
+                        { type: 'doc', id: 'fees/overview', label: 'Overview' },
+                        { type: 'doc', id: 'fees/fee-collector', label: 'FeeCollector' },
+                        { type: 'doc', id: 'fees/fee-distributor', label: 'FeeDistributor' },
+                        { type: 'doc', id: 'fees/fee-splitter', label: 'FeeSplitter' },
+                        { type: 'doc', id: 'fees/cow-swap-burner', label: 'CowSwapBurner' },
+                        { type: 'doc', id: 'fees/hooker', label: 'Hooker' },
+                        {
+                            type: 'category',
+                            label: 'Original Architecture',
+                            items: [
+                                { type: 'doc', id: 'fees/original-architecture/overview', label: 'Overview' },
+                                { type: 'doc', id: 'fees/original-architecture/withdraw-and-burn', label: 'Withdraw & Burn' },
+                                { type: 'doc', id: 'fees/original-architecture/burner', label: 'Burner' },
+                                { type: 'doc', id: 'fees/original-architecture/distributor', label: 'Distributor' },
+                                { type: 'doc', id: 'fees/original-architecture/sidechains', label: 'Sidechains' },
                             ],
                         },
                     ],
                 },
             ],
         },
-        {
-            type: 'category',
-            label: 'CryptoSwap Exchange',
-            items: [
-                { type: 'doc', id: 'cryptoswap-exchange/overview', label: 'Overview' },
-                {
-                    type: 'category',
-                    label: 'CryptoSwap',
-                    items: [
-                        {
-                            type: 'category',
-                            label: 'Pools',
-                            items: [
-                                { type: 'doc', id: 'cryptoswap-exchange/cryptoswap/pools/crypto-pool', label: 'CryptoPool' },
-                                { type: 'doc', id: 'cryptoswap-exchange/cryptoswap/pools/admin-controls', label: 'Admin Controls' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'LP Tokens',
-                            items: [
-                                { type: 'doc', id: 'cryptoswap-exchange/cryptoswap/lp_tokens/overview', label: 'Overview' },
-                                { type: 'doc', id: 'cryptoswap-exchange/cryptoswap/lp_tokens/lp-token-V5', label: 'LP Token V5' },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'TwoCrypto-NG',
-                    items: [
-                        { type: 'doc', id: 'cryptoswap-exchange/twocrypto-ng/overview', label: 'Overview' },
-                        {
-                            type: 'category',
-                            label: 'Pools',
-                            items: [
-                                { type: 'doc', id: 'cryptoswap-exchange/twocrypto-ng/pools/overview', label: 'Overview' },
-                                { type: 'doc', id: 'cryptoswap-exchange/twocrypto-ng/pools/twocrypto', label: 'TwoCrypto' },
-                                { type: 'doc', id: 'cryptoswap-exchange/twocrypto-ng/pools/oracles', label: 'Oracles' },
-                                { type: 'doc', id: 'cryptoswap-exchange/twocrypto-ng/pools/admin-controls', label: 'Admin Controls' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Utility Contracts',
-                            items: [
-                                { type: 'doc', id: 'cryptoswap-exchange/twocrypto-ng/utility-contracts/views', label: 'Views' },
-                                { type: 'doc', id: 'cryptoswap-exchange/twocrypto-ng/utility-contracts/math', label: 'Math' },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'TriCrypto-NG',
-                    items: [
-                        { type: 'doc', id: 'cryptoswap-exchange/tricrypto-ng/overview', label: 'Overview' },
-                        {
-                            type: 'category',
-                            label: 'Pools',
-                            items: [
-                                { type: 'doc', id: 'cryptoswap-exchange/tricrypto-ng/pools/tricrypto', label: 'TriCrypto' },
-                                { type: 'doc', id: 'cryptoswap-exchange/tricrypto-ng/pools/oracles', label: 'Oracles' },
-                                { type: 'doc', id: 'cryptoswap-exchange/tricrypto-ng/pools/admin-controls', label: 'Admin Controls' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Utility Contracts',
-                            items: [
-                                { type: 'doc', id: 'cryptoswap-exchange/tricrypto-ng/utility-contracts/views', label: 'Views' },
-                                { type: 'doc', id: 'cryptoswap-exchange/tricrypto-ng/utility-contracts/math', label: 'Math' },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Registry',
-            items: [
-                { type: 'doc', id: 'registry/overview', label: 'Overview' },
-                { type: 'doc', id: 'registry/MetaRegistryAPI', label: 'MetaRegistry API' },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Pool Factory',
-            items: [
-                { type: 'doc', id: 'factory/overview', label: 'Overview' },
-                {
-                    type: 'category',
-                    label: 'StableSwap',
-                    items: [
-                        { type: 'doc', id: 'factory/stableswap/overview', label: 'Overview' },
-                        { type: 'doc', id: 'factory/stableswap/deployer-api', label: 'Deployer API' },
-                        { type: 'doc', id: 'factory/stableswap/implementations', label: 'Implementations' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'StableSwap-NG',
-                    items: [
-                        { type: 'doc', id: 'factory/stableswap-ng/overview', label: 'Overview' },
-                        { type: 'doc', id: 'factory/stableswap-ng/deployer-api', label: 'Deployer API' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'CryptoSwap',
-                    items: [
-                        { type: 'doc', id: 'factory/cryptoswap/overview', label: 'Overview' },
-                        { type: 'doc', id: 'factory/cryptoswap/deployer-api', label: 'Deployer API' },
-                        { type: 'doc', id: 'factory/cryptoswap/implementations', label: 'Implementations' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'TwoCrypto-NG',
-                    items: [
-                        { type: 'doc', id: 'factory/twocrypto-ng/overview', label: 'Overview' },
-                        { type: 'doc', id: 'factory/twocrypto-ng/deployer-api', label: 'Deployer API' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'TriCrypto-NG',
-                    items: [
-                        { type: 'doc', id: 'factory/tricrypto-ng/overview', label: 'Overview' },
-                        { type: 'doc', id: 'factory/tricrypto-ng/deployer-api', label: 'Deployer API' },
-                    ],
-                },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Router',
-            items: [
-                { type: 'doc', id: 'router/CurveRouterNG', label: 'CurveRouter-NG' },
-                { type: 'doc', id: 'router/CurveRegistryExchange', label: 'CurveRegistryExchange' },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Gauges & Minting CRV',
-            items: [
-                { type: 'doc', id: 'liquidity-gauges-and-minting-crv/overview', label: 'Overview' },
-                {
-                    type: 'category',
-                    label: 'Gauges',
-                    items: [
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/gauges/overview', label: 'Overview' },
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/gauges/LiquidityGaugeV6', label: 'LiquidityGaugeV6' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Gauge Controller',
-                    items: [
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/gauge-controller/GaugeController', label: 'GaugeController' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Minter',
-                    items: [
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/minter/Minter', label: 'Minter' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Cross-chain Gauges',
-                    items: [
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/xchain-gauges/overview', label: 'Overview' },
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/xchain-gauges/RootGauge', label: 'RootGauge' },
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/xchain-gauges/RootGaugeFactory', label: 'RootGaugeFactory' },
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/xchain-gauges/ChildGauge', label: 'ChildGauge' },
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/xchain-gauges/ChildGaugeFactory', label: 'ChildGaugeFactory' },
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/xchain-gauges/Bridgers', label: 'Bridgers' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Boosting (Sidechains)',
-                    items: [
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/boosting-sidechains/L2VotingEscrowOracle', label: 'L2 VotingEscrow Oracle' },
-                        { type: 'doc', id: 'liquidity-gauges-and-minting-crv/boosting-sidechains/Updater', label: 'Updater' },
-                    ],
-                },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Fees',
-            items: [
-                { type: 'doc', id: 'fees/overview', label: 'Overview' },
-                { type: 'doc', id: 'fees/FeeCollector', label: 'FeeCollector' },
-                { type: 'doc', id: 'fees/FeeDistributor', label: 'FeeDistributor' },
-                { type: 'doc', id: 'fees/FeeSplitter', label: 'FeeSplitter' },
-                { type: 'doc', id: 'fees/CowSwapBurner', label: 'CowSwapBurner' },
-                { type: 'doc', id: 'fees/Hooker', label: 'Hooker' },
-                {
-                    type: 'category',
-                    label: 'Original Architecture',
-                    items: [
-                        { type: 'doc', id: 'fees/original-architecture/overview', label: 'Overview' },
-                        { type: 'doc', id: 'fees/original-architecture/withdraw-and-burn', label: 'Withdraw & Burn' },
-                        { type: 'doc', id: 'fees/original-architecture/burner', label: 'Burner' },
-                        { type: 'doc', id: 'fees/original-architecture/distributor', label: 'Distributor' },
-                        { type: 'doc', id: 'fees/original-architecture/sidechains', label: 'Sidechains' },
-                    ],
-                },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Governance',
-            items: [
-                { type: 'doc', id: 'governance/overview', label: 'Overview' },
-                { type: 'doc', id: 'governance/curve-dao', label: 'Curve DAO' },
-                {
-                    type: 'category',
-                    label: 'Cross-chain Governance',
-                    items: [
-                        { type: 'doc', id: 'governance/x-gov/overview', label: 'Overview' },
-                        { type: 'doc', id: 'governance/x-gov/broadcaster', label: 'Broadcaster' },
-                        { type: 'doc', id: 'governance/x-gov/relayer', label: 'Relayer' },
-                        { type: 'doc', id: 'governance/x-gov/agents', label: 'Agents' },
-                        { type: 'doc', id: 'governance/x-gov/vault', label: 'Vault' },
-                    ],
-                },
-            ],
-        },
+
+        // --- Integration (includes Registry + API) ---
         {
             type: 'category',
             label: 'Integration',
             items: [
                 { type: 'doc', id: 'integration/overview', label: 'Overview' },
                 { type: 'doc', id: 'integration/address-provider', label: 'AddressProvider' },
-                { type: 'doc', id: 'integration/metaregistry', label: 'MetaRegistry' },
+                { type: 'doc', id: 'integration/meta-registry', label: 'MetaRegistry' },
                 { type: 'doc', id: 'integration/rate-provider', label: 'Rate Provider' },
+                {
+                    type: 'category',
+                    label: 'Registry',
+                    items: [
+                        { type: 'doc', id: 'registry/overview', label: 'Overview' },
+                        { type: 'doc', id: 'registry/meta-registry-api', label: 'MetaRegistry API' },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'API',
+                    items: [
+                        { type: 'doc', id: 'api/curve-api', label: 'Curve API' },
+                        { type: 'doc', id: 'api/curve-prices', label: 'Curve Prices' },
+                    ],
+                },
             ],
         },
-        {
-            type: 'category',
-            label: 'Curve API',
-            items: [
-                { type: 'doc', id: 'curve-api/curve-api', label: 'Curve API' },
-                { type: 'doc', id: 'curve-api/curve-prices', label: 'Curve Prices' },
-            ],
-        },
+
+        // --- Deployments ---
         {
             type: 'category',
             label: 'Deployments',
@@ -493,17 +509,13 @@ export default {
                 { type: 'doc', id: 'deployments/router-zaps', label: 'Router & Zaps' },
             ],
         },
+
+        // --- Resources (Security + References) ---
         {
             type: 'category',
-            label: 'Security',
+            label: 'Resources',
             items: [
                 { type: 'doc', id: 'security/security', label: 'Security' },
-            ],
-        },
-        {
-            type: 'category',
-            label: 'References',
-            items: [
                 { type: 'doc', id: 'references/deployed-contracts', label: 'Deployed Contracts' },
                 { type: 'doc', id: 'references/audits', label: 'Audits' },
                 { type: 'doc', id: 'references/whitepaper', label: 'Whitepapers' },

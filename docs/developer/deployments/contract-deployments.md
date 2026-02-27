@@ -58,13 +58,13 @@ There is no confirmed resume time.
 | :logos-mantle: `Mantle` | [0xE265FC71d45fd791c9ebf3EE0a53FBB220Eb8f75](https://mantlescan.xyz/address/0xE265FC71d45fd791c9ebf3EE0a53FBB220Eb8f75) |  |
 | :logos-fraxtal: `Fraxtal` | [0x331b9182088e2a7d6d3fe4742aba1fb231aecc56](https://fraxscan.com/token/0x331b9182088e2a7d6d3fe4742aba1fb231aecc56) |  |
 | :logos-zksync: `zk-Sync` | [0x5945932099f124194452a4c62d34bb37f16183b2](https://era.zksync.network/token/0x5945932099f124194452a4c62d34bb37f16183b2) |  |
-| :logos-avalanche: `Avalanche`​ | [0xEEbC562d445F4bC13aC75c8caABb438DFae42A1B](https://snowscan.xyz/address/0xEEbC562d445F4bC13aC75c8caABb438DFae42A1B) | [**<mark style="background-color: #ffff00; color: black">x-dao (BETA)</mark>**](../deployments/crosschain.md#curve-x-dao)​ |
-| :logos-fantom: `Fantom`         | [0xE6c259bc0FCE25b71fE95A00361D3878E16232C3](https://ftmscout.com/address/0xE6c259bc0FCE25b71fE95A00361D3878E16232C3) | [**<mark style="background-color: #ffff00; color: black">x-dao (BETA)</mark>**](../deployments/crosschain.md#curve-x-dao)​ |
-| :logos-bsc: `Binance Smart Chain`         | [0x9996D0276612d23b35f90C51EE935520B3d7355B](https://bscscan.com/token/0x9996D0276612d23b35f90C51EE935520B3d7355B) | [**<mark style="background-color: #ffff00; color: black">x-dao (BETA)</mark>**](../deployments/crosschain.md#curve-x-dao)​ |
-| :logos-kava: `Kava`             | [0x7736C61F00c72e868AA9904c9063e8445A1eF5DD](https://kavascan.com/address/0x7736C61F00c72e868AA9904c9063e8445A1eF5DD) | [**<mark style="background-color: #ffff00; color: black">x-dao (BETA)</mark>**](../deployments/crosschain.md#curve-x-dao)​ |
-| :logos-avalanche: `Avalanche`​ | [0x47536F17F4fF30e64A96a7555826b8f9e66ec468](https://snowscan.xyz/address/0x47536F17F4fF30e64A96a7555826b8f9e66ec468) | [**<mark style="background-color: #f31743; color: black">Multichain</mark>**](https://multichain.org/)​ |
-| :logos-fantom: `Fantom`         | [0x1E4F97b9f9F913c46F1632781732927B9019C68b](https://ftmscout.com/address/0x1e4f97b9f9f913c46f1632781732927b9019c68b) | [**<mark style="background-color: #f31743; color: black">Multichain</mark>**](https://multichain.org/)​ |
-| :logos-celo: `Celo`             | [0x173fd7434B8B50dF08e3298f173487ebDB35FD14](https://explorer.celo.org/mainnet/address/0x173fd7434B8B50dF08e3298f173487ebDB35FD14) | [**<mark style="background-color: #f31743; color: black">Multichain</mark>**](https://multichain.org/)​ |
+| :logos-avalanche: `Avalanche`​ | [0xEEbC562d445F4bC13aC75c8caABb438DFae42A1B](https://snowscan.xyz/address/0xEEbC562d445F4bC13aC75c8caABb438DFae42A1B) | [**<mark style={{backgroundColor: '#ffff00', color: 'black'}}>x-dao (BETA)</mark>**](../deployments/crosschain.md#curve-x-dao)​ |
+| :logos-fantom: `Fantom`         | [0xE6c259bc0FCE25b71fE95A00361D3878E16232C3](https://ftmscout.com/address/0xE6c259bc0FCE25b71fE95A00361D3878E16232C3) | [**<mark style={{backgroundColor: '#ffff00', color: 'black'}}>x-dao (BETA)</mark>**](../deployments/crosschain.md#curve-x-dao)​ |
+| :logos-bsc: `Binance Smart Chain`         | [0x9996D0276612d23b35f90C51EE935520B3d7355B](https://bscscan.com/token/0x9996D0276612d23b35f90C51EE935520B3d7355B) | [**<mark style={{backgroundColor: '#ffff00', color: 'black'}}>x-dao (BETA)</mark>**](../deployments/crosschain.md#curve-x-dao)​ |
+| :logos-kava: `Kava`             | [0x7736C61F00c72e868AA9904c9063e8445A1eF5DD](https://kavascan.com/address/0x7736C61F00c72e868AA9904c9063e8445A1eF5DD) | [**<mark style={{backgroundColor: '#ffff00', color: 'black'}}>x-dao (BETA)</mark>**](../deployments/crosschain.md#curve-x-dao)​ |
+| :logos-avalanche: `Avalanche`​ | [0x47536F17F4fF30e64A96a7555826b8f9e66ec468](https://snowscan.xyz/address/0x47536F17F4fF30e64A96a7555826b8f9e66ec468) | [**<mark style={{backgroundColor: '#f31743', color: 'black'}}>Multichain</mark>**](https://multichain.org/)​ |
+| :logos-fantom: `Fantom`         | [0x1E4F97b9f9F913c46F1632781732927B9019C68b](https://ftmscout.com/address/0x1e4f97b9f9f913c46f1632781732927b9019c68b) | [**<mark style={{backgroundColor: '#f31743', color: 'black'}}>Multichain</mark>**](https://multichain.org/)​ |
+| :logos-celo: `Celo`             | [0x173fd7434B8B50dF08e3298f173487ebDB35FD14](https://explorer.celo.org/mainnet/address/0x173fd7434B8B50dF08e3298f173487ebDB35FD14) | [**<mark style={{backgroundColor: '#f31743', color: 'black'}}>Multichain</mark>**](https://multichain.org/)​ |
 
 ---
 
@@ -617,7 +617,7 @@ Each `RateProvider` is integrated into the chain-specific [`AddressProvider`](#a
 
 ### Stableswap-NG
 
-The full documentation for the `stableswap-ng` contracts can be found [here](../stableswap-exchange/stableswap-ng/overview.md). Source code for the `stableswap-ng` contracts is available on [ GitHub](https://github.com/curvefi/stableswap-ng).
+The full documentation for the `stableswap-ng` contracts can be found [here](../stableswap-ng/overview.md). Source code for the `stableswap-ng` contracts is available on [ GitHub](https://github.com/curvefi/stableswap-ng).
 
 :::warning[Implementation Contracts]
 
@@ -654,7 +654,7 @@ Every `Factory` contract has different implementation contracts which are used f
 
 ### Twocrypto-NG
 
-The full documentation for the `twocrypto-ng` contracts can be found [here](../cryptoswap-exchange/twocrypto-ng/overview.md). Source code for the `twocrypto-ng` contracts is available on [ GitHub](https://github.com/curvefi/twocrypto-ng).
+The full documentation for the `twocrypto-ng` contracts can be found [here](../twocrypto-ng/overview.md). Source code for the `twocrypto-ng` contracts is available on [ GitHub](https://github.com/curvefi/twocrypto-ng).
 
 :::warning[Implementation Contracts]
 
@@ -691,7 +691,7 @@ Every `Factory` contract has different implementation contracts which are used f
 
 ### Tricrypto-NG
 
-The full documentation for the `tricrypto-ng` contracts can be found [here](../cryptoswap-exchange/tricrypto-ng/overview.md). Source code for the `tricrypto-ng` contracts is available on [ GitHub](https://github.com/curvefi/tricrypto-ng).
+The full documentation for the `tricrypto-ng` contracts can be found [here](../tricrypto-ng/overview.md). Source code for the `tricrypto-ng` contracts is available on [ GitHub](https://github.com/curvefi/tricrypto-ng).
 
 :::warning[Implementation Contracts]
 
@@ -728,7 +728,7 @@ Every `Factory` contract has different implementation contracts which are used f
 
 ## Exchange Router
 
-The full documentation for the `Router` contracts can be found [here](../router/CurveRouterNG.md). Source code for the `Router` contracts is available on [ GitHub](https://github.com/curvefi/curve-router-ng/tree/master/contracts).
+The full documentation for the `Router` contracts can be found [here](../router/curve-router-ng.md). Source code for the `Router` contracts is available on [ GitHub](https://github.com/curvefi/curve-router-ng/tree/master/contracts).
 
 | Chain                             | Contract Address |
 | --------------------------------- | :--------------: |
@@ -842,7 +842,7 @@ The full documentation for the `Router` contracts can be found [here](../router/
 
 ## crvUSD
 
-The full documentation for the `crvUSD` contracts can be found [here](../crvUSD/overview.md). Source code for the `crvUSD` contracts is available on [ GitHub](https://github.com/curvefi/curve-stablecoin).
+The full documentation for the `crvUSD` contracts can be found [here](../crvusd/overview.md). Source code for the `crvUSD` contracts is available on [ GitHub](https://github.com/curvefi/curve-stablecoin).
 
 ### Core Contracts
 
