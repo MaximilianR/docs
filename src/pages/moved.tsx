@@ -5,12 +5,12 @@ export default function Moved(): React.JSX.Element {
   return (
     <Layout
       title="Docs moved"
-      description="Curve documentation has been unified on docs.curve.finance."
+      description="Curve documentation has been unified on dev.curve.finance."
     >
       <main style={{ padding: '2rem 1rem', maxWidth: 720, margin: '0 auto' }}>
         <h1>Documentation has moved</h1>
         <p>
-          Curve documentation is now unified on <strong>docs.curve.finance</strong>.
+          Curve documentation is now unified on <strong>dev.curve.finance</strong>.
           What used to live on resources.curve.finance and the previous docs.curve.finance
           is now here or on our legacy technical docs.
         </p>
