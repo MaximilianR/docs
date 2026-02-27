@@ -118,32 +118,6 @@ export default {
                 },
             ],
         },
-        //{
-        //    type: 'category',
-        //    label: 'Growing Liquidity',
-        //    items: [
-        //        {
-        //            type: 'doc',
-        //            id: 'grow-liquidity/grow-tvl',
-        //            label: 'TVL Growth Strategies',
-        //        },
-        //        {
-        //            type: 'doc',
-        //            id: 'grow-liquidity/community',
-        //            label: 'Engaging with the Curve Community',
-        //        },
-        //        {
-        //            type: 'doc',
-        //            id: 'grow-liquidity/analytics',
-        //            label: 'Using Curve Analytics Tools',
-        //        },
-        //        {
-        //            type: 'doc',
-        //            id: 'grow-liquidity/examples',
-        //            label: 'Examples of Successful Deployments',
-        //        },
-        //    ],
-        //},
         {
             type: 'link',
             href: 'https://curvefinance.notion.site/Brand-Assets-1a6599aae064802fba11ce6a9e642d74',

@@ -206,6 +206,7 @@ export default {
                                 {
                                     type: 'doc',
                                     id: 'llamalend/guides/borrow/loan-management',
+                                    label: 'Managing a Loan',
                                 },
                                 {
                                     type: 'doc',
@@ -220,6 +221,7 @@ export default {
                                 {
                                     type: 'doc',
                                     id: 'llamalend/guides/borrow/leveraged-loans',
+                                    label: 'Using Leverage',
                                 },
                             ],
                         },

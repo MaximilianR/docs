@@ -1,15 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import deploymentsData from '../../data/deployments.json';
 import styles from './styles.module.css';
-
-interface DeploymentEntry {
-  chain: string;
-  category: string;
-  subcategory?: string;
-  name: string;
-  address: string;
-  path: string;
-}
+import type { DeploymentEntry } from './types';
+import { formatChainName, formatCategoryName } from './constants';
+import { ChainLogo } from './ChainLogo';
+import { NameDisplay } from './NameDisplay';
+import { CategorySelect } from './CategorySelect';
+import { ChainSelect } from './ChainSelect';
+import { filterDeployments } from './searchFilter';
 
 // Get explorer URLs from JSON data
 const getExplorerUrls = (data: any): Record<string, string> => {
@@ -21,13 +19,11 @@ function flattenDeployments(data: any): DeploymentEntry[] {
 
   function traverse(obj: any, chain: string, category: string, subcategory: string = '', path: string = '') {
     for (const [key, value] of Object.entries(obj)) {
-      // Skip the _explorers key if it exists
       if (key === '_explorers') continue;
-      
+
       const currentPath = path ? `${path}.${key}` : key;
-      
+
       if (typeof value === 'string') {
-        // This is an address
         entries.push({
           chain,
           category,
@@ -37,14 +33,11 @@ function flattenDeployments(data: any): DeploymentEntry[] {
           path: currentPath,
         });
       } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-        // Check if all values in this object are strings (leaf level)
         const allValuesAreStrings = Object.values(value).every(v => typeof v === 'string');
-        
+
         if (allValuesAreStrings) {
-          // This is a subcategory containing only addresses (e.g., "stableswap" under "amm")
           traverse(value, chain, category, key, currentPath);
         } else {
-          // This contains nested objects, continue traversing with same subcategory
           traverse(value, chain, category, subcategory, currentPath);
         }
       }
@@ -52,9 +45,8 @@ function flattenDeployments(data: any): DeploymentEntry[] {
   }
 
   for (const [chain, chainData] of Object.entries(data)) {
-    // Skip _explorers at top level
     if (chain === '_explorers') continue;
-    
+
     if (typeof chainData === 'object' && chainData !== null) {
       for (const [category, categoryData] of Object.entries(chainData as any)) {
         if (typeof categoryData === 'object' && categoryData !== null) {
@@ -67,409 +59,8 @@ function flattenDeployments(data: any): DeploymentEntry[] {
   return entries;
 }
 
-function formatChainName(chain: string): string {
-  return chain
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
-// Category display name mappings
-const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
-  'amm': 'AMM',
-  'dao': 'DAO',
-  'x-dao': 'Crosschain DAO',
-  'x-gov': 'Crosschain Governance',
-  'crvusd': 'Curve Stablecoin',
-  'scrvusd': 'Savings crvUSD',
-  'llamalend': 'Curve Lending',
-  'tokens': 'Tokens',
-  'core': 'Core',
-  'gauges': 'Gauges',
-  'fees': 'Fees',
-  'integrations': 'Integrations',
-  'curve-block-oracle': 'Curve Block Oracle',
-  'vecrv': 'veCRV',
-};
-
-function formatCategoryName(category: string): string {
-  // Check if there's a custom display name
-  const lowerCategory = category.toLowerCase();
-  if (CATEGORY_DISPLAY_NAMES[lowerCategory]) {
-    return CATEGORY_DISPLAY_NAMES[lowerCategory];
-  }
-  
-  // Default formatting: capitalize each word
-  return category
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
-function toSlug(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-}
-
-function ChainLogo({ chain }: { chain: string }) {
-  const slug = toSlug(chain);
-  const exts = ['svg', 'png', 'webp'];
-  const [idx, setIdx] = React.useState(0);
-  const [hasTried, setHasTried] = React.useState(false);
-  
-  const src = idx < exts.length ? `/img/chains/${slug}.${exts[idx]}` : '';
-
-  const handleError = () => {
-    if (idx < exts.length - 1) {
-      setIdx(idx + 1);
-    } else {
-      setHasTried(true);
-    }
-  };
-
-  if (hasTried || !src) {
-    return null;
-  }
-
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img 
-      src={src} 
-      alt="" 
-      className={styles.chainLogo} 
-      onError={handleError}
-    />
-  );
-}
-
-function NameDisplay({ name }: { name: string }) {
-  const lowerName = name.toLowerCase();
-  
-  // Show CRV logo for "crv" name inside the code box
-  if (lowerName === 'crv') {
-    return (
-      <code className={styles.nameCode}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src="/img/logos/crv.png" 
-          alt="CRV" 
-          className={styles.nameLogo}
-        />
-        <span>CRV</span>
-      </code>
-    );
-  }
-  
-  // Show veCRV logo for "vecrv" name inside the code box
-  if (lowerName === 'vecrv') {
-    return (
-      <code className={styles.nameCode}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src="/img/logos/vecrv.png" 
-          alt="veCRV" 
-          className={styles.nameLogo}
-        />
-        <span>veCRV</span>
-      </code>
-    );
-  }
-  
-  // Show crvUSD logo for "crvusd" name inside the code box
-  if (lowerName === 'crvusd') {
-    return (
-      <code className={styles.nameCode}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src="/img/logos/crvUSD_xs.png" 
-          alt="crvUSD" 
-          className={styles.nameLogo}
-        />
-        <span>crvUSD</span>
-      </code>
-    );
-  }
-  
-  // Show scrvUSD logo for "scrvusd" name inside the code box
-  if (lowerName === 'scrvusd') {
-    return (
-      <code className={styles.nameCode}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src="/img/logos/scrvUSD_xs.png" 
-          alt="scrvUSD" 
-          className={styles.nameLogo}
-        />
-        <span>scrvUSD</span>
-      </code>
-    );
-  }
-
-  return <code className={styles.nameCode}>{name}</code>;
-}
-
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
-}
-
-function CategorySelect({ 
-  categories, 
-  value, 
-  onChange,
-  onOpenChange,
-  isControlledOpen,
-  onControlledClose
-}: { 
-  categories: string[]; 
-  value: string; 
-  onChange: (value: string) => void;
-  onOpenChange?: (isOpen: boolean) => void;
-  isControlledOpen?: boolean;
-  onControlledClose?: () => void;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-  
-  const handleToggle = (open: boolean) => {
-    setIsOpen(open);
-    if (onOpenChange) {
-      onOpenChange(open);
-    }
-  };
-  
-  // Handle controlled close from parent (for mobile coordination)
-  React.useEffect(() => {
-    if (isControlledOpen === false && isOpen) {
-      setIsOpen(false);
-      if (onControlledClose) {
-        onControlledClose();
-      }
-    }
-  }, [isControlledOpen, isOpen, onControlledClose]);
-
-  const selectedCategoryName = value === 'all' ? 'All Categories' : formatCategoryName(value);
-
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (!target.closest(`.${styles.customSelect}`)) {
-        handleToggle(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [isOpen]);
-
-  return (
-    <div className={styles.customSelect}>
-      <button
-        type="button"
-        className={styles.selectButton}
-        onClick={() => handleToggle(!isOpen)}
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-      >
-        <div className={styles.selectButtonContent}>
-          <span>{selectedCategoryName}</span>
-        </div>
-        <svg 
-          className={`${styles.selectArrow} ${isOpen ? styles.selectArrowOpen : ''}`}
-          width="16" 
-          height="16" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2"
-        >
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-      </button>
-      {isOpen && (
-        <div className={styles.selectDropdown}>
-          <button
-            type="button"
-            className={`${styles.selectOption} ${value === 'all' ? styles.selectOptionActive : ''}`}
-            onClick={() => {
-              onChange('all');
-              handleToggle(false);
-            }}
-          >
-            <input
-              type="radio"
-              checked={value === 'all'}
-              onChange={() => {}}
-              className={styles.radio}
-            />
-            <span>All Categories</span>
-          </button>
-          {categories.map(category => {
-            const isSelected = value === category;
-            return (
-              <button
-                key={category}
-                type="button"
-                className={`${styles.selectOption} ${isSelected ? styles.selectOptionActive : ''}`}
-                onClick={() => {
-                  onChange(category);
-                  handleToggle(false);
-                }}
-              >
-                <input
-                  type="radio"
-                  checked={isSelected}
-                  onChange={() => {}}
-                  className={styles.radio}
-                />
-                <span>{formatCategoryName(category)}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ChainSelect({ 
-  chains, 
-  value, 
-  onChange,
-  onOpenChange,
-  isControlledOpen,
-  onControlledClose
-}: { 
-  chains: string[]; 
-  value: string[]; 
-  onChange: (value: string[]) => void;
-  onOpenChange?: (isOpen: boolean) => void;
-  isControlledOpen?: boolean;
-  onControlledClose?: () => void;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-  
-  const handleToggle = (open: boolean) => {
-    setIsOpen(open);
-    if (onOpenChange) {
-      onOpenChange(open);
-    }
-  };
-  
-  // Handle controlled close from parent (for mobile coordination)
-  React.useEffect(() => {
-    if (isControlledOpen === false && isOpen) {
-      setIsOpen(false);
-      if (onControlledClose) {
-        onControlledClose();
-      }
-    }
-  }, [isControlledOpen, isOpen, onControlledClose]);
-
-  const handleToggleChain = (chain: string) => {
-    if (chain === 'all') {
-      onChange([]);
-    } else {
-      const newValue = value.includes(chain)
-        ? value.filter(c => c !== chain)
-        : [...value, chain];
-      onChange(newValue);
-    }
-  };
-
-  const handleSelectAll = () => {
-    onChange([]);
-  };
-
-  const isAllSelected = value.length === 0;
-  const selectedCount = value.length;
-
-  const getButtonText = () => {
-    if (isAllSelected) return 'All Chains';
-    if (selectedCount === 1) return formatChainName(value[0]);
-    return `${selectedCount} chains selected`;
-  };
-
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (!target.closest(`.${styles.customSelect}`)) {
-        handleToggle(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [isOpen]);
-
-  return (
-    <div className={styles.customSelect}>
-      <button
-        type="button"
-        className={styles.selectButton}
-        onClick={() => handleToggle(!isOpen)}
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-      >
-        <div className={styles.selectButtonContent}>
-          {!isAllSelected && selectedCount === 1 && <ChainLogo chain={value[0]} />}
-          <span>{getButtonText()}</span>
-        </div>
-        <svg 
-          className={`${styles.selectArrow} ${isOpen ? styles.selectArrowOpen : ''}`}
-          width="16" 
-          height="16" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2"
-        >
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-      </button>
-      {isOpen && (
-        <div className={styles.selectDropdown}>
-          <button
-            type="button"
-            className={`${styles.selectOption} ${isAllSelected ? styles.selectOptionActive : ''}`}
-            onClick={() => {
-              handleSelectAll();
-              handleToggle(false);
-            }}
-          >
-            <input
-              type="checkbox"
-              checked={isAllSelected}
-              onChange={() => {}}
-              className={styles.checkbox}
-            />
-            <span>All Chains</span>
-          </button>
-          {chains.map(chain => {
-            const isSelected = value.includes(chain);
-            return (
-              <button
-                key={chain}
-                type="button"
-                className={`${styles.selectOption} ${isSelected ? styles.selectOptionActive : ''}`}
-                onClick={() => handleToggleChain(chain)}
-              >
-                <input
-                  type="checkbox"
-                  checked={isSelected}
-                  onChange={() => {}}
-                  className={styles.checkbox}
-                />
-                <ChainLogo chain={chain} />
-                <span>{formatChainName(chain)}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
 }
 
 export default function DeploymentFilter(): React.ReactNode {
@@ -480,46 +71,44 @@ export default function DeploymentFilter(): React.ReactNode {
   const [chainDropdownOpen, setChainDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   // Check if mobile on mount and resize
   React.useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  
+
   // Close other dropdown when one opens (mobile only)
   const handleChainDropdownChange = (isOpen: boolean) => {
     setChainDropdownOpen(isOpen);
-    // Only close category dropdown on mobile
     if (isOpen && isMobile) {
       setCategoryDropdownOpen(false);
     }
   };
-  
+
   const handleCategoryDropdownChange = (isOpen: boolean) => {
     setCategoryDropdownOpen(isOpen);
-    // Only close chain dropdown on mobile
     if (isOpen && isMobile) {
       setChainDropdownOpen(false);
     }
   };
-  
+
   const handleChainClose = () => {
     setChainDropdownOpen(false);
   };
-  
+
   const handleCategoryClose = () => {
     setCategoryDropdownOpen(false);
   };
 
   const explorerUrls = useMemo(() => getExplorerUrls(deploymentsData), []);
   const allDeployments = useMemo(() => flattenDeployments(deploymentsData), []);
-  
+
   const chains = useMemo(() => {
     const chainSet = new Set(allDeployments.map(d => d.chain));
     return Array.from(chainSet).sort();
@@ -530,131 +119,10 @@ export default function DeploymentFilter(): React.ReactNode {
     return Array.from(categorySet).sort();
   }, [allDeployments]);
 
-  const filteredDeployments = useMemo(() => {
-    return allDeployments.filter(deployment => {
-      // Filter by chain(s) - empty array means all chains
-      if (selectedChains.length > 0 && !selectedChains.includes(deployment.chain)) {
-        return false;
-      }
-
-      // Filter by category
-      if (selectedCategory !== 'all' && deployment.category !== selectedCategory) {
-        return false;
-      }
-
-      // Filter by search term - support multi-word search across all fields
-      // Support exact match with quotes: "vecrv" will only match exact "vecrv"
-      // Support field-specific search: in:category "vecrv", in:chain ethereum, in:name math, in:address 0x...
-      if (searchTerm) {
-        const trimmed = searchTerm.trim();
-        
-        // Parse field-specific searches (in:field "value" or in:field value)
-        const fieldSearchPattern = /in:(chain|category|name|address|path)\s+(?:"([^"]+)"|(\S+))/gi;
-        const fieldSearches: Array<{field: string, value: string, exact: boolean}> = [];
-        let match;
-        let remainingText = trimmed;
-        
-        // Extract all field-specific searches
-        while ((match = fieldSearchPattern.exec(trimmed)) !== null) {
-          const field = match[1].toLowerCase();
-          const value = (match[2] || match[3] || '').toLowerCase();
-          const exact = !!match[2]; // If it was in quotes, it's exact
-          if (value) {
-            fieldSearches.push({ field, value, exact });
-            remainingText = remainingText.replace(match[0], '').trim();
-          }
-        }
-        
-        // Check field-specific searches
-        if (fieldSearches.length > 0) {
-          for (const fieldSearch of fieldSearches) {
-            let fieldValue = '';
-            switch (fieldSearch.field) {
-              case 'chain':
-                fieldValue = [deployment.chain, formatChainName(deployment.chain)].join(' ').toLowerCase();
-                break;
-              case 'category':
-                fieldValue = [deployment.category, formatCategoryName(deployment.category)].join(' ').toLowerCase();
-                break;
-              case 'name':
-                fieldValue = deployment.name.toLowerCase();
-                break;
-              case 'address':
-                fieldValue = deployment.address.toLowerCase();
-                break;
-              case 'path':
-                fieldValue = deployment.path.toLowerCase();
-                break;
-            }
-            
-            if (fieldSearch.exact) {
-              // Exact match for quoted values
-              if (!fieldValue.includes(fieldSearch.value)) {
-                return false;
-              }
-            } else {
-              // Regular match
-              if (!fieldValue.includes(fieldSearch.value)) {
-                return false;
-              }
-            }
-          }
-        }
-        
-        // Process remaining text (non-field-specific searches)
-        if (remainingText.trim()) {
-          // Check for quoted exact match
-          const exactMatchPattern = /"([^"]+)"/g;
-          const exactMatches: string[] = [];
-          let exactMatch;
-          let textForWords = remainingText;
-          
-          // Extract all quoted strings
-          while ((exactMatch = exactMatchPattern.exec(remainingText)) !== null) {
-            exactMatches.push(exactMatch[1].toLowerCase());
-            textForWords = textForWords.replace(exactMatch[0], '').trim();
-          }
-          
-          // Get remaining words (non-quoted)
-          const searchWords = textForWords.split(/\s+/).filter(word => word.length > 0).map(w => w.toLowerCase());
-          
-          // Create a searchable text string from all deployment fields
-          const searchableText = [
-            deployment.chain,
-            deployment.category,
-            deployment.subcategory || '',
-            deployment.name,
-            deployment.address,
-            deployment.path,
-            formatChainName(deployment.chain),
-            formatCategoryName(deployment.category),
-            deployment.subcategory ? formatCategoryName(deployment.subcategory) : '',
-          ].join(' ').toLowerCase();
-          
-          // Check exact matches first
-          if (exactMatches.length > 0) {
-            const allExactMatch = exactMatches.every(exact => {
-              return searchableText.includes(exact);
-            });
-            if (!allExactMatch) {
-              return false;
-            }
-          }
-          
-          // Check regular word matches
-          if (searchWords.length > 0) {
-            const allWordsMatch = searchWords.every(word => searchableText.includes(word));
-            if (!allWordsMatch) {
-              return false;
-            }
-          }
-        }
-      }
-
-      // Only show entries with non-empty addresses
-      return deployment.address && deployment.address.trim() !== '';
-    });
-  }, [allDeployments, selectedChains, selectedCategory, searchTerm]);
+  const filteredDeployments = useMemo(
+    () => filterDeployments(allDeployments, selectedChains, selectedCategory, searchTerm),
+    [allDeployments, selectedChains, selectedCategory, searchTerm],
+  );
 
   const handleCopy = (e: React.MouseEvent, address: string) => {
     e.preventDefault();
@@ -806,8 +274,3 @@ export default function DeploymentFilter(): React.ReactNode {
     </div>
   );
 }
-
-
-
-
-
