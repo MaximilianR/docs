@@ -589,3 +589,294 @@ admonition[type="warning"] .admonition-content p {
     font-size: var(--Typography-FontSize-sm);
   }
 }
+
+/* ==========================================================================
+   Developer docs: new admonition types
+   ========================================================================== */
+
+/* --- description: function signature admonitions (monospace title, subtle) --- */
+admonition[type="description"],
+.admonition[type="description"],
+.admonition.description {
+  --adm-color: #6b7280;
+  --adm-border-color: #d1d5db;
+  --adm-dark-border-color: #4b5563;
+  --adm-icon: 'ƒ';
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid var(--adm-border-color) !important;
+  border-radius: 0 !important;
+  padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
+  margin: var(--Spacing-lg) 0 !important;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  min-height: 48px;
+  display: block !important;
+}
+
+.admonition.description .admonition-heading h5,
+.admonition.description .admonition-title {
+  font-family: var(--Text-FontFamily-Mono) !important;
+  font-size: var(--Typography-FontSize-sm) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 0 var(--Spacing-xs) 0 !important;
+  word-break: break-all;
+}
+
+.admonition.description .admonition-content {
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* --- deploy: contract deployment info --- */
+admonition[type="deploy"],
+.admonition[type="deploy"],
+.admonition.deploy {
+  --adm-color: #059669;
+  --adm-border-color: #6ee7b7;
+  --adm-dark-border-color: #34d399;
+  --adm-icon: '▲';
+}
+
+/* --- github: source code links --- */
+admonition[type="github"],
+.admonition[type="github"],
+.admonition.github {
+  --adm-color: #374151;
+  --adm-border-color: #9ca3af;
+  --adm-dark-border-color: #6b7280;
+  --adm-icon: '⌂';
+}
+
+/* --- vyper: Vyper source code --- */
+admonition[type="vyper"],
+.admonition[type="vyper"],
+.admonition.vyper {
+  --adm-color: #6366f1;
+  --adm-border-color: #a5b4fc;
+  --adm-dark-border-color: #818cf8;
+  --adm-icon: 'V';
+}
+
+/* --- colab: Google Colab notebooks --- */
+admonition[type="colab"],
+.admonition[type="colab"],
+.admonition.colab {
+  --adm-color: #f59e0b;
+  --adm-border-color: #fcd34d;
+  --adm-dark-border-color: #fbbf24;
+  --adm-icon: '▶';
+}
+
+/* --- guard: safety / guard info --- */
+admonition[type="guard"],
+.admonition[type="guard"],
+.admonition.guard {
+  --adm-color: #dc2626;
+  --adm-border-color: #fca5a5;
+  --adm-dark-border-color: #f87171;
+  --adm-icon: '⛨';
+}
+
+/* --- telegram: Telegram links --- */
+admonition[type="telegram"],
+.admonition[type="telegram"],
+.admonition.telegram {
+  --adm-color: #0088cc;
+  --adm-border-color: #7dd3fc;
+  --adm-dark-border-color: #38bdf8;
+  --adm-icon: '✈';
+}
+
+/* --- notebook: interactive notebooks --- */
+admonition[type="notebook"],
+.admonition[type="notebook"],
+.admonition.notebook {
+  --adm-color: #f59e0b;
+  --adm-border-color: #fcd34d;
+  --adm-dark-border-color: #fbbf24;
+  --adm-icon: '▶';
+}
+
+/* --- solidity: Solidity source code --- */
+admonition[type="solidity"],
+.admonition[type="solidity"],
+.admonition.solidity {
+  --adm-color: #374151;
+  --adm-border-color: #9ca3af;
+  --adm-dark-border-color: #6b7280;
+  --adm-icon: 'S';
+}
+
+/* --- bug: known bug documentation --- */
+admonition[type="bug"],
+.admonition[type="bug"],
+.admonition.bug {
+  --adm-color: #ef4444;
+  --adm-border-color: #fca5a5;
+  --adm-dark-border-color: #f87171;
+  --adm-icon: '⚠';
+}
+
+/* --- pdf: whitepaper / PDF references --- */
+admonition[type="pdf"],
+.admonition[type="pdf"],
+.admonition.pdf {
+  --adm-color: #6366f1;
+  --adm-border-color: #a5b4fc;
+  --adm-dark-border-color: #818cf8;
+  --adm-icon: '⎙';
+}
+
+/* --- abstract: article / abstract references --- */
+admonition[type="abstract"],
+.admonition[type="abstract"],
+.admonition.abstract {
+  --adm-color: #0ea5e9;
+  --adm-border-color: #7dd3fc;
+  --adm-dark-border-color: #38bdf8;
+  --adm-icon: '◇';
+}
+
+/* Register new types in base admonition container styles */
+admonition[type="deploy"], .admonition[type="deploy"], .admonition.deploy,
+admonition[type="github"], .admonition[type="github"], .admonition.github,
+admonition[type="vyper"], .admonition[type="vyper"], .admonition.vyper,
+admonition[type="colab"], .admonition[type="colab"], .admonition.colab,
+admonition[type="guard"], .admonition[type="guard"], .admonition.guard,
+admonition[type="telegram"], .admonition[type="telegram"], .admonition.telegram,
+admonition[type="notebook"], .admonition[type="notebook"], .admonition.notebook,
+admonition[type="solidity"], .admonition[type="solidity"], .admonition.solidity,
+admonition[type="bug"], .admonition[type="bug"], .admonition.bug,
+admonition[type="pdf"], .admonition[type="pdf"], .admonition.pdf,
+admonition[type="abstract"], .admonition[type="abstract"], .admonition.abstract {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid var(--adm-border-color) !important;
+  border-radius: 0 !important;
+  padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
+  margin: var(--Spacing-lg) 0 !important;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  min-height: 48px;
+  display: block !important;
+}
+
+/* Left accent bar for new types */
+admonition[type="deploy"]::before, .admonition[type="deploy"]::before, .admonition.deploy::before,
+admonition[type="github"]::before, .admonition[type="github"]::before, .admonition.github::before,
+admonition[type="vyper"]::before, .admonition[type="vyper"]::before, .admonition.vyper::before,
+admonition[type="colab"]::before, .admonition[type="colab"]::before, .admonition.colab::before,
+admonition[type="guard"]::before, .admonition[type="guard"]::before, .admonition.guard::before,
+admonition[type="telegram"]::before, .admonition[type="telegram"]::before, .admonition.telegram::before,
+admonition[type="notebook"]::before, .admonition[type="notebook"]::before, .admonition.notebook::before,
+admonition[type="solidity"]::before, .admonition[type="solidity"]::before, .admonition.solidity::before,
+admonition[type="bug"]::before, .admonition[type="bug"]::before, .admonition.bug::before,
+admonition[type="pdf"]::before, .admonition[type="pdf"]::before, .admonition.pdf::before,
+admonition[type="abstract"]::before, .admonition[type="abstract"]::before, .admonition.abstract::before,
+admonition[type="description"]::before, .admonition[type="description"]::before, .admonition.description::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--adm-color);
+  border-radius: 0;
+}
+
+/* Icon circle for new types */
+admonition[type="deploy"]::after, .admonition[type="deploy"]::after, .admonition.deploy::after,
+admonition[type="github"]::after, .admonition[type="github"]::after, .admonition.github::after,
+admonition[type="vyper"]::after, .admonition[type="vyper"]::after, .admonition.vyper::after,
+admonition[type="colab"]::after, .admonition[type="colab"]::after, .admonition.colab::after,
+admonition[type="guard"]::after, .admonition[type="guard"]::after, .admonition.guard::after,
+admonition[type="telegram"]::after, .admonition[type="telegram"]::after, .admonition.telegram::after,
+admonition[type="notebook"]::after, .admonition[type="notebook"]::after, .admonition.notebook::after,
+admonition[type="solidity"]::after, .admonition[type="solidity"]::after, .admonition.solidity::after,
+admonition[type="bug"]::after, .admonition[type="bug"]::after, .admonition.bug::after,
+admonition[type="pdf"]::after, .admonition[type="pdf"]::after, .admonition.pdf::after,
+admonition[type="abstract"]::after, .admonition[type="abstract"]::after, .admonition.abstract::after,
+admonition[type="description"]::after, .admonition[type="description"]::after, .admonition.description::after {
+  content: var(--adm-icon);
+  position: absolute;
+  top: 50%;
+  left: -10.5px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: var(--adm-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: var(--Typography-FontWeight-Bold);
+  font-family: var(--Text-FontFamily-Body);
+  z-index: 1;
+}
+
+/* Content area for new types */
+admonition[type="deploy"] .admonition-content, .admonition.deploy .admonition-content,
+admonition[type="github"] .admonition-content, .admonition.github .admonition-content,
+admonition[type="vyper"] .admonition-content, .admonition.vyper .admonition-content,
+admonition[type="colab"] .admonition-content, .admonition.colab .admonition-content,
+admonition[type="guard"] .admonition-content, .admonition.guard .admonition-content,
+admonition[type="telegram"] .admonition-content, .admonition.telegram .admonition-content,
+admonition[type="notebook"] .admonition-content, .admonition.notebook .admonition-content,
+admonition[type="solidity"] .admonition-content, .admonition.solidity .admonition-content,
+admonition[type="bug"] .admonition-content, .admonition.bug .admonition-content,
+admonition[type="pdf"] .admonition-content, .admonition.pdf .admonition-content,
+admonition[type="abstract"] .admonition-content, .admonition.abstract .admonition-content,
+admonition[type="description"] .admonition-content, .admonition.description .admonition-content {
+  flex: 1;
+  color: var(--Text-TextColors-Primary) !important;
+  line-height: var(--Typography-LineHeight-md);
+  font-size: var(--Typography-FontSize-md);
+  padding-left: 40px;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Title styling for new block types */
+.admonition.deploy .admonition-title,
+.admonition.github .admonition-title,
+.admonition.vyper .admonition-title,
+.admonition.colab .admonition-title,
+.admonition.guard .admonition-title,
+.admonition.telegram .admonition-title,
+.admonition.notebook .admonition-title,
+.admonition.solidity .admonition-title,
+.admonition.bug .admonition-title,
+.admonition.pdf .admonition-title,
+.admonition.abstract .admonition-title {
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  margin: 0 0 var(--Spacing-xs) 0 !important;
+  font-size: var(--Typography-FontSize-md) !important;
+  line-height: var(--Typography-LineHeight-tight) !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* Dark mode for new types */
+[data-theme='dark'] admonition[type="deploy"], [data-theme='dark'] .admonition.deploy,
+[data-theme='dark'] admonition[type="github"], [data-theme='dark'] .admonition.github,
+[data-theme='dark'] admonition[type="vyper"], [data-theme='dark'] .admonition.vyper,
+[data-theme='dark'] admonition[type="colab"], [data-theme='dark'] .admonition.colab,
+[data-theme='dark'] admonition[type="guard"], [data-theme='dark'] .admonition.guard,
+[data-theme='dark'] admonition[type="telegram"], [data-theme='dark'] .admonition.telegram,
+[data-theme='dark'] admonition[type="notebook"], [data-theme='dark'] .admonition.notebook,
+[data-theme='dark'] admonition[type="solidity"], [data-theme='dark'] .admonition.solidity,
+[data-theme='dark'] admonition[type="bug"], [data-theme='dark'] .admonition.bug,
+[data-theme='dark'] admonition[type="pdf"], [data-theme='dark'] .admonition.pdf,
+[data-theme='dark'] admonition[type="abstract"], [data-theme='dark'] .admonition.abstract,
+[data-theme='dark'] admonition[type="description"], [data-theme='dark'] .admonition.description {
+  background: var(--Layer-2-Fill) !important;
+  border: 1px solid var(--adm-dark-border-color) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}

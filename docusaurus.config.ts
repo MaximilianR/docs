@@ -6,14 +6,14 @@ import rehypeKatex from 'rehype-katex';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-const SITE_DOMAIN = 'dev.curve.finance';
+const SITE_DOMAIN = 'docs.curve.finance';
 
 // Shared doc plugin options (used by both user and protocol sections)
 const sharedDocOptions = {
   remarkPlugins: [remarkMath],
   rehypePlugins: [rehypeKatex],
   admonitions: {
-    keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'danger', 'example'],
+    keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'warning', 'danger', 'example', 'description', 'deploy', 'github', 'vyper', 'colab', 'guard', 'telegram', 'notebook', 'solidity', 'bug', 'pdf', 'abstract'],
   },
 };
 
@@ -102,8 +102,9 @@ const config: Config = {
           activeBasePath: '/user',
         },
         {
-          href: 'https://dev.curve.finance/documentation-overview/',
+          to: 'developer/documentation-overview',
           label: 'Developers',
+          activeBasePath: '/developer',
         },
         {
           to: 'protocol/why-curve',
@@ -245,6 +246,18 @@ const config: Config = {
         routeBasePath: 'protocol',
         includeCurrentVersion: true,
         sidebarPath: './sidebars/sidebarProtocol.js',
+        sidebarCollapsed: true,
+        breadcrumbs: false,
+        ...sharedDocOptions,
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'developer',
+        path: 'docs/developer',
+        routeBasePath: 'developer',
+        sidebarPath: './sidebars/sidebarDeveloper.js',
         sidebarCollapsed: true,
         breadcrumbs: false,
         ...sharedDocOptions,
