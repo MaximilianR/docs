@@ -1,618 +1,884 @@
-<h1>CryptoFromPoolVault</h1>
+# CryptoFromPoolVault
 
-This oracle contract takes the **price oracle from a Curve liquidity pool and applies the redemption of the vault token to it**. This is often used when having **ERC-4626 Vault tokens** with `pricePerShare`, `convertToAsset`, or other similar functions which essentially return the price of one vault token compared to the underlying assets. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvUSD/priceaggregator.md), but experience has shown that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+This oracle contract takes the **price oracle from a Curve liquidity pool and applies the redemption of the vault token to it**. This is often used when having **ERC-4626 Vault tokens**with `pricePerShare`, `convertToAsset`, or other similar functions which essentially return the price of one vault token compared to the underlying assets. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvUSD/priceaggregator.md), but experience has shown that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
 
 These kinds of oracle contracts **need to be deployed manually**, as there is currently no `Factory` to do so.
 
-!!!github "GitHub"
-    The source code for the following price oracle contracts can be found on :material-github: GitHub:
+:::github[GitHub]
 
-    - [`CryptoFromPoolVault.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVault.vy)
-    - [`CryptoFromPoolVaultWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVaultWAgg.vy)
+The source code for the following price oracle contracts can be found on  GitHub:
 
-    !!! warning "Oracle Suitability"
-        `CryptoFromPoolVaultWAgg.vy` is only suitable for vaults which cannot be affected by [donation attacks](https://mixbytes.io/blog/overview-of-the-inflation-attack).
+- [`CryptoFromPoolVault.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVault.vy)
+- [`CryptoFromPoolVaultWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVaultWAgg.vy)
 
-!!!danger "Oracle Immutability"
-    The oracle contracts are fully immutable. Once deployed, they cannot change any parameters, stop the price updates, or alter the pools used to calculate the prices. However, because the contract relies on other pools, it's important to keep in mind that changing parameters in the pool, such as the periodicity of the oracle, can influence these oracle contracts. All relevant data required for the oracle to function is passed into the `__init__` function during the deployment of the contract.
+:::warning[Oracle Suitability]
 
-    ???quote "`__init__`"
-        
-        === "CryptoFromPoolVault.vy"
+`CryptoFromPoolVaultWAgg.vy` is only suitable for vaults which cannot be affected by [donation attacks](https://mixbytes.io/blog/overview-of-the-inflation-attack).
 
-            ```python
-            @external
-            def __init__(
-                    pool: Pool,
-                    N: uint256,
-                    borrowed_ix: uint256,
-                    collateral_ix: uint256,
-                    vault: Vault
-                ):
-                assert borrowed_ix != collateral_ix
-                assert borrowed_ix < N
-                assert collateral_ix < N
 
-                POOL = pool
-                N_COINS = N
-                BORROWED_IX = borrowed_ix
-                COLLATERAL_IX = collateral_ix
-                VAULT = vault
+:::
 
-                no_argument: bool = False
-                if N == 2:
-                    success: bool = False
-                    res: Bytes[32] = empty(Bytes[32])
-                    success, res = raw_call(
-                        pool.address,
-                        _abi_encode(empty(uint256), method_id=method_id("price_oracle(uint256)")),
-                        max_outsize=32, is_static_call=True, revert_on_failure=False)
-                    if not success:
-                        no_argument = True
-                NO_ARGUMENT = no_argument
 
-                self.cached_price_per_share = VAULT.pricePerShare()
-                self.cached_timestamp = block.timestamp
-            ```
+:::
 
-        === "CryptoFromPoolVaultWAgg.vy"
+:::danger[Oracle Immutability]
 
-            ```python
-            @external
-            def __init__(
-                    pool: Pool,
-                    N: uint256,
-                    borrowed_ix: uint256,
-                    collateral_ix: uint256,
-                    vault: Vault,
-                    agg: StableAggregator
-                ):
-                assert borrowed_ix != collateral_ix
-                assert borrowed_ix < N
-                assert collateral_ix < N
-                POOL = pool
-                N_COINS = N
-                BORROWED_IX = borrowed_ix
-                COLLATERAL_IX = collateral_ix
-                VAULT = vault
-                AGG = agg
+The oracle contracts are fully immutable. Once deployed, they cannot change any parameters, stop the price updates, or alter the pools used to calculate the prices. However, because the contract relies on other pools, it's important to keep in mind that changing parameters in the pool, such as the periodicity of the oracle, can influence these oracle contracts. All relevant data required for the oracle to function is passed into the `__init__` function during the deployment of the contract.
 
-                no_argument: bool = False
-                if N == 2:
-                    success: bool = False
-                    res: Bytes[32] = empty(Bytes[32])
-                    success, res = raw_call(
-                        pool.address,
-                        _abi_encode(empty(uint256), method_id=method_id("price_oracle(uint256)")),
-                        max_outsize=32, is_static_call=True, revert_on_failure=False)
-                    if not success:
-                        no_argument = True
-                NO_ARGUMENT = no_argument
-            ```
+<details>
+<summary>`__init__`</summary>
 
+
+<Tabs>
+<TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
+
+
+```python
+@external
+def __init__(
+        pool: Pool,
+        N: uint256,
+        borrowed_ix: uint256,
+        collateral_ix: uint256,
+        vault: Vault
+    ):
+    assert borrowed_ix != collateral_ix
+    assert borrowed_ix < N
+    assert collateral_ix < N
+
+    POOL = pool
+    N_COINS = N
+    BORROWED_IX = borrowed_ix
+    COLLATERAL_IX = collateral_ix
+    VAULT = vault
+
+    no_argument: bool = False
+    if N == 2:
+        success: bool = False
+        res: Bytes[32] = empty(Bytes[32])
+        success, res = raw_call(
+            pool.address,
+            _abi_encode(empty(uint256), method_id=method_id("price_oracle(uint256)")),
+            max_outsize=32, is_static_call=True, revert_on_failure=False)
+        if not success:
+            no_argument = True
+    NO_ARGUMENT = no_argument
+
+    self.cached_price_per_share = VAULT.pricePerShare()
+    self.cached_timestamp = block.timestamp
+```
+
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
+
+
+```python
+@external
+def __init__(
+        pool: Pool,
+        N: uint256,
+        borrowed_ix: uint256,
+        collateral_ix: uint256,
+        vault: Vault,
+        agg: StableAggregator
+    ):
+    assert borrowed_ix != collateral_ix
+    assert borrowed_ix < N
+    assert collateral_ix < N
+    POOL = pool
+    N_COINS = N
+    BORROWED_IX = borrowed_ix
+    COLLATERAL_IX = collateral_ix
+    VAULT = vault
+    AGG = agg
+
+    no_argument: bool = False
+    if N == 2:
+        success: bool = False
+        res: Bytes[32] = empty(Bytes[32])
+        success, res = raw_call(
+            pool.address,
+            _abi_encode(empty(uint256), method_id=method_id("price_oracle(uint256)")),
+            max_outsize=32, is_static_call=True, revert_on_failure=False)
+        if not success:
+            no_argument = True
+    NO_ARGUMENT = no_argument
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+
+:::
 
 ---
 
 
-## **Oracle Price**
+## **Oracle Price**The oracle price is calculated by taking the `price_oracle` of a Curve pool and then adjusting it by the redemption rate of a vault, using methods such as `convertToAssets`, `pricePerShare` or really any other equvalent function which returns the rate of the vault token and the underlying asset.
 
-The oracle price is calculated by taking the `price_oracle` of a Curve pool and then adjusting it by the redemption rate of a vault, using methods such as `convertToAssets`, `pricePerShare` or really any other equvalent function which returns the rate of the vault token and the underlying asset.
+:::example[Example]
 
-!!!example "Example"
-    Let's take a look at the [sDOLA/crvUSD lending market](https://lend.curve.fi/#/ethereum/markets/one-way-market-17/create), which uses the `CryptoFromPoolVaultWAgg.vy` code. 
+Let's take a look at the [sDOLA/crvUSD lending market](https://lend.curve.fi/#/ethereum/markets/one-way-market-17/create), which uses the `CryptoFromPoolVaultWAgg.vy` code. 
 
-    The [oracle contract](https://etherscan.io/address/0x002688C4296A2C4d800F271fe6F01741111B09Be) fetches the `price_oracle` of the [DOLA <> crvUSD stableswap-ng pool](https://etherscan.io/address/0x8272E1A3dBef607C04AA6e5BD3a1A134c8ac063B#readContract#F9) and then adjusts this value by the redemption rate obtained from the [`convertToAssets`](https://etherscan.io/address/0xb45ad160634c528Cc3D2926d9807104FA3157305#readContract#F7) method of the [sDOLA vault](https://etherscan.io/address/0xb45ad160634c528Cc3D2926d9807104FA3157305).
-
-Additionally, the `CryptoFromPoolVault.vy` contract has a **built-in mechanism that considers a certain maximum speed of price change within the vault** when calculating the oracle price. This feature is not included in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
-
-??? quote "Source Code"
-
-    *The formula to calculate the applied redemption rate is the following:*
-
-    $$\min \left( \text{pricePerShare}, \frac{\text{cached_price_per_share} \times (10^{18} + \text{PPS_MAX_SPEED} \times (\text{block.timestamp} - \text{cached_timestamp}))}{10^{18}} \right)$$
-
-    In this example, `pricePerShare` is used, but it can really be any equivalent method that returns the redemption rate of the vault token with respect to its underlying token.
-
-    `cached_price_per_share` and `cached_timestamp` are internal variables that are updated whenever the `price_w` function is called. The first value is set to the current redemption rate within the vault at the block when the function is called, and the second value to the current timestamp (`block.timestamp`).
-
-    === "CryptoFromPoolVaul.vy"
-
-        ```py
-        PPS_MAX_SPEED: constant(uint256) = 10**16 / 60  # Max speed of pricePerShare change
-
-        cached_price_per_share: public(uint256)
-        cached_timestamp: public(uint256)
-
-        @internal
-        @view
-        def _pps() -> uint256:
-            return min(VAULT.pricePerShare(), self.cached_price_per_share * (10**18 + PPS_MAX_SPEED * (block.timestamp - self.cached_timestamp)) / 10**18)
+The [oracle contract](https://etherscan.io/address/0x002688C4296A2C4d800F271fe6F01741111B09Be) fetches the `price_oracle` of the [DOLA &lt;&gt; crvUSD stableswap-ng pool](https://etherscan.io/address/0x8272E1A3dBef607C04AA6e5BD3a1A134c8ac063B#readContract#F9) and then adjusts this value by the redemption rate obtained from the [`convertToAssets`](https://etherscan.io/address/0xb45ad160634c528Cc3D2926d9807104FA3157305#readContract#F7) method of the [sDOLA vault](https://etherscan.io/address/0xb45ad160634c528Cc3D2926d9807104FA3157305).
 
 
-        @internal
-        def _pps_w() -> uint256:
-            pps: uint256 = min(VAULT.pricePerShare(), self.cached_price_per_share * (10**18 + PPS_MAX_SPEED * (block.timestamp - self.cached_timestamp)) / 10**18)
-            self.cached_price_per_share = pps
-            self.cached_timestamp = block.timestamp
-            return pps
-        ```
+:::
 
+Additionally, the `CryptoFromPoolVault.vy` contract has a **built-in mechanism that considers a certain maximum speed of price change within the vault**when calculating the oracle price. This feature is not included in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
+
+<details>
+<summary>Source Code</summary>
+
+
+*The formula to calculate the applied redemption rate is the following:*
+
+$$\min \left( \text\{pricePerShare\}, \frac\{\text\{cached_price_per_share\} \times (10^\{18\} + \text\{PPS_MAX_SPEED\} \times (\text\{block.timestamp\} - \text\{cached_timestamp\}))\}\{10^\{18\}\} \right)$$
+
+In this example, `pricePerShare` is used, but it can really be any equivalent method that returns the redemption rate of the vault token with respect to its underlying token.
+
+`cached_price_per_share` and `cached_timestamp` are internal variables that are updated whenever the `price_w` function is called. The first value is set to the current redemption rate within the vault at the block when the function is called, and the second value to the current timestamp (`block.timestamp`).
+
+<Tabs>
+<TabItem value="cryptofrompoolvaul-vy" label="CryptoFromPoolVaul.vy">
+
+
+```py
+PPS_MAX_SPEED: constant(uint256) = 10**16 / 60  # Max speed of pricePerShare change
+
+cached_price_per_share: public(uint256)
+cached_timestamp: public(uint256)
+
+@internal
+@view
+def _pps() -> uint256:
+    return min(VAULT.pricePerShare(), self.cached_price_per_share * (10**18 + PPS_MAX_SPEED * (block.timestamp - self.cached_timestamp)) / 10**18)
+
+
+@internal
+def _pps_w() -> uint256:
+    pps: uint256 = min(VAULT.pricePerShare(), self.cached_price_per_share * (10**18 + PPS_MAX_SPEED * (block.timestamp - self.cached_timestamp)) / 10**18)
+    self.cached_price_per_share = pps
+    self.cached_timestamp = block.timestamp
+    return pps
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
 
 ### `price`
-!!! description "`CryptoFromPoolVault.price() -> uint256`"
+:::description[`CryptoFromPoolVault.price() -> uint256`]
 
-    Getter for the price of the collateral asset denominated against the borrowed token and applying the conversion rate form a vault.
 
-    Returns: oracle price (`uint256`).
+Getter for the price of the collateral asset denominated against the borrowed token and applying the conversion rate form a vault.
 
-    ??? quote "Source code"
+Returns: oracle price (`uint256`).
 
-        The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvUSD/priceaggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
+<details>
+<summary>Source code</summary>
 
-        The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-        === "CryptoFromPoolVault.vy"
+The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvUSD/priceaggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
 
-            ```python
-            interface Pool:
-                def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
+The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-            interface StableAggregator:
-                def price() -> uint256: view
-                def price_w() -> uint256: nonpayable
-                def stablecoin() -> address: view
+<Tabs>
+<TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
-            interface Vault:
-                def convertToAssets(shares: uint256) -> uint256: view
 
-            POOL: public(immutable(Pool))
-            BORROWED_IX: public(immutable(uint256))
-            COLLATERAL_IX: public(immutable(uint256))
-            N_COINS: public(immutable(uint256))
-            NO_ARGUMENT: public(immutable(bool))
-            VAULT: public(immutable(Vault))
-            AGG: public(immutable(StableAggregator))
+```python
+interface Pool:
+    def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
 
-            PPS_MAX_SPEED: constant(uint256) = 10**16 / 60  # Max speed of pricePerShare change
+interface StableAggregator:
+    def price() -> uint256: view
+    def price_w() -> uint256: nonpayable
+    def stablecoin() -> address: view
 
-            cached_price_per_share: public(uint256)
-            cached_timestamp: public(uint256)
+interface Vault:
+    def convertToAssets(shares: uint256) -> uint256: view
 
-            @external
-            @view
-            def price() -> uint256:
-                return self._raw_price(self._pps())
+POOL: public(immutable(Pool))
+BORROWED_IX: public(immutable(uint256))
+COLLATERAL_IX: public(immutable(uint256))
+N_COINS: public(immutable(uint256))
+NO_ARGUMENT: public(immutable(bool))
+VAULT: public(immutable(Vault))
+AGG: public(immutable(StableAggregator))
 
-            @internal
-            @view
-            def _raw_price(pps: uint256) -> uint256:
-                p_borrowed: uint256 = 10**18
-                p_collateral: uint256 = 10**18
+PPS_MAX_SPEED: constant(uint256) = 10**16 / 60  # Max speed of pricePerShare change
 
-                if NO_ARGUMENT:
-                    p: uint256 = POOL.price_oracle()
-                    if COLLATERAL_IX > 0:
-                        p_collateral = p
-                    else:
-                        p_borrowed = p
+cached_price_per_share: public(uint256)
+cached_timestamp: public(uint256)
 
-                else:
-                    if BORROWED_IX > 0:
-                        p_borrowed = POOL.price_oracle(BORROWED_IX - 1)
-                    if COLLATERAL_IX > 0:
-                        p_collateral = POOL.price_oracle(COLLATERAL_IX - 1)
+@external
+@view
+def price() -> uint256:
+    return self._raw_price(self._pps())
 
-                return p_collateral * pps / p_borrowed
+@internal
+@view
+def _raw_price(pps: uint256) -> uint256:
+    p_borrowed: uint256 = 10**18
+    p_collateral: uint256 = 10**18
 
-            @internal
-            @view
-            def _pps() -> uint256:
-                return min(VAULT.pricePerShare(), self.cached_price_per_share * (10**18 + PPS_MAX_SPEED * (block.timestamp - self.cached_timestamp)) / 10**18)
-            ```
+    if NO_ARGUMENT:
+        p: uint256 = POOL.price_oracle()
+        if COLLATERAL_IX > 0:
+            p_collateral = p
+        else:
+            p_borrowed = p
 
-        === "CryptoFromPoolVaultWAgg.vy"
+    else:
+        if BORROWED_IX > 0:
+            p_borrowed = POOL.price_oracle(BORROWED_IX - 1)
+        if COLLATERAL_IX > 0:
+            p_collateral = POOL.price_oracle(COLLATERAL_IX - 1)
 
-            ```python
-            interface Pool:
-                def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
+    return p_collateral * pps / p_borrowed
 
-            interface StableAggregator:
-                def price() -> uint256: view
-                def price_w() -> uint256: nonpayable
-                def stablecoin() -> address: view
+@internal
+@view
+def _pps() -> uint256:
+    return min(VAULT.pricePerShare(), self.cached_price_per_share * (10**18 + PPS_MAX_SPEED * (block.timestamp - self.cached_timestamp)) / 10**18)
+```
 
-            interface Vault:
-                def convertToAssets(shares: uint256) -> uint256: view
 
-            POOL: public(immutable(Pool))
-            BORROWED_IX: public(immutable(uint256))
-            COLLATERAL_IX: public(immutable(uint256))
-            N_COINS: public(immutable(uint256))
-            NO_ARGUMENT: public(immutable(bool))
-            VAULT: public(immutable(Vault))
-            AGG: public(immutable(StableAggregator))
+</TabItem>
+</Tabs>
 
-            @external
-            @view
-            def price() -> uint256:
-                return self._raw_price() * AGG.price() / 10**18
+<Tabs>
+<TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
-            @internal
-            @view
-            def _raw_price() -> uint256:
-                p_borrowed: uint256 = 10**18
-                p_collateral: uint256 = 10**18
 
-                if NO_ARGUMENT:
-                    p: uint256 = POOL.price_oracle()
-                    if COLLATERAL_IX > 0:
-                        p_collateral = p
-                    else:
-                        p_borrowed = p
+```python
+interface Pool:
+    def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
 
-                else:
-                    if BORROWED_IX > 0:
-                        p_borrowed = POOL.price_oracle(BORROWED_IX - 1)
-                    if COLLATERAL_IX > 0:
-                        p_collateral = POOL.price_oracle(COLLATERAL_IX - 1)
+interface StableAggregator:
+    def price() -> uint256: view
+    def price_w() -> uint256: nonpayable
+    def stablecoin() -> address: view
 
-                return p_collateral * VAULT.convertToAssets(10**18) / p_borrowed
-            ```
+interface Vault:
+    def convertToAssets(shares: uint256) -> uint256: view
 
-    === "Example"
-        ```shell
-        >>> CryptoFromPoolVault.price()
-        1046959880335267532
-        ```
+POOL: public(immutable(Pool))
+BORROWED_IX: public(immutable(uint256))
+COLLATERAL_IX: public(immutable(uint256))
+N_COINS: public(immutable(uint256))
+NO_ARGUMENT: public(immutable(bool))
+VAULT: public(immutable(Vault))
+AGG: public(immutable(StableAggregator))
 
+@external
+@view
+def price() -> uint256:
+    return self._raw_price() * AGG.price() / 10**18
+
+@internal
+@view
+def _raw_price() -> uint256:
+    p_borrowed: uint256 = 10**18
+    p_collateral: uint256 = 10**18
+
+    if NO_ARGUMENT:
+        p: uint256 = POOL.price_oracle()
+        if COLLATERAL_IX > 0:
+            p_collateral = p
+        else:
+            p_borrowed = p
+
+    else:
+        if BORROWED_IX > 0:
+            p_borrowed = POOL.price_oracle(BORROWED_IX - 1)
+        if COLLATERAL_IX > 0:
+            p_collateral = POOL.price_oracle(COLLATERAL_IX - 1)
+
+    return p_collateral * VAULT.convertToAssets(10**18) / p_borrowed
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> CryptoFromPoolVault.price()
+1046959880335267532
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `price_w`
-!!! description "`CryptoFromPoolVault.price_w() -> uint256`"
+:::description[`CryptoFromPoolVault.price_w() -> uint256`]
 
-    This function calculates and writes the price while updating `cached_rate` and `cached_timestamp`. It method is called whenever the `_exchange` function is called within the AMM contract of the lending market.
 
-    Returns: oracle price (`uint256`).
+This function calculates and writes the price while updating `cached_rate` and `cached_timestamp`. It method is called whenever the `_exchange` function is called within the AMM contract of the lending market.
 
-    ??? quote "Source code"
+Returns: oracle price (`uint256`).
 
-        The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvUSD/priceaggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
+<details>
+<summary>Source code</summary>
 
-        The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-        === "CryptoFromPoolVault.vy"
+The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvUSD/priceaggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
 
-            ```python
-            interface Pool:
-                def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
+The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-            interface StableAggregator:
-                def price() -> uint256: view
-                def price_w() -> uint256: nonpayable
-                def stablecoin() -> address: view
+<Tabs>
+<TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
-            interface Vault:
-                def convertToAssets(shares: uint256) -> uint256: view
 
-            POOL: public(immutable(Pool))
-            BORROWED_IX: public(immutable(uint256))
-            COLLATERAL_IX: public(immutable(uint256))
-            N_COINS: public(immutable(uint256))
-            NO_ARGUMENT: public(immutable(bool))
-            VAULT: public(immutable(Vault))
-            AGG: public(immutable(StableAggregator))
+```python
+interface Pool:
+    def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
 
-            PPS_MAX_SPEED: constant(uint256) = 10**16 / 60  # Max speed of pricePerShare change
+interface StableAggregator:
+    def price() -> uint256: view
+    def price_w() -> uint256: nonpayable
+    def stablecoin() -> address: view
 
-            cached_price_per_share: public(uint256)
-            cached_timestamp: public(uint256)
+interface Vault:
+    def convertToAssets(shares: uint256) -> uint256: view
 
-            @external
-            def price_w() -> uint256:
-                return self._raw_price(self._pps_w())
+POOL: public(immutable(Pool))
+BORROWED_IX: public(immutable(uint256))
+COLLATERAL_IX: public(immutable(uint256))
+N_COINS: public(immutable(uint256))
+NO_ARGUMENT: public(immutable(bool))
+VAULT: public(immutable(Vault))
+AGG: public(immutable(StableAggregator))
 
-            @internal
-            @view
-            def _raw_price(pps: uint256) -> uint256:
-                p_borrowed: uint256 = 10**18
-                p_collateral: uint256 = 10**18
+PPS_MAX_SPEED: constant(uint256) = 10**16 / 60  # Max speed of pricePerShare change
 
-                if NO_ARGUMENT:
-                    p: uint256 = POOL.price_oracle()
-                    if COLLATERAL_IX > 0:
-                        p_collateral = p
-                    else:
-                        p_borrowed = p
+cached_price_per_share: public(uint256)
+cached_timestamp: public(uint256)
 
-                else:
-                    if BORROWED_IX > 0:
-                        p_borrowed = POOL.price_oracle(BORROWED_IX - 1)
-                    if COLLATERAL_IX > 0:
-                        p_collateral = POOL.price_oracle(COLLATERAL_IX - 1)
+@external
+def price_w() -> uint256:
+    return self._raw_price(self._pps_w())
 
-                return p_collateral * pps / p_borrowed
+@internal
+@view
+def _raw_price(pps: uint256) -> uint256:
+    p_borrowed: uint256 = 10**18
+    p_collateral: uint256 = 10**18
 
-            @internal
-            def _pps_w() -> uint256:
-                pps: uint256 = min(VAULT.pricePerShare(), self.cached_price_per_share * (10**18 + PPS_MAX_SPEED * (block.timestamp - self.cached_timestamp)) / 10**18)
-                self.cached_price_per_share = pps
-                self.cached_timestamp = block.timestamp
-                return pps
-            ```
+    if NO_ARGUMENT:
+        p: uint256 = POOL.price_oracle()
+        if COLLATERAL_IX > 0:
+            p_collateral = p
+        else:
+            p_borrowed = p
 
-        === "CryptoFromPoolVaultWAgg.vy"
+    else:
+        if BORROWED_IX > 0:
+            p_borrowed = POOL.price_oracle(BORROWED_IX - 1)
+        if COLLATERAL_IX > 0:
+            p_collateral = POOL.price_oracle(COLLATERAL_IX - 1)
 
-            ```python
-            interface Pool:
-                def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
+    return p_collateral * pps / p_borrowed
 
-            interface StableAggregator:
-                def price() -> uint256: view
-                def price_w() -> uint256: nonpayable
-                def stablecoin() -> address: view
+@internal
+def _pps_w() -> uint256:
+    pps: uint256 = min(VAULT.pricePerShare(), self.cached_price_per_share * (10**18 + PPS_MAX_SPEED * (block.timestamp - self.cached_timestamp)) / 10**18)
+    self.cached_price_per_share = pps
+    self.cached_timestamp = block.timestamp
+    return pps
+```
 
-            interface Vault:
-                def convertToAssets(shares: uint256) -> uint256: view
 
-            POOL: public(immutable(Pool))
-            BORROWED_IX: public(immutable(uint256))
-            COLLATERAL_IX: public(immutable(uint256))
-            N_COINS: public(immutable(uint256))
-            NO_ARGUMENT: public(immutable(bool))
-            VAULT: public(immutable(Vault))
-            AGG: public(immutable(StableAggregator))
+</TabItem>
+</Tabs>
 
-            @external
-            def price_w() -> uint256:
-                return self._raw_price() * AGG.price_w() / 10**18
+<Tabs>
+<TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
-            @internal
-            @view
-            def _raw_price() -> uint256:
-                p_borrowed: uint256 = 10**18
-                p_collateral: uint256 = 10**18
 
-                if NO_ARGUMENT:
-                    p: uint256 = POOL.price_oracle()
-                    if COLLATERAL_IX > 0:
-                        p_collateral = p
-                    else:
-                        p_borrowed = p
+```python
+interface Pool:
+    def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
 
-                else:
-                    if BORROWED_IX > 0:
-                        p_borrowed = POOL.price_oracle(BORROWED_IX - 1)
-                    if COLLATERAL_IX > 0:
-                        p_collateral = POOL.price_oracle(COLLATERAL_IX - 1)
+interface StableAggregator:
+    def price() -> uint256: view
+    def price_w() -> uint256: nonpayable
+    def stablecoin() -> address: view
 
-                return p_collateral * VAULT.convertToAssets(10**18) / p_borrowed
-            ```
+interface Vault:
+    def convertToAssets(shares: uint256) -> uint256: view
 
-    === "Example"
-        ```shell
-        >>> CryptoFromPoolVault.price_w()
-        1046959880335267532
-        ```
+POOL: public(immutable(Pool))
+BORROWED_IX: public(immutable(uint256))
+COLLATERAL_IX: public(immutable(uint256))
+N_COINS: public(immutable(uint256))
+NO_ARGUMENT: public(immutable(bool))
+VAULT: public(immutable(Vault))
+AGG: public(immutable(StableAggregator))
 
+@external
+def price_w() -> uint256:
+    return self._raw_price() * AGG.price_w() / 10**18
+
+@internal
+@view
+def _raw_price() -> uint256:
+    p_borrowed: uint256 = 10**18
+    p_collateral: uint256 = 10**18
+
+    if NO_ARGUMENT:
+        p: uint256 = POOL.price_oracle()
+        if COLLATERAL_IX > 0:
+            p_collateral = p
+        else:
+            p_borrowed = p
+
+    else:
+        if BORROWED_IX > 0:
+            p_borrowed = POOL.price_oracle(BORROWED_IX - 1)
+        if COLLATERAL_IX > 0:
+            p_collateral = POOL.price_oracle(COLLATERAL_IX - 1)
+
+    return p_collateral * VAULT.convertToAssets(10**18) / p_borrowed
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> CryptoFromPoolVault.price_w()
+1046959880335267532
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ---
 
 
+## **Contract Info Methods**### `VAULT`
+:::description[`CryptoFromPoolVault.VAULT() -> address: view`]
 
-## **Contract Info Methods**
+
+Getter for the vault contract from which the redemption rate (`convertToAssets` or similar functions) is fetched. This value is immutable and set at contract initialization.
+
+Returns: vault contract (`address`).
+
+<details>
+<summary>Source code</summary>
 
 
-### `VAULT`
-!!! description "`CryptoFromPoolVault.VAULT() -> address: view`"
+The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-    Getter for the vault contract from which the redemption rate (`convertToAssets` or similar functions) is fetched. This value is immutable and set at contract initialization.
+<Tabs>
+<TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
-    Returns: vault contract (`address`).
 
-    ??? quote "Source code"
+```python
+VAULT: public(immutable(Vault))
+```
 
-        The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-        === "CryptoFromPoolVault.vy"
+</TabItem>
+</Tabs>
 
-            ```python
-            VAULT: public(immutable(Vault))
-            ```
+<Tabs>
+<TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAGG.vy">
 
-        === "CryptoFromPoolVaultWAGG.vy"
 
-            ```python
-            VAULT: public(immutable(Vault))
-            ```
+```python
+VAULT: public(immutable(Vault))
+```
 
-    === "Example"
 
-        ```shell
-        >>> CryptoFromPoolVault.VAULT()
-        '0xb45ad160634c528Cc3D2926d9807104FA3157305'
-        ```
+</TabItem>
+</Tabs>
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> CryptoFromPoolVault.VAULT()
+'0xb45ad160634c528Cc3D2926d9807104FA3157305'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `POOL`
-!!! description "`CryptoFromPoolVault.POOL() -> address: view`"
+:::description[`CryptoFromPoolVault.POOL() -> address: view`]
 
-    Getter for the liquidity pool used to fetch the `price_oracle`.
 
-    Returns: pool contract (`address`).
+Getter for the liquidity pool used to fetch the `price_oracle`.
 
-    ??? quote "Source code"
+Returns: pool contract (`address`).
 
-        The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "CryptoFromPoolVault.vy"
 
-            ```python
-            POOL: public(immutable(Pool))
-            ```
+The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-        === "CryptoFromPoolVaultWAgg.vy"
+<Tabs>
+<TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
-            ```python
-            POOL: public(immutable(Pool))
-            ```
 
-    === "Example"
+```python
+POOL: public(immutable(Pool))
+```
 
-        ```shell
-        >>> CryptoFromPoolVault.POOL()
-        '0x8272E1A3dBef607C04AA6e5BD3a1A134c8ac063B'
-        ```
 
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
+
+
+```python
+POOL: public(immutable(Pool))
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> CryptoFromPoolVault.POOL()
+'0x8272E1A3dBef607C04AA6e5BD3a1A134c8ac063B'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `BORROWED_IX`
-!!! description "`CryptoFromPoolVault.BORROWED_IX() -> uint256: view`"
+:::description[`CryptoFromPoolVault.BORROWED_IX() -> uint256: view`]
 
-    Getter for the coin index of the borrowed token within the pool from which `price_oracle` is fetched. This value is immutable and set at contract initialization.
 
-    Returns: coin index (`uint256`).
+Getter for the coin index of the borrowed token within the pool from which `price_oracle` is fetched. This value is immutable and set at contract initialization.
 
-    ??? quote "Source code"
+Returns: coin index (`uint256`).
 
-        The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "CryptoFromPoolVault.vy"
 
-            ```python
-            BORROWED_IX: public(immutable(uint256))
-            ```
+The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-        === "CryptoFromPoolVaultWAgg.vy"
+<Tabs>
+<TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
-            ```python
-            BORROWED_IX: public(immutable(uint256))
-            ```
 
-    === "Example"
+```python
+BORROWED_IX: public(immutable(uint256))
+```
 
-        `BORROWED_IX` of `1` means the borrowed token in the pool, from which the price oracle value is fetched, is at coin index `1` (`Pool.coins(1)`).
 
-        ```shell
-        >>> CryptoFromPoolVaultWAgg.BORROWED_IX()
-        1
-        ```
+</TabItem>
+</Tabs>
 
+<Tabs>
+<TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
+
+
+```python
+BORROWED_IX: public(immutable(uint256))
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+`BORROWED_IX` of `1` means the borrowed token in the pool, from which the price oracle value is fetched, is at coin index `1` (`Pool.coins(1)`).
+
+```shell
+>>> CryptoFromPoolVaultWAgg.BORROWED_IX()
+1
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `COLLATERAL_IX`
-!!! description "`CryptoFromPoolVault.COLLATERAL_IX() -> uint256: view`"
+:::description[`CryptoFromPoolVault.COLLATERAL_IX() -> uint256: view`]
 
-    Getter for the coin index of the collateral token within the pool from which `price_oracle` is fetched. This value is immutable and set at contract initialization.
 
-    Returns: coin index (`uint256`).
+Getter for the coin index of the collateral token within the pool from which `price_oracle` is fetched. This value is immutable and set at contract initialization.
 
-    ??? quote "Source code"
+Returns: coin index (`uint256`).
 
-        The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "CryptoFromPoolVault.vy"
 
-            ```python
-            COLLATERAL_IX: public(immutable(uint256))
-            ```
+The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-        === "CryptoFromPoolVaultWAgg.vy"
+<Tabs>
+<TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
-            ```python
-            COLLATERAL_IX: public(immutable(uint256))
-            ```
 
-    === "Example"
+```python
+COLLATERAL_IX: public(immutable(uint256))
+```
 
-        `COLLATERAL_IX` of `0` means the borrowed token in the pool, from which the price oracle value is fetched, is at coin index `0` (`Pool.coins(0)`).
 
-        ```shell
-        >>> CryptoFromPoolVaultWAgg.COLLATERAL_IX()
-        0
-        ```
+</TabItem>
+</Tabs>
 
+<Tabs>
+<TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
+
+
+```python
+COLLATERAL_IX: public(immutable(uint256))
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+`COLLATERAL_IX` of `0` means the borrowed token in the pool, from which the price oracle value is fetched, is at coin index `0` (`Pool.coins(0)`).
+
+```shell
+>>> CryptoFromPoolVaultWAgg.COLLATERAL_IX()
+0
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `N_COINS`
-!!! description "`CryptoFromPoolVault.N_COINS() -> uint256: view`"
+:::description[`CryptoFromPoolVault.N_COINS() -> uint256: view`]
 
-    Getter for the number of coins in `POOL`.
 
-    Returns: number of coins (`uint256`).
+Getter for the number of coins in `POOL`.
 
-    ??? quote "Source code"
+Returns: number of coins (`uint256`).
 
-        The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "CryptoFromPoolVault.vy"
 
-            ```python
-            N_COINS: public(immutable(uint256))
-            ```
+The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-        === "CryptoFromPoolVaultWAgg.vy"
+<Tabs>
+<TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
-            ```python
-            N_COINS: public(immutable(uint256))
-            ```
 
-    === "Example"
+```python
+N_COINS: public(immutable(uint256))
+```
 
-        ```shell
-        >>> CryptoFromPoolVault.N_COINS()
-        2
-        ```
 
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
+
+
+```python
+N_COINS: public(immutable(uint256))
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> CryptoFromPoolVault.N_COINS()
+2
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `NO_ARGUMENT`
-!!! description "`CryptoFromPoolVault.NO_ARGUMENT() -> bool: view`"
+:::description[`CryptoFromPoolVault.NO_ARGUMENT() -> bool: view`]
 
-    Getter for the `NO_ARGUMENT` storage variable. This is an additional variable to ensure the correct price oracle is fetched from a `POOL`. This value is immutable and set at contract initialization.
 
-    Returns: true or false (`bool`).
+Getter for the `NO_ARGUMENT` storage variable. This is an additional variable to ensure the correct price oracle is fetched from a `POOL`. This value is immutable and set at contract initialization.
 
-    ??? quote "Source code"
+Returns: true or false (`bool`).
 
-        The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "CryptoFromPoolVault.vy"
 
-            ```python
-            NO_ARGUMENT: public(immutable(bool))
-            ```
+The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
-    === "Example"
+<Tabs>
+<TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
-        ```shell
-        >>> CryptoFromPoolVault.NO_ARGUMENT()
-        'True'
-        ```
 
+```python
+NO_ARGUMENT: public(immutable(bool))
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> CryptoFromPoolVault.NO_ARGUMENT()
+'True'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `AGG`
-!!! description "`CryptoFromPoolVaultWAgg.AGG() -> address: view`"
+:::description[`CryptoFromPoolVaultWAgg.AGG() -> address: view`]
 
-    !!!info
-        This `AGG` storage variable is only used within the `CryptoFromPoolVaultWAgg` contracts.
 
-    Getter for the crvUSD `PriceAggregator` contract. This value is immutable and set at contract initialization.
+:::info
 
-    Returns: `PriceAggregator` (`address`).
+This `AGG` storage variable is only used within the `CryptoFromPoolVaultWAgg` contracts.
 
-    ??? quote "Source code"
 
-        The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
+:::
 
-        === "CryptoFromPoolVaultWAgg.vy"
+Getter for the crvUSD `PriceAggregator` contract. This value is immutable and set at contract initialization.
 
-            ```python
-            interface StableAggregator:
-                def price() -> uint256: view
-                def price_w() -> uint256: nonpayable
-                def stablecoin() -> address: view
+Returns: `PriceAggregator` (`address`).
 
-            AGG: public(immutable(StableAggregator))
-            ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> CryptoFromPoolVaultWAgg.AGG()
-        '0x18672b1b0c623a30089A280Ed9256379fb0E4E62'
-        ```
+The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
+
+<Tabs>
+<TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
+
+
+```python
+interface StableAggregator:
+    def price() -> uint256: view
+    def price_w() -> uint256: nonpayable
+    def stablecoin() -> address: view
+
+AGG: public(immutable(StableAggregator))
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> CryptoFromPoolVaultWAgg.AGG()
+'0x18672b1b0c623a30089A280Ed9256379fb0E4E62'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::

@@ -1,94 +1,106 @@
-<h1>Vault</h1>
+# Vault
 
-The vault is an **implementation of a [ERC-4626](https://ethereum.org/developers/docs/standards/tokens/erc-4626)** vault which **deposits the underlying asset into the controller** and **tracks the progress of the fees earned**. 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-!!!github "GitHub"
-    The source code of the `Vault.vy` contract can be found on [:material-github: GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/Vault.vy).
+The vault is an **implementation of a [ERC-4626](https://ethereum.org/developers/docs/standards/tokens/erc-4626)**vault which **deposits the underlying asset into the controller**and **tracks the progress of the fees earned**. 
+
+:::github[GitHub]
+
+The source code of the `Vault.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/Vault.vy).
+
+
+:::
 
 ERC-4626 vaults are **yield-bearing**, meaning the shares received when depositing assets increase in value due to the interest earned from lending out assets. The share balance does not increase, only its value. **Shares are transferable**.
 
 It is a proxy contract (EIP1167-compliant) duplicating the logic of the factory's vault implementation contract. Upon initialization it also creates the market's AMM and Controller using blueprint contracts.
 
-??? quote "`initialize()`"
+<details>
+<summary>`initialize()`</summary>
 
-    Function which initializes a vault and creates the corresponding Controller and AMM from their blueprint implementations.
 
-    ```vyper
-    @external
-    def initialize(
-            amm_impl: address,
-            controller_impl: address,
-            borrowed_token: ERC20,
-            collateral_token: ERC20,
-            A: uint256,
-            fee: uint256,
-            price_oracle: PriceOracle,  # Factory makes from template if needed, deploying with a from_pool()
-            monetary_policy: address,  # Standard monetary policy set in factory
-            loan_discount: uint256,
-            liquidation_discount: uint256
-        ) -> (address, address):
-        """
-        @notice Initializer for vaults
-        @param amm_impl AMM implementation (blueprint)
-        @param controller_impl Controller implementation (blueprint)
-        @param borrowed_token Token which is being borrowed
-        @param collateral_token Token used for collateral
-        @param A Amplification coefficient: band size is ~1/A
-        @param fee Fee for swaps in AMM (for ETH markets found to be 0.6%)
-        @param price_oracle Already initialized price oracle
-        @param monetary_policy Already initialized monetary policy
-        @param loan_discount Maximum discount. LTV = sqrt(((A - 1) / A) ** 4) - loan_discount
-        @param liquidation_discount Liquidation discount. LT = sqrt(((A - 1) / A) ** 4) - liquidation_discount
-        """
-        assert self.borrowed_token.address == empty(address)
+Function which initializes a vault and creates the corresponding Controller and AMM from their blueprint implementations.
 
-        self.borrowed_token = borrowed_token
-        self.collateral_token = collateral_token
-        self.price_oracle = price_oracle
+```vyper
+@external
+def initialize(
+        amm_impl: address,
+        controller_impl: address,
+        borrowed_token: ERC20,
+        collateral_token: ERC20,
+        A: uint256,
+        fee: uint256,
+        price_oracle: PriceOracle,  # Factory makes from template if needed, deploying with a from_pool()
+        monetary_policy: address,  # Standard monetary policy set in factory
+        loan_discount: uint256,
+        liquidation_discount: uint256
+    ) -> (address, address):
+    """
+    @notice Initializer for vaults
+    @param amm_impl AMM implementation (blueprint)
+    @param controller_impl Controller implementation (blueprint)
+    @param borrowed_token Token which is being borrowed
+    @param collateral_token Token used for collateral
+    @param A Amplification coefficient: band size is ~1/A
+    @param fee Fee for swaps in AMM (for ETH markets found to be 0.6%)
+    @param price_oracle Already initialized price oracle
+    @param monetary_policy Already initialized monetary policy
+    @param loan_discount Maximum discount. LTV = sqrt(((A - 1) / A) **4) - loan_discount
+    @param liquidation_discount Liquidation discount. LT = sqrt(((A - 1) / A) **4) - liquidation_discount
+    """
+    assert self.borrowed_token.address == empty(address)
 
-        assert A >= MIN_A and A <= MAX_A, "Wrong A"
-        assert fee <= MAX_FEE, "Fee too high"
-        assert fee >= MIN_FEE, "Fee too low"
-        assert liquidation_discount >= MIN_LIQUIDATION_DISCOUNT, "Liquidation discount too low"
-        assert loan_discount <= MAX_LOAN_DISCOUNT, "Loan discount too high"
-        assert loan_discount > liquidation_discount, "need loan_discount>liquidation_discount"
+    self.borrowed_token = borrowed_token
+    self.collateral_token = collateral_token
+    self.price_oracle = price_oracle
 
-        p: uint256 = price_oracle.price()  # This also validates price oracle ABI
-        assert p > 0
-        assert price_oracle.price_w() == p
-        A_ratio: uint256 = 10**18 * A / (A - 1)
+    assert A >= MIN_A and A <= MAX_A, "Wrong A"
+    assert fee <= MAX_FEE, "Fee too high"
+    assert fee >= MIN_FEE, "Fee too low"
+    assert liquidation_discount >= MIN_LIQUIDATION_DISCOUNT, "Liquidation discount too low"
+    assert loan_discount <= MAX_LOAN_DISCOUNT, "Loan discount too high"
+    assert loan_discount > liquidation_discount, "need loan_discount>liquidation_discount"
 
-        borrowed_precision: uint256 = 10**(18 - borrowed_token.decimals())
+    p: uint256 = price_oracle.price()  # This also validates price oracle ABI
+    assert p > 0
+    assert price_oracle.price_w() == p
+    A_ratio: uint256 = 10**18 * A / (A - 1)
 
-        amm: address = create_from_blueprint(
-            amm_impl,
-            borrowed_token.address, borrowed_precision,
-            collateral_token.address, 10**(18 - collateral_token.decimals()),
-            A, isqrt(A_ratio * 10**18), self.ln_int(A_ratio),
-            p, fee, ADMIN_FEE, price_oracle.address,
-            code_offset=3)
-        controller: address = create_from_blueprint(
-            controller_impl,
-            empty(address), monetary_policy, loan_discount, liquidation_discount, amm,
-            code_offset=3)
-        AMM(amm).set_admin(controller)
+    borrowed_precision: uint256 = 10**(18 - borrowed_token.decimals())
 
-        self.amm = AMM(amm)
-        self.controller = Controller(controller)
-        self.factory = Factory(msg.sender)
+    amm: address = create_from_blueprint(
+        amm_impl,
+        borrowed_token.address, borrowed_precision,
+        collateral_token.address, 10**(18 - collateral_token.decimals()),
+        A, isqrt(A_ratio * 10**18), self.ln_int(A_ratio),
+        p, fee, ADMIN_FEE, price_oracle.address,
+        code_offset=3)
+    controller: address = create_from_blueprint(
+        controller_impl,
+        empty(address), monetary_policy, loan_discount, liquidation_discount, amm,
+        code_offset=3)
+    AMM(amm).set_admin(controller)
 
-        # ERC20 set up
-        self.precision = borrowed_precision
-        borrowed_symbol: String[32] = borrowed_token.symbol()
-        self.name = concat(NAME_PREFIX, borrowed_symbol)
-        # Symbol must be String[32], but we do String[34]. It doesn't affect contracts which read it (they will truncate)
-        # However this will be changed as soon as Vyper can *properly* manipulate strings
-        self.symbol = concat(SYMBOL_PREFIX, borrowed_symbol)
+    self.amm = AMM(amm)
+    self.controller = Controller(controller)
+    self.factory = Factory(msg.sender)
 
-        # No events because it's the only market we would ever create in this contract
+    # ERC20 set up
+    self.precision = borrowed_precision
+    borrowed_symbol: String[32] = borrowed_token.symbol()
+    self.name = concat(NAME_PREFIX, borrowed_symbol)
+    # Symbol must be String[32], but we do String[34]. It doesn't affect contracts which read it (they will truncate)
+    # However this will be changed as soon as Vyper can *properly* manipulate strings
+    self.symbol = concat(SYMBOL_PREFIX, borrowed_symbol)
 
-        return controller, amm
-    ```
+    # No events because it's the only market we would ever create in this contract
+
+    return controller, amm
+```
+
+
+</details>
 
 The Vault itself does not hold any tokens, as the deposited tokens are forwarded to the Controller contract where it can be borrowed from.
 
@@ -104,10 +116,12 @@ Additionally, methods like `mint()`, `deposit()`, `redeem()`, and `withdraw()` c
 ---
 
 
-## **Depositing Assets and Minting Shares**
+## **Depositing Assets and Minting Shares**:::colab[Google Colab Notebook]
 
-!!!colab "Google Colab Notebook"
-    A google colab notebook on how to use the `deposit` and `mint` functions can be found here: [https://colab.research.google.com/drive/1Qj9nOk5TYXp6j6go3VIh6--r5VILnoo9?usp=sharing](https://colab.research.google.com/drive/1Qj9nOk5TYXp6j6go3VIh6--r5VILnoo9?usp=sharing).
+A google colab notebook on how to use the `deposit` and `mint` functions can be found here: [https://colab.research.google.com/drive/1Qj9nOk5TYXp6j6go3VIh6--r5VILnoo9?usp=sharing](https://colab.research.google.com/drive/1Qj9nOk5TYXp6j6go3VIh6--r5VILnoo9?usp=sharing).
+
+
+:::
 
 *Two methods for obtaining shares directly from an ERC4626 Vault:*
 
@@ -116,672 +130,895 @@ Additionally, methods like `mint()`, `deposit()`, `redeem()`, and `withdraw()` c
 
 Because shares are transferable, a user can also acquire shares by means other than depositing assets and minting shares.
 
-!!!tip
-    A newer version of the vault contract allows for setting a maximum supply of assets that can be deposited into the vault. This change was introduced in commit [`cb08681`](https://github.com/curvefi/curve-stablecoin/tree/cb08681ae940f8ff57889e79dce5a23212f0dc19) and [`46fdec2`](https://github.com/curvefi/curve-stablecoin/tree/46fdec2561cc32f43f0e8c1080429a9f3f984e60). When using newer vaults, `mint` and `deposit` functions will check if the maximum supply is exceeded and revert if it is.
+:::tip
 
+A newer version of the vault contract allows for setting a maximum supply of assets that can be deposited into the vault. This change was introduced in commit [`cb08681`](https://github.com/curvefi/curve-stablecoin/tree/cb08681ae940f8ff57889e79dce5a23212f0dc19) and [`46fdec2`](https://github.com/curvefi/curve-stablecoin/tree/46fdec2561cc32f43f0e8c1080429a9f3f984e60). When using newer vaults, `mint` and `deposit` functions will check if the maximum supply is exceeded and revert if it is.
+
+
+:::
 
 ### `deposit`
-!!! description "`Vault.deposit(assets: uint256, receiver: address = msg.sender) -> uint256:`"
+:::description[`Vault.deposit(assets: uint256, receiver: address = msg.sender) -> uint256:`]
 
-    Function to deposit a specified number of assets of the underlying token (`borrowed_token`) into the vault and mint the corresponding amount of shares to `receiver`. There is no cap when depositing assets into the vault - as many token as desired can be deposited into it.
 
-    Returns: minted shares (`uint256`).
+Function to deposit a specified number of assets of the underlying token (`borrowed_token`) into the vault and mint the corresponding amount of shares to `receiver`. There is no cap when depositing assets into the vault - as many token as desired can be deposited into it.
 
-    Emits: `Deposit`, `Transfer` and `SetRate`
+Returns: minted shares (`uint256`).
 
-    | Input       | Type      | Description                                                           |
-    |-------------|-----------|-----------------------------------------------------------------------|
-    | `assets`    | `uint256` | Amount of assets to deposit.                                          |
-    | `receiver`  | `address` | Receiver of the minted shares. Defaults to `msg.sender`.              |
+Emits: `Deposit`, `Transfer` and `SetRate`
 
-    ??? quote "Source code"
+| Input       | Type      | Description                                                           |
+|-------------|-----------|-----------------------------------------------------------------------|
+| `assets`    | `uint256` | Amount of assets to deposit.                                          |
+| `receiver`  | `address` | Receiver of the minted shares. Defaults to `msg.sender`.              |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            event Transfer:
-                sender: indexed(address)
-                receiver: indexed(address)
-                value: uint256
 
-            event Deposit:
-                sender: indexed(address)
-                owner: indexed(address)
-                assets: uint256
-                shares: uint256
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-            @external
-            @nonreentrant('lock')
-            def deposit(assets: uint256, receiver: address = msg.sender) -> uint256:
-                """
-                @notice Deposit assets in return for whatever number of shares corresponds to the current conditions
-                @param assets Amount of assets to deposit
-                @param receiver Receiver of the shares who is optional. If not specified - receiver is the sender
-                """
-                controller: Controller = self.controller
-                total_assets: uint256 = self._total_assets()
-                assert total_assets + assets >= MIN_ASSETS, "Need more assets"
-                to_mint: uint256 = self._convert_to_shares(assets, True, total_assets)
-                assert self.borrowed_token.transferFrom(msg.sender, controller.address, assets, default_return_value=True)
-                self._mint(receiver, to_mint)
-                controller.save_rate()
-                log Deposit(msg.sender, receiver, assets, to_mint)
-                return to_mint
 
-            @internal
-            def _mint(_to: address, _value: uint256):
-                self.balanceOf[_to] += _value
-                self.totalSupply += _value
+```vyper
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    value: uint256
 
-                log Transfer(empty(address), _to, _value)
+event Deposit:
+    sender: indexed(address)
+    owner: indexed(address)
+    assets: uint256
+    shares: uint256
 
-            @internal
-            @view
-            def _total_assets() -> uint256:
-                # admin fee should be accounted for here when enabled
-                self.controller.check_lock()
-                return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
+@external
+@nonreentrant('lock')
+def deposit(assets: uint256, receiver: address = msg.sender) -> uint256:
+    """
+    @notice Deposit assets in return for whatever number of shares corresponds to the current conditions
+    @param assets Amount of assets to deposit
+    @param receiver Receiver of the shares who is optional. If not specified - receiver is the sender
+    """
+    controller: Controller = self.controller
+    total_assets: uint256 = self._total_assets()
+    assert total_assets + assets >= MIN_ASSETS, "Need more assets"
+    to_mint: uint256 = self._convert_to_shares(assets, True, total_assets)
+    assert self.borrowed_token.transferFrom(msg.sender, controller.address, assets, default_return_value=True)
+    self._mint(receiver, to_mint)
+    controller.save_rate()
+    log Deposit(msg.sender, receiver, assets, to_mint)
+    return to_mint
 
-            @internal
-            @view
-            def _convert_to_shares(assets: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
-                denominator: uint256 = (total_assets * precision + 1)
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
+@internal
+def _mint(_to: address, _value: uint256):
+    self.balanceOf[_to] += _value
+    self.totalSupply += _value
 
-        === "Controller.vy"
+    log Transfer(empty(address), _to, _value)
 
-            ```vyper
-            interface MonetaryPolicy:
-                def rate_write() -> uint256: nonpayable
+@internal
+@view
+def _total_assets() -> uint256:
+    # admin fee should be accounted for here when enabled
+    self.controller.check_lock()
+    return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
 
-            monetary_policy: public(MonetaryPolicy)
+@internal
+@view
+def _convert_to_shares(assets: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
+    denominator: uint256 = (total_assets * precision + 1)
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
 
-            @external
-            @nonreentrant('lock')
-            def save_rate():
-                """
-                @notice Save current rate
-                """
-                self._save_rate()
 
-            @internal
-            def _save_rate():
-                """
-                @notice Save current rate
-                """
-                rate: uint256 = min(self.monetary_policy.rate_write(), MAX_RATE)
-                AMM.set_rate(rate)
-            ```
+</TabItem>
+</Tabs>
 
-        === "MonetaryPolicy.vy"
+<Tabs>
+<TabItem value="controller-vy" label="Controller.vy">
 
-            ```vyper
-            log_min_rate: public(int256)
-            log_max_rate: public(int256)
 
-            @external
-            def rate_write(_for: address = msg.sender) -> uint256:
-                return self.calculate_rate(_for, 0, 0)
+```vyper
+interface MonetaryPolicy:
+    def rate_write() -> uint256: nonpayable
 
-            @internal
-            @view
-            def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256:
-                total_debt: int256 = convert(Controller(_for).total_debt(), int256)
-                total_reserves: int256 = convert(BORROWED_TOKEN.balanceOf(_for), int256) + total_debt + d_reserves
-                total_debt += d_debt
-                assert total_debt >= 0, "Negative debt"
-                assert total_reserves >= total_debt, "Reserves too small"
-                if total_debt == 0:
-                    return self.min_rate
-                else:
-                    log_min_rate: int256 = self.
-                    log_max_rate: int256 = self.log_max_rate
-                    return self.exp(total_debt * (log_max_rate - log_min_rate) / total_reserves + log_min_rate)
-            ```
-            
-        === "AMM.vy"
+monetary_policy: public(MonetaryPolicy)
 
-            ```vyper
-            event SetRate:
-                rate: uint256
-                rate_mul: uint256
-                time: uint256
+@external
+@nonreentrant('lock')
+def save_rate():
+    """
+    @notice Save current rate
+    """
+    self._save_rate()
 
-            @external
-            @nonreentrant('lock')
-            def set_rate(rate: uint256) -> uint256:
-                """
-                @notice Set interest rate. That affects the dependence of AMM base price over time
-                @param rate New rate in units of int(fraction * 1e18) per second
-                @return rate_mul multiplier (e.g. 1.0 + integral(rate, dt))
-                """
-                assert msg.sender == self.admin
-                rate_mul: uint256 = self._rate_mul()
-                self.rate_mul = rate_mul
-                self.rate_time = block.timestamp
-                self.rate = rate
-                log SetRate(rate, rate_mul, block.timestamp)
-                return rate_mul
+@internal
+def _save_rate():
+    """
+    @notice Save current rate
+    """
+    rate: uint256 = min(self.monetary_policy.rate_write(), MAX_RATE)
+    AMM.set_rate(rate)
+```
 
-            @internal
-            @view
-            def _rate_mul() -> uint256:
-                """
-                @notice Rate multiplier which is 1.0 + integral(rate, dt)
-                @return Rate multiplier in units where 1.0 == 1e18
-                """
-                return unsafe_div(self.rate_mul * (10**18 + self.rate * (block.timestamp - self.rate_time)), 10**18)
-            ```
 
-    === "Example"
-        ```shell
-        In  [1]:  Vault.balanceOf(trader)
-        Out [1]:  0
+</TabItem>
+</Tabs>
 
-        In  [2]:  Vault.deposit(1000000000000000000)
+<Tabs>
+<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
-        In  [3]:  Vault.balanceOf(trader)
-        Out [3]:  997552662404145514069
-        ```
 
+```vyper
+log_min_rate: public(int256)
+log_max_rate: public(int256)
+
+@external
+def rate_write(_for: address = msg.sender) -> uint256:
+    return self.calculate_rate(_for, 0, 0)
+
+@internal
+@view
+def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256:
+    total_debt: int256 = convert(Controller(_for).total_debt(), int256)
+    total_reserves: int256 = convert(BORROWED_TOKEN.balanceOf(_for), int256) + total_debt + d_reserves
+    total_debt += d_debt
+    assert total_debt >= 0, "Negative debt"
+    assert total_reserves >= total_debt, "Reserves too small"
+    if total_debt == 0:
+        return self.min_rate
+    else:
+        log_min_rate: int256 = self.
+        log_max_rate: int256 = self.log_max_rate
+        return self.exp(total_debt * (log_max_rate - log_min_rate) / total_reserves + log_min_rate)
+```
+
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="amm-vy" label="AMM.vy">
+
+
+```vyper
+event SetRate:
+    rate: uint256
+    rate_mul: uint256
+    time: uint256
+
+@external
+@nonreentrant('lock')
+def set_rate(rate: uint256) -> uint256:
+    """
+    @notice Set interest rate. That affects the dependence of AMM base price over time
+    @param rate New rate in units of int(fraction * 1e18) per second
+    @return rate_mul multiplier (e.g. 1.0 + integral(rate, dt))
+    """
+    assert msg.sender == self.admin
+    rate_mul: uint256 = self._rate_mul()
+    self.rate_mul = rate_mul
+    self.rate_time = block.timestamp
+    self.rate = rate
+    log SetRate(rate, rate_mul, block.timestamp)
+    return rate_mul
+
+@internal
+@view
+def _rate_mul() -> uint256:
+    """
+    @notice Rate multiplier which is 1.0 + integral(rate, dt)
+    @return Rate multiplier in units where 1.0 == 1e18
+    """
+    return unsafe_div(self.rate_mul * (10**18 + self.rate * (block.timestamp - self.rate_time)), 10**18)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+In  [1]:  Vault.balanceOf(trader)
+Out [1]:  0
+
+In  [2]:  Vault.deposit(1000000000000000000)
+
+In  [3]:  Vault.balanceOf(trader)
+Out [3]:  997552662404145514069
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `maxDeposit`
-!!! description "`Vault.maxDeposit(receiver: address) -> uint256:`"
+:::description[`Vault.maxDeposit(receiver: address) -> uint256:`]
 
-    Getter for the maximum amount of assets `receiver` can deposit. Essentially equals to `max_value(uint256)`.
 
-    Returns: maximum depositable assets (`uint256`).
+Getter for the maximum amount of assets `receiver` can deposit. Essentially equals to `max_value(uint256)`.
 
-    | Input       | Type      | Description          |
-    |-------------|-----------|----------------------|
-    | `receiver`  | `address` | Address of the user. |
+Returns: maximum depositable assets (`uint256`).
 
-    ??? quote "Source code"
+| Input       | Type      | Description          |
+|-------------|-----------|----------------------|
+| `receiver`  | `address` | Address of the user. |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            balanceOf: public(HashMap[address, uint256])
 
-            @external
-            @view
-            def maxDeposit(receiver: address) -> uint256:
-                """
-                @notice Maximum amount of assets which a given user can deposit (inf)
-                """
-                return self.borrowed_token.balanceOf(receiver)
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-    === "Example"
-        ```shell
-        >>> Vault.maxDeposit("0x7a16fF8270133F063aAb6C9977183D9e72835428"):
-        should return borrowed_token.balanceOf("0x7a16fF8270133F063aAb6C9977183D9e72835428")
-        ```
 
+```vyper
+balanceOf: public(HashMap[address, uint256])
+
+@external
+@view
+def maxDeposit(receiver: address) -> uint256:
+    """
+    @notice Maximum amount of assets which a given user can deposit (inf)
+    """
+    return self.borrowed_token.balanceOf(receiver)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.maxDeposit("0x7a16fF8270133F063aAb6C9977183D9e72835428"):
+should return borrowed_token.balanceOf("0x7a16fF8270133F063aAb6C9977183D9e72835428")
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `previewDeposit`
-!!! description "`Vault.previewDeposit(assets: uint256) -> uint256:`"
+:::description[`Vault.previewDeposit(assets: uint256) -> uint256:`]
 
-    Function to simulate the effects of depositing `assets` into the vault based on the current state.
 
-    Returns: amount of shares to be received (`uint256`).
+Function to simulate the effects of depositing `assets` into the vault based on the current state.
 
-    | Input     | Type      | Description            |
-    |-----------|-----------|------------------------|
-    | `assets`  | `uint256` | Number of assets to deposit. |
+Returns: amount of shares to be received (`uint256`).
 
-    ??? quote "Source code"
+| Input     | Type      | Description            |
+|-----------|-----------|------------------------|
+| `assets`  | `uint256` | Number of assets to deposit. |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            @external
-            @view
-            @nonreentrant('lock')
-            def previewDeposit(assets: uint256) -> uint256:
-                """
-                @notice Returns the amount of shares which can be obtained upon depositing assets
-                """
-                return self._convert_to_shares(assets)
 
-            @internal
-            @view
-            def _convert_to_shares(assets: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
-                denominator: uint256 = (total_assets * precision + 1)
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-    === "Example"
-        ```shell
-        >>> Vault.previewDeposit(1000000000000000000):      # depositing 1 crvusd 
-        998709265069121019738                               # shares to receive
-        ```
 
+```vyper
+@external
+@view
+@nonreentrant('lock')
+def previewDeposit(assets: uint256) -> uint256:
+    """
+    @notice Returns the amount of shares which can be obtained upon depositing assets
+    """
+    return self._convert_to_shares(assets)
+
+@internal
+@view
+def _convert_to_shares(assets: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
+    denominator: uint256 = (total_assets * precision + 1)
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.previewDeposit(1000000000000000000):      # depositing 1 crvusd 
+998709265069121019738                               # shares to receive
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `mint`
-!!! description "`Vault.mint(shares: uint256, receiver: address = msg.sender) -> uint256:`"
+:::description[`Vault.mint(shares: uint256, receiver: address = msg.sender) -> uint256:`]
 
-    Function to mint a specific amount of shares (`shares`) to `receiver` by depositing the necessary number of assets into the vault. 
 
-    Returns: amount of assets deposited (`uint256`).
+Function to mint a specific amount of shares (`shares`) to `receiver` by depositing the necessary number of assets into the vault. 
 
-    Emits: `Deposit`, `Transfer` and `SetRate`
+Returns: amount of assets deposited (`uint256`).
 
-    | Input       | Type      | Description                                                      |
-    |-------------|-----------|------------------------------------------------------------------|
-    | `shares`    | `uint256` | Number of shares to be minted.                                   |
-    | `receiver`  | `address` | Receiver of the minted shares. Defaults to `msg.sender`.         |
+Emits: `Deposit`, `Transfer` and `SetRate`
 
-    ??? quote "Source code"
+| Input       | Type      | Description                                                      |
+|-------------|-----------|------------------------------------------------------------------|
+| `shares`    | `uint256` | Number of shares to be minted.                                   |
+| `receiver`  | `address` | Receiver of the minted shares. Defaults to `msg.sender`.         |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            event Transfer:
-                sender: indexed(address)
-                receiver: indexed(address)
-                value: uint256
 
-            event Deposit:
-                sender: indexed(address)
-                owner: indexed(address)
-                assets: uint256
-                shares: uint256
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-            @external
-            @nonreentrant('lock')
-            def mint(shares: uint256, receiver: address = msg.sender) -> uint256:
-                """
-                @notice Mint given amount of shares taking whatever number of assets it requires
-                @param shares Number of sharess to mint
-                @param receiver Optional receiver for the shares. If not specified - it's the sender
-                """
-                controller: Controller = self.controller
-                total_assets: uint256 = self._total_assets()
-                assets: uint256 = self._convert_to_assets(shares, False, total_assets)
-                assert total_assets + assets >= MIN_ASSETS, "Need more assets"
-                assert self.borrowed_token.transferFrom(msg.sender, controller.address, assets, default_return_value=True)
-                self._mint(receiver, shares)
-                controller.save_rate()
-                log Deposit(msg.sender, receiver, assets, shares)
-                return assets
 
-            @internal
-            def _mint(_to: address, _value: uint256):
-                self.balanceOf[_to] += _value
-                self.totalSupply += _value
+```vyper
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    value: uint256
 
-                log Transfer(empty(address), _to, _value)
+event Deposit:
+    sender: indexed(address)
+    owner: indexed(address)
+    assets: uint256
+    shares: uint256
 
-            @internal
-            @view
-            def _total_assets() -> uint256:
-                # admin fee should be accounted for here when enabled
-                self.controller.check_lock()
-                return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
+@external
+@nonreentrant('lock')
+def mint(shares: uint256, receiver: address = msg.sender) -> uint256:
+    """
+    @notice Mint given amount of shares taking whatever number of assets it requires
+    @param shares Number of sharess to mint
+    @param receiver Optional receiver for the shares. If not specified - it's the sender
+    """
+    controller: Controller = self.controller
+    total_assets: uint256 = self._total_assets()
+    assets: uint256 = self._convert_to_assets(shares, False, total_assets)
+    assert total_assets + assets >= MIN_ASSETS, "Need more assets"
+    assert self.borrowed_token.transferFrom(msg.sender, controller.address, assets, default_return_value=True)
+    self._mint(receiver, shares)
+    controller.save_rate()
+    log Deposit(msg.sender, receiver, assets, shares)
+    return assets
 
-            @internal
-            @view
-            def _convert_to_assets(shares: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = shares * (total_assets * precision + 1)
-                denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
+@internal
+def _mint(_to: address, _value: uint256):
+    self.balanceOf[_to] += _value
+    self.totalSupply += _value
 
-        === "Controller.vy"
+    log Transfer(empty(address), _to, _value)
 
-            ```vyper
-            interface MonetaryPolicy:
-                def rate_write() -> uint256: nonpayable
+@internal
+@view
+def _total_assets() -> uint256:
+    # admin fee should be accounted for here when enabled
+    self.controller.check_lock()
+    return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
 
-            monetary_policy: public(MonetaryPolicy)
+@internal
+@view
+def _convert_to_assets(shares: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = shares * (total_assets * precision + 1)
+    denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
 
-            @external
-            @nonreentrant('lock')
-            def save_rate():
-                """
-                @notice Save current rate
-                """
-                self._save_rate()
 
-            @internal
-            def _save_rate():
-                """
-                @notice Save current rate
-                """
-                rate: uint256 = min(self.monetary_policy.rate_write(), MAX_RATE)
-                AMM.set_rate(rate)
-            ```
+</TabItem>
+</Tabs>
 
-        === "MonetaryPolicy.vy"
+<Tabs>
+<TabItem value="controller-vy" label="Controller.vy">
 
-            ```vyper
-            log_min_rate: public(int256)
-            log_max_rate: public(int256)
 
-            @external
-            def rate_write(_for: address = msg.sender) -> uint256:
-                return self.calculate_rate(_for, 0, 0)
+```vyper
+interface MonetaryPolicy:
+    def rate_write() -> uint256: nonpayable
 
-            @internal
-            @view
-            def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256:
-                total_debt: int256 = convert(Controller(_for).total_debt(), int256)
-                total_reserves: int256 = convert(BORROWED_TOKEN.balanceOf(_for), int256) + total_debt + d_reserves
-                total_debt += d_debt
-                assert total_debt >= 0, "Negative debt"
-                assert total_reserves >= total_debt, "Reserves too small"
-                if total_debt == 0:
-                    return self.min_rate
-                else:
-                    log_min_rate: int256 = self.log_min_rate
-                    log_max_rate: int256 = self.log_max_rate
-                    return self.exp(total_debt * (log_max_rate - log_min_rate) / total_reserves + log_min_rate)
-            ```
-            
-        === "AMM.vy"
+monetary_policy: public(MonetaryPolicy)
 
-            ```vyper
-            event SetRate:
-                rate: uint256
-                rate_mul: uint256
-                time: uint256
+@external
+@nonreentrant('lock')
+def save_rate():
+    """
+    @notice Save current rate
+    """
+    self._save_rate()
 
-            @external
-            @nonreentrant('lock')
-            def set_rate(rate: uint256) -> uint256:
-                """
-                @notice Set interest rate. That affects the dependence of AMM base price over time
-                @param rate New rate in units of int(fraction * 1e18) per second
-                @return rate_mul multiplier (e.g. 1.0 + integral(rate, dt))
-                """
-                assert msg.sender == self.admin
-                rate_mul: uint256 = self._rate_mul()
-                self.rate_mul = rate_mul
-                self.rate_time = block.timestamp
-                self.rate = rate
-                log SetRate(rate, rate_mul, block.timestamp)
-                return rate_mul
+@internal
+def _save_rate():
+    """
+    @notice Save current rate
+    """
+    rate: uint256 = min(self.monetary_policy.rate_write(), MAX_RATE)
+    AMM.set_rate(rate)
+```
 
-            @internal
-            @view
-            def _rate_mul() -> uint256:
-                """
-                @notice Rate multiplier which is 1.0 + integral(rate, dt)
-                @return Rate multiplier in units where 1.0 == 1e18
-                """
-                return unsafe_div(self.rate_mul * (10**18 + self.rate * (block.timestamp - self.rate_time)), 10**18)
-            ```
 
-    === "Example"
-        ```shell
-        In  [1]:  Vault.balanceOf(trader)
-        Out [1]:  997552662404145514069
+</TabItem>
+</Tabs>
 
-        In  [2]:  Vault.mint(100000000000000000000)
+<Tabs>
+<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
-        In  [3]:  Vault.balanceOf(trader)
-        Out [3]:  1097552662404145514069
-        ```
 
+```vyper
+log_min_rate: public(int256)
+log_max_rate: public(int256)
+
+@external
+def rate_write(_for: address = msg.sender) -> uint256:
+    return self.calculate_rate(_for, 0, 0)
+
+@internal
+@view
+def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256:
+    total_debt: int256 = convert(Controller(_for).total_debt(), int256)
+    total_reserves: int256 = convert(BORROWED_TOKEN.balanceOf(_for), int256) + total_debt + d_reserves
+    total_debt += d_debt
+    assert total_debt >= 0, "Negative debt"
+    assert total_reserves >= total_debt, "Reserves too small"
+    if total_debt == 0:
+        return self.min_rate
+    else:
+        log_min_rate: int256 = self.log_min_rate
+        log_max_rate: int256 = self.log_max_rate
+        return self.exp(total_debt * (log_max_rate - log_min_rate) / total_reserves + log_min_rate)
+```
+
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="amm-vy" label="AMM.vy">
+
+
+```vyper
+event SetRate:
+    rate: uint256
+    rate_mul: uint256
+    time: uint256
+
+@external
+@nonreentrant('lock')
+def set_rate(rate: uint256) -> uint256:
+    """
+    @notice Set interest rate. That affects the dependence of AMM base price over time
+    @param rate New rate in units of int(fraction * 1e18) per second
+    @return rate_mul multiplier (e.g. 1.0 + integral(rate, dt))
+    """
+    assert msg.sender == self.admin
+    rate_mul: uint256 = self._rate_mul()
+    self.rate_mul = rate_mul
+    self.rate_time = block.timestamp
+    self.rate = rate
+    log SetRate(rate, rate_mul, block.timestamp)
+    return rate_mul
+
+@internal
+@view
+def _rate_mul() -> uint256:
+    """
+    @notice Rate multiplier which is 1.0 + integral(rate, dt)
+    @return Rate multiplier in units where 1.0 == 1e18
+    """
+    return unsafe_div(self.rate_mul * (10**18 + self.rate * (block.timestamp - self.rate_time)), 10**18)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+In  [1]:  Vault.balanceOf(trader)
+Out [1]:  997552662404145514069
+
+In  [2]:  Vault.mint(100000000000000000000)
+
+In  [3]:  Vault.balanceOf(trader)
+Out [3]:  1097552662404145514069
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `maxMint`
-!!! description "`Vault.maxMint(receiver: address) -> uint256:`"
+:::description[`Vault.maxMint(receiver: address) -> uint256:`]
 
-    Getter for the maximum amount of shares a user can mint. Essentially equals to `max_value(uint256)`.
 
-    Returns: maximum mintable shares (`uint256`).
+Getter for the maximum amount of shares a user can mint. Essentially equals to `max_value(uint256)`.
 
-    | Input      | Type      | Description       |
-    |------------|-----------|-------------------|
-    | `receiver` | `address` | Address of the user. |
+Returns: maximum mintable shares (`uint256`).
 
-    ??? quote "Source code"
+| Input      | Type      | Description       |
+|------------|-----------|-------------------|
+| `receiver` | `address` | Address of the user. |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            @external
-            @view
-            def maxMint(receiver: address) -> uint256:
-                """
-                @notice Return maximum amount of shares which a given user can mint (inf)
-                """
-                return max_value(uint256)
 
-            @internal
-            @view
-            def _convert_to_shares(assets: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
-                denominator: uint256 = (total_assets * precision + 1)
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.maxMint("0x7a16fF8270133F063aAb6C9977183D9e72835428"):    
-        119831204184300884951118160092
-        ```
+```vyper
+@external
+@view
+def maxMint(receiver: address) -> uint256:
+    """
+    @notice Return maximum amount of shares which a given user can mint (inf)
+    """
+    return max_value(uint256)
 
+@internal
+@view
+def _convert_to_shares(assets: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
+    denominator: uint256 = (total_assets * precision + 1)
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.maxMint("0x7a16fF8270133F063aAb6C9977183D9e72835428"):    
+119831204184300884951118160092
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `previewMint`
-!!! description "`Vault.previewMint(shares: uint256) -> uint256:`"
-
-    Function to simulate the number of assets required to mint a specified amount of shares (`shares`) given the current state of the vault.
-
-    Returns: Number of assets required (`uint256`).
-
-    | Input     | Type      | Description             |
-    |-----------|-----------|-------------------------|
-    | `shares`  | `uint256` | Number of shares to mint. |
+:::description[`Vault.previewMint(shares: uint256) -> uint256:`]
 
 
-    ??? quote "Source code"
+Function to simulate the number of assets required to mint a specified amount of shares (`shares`) given the current state of the vault.
 
-        === "Vault.vy"
+Returns: Number of assets required (`uint256`).
 
-            ```vyper
-            @external
-            @view
-            @nonreentrant('lock')
-            def previewMint(shares: uint256) -> uint256:
-                """
-                @notice Calculate the amount of assets which is needed to exactly mint the given amount of shares
-                """
-                return self._convert_to_assets(shares, False)
+| Input     | Type      | Description             |
+|-----------|-----------|-------------------------|
+| `shares`  | `uint256` | Number of shares to mint. |
 
-            @internal
-            @view
-            def _convert_to_assets(shares: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = shares * (total_assets * precision + 1)
-                denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.previewMint(1000000000000000000):     # mint 1 share
-        1001291061639566                                # assets needed deposit to mint 1 share
-        ```
+<details>
+<summary>Source code</summary>
+
+
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
+
+
+```vyper
+@external
+@view
+@nonreentrant('lock')
+def previewMint(shares: uint256) -> uint256:
+    """
+    @notice Calculate the amount of assets which is needed to exactly mint the given amount of shares
+    """
+    return self._convert_to_assets(shares, False)
+
+@internal
+@view
+def _convert_to_assets(shares: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = shares * (total_assets * precision + 1)
+    denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.previewMint(1000000000000000000):     # mint 1 share
+1001291061639566                                # assets needed deposit to mint 1 share
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `convertToShares`
-!!! description "`Vault.convertToShares(assets: uint256) -> uint256:`"
-
-    Function to calculate the amount of shares received for a given amount of `assets` provided.
-
-    Returns: amount of shares received (`uint256`).
-
-    | Input    | Type      | Description                   |
-    |----------|-----------|-------------------------------|
-    | `assets` | `uint256` | Amount of assets to convert.  |
+:::description[`Vault.convertToShares(assets: uint256) -> uint256:`]
 
 
-    ??? quote "Source code"
+Function to calculate the amount of shares received for a given amount of `assets` provided.
 
-        === "Vault.vy"
+Returns: amount of shares received (`uint256`).
 
-            ```vyper
-            @external
-            @view
-            @nonreentrant('lock')
-            def convertToShares(assets: uint256) -> uint256:
-                """
-                @notice Returns the amount of shares which the Vault would exchange for the given amount of shares provided
-                """
-                return self._convert_to_shares(assets)
+| Input    | Type      | Description                   |
+|----------|-----------|-------------------------------|
+| `assets` | `uint256` | Amount of assets to convert.  |
 
-            @internal
-            @view
-            def _convert_to_shares(assets: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
-                denominator: uint256 = (total_assets * precision + 1)
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.convertToShares(1000000000000000000):
-        998709265069121019738
-        ```
+<details>
+<summary>Source code</summary>
 
+
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
+
+
+```vyper
+@external
+@view
+@nonreentrant('lock')
+def convertToShares(assets: uint256) -> uint256:
+    """
+    @notice Returns the amount of shares which the Vault would exchange for the given amount of shares provided
+    """
+    return self._convert_to_shares(assets)
+
+@internal
+@view
+def _convert_to_shares(assets: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
+    denominator: uint256 = (total_assets * precision + 1)
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.convertToShares(1000000000000000000):
+998709265069121019738
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `maxSupply`
-!!! description "`Vault.maxSupply() -> uint256: view`"
+:::description[`Vault.maxSupply() -> uint256: view`]
 
-    Getter for the maximum amount of assets that can be supplied to the vault. This function is only avaliable in a newer version of the vault contract.
 
-    Returns: maximum supply (`uint256`).
+Getter for the maximum amount of assets that can be supplied to the vault. This function is only avaliable in a newer version of the vault contract.
 
-    ??? quote "Source code"
+Returns: maximum supply (`uint256`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            event SetMaxSupply:
-                max_supply: uint256
 
-            maxSupply: public(uint256)
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-            @external
-            def set_max_supply(max_supply: uint256):
-                """
-                @notice Set maximum depositable supply
-                """
-                assert msg.sender == self.factory.admin() or msg.sender == self.factory.address
-                self.maxSupply = max_supply
-                log SetMaxSupply(max_supply)
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.maxSupply()
-        1500000000000000000000000       # 15m of the underlying asset
-        ```
+```vyper
+event SetMaxSupply:
+    max_supply: uint256
 
+maxSupply: public(uint256)
+
+@external
+def set_max_supply(max_supply: uint256):
+    """
+    @notice Set maximum depositable supply
+    """
+    assert msg.sender == self.factory.admin() or msg.sender == self.factory.address
+    self.maxSupply = max_supply
+    log SetMaxSupply(max_supply)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.maxSupply()
+1500000000000000000000000       # 15m of the underlying asset
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_max_supply `
-!!! description "`Vault.set_max_supply(max_supply: uint256):`"
-
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the factory.
-
-    Function to set the maximum amount of assets that can be supplied to the vault. This function is only avaliable in a newer version of the vault contract.
-
-    Emits: `SetMaxSupply`
-
-    | Input      | Type      | Description                   |
-    |------------|-----------|-------------------------------|
-    | `max_supply` | `uint256` | Maximum amount of assets to set. |
-
-    ??? quote "Source code"
-
-        === "Vault.vy"
-
-            ```vyper
-            event SetMaxSupply:
-                max_supply: uint256
-
-            maxSupply: public(uint256)
-
-            @external
-            def set_max_supply(max_supply: uint256):
-                """
-                @notice Set maximum depositable supply
-                """
-                assert msg.sender == self.factory.admin() or msg.sender == self.factory.address
-                self.maxSupply = max_supply
-                log SetMaxSupply(max_supply)
-            ```
-
-    === "Example"
-        ```shell
-        >>> Vault.maxSupply()
-        1500000000000000000000000       # 15m of the underlying asset
-        ```
+:::description[`Vault.set_max_supply(max_supply: uint256):`]
 
 
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the factory.
+
+
+:::
+
+Function to set the maximum amount of assets that can be supplied to the vault. This function is only avaliable in a newer version of the vault contract.
+
+Emits: `SetMaxSupply`
+
+| Input      | Type      | Description                   |
+|------------|-----------|-------------------------------|
+| `max_supply` | `uint256` | Maximum amount of assets to set. |
+
+<details>
+<summary>Source code</summary>
+
+
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
+
+
+```vyper
+event SetMaxSupply:
+    max_supply: uint256
+
+maxSupply: public(uint256)
+
+@external
+def set_max_supply(max_supply: uint256):
+    """
+    @notice Set maximum depositable supply
+    """
+    assert msg.sender == self.factory.admin() or msg.sender == self.factory.address
+    self.maxSupply = max_supply
+    log SetMaxSupply(max_supply)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.maxSupply()
+1500000000000000000000000       # 15m of the underlying asset
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ---
 
 
+## **Withdrawing Assets and Redeeming Shares**:::colab[Google Colab Notebook]
 
-## **Withdrawing Assets and Redeeming Shares**
+A Google Colab notebook on how to use the `withdraw` and `mint` functions, as well as how shares are priced, can be found here: [https://colab.research.google.com/drive/1Ta69fsIc7zmtjFlQ94a8MDYYLeo4GJJI?usp=sharing](https://colab.research.google.com/drive/1Ta69fsIc7zmtjFlQ94a8MDYYLeo4GJJI?usp=sharing).
 
-!!!colab "Google Colab Notebook"
-    A Google Colab notebook on how to use the `withdraw` and `mint` functions, as well as how shares are priced, can be found here: [https://colab.research.google.com/drive/1Ta69fsIc7zmtjFlQ94a8MDYYLeo4GJJI?usp=sharing](https://colab.research.google.com/drive/1Ta69fsIc7zmtjFlQ94a8MDYYLeo4GJJI?usp=sharing).
 
+:::
 
 *Two ways to retrieve the underlying asset directly from the according ERC4626 Vault:*
 
@@ -789,659 +1026,836 @@ Because shares are transferable, a user can also acquire shares by means other t
 - **Redeem**: A user redeems (and burns) a predefined number of shares to receive the corresponding amount of the underlying assets. This process decreases the shares owned by the user while increasing their holding of the underlying asset.
 
 
-!!!warning "Withdrawing and Redeeming Assets When Utilization is High"
-    Withdrawing assets (or redeeming shares) from the vault is generally always possible. However, there might be cases where a lending market has very high utilization, which could hinder the withdrawal of assets. For example, if a market has a utilization rate of 100%, meaning every supplied asset in the vault is borrowed, then a user cannot redeem their vault shares for assets. They would need to wait for the utilization rate to go down.
+:::warning[Withdrawing and Redeeming Assets When Utilization is High]
 
-    To prevent this scenario, the borrow rate is based on the utilization rate of the lending market. If the utilization reaches 100%, this would cause the interest rate to skyrocket to the maximum value, incentivizing either the borrowers to repay debt or lenders to supply more assets to the vault.
+Withdrawing assets (or redeeming shares) from the vault is generally always possible. However, there might be cases where a lending market has very high utilization, which could hinder the withdrawal of assets. For example, if a market has a utilization rate of 100%, meaning every supplied asset in the vault is borrowed, then a user cannot redeem their vault shares for assets. They would need to wait for the utilization rate to go down.
 
+To prevent this scenario, the borrow rate is based on the utilization rate of the lending market. If the utilization reaches 100%, this would cause the interest rate to skyrocket to the maximum value, incentivizing either the borrowers to repay debt or lenders to supply more assets to the vault.
+
+
+:::
 
 ### `withdraw`
-!!! description "`Vault.withdraw(assets: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`"
+:::description[`Vault.withdraw(assets: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`]
 
-    Function to withdraw `assets` from `owner` to the `receiver` and burn the corresponding amount of shares.
 
-    Returns: shares withdrawn (`uint256`).
+Function to withdraw `assets` from `owner` to the `receiver` and burn the corresponding amount of shares.
 
-    Emits: `Withdraw`, `Transfer` and `SetRate`
+Returns: shares withdrawn (`uint256`).
 
-    | Input      | Type     | Description                                        |
-    | ---------- | -------- | -------------------------------------------------- |
-    | `assets`   | `uint256` | Amount of assets to withdraw.                     |
-    | `receiver` | `address` | Receiver of the shares. Defaults to `msg.sender`. |
-    | `owner`    | `address` | Address of whose shares to burn. Defaults to `msg.sender`. |
+Emits: `Withdraw`, `Transfer` and `SetRate`
 
-    ??? quote "Source code"
+| Input      | Type     | Description                                        |
+| ---------- | -------- | -------------------------------------------------- |
+| `assets`   | `uint256` | Amount of assets to withdraw.                     |
+| `receiver` | `address` | Receiver of the shares. Defaults to `msg.sender`. |
+| `owner`    | `address` | Address of whose shares to burn. Defaults to `msg.sender`. |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            event Transfer:
-                sender: indexed(address)
-                receiver: indexed(address)
-                value: uint256
 
-            event Withdraw:
-                sender: indexed(address)
-                receiver: indexed(address)
-                owner: indexed(address)
-                assets: uint256
-                shares: uint256
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-            @external
-            @nonreentrant('lock')
-            def withdraw(assets: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:
-                """
-                @notice Withdraw given amount of asset and burn the corresponding amount of vault shares
-                @param assets Amount of assets to withdraw
-                @param receiver Receiver of the assets (optional, sender if not specified)
-                @param owner Owner who's shares the caller takes. Only can take those if owner gave the approval to the sender. Optional
-                """
-                total_assets: uint256 = self._total_assets()
-                assert total_assets - assets >= MIN_ASSETS or total_assets == assets, "Need more assets"
-                shares: uint256 = self._convert_to_shares(assets, False, total_assets)
-                if owner != msg.sender:
-                    allowance: uint256 = self.allowance[owner][msg.sender]
-                    if allowance != max_value(uint256):
-                        self._approve(owner, msg.sender, allowance - shares)
 
-                controller: Controller = self.controller
-                self._burn(owner, shares)
-                assert self.borrowed_token.transferFrom(controller.address, receiver, assets, default_return_value=True)
-                controller.save_rate()
-                log Withdraw(msg.sender, receiver, owner, assets, shares)
-                return shares
+```vyper
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    value: uint256
 
-            @internal
-            def _burn(_from: address, _value: uint256):
-                self.balanceOf[_from] -= _value
-                self.totalSupply -= _value
+event Withdraw:
+    sender: indexed(address)
+    receiver: indexed(address)
+    owner: indexed(address)
+    assets: uint256
+    shares: uint256
 
-                log Transfer(_from, empty(address), _value)
+@external
+@nonreentrant('lock')
+def withdraw(assets: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:
+    """
+    @notice Withdraw given amount of asset and burn the corresponding amount of vault shares
+    @param assets Amount of assets to withdraw
+    @param receiver Receiver of the assets (optional, sender if not specified)
+    @param owner Owner who's shares the caller takes. Only can take those if owner gave the approval to the sender. Optional
+    """
+    total_assets: uint256 = self._total_assets()
+    assert total_assets - assets >= MIN_ASSETS or total_assets == assets, "Need more assets"
+    shares: uint256 = self._convert_to_shares(assets, False, total_assets)
+    if owner != msg.sender:
+        allowance: uint256 = self.allowance[owner][msg.sender]
+        if allowance != max_value(uint256):
+            self._approve(owner, msg.sender, allowance - shares)
 
-            @internal
-            @view
-            def _total_assets() -> uint256:
-                # admin fee should be accounted for here when enabled
-                self.controller.check_lock()
-                return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
+    controller: Controller = self.controller
+    self._burn(owner, shares)
+    assert self.borrowed_token.transferFrom(controller.address, receiver, assets, default_return_value=True)
+    controller.save_rate()
+    log Withdraw(msg.sender, receiver, owner, assets, shares)
+    return shares
 
-            @internal
-            @view
-            def _convert_to_shares(assets: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
-                denominator: uint256 = (total_assets * precision + 1)
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
+@internal
+def _burn(_from: address, _value: uint256):
+    self.balanceOf[_from] -= _value
+    self.totalSupply -= _value
 
-        === "Controller.vy"
+    log Transfer(_from, empty(address), _value)
 
-            ```vyper
-            interface MonetaryPolicy:
-                def rate_write() -> uint256: nonpayable
+@internal
+@view
+def _total_assets() -> uint256:
+    # admin fee should be accounted for here when enabled
+    self.controller.check_lock()
+    return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
 
-            monetary_policy: public(MonetaryPolicy)
+@internal
+@view
+def _convert_to_shares(assets: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
+    denominator: uint256 = (total_assets * precision + 1)
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
 
-            @external
-            @nonreentrant('lock')
-            def save_rate():
-                """
-                @notice Save current rate
-                """
-                self._save_rate()
 
-            @internal
-            def _save_rate():
-                """
-                @notice Save current rate
-                """
-                rate: uint256 = min(self.monetary_policy.rate_write(), MAX_RATE)
-                AMM.set_rate(rate)
-            ```
+</TabItem>
+</Tabs>
 
-        === "MonetaryPolicy.vy"
+<Tabs>
+<TabItem value="controller-vy" label="Controller.vy">
 
-            ```vyper
-            log_min_rate: public(int256)
-            log_max_rate: public(int256)
 
-            @external
-            def rate_write(_for: address = msg.sender) -> uint256:
-                return self.calculate_rate(_for, 0, 0)
+```vyper
+interface MonetaryPolicy:
+    def rate_write() -> uint256: nonpayable
 
-            @internal
-            @view
-            def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256:
-                total_debt: int256 = convert(Controller(_for).total_debt(), int256)
-                total_reserves: int256 = convert(BORROWED_TOKEN.balanceOf(_for), int256) + total_debt + d_reserves
-                total_debt += d_debt
-                assert total_debt >= 0, "Negative debt"
-                assert total_reserves >= total_debt, "Reserves too small"
-                if total_debt == 0:
-                    return self.min_rate
-                else:
-                    log_min_rate: int256 = self.log_min_rate
-                    log_max_rate: int256 = self.log_max_rate
-                    return self.exp(total_debt * (log_max_rate - log_min_rate) / total_reserves + log_min_rate)
-            ```
-            
-        === "AMM.vy"
+monetary_policy: public(MonetaryPolicy)
 
-            ```vyper
-            event SetRate:
-                rate: uint256
-                rate_mul: uint256
-                time: uint256
+@external
+@nonreentrant('lock')
+def save_rate():
+    """
+    @notice Save current rate
+    """
+    self._save_rate()
 
-            @external
-            @nonreentrant('lock')
-            def set_rate(rate: uint256) -> uint256:
-                """
-                @notice Set interest rate. That affects the dependence of AMM base price over time
-                @param rate New rate in units of int(fraction * 1e18) per second
-                @return rate_mul multiplier (e.g. 1.0 + integral(rate, dt))
-                """
-                assert msg.sender == self.admin
-                rate_mul: uint256 = self._rate_mul()
-                self.rate_mul = rate_mul
-                self.rate_time = block.timestamp
-                self.rate = rate
-                log SetRate(rate, rate_mul, block.timestamp)
-                return rate_mul
+@internal
+def _save_rate():
+    """
+    @notice Save current rate
+    """
+    rate: uint256 = min(self.monetary_policy.rate_write(), MAX_RATE)
+    AMM.set_rate(rate)
+```
 
-            @internal
-            @view
-            def _rate_mul() -> uint256:
-                """
-                @notice Rate multiplier which is 1.0 + integral(rate, dt)
-                @return Rate multiplier in units where 1.0 == 1e18
-                """
-                return unsafe_div(self.rate_mul * (10**18 + self.rate * (block.timestamp - self.rate_time)), 10**18)
-            ```
 
-    === "Example"
-        ```shell
-        In  [1]:  Vault.balanceOf(trader)
-        Out [1]:  1097552662404145514069
+</TabItem>
+</Tabs>
 
-        In  [2]:  crvusd.balanceOf(trader)
-        Out [2]:  999998899754665824864192
+<Tabs>
+<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
-        In  [3]:  Vault.withdraw(1000000000000000000)
 
-        In  [4]:  Vault.balanceOf(trader)
-        Out [4]:  99999999999999999999
+```vyper
+log_min_rate: public(int256)
+log_max_rate: public(int256)
 
-        In  [5]:  crvusd.balanceOf(trader)
-        Out [5]:  999999899754665824864192
-        ```
+@external
+def rate_write(_for: address = msg.sender) -> uint256:
+    return self.calculate_rate(_for, 0, 0)
 
+@internal
+@view
+def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256:
+    total_debt: int256 = convert(Controller(_for).total_debt(), int256)
+    total_reserves: int256 = convert(BORROWED_TOKEN.balanceOf(_for), int256) + total_debt + d_reserves
+    total_debt += d_debt
+    assert total_debt >= 0, "Negative debt"
+    assert total_reserves >= total_debt, "Reserves too small"
+    if total_debt == 0:
+        return self.min_rate
+    else:
+        log_min_rate: int256 = self.log_min_rate
+        log_max_rate: int256 = self.log_max_rate
+        return self.exp(total_debt * (log_max_rate - log_min_rate) / total_reserves + log_min_rate)
+```
+
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="amm-vy" label="AMM.vy">
+
+
+```vyper
+event SetRate:
+    rate: uint256
+    rate_mul: uint256
+    time: uint256
+
+@external
+@nonreentrant('lock')
+def set_rate(rate: uint256) -> uint256:
+    """
+    @notice Set interest rate. That affects the dependence of AMM base price over time
+    @param rate New rate in units of int(fraction * 1e18) per second
+    @return rate_mul multiplier (e.g. 1.0 + integral(rate, dt))
+    """
+    assert msg.sender == self.admin
+    rate_mul: uint256 = self._rate_mul()
+    self.rate_mul = rate_mul
+    self.rate_time = block.timestamp
+    self.rate = rate
+    log SetRate(rate, rate_mul, block.timestamp)
+    return rate_mul
+
+@internal
+@view
+def _rate_mul() -> uint256:
+    """
+    @notice Rate multiplier which is 1.0 + integral(rate, dt)
+    @return Rate multiplier in units where 1.0 == 1e18
+    """
+    return unsafe_div(self.rate_mul * (10**18 + self.rate * (block.timestamp - self.rate_time)), 10**18)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+In  [1]:  Vault.balanceOf(trader)
+Out [1]:  1097552662404145514069
+
+In  [2]:  crvusd.balanceOf(trader)
+Out [2]:  999998899754665824864192
+
+In  [3]:  Vault.withdraw(1000000000000000000)
+
+In  [4]:  Vault.balanceOf(trader)
+Out [4]:  99999999999999999999
+
+In  [5]:  crvusd.balanceOf(trader)
+Out [5]:  999999899754665824864192
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `maxWithdraw`
-!!! description "`Vault.maxWithdraw(owner: address) -> uint256:`"
+:::description[`Vault.maxWithdraw(owner: address) -> uint256:`]
 
-    Getter for the maximum amount of assets withdrawable by `owner`.
 
-    Returns: withdrawable assets (`uint256`).
+Getter for the maximum amount of assets withdrawable by `owner`.
 
-    | Input   | Type     | Description                        |
-    |---------|----------|------------------------------------|
-    | `owner` | `address` | Address of the user to withdraw from. |
+Returns: withdrawable assets (`uint256`).
 
-    ??? quote "Source code"
+| Input   | Type     | Description                        |
+|---------|----------|------------------------------------|
+| `owner` | `address` | Address of the user to withdraw from. |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            @external
-            @view
-            @nonreentrant('lock')
-            def maxWithdraw(owner: address) -> uint256:
-                """
-                @notice Maximum amount of assets which a given user can withdraw. Aware of both user's balance and available liquidity
-                """
-                return min(
-                    self._convert_to_assets(self.balanceOf[owner]),
-                    self.borrowed_token.balanceOf(self.controller.address))
 
-            @internal
-            @view
-            def _convert_to_assets(shares: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = shares * (total_assets * precision + 1)
-                denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-    === "Example"
-        ```shell
-        >>> Vault.maxWithdraw("0x7a16fF8270133F063aAb6C9977183D9e72835428")
-        45917295006116605730466
-        ```
 
+```vyper
+@external
+@view
+@nonreentrant('lock')
+def maxWithdraw(owner: address) -> uint256:
+    """
+    @notice Maximum amount of assets which a given user can withdraw. Aware of both user's balance and available liquidity
+    """
+    return min(
+        self._convert_to_assets(self.balanceOf[owner]),
+        self.borrowed_token.balanceOf(self.controller.address))
+
+@internal
+@view
+def _convert_to_assets(shares: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = shares * (total_assets * precision + 1)
+    denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.maxWithdraw("0x7a16fF8270133F063aAb6C9977183D9e72835428")
+45917295006116605730466
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `previewWithdraw`
-!!! description "`Vault.previewWithdraw(assets: uint256) -> uint256:`"
+:::description[`Vault.previewWithdraw(assets: uint256) -> uint256:`]
 
-    Function to simulate the amount of shares getting burned when withdrawing `assets`.
 
-    Returns: number of shares burned (`uint256`).
+Function to simulate the amount of shares getting burned when withdrawing `assets`.
 
-    | Input   | Type      | Description                      |
-    |---------|-----------|----------------------------------|
-    | `asset` | `address` | Number of assets to withdraw. |
+Returns: number of shares burned (`uint256`).
 
-    ??? quote "Source code"
+| Input   | Type      | Description                      |
+|---------|-----------|----------------------------------|
+| `asset` | `address` | Number of assets to withdraw. |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            @external
-            @view
-            @nonreentrant('lock')
-            def previewWithdraw(assets: uint256) -> uint256:
-                """
-                @notice Calculate number of shares which gets burned when withdrawing given amount of asset
-                """
-                assert assets <= self.borrowed_token.balanceOf(self.controller.address)
-                return self._convert_to_shares(assets, False)
 
-            @internal
-            @view
-            def _convert_to_shares(assets: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
-                denominator: uint256 = (total_assets * precision + 1)
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-    === "Example"
-        ```shell
-        >>> Vault.previewWithdraw(1000000000000000000):     # withdrawing 1 crvusd
-        998540201056049850914                               # shares to burn (approx. 988)
-        ```
 
+```vyper
+@external
+@view
+@nonreentrant('lock')
+def previewWithdraw(assets: uint256) -> uint256:
+    """
+    @notice Calculate number of shares which gets burned when withdrawing given amount of asset
+    """
+    assert assets <= self.borrowed_token.balanceOf(self.controller.address)
+    return self._convert_to_shares(assets, False)
+
+@internal
+@view
+def _convert_to_shares(assets: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
+    denominator: uint256 = (total_assets * precision + 1)
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.previewWithdraw(1000000000000000000):     # withdrawing 1 crvusd
+998540201056049850914                               # shares to burn (approx. 988)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `redeem`
-!!! description "`Vault.redeem(shares: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`"
+:::description[`Vault.redeem(shares: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`]
 
-    Function to redeem (and burn) `shares` from `owner` and send the received assets to `receiver`. Shares are burned when they are redeemed.
 
-    Returns: assets received (`uint256`).
+Function to redeem (and burn) `shares` from `owner` and send the received assets to `receiver`. Shares are burned when they are redeemed.
 
-    Emits: `Withdraw`, `Transfer` and `SetRate`
+Returns: assets received (`uint256`).
 
-    | Input     | Type      | Description                                        |
-    |-----------|-----------|----------------------------------------------------|
-    | `shares`  | `uint256` | Amount of shares to redeem.                        |
-    | `receiver`| `address` | Receiver of the shares. Defaults to `msg.sender`. |
-    | `owner`   | `address` | Address of whose shares to burn. Defaults to `msg.sender`. |
+Emits: `Withdraw`, `Transfer` and `SetRate`
 
-    ??? quote "Source code"
+| Input     | Type      | Description                                        |
+|-----------|-----------|----------------------------------------------------|
+| `shares`  | `uint256` | Amount of shares to redeem.                        |
+| `receiver`| `address` | Receiver of the shares. Defaults to `msg.sender`. |
+| `owner`   | `address` | Address of whose shares to burn. Defaults to `msg.sender`. |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            event Transfer:
-                sender: indexed(address)
-                receiver: indexed(address)
-                value: uint256
 
-            event Withdraw:
-                sender: indexed(address)
-                receiver: indexed(address)
-                owner: indexed(address)
-                assets: uint256
-                shares: uint256
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-            @external
-            @nonreentrant('lock')
-            def redeem(shares: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:
-                """
-                @notice Burn given amount of shares and give corresponding assets to the user
-                @param shares Amount of shares to burn
-                @param receiver Optional receiver of the assets
-                @param owner Optional owner of the shares. Can only redeem if owner gave approval to the sender
-                """
-                if owner != msg.sender:
-                    allowance: uint256 = self.allowance[owner][msg.sender]
-                    if allowance != max_value(uint256):
-                        self._approve(owner, msg.sender, allowance - shares)
 
-                total_assets: uint256 = self._total_assets()
-                assets_to_redeem: uint256 = self._convert_to_assets(shares, True, total_assets)
-                if total_assets - assets_to_redeem < MIN_ASSETS:
-                    if shares == self.totalSupply:
-                        # This is the last withdrawal, so we can take everything
-                        assets_to_redeem = total_assets
-                    else:
-                        raise "Need more assets"
-                self._burn(owner, shares)
-                controller: Controller = self.controller
-                assert self.borrowed_token.transferFrom(controller.address, receiver, assets_to_redeem, default_return_value=True)
-                controller.save_rate()
-                log Withdraw(msg.sender, receiver, owner, assets_to_redeem, shares)
-                return assets_to_redeem
+```vyper
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    value: uint256
 
-            @internal
-            def _burn(_from: address, _value: uint256):
-                self.balanceOf[_from] -= _value
-                self.totalSupply -= _value
+event Withdraw:
+    sender: indexed(address)
+    receiver: indexed(address)
+    owner: indexed(address)
+    assets: uint256
+    shares: uint256
 
-                log Transfer(_from, empty(address), _value)
+@external
+@nonreentrant('lock')
+def redeem(shares: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:
+    """
+    @notice Burn given amount of shares and give corresponding assets to the user
+    @param shares Amount of shares to burn
+    @param receiver Optional receiver of the assets
+    @param owner Optional owner of the shares. Can only redeem if owner gave approval to the sender
+    """
+    if owner != msg.sender:
+        allowance: uint256 = self.allowance[owner][msg.sender]
+        if allowance != max_value(uint256):
+            self._approve(owner, msg.sender, allowance - shares)
 
-            @internal
-            @view
-            def _total_assets() -> uint256:
-                # admin fee should be accounted for here when enabled
-                self.controller.check_lock()
-                return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
+    total_assets: uint256 = self._total_assets()
+    assets_to_redeem: uint256 = self._convert_to_assets(shares, True, total_assets)
+    if total_assets - assets_to_redeem < MIN_ASSETS:
+        if shares == self.totalSupply:
+            # This is the last withdrawal, so we can take everything
+            assets_to_redeem = total_assets
+        else:
+            raise "Need more assets"
+    self._burn(owner, shares)
+    controller: Controller = self.controller
+    assert self.borrowed_token.transferFrom(controller.address, receiver, assets_to_redeem, default_return_value=True)
+    controller.save_rate()
+    log Withdraw(msg.sender, receiver, owner, assets_to_redeem, shares)
+    return assets_to_redeem
 
-            @internal
-            @view
-            def _convert_to_shares(assets: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
-                denominator: uint256 = (total_assets * precision + 1)
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
+@internal
+def _burn(_from: address, _value: uint256):
+    self.balanceOf[_from] -= _value
+    self.totalSupply -= _value
 
-        === "Controller.vy"
+    log Transfer(_from, empty(address), _value)
 
-            ```vyper
-            interface MonetaryPolicy:
-                def rate_write() -> uint256: nonpayable
+@internal
+@view
+def _total_assets() -> uint256:
+    # admin fee should be accounted for here when enabled
+    self.controller.check_lock()
+    return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
 
-            monetary_policy: public(MonetaryPolicy)
+@internal
+@view
+def _convert_to_shares(assets: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
+    denominator: uint256 = (total_assets * precision + 1)
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
 
-            @external
-            @nonreentrant('lock')
-            def save_rate():
-                """
-                @notice Save current rate
-                """
-                self._save_rate()
 
-            @internal
-            def _save_rate():
-                """
-                @notice Save current rate
-                """
-                rate: uint256 = min(self.monetary_policy.rate_write(), MAX_RATE)
-                AMM.set_rate(rate)
-            ```
+</TabItem>
+</Tabs>
 
-        === "MonetaryPolicy.vy"
+<Tabs>
+<TabItem value="controller-vy" label="Controller.vy">
 
-            ```vyper
-            log_min_rate: public(int256)
-            log_max_rate: public(int256)
 
-            @external
-            def rate_write(_for: address = msg.sender) -> uint256:
-                return self.calculate_rate(_for, 0, 0)
+```vyper
+interface MonetaryPolicy:
+    def rate_write() -> uint256: nonpayable
 
-            @internal
-            @view
-            def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256:
-                total_debt: int256 = convert(Controller(_for).total_debt(), int256)
-                total_reserves: int256 = convert(BORROWED_TOKEN.balanceOf(_for), int256) + total_debt + d_reserves
-                total_debt += d_debt
-                assert total_debt >= 0, "Negative debt"
-                assert total_reserves >= total_debt, "Reserves too small"
-                if total_debt == 0:
-                    return self.min_rate
-                else:
-                    log_min_rate: int256 = self.log_min_rate
-                    log_max_rate: int256 = self.log_max_rate
-                    return self.exp(total_debt * (log_max_rate - log_min_rate) / total_reserves + log_min_rate)
-            ```
+monetary_policy: public(MonetaryPolicy)
 
-        === "AMM.vy"
+@external
+@nonreentrant('lock')
+def save_rate():
+    """
+    @notice Save current rate
+    """
+    self._save_rate()
 
-            ```vyper
-            event SetRate:
-                rate: uint256
-                rate_mul: uint256
-                time: uint256
+@internal
+def _save_rate():
+    """
+    @notice Save current rate
+    """
+    rate: uint256 = min(self.monetary_policy.rate_write(), MAX_RATE)
+    AMM.set_rate(rate)
+```
 
-            @external
-            @nonreentrant('lock')
-            def set_rate(rate: uint256) -> uint256:
-                """
-                @notice Set interest rate. That affects the dependence of AMM base price over time
-                @param rate New rate in units of int(fraction * 1e18) per second
-                @return rate_mul multiplier (e.g. 1.0 + integral(rate, dt))
-                """
-                assert msg.sender == self.admin
-                rate_mul: uint256 = self._rate_mul()
-                self.rate_mul = rate_mul
-                self.rate_time = block.timestamp
-                self.rate = rate
-                log SetRate(rate, rate_mul, block.timestamp)
-                return rate_mul
 
-            @internal
-            @view
-            def _rate_mul() -> uint256:
-                """
-                @notice Rate multiplier which is 1.0 + integral(rate, dt)
-                @return Rate multiplier in units where 1.0 == 1e18
-                """
-                return unsafe_div(self.rate_mul * (10**18 + self.rate * (block.timestamp - self.rate_time)), 10**18)
-            ```
+</TabItem>
+</Tabs>
 
-    === "Example"
-        ```shell
-        In  [1]:  Vault.balanceOf(trader)
-        Out [1]:  99999999999999999999
+<Tabs>
+<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
-        In  [2]:  crvusd.balanceOf(trader)
-        Out [2]:  999999899754665824864192
 
-        In  [3]:  Vault.redeem(99999999999999999999)
+```vyper
+log_min_rate: public(int256)
+log_max_rate: public(int256)
 
-        In  [4]:  Vault.balanceOf(trader)
-        Out [4]:  0
+@external
+def rate_write(_for: address = msg.sender) -> uint256:
+    return self.calculate_rate(_for, 0, 0)
 
-        In  [5]:  crvusd.balanceOf(trader)
-        Out [5]:  999999999999999999999998
-        ```
+@internal
+@view
+def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256:
+    total_debt: int256 = convert(Controller(_for).total_debt(), int256)
+    total_reserves: int256 = convert(BORROWED_TOKEN.balanceOf(_for), int256) + total_debt + d_reserves
+    total_debt += d_debt
+    assert total_debt >= 0, "Negative debt"
+    assert total_reserves >= total_debt, "Reserves too small"
+    if total_debt == 0:
+        return self.min_rate
+    else:
+        log_min_rate: int256 = self.log_min_rate
+        log_max_rate: int256 = self.log_max_rate
+        return self.exp(total_debt * (log_max_rate - log_min_rate) / total_reserves + log_min_rate)
+```
 
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="amm-vy" label="AMM.vy">
+
+
+```vyper
+event SetRate:
+    rate: uint256
+    rate_mul: uint256
+    time: uint256
+
+@external
+@nonreentrant('lock')
+def set_rate(rate: uint256) -> uint256:
+    """
+    @notice Set interest rate. That affects the dependence of AMM base price over time
+    @param rate New rate in units of int(fraction * 1e18) per second
+    @return rate_mul multiplier (e.g. 1.0 + integral(rate, dt))
+    """
+    assert msg.sender == self.admin
+    rate_mul: uint256 = self._rate_mul()
+    self.rate_mul = rate_mul
+    self.rate_time = block.timestamp
+    self.rate = rate
+    log SetRate(rate, rate_mul, block.timestamp)
+    return rate_mul
+
+@internal
+@view
+def _rate_mul() -> uint256:
+    """
+    @notice Rate multiplier which is 1.0 + integral(rate, dt)
+    @return Rate multiplier in units where 1.0 == 1e18
+    """
+    return unsafe_div(self.rate_mul * (10**18 + self.rate * (block.timestamp - self.rate_time)), 10**18)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+In  [1]:  Vault.balanceOf(trader)
+Out [1]:  99999999999999999999
+
+In  [2]:  crvusd.balanceOf(trader)
+Out [2]:  999999899754665824864192
+
+In  [3]:  Vault.redeem(99999999999999999999)
+
+In  [4]:  Vault.balanceOf(trader)
+Out [4]:  0
+
+In  [5]:  crvusd.balanceOf(trader)
+Out [5]:  999999999999999999999998
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `maxRedeem`
-!!! description "`Vault.maxRedeem(owner: address) -> uint256:`"
+:::description[`Vault.maxRedeem(owner: address) -> uint256:`]
 
-    Getter for the maximum redeemable shares from `owner`.
 
-    Returns: maximum redeemable shares (`uint256`).
+Getter for the maximum redeemable shares from `owner`.
 
-    | Input   | Type      | Description                           |
-    |---------|-----------|---------------------------------------|
-    | `owner` | `address` | Address of the user to redeem shares from.   |
+Returns: maximum redeemable shares (`uint256`).
 
-    ??? quote "Source code"
+| Input   | Type      | Description                           |
+|---------|-----------|---------------------------------------|
+| `owner` | `address` | Address of the user to redeem shares from.   |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            @external   
-            @view
-            @nonreentrant('lock')
-            def maxRedeem(owner: address) -> uint256:
-                """
-                @notice Calculate maximum amount of shares which a given user can redeem
-                """
-                return min(
-                    self._convert_to_shares(self.borrowed_token.balanceOf(self.controller.address), False),
-                    self.balanceOf[owner])
 
-            @internal
-            @view
-            def _convert_to_shares(assets: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
-                denominator: uint256 = (total_assets * precision + 1)
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-    === "Example"
-        ```shell
-        >>> Vault.maxRedeem("0x7a16fF8270133F063aAb6C9977183D9e72835428")
-        45836614069469292514157944
-        ```
 
+```vyper
+@external   
+@view
+@nonreentrant('lock')
+def maxRedeem(owner: address) -> uint256:
+    """
+    @notice Calculate maximum amount of shares which a given user can redeem
+    """
+    return min(
+        self._convert_to_shares(self.borrowed_token.balanceOf(self.controller.address), False),
+        self.balanceOf[owner])
+
+@internal
+@view
+def _convert_to_shares(assets: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = (self.totalSupply + DEAD_SHARES) * assets * precision
+    denominator: uint256 = (total_assets * precision + 1)
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.maxRedeem("0x7a16fF8270133F063aAb6C9977183D9e72835428")
+45836614069469292514157944
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `previewRedeem`
-!!! description "`Vault.previewRedeem(shares: uint256) -> uint256:`"
+:::description[`Vault.previewRedeem(shares: uint256) -> uint256:`]
 
-    Function to simulate the number of assets received when redeeming (burning) `shares`.
 
-    Returns: obtainable assets (`uint256`).
+Function to simulate the number of assets received when redeeming (burning) `shares`.
 
-    | Input    | Type      | Description                      |
-    |----------|-----------|----------------------------------|
-    | `shares` | `uint256` | Number of shares to redeem.      |
+Returns: obtainable assets (`uint256`).
 
-    ??? quote "Source code"
+| Input    | Type      | Description                      |
+|----------|-----------|----------------------------------|
+| `shares` | `uint256` | Number of shares to redeem.      |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            @external
-            @view
-            @nonreentrant('lock')
-            def previewRedeem(shares: uint256) -> uint256:
-                """
-                @notice Calculate the amount of assets which can be obtained by redeeming the given amount of shares
-                """
-                if self.totalSupply == 0:
-                    assert shares == 0
-                    return 0
 
-                else:
-                    assets_to_redeem: uint256 = self._convert_to_assets(shares)
-                    assert assets_to_redeem <= self.borrowed_token.balanceOf(self.controller.address)
-                    return assets_to_redeem
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-            @internal
-            @view
-            def _convert_to_assets(shares: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = shares * (total_assets * precision + 1)
-                denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.previewRedeem(1000000000000000000):
-        1001293138709678
-        ```
+```vyper
+@external
+@view
+@nonreentrant('lock')
+def previewRedeem(shares: uint256) -> uint256:
+    """
+    @notice Calculate the amount of assets which can be obtained by redeeming the given amount of shares
+    """
+    if self.totalSupply == 0:
+        assert shares == 0
+        return 0
 
+    else:
+        assets_to_redeem: uint256 = self._convert_to_assets(shares)
+        assert assets_to_redeem <= self.borrowed_token.balanceOf(self.controller.address)
+        return assets_to_redeem
+
+@internal
+@view
+def _convert_to_assets(shares: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = shares * (total_assets * precision + 1)
+    denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.previewRedeem(1000000000000000000):
+1001293138709678
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `convertToAssets`
-!!! description "`Vault.convertToAssets(shares: uint256) -> uint256:`"
-
-    Function to calculate the amount of assets received when converting `shares` to assets.
-
-    Returns: amount of assets received (`uint256`).
-
-    | Input    | Type      | Description                          |
-    |----------|-----------|--------------------------------------|
-    | `shares` | `uint256` | Amount of shares to convert to assets. |
+:::description[`Vault.convertToAssets(shares: uint256) -> uint256:`]
 
 
-    ??? quote "Source code"
+Function to calculate the amount of assets received when converting `shares` to assets.
 
-        === "Vault.vy"
+Returns: amount of assets received (`uint256`).
 
-            ```vyper
-            @external
-            @view
-            @nonreentrant('lock')
-            def convertToAssets(shares: uint256) -> uint256:
-                """
-                @notice Returns the amount of assets that the Vault would exchange for the amount of shares provided
-                """
-                return self._convert_to_assets(shares)
+| Input    | Type      | Description                          |
+|----------|-----------|--------------------------------------|
+| `shares` | `uint256` | Amount of shares to convert to assets. |
 
-            @internal
-            @view
-            def _convert_to_assets(shares: uint256, is_floor: bool = True,
-                                _total_assets: uint256 = max_value(uint256)) -> uint256:
-                total_assets: uint256 = _total_assets
-                if total_assets == max_value(uint256):
-                    total_assets = self._total_assets()
-                precision: uint256 = self.precision
-                numerator: uint256 = shares * (total_assets * precision + 1)
-                denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
-                if is_floor:
-                    return numerator / denominator
-                else:
-                    return (numerator + denominator - 1) / denominator
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.convertToAssets(1000000000000000000):
-        1001293138709678
-        ```
+<details>
+<summary>Source code</summary>
 
+
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
+
+
+```vyper
+@external
+@view
+@nonreentrant('lock')
+def convertToAssets(shares: uint256) -> uint256:
+    """
+    @notice Returns the amount of assets that the Vault would exchange for the amount of shares provided
+    """
+    return self._convert_to_assets(shares)
+
+@internal
+@view
+def _convert_to_assets(shares: uint256, is_floor: bool = True,
+                    _total_assets: uint256 = max_value(uint256)) -> uint256:
+    total_assets: uint256 = _total_assets
+    if total_assets == max_value(uint256):
+        total_assets = self._total_assets()
+    precision: uint256 = self.precision
+    numerator: uint256 = shares * (total_assets * precision + 1)
+    denominator: uint256 = (self.totalSupply + DEAD_SHARES) * precision
+    if is_floor:
+        return numerator / denominator
+    else:
+        return (numerator + denominator - 1) / denominator
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.convertToAssets(1000000000000000000):
+1001293138709678
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ---
 
 
-## **Interest Rates**
-
-Interest rates within lending markets are intricately linked to the market's utilization rate. Essentially, as market utilization increases, so too do the interest rates. This dynamic relationship underscores the market's demand-supply equilibrium, directly influencing the cost of borrowing and the returns on lending.
+## **Interest Rates**Interest rates within lending markets are intricately linked to the market's utilization rate. Essentially, as market utilization increases, so too do the interest rates. This dynamic relationship underscores the market's demand-supply equilibrium, directly influencing the cost of borrowing and the returns on lending.
 
 The vault contract has two public methods, named `borrow_apr` and `lend_apr`. These methods are designed to compute and return the **annualized rates for borrowing and lending**, respectively, standardized to a base of 1e18.
 
-- **Borrow Rate:** This is the interest rate charged on the amount borrowed by a user.
-- **Lend Rate:** Conversely, this rate represents the yield a user earns by lending their assets to the vault.
+- **Borrow Rate:**This is the interest rate charged on the amount borrowed by a user.
+- **Lend Rate:**Conversely, this rate represents the yield a user earns by lending their assets to the vault.
 
 
 ```py
@@ -1459,401 +1873,658 @@ More on rates and when they are updated here: [SemiLog Monetary Policy](./semilo
 
 *The formula to calculate the annual percentage rate (APR) for borrowing is outlined as follows:*
 
-$$\text{borrowAPR} = \frac{\text{rate} * 365 * 86400}{10^{18}}$$
+$$\text\{borrowAPR\} = \frac\{\text\{rate\} * 365 * 86400\}\{10^\{18\}\}$$
 
 
 *The APR for lending is directly linked to the APR for borrowing, defined by:*
 
-$$\text{lendAPR} = \text{borrowAPR} * \text{utilization}$$
+$$\text\{lendAPR\} = \text\{borrowAPR\} * \text\{utilization\}$$
 
 
 *Additionally, the utilization ratio is determined by the following:*[^1]
 
-$$\text{utilization} = \frac{\text{debt}}{\text{totalAssets}}$$
+$$\text\{utilization\} = \frac\{\text\{debt\}\}\{\text\{totalAssets\}\}$$
 
 [^1]: This ratio represents the proportion of borrowed assets (debt) to the total assets supplied in the vault. It's a key metric that reflects the level of asset utilization within the vault. Borrowed assets, or debt, are obtained through the `total_debt` method from the Controller, while the `totalAssets` method within the Vault provides the value of total assets supplied.
 
 ---
 
 ### `borrow_apr`
-!!! description "`Vault.borrow_apr() -> uint256`"
+:::description[`Vault.borrow_apr() -> uint256`]
 
-    Getter for the annualized borrow APR. The user pays this rate on the assets borrowed.
 
-    Returns: borrow rate (`uint256`).
+Getter for the annualized borrow APR. The user pays this rate on the assets borrowed.
 
-    ??? quote "Source code"
+Returns: borrow rate (`uint256`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            interface AMM:
-                def set_admin(_admin: address): nonpayable
-                def rate() -> uint256: view
 
-            amm: public(AMM)
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-            @external
-            @view
-            @nonreentrant('lock')
-            def borrow_apr() -> uint256:
-                """
-                @notice Borrow APR (annualized and 1e18-based)
-                """
-                return self.amm.rate() * (365 * 86400)
-            ```
 
-        === "AMM.vy"
+```vyper
+interface AMM:
+    def set_admin(_admin: address): nonpayable
+    def rate() -> uint256: view
 
-            ```vyper
-            rate: public(uint256)
-            ```
+amm: public(AMM)
 
-    === "Example"
-        ```shell
-        >>> Vault.borrow_apr():
-        152933173055280000          # 15.29%
-        ```
+@external
+@view
+@nonreentrant('lock')
+def borrow_apr() -> uint256:
+    """
+    @notice Borrow APR (annualized and 1e18-based)
+    """
+    return self.amm.rate() * (365 * 86400)
+```
 
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="amm-vy" label="AMM.vy">
+
+
+```vyper
+rate: public(uint256)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.borrow_apr():
+152933173055280000          # 15.29%
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `lend_apr`
-!!! description "`Vault.lend_apr() -> uint256:`"
-
-    Getter for the annualized lending APR. The value is based on the utilization is awarded to the user for supplying underlying asset (`borrowed_token`) to the vault.
-
-    Returns: lending rate (`uint256`).
+:::description[`Vault.lend_apr() -> uint256:`]
 
 
-    ??? quote "Source code"
+Getter for the annualized lending APR. The value is based on the utilization is awarded to the user for supplying underlying asset (`borrowed_token`) to the vault.
 
-        === "Vault.vy"
+Returns: lending rate (`uint256`).
 
-            ```vyper
-            interface AMM:
-                def set_admin(_admin: address): nonpayable
-                def rate() -> uint256: view
 
-            amm: public(AMM)
+<details>
+<summary>Source code</summary>
 
-            @external
-            @view
-            @nonreentrant('lock')
-            def lend_apr() -> uint256:
-                """
-                @notice Lending APR (annualized and 1e18-based)
-                """
-                debt: uint256 = self.controller.total_debt()
-                if debt == 0:
-                    return 0
-                else:
-                    return self.amm.rate() * (365 * 86400) * debt / self._total_assets()
 
-            @internal
-            @view
-            def _total_assets() -> uint256:
-                # admin fee should be accounted for here when enabled
-                self.controller.check_lock()
-                return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-        === "AMM.vy"
 
-            ```vyper
-            rate: public(uint256)
-            ```
+```vyper
+interface AMM:
+    def set_admin(_admin: address): nonpayable
+    def rate() -> uint256: view
 
-    === "Example"
-        ```shell
-        >>> Vault.lend_apr():
-        113600673360849488          # 11.36%
-        ```
+amm: public(AMM)
 
+@external
+@view
+@nonreentrant('lock')
+def lend_apr() -> uint256:
+    """
+    @notice Lending APR (annualized and 1e18-based)
+    """
+    debt: uint256 = self.controller.total_debt()
+    if debt == 0:
+        return 0
+    else:
+        return self.amm.rate() * (365 * 86400) * debt / self._total_assets()
+
+@internal
+@view
+def _total_assets() -> uint256:
+    # admin fee should be accounted for here when enabled
+    self.controller.check_lock()
+    return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
+```
+
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="amm-vy" label="AMM.vy">
+
+
+```vyper
+rate: public(uint256)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.lend_apr():
+113600673360849488          # 11.36%
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ---
 
 
-## **Contract Info Methods**
+## **Contract Info Methods**### `asset`
+:::description[`Vault.asset() -> ERC20:`]
 
-### `asset`
-!!! description "`Vault.asset() -> ERC20:`"
 
-    Getter for the underlying asset used by the vault, which is the `borrowed_token`.
+Getter for the underlying asset used by the vault, which is the `borrowed_token`.
 
-    Returns: underlying asset (`address`).
+Returns: underlying asset (`address`).
 
-    ??? quote "Source code"
+<details>
+<summary>Source code</summary>
 
-        === "Vault.vy"
 
-            ```vyper
-            @external
-            @view
-            def asset() -> ERC20:
-                """
-                @notice Asset which is the same as borrowed_token
-                """
-                return self.borrowed_token
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-    === "Example"
-        ```shell
-        >>> Vault.asset():
-        '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
-        ```
 
+```vyper
+@external
+@view
+def asset() -> ERC20:
+    """
+    @notice Asset which is the same as borrowed_token
+    """
+    return self.borrowed_token
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.asset():
+'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `totalAssets`
-!!! description "`Vault.totalAssets() -> uint256:`"
+:::description[`Vault.totalAssets() -> uint256:`]
 
-    Getter for the total amount of the underlying asset (`borrowed_token`) held by the vault. These are the total assets that can be lent out.
 
-    Returns: total assets in the vault (`uint256`).
+Getter for the total amount of the underlying asset (`borrowed_token`) held by the vault. These are the total assets that can be lent out.
 
-    ??? quote "Source code"
+Returns: total assets in the vault (`uint256`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            @external
-            @view
-            @nonreentrant('lock')
-            def totalAssets() -> uint256:
-                """
-                @notice Total assets which can be lent out or be in reserve
-                """
-                return self._total_assets()
 
-            @internal
-            @view
-            def _total_assets() -> uint256:
-                # admin fee should be accounted for here when enabled
-                self.controller.check_lock()
-                return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-    === "Example"
-        ```shell
-        >>> Vault.totalAssets():
-        181046847949654671685165
-        ```
 
+```vyper
+@external
+@view
+@nonreentrant('lock')
+def totalAssets() -> uint256:
+    """
+    @notice Total assets which can be lent out or be in reserve
+    """
+    return self._total_assets()
+
+@internal
+@view
+def _total_assets() -> uint256:
+    # admin fee should be accounted for here when enabled
+    self.controller.check_lock()
+    return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.totalAssets():
+181046847949654671685165
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `pricePerShare`
-!!! description "`Vault.pricePerShare(is_floor: bool = True) -> uint256:`"
+:::description[`Vault.pricePerShare(is_floor: bool = True) -> uint256:`]
 
-    Getter for the price of one share in asset tokens.
 
-    Returns: asset price per share (`uint256`).
+Getter for the price of one share in asset tokens.
 
-    | Input      | Type   | Description |
-    |------------|--------|-------------|
-    | `is_floor` | `bool` | - |
+Returns: asset price per share (`uint256`).
 
-    ??? quote "Source code"
+| Input      | Type   | Description |
+|------------|--------|-------------|
+| `is_floor` | `bool` | - |
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            @external
-            @view
-            @nonreentrant('lock')
-            def pricePerShare(is_floor: bool = True) -> uint256:
-                """
-                @notice Method which shows how much one pool share costs in asset tokens if they are normalized to 18 decimals
-                """
-                supply: uint256 = self.totalSupply
-                if supply == 0:
-                    return 10**18 / DEAD_SHARES
-                else:
-                    precision: uint256 = self.precision
-                    numerator: uint256 = 10**18 * (self._total_assets() * precision + 1)
-                    denominator: uint256 = (supply + DEAD_SHARES)
-                    pps: uint256 = 0
-                    if is_floor:
-                        pps = numerator / denominator
-                    else:
-                        pps = (numerator + denominator - 1) / denominator
-                    assert pps > 0
-                    return pps
 
-            @internal
-            @view
-            def _total_assets() -> uint256:
-                # admin fee should be accounted for here when enabled
-                self.controller.check_lock()
-                return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-    === "Example"
-        ```shell
-        >>> Vault.pricePerShare(true):
-        1001291278001035
-        >>> Vault.pricePerShare(false):
-        1001292100174622
-        ```
 
+```vyper
+@external
+@view
+@nonreentrant('lock')
+def pricePerShare(is_floor: bool = True) -> uint256:
+    """
+    @notice Method which shows how much one pool share costs in asset tokens if they are normalized to 18 decimals
+    """
+    supply: uint256 = self.totalSupply
+    if supply == 0:
+        return 10**18 / DEAD_SHARES
+    else:
+        precision: uint256 = self.precision
+        numerator: uint256 = 10**18 * (self._total_assets() * precision + 1)
+        denominator: uint256 = (supply + DEAD_SHARES)
+        pps: uint256 = 0
+        if is_floor:
+            pps = numerator / denominator
+        else:
+            pps = (numerator + denominator - 1) / denominator
+        assert pps > 0
+        return pps
+
+@internal
+@view
+def _total_assets() -> uint256:
+    # admin fee should be accounted for here when enabled
+    self.controller.check_lock()
+    return self.borrowed_token.balanceOf(self.controller.address) + self.controller.total_debt()
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.pricePerShare(true):
+1001291278001035
+>>> Vault.pricePerShare(false):
+1001292100174622
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `admin`
-!!! description "`Vault.admin() -> address: view`"
+:::description[`Vault.admin() -> address: view`]
 
-    Getter for the admin of the vault.
 
-    Returns: admin (`address`).
+Getter for the admin of the vault.
 
-    ??? quote "Source code"
+Returns: admin (`address`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            interface Factory:
-                def admin() -> address: view
 
-            @external
-            @view
-            def admin() -> address:
-                return self.factory.admin()
-            ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
-        === "LendingFactory.vy"
 
-            ```vyper
-            admin: public(address)
-            ```
+```vyper
+interface Factory:
+    def admin() -> address: view
 
-    === "Example"
-        ```shell
-        >>> Vault.admin():
-        '0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
-        ```
+@external
+@view
+def admin() -> address:
+    return self.factory.admin()
+```
 
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="lendingfactory-vy" label="LendingFactory.vy">
+
+
+```vyper
+admin: public(address)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.admin():
+'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `borrowed_token`
-!!! description "`Vault.borrowed_token() -> address: view`"
+:::description[`Vault.borrowed_token() -> address: view`]
 
-    Getter for the borrowable token in the vault.
 
-    Returns: borrowable token (`address`).
+Getter for the borrowable token in the vault.
 
-    ??? quote "Source code"
+Returns: borrowable token (`address`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            borrowed_token: public(ERC20)
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.borrowed_token():
-        '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
-        ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
+
+```vyper
+borrowed_token: public(ERC20)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.borrowed_token():
+'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `collateral_token`
-!!! description "`Vault.collateral_token() -> address: view`"
+:::description[`Vault.collateral_token() -> address: view`]
 
-    Getter for the collateral token of the lending market which is deposited into the AMM.
 
-    Returns: collateral token (`address`).
+Getter for the collateral token of the lending market which is deposited into the AMM.
 
-    ??? quote "Source code"
+Returns: collateral token (`address`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            collateral_token: public(ERC20)
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.collateral_token():
-        '0xD533a949740bb3306d119CC777fa900bA034cd52'
-        ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
+
+```vyper
+collateral_token: public(ERC20)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.collateral_token():
+'0xD533a949740bb3306d119CC777fa900bA034cd52'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `price_oracle`
-!!! description "`Vault.price_oracle() -> address: view`"
+:::description[`Vault.price_oracle() -> address: view`]
 
-    Getter for the price oracle contract used in the vault.
 
-    Returns: oracle (`address`).
+Getter for the price oracle contract used in the vault.
 
-    ??? quote "Source code"
+Returns: oracle (`address`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            price_oracle: public(PriceOracle)
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.price_oracle():
-        '0xc17B0451E6d8C0f71297d0f174590632BE81163c'
-        ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
+
+```vyper
+price_oracle: public(PriceOracle)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.price_oracle():
+'0xc17B0451E6d8C0f71297d0f174590632BE81163c'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `amm`
-!!! description "`Vault.amm() -> address: view`"
+:::description[`Vault.amm() -> address: view`]
 
-    Getter for the AMM of the vault.
 
-    Returns: AMM (`address`).
+Getter for the AMM of the vault.
 
-    ??? quote "Source code"
+Returns: AMM (`address`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            amm: public(AMM)
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.amm():
-        '0xafC1ab86045Cb2a07C23399dbE64b56D1B8B3239'
-        ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
+
+```vyper
+amm: public(AMM)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.amm():
+'0xafC1ab86045Cb2a07C23399dbE64b56D1B8B3239'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `controller`
-!!! description "`Vault.controller() -> address: view`"
+:::description[`Vault.controller() -> address: view`]
 
-    Getter for the Controller of the vault.
 
-    Returns: Controller (`address`).
+Getter for the Controller of the vault.
 
-    ??? quote "Source code"
+Returns: Controller (`address`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            controller: public(Controller)
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.controller():
-        '0x7443944962D04720f8c220C0D25f56F869d6EfD4'        
-        ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
 
+
+```vyper
+controller: public(Controller)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.controller():
+'0x7443944962D04720f8c220C0D25f56F869d6EfD4'        
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `factory`
-!!! description "`Vault.factory() -> address: view`"
+:::description[`Vault.factory() -> address: view`]
 
-    Getter for the Factory of the vault.
 
-    Returns: Factory (`address`).
+Getter for the Factory of the vault.
 
-    ??? quote "Source code"
+Returns: Factory (`address`).
 
-        === "Vault.vy"
+<details>
+<summary>Source code</summary>
 
-            ```vyper
-            factory: public(Factory)
-            ```
 
-    === "Example"
-        ```shell
-        >>> Vault.factory():
-        '0xc67a44D958eeF0ff316C3a7c9E14FB96f6DedAA3'
-        ```
+<Tabs>
+<TabItem value="vault-vy" label="Vault.vy">
+
+
+```vyper
+factory: public(Factory)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Vault.factory():
+'0xc67a44D958eeF0ff316C3a7c9E14FB96f6DedAA3'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::

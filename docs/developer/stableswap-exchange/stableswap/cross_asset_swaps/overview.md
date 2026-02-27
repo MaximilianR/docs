@@ -1,7 +1,3 @@
----
-search:
-  exclude: true
----
 
 
 Curve integrates with Synthetix to allow large scale swaps between different asset classes with minimal 
@@ -68,4 +64,3 @@ It is possible to perform additional `A -> B -> C` swaps to increase the balance
 
 The range of available actions and time frames make it significantly more difficult to predict the outcome of a swap 
 and trade against it.
-

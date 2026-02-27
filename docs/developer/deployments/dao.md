@@ -1,15 +1,11 @@
----
-search:
-  exclude: true
----
 
-<h1></h1>
+# 
+# **Core Contracts**:::github
+
+The source code for the core dao-contracts can be found on [ GitHub](https://github.com/curvefi/curve-dao-contracts).
 
 
-# **Core Contracts**
-
-!!!github
-    The source code for the core dao-contracts can be found on [:material-github: GitHub](https://github.com/curvefi/curve-dao-contracts).
+:::
 
 *Here is a list of contract deployments that are used in the Curve DAO:*
 
@@ -40,15 +36,14 @@ search:
 ---
 
 
-# **CRV Token**
+# **CRV Token***Despite being launched on Ethereum, the Curve DAO Token can be bridged to various chains:*
 
-*Despite being launched on Ethereum, the Curve DAO Token can be bridged to various chains:*
+:::danger[MULTICHAIN WARNING]
 
-!!!danger "MULTICHAIN WARNING"
-    Multichain statement: https://twitter.com/MultichainOrg/status/1677180114227056641  
-    The Multichain service stopped currently, and all bridge transactions will be stuck on the source chains. 
-    There is no confirmed resume time.  
-    **Please don’t use the Multichain bridging service now.**
+Multichain statement: https://twitter.com/MultichainOrg/status/1677180114227056641  
+The Multichain service stopped currently, and all bridge transactions will be stuck on the source chains. 
+There is no confirmed resume time.  
+**Please don’t use the Multichain bridging service now.**:::
 
 | Chain | Contract Address | Bridge |
 | ----- | ---------------- | ------ |
@@ -79,13 +74,9 @@ search:
 ---
 
 
-# **Aragon**
+# **Aragon**Curve DAO consists of multiple smart contracts connected by [Aragon](https://github.com/aragon/aragonOS). Interaction with Aragon occurs through a [modified implementation](https://github.com/curvefi/curve-aragon-voting) of the [Aragon Voting App](https://github.com/aragon/aragon-apps/tree/master/apps/voting). Aragon’s standard one-token, one-vote method is replaced with a weighting system based on locking tokens. Curve DAO has a token (CRV) used for governance and value accrual.
 
-Curve DAO consists of multiple smart contracts connected by [Aragon](https://github.com/aragon/aragonOS). Interaction with Aragon occurs through a [modified implementation](https://github.com/curvefi/curve-aragon-voting) of the [Aragon Voting App](https://github.com/aragon/aragon-apps/tree/master/apps/voting). Aragon’s standard one-token, one-vote method is replaced with a weighting system based on locking tokens. Curve DAO has a token (CRV) used for governance and value accrual.
-
-## **Voting**
-
-Aragon [Voting App](https://wiki.aragon.org/archive/dev/apps/voting/) deployments are the main entry points used to create new votes, vote, check the status of a vote, and execute a successful vote.
+## **Voting**Aragon [Voting App](https://wiki.aragon.org/archive/dev/apps/voting/) deployments are the main entry points used to create new votes, vote, check the status of a vote, and execute a successful vote.
 
 | Voting Type | Contract Address |
 | :---------: | :--------------: | 
@@ -100,10 +91,7 @@ The following token addresses are used for determining voter weights within Curv
 | `Ownership / Parameter` | [0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2](https://etherscan.io/address/0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2) |
 
 
-
-## **Agent**
-
-Aragon [Agent](https://hack.aragon.org/docs/guides-use-agent) deployments correspond to the different owner accounts within the DAO. Contract calls made due to a successful vote will be executed from these addresses. When deploying new contracts, these addresses should be given appropriate access to admin functionality.
+## **Agent**Aragon [Agent](https://hack.aragon.org/docs/guides-use-agent) deployments correspond to the different owner accounts within the DAO. Contract calls made due to a successful vote will be executed from these addresses. When deploying new contracts, these addresses should be given appropriate access to admin functionality.
 
 | Agent Type  | Contract Address  |
 | :---------: | :---------------: | 
@@ -111,10 +99,7 @@ Aragon [Agent](https://hack.aragon.org/docs/guides-use-agent) deployments corres
 | `Parameter` | [0x4EEb3bA4f221cA16ed4A0cC7254E2E32DF948c5f](https://etherscan.io/address/0x4EEb3bA4f221cA16ed4A0cC7254E2E32DF948c5f) |
 
 
-
-## **Emergency DAO**
-
-The Emergency DAO is deployed at:
+## **Emergency DAO**The Emergency DAO is deployed at:
 
 | Vote Type   | Contract Address  |
 | :---------: | :---------------: | 
@@ -122,9 +107,7 @@ The Emergency DAO is deployed at:
 
 ---
 
-# **Fee Receiver**
-
-| Chain | Contract Address |
+# **Fee Receiver**| Chain | Contract Address |
 | :---------: | :-----: |
 | :logos-ethereum: `Ethereum` | [0xeCb456EA5365865EbAb8a2661B0c503410e9B347](https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347) |
 | :logos-ethereum: `Ethereum` | [0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00](https://etherscan.io/address/0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00) |
@@ -151,15 +134,14 @@ The Emergency DAO is deployed at:
 ---
 
 
-# **New Curve Burner System**
+# **New Curve Burner System**:::info[New Fee-Burning Architecture]
 
-!!!info "New Fee-Burning Architecture"
-    Curve has developed and deployed a new fee-burning architecture. For detailed documentation, please see here: [Curve Burner Documentation](../fees/overview.md).
+Curve has developed and deployed a new fee-burning architecture. For detailed documentation, please see here: [Curve Burner Documentation](../fees/overview.md).
 
 
-**:logos-ethereum: Ethereum**
+:::
 
-| Contract Type    | Contract Address |
+**:logos-ethereum: Ethereum**| Contract Type    | Contract Address |
 | :--------------: | :--------------: |
 | `FeeCollector`   | [0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00](https://etherscan.io/address/0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00) |
 | `Hooker`         | [0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D](https://etherscan.io/address/0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D) |
@@ -168,10 +150,7 @@ The Emergency DAO is deployed at:
 | `FeeSplitter`   | [0x2dFd89449faff8a532790667baB21cF733C064f2](https://etherscan.io/address/0x2dFd89449faff8a532790667baB21cF733C064f2) |
 
 
-
-**:logos-gnosis: Gnosis**
-
-| Contract Type    | Contract Address |
+**:logos-gnosis: Gnosis**| Contract Type    | Contract Address |
 | :--------------: | :--------------: |
 | `FeeCollector`   | [0xBb7404F9965487a9DdE721B3A5F0F3CcfA9aa4C5](https://gnosisscan.io/address/0xBb7404F9965487a9DdE721B3A5F0F3CcfA9aa4C5) |
 | `Hooker`         | [0xE898893ebAe7b75dc4cAB0fb16e24137309ff178](https://gnosisscan.io/address/0xE898893ebAe7b75dc4cAB0fb16e24137309ff178) |
@@ -182,19 +161,19 @@ The Emergency DAO is deployed at:
 ---
 
 
-# **Fee Burner**
+# **Fee Burner**:::info[New Fee-Burning Architecture]
 
-!!!info "New Fee-Burning Architecture"
-    Curve has developed and deployed a new fee-burning architecture. For detailed documentation, please see here: [Curve Burner Documentation](../fees/original-architecture/overview.md).
+Curve has developed and deployed a new fee-burning architecture. For detailed documentation, please see here: [Curve Burner Documentation](../fees/original-architecture/overview.md).
+
+
+:::
 
 Burners are a crucial element of the fee payout system in Curve. They convert the collected pool fees into an asset that is later exchanged for USDC. Eventually, the USDC is deposited into the 3Pool, and the fees are distributed to veCRV holders in 3CRV. The type of burner used depends on the tokens present in the pool.
 
 *Here is a list of burner contracts currently in use:*
 
 
-**:logos-ethereum: Ethereum**
-
-| Burner Type       | Contract Address |
+**:logos-ethereum: Ethereum**| Burner Type       | Contract Address |
 | :---------------: | :--------------: |
 |`ABurner`          | [0x12220a63a2013133D54558C9d03c35288eAC9B34](https://etherscan.io/address/0x12220a63a2013133d54558c9d03c35288eac9b34#code) |
 |`CryptoSwapBurner` | [0xdc237b4B882Fa1d1fd1dD5B59A08F8dB3416DbE3](https://etherscan.io/address/0xdc237b4B882Fa1d1fd1dD5B59A08F8dB3416DbE3#code) |
@@ -209,10 +188,7 @@ Burners are a crucial element of the fee payout system in Curve. They convert th
 |`UnderlyingBurner` | [0x786b374b5eef874279f4b7b4de16940e57301a58](https://etherscan.io/address/0x786b374b5eef874279f4b7b4de16940e57301a58#code) |
 
 
-
-**:logos-arbitrum: Arbitrum**
-
-| Burner Type       | Contract Address                                       |
+**:logos-arbitrum: Arbitrum**| Burner Type       | Contract Address                                       |
 | :---------------: | :----------------------------------------------------: |
 | `LPBurner`        | [0x2Ac51A7bC5E41cc35a1ce107E39847Ce00c20161](https://arbiscan.io/address/0x2Ac51A7bC5E41cc35a1ce107E39847Ce00c20161#code) |
 | `MetaBurner`      | [0xE4b65889469ad896e866331f0AB5652C1EcfB3E6](https://arbiscan.io/address/0xE4b65889469ad896e866331f0AB5652C1EcfB3E6#code) |
@@ -222,20 +198,14 @@ Burners are a crucial element of the fee payout system in Curve. They convert th
 | `wETHBurner`      | [0x5191946500e75f0A74476F146dF7d386e52961d9](https://arbiscan.io/address/0x5191946500e75f0A74476F146dF7d386e52961d9#code) |
 
 
-
-**:logos-optimism: Optimism**
-
-| Burner Type       | Contract Address                                       |
+**:logos-optimism: Optimism**| Burner Type       | Contract Address                                       |
 | :---------------: | :----------------------------------------------------: |
 | `StableBurner`    | [0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69](https://optimistic.etherscan.io/address/0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69#code) |
 | `SwapBurner`      | [0xe35A879E5EfB4F1Bb7F70dCF3250f2e19f096bd8](https://optimistic.etherscan.io/address/0xe35A879E5EfB4F1Bb7F70dCF3250f2e19f096bd8#code) |
 | `SynthTokenBurner`| [0x070A5C8a99002F50C18B52B90e938BC477611b16](https://optimistic.etherscan.io/address/0x070A5C8a99002F50C18B52B90e938BC477611b16#code) |
 
 
-
-**:logos-polygon: Polygon**
-
-| Burner Type            | Contract Address                                       |
+**:logos-polygon: Polygon**| Burner Type            | Contract Address                                       |
 | :--------------------: | :----------------------------------------------------: |
 | `amToken Burner`       | [0x7b7b5f87c7357133c93dba8d61fb397f33c99a6b](https://polygonscan.com/address/0x7b7b5f87c7357133c93dba8d61fb397f33c99a6b#code) |
 | `EURT Burner`          | [0x410364C393C7E64b6F1d0Ee03f89BFD09b49940c](https://polygonscan.com/address/0x410364C393C7E64b6F1d0Ee03f89BFD09b49940c#code) |
@@ -246,10 +216,7 @@ Burners are a crucial element of the fee payout system in Curve. They convert th
 | `BridgeContract`        | [0x28542E4AF3De534ca36dAF342febdA541c937C5a](https://polygonscan.com/address/0x28542e4af3de534ca36daf342febda541c937c5a#code) |
 
 
-
-**:logos-avalanche: Avalanche**
-
-| Burner Type       | Contract Address                                       |
+**:logos-avalanche: Avalanche**| Burner Type       | Contract Address                                       |
 | :---------------: | :----------------------------------------------------: |
 | `LPBurner`        | [0x2c2fc48c3404a70f2d33290d5820edf49cbf74a5](https://snowscan.xyz/address/0x2c2fc48c3404a70f2d33290d5820edf49cbf74a5#code) |
 | `LPBurner`        | [0x8038C01A0390a8c547446a0b2c18fc9aEFEcc10c](https://snowscan.xyz/address/0x8038C01A0390a8c547446a0b2c18fc9aEFEcc10c#code) |
@@ -261,11 +228,7 @@ Burners are a crucial element of the fee payout system in Curve. They convert th
 | `BridgeContract`  | [0xa218ed442715fc42ac96a6323b47538684a36e4b](https://snowscan.xyz/address/0xa218ed442715fc42ac96a6323b47538684a36e4b#code) |
 
 
-
-
-**:logos-fantom: Fantom**
-
-| Burner Type         | Contract Address                                       |
+**:logos-fantom: Fantom**| Burner Type         | Contract Address                                       |
 | :-----------------: | :----------------------------------------------------: |
 | `UnderlyingBurner`  | [0x423f26eb44d4be89072eecfc81b95065ce43bf4b](https://ftmscout.com/address/0x423f26eb44d4be89072eecfc81b95065ce43bf4b#code) |
 | `BTCBurner`         | [0xFa18A0385610b560f3041C40E23fB319e24658f1](https://ftmscout.com/address/0xFa18A0385610b560f3041C40E23fB319e24658f1#code) |

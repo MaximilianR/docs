@@ -1,19 +1,20 @@
----
-search:
-  exclude: true
----
 
-<h1></h1>
+# 
+# **crvUSD Core Contracts**For testing in production purposes, several contract deployments have taken place. Please ensure that you are using the correct and latest version. The latest deployment logs can be found [here](https://github.com/curvefi/curve-stablecoin/blob/master/deployment-logs/mainnet.log).
 
-# **crvUSD Core Contracts**
+:::github[GitHub]
 
-For testing in production purposes, several contract deployments have taken place. Please ensure that you are using the correct and latest version. The latest deployment logs can be found [here](https://github.com/curvefi/curve-stablecoin/blob/master/deployment-logs/mainnet.log).
+Source code for all `curve-stablecoin` contracts is available on [ GitHub](https://github.com/curvefi/curve-stablecoin).
 
-!!!github "GitHub"
-    Source code for all `curve-stablecoin` contracts is available on [:material-github: GitHub](https://github.com/curvefi/curve-stablecoin).
 
-!!!warning "Implementations"
-    **Implementation contracts are upgradable.** They can be either replaced or additional implementation contracts can be set. Therefore, please **always make sure to check the most recent ones**.
+:::
+
+:::warning[Implementations]
+
+**Implementation contracts are upgradable.**They can be either replaced or additional implementation contracts can be set. Therefore, please **always make sure to check the most recent ones**.
+
+
+:::
 
 | Contract Type           | Contract Address                                                         |
 | :---------------------: | :----------------------------------------------------------------------: |
@@ -30,9 +31,7 @@ For testing in production purposes, several contract deployments have taken plac
 
 ---
 
-# **PegKeepers**
-
-| Contract Type           | Contract Address                                                         |
+# **PegKeepers**| Contract Type           | Contract Address                                                         |
 | :---------------------: | :----------------------------------------------------------------------: |
 | `PegKeeperV1 (USDC)`      | [0xaA346781dDD7009caa644A4980f044C50cD2ae22](https://etherscan.io/address/0xaA346781dDD7009caa644A4980f044C50cD2ae22#code) |
 | `PegKeeperV1 (USDT)`      | [0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8](https://etherscan.io/address/0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8#code) |
@@ -47,9 +46,7 @@ For testing in production purposes, several contract deployments have taken plac
 
 ---
 
-# **crvUSD CrossChain**
-
-*Despite being launched on Ethereum, crvUSD can be bridged to various chains:*
+# **crvUSD CrossChain***Despite being launched on Ethereum, crvUSD can be bridged to various chains:*
 
 | Chain                         | crvUSD Token Address | 
 | ----------------------------- | :------------------: | 
@@ -71,11 +68,7 @@ For testing in production purposes, several contract deployments have taken plac
 
 ---
 
-# **Markets**
-
-**:logos-sfrxeth: sfrxETH**
-
-| Contract Type | Contract Address |
+# **Markets****:logos-sfrxeth: sfrxETH**| Contract Type | Contract Address |
 | :---------: | :----------------: | 
 |`AMM`|[0x136e783846ef68c8bd00a3369f787df8d683a696](https://etherscan.io/address/0x136e783846ef68c8bd00a3369f787df8d683a696#code)|
 |`Controller`|[0x8472a9a7632b173c8cf3a86d3afec50c35548e76](https://etherscan.io/address/0x8472a9a7632b173c8cf3a86d3afec50c35548e76#code)|
@@ -84,9 +77,7 @@ For testing in production purposes, several contract deployments have taken plac
 |`PriceOracle`|[0x19F5B81e5325F882C9853B5585f74f751DE3896d](https://etherscan.io/address/0x19F5B81e5325F882C9853B5585f74f751DE3896d#code)|
 |`Leverage Zap`|[0xb556FA4C4752321B3154f08DfBDFCF34847f2eac](https://etherscan.io/address/0xb556FA4C4752321B3154f08DfBDFCF34847f2eac#code)|
 
-**:logos-wsteth: wstETH**
-
-| Contract Type | Contract Address |
+**:logos-wsteth: wstETH**| Contract Type | Contract Address |
 | :---------: | :----------------: | 
 |`AMM`|[0x37417b2238aa52d0dd2d6252d989e728e8f706e4](https://etherscan.io/address/0x37417b2238aa52d0dd2d6252d989e728e8f706e4#code)|
 |`Controller`|[0x100daa78fc509db39ef7d04de0c1abd299f4c6ce](https://etherscan.io/address/0x100daa78fc509db39ef7d04de0c1abd299f4c6ce#code)|
@@ -95,9 +86,7 @@ For testing in production purposes, several contract deployments have taken plac
 |`PriceOracle`|[0xc1793A29609ffFF81f10139fa0A7A444c9e106Ad](https://etherscan.io/address/0xc1793A29609ffFF81f10139fa0A7A444c9e106Ad#code) |
 |`Leverage Zap`|[0x293436d4e4a15FBc6cCC400c14a01735E5FC74fd](https://etherscan.io/address/0x293436d4e4a15FBc6cCC400c14a01735E5FC74fd#code)|
 
-**:logos-wbtc: wBTC**
-
-| Contract Type | Contract Address |
+**:logos-wbtc: wBTC**| Contract Type | Contract Address |
 | :---------: | :----------------: | 
 |`AMM`|[0xe0438eb3703bf871e31ce639bd351109c88666ea](https://etherscan.io/address/0xe0438eb3703bf871e31ce639bd351109c88666ea#code)|
 |`Controller`|[0x4e59541306910ad6dc1dac0ac9dfb29bd9f15c67](https://etherscan.io/address/0x4e59541306910ad6dc1dac0ac9dfb29bd9f15c67#code)|
@@ -106,9 +95,7 @@ For testing in production purposes, several contract deployments have taken plac
 |`PriceOracle`|[0xBe83fD842DB4937C0C3d15B2aBA6AF7E854f8dcb](https://etherscan.io/address/0xBe83fD842DB4937C0C3d15B2aBA6AF7E854f8dcb#code)|
 |`Leverage Zap`|[0xA2518b71ee64E910741f5Cf480b19E8e402de4d7](https://etherscan.io/address/0xA2518b71ee64E910741f5Cf480b19E8e402de4d7#code)|
 
-**:logos-eth: ETH**
-
-| Contract Type | Contract Address |
+**:logos-eth: ETH**| Contract Type | Contract Address |
 | :---------: | :----------------: | 
 |`AMM`|[0x1681195c176239ac5e72d9aebacf5b2492e0c4ee](https://etherscan.io/address/0x1681195c176239ac5e72d9aebacf5b2492e0c4ee#code)|
 |`Controller`|[0xa920de414ea4ab66b97da1bfe9e6eca7d4219635](https://etherscan.io/address/0xa920de414ea4ab66b97da1bfe9e6eca7d4219635#code)|
@@ -117,9 +104,7 @@ For testing in production purposes, several contract deployments have taken plac
 |`PriceOracle`|[0x966cBDeceFB60A289b0460F7638f4A75F432cA06](https://etherscan.io/address/0x966cBDeceFB60A289b0460F7638f4A75F432cA06#code)|
 |`Leverage Zap`|[0xd3e576B5DcDe3580420A5Ef78F3639BA9cd1B967](https://etherscan.io/address/0xd3e576B5DcDe3580420A5Ef78F3639BA9cd1B967#code)|
 
-**:logos-sfrxeth: sfrxeth v2**
-
-| Contract Type | Contract Address |
+**:logos-sfrxeth: sfrxeth v2**| Contract Type | Contract Address |
 | :---------: | :----------------: | 
 |`AMM`|[0xfa96ad0a9e64261db86950e2da362f5572c5c6fd](https://etherscan.io/address/0xfa96ad0a9e64261db86950e2da362f5572c5c6fd#code)|
 |`Controller`|[0xec0820efafc41d8943ee8de495fc9ba8495b15cf](https://etherscan.io/address/0xec0820efafc41d8943ee8de495fc9ba8495b15cf#code)|
@@ -128,9 +113,7 @@ For testing in production purposes, several contract deployments have taken plac
 |`PriceOracle`|[0x28d7880B5b67fB4a0B1c6Ed6c33c33f365113C29](https://etherscan.io/address/0x28d7880B5b67fB4a0B1c6Ed6c33c33f365113C29#code)|
 |`Leverage Zap`|[0x43eCFfe6c6C1b9F24AeB5C180E659c2a6FCe11Bc](https://etherscan.io/address/0x43eCFfe6c6C1b9F24AeB5C180E659c2a6FCe11Bc#code)|
 
-**tBTC**
-
-| Contract Type | Contract Address |
+**tBTC**| Contract Type | Contract Address |
 | :---------: | :----------------: | 
 |`AMM`|[0xf9bd9da2427a50908c4c6d1599d8e62837c2bcb0](https://etherscan.io/address/0xf9bd9da2427a50908c4c6d1599d8e62837c2bcb0#code)|
 |`Controller`|[0x1c91da0223c763d2e0173243eadaa0a2ea47e704](https://etherscan.io/address/0x1c91da0223c763d2e0173243eadaa0a2ea47e704#code)|
@@ -139,9 +122,7 @@ For testing in production purposes, several contract deployments have taken plac
 |`PriceOracle`|[0xbeF434E2aCF0FBaD1f0579d2376fED0d1CfC4217](https://etherscan.io/address/0xbeF434E2aCF0FBaD1f0579d2376fED0d1CfC4217#code)|
 |`Leverage Zap`|[0xD79964C70Cb06224FdA4c48387B53E9819bcB71c](https://etherscan.io/address/0xD79964C70Cb06224FdA4c48387B53E9819bcB71c#code)|
 
-**cbBTC**
-
-| Contract Type | Contract Address |
+**cbBTC**| Contract Type | Contract Address |
 | :---------: | :----------------: | 
 |`AMM`|[0xB6E62Aa178a5421d0A51D17E720A05de78D3137A](https://etherscan.io/address/0xB6E62Aa178a5421d0A51D17E720A05de78D3137A#code)|
 |`Controller`|[0xf8C786b1064889fFd3c8A08B48D5e0c159F4cBe3](https://etherscan.io/address/0xf8C786b1064889fFd3c8A08B48D5e0c159F4cBe3#code)|
@@ -149,9 +130,7 @@ For testing in production purposes, several contract deployments have taken plac
 |`CollateralToken (cbBTC)`|[0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf](https://etherscan.io/address/0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf)|
 |`PriceOracle`|[0x4710A77a0E0f4c7b0E11CDeB74acB042e62B8d22](https://etherscan.io/address/0x4710A77a0E0f4c7b0E11CDeB74acB042e62B8d22#code)|
 
-**LBTC**
-
-| Contract Type | Contract Address |
+**LBTC**| Contract Type | Contract Address |
 | :---------: | :----------------: | 
 |`AMM`|[0x9a2e6bb3114B1EEB5492D97188A3ECB09E39fac8](https://etherscan.io/address/0x9a2e6bb3114B1EEB5492D97188A3ECB09E39fac8#code)|
 |`Controller`|[0x8aca5A776a878Ea1F8967e70a23b8563008f58Ef](https://etherscan.io/address/0x8aca5A776a878Ea1F8967e70a23b8563008f58Ef#code)|
@@ -159,9 +138,7 @@ For testing in production purposes, several contract deployments have taken plac
 |`CollateralToken (LBTC)`|[0x8236a87084f8B84306f72007F36F2618A5634494](https://etherscan.io/address/0x8236a87084f8B84306f72007F36F2618A5634494)|
 |`PriceOracle`|[0x2eF4b38A128eCc1aC06B43055553F95af59523de](https://etherscan.io/address/0x2eF4b38A128eCc1aC06B43055553F95af59523de#code)|
 
-**weETH**
-
-| Contract Type | Contract Address |
+**weETH**| Contract Type | Contract Address |
 | :---------: | :----------------: | 
 |`AMM`|[0xEd325262f54b2987e74436f4556a27f748146da1](https://etherscan.io/address/0xEd325262f54b2987e74436f4556a27f748146da1#code)|
 |`Controller`|[0x652aEa6B22310C89DCc506710CaD24d2Dba56B11](https://etherscan.io/address/0x652aEa6B22310C89DCc506710CaD24d2Dba56B11#code)|
@@ -172,9 +149,7 @@ For testing in production purposes, several contract deployments have taken plac
 
 ---
 
-# **Savings crvUSD**
-
-| Contract Type           | Contract Address |
+# **Savings crvUSD**| Contract Type           | Contract Address |
 | :---------------------: | :----------------: |
 | `scrvUSD / Vault` | [0x0655977FEb2f289A4aB78af67BAB0d17aAb84367](https://etherscan.io/address/0x0655977FEb2f289A4aB78af67BAB0d17aAb84367) |
 | `RewardsHandler` | [0xe8d1e2531761406af1615a6764b0d5ff52736f56](https://etherscan.io/address/0xe8d1e2531761406af1615a6764b0d5ff52736f56) |

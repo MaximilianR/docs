@@ -1,5 +1,4 @@
-<h1>scrvUSD Crosschain Oracle V2</h1>
-
+# scrvUSD Crosschain Oracle V2
 `scrvUSD` on Ethereum is an ERC-4626 compatible token. While the contract provides a price through various methods, such as `pricePerShare` or `pricePerAsset`, it is not treated as an ERC-4626 token when bridged to other chains. Consequently, it will lack methods to return its continuously updating price. To address this, Curve uses a system to commit to and verify the price of `scrvUSD` on other chains.
 
 ---
@@ -35,10 +34,6 @@ flowchart TD
 
 ---
 
-**Safety**
+**Safety**The prover doesn't need to be trusted as the safety of the whole system relies on the fact that it is not feasible to push an update with a forged proof.
 
-The prover doesn't need to be trusted as the safety of the whole system relies on the fact that it is not feasible to push an update with a forged proof.
-
-**Liveness**
-
-The prover needs to be online to provide the proof in a timely manner, if the prover is offline the system might not be able to provide a correct (or accurate) price for scrvUSD.
+**Liveness**The prover needs to be online to provide the proof in a timely manner, if the prover is offline the system might not be able to provide a correct (or accurate) price for scrvUSD.

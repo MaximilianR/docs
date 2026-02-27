@@ -1,9 +1,12 @@
-<h1>Curve-DAO Package</h1>
-
+# Curve-DAO Package
 The `curve-dao` package is a Python tool designed to interact with CurveDAO governance, allowing users to simulate and publish on-chain proposals for DAO voting.
 
-!!!github "GitHub"
-    Source code of the `curve-dao` package can be found on [:material-github: GitHub](https://github.com/bout3fiddy/curve-dao). Contributions to develop this package are more than welcome!
+:::github[GitHub]
+
+Source code of the `curve-dao` package can be found on [ GitHub](https://github.com/bout3fiddy/curve-dao). Contributions to develop this package are more than welcome!
+
+
+:::
 
 ---
 

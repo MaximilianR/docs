@@ -1,60 +1,45 @@
-<h1>Curve DAO: Liquidity Gauges and Minting CRV</h1>
-
+# Curve DAO: Liquidity Gauges and Minting CRV
 Curve is built in a way to incentivise liquidity providers with CRV, the protocols governance token. The protocol works in a way that it directs the inflation of the CRV token to the liquidity providers based on the votes of the veCRV holders. This is done through a system of gauges, the `GaugeController` contract, and the `Minter` contract.
 
 Users who have veCRV, Curve's voting-escrowed token, can vote on DAO-approved gauges to receive CRV emissions.
 
 ---
 
-# **Smart Contracts**
+# **Smart Contracts**Allocation, distribution and minting of CRV are managed via several related DAO contracts:
 
-Allocation, distribution and minting of CRV are managed via several related DAO contracts:
 
-<div class="grid cards" markdown>
-
--   :logos-vyper: **GaugeController**
-
-    ---
+-   :logos-vyper: **GaugeController**---
 
     Central controller that maintains a list of gauges, weights and type weights, and coordinates the rate of CRV production for each liquidity gauge
 
-    [:octicons-arrow-right-24: `GaugeController.vy`](./gauge-controller/GaugeController.md)
+    [→ `GaugeController.vy`](./gauge-controller/GaugeController.md)
 
--   :logos-vyper: **Minter**
-
-    ---
+-   :logos-vyper: **Minter**---
 
     CRV minting contract, generates new CRV according to liquidity gauges
 
-    [:octicons-arrow-right-24: `Minter.vy`](./minter/Minter.md)
+    [→ `Minter.vy`](./minter/Minter.md)
 
--   :logos-vyper: **Liquidity Gauges**
-
-    ---
+-   :logos-vyper: **Liquidity Gauges**---
 
     Measures liquidity provided by users over time, in order to distribute CRV and other rewards
 
-    [:octicons-arrow-right-24: `LiquidityGauge.vy`](./gauges/LiquidityGaugeV6.md)
+    [→ `LiquidityGauge.vy`](./gauges/LiquidityGaugeV6.md)
 
--   **Liquidity Gauges on EVM Sidechains**
-
-    ---
+-   **Liquidity Gauges on EVM Sidechains**---
 
     Liquidity gauges on EVM sidechains use a system of Root and Child Liquidity Gauges which allows gauges on sidechains to receive CRV emissions.
 
-    [:octicons-arrow-right-24: `Getting started`](./xchain-gauges/overview.md)
+    [→ `Getting started`](./xchain-gauges/overview.md)
 
-</div>
 
 ---
 
-# **Implementation Details**
-
-## CRV Inflation
+# **Implementation Details**## CRV Inflation
 CRV follows a piecewise linear inflation schedule. The inflation is reduced by around 15.9% each year. Each time the inflation reduces, a new mining epoch starts.
 
-<figure markdown>
-  ![](https://curve.readthedocs.io/_images/inflation.svg){ width="500" }
+<figure>
+  <img src="https://curve.readthedocs.io/_images/inflation.svg" alt="" width="500" />
   <figcaption></figcaption>
 </figure>
 
@@ -75,7 +60,7 @@ $I_{u} = \int \frac{r'(t)b_{u}(t)}{S(t)}dt,$ where $b_{u}(t)$ is the balance sup
 
 To avoid requiring that all users to checkpoint periodically, we keep recording values of the following integral (named `integrate_inv_supply` in the contract):
 
-$$I_{is}(t) = \int_0^t \frac{r'(t)}{S(t)}dt$$
+$$I_\{is\}(t) = \int_0^t \frac\{r'(t)\}\{S(t)\}dt$$
 
 The value of $I_{is}$ is recorded at any point any user deposits or withdraws, as well as every time the rate $r$ changes (either due to weight change or change of mining epoch).
 
@@ -100,8 +85,12 @@ Users can allocate their veCRV towards one or more liquidity gauges. Gauges rece
 
 When a user applies a new weight vote, it gets applied at the start of the next epoch week. The weight vote for any one gauge cannot be changed more often than once in 10 days. Adding more CRV to your lock or extending the locktime increases your veCRV balance. This increase is not automatically accounted for in your current gauge weight votes. If you want to allocate all of your newly acquired voting power, make sure to re-vote.
 
-!!!warning
-    Resetting your gauge weight before re-voting means you'll need to wait 10 days to vote for the gauges whose weight you've reset. So, please ensure you simply re-vote; there is no need to reset your gauge weight votes before voting again.
+:::warning
+
+Resetting your gauge weight before re-voting means you'll need to wait 10 days to vote for the gauges whose weight you've reset. So, please ensure you simply re-vote; there is no need to reset your gauge weight votes before voting again.
+
+
+:::
 
 ---
 

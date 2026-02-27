@@ -1,7 +1,12 @@
-**The CryptoSwap Factory makes use of the `create_forwarder_to` function to deploy its contracts from the implementations.**
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-!!!warning
-    **Implementation contracts are upgradable.** They can either be replaced, or additional implementation contracts can be added. Therefore, please always make sure to check the most recent ones.
+**The CryptoSwap Factory makes use of the `create_forwarder_to` function to deploy its contracts from the implementations.**:::warning
+
+**Implementation contracts are upgradable.**They can either be replaced, or additional implementation contracts can be added. Therefore, please always make sure to check the most recent ones.
+
+
+:::
 
 It utilizes three different implementations:
 
@@ -10,199 +15,291 @@ It utilizes three different implementations:
 - **`gauge_implementation`**, containing a blueprint contract that is used when deploying gauges for pools.
 
 
-## **Query Implementations**
- 
-### `pool_implementations`
-!!! description "`Factory.pool_implementations() -> address: view`"
+## **Query Implementations**### `pool_implementations`
+:::description[`Factory.pool_implementations() -> address: view`]
 
-    Getter for the pool implementation contract.
 
-    Returns: pool implementation (`address`).
+Getter for the pool implementation contract.
 
-    ??? quote "Source code"
+Returns: pool implementation (`address`).
 
-        ```vyper
-        pool_implementation: public(address)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
-        ```shell
-        >>> Factory.pool_implementations()
-        '0xa85461AFc2DEEC01bDA23b5cd267d51F765fba10'
-        ```
 
+```vyper
+pool_implementation: public(address)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Factory.pool_implementations()
+'0xa85461AFc2DEEC01bDA23b5cd267d51F765fba10'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `token_implementation`
-!!! description "`Factory.token_implementation() -> address: view`"
+:::description[`Factory.token_implementation() -> address: view`]
 
-    Getter for the token implementation contract.
 
-    Returns: token implementation (`address`).
+Getter for the token implementation contract.
 
-    ??? quote "Source code"
+Returns: token implementation (`address`).
 
-        ```vyper
-        token_implementation: public(address)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
-        ```shell
-        >>> Factory.token_implementation()
-        '0xc08550A4cc5333f40e593eCc4C4724808085D304'
-        ```
 
+```vyper
+token_implementation: public(address)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Factory.token_implementation()
+'0xc08550A4cc5333f40e593eCc4C4724808085D304'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `gauge_implementation`
-!!! description "`Factory.gauge_implementation() -> address: view`"
-
-    Getter for the gauge implementation contract.
-
-    Returns: gauge implementation (`address`).
-
-    ??? quote "Source code"
-
-        ```vyper
-        gauge_implementation: public(address)
-        ```
-
-    === "Example"
-        ```shell
-        >>> Factory.gauge_implementation()
-        '0xdc892358d55d5Ae1Ec47a531130D62151EBA36E5'
-        ```
+:::description[`Factory.gauge_implementation() -> address: view`]
 
 
-## **Set New Implementation**
+Getter for the gauge implementation contract.
 
-*New implementations can be set via these admin-only functions:*
+Returns: gauge implementation (`address`).
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+gauge_implementation: public(address)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Factory.gauge_implementation()
+'0xdc892358d55d5Ae1Ec47a531130D62151EBA36E5'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
+
+## **Set New Implementation***New implementations can be set via these admin-only functions:*
 
 ### `set_pool_implementation`
-!!! description "`Factory.set_pool_implementation(_pool_implementation: address):`"
-
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
-
-    Function to set a new pool implementation contract.
-
-    Emits event: `UpdatePoolImplementation`
-
-    | Input                 | Type      | Description               |
-    | --------------------- | --------- | ------------------------- |
-    | `_pool_implementation`| `address` | New pool implementation   |
+:::description[`Factory.set_pool_implementation(_pool_implementation: address):`]
 
 
-    ??? quote "Source code"
+:::guard[Guarded Method]
 
-        ```vyper
-        event UpdatePoolImplementation:
-            _old_pool_implementation: address
-            _new_pool_implementation: address
+This function is only callable by the `admin` of the contract.
 
-        pool_implementation: public(address)
 
-        @external
-        def set_pool_implementation(_pool_implementation: address):
-            """
-            @notice Set pool implementation
-            @dev Set to ZERO_ADDRESS to prevent deployment of new pools
-            @param _pool_implementation Address of the new pool implementation
-            """
-            assert msg.sender == self.admin  # dev: admin only
+:::
 
-            log UpdatePoolImplementation(self.pool_implementation, _pool_implementation)
-            self.pool_implementation = _pool_implementation
-        ```
+Function to set a new pool implementation contract.
 
-    === "Example"
-        ```shell
-        >>> Factory.set_pool_implementation("todo")
-        'todo'
-        ```
+Emits event: `UpdatePoolImplementation`
 
+| Input                 | Type      | Description               |
+| --------------------- | --------- | ------------------------- |
+| `_pool_implementation`| `address` | New pool implementation   |
+
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+event UpdatePoolImplementation:
+    _old_pool_implementation: address
+    _new_pool_implementation: address
+
+pool_implementation: public(address)
+
+@external
+def set_pool_implementation(_pool_implementation: address):
+    """
+    @notice Set pool implementation
+    @dev Set to ZERO_ADDRESS to prevent deployment of new pools
+    @param _pool_implementation Address of the new pool implementation
+    """
+    assert msg.sender == self.admin  # dev: admin only
+
+    log UpdatePoolImplementation(self.pool_implementation, _pool_implementation)
+    self.pool_implementation = _pool_implementation
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Factory.set_pool_implementation("todo")
+'todo'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_token_implementation`
-!!! description "`Factory.set_token_implementation(_token_implementation: address):`"
-
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
-
-    Function to set a new token implementation contract.
-
-    Emits event: `UpdateTokenImplementation`
-
-    | Input                  | Type      | Description               |
-    | ---------------------- | --------- | ------------------------- |
-    | `_token_implementation`| `address` | New token implementation  |
+:::description[`Factory.set_token_implementation(_token_implementation: address):`]
 
 
-    ??? quote "Source code"
+:::guard[Guarded Method]
 
-        ```vyper
-        event UpdateTokenImplementation:
-            _old_token_implementation: address
-            _new_token_implementation: address
+This function is only callable by the `admin` of the contract.
 
-        token_implementation: public(address)
 
-        @external
-        def set_token_implementation(_token_implementation: address):
-            """
-            @notice Set token implementation
-            @dev Set to ZERO_ADDRESS to prevent deployment of new pools
-            @param _token_implementation Address of the new token implementation
-            """
-            assert msg.sender == self.admin  # dev: admin only
+:::
 
-            log UpdateTokenImplementation(self.token_implementation, _token_implementation)
-            self.token_implementation = _token_implementation
-        ```
+Function to set a new token implementation contract.
 
-    === "Example"
-        ```shell
-        >>> Factory.set_token_implementation("todo")
-        'todo'
-        ```
+Emits event: `UpdateTokenImplementation`
 
+| Input                  | Type      | Description               |
+| ---------------------- | --------- | ------------------------- |
+| `_token_implementation`| `address` | New token implementation  |
+
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+event UpdateTokenImplementation:
+    _old_token_implementation: address
+    _new_token_implementation: address
+
+token_implementation: public(address)
+
+@external
+def set_token_implementation(_token_implementation: address):
+    """
+    @notice Set token implementation
+    @dev Set to ZERO_ADDRESS to prevent deployment of new pools
+    @param _token_implementation Address of the new token implementation
+    """
+    assert msg.sender == self.admin  # dev: admin only
+
+    log UpdateTokenImplementation(self.token_implementation, _token_implementation)
+    self.token_implementation = _token_implementation
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Factory.set_token_implementation("todo")
+'todo'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_gauge_implementation`
-!!! description "`Factory.set_fee_receiver(_fee_receiver: address):`"
-
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
-
-    Function to set a new gauge implementation contract.
-
-    Emits event: `UpdateGaugeImplementation`
-
-    | Input                   | Type      | Description              |
-    | ----------------------- | --------- | ------------------------ |
-    | `_gauge_implementation` | `address` | New gauge implementation |
+:::description[`Factory.set_fee_receiver(_fee_receiver: address):`]
 
 
-    ??? quote "Source code"
+:::guard[Guarded Method]
 
-        ```vyper
-        event UpdateGaugeImplementation:
-            _old_gauge_implementation: address
-            _new_gauge_implementation: address
+This function is only callable by the `admin` of the contract.
 
-        gauge_implementation: public(address)
 
-        @external
-        def set_gauge_implementation(_gauge_implementation: address):
-            """
-            @notice Set gauge implementation
-            @dev Set to ZERO_ADDRESS to prevent deployment of new gauges
-            @param _gauge_implementation Address of the new token implementation
-            """
-            assert msg.sender == self.admin  # dev: admin-only function
+:::
 
-            log UpdateGaugeImplementation(self.gauge_implementation, _gauge_implementation)
-            self.gauge_implementation = _gauge_implementation
-        ```
+Function to set a new gauge implementation contract.
 
-    === "Example"
-        ```shell
-        >>> Factory.set_gauge_implementation("todo")
-        'todo'
-        ```
+Emits event: `UpdateGaugeImplementation`
+
+| Input                   | Type      | Description              |
+| ----------------------- | --------- | ------------------------ |
+| `_gauge_implementation` | `address` | New gauge implementation |
+
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+event UpdateGaugeImplementation:
+    _old_gauge_implementation: address
+    _new_gauge_implementation: address
+
+gauge_implementation: public(address)
+
+@external
+def set_gauge_implementation(_gauge_implementation: address):
+    """
+    @notice Set gauge implementation
+    @dev Set to ZERO_ADDRESS to prevent deployment of new gauges
+    @param _gauge_implementation Address of the new token implementation
+    """
+    assert msg.sender == self.admin  # dev: admin-only function
+
+    log UpdateGaugeImplementation(self.gauge_implementation, _gauge_implementation)
+    self.gauge_implementation = _gauge_implementation
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> Factory.set_gauge_implementation("todo")
+'todo'
+```
+
+</TabItem>
+</Tabs>
+
+
+:::

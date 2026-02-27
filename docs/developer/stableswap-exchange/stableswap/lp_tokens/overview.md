@@ -14,6 +14,10 @@ todo: add hyperlink to deployment addresses
 
 The version of each pool’s LP token can be found in the Deployment Addresses.
 
-!!! note
+:::note
 
-    For older Curve pools the ``token`` attribute is not always ``public`` and a getter has not been explicitly implemented.
+
+For older Curve pools the ``token`` attribute is not always ``public`` and a getter has not been explicitly implemented.
+
+
+:::

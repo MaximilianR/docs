@@ -1,24 +1,27 @@
----
-hide_feature_button: true
----
 
-<h1>Plain and Meta-Pool Implementation with Custom Admin Controls</h1>
+# Plain and Meta-Pool Implementation with Custom Admin Controls
 
-This implementation enables **arbitrary assignment of an `admin` and `admin_fee`** for a specific pool. The `Factory.admin()` is, and will always remain, one of the pool’s owners—ensuring full control via the DAO.
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-!!!vyper "Contract Implementations"
-    The source code for the implementation can be found on GitHub in the [admin-implementation branch](https://github.com/curvefi/stableswap-ng/tree/admin-implementation). This implementation is initially used by CrossCurve on Sonic.
+This implementation enables **arbitrary assignment of an `admin` and `admin_fee`**for a specific pool. The `Factory.admin()` is, and will always remain, one of the pool’s owners—ensuring full control via the DAO.
 
-    The implementations were added to the StableSwapFactory on Sonic via [Vote ID #1010](https://curve.fi/dao/ethereum/proposals/1010-OWNERSHIP/) and are deployed at `index = 710420`.
+:::vyper[Contract Implementations]
 
-    ```py
-    >>> Factory.metapool_implementations(710420)
-    '0x8663426e8713922D81e44d73295759e74Afc230F'
+The source code for the implementation can be found on GitHub in the [admin-implementation branch](https://github.com/curvefi/stableswap-ng/tree/admin-implementation). This implementation is initially used by CrossCurve on Sonic.
 
-    >>> Factory.pool_implementations(710420)
-    '0xA7c2DD4356168153792EF05D27922064b3c71A26'
-    ```
+The implementations were added to the StableSwapFactory on Sonic via [Vote ID #1010](https://curve.fi/dao/ethereum/proposals/1010-OWNERSHIP/) and are deployed at `index = 710420`.
 
+```py
+>>> Factory.metapool_implementations(710420)
+'0x8663426e8713922D81e44d73295759e74Afc230F'
+
+>>> Factory.pool_implementations(710420)
+'0xA7c2DD4356168153792EF05D27922064b3c71A26'
+```
+
+
+:::
 
 The implementation introduces the ability to designate an additional admin with the following permissions:
 
@@ -30,183 +33,273 @@ At contract initialization, the admin is set to `ZERO_ADDRESS`. This means assig
 ---
 
 ### `admin`
-!!! description "`CurveStableSwap.admin() -> address: view`"
+:::description[`CurveStableSwap.admin() -> address: view`]
 
-    Getter for the admin of the contract. At contract initialization, the address of the admin is always set to `ZERO_ADDRESS`.
 
-    Returns: admin of the contract (`address`).
+Getter for the admin of the contract. At contract initialization, the address of the admin is always set to `ZERO_ADDRESS`.
 
-    ??? quote "Source code"
+Returns: admin of the contract (`address`).
 
-        === "CurveStableSwap.vy"
+<details>
+<summary>Source code</summary>
 
-            ```python
-            @external
-            def __init__(
-                ...
-            ):
 
-                ...
-                self.admin = empty(address)
-                ...
+<Tabs>
+<TabItem value="curvestableswap-vy" label="CurveStableSwap.vy">
 
-            admin: public(address)
-            ```
 
-    === "Example"
+```python
+@external
+def __init__(
+    ...
+):
 
-        This example returns the current admin of the contract.
+    ...
+    self.admin = empty(address)
+    ...
 
-        ```shell
-        >>> CurveStableSwap.admin()
-        '0x0000000000000000000000000000000000000000'
-        ```
+admin: public(address)
+```
 
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+This example returns the current admin of the contract.
+
+```shell
+>>> CurveStableSwap.admin()
+'0x0000000000000000000000000000000000000000'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_admin`
-!!! description "`CurveStableSwap.set_admin(_new_admin: address)`"
+:::description[`CurveStableSwap.set_admin(_new_admin: address)`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the `Factory`.
 
-    Function to set the admin of the contract. Setting the admin will revert if its not called by the admin of the `Factory`.
+:::guard[Guarded Method]
 
-    Emits: `SetAdmin` event.
+This function is only callable by the `admin` of the `Factory`.
 
-    | Input        | Type      | Description        |
-    | ------------ | --------- | ------------------ |
-    | `_new_admin` | `address` | New admin address. |
 
-    ??? quote "Source code"
+:::
 
-        === "CurveStableSwap.vy"
+Function to set the admin of the contract. Setting the admin will revert if its not called by the admin of the `Factory`.
 
-            ```python
-            interface Factory:
-                def fee_receiver() -> address: view
+Emits: `SetAdmin` event.
 
-            event SetAdmin:
-                admin: address
+| Input        | Type      | Description        |
+| ------------ | --------- | ------------------ |
+| `_new_admin` | `address` | New admin address. |
 
-            admin: public(address)
+<details>
+<summary>Source code</summary>
 
-            @external
-            def set_admin(_new_admin: address):
-                assert msg.sender == factory.admin()  # dev: only owner
 
-                self.admin = _new_admin
-                log SetAdmin(_new_admin)
-            
-            @view
-            @internal
-            def _check_admins():
-                assert msg.sender == factory.admin() or msg.sender == self.admin  # dev: only admin
-            ```
+<Tabs>
+<TabItem value="curvestableswap-vy" label="CurveStableSwap.vy">
 
-    === "Example"
 
-        This example sets the admin of the contract.
+```python
+interface Factory:
+    def fee_receiver() -> address: view
 
-        ```shell
-        >>> CurveStableSwap.admin()
-        '0x0000000000000000000000000000000000000000'
+event SetAdmin:
+    admin: address
 
-        >>> CurveStableSwap.set_admin('0x7a16ff8270133f063aab6c9977183d9e72835428')
+admin: public(address)
 
-        >>> CurveStableSwap.admin()
-        '0x7a16ff8270133f063aab6c9977183d9e72835428'
-        ```
+@external
+def set_admin(_new_admin: address):
+    assert msg.sender == factory.admin()  # dev: only owner
+
+    self.admin = _new_admin
+    log SetAdmin(_new_admin)
+
+@view
+@internal
+def _check_admins():
+    assert msg.sender == factory.admin() or msg.sender == self.admin  # dev: only admin
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+This example sets the admin of the contract.
+
+```shell
+>>> CurveStableSwap.admin()
+'0x0000000000000000000000000000000000000000'
+
+>>> CurveStableSwap.set_admin('0x7a16ff8270133f063aab6c9977183d9e72835428')
+
+>>> CurveStableSwap.admin()
+'0x7a16ff8270133f063aab6c9977183d9e72835428'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ---
 
 ### `admin_fee`
-!!! description "`CurveStableSwap.admin_fee() -> uint256: view`"
+:::description[`CurveStableSwap.admin_fee() -> uint256: view`]
 
-    Getter for the admin fee of the pool. At contract initialization, the admin fee is set to 50%.
 
-    Returns: admin fee (`uint256`).
+Getter for the admin fee of the pool. At contract initialization, the admin fee is set to 50%.
 
-    ??? quote "Source code"
+Returns: admin fee (`uint256`).
 
-        === "CurveStableSwap.vy"
+<details>
+<summary>Source code</summary>
 
-            ```python
-            @external
-            def __init__(
-                ...
-            ):
 
-                ...
-                self.admin_fee = 5000000000
-                ...
+<Tabs>
+<TabItem value="curvestableswap-vy" label="CurveStableSwap.vy">
 
-            admin_fee: public(uint256)
-            ```
 
-    === "Example"
+```python
+@external
+def __init__(
+    ...
+):
 
-        This example returns the current admin fee of the contract.
+    ...
+    self.admin_fee = 5000000000
+    ...
 
-        ```shell
-        >>> CurveStableSwap.admin()
-        '0x0000000000000000000000000000000000000000'
-        ```
+admin_fee: public(uint256)
+```
 
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+This example returns the current admin fee of the contract.
+
+```shell
+>>> CurveStableSwap.admin()
+'0x0000000000000000000000000000000000000000'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_new_admin_fee`
-!!! description "`CurveStableSwap.set_new_admin_fee(_new_admin_fee: uint256):`"
+:::description[`CurveStableSwap.set_new_admin_fee(_new_admin_fee: uint256):`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the `Pool` or the `Factory`.
 
-    Function to set the admin fee of the pool. 
+:::guard[Guarded Method]
 
-    Emits: `SetAdmin` event.
+This function is only callable by the `admin` of the `Pool` or the `Factory`.
 
-    | Input        | Type      | Description        |
-    | ------------ | --------- | ------------------ |
-    | `_new_admin_fee` | `uint256` | New admin fee value. |
 
-    ??? quote "Source code"
+:::
 
-        === "CurveStableSwap.vy"
+Function to set the admin fee of the pool. 
 
-            ```python
-            interface Factory:
-                def fee_receiver() -> address: view
+Emits: `SetAdmin` event.
 
-            event ApplyNewAdminFee:
-                admin_fee: uint256
+| Input        | Type      | Description        |
+| ------------ | --------- | ------------------ |
+| `_new_admin_fee` | `uint256` | New admin fee value. |
 
-            admin_fee: public(uint256)
+<details>
+<summary>Source code</summary>
 
-            FEE_DENOMINATOR: constant(uint256) = 10 ** 10
 
-            @external
-            def set_new_admin_fee(_new_admin_fee: uint256):
-                self._check_admins()
-                # FEE_DENOMINATOR = 1 = 100%
-                assert _new_admin_fee <= FEE_DENOMINATOR  # dev: more than 100%
+<Tabs>
+<TabItem value="curvestableswap-vy" label="CurveStableSwap.vy">
 
-                self.admin_fee = _new_admin_fee
-                log ApplyNewAdminFee(_new_admin_fee)
 
-            @view
-            @internal
-            def _check_admins():
-                assert msg.sender == factory.admin() or msg.sender == self.admin  # dev: only admin
-            ```
+```python
+interface Factory:
+    def fee_receiver() -> address: view
 
-    === "Example"
+event ApplyNewAdminFee:
+    admin_fee: uint256
 
-        This example sets the admin of the contract.
+admin_fee: public(uint256)
 
-        ```shell
-        >>> StableSwapNG.admin_fee()
-        5000000000
+FEE_DENOMINATOR: constant(uint256) = 10 **10
 
-        >>> StableSwapNG.set_new_admin_fee(0)
+@external
+def set_new_admin_fee(_new_admin_fee: uint256):
+    self._check_admins()
+    # FEE_DENOMINATOR = 1 = 100%
+    assert _new_admin_fee <= FEE_DENOMINATOR  # dev: more than 100%
 
-        >>> StableSwapNG.admin_fee()
-        0
-        ```
+    self.admin_fee = _new_admin_fee
+    log ApplyNewAdminFee(_new_admin_fee)
+
+@view
+@internal
+def _check_admins():
+    assert msg.sender == factory.admin() or msg.sender == self.admin  # dev: only admin
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+This example sets the admin of the contract.
+
+```shell
+>>> StableSwapNG.admin_fee()
+5000000000
+
+>>> StableSwapNG.set_new_admin_fee(0)
+
+>>> StableSwapNG.admin_fee()
+0
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::

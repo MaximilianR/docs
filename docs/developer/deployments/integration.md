@@ -1,18 +1,13 @@
----
-search:
-  exclude: true
----
 
-<h1></h1>
+# 
+# **Address Provider**Contract functionality is documented [here ↗](../integration/address-provider.md).
+
+:::github
+
+The source code for the `AddressProviderNG.vy` contract can be found on [ GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/AddressProviderNG.vy).
 
 
-# **Address Provider**
-
-Contract functionality is documented [here :material-arrow-up-right:](../integration/address-provider.md).
-
-!!!github
-    The source code for the `AddressProviderNG.vy` contract can be found on [:material-github: GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/AddressProviderNG.vy).
-
+:::
 
 | Chain                           | Contract Address |
 | ------------------------------- | ---------------- |
@@ -44,12 +39,14 @@ Contract functionality is documented [here :material-arrow-up-right:](../integra
 ---
 
 
-# **Meta Registry**
+# **Meta Registry**Contract functionality is documented here: [`MetaRegistry`](../registry/overview.md)
 
-Contract functionality is documented here: [`MetaRegistry`](../registry/overview.md)
+:::github
 
-!!!github
-    The source code for the `MetaRegistry.vy` and `MetaRegistryL2.vy` contracts can be found on [:material-github: GitHub](https://github.com/curvefi/metaregistry/tree/main/contracts).
+The source code for the `MetaRegistry.vy` and `MetaRegistryL2.vy` contracts can be found on [ GitHub](https://github.com/curvefi/metaregistry/tree/main/contracts).
+
+
+:::
 
 Each `MetaRegistry` is integrated into the chain-specific [`AddressProvider`](#address-provider) at `ID = 7`. To get the **most recent contract, users are advised to fetch it directly from the `AddressProvider` contract**. 
 
@@ -64,12 +61,14 @@ Each `MetaRegistry` is integrated into the chain-specific [`AddressProvider`](#a
 ---
 
 
-# **Rate Provider**
+# **Rate Provider**Contract functionality is documented here: [`RateProvider`](../integration/rate-provider.md)
 
-Contract functionality is documented here: [`RateProvider`](../integration/rate-provider.md)
+:::github
 
-!!!github
-    The source code for the `RateProvider.vy` contract can be found on [:material-github: GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/RateProvider.vy).  
+The source code for the `RateProvider.vy` contract can be found on [ GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/RateProvider.vy).  
+
+
+:::
 
 Each `RateProvider` is integrated into the chain-specific [`AddressProvider`](#address-provider) at `ID = 18`.  
 

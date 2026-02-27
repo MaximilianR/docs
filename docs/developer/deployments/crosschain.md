@@ -1,19 +1,14 @@
----
-search:
-  exclude: true
-  title: "Cross-Chain Deployments"
----
 
-# **Curve X-GOV**
+# **Curve X-GOV**Full `x-gov` documentation can be found here: [Cross-Chain Governance](../governance/overview.md)
 
-Full `x-gov` documentation can be found here: [Cross-Chain Governance](../governance/overview.md)
+:::github[GitHub]
 
-!!!github "GitHub"
-    Source code for cross-chain governance contracts is available on [:material-github: GitHub](https://github.com/curvefi/curve-xgov).
+Source code for cross-chain governance contracts is available on [ GitHub](https://github.com/curvefi/curve-xgov).
 
-**:logos-arbitrum: Arbitrum**
 
-| Contract Type      | Contract Address |
+:::
+
+**:logos-arbitrum: Arbitrum**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0xb7b0FF38E0A01D798B5cd395BbA6Ddb56A323830](https://etherscan.io/address/0xb7b0FF38E0A01D798B5cd395BbA6Ddb56A323830) |
 | L2 Relayer         | [0xb7b0FF38E0A01D798B5cd395BbA6Ddb56A323830](https://arbiscan.io/address/0xb7b0FF38E0A01D798B5cd395BbA6Ddb56A323830) |
@@ -23,9 +18,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | L2 Vault           | [0x25877b9413Cc7832A6d142891b50bd53935feF82](https://arbiscan.io/address/0x25877b9413Cc7832A6d142891b50bd53935feF82) |
 | Agent Blueprint    | [0x187FE3505e56f4dA67b06564F03575cC15bE2B4d](https://arbiscan.io/address/0x187FE3505e56f4dA67b06564F03575cC15bE2B4d) |
 
-**:logos-optimism: Optimism**
-
-| Contract Type      | Contract Address |
+**:logos-optimism: Optimism**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0x8e1e5001c7b8920196c7e3edf2bcf47b2b6153ff](https://etherscan.io/address/0x8e1e5001c7b8920196c7e3edf2bcf47b2b6153ff) |
 | L2 Relayer         | [0x8e1e5001C7B8920196c7E3EdF2BCf47B2B6153ff](https://optimistic.etherscan.io/address/0x8e1e5001C7B8920196c7E3EdF2BCf47B2B6153ff) |
@@ -36,9 +29,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0xC5fd5D3b06a8ef50b911972CA313E4d327F7c0aC](https://optimistic.etherscan.io/address/0xC5fd5D3b06a8ef50b911972CA313E4d327F7c0aC) |
 
 
-**:logos-base: Base**
-
-| Contract Type      | Contract Address |
+**:logos-base: Base**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0xcb843280c5037acfa67b8d4adc71484ced7c48c9](https://etherscan.io/address/0xcb843280c5037acfa67b8d4adc71484ced7c48c9) |
 | L2 Relayer         | [0xCb843280C5037ACfA67b8D4aDC71484ceD7C48C9](https://basescan.org/address/0xCb843280C5037ACfA67b8D4aDC71484ceD7C48C9) |
@@ -49,9 +40,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0xF3BC9E5fA891977DCa765ff52E8f22A1F7d49c1f](https://basescan.org/address/0xF3BC9E5fA891977DCa765ff52E8f22A1F7d49c1f) |
 
 
-**:logos-gnosis: Gnosis**
-
-| Contract Type      | Contract Address |
+**:logos-gnosis: Gnosis**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0x22089A449ABdAd415d3B8476A501BFe70870C1a7](https://etherscan.io/address/0x22089A449ABdAd415d3B8476A501BFe70870C1a7) |
 | L2 Relayer         | [0x22089A449ABdAd415d3B8476A501BFe70870C1a7](https://gnosisscan.io/address/0x22089A449ABdAd415d3B8476A501BFe70870C1a7) |
@@ -62,9 +51,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0x61951AC5664c7a7d7aB7df9892a82a5fCd622Bb2](https://gnosisscan.io/address/0x61951AC5664c7a7d7aB7df9892a82a5fCd622Bb2) |
 
 
-**:logos-fraxtal: Fraxtal**
-
-| Contract Type      | Contract Address |
+**:logos-fraxtal: Fraxtal**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0xE0fE4416214e95F0C67Dc044AAf1E63d6972e0b9](https://etherscan.io/address/0xE0fE4416214e95F0C67Dc044AAf1E63d6972e0b9) |
 | L2 Relayer         | [0x7BE6BD57A319A7180f71552E58c9d32Da32b6f96](https://fraxscan.com/address/0x7BE6BD57A319A7180f71552E58c9d32Da32b6f96) |
@@ -75,9 +62,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0x47fE2319e3Ea3451f87196Aca4973563CEda838b](https://fraxscan.com/address/0x47fE2319e3Ea3451f87196Aca4973563CEda838b) |
 
 
-**:logos-mantle: Mantle**
-
-| Contract Type      | Contract Address |
+**:logos-mantle: Mantle**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0xb50b9a0d8a4ed8115fe174f300465ea4686d86df](https://etherscan.io/address/0xb50b9a0d8a4ed8115fe174f300465ea4686d86df) |
 | L2 Relayer         | [0xB50B9a0D8A4ED8115Fe174F300465Ea4686d86Df](https://explorer.mantle.xyz/address/0xB50B9a0D8A4ED8115Fe174F300465Ea4686d86Df) |
@@ -88,9 +73,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0x5EF72230578b3e399E6C6F4F6360edF95e83BBfd](https://explorer.mantle.xyz/address/0x5EF72230578b3e399E6C6F4F6360edF95e83BBfd) |
 
 
-**:logos-avalanche: Avalanche**
-
-| Contract Type      | Contract Address |
+**:logos-avalanche: Avalanche**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89](https://etherscan.io/address/0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89) |
 | L2 Relayer         | [0x3895064FD74a86542206C4c39eb1bf14BB9aF9a6](https://snowscan.xyz/address/0x3895064FD74a86542206C4c39eb1bf14BB9aF9a6) |
@@ -100,9 +83,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | L2 Vault           | [0xad422855ac8010f82F08696CA7750EfE061aa6D6](https://snowscan.xyz/address/0xad422855ac8010f82F08696CA7750EfE061aa6D6) |
 | Agent Blueprint    | [0x31d13B6e3e287F506D21bBED9eA4b169971DF3fe](https://snowscan.xyz/address/0x31d13B6e3e287F506D21bBED9eA4b169971DF3fe) |
 
-**:logos-fantom: Fantom**
-
-| Contract Type      | Contract Address |
+**:logos-fantom: Fantom**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89](https://etherscan.io/address/0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89) |
 | L2 Relayer         | [0x002599c7D4299A268b332B3240d60308f93C99eC](https://ftmscout.com/address/0x002599c7D4299A268b332B3240d60308f93C99eC) |
@@ -112,9 +93,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | L2 Vault           | [0x49C8De2D10C9A56DD9A59ab5Ca1216111276394C](https://ftmscout.com/address/0x49C8De2D10C9A56DD9A59ab5Ca1216111276394C) |
 | Agent Blueprint    | [0x0732539C8aD556594FDa6A50fA8E976cA6D514B9](https://ftmscout.com/address/0x0732539C8aD556594FDa6A50fA8E976cA6D514B9) |
 
-**:logos-sonic: Sonic**
-
-| Contract Type      | Contract Address |
+**:logos-sonic: Sonic**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc](https://etherscan.io/address/0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc) |
 | L2 Relayer         | [0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69](https://sonicscan.org/address/0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69) |
@@ -124,9 +103,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | L2 Vault           | [0x3c0a405E914337139992625D5100Ea141a9C4d11](https://sonicscan.org/address/0x3c0a405E914337139992625D5100Ea141a9C4d11) |
 | Agent Blueprint    | [0x13DFF1809D1E9ddf9Ac901F47817B7F45220A846](https://sonicscan.org/address/0x13DFF1809D1E9ddf9Ac901F47817B7F45220A846) |
 
-**:logos-bsc: BinanceSmartChain**
-
-| Contract Type      | Contract Address |
+**:logos-bsc: BinanceSmartChain**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89](https://etherscan.io/address/0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89) |
 | L2 Relayer         | [0x37b6d6d425438a9f8e40C8B4c06c10560967b678](https://bscscan.com/address/0x37b6d6d425438a9f8e40C8B4c06c10560967b678) |
@@ -137,9 +114,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0x3D09c5D6AE6e45d01C560342E11ef355C2763F01](https://bscscan.com/address/0x3D09c5D6AE6e45d01C560342E11ef355C2763F01) |
 
 
-**:logos-kava: Kava**
-
-| Contract Type      | Contract Address |
+**:logos-kava: Kava**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89](https://etherscan.io/address/0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89) |
 | L2 Relayer         | [0xA5961898870943c68037F6848d2D866Ed2016bcB](https://kavascan.com/address/0xA5961898870943c68037F6848d2D866Ed2016bcB) |
@@ -150,9 +125,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0xC0AE3B85060530384647E9F3D63C9e1F53231f68](https://kavascan.com/address/0xC0AE3B85060530384647E9F3D63C9e1F53231f68) |
 
 
-**:logos-polygon: Polygon**
-
-| Contract Type      | Contract Address |
+**:logos-polygon: Polygon**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0x91e95f16f7F1b988391A869771Ffb50Df4ceBDF7](https://etherscan.io/address/0x91e95f16f7F1b988391A869771Ffb50Df4ceBDF7) |
 | L2 Relayer         | [0x91e95f16f7F1b988391A869771Ffb50Df4ceBDF7](https://polygonscan.com/address/0x91e95f16f7F1b988391A869771Ffb50Df4ceBDF7) |
@@ -163,9 +136,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0x1fE46Da288A55aAf32facc6D182fB1933B22c2E9](https://polygonscan.com/address/0x1fE46Da288A55aAf32facc6D182fB1933B22c2E9) |
 
 
-**:logos-polygon: Polygon zk-EVM**
-
-| Contract Type      | Contract Address |
+**:logos-polygon: Polygon zk-EVM**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0xB5e7fE8eA8ECbd33504485756fCabB5f5D29C051](https://etherscan.io/address/0xB5e7fE8eA8ECbd33504485756fCabB5f5D29C051) |
 | L2 Relayer         | [0x5bcA7dDF1bcccB2eE8e46c56bfc9d3CDC77262bC](https://zkevm.polygonscan.com/address/0x5bcA7dDF1bcccB2eE8e46c56bfc9d3CDC77262bC) |
@@ -176,9 +147,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0xe35A879E5EfB4F1Bb7F70dCF3250f2e19f096bd8](https://zkevm.polygonscan.com/address/0xe35A879E5EfB4F1Bb7F70dCF3250f2e19f096bd8) |
 
 
-**:logos-xlayer: X-Layer**
-
-| Contract Type      | Contract Address |
+**:logos-xlayer: X-Layer**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L1 Broadcaster     | [0x9D9e70CA10fE911Dee9869F21e5ebB24A9519Ade](https://etherscan.io/address/0x9D9e70CA10fE911Dee9869F21e5ebB24A9519Ade) |
 | L2 Relayer         | [0x9D9e70CA10fE911Dee9869F21e5ebB24A9519Ade](https://www.oklink.com/xlayer/address/0x6628b9e7c0029cea234b382be17101648f32cd8f/contract) |
@@ -189,9 +158,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Agent Blueprint    | [0x0199429171bce183048dccf1d5546ca519ea9717](https://www.okx.com/web3/explorer/xlayer/address/0x0199429171bce183048dccf1d5546ca519ea9717/contract) |
 
 
-**:logos-taiko: Taiko**
-
-| Contract Type      | Contract Address |
+**:logos-taiko: Taiko**| Contract Type      | Contract Address |
 | :----------------: | :--------------: |
 | L2 Relayer         | [0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69](https://taikoscan.io/address/0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69) |
 | L2 Ownership Agent | [0x6c9578402A3ace046A12839f45F84Aa5448E9c30](https://taikoscan.io/address/0x6c9578402A3ace046A12839f45F84Aa5448E9c30) |
@@ -203,21 +170,18 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 ---
 
 
-# **Curve X-DAO**
+# **Curve X-DAO**:::github[GitHub]
 
-!!!github "GitHub"
-    Source code for cross-chain structure contracts is available on [:material-github: GitHub](https://github.com/curvefi/curve-xdao).
+Source code for cross-chain structure contracts is available on [ GitHub](https://github.com/curvefi/curve-xdao).
 
 
-**:logos-ethereum: Ethereum**
+:::
 
-| Contract Type | Contract Address |
+**:logos-ethereum: Ethereum**| Contract Type | Contract Address |
 | :------------ | :--------------- |
 | Bridge Owner Proxy | [`0x5a02d537fE0044E3eF506ccfA08f370425d1408C`](https://etherscan.io/address/0x5a02d537fE0044E3eF506ccfA08f370425d1408C#code) |
 
-**:logos-crv: CRV Bridges**
-
-| Chain | Contract Address |
+**:logos-crv: CRV Bridges**| Chain | Contract Address |
 | :---- | :--------------- |
 | AVAX Bridge (LayerZero) | [`0x5cc0144A511807608eF644c9e99B486124D1cFd6`](https://etherscan.io/address/0x5cc0144A511807608eF644c9e99B486124D1cFd6#code) |
 | FTM Bridge (LayerZero) | [`0x7ce8aF75A9180B602445bE230860DDcb4cAc3E42`](https://etherscan.io/address/0x7ce8aF75A9180B602445bE230860DDcb4cAc3E42#code) |
@@ -225,9 +189,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | KAVA Bridge (LayerZero) | [`0x3C8D2A033131551a3f09E7b5c07DB01d547311CC`](https://etherscan.io/address/0x3C8D2A033131551a3f09E7b5c07DB01d547311CC#code) |
 | Sonic Bridge (LayerZero) | [`0x5A537a46D780B1C70138aB98eDce69e7a53177ba`](https://etherscan.io/address/0x5A537a46D780B1C70138aB98eDce69e7a53177ba#code) |
 
-**:logos-crvusd: crvUSD Bridges**
- 
-| Chain | Contract Address |
+**:logos-crvusd: crvUSD Bridges**| Chain | Contract Address |
 | :---- | :--------------- |
 | AVAX Bridge (LayerZero) | [`0x26D01ce989037befd7Ff63837A86e2da32E7D7e2`](https://etherscan.io/address/0x26D01ce989037befd7Ff63837A86e2da32E7D7e2#code) |
 | BNB Bridge (LayerZero) | [`0x0A92Fd5271dB1C41564BD01ef6b1a75fC1db4d4f`](https://etherscan.io/address/0x0A92Fd5271dB1C41564BD01ef6b1a75fC1db4d4f#code) |
@@ -235,18 +197,14 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | KAVA Bridge (LayerZero) | [`0x1C4e4553F95C28bc529233Cc35D550befE7B83Fc`](https://etherscan.io/address/0x1C4e4553F95C28bc529233Cc35D550befE7B83Fc#code) |
 | Sonic Bridge (LayerZero) | [`0xf6F07B393e4cEE82EFBcD502Db2903f28aA0472e`](https://etherscan.io/address/0xf6F07B393e4cEE82EFBcD502Db2903f28aA0472e#code) |
 
-**:logos-scrvusd:scrvUSD Bridges**
-
-| Chain | Contract Address |
+**:logos-scrvusd:scrvUSD Bridges**| Chain | Contract Address |
 | :---- | :--------------- |
 | AVAX Bridge (LayerZero) | [`0x26E91B1f142b9bF0bB37e82959bA79D2Aa6b99b8`](https://etherscan.io/address/0x26E91B1f142b9bF0bB37e82959bA79D2Aa6b99b8#code) |
 | BNB Bridge (LayerZero) | [`0xAE0666C978500f2C05784242B79B08C478Dd999c`](https://etherscan.io/address/0xAE0666C978500f2C05784242B79B08C478Dd999c#code) |
 | FTM Bridge (LayerZero) | [`0x08132eA9b02750E118cF5F5C640B7c46A8E638E8`](https://etherscan.io/address/0x08132eA9b02750E118cF5F5C640B7c46A8E638E8#code) |
 | Sonic Bridge (LayerZero) | [`0x6F8012b70ba1fb7F40873CD7f1b03c6fb5bf666C`](https://etherscan.io/address/0x6F8012b70ba1fb7F40873CD7f1b03c6fb5bf666C#code) |
 
-**Keepers (Block Hash Sender)**
-
-| Chain | Contract Address |
+**Keepers (Block Hash Sender)**| Chain | Contract Address |
 | :---- | :--------------- |
 | AVAX Keeper (LayerZero) | [`0x90fe734080403F9dBDb343478A390B901CF3922C`](https://etherscan.io/address/0x90fe734080403F9dBDb343478A390B901CF3922C#code) |
 | FTM Keeper (LayerZero) | [`0x9116ED9cfA7f291C3F7c8F855Db065c7ab5723e7`](https://etherscan.io/address/0x9116ED9cfA7f291C3F7c8F855Db065c7ab5723e7#code) |
@@ -255,9 +213,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Polygon Keeper (LayerZero) | [`0x845F4E2a88B12978e50C08b46a1d5A1b0eEe28aA`](https://etherscan.io/address/0x845F4E2a88B12978e50C08b46a1d5A1b0eEe28aA#code) |
 | CCIP Keeper | [`0x51a00F38CB1c055EbbBE380D3bA3D27CAE5d9e61`](https://etherscan.io/address/0x51a00F38CB1c055EbbBE380D3bA3D27CAE5d9e61#code) |
 
-**:logos-avalanche: Avalanche**
-
-| Contract Type | Contract Address |
+**:logos-avalanche: Avalanche**| Contract Type | Contract Address |
 | :------------ | :--------------- |
 | CRV ETH Bridge (LayerZero) | [`0x5cc0144A511807608eF644c9e99B486124D1cFd6`](https://snowscan.xyz/address/0x5cc0144A511807608eF644c9e99B486124D1cFd6#code) |
 | CRVUSD ETH Bridge (LayerZero) | [`0x26D01ce989037befd7Ff63837A86e2da32E7D7e2`](https://snowscan.xyz/address/0x26D01ce989037befd7Ff63837A86e2da32E7D7e2#code) |
@@ -273,9 +229,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Gauge Type Prover | [`0x0B2584EfC66e9954e72d516be2Bb855EF0Defe62`](https://snowscan.xyz/address/0x0B2584EfC66e9954e72d516be2Bb855EF0Defe62#code) |
 | Message Digest Prover | [`0xd5cF10C83aC5F30Ab27B6156DA9c238Aa63a63d0`](https://snowscan.xyz/address/0xd5cF10C83aC5F30Ab27B6156DA9c238Aa63a63d0#code) |
 
-**:logos-fantom: Fantom**
-
-| Contract Type | Contract Address |
+**:logos-fantom: Fantom**| Contract Type | Contract Address |
 | :------------ | :--------------- |
 | CRV ETH Bridge (LayerZero) | [`0x7ce8aF75A9180B602445bE230860DDcb4cAc3E42`](https://ftmscout.com/address/0x7ce8aF75A9180B602445bE230860DDcb4cAc3E42#code) |
 | CRVUSD ETH Bridge (LayerZero) | [`0x76EAfda658C54548B460B3f190386699DE3827d8`](https://ftmscout.com/address/0x76EAfda658C54548B460B3f190386699DE3827d8#code) |
@@ -291,9 +245,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Gauge Type Prover | [`0x7FA0a0E2820b7B12aeFb3A2A3c0C6F83aAD87054`](https://ftmscout.com/address/0x7FA0a0E2820b7B12aeFb3A2A3c0C6F83aAD87054#code) |
 | Message Digest Prover | [`0xAb0ab357a10c0161002A91426912933750082A9d`](https://ftmscout.com/address/0xAb0ab357a10c0161002A91426912933750082A9d#code) |
 
-**:logos-bsc: Binance Smart Chain**
-
-| Contract Type | Contract Address |
+**:logos-bsc: Binance Smart Chain**| Contract Type | Contract Address |
 | :------------ | :--------------- |
 | CRV ETH Bridge (LayerZero) | [`0xC91113B4Dd89dd20FDEECDAC82477Bc99A840355`](https://bscscan.com/address/0xC91113B4Dd89dd20FDEECDAC82477Bc99A840355#code) |
 | crvUSD ETH Bridge (LayerZero) | [`0x0A92Fd5271dB1C41564BD01ef6b1a75fC1db4d4f`](https://bscscan.com/address/0x0A92Fd5271dB1C41564BD01ef6b1a75fC1db4d4f#code) |
@@ -309,9 +261,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Gauge Type Prover | [`0xd7454AEbf1C37661dfb5d2857F6aF7a2E09975bc`](https://bscscan.com/address/0xd7454AEbf1C37661dfb5d2857F6aF7a2E09975bc#code) |
 | Message Digest Prover | [`0xbfF1f56c8e48e2F2F52941e16FEecc76C49f1825`](https://bscscan.com/address/0xbfF1f56c8e48e2F2F52941e16FEecc76C49f1825#code) |
 
-**:logos-sonic: Sonic**
-
-| Contract Type | Contract Address |
+**:logos-sonic: Sonic**| Contract Type | Contract Address |
 | :------------ | :--------------- |
 | CRV ETH Bridge (LayerZero) | [`0x5A537a46D780B1C70138aB98eDce69e7a53177ba`](https://sonicscan.org/address/0x5A537a46D780B1C70138aB98eDce69e7a53177ba#code) |
 | crvUSD ETH Bridge (LayerZero) | [`0xf6F07B393e4cEE82EFBcD502Db2903f28aA0472e`](https://sonicscan.org/address/0xf6F07B393e4cEE82EFBcD502Db2903f28aA0472e#code) |
@@ -327,9 +277,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Gauge Type Verifier | [`0x47ca04Ee05f167583122833abfb0f14aC5677Ee4`](https://sonicscan.org/address/0x47ca04Ee05f167583122833abfb0f14aC5677Ee4#code) |
 | Message Digest Verifier | [`0x3d8EADb739D1Ef95dd53D718e4810721837c69c1`](https://sonicscan.org/address/0x3d8EADb739D1Ef95dd53D718e4810721837c69c1#code) |
 
-**:logos-kava: Kava**
-
-| Contract Type | Contract Address |
+**:logos-kava: Kava**| Contract Type | Contract Address |
 | :------------ | :--------------- |
 | CRV ETH Bridge (LayerZero) | [`0x3C8D2A033131551a3f09E7b5c07DB01d547311CC`](https://kavascan.com/address/0x3C8D2A033131551a3f09E7b5c07DB01d547311CC#code) |
 | crvUSD ETH Bridge (LayerZero) | [`0x1C4e4553F95C28bc529233Cc35D550befE7B83Fc`](https://kavascan.com/address/0x1C4e4553F95C28bc529233Cc35D550befE7B83Fc#code) |
@@ -342,9 +290,7 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 | Gauge Type Prover | [`0x64ed8CfF5Ad3DaEb217abE03a00Ff2D90b86456b`](https://kavascan.com/address/0x64ed8CfF5Ad3DaEb217abE03a00Ff2D90b86456b#code) |
 | Message Digest Prover | [`0x5373E1B9f2781099f6796DFe5D68DE59ac2F18E3](https://kavascan.com/address/0x5373E1B9f2781099f6796DFe5D68DE59ac2F18E3#code) |
 
-**:logos-polygon: Polygon**
-
-| Contract Type | Contract Address |
+**:logos-polygon: Polygon**| Contract Type | Contract Address |
 | :------------ | :--------------- |
 | Block Hash Oracle | [`0xEeE35C0d23Ac93fdF9033B54453a41e23Ca66D04`](https://polygonscan.com/address/0xEeE35C0d23Ac93fdF9033B54453a41e23Ca66D04#code) |
 | Gauge Type Oracle | [`0xa5a1d8DCAf455De190902EFACcCDA551a3Caa193`](https://polygonscan.com/address/0xa5a1d8DCAf455De190902EFACcCDA551a3Caa193#code) |
@@ -353,20 +299,28 @@ Full `x-gov` documentation can be found here: [Cross-Chain Governance](../govern
 
 ---
 
-# **EVM Sidechain Gauges**
+# **EVM Sidechain Gauges**## **Old Implementation**:::warning[Deprecated]
 
-## **Old Implementation**
+The old implementation of sidechain gauges is deprecated and will be removed in the future.
 
-!!!warning "Deprecated"
-    The old implementation of sidechain gauges is deprecated and will be removed in the future.
 
-!!!danger "MULTICHAIN WARNING"
-    At the time of writing (13.11.2023), sidechain gauges on Celo, Avalanche and Fantom are disabled due to issues with Multichain.    
-    The Multichain service stopped currently, and all bridge transactions will be stuck on the source chains. There is no confirmed resume time.  
-    Multichain statement: https://twitter.com/MultichainOrg/status/1677180114227056641
+:::
 
-!!!github "GitHub"
-    Source code is available on [GitHub](https://github.com/curvefi/curve-dao-contracts/tree/master/contracts/gauges/sidechain).
+:::danger[MULTICHAIN WARNING]
+
+At the time of writing (13.11.2023), sidechain gauges on Celo, Avalanche and Fantom are disabled due to issues with Multichain.    
+The Multichain service stopped currently, and all bridge transactions will be stuck on the source chains. There is no confirmed resume time.  
+Multichain statement: https://twitter.com/MultichainOrg/status/1677180114227056641
+
+
+:::
+
+:::github[GitHub]
+
+Source code is available on [GitHub](https://github.com/curvefi/curve-dao-contracts/tree/master/contracts/gauges/sidechain).
+
+
+:::
 
 The `RootLiquidityGaugeFactory` contract on Ethereum is utilized across a majority of sidechains, with the exception of Fraxtal, Binance Smart Chain, Avalanche, and Fantom. Each of these networks hosts its own version of the `RootLiquidityGaugeFactory` contract. While the functionality across these contracts remains consistent, they differ in their contract addresses.
 
@@ -380,9 +334,9 @@ The `RootLiquidityGaugeFactory` contract on Ethereum is utilized across a majori
 | :logos-fraxtal: `RootLiquidityGaugeFactory` | :logos-ethereum: Ethereum | [0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c](https://etherscan.io/address/0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c) |
 | `ChildLiquidityGaugeFactory` | :logos-fraxtal: Fraxtal | [0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c](https://fraxscan.com/address/0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c) |
 | `ChildLiquidityGaugeFactory` | :logos-gnosis: Gnosis | [0xabc000d88f23bb45525e447528dbf656a9d55bf5](https://gnosisscan.io/address/0xabc000d88f23bb45525e447528dbf656a9d55bf5) |
-| `ChildLiquidityGaugeFactory` | :logos-celo: Celo | :material-close: |
-| `ChildLiquidityGaugeFactory` | :logos-avalanche: Avalanche | :material-close: |
-| `ChildLiquidityGaugeFactory` | :logos-fantom: Fantom | :material-close: |
+| `ChildLiquidityGaugeFactory` | :logos-celo: Celo |  |
+| `ChildLiquidityGaugeFactory` | :logos-avalanche: Avalanche |  |
+| `ChildLiquidityGaugeFactory` | :logos-fantom: Fantom |  |
 | :logos-mantle: `RootLiquidityGaugeFactory` | :logos-ethereum: Ethereum | [0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c](https://etherscan.io/address/0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c) |
 | `ChildLiquidityGaugeFactory` | :logos-mantle: Mantle | [0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c](https://mantlescan.xyz/address/0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c) |
 | :logos-xlayer: `RootLiquidityGaugeFactory` | :logos-ethereum: Ethereum | [0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c](https://etherscan.io/address/0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c) |
@@ -390,18 +344,12 @@ The `RootLiquidityGaugeFactory` contract on Ethereum is utilized across a majori
 
 ---
 
-## **New Implementation**
-
-### **RootGauge Factory**
-
-| Chain ID | Chain | Address |
+## **New Implementation**### **RootGauge Factory**| Chain ID | Chain | Address |
 | :------: | ----- | ------- |
 | `1` | :logos-ethereum: Ethereum | [0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6](https://etherscan.io/address/0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6) |
 
 
-### **ChildGauge Factory**
-
-| Chain ID | Chain | Address |
+### **ChildGauge Factory**| Chain ID | Chain | Address |
 | :------: | ----- | ------- |
 | `100` | :logos-gnosis: Gnosis | [0x06471ED238306a427241B3eA81352244E77B004F](https://gnosisscan.io/address/0x06471ED238306a427241B3eA81352244E77B004F) |
 | `137` | :logos-polygon: Polygon | [0x55a1C26CE60490A15Bdd6bD73De4F6346525e01e](https://polygonscan.com/address/0x55a1C26CE60490A15Bdd6bD73De4F6346525e01e) |

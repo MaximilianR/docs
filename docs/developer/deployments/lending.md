@@ -1,16 +1,18 @@
----
-search:
-  exclude: true
----
 
-<h1>Curve Lending: Deployment Addresses</h1>
+# Curve Lending: Deployment Addresses
+:::github
 
-!!!github
-    The source code for all lending-relevant contracts can be found on [:material-github: GitHub](https://github.com/curvefi/curve-stablecoin/tree/lending).
+The source code for all lending-relevant contracts can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/lending).
 
-!!!warning "Implementations"
-    **Implementation contracts are upgradable.** They can be either replaced or additional implementation contracts can be set. Therefore, please **always make sure to check the most recent ones**.
 
+:::
+
+:::warning[Implementations]
+
+**Implementation contracts are upgradable.**They can be either replaced or additional implementation contracts can be set. Therefore, please **always make sure to check the most recent ones**.
+
+
+:::
 
 As the creation of lending markets is permissionless, listing all deployed vaults and their correpsonding contracts would exceed the scope of this section. The Factory contract has a [`market_count`](../lending/contracts/oneway-factory.md#market_count) variable which represents the total number of markets created, as well as a [`vaults(arg0: uint256)`](../lending/contracts/oneway-factory.md#vaults) which returns the vault address at a specific index.
 
@@ -35,9 +37,7 @@ AMM, Controller, and Price Oracle contracts and other variables of a vault can s
 ---
 
 
-### **Ethereum**
-
-| Contract Type                      | Contract Address                                                         |
+### **Ethereum**| Contract Type                      | Contract Address                                                         |
 | :--------------------------------: | :----------------------------------------------------------------------: |
 | `AMM implementation`               | [0xB57A959cdB3D5e460f9a7Cc48ed05ec29dfF049a](https://etherscan.io/address/0xB57A959cdB3D5e460f9a7Cc48ed05ec29dfF049a) |
 | `Controller implementation`        | [0x584B0Fd8F038fe8AEDf4057Ca3cB3D840446fBbf](https://etherscan.io/address/0x584B0Fd8F038fe8AEDf4057Ca3cB3D840446fBbf) |
@@ -51,9 +51,7 @@ AMM, Controller, and Price Oracle contracts and other variables of a vault can s
 ---
 
 
-### **Arbitrum**
-
-| Contract Type                      | Contract Address                                                         |
+### **Arbitrum**| Contract Type                      | Contract Address                                                         |
 | :--------------------------------: | :----------------------------------------------------------------------: |
 | `AMM implementation`               | [0xaA2377F39419F8f4CB98885076c41fE547C65a6A](https://arbiscan.io/address/0xaA2377F39419F8f4CB98885076c41fE547C65a6A) |
 | `Controller implementation`        | [0x2287b7b2bF3d82c3ecC11ca176F4B4F35f920775](https://arbiscan.io/address/0x2287b7b2bF3d82c3ecC11ca176F4B4F35f920775) |
@@ -67,9 +65,7 @@ AMM, Controller, and Price Oracle contracts and other variables of a vault can s
 ---
 
 
-### **Optimism**
-
-The deployments on Optimism were done using a new implementation of the `Controller.vy` contract and a slightly modified `Vault.vy` contract. Commit [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721) contains the changes.
+### **Optimism**The deployments on Optimism were done using a new implementation of the `Controller.vy` contract and a slightly modified `Vault.vy` contract. Commit [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721) contains the changes.
 
 | Contract Type                      | Contract Address                                                         |
 | :--------------------------------: | :----------------------------------------------------------------------: |
@@ -85,9 +81,7 @@ The deployments on Optimism were done using a new implementation of the `Control
 ---
 
 
-### **Fraxtal**
-
-The deployments on Fraxtal were done using a new implementation of the `Controller.vy` contract and a slightly modified `Vault.vy` contract. Commit [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721) contains the changes.
+### **Fraxtal**The deployments on Fraxtal were done using a new implementation of the `Controller.vy` contract and a slightly modified `Vault.vy` contract. Commit [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721) contains the changes.
 
 | Contract Type                      | Contract Address                                                         |
 | :--------------------------------: | :----------------------------------------------------------------------: |
@@ -103,9 +97,7 @@ The deployments on Fraxtal were done using a new implementation of the `Controll
 ---
 
 
-### **Sonic**
-
-Deployments were done at commit height [`0f49419`](https://github.com/curvefi/curve-stablecoin/commit/0f49419e714cbf56b280f448cb0607d0adc77185).
+### **Sonic**Deployments were done at commit height [`0f49419`](https://github.com/curvefi/curve-stablecoin/commit/0f49419e714cbf56b280f448cb0607d0adc77185).
 
 | Contract Type                      | Contract Address                                                         |
 | :--------------------------------: | :----------------------------------------------------------------------: |

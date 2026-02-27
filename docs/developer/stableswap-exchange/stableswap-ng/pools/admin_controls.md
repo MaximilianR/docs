@@ -1,202 +1,277 @@
-The following methods are guarded and may only be called by the **`admin`** of the Stableswap-NG Factory.
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The following methods are guarded and may only be called by the **`admin`**of the Stableswap-NG Factory.
 
 
 ### `ramp_A`
-!!! description "`StableSwap.ramp_A(_future_A: uint256, _future_time: uint256):`"
+:::description[`StableSwap.ramp_A(_future_A: uint256, _future_time: uint256):`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the Factory.
 
-    Function to ramp amplification coefficient A. Minimum ramp time is 86400 (24h).
+:::guard[Guarded Method]
 
-    *Limitations when ramping A:*
+This function is only callable by the `admin` of the Factory.
 
-    - `block.timestamp` >= `initial_A_time` + `MIN_RAMP_TIME`  
-    - `_future_time` >= `block.timestamp` + `MIN_RAMP_TIME`   
-    - `future_A` > 0  
-    - `future_A` < `MAX_A (1000000)`
 
-    Emits: `RampA`
+:::
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `_future_A` |  `uint256` | future A value |
-    | `_future_time` |  `uint256` | timestamp until ramping should occur; needs to be at least 24h (`MIN_RAMP_TIME`) |
+Function to ramp amplification coefficient A. Minimum ramp time is 86400 (24h).
 
-    ??? quote "Source code"
+*Limitations when ramping A:*
 
-        ```vyper 
-        A_PRECISION: constant(uint256) = 100
-        MAX_A: constant(uint256) = 10 ** 6
-        MAX_A_CHANGE: constant(uint256) = 10
+- `block.timestamp` >= `initial_A_time` + `MIN_RAMP_TIME`  
+- `_future_time` >= `block.timestamp` + `MIN_RAMP_TIME`   
+- `future_A` > 0  
+- `future_A` < `MAX_A (1000000)`
 
-        MIN_RAMP_TIME: constant(uint256) = 86400
+Emits: `RampA`
 
-        event RampA:
-            old_A: uint256
-            new_A: uint256
-            initial_time: uint256
-            future_time: uint256
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_future_A` |  `uint256` | future A value |
+| `_future_time` |  `uint256` | timestamp until ramping should occur; needs to be at least 24h (`MIN_RAMP_TIME`) |
 
-        @external
-        def ramp_A(_future_A: uint256, _future_time: uint256):
-            assert msg.sender == factory.admin()  # dev: only owner
-            assert block.timestamp >= self.initial_A_time + MIN_RAMP_TIME
-            assert _future_time >= block.timestamp + MIN_RAMP_TIME  # dev: insufficient time
+<details>
+<summary>Source code</summary>
 
-            _initial_A: uint256 = self._A()
-            _future_A_p: uint256 = _future_A * A_PRECISION
 
-            assert _future_A > 0 and _future_A < MAX_A
-            if _future_A_p < _initial_A:
-                assert _future_A_p * MAX_A_CHANGE >= _initial_A
-            else:
-                assert _future_A_p <= _initial_A * MAX_A_CHANGE
+```vyper 
+A_PRECISION: constant(uint256) = 100
+MAX_A: constant(uint256) = 10 **6
+MAX_A_CHANGE: constant(uint256) = 10
 
-            self.initial_A = _initial_A
-            self.future_A = _future_A_p
-            self.initial_A_time = block.timestamp
-            self.future_A_time = _future_time
+MIN_RAMP_TIME: constant(uint256) = 86400
 
-            log RampA(_initial_A, _future_A_p, block.timestamp, _future_time)
-        ```
+event RampA:
+    old_A: uint256
+    new_A: uint256
+    initial_time: uint256
+    future_time: uint256
 
-    === "Example"
+@external
+def ramp_A(_future_A: uint256, _future_time: uint256):
+    assert msg.sender == factory.admin()  # dev: only owner
+    assert block.timestamp >= self.initial_A_time + MIN_RAMP_TIME
+    assert _future_time >= block.timestamp + MIN_RAMP_TIME  # dev: insufficient time
 
-        ```shell
-        >>> StableSwap.ramp_A('todo')
-        'todo'
-        ```
+    _initial_A: uint256 = self._A()
+    _future_A_p: uint256 = _future_A * A_PRECISION
 
+    assert _future_A > 0 and _future_A < MAX_A
+    if _future_A_p < _initial_A:
+        assert _future_A_p * MAX_A_CHANGE >= _initial_A
+    else:
+        assert _future_A_p <= _initial_A * MAX_A_CHANGE
+
+    self.initial_A = _initial_A
+    self.future_A = _future_A_p
+    self.initial_A_time = block.timestamp
+    self.future_A_time = _future_time
+
+    log RampA(_initial_A, _future_A_p, block.timestamp, _future_time)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> StableSwap.ramp_A('todo')
+'todo'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `stop_ramp_A`
-!!! description "`StableSwap.stop_ramp_A():`"
+:::description[`StableSwap.stop_ramp_A():`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the Factory.
 
-    Function to immediately stop the ramping A. The current value during the ramping process will be finalized as `A`.
+:::guard[Guarded Method]
 
-    Emits: `StopRampA`
+This function is only callable by the `admin` of the Factory.
 
-    ??? quote "Source code"
 
-        ```vyper
-        event StopRampA:
-            A: uint256
-            t: uint256
+:::
 
-        @external
-        def stop_ramp_A():
-            assert msg.sender == factory.admin()  # dev: only owner
+Function to immediately stop the ramping A. The current value during the ramping process will be finalized as `A`.
 
-            current_A: uint256 = self._A()
-            self.initial_A = current_A
-            self.future_A = current_A
-            self.initial_A_time = block.timestamp
-            self.future_A_time = block.timestamp
-            # now (block.timestamp < t1) is always False, so we return saved A
+Emits: `StopRampA`
 
-            log StopRampA(current_A, block.timestamp)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> StableSwap.stop_ramp_A()
-        ```
+```vyper
+event StopRampA:
+    A: uint256
+    t: uint256
 
+@external
+def stop_ramp_A():
+    assert msg.sender == factory.admin()  # dev: only owner
+
+    current_A: uint256 = self._A()
+    self.initial_A = current_A
+    self.future_A = current_A
+    self.initial_A_time = block.timestamp
+    self.future_A_time = block.timestamp
+    # now (block.timestamp < t1) is always False, so we return saved A
+
+    log StopRampA(current_A, block.timestamp)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> StableSwap.stop_ramp_A()
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_new_fee`
-!!! description "`StableSwap.set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):`"
+:::description[`StableSwap.set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the Factory.
-    
-    Function to set new values for `fee` and `offpeg_fee_multiplier`.
 
-    *Limitations when setting new parameters:*  
+:::guard[Guarded Method]
 
-    - `_new_fee` <= `MAX_FEE` (5000000000)  
-    - `_new_offpeg_fee_multiplier` * `_new_fee` <= `MAX_FEE` * `FEE_DENOMINATOR`  
+This function is only callable by the `admin` of the Factory.
 
-    Emits: `ApplyNewFee`
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `_new_fee` |  `uint256` | new fee |
-    | `_new_offpeg_fee_multiplier` |  `uint256` | new off-peg fee multiplier |
+:::
 
-    ??? quote "Source code"
+Function to set new values for `fee` and `offpeg_fee_multiplier`.
 
-        ```vyper 
-        MAX_FEE: constant(uint256) = 5 * 10 ** 9
-        FEE_DENOMINATOR: constant(uint256) = 10 ** 10
+*Limitations when setting new parameters:*  
 
-        event ApplyNewFee:
-            fee: uint256
-            offpeg_fee_multiplier: uint256
+- `_new_fee` &lt;= `MAX_FEE` (5000000000)
+- `_new_offpeg_fee_multiplier` * `_new_fee` &lt;= `MAX_FEE` * `FEE_DENOMINATOR`  
 
-        @external
-        def set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):
+Emits: `ApplyNewFee`
 
-            assert msg.sender == factory.admin()
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_new_fee` |  `uint256` | new fee |
+| `_new_offpeg_fee_multiplier` |  `uint256` | new off-peg fee multiplier |
 
-            # set new fee:
-            assert _new_fee <= MAX_FEE
-            self.fee = _new_fee
+<details>
+<summary>Source code</summary>
 
-            # set new offpeg_fee_multiplier:
-            assert _new_offpeg_fee_multiplier * _new_fee <= MAX_FEE * FEE_DENOMINATOR  # dev: offpeg multiplier exceeds maximum
-            self.offpeg_fee_multiplier = _new_offpeg_fee_multiplier
 
-            log ApplyNewFee(_new_fee, _new_offpeg_fee_multiplier)
-        ```
+```vyper 
+MAX_FEE: constant(uint256) = 5 * 10 **9
+FEE_DENOMINATOR: constant(uint256) = 10 **10
 
-    === "Example"
+event ApplyNewFee:
+    fee: uint256
+    offpeg_fee_multiplier: uint256
 
-        ```shell
-        >>> StableSwap.set_new_fee('todo')
-        'todo'
-        ```
+@external
+def set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):
 
+    assert msg.sender == factory.admin()
+
+    # set new fee:
+    assert _new_fee <= MAX_FEE
+    self.fee = _new_fee
+
+    # set new offpeg_fee_multiplier:
+    assert _new_offpeg_fee_multiplier * _new_fee <= MAX_FEE * FEE_DENOMINATOR  # dev: offpeg multiplier exceeds maximum
+    self.offpeg_fee_multiplier = _new_offpeg_fee_multiplier
+
+    log ApplyNewFee(_new_fee, _new_offpeg_fee_multiplier)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> StableSwap.set_new_fee('todo')
+'todo'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_ma_exp_time`
-!!! description "`StableSwap.set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):`"
+:::description[`StableSwap.set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the Factory.
 
-    Function to set the moving average window for `ma_exp_time` and `D_ma_time`.
+:::guard[Guarded Method]
 
-    *Limitations when setting new fee parameters:*  
+This function is only callable by the `admin` of the Factory.
 
-    - `_ma_exp_time` and `_D_ma_time` > 0
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `_ma_exp_time` |  `uint256` | new ma exp time |
-    | `_D_ma_time` |  `uint256` | new D ma time |
+:::
 
-    ??? quote "Source code"
+Function to set the moving average window for `ma_exp_time` and `D_ma_time`.
 
-        ```vyper 
-        @external
-        def set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):
-            """
-            @notice Set the moving average window of the price oracles.
-            @param _ma_exp_time Moving average window. It is time_in_seconds / ln(2)
-            """
-            assert msg.sender == factory.admin()  # dev: only owner
-            assert 0 not in [_ma_exp_time, _D_ma_time]
+*Limitations when setting new fee parameters:*  
 
-            self.ma_exp_time = _ma_exp_time
-            self.D_ma_time = _D_ma_time
-        ```
+- `_ma_exp_time` and `_D_ma_time` > 0
 
-    === "Example"
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_ma_exp_time` |  `uint256` | new ma exp time |
+| `_D_ma_time` |  `uint256` | new D ma time |
 
-        ```shell
-        >>> StableSwap.set_ma_exp_time('todo')
-        'todo'
-        ``` 
+<details>
+<summary>Source code</summary>
+
+
+```vyper 
+@external
+def set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):
+    """
+    @notice Set the moving average window of the price oracles.
+    @param _ma_exp_time Moving average window. It is time_in_seconds / ln(2)
+    """
+    assert msg.sender == factory.admin()  # dev: only owner
+    assert 0 not in [_ma_exp_time, _D_ma_time]
+
+    self.ma_exp_time = _ma_exp_time
+    self.D_ma_time = _D_ma_time
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> StableSwap.set_ma_exp_time('todo')
+'todo'
+``` 
+
+</TabItem>
+</Tabs>
+
+
+:::

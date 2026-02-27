@@ -1,327 +1,436 @@
-The following are methods that **may only be called by the owner of the contract,** which is the **CurveOwnershipAgent**.
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The following are methods that **may only be called by the owner of the contract,**which is the **CurveOwnershipAgent**.
 
 
-## **Adjusting Debt Ceilings**
-
-### `set_debt_ceiling`
-!!! description "`ControllerFactory.set_debt_ceiling(_to: address, debt_ceiling: uint256):`"
-
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
-
-    Function to set the debt ceiling of a market and mint the token amount given for it.
-
-    Returns: debt ceiling (`uint256`).
-
-    Emits: `MintForMarket` or `RemoveFromMarket` or `SetDebtCeiling`
-
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `_to` |  `address` | Address to set debt ceiling for |
-    | `debt_ceiling` |  `uint256` | Maximum to be allowed to mint |
-
-    ??? quote "Source code"
-
-        === "ControllerFactory.vy"
-
-            ```vyper
-            event SetDebtCeiling:
-                addr: indexed(address)
-                debt_ceiling: uint256
-
-            event MintForMarket:
-                addr: indexed(address)
-                amount: uint256
-
-            event RemoveFromMarket:
-                addr: indexed(address)
-                amount: uint256
-
-            @internal
-            def _set_debt_ceiling(addr: address, debt_ceiling: uint256, update: bool):
-                """
-                @notice Set debt ceiling for a market
-                @param addr Controller address
-                @param debt_ceiling Value for stablecoin debt ceiling
-                @param update Whether to actually update the debt ceiling (False is used for burning the residuals)
-                """
-                old_debt_residual: uint256 = self.debt_ceiling_residual[addr]
-
-                if debt_ceiling > old_debt_residual:
-                    to_mint: uint256 = debt_ceiling - old_debt_residual
-                    STABLECOIN.mint(addr, to_mint)
-                    self.debt_ceiling_residual[addr] = debt_ceiling
-                    log MintForMarket(addr, to_mint)
-
-                if debt_ceiling < old_debt_residual:
-                    diff: uint256 = min(old_debt_residual - debt_ceiling, STABLECOIN.balanceOf(addr))
-                    STABLECOIN.burnFrom(addr, diff)
-                    self.debt_ceiling_residual[addr] = old_debt_residual - diff
-                    log RemoveFromMarket(addr, diff)
-
-                if update:
-                    self.debt_ceiling[addr] = debt_ceiling
-                    log SetDebtCeiling(addr, debt_ceiling)
-
-            @external
-            @nonreentrant('lock')
-            def set_debt_ceiling(_to: address, debt_ceiling: uint256):
-                """
-                @notice Set debt ceiling of the address - mint the token amount given for it
-                @param _to Address to allow borrowing for
-                @param debt_ceiling Maximum allowed to be allowed to mint for it
-                """
-                assert msg.sender == self.admin
-                self._set_debt_ceiling(_to, debt_ceiling, True)
-            ```
-
-        === "Stablecoin.vy"
-
-            ```vyper
-            @external
-            def mint(_to: address, _value: uint256) -> bool:
-                """
-                @notice Mint `_value` amount of tokens to `_to`.
-                @dev Only callable by an account with minter privileges.
-                @param _to The account newly minted tokens are credited to.
-                @param _value The amount of tokens to mint.
-                """
-                assert msg.sender == self.minter
-                assert _to not in [self, empty(address)]
-
-                self.balanceOf[_to] += _value
-                self.totalSupply += _value
-
-                log Transfer(empty(address), _to, _value)
-                return True
-
-            @external
-            def burn(_value: uint256) -> bool:
-                """
-                @notice Burn `_value` amount of tokens.
-                @param _value The amount of tokens to burn.
-                """
-                self._burn(msg.sender, _value)
-                return True
-            ```
-
-    === "Example"
-        ```shell
-        >>> ControllerFactory.set_debt_ceiling(20000000000000000000000000)
-        ```
+## **Adjusting Debt Ceilings**### `set_debt_ceiling`
+:::description[`ControllerFactory.set_debt_ceiling(_to: address, debt_ceiling: uint256):`]
 
 
+:::guard[Guarded Method]
 
-## **Fee Receiver**
+This function is only callable by the `admin` of the contract.
 
-### `set_fee_receiver`
-!!! description "`ControllerFactory.set_fee_receiver(fee_receiver: address):`"
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
+:::
 
-    Function to set the fee receiver address.
+Function to set the debt ceiling of a market and mint the token amount given for it.
 
-    Emits: `SetFeeReceiver`
+Returns: debt ceiling (`uint256`).
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `fee_receiver` |  `address` | Address of the receiver |
+Emits: `MintForMarket` or `RemoveFromMarket` or `SetDebtCeiling`
 
-    ??? quote "Source code"
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_to` |  `address` | Address to set debt ceiling for |
+| `debt_ceiling` |  `uint256` | Maximum to be allowed to mint |
 
-        ```vyper
-        event SetFeeReceiver:
-            fee_receiver: address
+<details>
+<summary>Source code</summary>
 
-        fee_receiver: public(address)
 
-        @external
-        @nonreentrant('lock')
-        def set_fee_receiver(fee_receiver: address):
-            """
-            @notice Set fee receiver who earns interest (DAO)
-            @param fee_receiver Address of the receiver
-            """
-            assert msg.sender == self.admin
-            assert fee_receiver != empty(address)
-            self.fee_receiver = fee_receiver
-            log SetFeeReceiver(fee_receiver)
-        ```
+<Tabs>
+<TabItem value="controllerfactory-vy" label="ControllerFactory.vy">
 
-    === "Example"
-        ```shell
-        >>> ControllerFactory.set_fee_receiver("0xeCb456EA5365865EbAb8a2661B0c503410e9B347")
-        ```
 
+```vyper
+event SetDebtCeiling:
+    addr: indexed(address)
+    debt_ceiling: uint256
+
+event MintForMarket:
+    addr: indexed(address)
+    amount: uint256
+
+event RemoveFromMarket:
+    addr: indexed(address)
+    amount: uint256
+
+@internal
+def _set_debt_ceiling(addr: address, debt_ceiling: uint256, update: bool):
+    """
+    @notice Set debt ceiling for a market
+    @param addr Controller address
+    @param debt_ceiling Value for stablecoin debt ceiling
+    @param update Whether to actually update the debt ceiling (False is used for burning the residuals)
+    """
+    old_debt_residual: uint256 = self.debt_ceiling_residual[addr]
+
+    if debt_ceiling > old_debt_residual:
+        to_mint: uint256 = debt_ceiling - old_debt_residual
+        STABLECOIN.mint(addr, to_mint)
+        self.debt_ceiling_residual[addr] = debt_ceiling
+        log MintForMarket(addr, to_mint)
+
+    if debt_ceiling < old_debt_residual:
+        diff: uint256 = min(old_debt_residual - debt_ceiling, STABLECOIN.balanceOf(addr))
+        STABLECOIN.burnFrom(addr, diff)
+        self.debt_ceiling_residual[addr] = old_debt_residual - diff
+        log RemoveFromMarket(addr, diff)
+
+    if update:
+        self.debt_ceiling[addr] = debt_ceiling
+        log SetDebtCeiling(addr, debt_ceiling)
+
+@external
+@nonreentrant('lock')
+def set_debt_ceiling(_to: address, debt_ceiling: uint256):
+    """
+    @notice Set debt ceiling of the address - mint the token amount given for it
+    @param _to Address to allow borrowing for
+    @param debt_ceiling Maximum allowed to be allowed to mint for it
+    """
+    assert msg.sender == self.admin
+    self._set_debt_ceiling(_to, debt_ceiling, True)
+```
+
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="stablecoin-vy" label="Stablecoin.vy">
+
+
+```vyper
+@external
+def mint(_to: address, _value: uint256) -> bool:
+    """
+    @notice Mint `_value` amount of tokens to `_to`.
+    @dev Only callable by an account with minter privileges.
+    @param _to The account newly minted tokens are credited to.
+    @param _value The amount of tokens to mint.
+    """
+    assert msg.sender == self.minter
+    assert _to not in [self, empty(address)]
+
+    self.balanceOf[_to] += _value
+    self.totalSupply += _value
+
+    log Transfer(empty(address), _to, _value)
+    return True
+
+@external
+def burn(_value: uint256) -> bool:
+    """
+    @notice Burn `_value` amount of tokens.
+    @param _value The amount of tokens to burn.
+    """
+    self._burn(msg.sender, _value)
+    return True
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> ControllerFactory.set_debt_ceiling(20000000000000000000000000)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
+
+## **Fee Receiver**### `set_fee_receiver`
+:::description[`ControllerFactory.set_fee_receiver(fee_receiver: address):`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the contract.
+
+
+:::
+
+Function to set the fee receiver address.
+
+Emits: `SetFeeReceiver`
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `fee_receiver` |  `address` | Address of the receiver |
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+event SetFeeReceiver:
+    fee_receiver: address
+
+fee_receiver: public(address)
+
+@external
+@nonreentrant('lock')
+def set_fee_receiver(fee_receiver: address):
+    """
+    @notice Set fee receiver who earns interest (DAO)
+    @param fee_receiver Address of the receiver
+    """
+    assert msg.sender == self.admin
+    assert fee_receiver != empty(address)
+    self.fee_receiver = fee_receiver
+    log SetFeeReceiver(fee_receiver)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> ControllerFactory.set_fee_receiver("0xeCb456EA5365865EbAb8a2661B0c503410e9B347")
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `collect_fees_above_ceiling`
-!!! description "`ControllerFactory.collect_fees_above_ceiling(_to: address):`"
-
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
-
-    Function to claim fees above the debt ceiling. This function will automatically increase the debt ceiling if there is not enough to claim admin fees.
-
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `_to` |  `address` | Address of the controller |
-
-    ??? quote "Source code"
-
-        ```vyper
-        @external
-        @nonreentrant('lock')
-        def collect_fees_above_ceiling(_to: address):
-            """
-            @notice If the receiver is the controller - increase the debt ceiling if it's not enough to claim admin fees
-                    and claim them
-            @param _to Address of the controller
-            """
-            assert msg.sender == self.admin
-            old_debt_residual: uint256 = self.debt_ceiling_residual[_to]
-            assert self.debt_ceiling[_to] > 0 or old_debt_residual > 0
-
-            admin_fees: uint256 = Controller(_to).total_debt() + Controller(_to).redeemed() - Controller(_to).minted()
-            b: uint256 = STABLECOIN.balanceOf(_to)
-            if admin_fees > b:
-                to_mint: uint256 = admin_fees - b
-                STABLECOIN.mint(_to, to_mint)
-                self.debt_ceiling_residual[_to] = old_debt_residual + to_mint
-            Controller(_to).collect_fees()
-        ```
-
-    === "Example"
-        ```shell
-        >>> ControllerFactory.collect_fees_above_ceiling("0x100dAa78fC509Db39Ef7D04DE0c1ABD299f4C6CE")
-        ```
+:::description[`ControllerFactory.collect_fees_above_ceiling(_to: address):`]
 
 
+:::guard[Guarded Method]
 
-## **Implementations (Blueprint Contracts)**
-
-### `set_implementations`
-!!! description "`ControllerFactory.set_implementations(controller: address, amm: address):`"
-
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
-
-    Function to set new implementations (blueprints) for Controller and AMM. Setting new implementations for Controller and AMM does not affect the existing ones.
-
-    Emits: `SetImplementations`
-
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `controller` |  `Address` | Address of the controller blueprint |
-    | `amm` |  `Address` | Address of the amm blueprint |
-
-    ??? quote "Source code"
-
-        ```vyper
-        event SetImplementations:
-            amm: address
-            controller: address
-
-        controller_implementation: public(address)
-        amm_implementation: public(address)
-
-        @external
-        @nonreentrant('lock')
-        def set_implementations(controller: address, amm: address):
-            """
-            @notice Set new implementations (blueprints) for controller and amm. Doesn't change existing ones
-            @param controller Address of the controller blueprint
-            @param amm Address of the AMM blueprint
-            """
-            assert msg.sender == self.admin
-            assert controller != empty(address)
-            assert amm != empty(address)
-            self.controller_implementation = controller
-            self.amm_implementation = amm
-            log SetImplementations(amm, controller)
-        ```
-
-    === "Example"
-        ```shell
-        >>> ControllerFactory.set_implementation("new controller implementation, new amm implementation")
-        ``` 
+This function is only callable by the `admin` of the contract.
 
 
+:::
 
-## **Admin Ownership**
+Function to claim fees above the debt ceiling. This function will automatically increase the debt ceiling if there is not enough to claim admin fees.
 
-### `admin`
-!!! description "`ControllerFactory.admin() -> address: view`"
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_to` |  `address` | Address of the controller |
 
-    Getter for the admin of the contract.
+<details>
+<summary>Source code</summary>
 
-    Returns: admin (`address`).
 
-    ??? quote "Source code"
+```vyper
+@external
+@nonreentrant('lock')
+def collect_fees_above_ceiling(_to: address):
+    """
+    @notice If the receiver is the controller - increase the debt ceiling if it's not enough to claim admin fees
+            and claim them
+    @param _to Address of the controller
+    """
+    assert msg.sender == self.admin
+    old_debt_residual: uint256 = self.debt_ceiling_residual[_to]
+    assert self.debt_ceiling[_to] > 0 or old_debt_residual > 0
 
-        ```vyper
-        admin: public(address)
+    admin_fees: uint256 = Controller(_to).total_debt() + Controller(_to).redeemed() - Controller(_to).minted()
+    b: uint256 = STABLECOIN.balanceOf(_to)
+    if admin_fees > b:
+        to_mint: uint256 = admin_fees - b
+        STABLECOIN.mint(_to, to_mint)
+        self.debt_ceiling_residual[_to] = old_debt_residual + to_mint
+    Controller(_to).collect_fees()
+```
 
-        @external
-        def __init__(stablecoin: ERC20,
-                    admin: address,
-                    fee_receiver: address,
-                    weth: address):
-            """
-            @notice Factory which creates both controllers and AMMs from blueprints
-            @param stablecoin Stablecoin address
-            @param admin Admin of the factory (ideally DAO)
-            @param fee_receiver Receiver of interest and admin fees
-            @param weth Address of WETH contract address
-            """
-            STABLECOIN = stablecoin
-            self.admin = admin
-            self.fee_receiver = fee_receiver
-            WETH = weth
-        ```
 
-    === "Example"
-        ```shell
-        >>> ControllerFactory.admin()
-        '0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
-        ```
+</details>
 
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> ControllerFactory.collect_fees_above_ceiling("0x100dAa78fC509Db39Ef7D04DE0c1ABD299f4C6CE")
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
+
+## **Implementations (Blueprint Contracts)**### `set_implementations`
+:::description[`ControllerFactory.set_implementations(controller: address, amm: address):`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the contract.
+
+
+:::
+
+Function to set new implementations (blueprints) for Controller and AMM. Setting new implementations for Controller and AMM does not affect the existing ones.
+
+Emits: `SetImplementations`
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `controller` |  `Address` | Address of the controller blueprint |
+| `amm` |  `Address` | Address of the amm blueprint |
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+event SetImplementations:
+    amm: address
+    controller: address
+
+controller_implementation: public(address)
+amm_implementation: public(address)
+
+@external
+@nonreentrant('lock')
+def set_implementations(controller: address, amm: address):
+    """
+    @notice Set new implementations (blueprints) for controller and amm. Doesn't change existing ones
+    @param controller Address of the controller blueprint
+    @param amm Address of the AMM blueprint
+    """
+    assert msg.sender == self.admin
+    assert controller != empty(address)
+    assert amm != empty(address)
+    self.controller_implementation = controller
+    self.amm_implementation = amm
+    log SetImplementations(amm, controller)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> ControllerFactory.set_implementation("new controller implementation, new amm implementation")
+``` 
+
+
+</TabItem>
+</Tabs>
+
+
+:::
+
+## **Admin Ownership**### `admin`
+:::description[`ControllerFactory.admin() -> address: view`]
+
+
+Getter for the admin of the contract.
+
+Returns: admin (`address`).
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+admin: public(address)
+
+@external
+def __init__(stablecoin: ERC20,
+            admin: address,
+            fee_receiver: address,
+            weth: address):
+    """
+    @notice Factory which creates both controllers and AMMs from blueprints
+    @param stablecoin Stablecoin address
+    @param admin Admin of the factory (ideally DAO)
+    @param fee_receiver Receiver of interest and admin fees
+    @param weth Address of WETH contract address
+    """
+    STABLECOIN = stablecoin
+    self.admin = admin
+    self.fee_receiver = fee_receiver
+    WETH = weth
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> ControllerFactory.admin()
+'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_admin`
-!!! description "`ControllerFactory.set_admin(admin: address):`"
+:::description[`ControllerFactory.set_admin(admin: address):`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
 
-    Function to set the admin of the contract.
+:::guard[Guarded Method]
 
-    Emits: `SetAdmin`
+This function is only callable by the `admin` of the contract.
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `admin` |  `address` | New admin |
 
-    ??? quote "Source code"
+:::
 
-        ```vyper
-        event SetAdmin:
-            admin: address
+Function to set the admin of the contract.
 
-        admin: public(address)
+Emits: `SetAdmin`
 
-        @external
-        @nonreentrant('lock')
-        def set_admin(admin: address):
-            """
-            @notice Set admin of the factory (should end up with DAO)
-            @param admin Address of the admin
-            """
-            assert msg.sender == self.admin
-            self.admin = admin
-            log SetAdmin(admin)
-        ```
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `admin` |  `address` | New admin |
 
-    === "Example"
-        ```shell
-        >>> ControllerFactory.set_admin("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")
-        ```
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+event SetAdmin:
+    admin: address
+
+admin: public(address)
+
+@external
+@nonreentrant('lock')
+def set_admin(admin: address):
+    """
+    @notice Set admin of the factory (should end up with DAO)
+    @param admin Address of the admin
+    """
+    assert msg.sender == self.admin
+    self.admin = admin
+    log SetAdmin(admin)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+```shell
+>>> ControllerFactory.set_admin("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::

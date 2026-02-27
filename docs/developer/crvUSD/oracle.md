@@ -1,48 +1,60 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 As crvusd markets use interal oracles, they utilizes in-house liquidity pools to aggregate the price of collateral. But there is a possibility to use Chainlink oracle prices as safety limits.
 
-!!!warning
-    Every market has its own price oracle contract, which can be fetched by calling `price_oracle_contract` within the controller of the market. The [wstETH oracle](https://etherscan.io/address/0xc1793A29609ffFF81f10139fa0A7A444c9e106Ad#code) will be used for the purpose of this documentation. Please be aware that oracle contracts can vary based on the collateral token.
+:::warning
+
+Every market has its own price oracle contract, which can be fetched by calling `price_oracle_contract` within the controller of the market. The [wstETH oracle](https://etherscan.io/address/0xc1793A29609ffFF81f10139fa0A7A444c9e106Ad#code) will be used for the purpose of this documentation. Please be aware that oracle contracts can vary based on the collateral token.
 
 
-!!!tip
-    The formulas below use slightly different terminologies than the code to make them easier to read.  
-    For abbreviations, see [here](./oracle.md#terminology-used-in-code).
+:::
+
+:::tip
+
+The formulas below use slightly different terminologies than the code to make them easier to read.  
+For abbreviations, see [here](./oracle.md#terminology-used-in-code).
 
 
-## **EMA of TVL**
+:::
 
-`_ema_tvl()` calculates the *exponential moving average* (EMA) of the *total value locked* (TVL) for `TRICRYPTO` pools.
+## **EMA of TVL**`_ema_tvl()` calculates the *exponential moving average* (EMA) of the *total value locked* (TVL) for `TRICRYPTO` pools.
 
 This value is subsequently used in the internal function `_raw_price()` to compute the *weighted price of ETH*.
 
 
-??? quote "`_ema_tvl() -> uint256[N_POOLS]:`"
+<details>
+<summary>`_ema_tvl() -&gt; uint256[N_POOLS]:`</summary>
 
-    ```vyper
-    last_timestamp: public(uint256)
-    last_tvl: public(uint256[N_POOLS])
-    TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 
-    @internal
-    @view
-    def _ema_tvl() -> uint256[N_POOLS]:
-        last_timestamp: uint256 = self.last_timestamp
-        last_tvl: uint256[N_POOLS] = self.last_tvl
+```vyper
+last_timestamp: public(uint256)
+last_tvl: public(uint256[N_POOLS])
+TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 
-        if last_timestamp < block.timestamp:
-            alpha: uint256 = self.exp(- convert((block.timestamp - last_timestamp) * 10**18 / TVL_MA_TIME, int256))
-            # alpha = 1.0 when dt = 0
-            # alpha = 0.0 when dt = inf
-            for i in range(N_POOLS):
-                tvl: uint256 = TRICRYPTO[i].totalSupply() * TRICRYPTO[i].virtual_price() / 10**18
-                last_tvl[i] = (tvl * (10**18 - alpha) + last_tvl[i] * alpha) / 10**18
+@internal
+@view
+def _ema_tvl() -> uint256[N_POOLS]:
+    last_timestamp: uint256 = self.last_timestamp
+    last_tvl: uint256[N_POOLS] = self.last_tvl
 
-        return last_tvl
-    ```
+    if last_timestamp < block.timestamp:
+        alpha: uint256 = self.exp(- convert((block.timestamp - last_timestamp) * 10**18 / TVL_MA_TIME, int256))
+        # alpha = 1.0 when dt = 0
+        # alpha = 0.0 when dt = inf
+        for i in range(N_POOLS):
+            tvl: uint256 = TRICRYPTO[i].totalSupply() * TRICRYPTO[i].virtual_price() / 10**18
+            last_tvl[i] = (tvl * (10**18 - alpha) + last_tvl[i] * alpha) / 10**18
 
-$$tvl_{i} = \frac{TS_i * VP_i}{10^{18}}$$
+    return last_tvl
+```
 
-$$\text{last_tvl}_i = \frac{tvl_i * (10^{18} - \alpha) + \text{last_tvl}_i * \alpha}{10^{18}}$$
+
+</details>
+
+$$tvl_\{i\} = \frac\{TS_i * VP_i\}\{10^\{18\}\}$$
+
+$$\text\{last_tvl\}_i = \frac\{tvl_i * (10^\{18\} - \alpha) + \text\{last_tvl\}_i * \alpha\}\{10^\{18\}\}$$
 
 
 $tvl_i = \text{TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]`  
@@ -52,129 +64,159 @@ $\text{last_tvl}_i = \text{smoothed TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]`
 
 
 ### `ema_tvl`
-!!! description "`Oracle.ema_tvl() -> uint256[N_POOLS]:`"
+:::description[`Oracle.ema_tvl() -> uint256[N_POOLS]:`]
 
-    Function to calculate the Total-Value-Locked (TVL) Exponential-Moving-Average (EMA) of the `TRICRYPTO` pools. 
 
-    Returns: `last_tvl` (`uint256[N_POOLS]`).
+Function to calculate the Total-Value-Locked (TVL) Exponential-Moving-Average (EMA) of the `TRICRYPTO` pools. 
 
-    ??? quote "Source code"
+Returns: `last_tvl` (`uint256[N_POOLS]`).
 
-        ```vyper hl_lines="3 4 8 20"
-        @external
-        @view
-        def ema_tvl() -> uint256[N_POOLS]:
-            return self._ema_tvl()
+<details>
+<summary>Source code</summary>
 
-        @internal
-        @view
-        def _ema_tvl() -> uint256[N_POOLS]:
-            last_timestamp: uint256 = self.last_timestamp
-            last_tvl: uint256[N_POOLS] = self.last_tvl
 
-            if last_timestamp < block.timestamp:
-                alpha: uint256 = self.exp(- convert((block.timestamp - last_timestamp) * 10**18 / TVL_MA_TIME, int256))
-                # alpha = 1.0 when dt = 0
-                # alpha = 0.0 when dt = inf
-                for i in range(N_POOLS):
-                    tvl: uint256 = TRICRYPTO[i].totalSupply() * TRICRYPTO[i].virtual_price() / 10**18
-                    last_tvl[i] = (tvl * (10**18 - alpha) + last_tvl[i] * alpha) / 10**18
+```vyper hl_lines="3 4 8 20"
+@external
+@view
+def ema_tvl() -> uint256[N_POOLS]:
+    return self._ema_tvl()
 
-            return last_tvl
-        ```
+@internal
+@view
+def _ema_tvl() -> uint256[N_POOLS]:
+    last_timestamp: uint256 = self.last_timestamp
+    last_tvl: uint256[N_POOLS] = self.last_tvl
 
-    === "Example"
+    if last_timestamp < block.timestamp:
+        alpha: uint256 = self.exp(- convert((block.timestamp - last_timestamp) * 10**18 / TVL_MA_TIME, int256))
+        # alpha = 1.0 when dt = 0
+        # alpha = 0.0 when dt = inf
+        for i in range(N_POOLS):
+            tvl: uint256 = TRICRYPTO[i].totalSupply() * TRICRYPTO[i].virtual_price() / 10**18
+            last_tvl[i] = (tvl * (10**18 - alpha) + last_tvl[i] * alpha) / 10**18
 
-        ```shell
-        >>> Oracle.ema_tvl()
-        38652775551183170655949, 40849321168337010409906
-        ```
+    return last_tvl
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.ema_tvl()
+38652775551183170655949, 40849321168337010409906
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `last_tvl`
-!!! description "`Oracle.last_tvl(arg0: uint256) -> uint256:`"
-
-    Getter for the `last_tvl` of the tricrypto pool at index `arg0`.
-
-    Returns: `last_tvl` (`uint256[N_POOLS]`).
-
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `arg0` |  `uint256` | Index |
-
-    ??? quote "Source code"
-
-        ```vyper hl_lines="3"
-        last_tvl: public(uint256[N_POOLS])
-        ```
-
-    === "Example"
-
-        ```shell
-        >>> Oracle.last_tvl(0)
-        38650114241563018578505
-        ```
+:::description[`Oracle.last_tvl(arg0: uint256) -> uint256:`]
 
 
-## **Calculate Raw Price**
+Getter for the `last_tvl` of the tricrypto pool at index `arg0`.
 
-The internal `_raw_price()` function calculates the *raw price of the collateral token*.
+Returns: `last_tvl` (`uint256[N_POOLS]`).
 
-??? quote "`_raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:`"
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `arg0` |  `uint256` | Index |
 
-    ```vyper
-    @internal
-    @view
-    def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
-        weighted_price: uint256 = 0
-        weights: uint256 = 0
-        for i in range(N_POOLS):
-            p_crypto_r: uint256 = TRICRYPTO[i].price_oracle(TRICRYPTO_IX[i])   # d_usdt/d_eth
-            p_stable_r: uint256 = STABLESWAP[i].price_oracle()                 # d_usdt/d_st
-            p_stable_agg: uint256 = agg_price                                  # d_usd/d_st
-            if IS_INVERSE[i]:
-                p_stable_r = 10**36 / p_stable_r
-            weight: uint256 = tvls[i]
-            # Prices are already EMA but weights - not so much
-            weights += weight
-            weighted_price += p_crypto_r * p_stable_agg / p_stable_r * weight     # d_usd/d_eth
-        crv_p: uint256 = weighted_price / weights
-
-        use_chainlink: bool = self.use_chainlink
-
-        # Limit ETH price
-        if use_chainlink:
-            chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_ETH.latestRoundData()
-            if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
-                chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_ETH
-                lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
-                upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
-                crv_p = min(max(crv_p, lower), upper)
-
-        p_staked: uint256 = STAKEDSWAP.price_oracle()  # d_eth / d_steth
-
-        # Limit STETH price
-        if use_chainlink:
-            chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_STETH.latestRoundData()
-            if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
-                chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_STETH
-                lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
-                upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
-                p_staked = min(max(p_staked, lower), upper)
-
-        p_staked = min(p_staked, 10**18) * WSTETH.stEthPerToken() / 10**18  # d_eth / d_wsteth
-
-        return p_staked * crv_p / 10**18
-    ```   
+<details>
+<summary>Source code</summary>
 
 
-$$price_{weighted} = (\frac{price_{eth} * price_{crvusd}}{price_{usd}}) * weight$$
+```vyper hl_lines="3"
+last_tvl: public(uint256[N_POOLS])
+```
 
-$$totalPrice_{weighted} = \frac{\sum{price_{weighted}}}{\sum{weight}}$$
 
-$$price_{stETH} = min(price_{stETH}, 10^{18}) * \frac{rate_{wstETH}}{10^{18}}$$
+</details>
 
-$$price = price_{stETH} * totalPrice_{weighted}$$
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.last_tvl(0)
+38650114241563018578505
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
+
+## **Calculate Raw Price**The internal `_raw_price()` function calculates the *raw price of the collateral token*.
+
+<details>
+<summary>`_raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -&gt; uint256:`</summary>
+
+
+```vyper
+@internal
+@view
+def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
+    weighted_price: uint256 = 0
+    weights: uint256 = 0
+    for i in range(N_POOLS):
+        p_crypto_r: uint256 = TRICRYPTO[i].price_oracle(TRICRYPTO_IX[i])   # d_usdt/d_eth
+        p_stable_r: uint256 = STABLESWAP[i].price_oracle()                 # d_usdt/d_st
+        p_stable_agg: uint256 = agg_price                                  # d_usd/d_st
+        if IS_INVERSE[i]:
+            p_stable_r = 10**36 / p_stable_r
+        weight: uint256 = tvls[i]
+        # Prices are already EMA but weights - not so much
+        weights += weight
+        weighted_price += p_crypto_r * p_stable_agg / p_stable_r * weight     # d_usd/d_eth
+    crv_p: uint256 = weighted_price / weights
+
+    use_chainlink: bool = self.use_chainlink
+
+    # Limit ETH price
+    if use_chainlink:
+        chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_ETH.latestRoundData()
+        if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
+            chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_ETH
+            lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
+            upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
+            crv_p = min(max(crv_p, lower), upper)
+
+    p_staked: uint256 = STAKEDSWAP.price_oracle()  # d_eth / d_steth
+
+    # Limit STETH price
+    if use_chainlink:
+        chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_STETH.latestRoundData()
+        if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
+            chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_STETH
+            lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
+            upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
+            p_staked = min(max(p_staked, lower), upper)
+
+    p_staked = min(p_staked, 10**18) * WSTETH.stEthPerToken() / 10**18  # d_eth / d_wsteth
+
+    return p_staked * crv_p / 10**18
+```   
+
+
+</details>
+
+$$price_\{weighted\} = (\frac\{price_\{eth\} * price_\{crvusd\}\}\{price_\{usd\}\}) * weight$$
+
+$$totalPrice_\{weighted\} = \frac\{\sum\{price_\{weighted\}\}\}\{\sum\{weight\}\}$$
+
+$$price_\{stETH\} = min(price_\{stETH\}, 10^\{18\}) * \frac\{rate_\{wstETH\}\}\{10^\{18\}\}$$
+
+$$price = price_\{stETH\} * totalPrice_\{weighted\}$$
 
 $price_{weighted} =$ weighted price of ETH  
 $totalPrice_{weighted} =$ total weighted price of ETH  
@@ -186,137 +228,180 @@ $rate_{wstETH} =$ amount of stETH for 1 wstETH
 
 
 ### `raw_price`
-!!! description "`Oracle.raw_price() -> uint256: view`"
+:::description[`Oracle.raw_price() -> uint256: view`]
 
-    Function to calculate the raw price.
-    
-    Returns: raw price (`uint256`).
 
-    ??? quote "Source code"
+Function to calculate the raw price.
 
-        ```vyper hl_lines="1 16 18"
-        @external
-        @view
-        def raw_price() -> uint256:
-            return self._raw_price()
+Returns: raw price (`uint256`).
 
-        @internal
-        @view
-        def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
-            weighted_price: uint256 = 0
-            weights: uint256 = 0
-            for i in range(N_POOLS):
-                p_crypto_r: uint256 = TRICRYPTO[i].price_oracle(TRICRYPTO_IX[i])   # d_usdt/d_eth
-                p_stable_r: uint256 = STABLESWAP[i].price_oracle()                 # d_usdt/d_st
-                p_stable_agg: uint256 = agg_price                                  # d_usd/d_st
-                if IS_INVERSE[i]:   
-                    p_stable_r = 10**36 / p_stable_r
-                weight: uint256 = tvls[i]
-                # Prices are already EMA but weights - not so much
-                weights += weight
-                weighted_price += p_crypto_r * p_stable_agg / p_stable_r * weight     # d_usd/d_eth
-            crv_p: uint256 = weighted_price / weights
+<details>
+<summary>Source code</summary>
 
-            use_chainlink: bool = self.use_chainlink
 
-            # Limit ETH price
-            if use_chainlink:
-                chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_ETH.latestRoundData()
-                if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
-                    chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_ETH
-                    lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
-                    upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
-                    crv_p = min(max(crv_p, lower), upper)
+```vyper hl_lines="1 16 18"
+@external
+@view
+def raw_price() -> uint256:
+    return self._raw_price()
 
-            p_staked: uint256 = STAKEDSWAP.price_oracle()  # d_eth / d_steth
+@internal
+@view
+def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
+    weighted_price: uint256 = 0
+    weights: uint256 = 0
+    for i in range(N_POOLS):
+        p_crypto_r: uint256 = TRICRYPTO[i].price_oracle(TRICRYPTO_IX[i])   # d_usdt/d_eth
+        p_stable_r: uint256 = STABLESWAP[i].price_oracle()                 # d_usdt/d_st
+        p_stable_agg: uint256 = agg_price                                  # d_usd/d_st
+        if IS_INVERSE[i]:   
+            p_stable_r = 10**36 / p_stable_r
+        weight: uint256 = tvls[i]
+        # Prices are already EMA but weights - not so much
+        weights += weight
+        weighted_price += p_crypto_r * p_stable_agg / p_stable_r * weight     # d_usd/d_eth
+    crv_p: uint256 = weighted_price / weights
 
-            # Limit STETH price
-            if use_chainlink:
-                chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_STETH.latestRoundData()
-                if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
-                    chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_STETH
-                    lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
-                    upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
-                    p_staked = min(max(p_staked, lower), upper)
+    use_chainlink: bool = self.use_chainlink
 
-            p_staked = min(p_staked, 10**18) * WSTETH.stEthPerToken() / 10**18  # d_eth / d_wsteth
+    # Limit ETH price
+    if use_chainlink:
+        chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_ETH.latestRoundData()
+        if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
+            chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_ETH
+            lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
+            upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
+            crv_p = min(max(crv_p, lower), upper)
 
-            return p_staked * crv_p / 10**18
-        ```
+    p_staked: uint256 = STAKEDSWAP.price_oracle()  # d_eth / d_steth
 
-    === "Example"
+    # Limit STETH price
+    if use_chainlink:
+        chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_STETH.latestRoundData()
+        if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
+            chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_STETH
+            lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
+            upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
+            p_staked = min(max(p_staked, lower), upper)
 
-        ```shell
-        >>> Oracle.raw_price()
-        1970446024043370547236
-        ```
+    p_staked = min(p_staked, 10**18) * WSTETH.stEthPerToken() / 10**18  # d_eth / d_wsteth
 
-## **Chainlink Limits**
-The oracle contracts have the option to utilize Chainlink prices, which serve as safety limits. When enabled, these limits are triggered if the Chainlink price deviates by more than 1.5% (represented by `BOUND_SIZE`) from the internal price oracles.
+    return p_staked * crv_p / 10**18
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.raw_price()
+1970446024043370547236
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
+
+## **Chainlink Limits**The oracle contracts have the option to utilize Chainlink prices, which serve as safety limits. When enabled, these limits are triggered if the Chainlink price deviates by more than 1.5% (represented by `BOUND_SIZE`) from the internal price oracles.
 
 Chainlink limits can be turned on and off by calling `set_use_chainlink(do_it: bool)`, which can only be done by the admin of the Factory contract.
 
-<figure markdown>
-  ![](../assets/images/oracle_chainlink_vs_internal.png){ width="400" }
+<figure>
+  <img src="../assets/images/oracle_chainlink_vs_internal.png" alt="" width="400" />
   <figcaption>Chainlink vs Internal Oracle</figcaption>
 </figure>
 
 
 ### `use_chainlink`
-!!! description "`Oracle.use_chainlink() -> bool:`"
+:::description[`Oracle.use_chainlink() -> bool:`]
 
-    Getter method to check if chainlink oracles are turned on or off.
 
-    Returns: True or False (`bool`).
+Getter method to check if chainlink oracles are turned on or off.
 
-    ??? quote "Source code"
+Returns: True or False (`bool`).
 
-        ```vyper hl_lines="1"
-        use_chainlink: public(bool)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.use_chainlink()
-        'False'
-        ```
+```vyper hl_lines="1"
+use_chainlink: public(bool)
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.use_chainlink()
+'False'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_use_chainlink`
-!!! description "`Oracle.set_use_chainlink(do_it: bool):`"
-
-    !!!guard "Guarded Method" 
-        This function is only callable by the `admin` of the Factory contract.
-
-    Function to toggle the usage of chainlink limits. 
-
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `do_it` |  `bool` | Bool to toggle the usage of chainlink oracles |
-
-    ??? quote "Source code"
-
-        ```vyper hl_lines="1 4 6"
-        use_chainlink: public(bool)
-
-        @external
-        def set_use_chainlink(do_it: bool):
-            assert msg.sender == FACTORY.admin()
-            self.use_chainlink = do_it
-        ```
-
-    === "Example"
-
-        ```shell
-        >>> Oracle.set_use_chainlink('False')
-        ```
+:::description[`Oracle.set_use_chainlink(do_it: bool):`]
 
 
+:::guard[Guarded Method]
 
-## **Terminology used in Code**
+This function is only callable by the `admin` of the Factory contract.
 
-| terminology used in code | |
+
+:::
+
+Function to toggle the usage of chainlink limits. 
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `do_it` |  `bool` | Bool to toggle the usage of chainlink oracles |
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper hl_lines="1 4 6"
+use_chainlink: public(bool)
+
+@external
+def set_use_chainlink(do_it: bool):
+    assert msg.sender == FACTORY.admin()
+    self.use_chainlink = do_it
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.set_use_chainlink('False')
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
+
+## **Terminology used in Code**| terminology used in code | |
 |-----------|----------------|
 | $\alpha$ | `alpha` |
 | $\exp$  | `exp(power: int256) -> uint256:` |
@@ -329,366 +414,564 @@ Chainlink limits can be turned on and off by calling `set_use_chainlink(do_it: b
 | $totalETH_{price}$ | `crv_p` |
 
 
+## **Contract Info Methods**### `N_POOLS`
+:::description[`Oracle.N_POOLS() -> uint256:`]
 
-## **Contract Info Methods**
 
-### `N_POOLS`
-!!! description "`Oracle.N_POOLS() -> uint256:`"
+Getter for the number of external pools used by the oracle.
 
-    Getter for the number of external pools used by the oracle.
+Returns: number of pools (`uint256`).
 
-    Returns: number of pools (`uint256`).
+<details>
+<summary>Source code</summary>
 
-    ??? quote "Source code"
 
-        ```vyper hl_lines="1"
-        N_POOLS: public(constant(uint256)) = 2
-        ```
+```vyper hl_lines="1"
+N_POOLS: public(constant(uint256)) = 2
+```
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.N_POOLS()
-        2
-        ```
+</details>
 
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.N_POOLS()
+2
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `TRICRYPTO`
-!!! description "`Oracle.TRICRYPTO(arg0: uint256) -> uint256:`"
+:::description[`Oracle.TRICRYPTO(arg0: uint256) -> uint256:`]
 
-    Getter for the tricrypto pool at index `arg0`.
 
-    Returns: `last_tvl` (`uint256[N_POOLS]`).
+Getter for the tricrypto pool at index `arg0`.
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `arg0` |  `uint256` | Index |
+Returns: `last_tvl` (`uint256[N_POOLS]`).
 
-    ??? quote "Source code"
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `arg0` |  `uint256` | Index |
 
-        ```vyper hl_lines="1"
-        TRICRYPTO: public(immutable(Tricrypto[N_POOLS]))
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.TRICRYPTO(0)
-        '0x7F86Bf177Dd4F3494b841a37e810A34dD56c829B'
-        ```
+```vyper hl_lines="1"
+TRICRYPTO: public(immutable(Tricrypto[N_POOLS]))
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.TRICRYPTO(0)
+'0x7F86Bf177Dd4F3494b841a37e810A34dD56c829B'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `TRICRYPTO_IX`
-!!! description "`Oracle.TRICRYPTO_IX(arg0: uint256) -> uint256:`"
+:::description[`Oracle.TRICRYPTO_IX(arg0: uint256) -> uint256:`]
 
-    Getter for the index of ETH in the tricrypto pool w.r.t the coin at index 0.
 
-    Returns: Index of ETH price oracle in the tricrypto pool (`uint256`).
+Getter for the index of ETH in the tricrypto pool w.r.t the coin at index 0.
 
-    !!!tip
-        Returns 1, as ETH price oracle index in the tricrypto pool is 1. If the same index would be 0, it would return the price oracle of ETH. Their prices are all w.r.t the coin at index 0 (USDC or USDT).
+Returns: Index of ETH price oracle in the tricrypto pool (`uint256`).
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `arg0` |  `uint256` | Index of `TRICRYPTO` |
+:::tip
 
-    ??? quote "Source code"
+Returns 1, as ETH price oracle index in the tricrypto pool is 1. If the same index would be 0, it would return the price oracle of ETH. Their prices are all w.r.t the coin at index 0 (USDC or USDT).
 
-        ```vyper hl_lines="1"
-        TRICRYPTO_IX: public(immutable(uint256[N_POOLS]))
-        ```
 
-    === "Example"
+:::
 
-        ```shell
-        >>> Oracle.TRICRYPTO_IX(0)
-        1
-        ```
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `arg0` |  `uint256` | Index of `TRICRYPTO` |
 
+<details>
+<summary>Source code</summary>
+
+
+```vyper hl_lines="1"
+TRICRYPTO_IX: public(immutable(uint256[N_POOLS]))
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.TRICRYPTO_IX(0)
+1
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `STABLESWAP_AGGREGATOR`
-!!! description "`Oracle.STABLESWAP_AGGREGATOR() -> address:`"
+:::description[`Oracle.STABLESWAP_AGGREGATOR() -> address:`]
 
-    Getter for contract of the crvusd price aggregator.
 
-    Returns: contract (`address`).
+Getter for contract of the crvusd price aggregator.
 
-    ??? quote "Source code"
+Returns: contract (`address`).
 
-        ```vyper hl_lines="1"
-        STABLESWAP_AGGREGATOR: public(immutable(StableAggregator))
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.STABLESWAP_AGGREGATOR()
-        '0x18672b1b0c623a30089A280Ed9256379fb0E4E62'
-        ```
+```vyper hl_lines="1"
+STABLESWAP_AGGREGATOR: public(immutable(StableAggregator))
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.STABLESWAP_AGGREGATOR()
+'0x18672b1b0c623a30089A280Ed9256379fb0E4E62'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `STABLESWAP`
-!!! description "`Oracle.STABLESWAP(arg0: uint256) -> address:`"
+:::description[`Oracle.STABLESWAP(arg0: uint256) -> address:`]
 
-    Getter for the stableswap pool at index `arg0`., 
 
-    Returns: stableswap pool (`address`).
+Getter for the stableswap pool at index `arg0`., 
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `arg0` |  `uint256` | Index of `STABLESWAP` |
+Returns: stableswap pool (`address`).
 
-    ??? quote "Source code"
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `arg0` |  `uint256` | Index of `STABLESWAP` |
 
-        ```vyper hl_lines="1"
-        STABLESWAP: public(immutable(Stableswap[N_POOLS]))
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.STABLESWAP(0)
-        '0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E'
-        ```
+```vyper hl_lines="1"
+STABLESWAP: public(immutable(Stableswap[N_POOLS]))
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.STABLESWAP(0)
+'0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `STABLECOIN`
-!!! description "`Oracle.STABLECOIN() -> address:`"
+:::description[`Oracle.STABLECOIN() -> address:`]
 
-    Getter for the contract address of crvUSD.
 
-    Returns: crvUSD contract (`address`).
+Getter for the contract address of crvUSD.
 
-    ??? quote "Source code"
+Returns: crvUSD contract (`address`).
 
-        ```vyper hl_lines="1"
-        STABLECOIN: public(immutable(address))
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.STABLECOIN()
-        '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
-        ```
+```vyper hl_lines="1"
+STABLECOIN: public(immutable(address))
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.STABLECOIN()
+'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `FACTORY`
-!!! description "`Oracle.FACTORY() -> address:`"
+:::description[`Oracle.FACTORY() -> address:`]
 
-    Getter for the contract address of the Factory.
 
-    Returns: factory contract (`address`).
+Getter for the contract address of the Factory.
 
-    ??? quote "Source code"
+Returns: factory contract (`address`).
 
-        ```vyper hl_lines="1"
-        FACTORY: public(immutable(ControllerFactory))
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.FACTORY()
-        '0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC'
-        ```
+```vyper hl_lines="1"
+FACTORY: public(immutable(ControllerFactory))
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.FACTORY()
+'0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `BOUND_SIZE`
-!!! description "`Oracle.BOUND_SIZE() -> uint256:`"
+:::description[`Oracle.BOUND_SIZE() -> uint256:`]
 
-    Getter for the bound size of the chainlink oracle limits. This essentially is the size of the safety limits.
 
-    Returns: bound size (`uint256`).
+Getter for the bound size of the chainlink oracle limits. This essentially is the size of the safety limits.
 
-    ??? quote "Source code"
+Returns: bound size (`uint256`).
 
-        ```vyper hl_lines="1"
-        BOUND_SIZE: public(immutable(uint256))
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.BOUND_SIZE()
-        15000000000000000
-        ```
+```vyper hl_lines="1"
+BOUND_SIZE: public(immutable(uint256))
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.BOUND_SIZE()
+15000000000000000
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `STAKEDSWAP`
-!!! description "`Oracle.STAKEDSWAP() -> address:`"
+:::description[`Oracle.STAKEDSWAP() -> address:`]
 
-    Getter for the stETH/ETH stableswap pool.
 
-    Returns: pool contract (`address`).
+Getter for the stETH/ETH stableswap pool.
 
-    ??? quote "Source code"
+Returns: pool contract (`address`).
 
-        ```vyper hl_lines="1"
-        STAKEDSWAP: public(immutable(Stableswap))
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.STAKEDSWAP()
-        '0x21E27a5E5513D6e65C4f830167390997aA84843a'
-        ```
+```vyper hl_lines="1"
+STAKEDSWAP: public(immutable(Stableswap))
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.STAKEDSWAP()
+'0x21E27a5E5513D6e65C4f830167390997aA84843a'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `WSTETH`
-!!! description "`Oracle.WSTETH() -> address:`"
+:::description[`Oracle.WSTETH() -> address:`]
 
-    Getter for the wstETH contract address.
 
-    Returns: wstETH contract (`address`).
+Getter for the wstETH contract address.
 
-    ??? quote "Source code"
+Returns: wstETH contract (`address`).
 
-        ```vyper hl_lines="1"
-        WSTETH: public(immutable(wstETH))
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.WSTETH()
-        '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0'
-        ```
+```vyper hl_lines="1"
+WSTETH: public(immutable(wstETH))
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.WSTETH()
+'0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `last_timestamp`
-!!! description "`Oracle.last_timestamp() -> uint256:`"
+:::description[`Oracle.last_timestamp() -> uint256:`]
 
-    Getter for the last timestamp when `price_w()` was called.
 
-    Returns: timestamp (`uint256`).
+Getter for the last timestamp when `price_w()` was called.
 
-    ??? quote "Source code"
+Returns: timestamp (`uint256`).
 
-        ```vyper hl_lines="1"
-        last_timestamp: public(uint256)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.last_timestamp()
-        1692613703
-        ```
+```vyper hl_lines="1"
+last_timestamp: public(uint256)
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.last_timestamp()
+1692613703
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `TVL_MA_TIME`
-!!! description "`Oracle.TVL_MA_TIME() -> uint256:`"
+:::description[`Oracle.TVL_MA_TIME() -> uint256:`]
 
-    Getter for the Exponential-Moving-Average time.
 
-    Returns: ema time (`uint256`).
+Getter for the Exponential-Moving-Average time.
 
-    ??? quote "Source code"
+Returns: ema time (`uint256`).
 
-        ```vyper hl_lines="1"
-        TVL_MA_TIME: public(constant(uint256)) = 50000  # s
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.TVL_MA_TIME()
-        50000
-        ```
+```vyper hl_lines="1"
+TVL_MA_TIME: public(constant(uint256)) = 50000  # s
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.TVL_MA_TIME()
+50000
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `price`
-!!! description "`Oracle.price() -> uint256: view`"
+:::description[`Oracle.price() -> uint256: view`]
 
-    Function to calculate the raw price of the collateral token.
-    
-    Returns: raw price (`uint256`).
 
-    ??? quote "Source code"
+Function to calculate the raw price of the collateral token.
 
-        ```vyper hl_lines="3 4 8 47"
-        @external
-        @view
-        def price() -> uint256:
-            return self._raw_price(self._ema_tvl(), STABLESWAP_AGGREGATOR.price())
+Returns: raw price (`uint256`).
 
-        @internal
-        @view
-        def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
-            weighted_price: uint256 = 0
-            weights: uint256 = 0
-            for i in range(N_POOLS):
-                p_crypto_r: uint256 = TRICRYPTO[i].price_oracle(TRICRYPTO_IX[i])   # d_usdt/d_eth
-                p_stable_r: uint256 = STABLESWAP[i].price_oracle()                 # d_usdt/d_st
-                p_stable_agg: uint256 = agg_price                                  # d_usd/d_st
-                if IS_INVERSE[i]:   
-                    p_stable_r = 10**36 / p_stable_r
-                weight: uint256 = tvls[i]
-                # Prices are already EMA but weights - not so much
-                weights += weight
-                weighted_price += p_crypto_r * p_stable_agg / p_stable_r * weight     # d_usd/d_eth
-            crv_p: uint256 = weighted_price / weights
+<details>
+<summary>Source code</summary>
 
-            use_chainlink: bool = self.use_chainlink
 
-            # Limit ETH price
-            if use_chainlink:
-                chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_ETH.latestRoundData()
-                if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
-                    chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_ETH
-                    lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
-                    upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
-                    crv_p = min(max(crv_p, lower), upper)
+```vyper hl_lines="3 4 8 47"
+@external
+@view
+def price() -> uint256:
+    return self._raw_price(self._ema_tvl(), STABLESWAP_AGGREGATOR.price())
 
-            p_staked: uint256 = STAKEDSWAP.price_oracle()  # d_eth / d_steth
+@internal
+@view
+def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
+    weighted_price: uint256 = 0
+    weights: uint256 = 0
+    for i in range(N_POOLS):
+        p_crypto_r: uint256 = TRICRYPTO[i].price_oracle(TRICRYPTO_IX[i])   # d_usdt/d_eth
+        p_stable_r: uint256 = STABLESWAP[i].price_oracle()                 # d_usdt/d_st
+        p_stable_agg: uint256 = agg_price                                  # d_usd/d_st
+        if IS_INVERSE[i]:   
+            p_stable_r = 10**36 / p_stable_r
+        weight: uint256 = tvls[i]
+        # Prices are already EMA but weights - not so much
+        weights += weight
+        weighted_price += p_crypto_r * p_stable_agg / p_stable_r * weight     # d_usd/d_eth
+    crv_p: uint256 = weighted_price / weights
 
-            # Limit STETH price
-            if use_chainlink:
-                chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_STETH.latestRoundData()
-                if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
-                    chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_STETH
-                    lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
-                    upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
-                    p_staked = min(max(p_staked, lower), upper)
+    use_chainlink: bool = self.use_chainlink
 
-            p_staked = min(p_staked, 10**18) * WSTETH.stEthPerToken() / 10**18  # d_eth / d_wsteth
+    # Limit ETH price
+    if use_chainlink:
+        chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_ETH.latestRoundData()
+        if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
+            chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_ETH
+            lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
+            upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
+            crv_p = min(max(crv_p, lower), upper)
 
-            return p_staked * crv_p / 10**18
-        ```
+    p_staked: uint256 = STAKEDSWAP.price_oracle()  # d_eth / d_steth
 
-    === "Example"
+    # Limit STETH price
+    if use_chainlink:
+        chainlink_lrd: ChainlinkAnswer = CHAINLINK_AGGREGATOR_STETH.latestRoundData()
+        if block.timestamp - min(chainlink_lrd.updated_at, block.timestamp) <= CHAINLINK_STALE_THRESHOLD:
+            chainlink_p: uint256 = convert(chainlink_lrd.answer, uint256) * 10**18 / CHAINLINK_PRICE_PRECISION_STETH
+            lower: uint256 = chainlink_p * (10**18 - BOUND_SIZE) / 10**18
+            upper: uint256 = chainlink_p * (10**18 + BOUND_SIZE) / 10**18
+            p_staked = min(max(p_staked, lower), upper)
 
-        ```shell
-        >>> Oracle.price()
-        1970446024043370547236
-        ```
+    p_staked = min(p_staked, 10**18) * WSTETH.stEthPerToken() / 10**18  # d_eth / d_wsteth
 
+    return p_staked * crv_p / 10**18
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.price()
+1970446024043370547236
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `price_w` 
-!!! description "`Oracle.price_w() -> uint256:`"
+:::description[`Oracle.price_w() -> uint256:`]
 
-    Function to obtain the oracle price of the collateral token and update `last_tvl` and `last_timestamp`. This function is used in the AMM.
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `arg0` |  `uint256` | `last_tvl` of tricrypto pool at index `arg0` |
+Function to obtain the oracle price of the collateral token and update `last_tvl` and `last_timestamp`. This function is used in the AMM.
 
-    ??? quote "Source code"
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `arg0` |  `uint256` | `last_tvl` of tricrypto pool at index `arg0` |
 
-        ```vyper hl_lines="2 7"
-        @external
-        def price_w() -> uint256:
-            tvls: uint256[N_POOLS] = self._ema_tvl()
-            if self.last_timestamp < block.timestamp:
-                self.last_timestamp = block.timestamp
-                self.last_tvl = tvls
-            return self._raw_price(tvls, STABLESWAP_AGGREGATOR.price_w())
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> Oracle.price_w()
-        ```
+```vyper hl_lines="2 7"
+@external
+def price_w() -> uint256:
+    tvls: uint256[N_POOLS] = self._ema_tvl()
+    if self.last_timestamp < block.timestamp:
+        self.last_timestamp = block.timestamp
+        self.last_tvl = tvls
+    return self._raw_price(tvls, STABLESWAP_AGGREGATOR.price_w())
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> Oracle.price_w()
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::

@@ -1,11 +1,18 @@
-<h1>FlashLender</h1>
+# FlashLender
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 The `FlashLender.vy` contract is an [`ERC-3156`](https://eips.ethereum.org/EIPS/eip-3156) contract that allows users to take out a flash loan for `crvUSD`. The flash loan must be repaid within the same transaction; otherwise, the transaction will revert.
 
-!!!github "GitHub"
-    The source code for the `FlashLender.vy` contract can be found on [GitHub :material-github:](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/flashloan/FlashLender.vy). Additionally, a `DummyFlashBorrower.vy` contract showcasing a potential usage of a flash loan can also be found on [:material-github: GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/testing/DummyFlashBorrower.vy).
+:::github[GitHub]
 
-    The `FlashLender.vy` is deployed at [`0x26dE7861e213A5351F6ED767d00e0839930e9eE1`](https://etherscan.io/address/0x26dE7861e213A5351F6ED767d00e0839930e9eE1) on Ethereum.
+The source code for the `FlashLender.vy` contract can be found on [GitHub ](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/flashloan/FlashLender.vy). Additionally, a `DummyFlashBorrower.vy` contract showcasing a potential usage of a flash loan can also be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/testing/DummyFlashBorrower.vy).
+
+The `FlashLender.vy` is deployed at [`0x26dE7861e213A5351F6ED767d00e0839930e9eE1`](https://etherscan.io/address/0x26dE7861e213A5351F6ED767d00e0839930e9eE1) on Ethereum.
+
+
+:::
 
 The contract does not charge any fees on flash loans. The `fee` and `flashFee` methods are implemented to comply with the `ERC-3156` standard.
 
@@ -14,240 +21,355 @@ The contract does not charge any fees on flash loans. The `fee` and `flashFee` m
 
 
 ### `flashLoan`
-!!! description "`FlashLender.flashLoan(receiver: ERC3156FlashBorrower, token: address, amount: uint256, data: Bytes[10**5]) -> bool`"
+:::description[`FlashLender.flashLoan(receiver: ERC3156FlashBorrower, token: address, amount: uint256, data: Bytes[10**5]) -> bool`]
 
-    Function to take out a flash loan of `amount` of `token` and send them to the `receiver`. The `receiver` address must be a contract that implements the `onFlashLoan(initiator: address, token: address, amount: uint256, fee: uint256, data: Bytes[10**5])` interface. A flash loan must be repaid within the same transaction; otherwise, the transaction will revert. Additionally, the method allows passing custom `data` to the `receiver` contract.
 
-    Returns: `True` (`bool`)
+Function to take out a flash loan of `amount` of `token` and send them to the `receiver`. The `receiver` address must be a contract that implements the `onFlashLoan(initiator: address, token: address, amount: uint256, fee: uint256, data: Bytes[10**5])` interface. A flash loan must be repaid within the same transaction; otherwise, the transaction will revert. Additionally, the method allows passing custom `data` to the `receiver` contract.
 
-    Emits: `FlashLoan`
+Returns: `True` (`bool`)
 
-    | Input      | Type                   | Description                                   |
-    | ---------- | ---------------------- | --------------------------------------------- |
-    | `receiver` | `ERC3156FlashBorrower` | Contract to receive the flash loan            |
-    | `token`    | `address`              | Address of the token to take the flash loan in|
-    | `amount`   | `uint256`              | Amount of tokens to flash loan                |
-    | `data`     | `Bytes[10**5]`         | Custom data to pass to the receiver contract  |
+Emits: `FlashLoan`
 
-    ??? quote "Source code"
+| Input      | Type                   | Description                                   |
+| ---------- | ---------------------- | --------------------------------------------- |
+| `receiver` | `ERC3156FlashBorrower` | Contract to receive the flash loan            |
+| `token`    | `address`              | Address of the token to take the flash loan in|
+| `amount`   | `uint256`              | Amount of tokens to flash loan                |
+| `data`     | `Bytes[10**5]`         | Custom data to pass to the receiver contract  |
 
-        The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "FlashLender.vy"
 
-            ```py
-            from vyper.interfaces import ERC20
+The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
 
-            interface Factory:
-                def stablecoin() -> address: view
-                def debt_ceiling_residual(_to: address) -> uint256: view
+<Tabs>
+<TabItem value="flashlender-vy" label="FlashLender.vy">
 
-            event FlashLoan:
-                caller: indexed(address)
-                receiver: indexed(address)
-                amount: uint256
 
-            CRVUSD: immutable(address)
-            fee: public(constant(uint256)) = 0  # 1 == 0.01 %
+```py
+from vyper.interfaces import ERC20
 
-            @external
-            @nonreentrant('lock')
-            def flashLoan(receiver: ERC3156FlashBorrower, token: address, amount: uint256, data: Bytes[10**5]) -> bool:
-                """
-                @notice Loan `amount` tokens to `receiver`, and takes it back plus a `flashFee` after the callback
-                @param receiver The contract receiving the tokens, needs to implement the
-                `onFlashLoan(initiator: address, token: address, amount: uint256, fee: uint256, data: Bytes[10**5])` interface.
-                @param token The loan currency.
-                @param amount The amount of tokens lent.
-                @param data A data parameter to be passed on to the `receiver` for any custom use.
-                """
-                assert token == CRVUSD, "FlashLender: Unsupported currency"
-                ERC20(CRVUSD).transfer(receiver.address, amount)
-                receiver.onFlashLoan(msg.sender, CRVUSD, amount, 0, data)
-                assert ERC20(CRVUSD).balanceOf(self) >= FACTORY.debt_ceiling_residual(self), "FlashLender: Repay failed"
+interface Factory:
+    def stablecoin() -> address: view
+    def debt_ceiling_residual(_to: address) -> uint256: view
 
-                log FlashLoan(msg.sender, receiver.address, amount)
+event FlashLoan:
+    caller: indexed(address)
+    receiver: indexed(address)
+    amount: uint256
 
-                return True
-            ```
+CRVUSD: immutable(address)
+fee: public(constant(uint256)) = 0  # 1 == 0.01 %
 
+@external
+@nonreentrant('lock')
+def flashLoan(receiver: ERC3156FlashBorrower, token: address, amount: uint256, data: Bytes[10**5]) -> bool:
+    """
+    @notice Loan `amount` tokens to `receiver`, and takes it back plus a `flashFee` after the callback
+    @param receiver The contract receiving the tokens, needs to implement the
+    `onFlashLoan(initiator: address, token: address, amount: uint256, fee: uint256, data: Bytes[10**5])` interface.
+    @param token The loan currency.
+    @param amount The amount of tokens lent.
+    @param data A data parameter to be passed on to the `receiver` for any custom use.
+    """
+    assert token == CRVUSD, "FlashLender: Unsupported currency"
+    ERC20(CRVUSD).transfer(receiver.address, amount)
+    receiver.onFlashLoan(msg.sender, CRVUSD, amount, 0, data)
+    assert ERC20(CRVUSD).balanceOf(self) >= FACTORY.debt_ceiling_residual(self), "FlashLender: Repay failed"
+
+    log FlashLoan(msg.sender, receiver.address, amount)
+
+    return True
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+
+:::
 
 ### `maxFlashLoan`
-!!! description "`FlashLender.maxFlashLoan(token: address) -> uint256`"
+:::description[`FlashLender.maxFlashLoan(token: address) -> uint256`]
 
-    Getter for the maximum amount of flash-loanable tokens. This corresponds to the token balance of the contract (`token.balanceOf(FlashLender)`).
 
-    Returns: maximum flash-loanable amount (`uint256`)
+Getter for the maximum amount of flash-loanable tokens. This corresponds to the token balance of the contract (`token.balanceOf(FlashLender)`).
 
-    | Input   | Type      | Description                                                  |
-    | ------- | --------- | ------------------------------------------------------------ |
-    | `token` | `address` | Token address to check the maximum flash-loanable amount for |
+Returns: maximum flash-loanable amount (`uint256`)
 
-    ??? quote "Source code"
+| Input   | Type      | Description                                                  |
+| ------- | --------- | ------------------------------------------------------------ |
+| `token` | `address` | Token address to check the maximum flash-loanable amount for |
 
-        The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "FlashLender.vy"
 
-            ```py
-            CRVUSD: immutable(address)
-            fee: public(constant(uint256)) = 0  # 1 == 0.01 %
+The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
 
-            @external
-            @view
-            def maxFlashLoan(token: address) -> uint256:
-                """
-                @notice The amount of currency available to be lent.
-                @param token The loan currency.
-                @return The amount of `token` that can be borrowed.
-                """
-                if token == CRVUSD:
-                    return ERC20(CRVUSD).balanceOf(self)
-                else:
-                    return 0
-            ```
+<Tabs>
+<TabItem value="flashlender-vy" label="FlashLender.vy">
 
-    === "Example"
 
-        Calling the function with the `crvUSD` address as input will return the flash-loanable amount. Calling the function with any other token than `crvUSD` will return `0`. 
+```py
+CRVUSD: immutable(address)
+fee: public(constant(uint256)) = 0  # 1 == 0.01 %
 
-        ```shell
-        >>> FlashLender.maxFlashLoan('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E')
-        1000000000000000000000000
-        ```
+@external
+@view
+def maxFlashLoan(token: address) -> uint256:
+    """
+    @notice The amount of currency available to be lent.
+    @param token The loan currency.
+    @return The amount of `token` that can be borrowed.
+    """
+    if token == CRVUSD:
+        return ERC20(CRVUSD).balanceOf(self)
+    else:
+        return 0
+```
 
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+Calling the function with the `crvUSD` address as input will return the flash-loanable amount. Calling the function with any other token than `crvUSD` will return `0`. 
+
+```shell
+>>> FlashLender.maxFlashLoan('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E')
+1000000000000000000000000
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `fee`
-!!! description "`FlashLender.fee() -> uint256: view`"
+:::description[`FlashLender.fee() -> uint256: view`]
 
-    Getter for the fee charged on the flash loan. This variable is a constant set to `0` and cannot be changed. The fees for the contract will always remain at `0`.
 
-    Returns: fee (`uint256`).
+Getter for the fee charged on the flash loan. This variable is a constant set to `0` and cannot be changed. The fees for the contract will always remain at `0`.
 
-    ??? quote "Source code"
+Returns: fee (`uint256`).
 
-        The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "FlashLender.vy"
 
-            ```py
-            fee: public(constant(uint256)) = 0  # 1 == 0.01 %
-            ```
+The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
 
-    === "Example"
+<Tabs>
+<TabItem value="flashlender-vy" label="FlashLender.vy">
 
-        ```shell
-        >>> FlashLender.fee()
-        0
-        ```
 
+```py
+fee: public(constant(uint256)) = 0  # 1 == 0.01 %
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> FlashLender.fee()
+0
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `flashFee`
-!!! description "`FlashLender.flashFee(token: address, amount: uint256) -> uint256`"
+:::description[`FlashLender.flashFee(token: address, amount: uint256) -> uint256`]
 
-    Getter for the flash fee when taking out a flash loan of `amount` of `token`. This method will always return `0` and will always revert if `token != CRVUSD`.
 
-    Returns: total fee charged on the flashloan (`uint256`).
+Getter for the flash fee when taking out a flash loan of `amount` of `token`. This method will always return `0` and will always revert if `token != CRVUSD`.
 
-    | Input    | Type      | Description                               |
-    | -------- | --------- | ----------------------------------------- |
-    | `token`  | `address` | Address of the token for the flash loan   |
-    | `amount` | `uint256` | Amount of tokens to be flash loaned       |
+Returns: total fee charged on the flashloan (`uint256`).
 
-    ??? quote "Source code"
+| Input    | Type      | Description                               |
+| -------- | --------- | ----------------------------------------- |
+| `token`  | `address` | Address of the token for the flash loan   |
+| `amount` | `uint256` | Amount of tokens to be flash loaned       |
 
-        The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "FlashLender.vy"
 
-            ```py
-            CRVUSD: immutable(address)
+The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
 
-            @external
-            @view
-            def flashFee(token: address, amount: uint256) -> uint256:
-                """
-                @notice The fee to be charged for a given loan.
-                @param token The loan currency.
-                @param amount The amount of tokens lent.
-                @return The amount of `token` to be charged for the loan, on top of the returned principal.
-                """
-                assert token == CRVUSD, "FlashLender: Unsupported currency"
-                return 0
-            ```
+<Tabs>
+<TabItem value="flashlender-vy" label="FlashLender.vy">
 
-    === "Example"
 
-        This method will always return `0` for any amount of flash loaned `crvUSD` because the `fee` is `0`. If the function is called with any token other than `crvUSD`, the function will revert.
+```py
+CRVUSD: immutable(address)
 
-        ```shell
-        >>> FlashLender.flashFee('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E', 100000 * 10**18)
-        0
+@external
+@view
+def flashFee(token: address, amount: uint256) -> uint256:
+    """
+    @notice The fee to be charged for a given loan.
+    @param token The loan currency.
+    @param amount The amount of tokens lent.
+    @return The amount of `token` to be charged for the loan, on top of the returned principal.
+    """
+    assert token == CRVUSD, "FlashLender: Unsupported currency"
+    return 0
+```
 
-        >>> FlashLender.flashFee('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 100000 * 10**18)
-        reverts: "FlashLender: Unsupported currency"
-        ```
 
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+This method will always return `0` for any amount of flash loaned `crvUSD` because the `fee` is `0`. If the function is called with any token other than `crvUSD`, the function will revert.
+
+```shell
+>>> FlashLender.flashFee('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E', 100000 * 10**18)
+0
+
+>>> FlashLender.flashFee('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 100000 * 10**18)
+reverts: "FlashLender: Unsupported currency"
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `supportedTokens`
-!!! description "`FlashLender.supportedTokens(token: address) -> bool`"
+:::description[`FlashLender.supportedTokens(token: address) -> bool`]
 
-    Getter for the supported token by the `FlashLender`. The only supported token is `crvUSD`. Due to the immutability of the contract, no further supported tokens can be added.
 
-    Returns: `True` or `False` (`bool`).
+Getter for the supported token by the `FlashLender`. The only supported token is `crvUSD`. Due to the immutability of the contract, no further supported tokens can be added.
 
-    | Input   | Type      | Description                               |
-    | ------- | --------- | ----------------------------------------- |
-    | `token` | `address` | Token address to check support status for |
+Returns: `True` or `False` (`bool`).
 
-    ??? quote "Source code"
+| Input   | Type      | Description                               |
+| ------- | --------- | ----------------------------------------- |
+| `token` | `address` | Token address to check support status for |
 
-        The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "FlashLender.vy"
 
-            ```py
-            CRVUSD: immutable(address)
+The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
 
-            @external
-            @view
-            def supportedTokens(token: address) -> bool:
-                return token == CRVUSD
-            ```
+<Tabs>
+<TabItem value="flashlender-vy" label="FlashLender.vy">
 
-    === "Example"
 
-        This method returns a `bool` based on whether the token is supported or not.
+```py
+CRVUSD: immutable(address)
 
-        ```shell
-        >>> FlashLender.supportedTokens('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E')   # crvusd
-        'true'
+@external
+@view
+def supportedTokens(token: address) -> bool:
+    return token == CRVUSD
+```
 
-        >>> FlashLender.supportedTokens('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E')   # usdc
-        'false'
-        ```
 
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+This method returns a `bool` based on whether the token is supported or not.
+
+```shell
+>>> FlashLender.supportedTokens('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E')   # crvusd
+'true'
+
+>>> FlashLender.supportedTokens('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E')   # usdc
+'false'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `version`
-!!! description "`FlashLender.version() -> String[8]: view`"
+:::description[`FlashLender.version() -> String[8]: view`]
 
-    Getter for the version of the contract.
 
-    Returns: contract version (`String[8]`).
+Getter for the version of the contract.
 
-    ??? quote "Source code"
+Returns: contract version (`String[8]`).
 
-        The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
+<details>
+<summary>Source code</summary>
 
-        === "FlashLender.vy"
 
-            ```py
-            version: public(constant(String[8])) = "1.0.0"  # Initial
-            ```
+The following source code includes all changes up to commit hash [`e771f43`](https://github.com/curvefi/curve-stablecoin/tree/e771f437f42fbc5ab73990866000f610bffe1df2); any changes made after this commit are not included.
 
-    === "Example"
+<Tabs>
+<TabItem value="flashlender-vy" label="FlashLender.vy">
 
-        ```shell
-        >>> FlashLender.version()
-        "1.0.0"
-        ```
+
+```py
+version: public(constant(String[8])) = "1.0.0"  # Initial
+```
+
+
+</TabItem>
+</Tabs>
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> FlashLender.version()
+"1.0.0"
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::

@@ -1,17 +1,13 @@
----
-search:
-  exclude: true
----
 
-<h1></h1>
+# 
+# **Router**Routers that performs up to 5 swaps in a single transaction and can do estimations with `get_dy` and `get_dx`.
+
+:::github
+
+The source code for the router contracts can be found on [ GitHub](https://github.com/curvefi/curve-router-ng/tree/master/contracts).
 
 
-# **Router**
-
-Routers that performs up to 5 swaps in a single transaction and can do estimations with `get_dy` and `get_dx`.
-
-!!!github
-    The source code for the router contracts can be found on [:material-github: GitHub](https://github.com/curvefi/curve-router-ng/tree/master/contracts).
+:::
 
 | Chain                             | Contract Address |
 | --------------------------------- | :--------------: |
@@ -37,12 +33,14 @@ Routers that performs up to 5 swaps in a single transaction and can do estimatio
 
 ---
 
-# **StableCalcZap**
+# **StableCalcZap***Zap for stable pools to `calc_token_amount` taking fees into account and to `get_dx`.*
 
-*Zap for stable pools to `calc_token_amount` taking fees into account and to `get_dx`.*
+:::github
 
-!!!github
-    The source code for `StableCalcZaps.vy` can be found on [:material-github: GitHub](https://github.com/curvefi/curve-zaps/tree/master/contracts).
+The source code for `StableCalcZaps.vy` can be found on [ GitHub](https://github.com/curvefi/curve-zaps/tree/master/contracts).
+
+
+:::
 
 | Chain | Contract Address |
 | ----- | :--------------: |
@@ -63,13 +61,14 @@ Routers that performs up to 5 swaps in a single transaction and can do estimatio
 
 ---
 
-# **CryptoCalcZap**
+# **CryptoCalcZap***Zap for crypto pools to `get_dx`.*
 
-*Zap for crypto pools to `get_dx`.*
+:::github
 
-!!!github
-    The source code for `CryptoCalcZap.vy` can be found on [:material-github: GitHub](https://github.com/curvefi/curve-zaps/tree/master/contracts).
+The source code for `CryptoCalcZap.vy` can be found on [ GitHub](https://github.com/curvefi/curve-zaps/tree/master/contracts).
 
+
+:::
 
 | Chain | Contract Address |
 | ----- | :--------------: |
@@ -92,13 +91,14 @@ Routers that performs up to 5 swaps in a single transaction and can do estimatio
 ---
 
 
-# **DepositAndStakeZap**
+# **DepositAndStakeZap***Zap to add liquidity to pool and deposit into gauge in one transaction.*
 
-*Zap to add liquidity to pool and deposit into gauge in one transaction.*
+:::github
 
-!!!github
-    The source code for `DepositAndStakeZap.vy` can be found on [:material-github: GitHub](https://github.com/curvefi/deposit-and-stake-zap/tree/master/contracts).
+The source code for `DepositAndStakeZap.vy` can be found on [ GitHub](https://github.com/curvefi/deposit-and-stake-zap/tree/master/contracts).
 
+
+:::
 
 | Chain | Contract Address |
 | ----- | :--------------: |
@@ -122,12 +122,14 @@ Routers that performs up to 5 swaps in a single transaction and can do estimatio
 
 ---
 
-# **MetaZap-NG**
+# **MetaZap-NG***Zap to add liquidity and remove liquidity into ng-metapools.*
 
-*Zap to add liquidity and remove liquidity into ng-metapools.*
+:::github
 
-!!!github
-    The source code for `MetaZapNG.vy` can be found on [:material-github: GitHub](https://github.com/curvefi/stableswap-ng/blob/main/contracts/main/MetaZapNG.vy).
+The source code for `MetaZapNG.vy` can be found on [ GitHub](https://github.com/curvefi/stableswap-ng/blob/main/contracts/main/MetaZapNG.vy).
+
+
+:::
 
 | Chain | Contract Address |
 | ----- | :--------------: |
@@ -158,9 +160,7 @@ Routers that performs up to 5 swaps in a single transaction and can do estimatio
 
 ---
 
-# **LlamaLend LeverageZap**
-
-*Zap to create leverage for lending markets.*
+# **LlamaLend LeverageZap***Zap to create leverage for lending markets.*
 
 | Contract Type | Contract Address |
 | ----- | :--------------: |

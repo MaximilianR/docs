@@ -1,7 +1,5 @@
-## **Concept of PegKeepers**  
-
-PegKeepers are contracts that help stabilize the peg of crvUSD. Each Keeper is allocated a specific amount of crvUSD to secure the peg. 
-The DAO decides this balance and can be **raised or lowered** by calling `set_debt_ceiling()` in the [Factory](../factory/overview.md).
+## **Concept of PegKeepers**PegKeepers are contracts that help stabilize the peg of crvUSD. Each Keeper is allocated a specific amount of crvUSD to secure the peg. 
+The DAO decides this balance and can be **raised or lowered**by calling `set_debt_ceiling()` in the [Factory](../factory/overview.md).
 
 
 The underlying actions of the PegKeepers can be divided into two actions, which get executed when calling [`update()`](#update):
@@ -11,999 +9,1356 @@ It is important to note that the LP tokens are not staked in the gauge (if there
 
 - **crvUSD price < 1**: If PegKeepers hold a balance of the corresponding LP token, they can single-sidedly withdraw crvUSD from the liquidity pool and burn it. This action reduces the supply of crvUSD in the pool and should subsequently increase its price.
 
-!!!note
-    PegKeepers **do not actually mint or burn crvUSD tokens**. They have a defined allocated balance of crvUSD tokens that they can use for deposits. It is important to note that **PegKeepers cannot do anything else apart from depositing and withdrawing**. Therefore, crvUSD token balances of the PegKeepers that are not deposited into a pool may not be counted as circulating supply, although technically they are.
+:::note
+
+PegKeepers **do not actually mint or burn crvUSD tokens**. They have a defined allocated balance of crvUSD tokens that they can use for deposits. It is important to note that **PegKeepers cannot do anything else apart from depositing and withdrawing**. Therefore, crvUSD token balances of the PegKeepers that are not deposited into a pool may not be counted as circulating supply, although technically they are.
 
 
+:::
 
-!!!deploy "Contract Source & Deployment"
-    Source code for this contract is available on [Github](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeper.vy). 
+:::deploy[Contract Source & Deployment]
 
-    | PegKeepers                | Deployment Address  |
-    | ------------------------- | ------------------- |
-    |`PegKeeper for crvUSD/USDC`|[0xaA346781dDD7009caa644A4980f044C50cD2ae22](https://etherscan.io/address/0xaA346781dDD7009caa644A4980f044C50cD2ae22#code)|
-    |`PegKeeper for crvUSD/USDT`|[0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8](https://etherscan.io/address/0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8#code)|
-    |`PegKeeper for crvUSD/USDP`|[0x6B765d07cf966c745B340AdCa67749fE75B5c345](https://etherscan.io/address/0x6B765d07cf966c745B340AdCa67749fE75B5c345#code)|
-    |`PegKeeper for crvUSD/TUSD`|[0x1ef89Ed0eDd93D1EC09E4c07373f69C49f4dcCae](https://etherscan.io/address/0x1ef89Ed0eDd93D1EC09E4c07373f69C49f4dcCae#code)|
+Source code for this contract is available on [Github](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeper.vy). 
+
+| PegKeepers                | Deployment Address  |
+| ------------------------- | ------------------- |
+|`PegKeeper for crvUSD/USDC`|[0xaA346781dDD7009caa644A4980f044C50cD2ae22](https://etherscan.io/address/0xaA346781dDD7009caa644A4980f044C50cD2ae22#code)|
+|`PegKeeper for crvUSD/USDT`|[0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8](https://etherscan.io/address/0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8#code)|
+|`PegKeeper for crvUSD/USDP`|[0x6B765d07cf966c745B340AdCa67749fE75B5c345](https://etherscan.io/address/0x6B765d07cf966c745B340AdCa67749fE75B5c345#code)|
+|`PegKeeper for crvUSD/TUSD`|[0x1ef89Ed0eDd93D1EC09E4c07373f69C49f4dcCae](https://etherscan.io/address/0x1ef89Ed0eDd93D1EC09E4c07373f69C49f4dcCae#code)|
 
 
-## **Stabilisation Method** 
-The most important function in the PegKeeper contract is the `update()` function. When invoked, the PegKeeper either mints and single-sidedly deposits crvUSD into the StableSwap pool, or it withdraws crvUSD from the pool by redeeming the LP tokens received from previous deposits.
+:::
 
-- **Deposit and Mint:** This mechanism is triggered when the *price of crvUSD > 1*. Minting and depositing into the pool will increase the crvUSD supply and decrease its price. The LP tokens that the PegKeeper receives when depositing crvUSD into the pool are not staked in the gauge (if the pool has one), which means the PegKeeper does not receive CRV inflation rewards.
+## **Stabilisation Method**The most important function in the PegKeeper contract is the `update()` function. When invoked, the PegKeeper either mints and single-sidedly deposits crvUSD into the StableSwap pool, or it withdraws crvUSD from the pool by redeeming the LP tokens received from previous deposits.
 
-- **Withdraw and Burn:** This mechanism is triggered when the *price of crvUSD < 1*. By withdrawing crvUSD from the pool, the supply of crvUSD decreases, which increases its price.
+- **Deposit and Mint:**This mechanism is triggered when the *price of crvUSD > 1*. Minting and depositing into the pool will increase the crvUSD supply and decrease its price. The LP tokens that the PegKeeper receives when depositing crvUSD into the pool are not staked in the gauge (if the pool has one), which means the PegKeeper does not receive CRV inflation rewards.
+
+- **Withdraw and Burn:**This mechanism is triggered when the *price of crvUSD < 1*. By withdrawing crvUSD from the pool, the supply of crvUSD decreases, which increases its price.
 
 PegKeepers have unlimited approval for the liquidity pool, allowing them to deposit and withdraw crvUSD.
 
 
 ### `update`
-!!! description "`PegKeeper.update(_beneficiary: address = msg.sender) -> uint256:`"
+:::description[`PegKeeper.update(_beneficiary: address = msg.sender) -> uint256:`]
 
-    Function to either **mint and deposit** or **withdraw and burn** based on the balances within the pools.  
-    A share (`caller_share`) of the generated profit will be awarded to the function's caller. By default, this is set to `msg.sender`, but there is also the possibility to input a `_beneficiary` address to which the rewards will be sent. 
 
-    Returns: caller profit (`uint256`).
+Function to either **mint and deposit**or **withdraw and burn**based on the balances within the pools.  
+A share (`caller_share`) of the generated profit will be awarded to the function's caller. By default, this is set to `msg.sender`, but there is also the possibility to input a `_beneficiary` address to which the rewards will be sent. 
 
-    Emits: `Provide` or `Withdraw`
+Returns: caller profit (`uint256`).
 
-    !!!note
-        There is an `ACTION_DELAY` of 15 minutes before calling the function again.
+Emits: `Provide` or `Withdraw`
 
-    ??? quote "Source code: **Mint and Deposit**"
+:::note
 
-        ```vyper
-        event Provide:
-            amount: uint256
+There is an `ACTION_DELAY` of 15 minutes before calling the function again.
 
-        @external
-        @nonpayable
-        def update(_beneficiary: address = msg.sender) -> uint256:
-            """
-            @notice Provide or withdraw coins from the pool to stabilize it
-            @param _beneficiary Beneficiary address
-            @return Amount of profit received by beneficiary
-            """
-            if self.last_change + ACTION_DELAY > block.timestamp:
-                return 0
 
-            balance_pegged: uint256 = POOL.balances(I)
-            balance_peg: uint256 = POOL.balances(1 - I) * PEG_MUL
+:::
 
-            initial_profit: uint256 = self._calc_profit()
+<details>
+<summary>Source code: **Mint and Deposit**</summary>
 
-            p_agg: uint256 = AGGREGATOR.price()  # Current USD per stablecoin
 
-            # Checking the balance will ensure no-loss of the stabilizer, but to ensure stabilization
-            # we need to exclude "bad" p_agg, so we add an extra check for it
+```vyper
+event Provide:
+    amount: uint256
 
-            if balance_peg > balance_pegged:
-                assert p_agg >= 10**18
-                self._provide((balance_peg - balance_pegged) / 5)  # this dumps stablecoin
+@external
+@nonpayable
+def update(_beneficiary: address = msg.sender) -> uint256:
+    """
+    @notice Provide or withdraw coins from the pool to stabilize it
+    @param _beneficiary Beneficiary address
+    @return Amount of profit received by beneficiary
+    """
+    if self.last_change + ACTION_DELAY > block.timestamp:
+        return 0
 
-            else:
-                assert p_agg <= 10**18
-                self._withdraw((balance_pegged - balance_peg) / 5)  # this pumps stablecoin
+    balance_pegged: uint256 = POOL.balances(I)
+    balance_peg: uint256 = POOL.balances(1 - I) * PEG_MUL
 
-            # Send generated profit
-            new_profit: uint256 = self._calc_profit()
-            assert new_profit >= initial_profit, "peg unprofitable"
-            lp_amount: uint256 = new_profit - initial_profit
-            caller_profit: uint256 = lp_amount * self.caller_share / SHARE_PRECISION
-            if caller_profit > 0:
-                POOL.transfer(_beneficiary, caller_profit)
+    initial_profit: uint256 = self._calc_profit()
 
-            return caller_profit
+    p_agg: uint256 = AGGREGATOR.price()  # Current USD per stablecoin
 
-        @internal
-        def _provide(_amount: uint256):
-            # We already have all reserves here
-            # ERC20(PEGGED).mint(self, _amount)
-            if _amount == 0:
-                return
+    # Checking the balance will ensure no-loss of the stabilizer, but to ensure stabilization
+    # we need to exclude "bad" p_agg, so we add an extra check for it
 
-            amounts: uint256[2] = empty(uint256[2])
-            amounts[I] = _amount
-            POOL.add_liquidity(amounts, 0)
+    if balance_peg > balance_pegged:
+        assert p_agg >= 10**18
+        self._provide((balance_peg - balance_pegged) / 5)  # this dumps stablecoin
 
-            self.last_change = block.timestamp
-            self.debt += _amount
-            log Provide(_amount)
-        ```
+    else:
+        assert p_agg <= 10**18
+        self._withdraw((balance_pegged - balance_peg) / 5)  # this pumps stablecoin
 
-    ??? quote "Source code: **Withdraw and Burn**"
+    # Send generated profit
+    new_profit: uint256 = self._calc_profit()
+    assert new_profit >= initial_profit, "peg unprofitable"
+    lp_amount: uint256 = new_profit - initial_profit
+    caller_profit: uint256 = lp_amount * self.caller_share / SHARE_PRECISION
+    if caller_profit > 0:
+        POOL.transfer(_beneficiary, caller_profit)
 
-        ```vyper
-        event Withdraw:
-            amount: uint256
+    return caller_profit
 
-        @external
-        @nonpayable
-        def update(_beneficiary: address = msg.sender) -> uint256:
-            """
-            @notice Provide or withdraw coins from the pool to stabilize it
-            @param _beneficiary Beneficiary address
-            @return Amount of profit received by beneficiary
-            """
-            if self.last_change + ACTION_DELAY > block.timestamp:
-                return 0
+@internal
+def _provide(_amount: uint256):
+    # We already have all reserves here
+    # ERC20(PEGGED).mint(self, _amount)
+    if _amount == 0:
+        return
 
-            balance_pegged: uint256 = POOL.balances(I)
-            balance_peg: uint256 = POOL.balances(1 - I) * PEG_MUL
+    amounts: uint256[2] = empty(uint256[2])
+    amounts[I] = _amount
+    POOL.add_liquidity(amounts, 0)
 
-            initial_profit: uint256 = self._calc_profit()
+    self.last_change = block.timestamp
+    self.debt += _amount
+    log Provide(_amount)
+```
 
-            p_agg: uint256 = AGGREGATOR.price()  # Current USD per stablecoin
 
-            # Checking the balance will ensure no-loss of the stabilizer, but to ensure stabilization
-            # we need to exclude "bad" p_agg, so we add an extra check for it
+</details>
 
-            if balance_peg > balance_pegged:
-                assert p_agg >= 10**18
-                self._provide((balance_peg - balance_pegged) / 5)  # this dumps stablecoin
+<details>
+<summary>Source code: **Withdraw and Burn**</summary>
 
-            else:
-                assert p_agg <= 10**18
-                self._withdraw((balance_pegged - balance_peg) / 5)  # this pumps stablecoin
 
-            # Send generated profit
-            new_profit: uint256 = self._calc_profit()
-            assert new_profit >= initial_profit, "peg unprofitable"
-            lp_amount: uint256 = new_profit - initial_profit
-            caller_profit: uint256 = lp_amount * self.caller_share / SHARE_PRECISION
-            if caller_profit > 0:
-                POOL.transfer(_beneficiary, caller_profit)
+```vyper
+event Withdraw:
+    amount: uint256
 
-            return caller_profit
+@external
+@nonpayable
+def update(_beneficiary: address = msg.sender) -> uint256:
+    """
+    @notice Provide or withdraw coins from the pool to stabilize it
+    @param _beneficiary Beneficiary address
+    @return Amount of profit received by beneficiary
+    """
+    if self.last_change + ACTION_DELAY > block.timestamp:
+        return 0
 
-        @internal
-        def _withdraw(_amount: uint256):
-            if _amount == 0:
-                return
+    balance_pegged: uint256 = POOL.balances(I)
+    balance_peg: uint256 = POOL.balances(1 - I) * PEG_MUL
 
-            debt: uint256 = self.debt
-            amount: uint256 = min(_amount, debt)
+    initial_profit: uint256 = self._calc_profit()
 
-            amounts: uint256[2] = empty(uint256[2])
-            amounts[I] = amount
-            POOL.remove_liquidity_imbalance(amounts, max_value(uint256))
+    p_agg: uint256 = AGGREGATOR.price()  # Current USD per stablecoin
 
-            self.last_change = block.timestamp
-            self.debt -= amount
+    # Checking the balance will ensure no-loss of the stabilizer, but to ensure stabilization
+    # we need to exclude "bad" p_agg, so we add an extra check for it
 
-            log Withdraw(amount)
-        ```
+    if balance_peg > balance_pegged:
+        assert p_agg >= 10**18
+        self._provide((balance_peg - balance_pegged) / 5)  # this dumps stablecoin
 
-    === "Example"
+    else:
+        assert p_agg <= 10**18
+        self._withdraw((balance_pegged - balance_peg) / 5)  # this pumps stablecoin
 
-        ```shell
-        >>> PegKepper.update()
-        ```
+    # Send generated profit
+    new_profit: uint256 = self._calc_profit()
+    assert new_profit >= initial_profit, "peg unprofitable"
+    lp_amount: uint256 = new_profit - initial_profit
+    caller_profit: uint256 = lp_amount * self.caller_share / SHARE_PRECISION
+    if caller_profit > 0:
+        POOL.transfer(_beneficiary, caller_profit)
 
+    return caller_profit
+
+@internal
+def _withdraw(_amount: uint256):
+    if _amount == 0:
+        return
+
+    debt: uint256 = self.debt
+    amount: uint256 = min(_amount, debt)
+
+    amounts: uint256[2] = empty(uint256[2])
+    amounts[I] = amount
+    POOL.remove_liquidity_imbalance(amounts, max_value(uint256))
+
+    self.last_change = block.timestamp
+    self.debt -= amount
+
+    log Withdraw(amount)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.update()
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `last_change`
-!!! description "`PegKeeper.last_change() -> uint256: view`"
+:::description[`PegKeeper.last_change() -> uint256: view`]
 
-    Function which retrieves the timestamp of when the balances of the PegKeeper were last altered. This variable is updated each time `update()` (`_provide` or `_withdraw`) is called. This variable is of importance for `update()`, as there is a mandatory delay of 15 * 60 seconds before the function can be called again.
 
-    Returns: timestamp (`uint256`).
+Function which retrieves the timestamp of when the balances of the PegKeeper were last altered. This variable is updated each time `update()` (`_provide` or `_withdraw`) is called. This variable is of importance for `update()`, as there is a mandatory delay of 15 * 60 seconds before the function can be called again.
 
-    ??? quote "Source code"
+Returns: timestamp (`uint256`).
 
-        ```vyper 
-        last_change: public(uint256)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> PegKepper.last_change()
-        1688794235
-        ```
-   
+```vyper 
+last_change: public(uint256)
+```
 
-## **Calculating and Withdrawing Profits**
 
-### `calc_profit` 
-!!! description "`PegKeeper.calc_profit() -> uint256:`"
+</details>
 
-    Function to calculate the generated profit in LP tokens.
+<Tabs>
+<TabItem value="example" label="Example">
 
-    Returns: generated profit (`uint256`).
 
-    ??? quote "Source code"
+```shell
+>>> PegKepper.last_change()
+1688794235
+```
 
-        ```vyper
-        PRECISION: constant(uint256) = 10 ** 18
-        # Calculation error for profit
-        PROFIT_THRESHOLD: constant(uint256) = 10 ** 18
 
-        @internal
-        @view
-        def _calc_profit() -> uint256:
-            lp_balance: uint256 = POOL.balanceOf(self)
+</TabItem>
+</Tabs>
 
-            virtual_price: uint256 = POOL.get_virtual_price()
-            lp_debt: uint256 = self.debt * PRECISION / virtual_price + PROFIT_THRESHOLD
 
-            if lp_balance <= lp_debt:
-                return 0
-            else:
-                return lp_balance - lp_debt
+:::
 
-        @external
-        @view
-        def calc_profit() -> uint256:
-            """
-            @notice Calculate generated profit in LP tokens
-            @return Amount of generated profit
-            """
-            return self._calc_profit()
-        ```
+## **Calculating and Withdrawing Profits**### `calc_profit` 
+:::description[`PegKeeper.calc_profit() -> uint256:`]
 
-    === "Example"
 
-        ```shell
-        >>> PegKepper.calc_profit()
-        41173451286504149038
-        ```
+Function to calculate the generated profit in LP tokens.
 
+Returns: generated profit (`uint256`).
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+PRECISION: constant(uint256) = 10 **18
+# Calculation error for profit
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+PROFIT_THRESHOLD: constant(uint256) = 10 **18
+
+@internal
+@view
+def _calc_profit() -> uint256:
+    lp_balance: uint256 = POOL.balanceOf(self)
+
+    virtual_price: uint256 = POOL.get_virtual_price()
+    lp_debt: uint256 = self.debt * PRECISION / virtual_price + PROFIT_THRESHOLD
+
+    if lp_balance <= lp_debt:
+        return 0
+    else:
+        return lp_balance - lp_debt
+
+@external
+@view
+def calc_profit() -> uint256:
+    """
+    @notice Calculate generated profit in LP tokens
+    @return Amount of generated profit
+    """
+    return self._calc_profit()
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.calc_profit()
+41173451286504149038
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `estimate_caller_profit`
-!!! description "`PegKeeper.estimate_caller_profit() -> uint256:`"
+:::description[`PegKeeper.estimate_caller_profit() -> uint256:`]
 
-    Function to estimate the profit from calling `update()`. The caller of the function will receive 20% of the total profits. 
 
-    Returns: expected amount of profit going to the caller (`uint256`).
+Function to estimate the profit from calling `update()`. The caller of the function will receive 20% of the total profits. 
 
-    !!! warning
-        Please note that this method provides an estimate and may not reflect the precise profit. The actual profit tends to be higher due to the increasing virtual price of the LP token.
+Returns: expected amount of profit going to the caller (`uint256`).
 
-    ??? quote "Source code"
+:::warning
 
-        ```vyper 
-        ACTION_DELAY: constant(uint256) = 15 * 60
+Please note that this method provides an estimate and may not reflect the precise profit. The actual profit tends to be higher due to the increasing virtual price of the LP token.
 
-        @external
-        @view
-        def estimate_caller_profit() -> uint256:
-            """
-            @notice Estimate profit from calling update()
-            @dev This method is not precise, real profit is always more because of increasing virtual price
-            @return Expected amount of profit going to beneficiary
-            """
-            if self.last_change + ACTION_DELAY > block.timestamp:
-                return 0
 
-            balance_pegged: uint256 = POOL.balances(I)
-            balance_peg: uint256 = POOL.balances(1 - I) * PEG_MUL
+:::
 
-            initial_profit: uint256 = self._calc_profit()
+<details>
+<summary>Source code</summary>
 
-            p_agg: uint256 = AGGREGATOR.price()  # Current USD per stablecoin
 
-            # Checking the balance will ensure no-loss of the stabilizer, but to ensure stabilization
-            # we need to exclude "bad" p_agg, so we add an extra check for it
+```vyper 
+ACTION_DELAY: constant(uint256) = 15 * 60
 
-            new_profit: uint256 = 0
-            if balance_peg > balance_pegged:
-                if p_agg < 10**18:
-                    return 0
-                new_profit = self._calc_future_profit((balance_peg - balance_pegged) / 5, True)  # this dumps stablecoin
+@external
+@view
+def estimate_caller_profit() -> uint256:
+    """
+    @notice Estimate profit from calling update()
+    @dev This method is not precise, real profit is always more because of increasing virtual price
+    @return Expected amount of profit going to beneficiary
+    """
+    if self.last_change + ACTION_DELAY > block.timestamp:
+        return 0
 
-            else:
-                if p_agg > 10**18:
-                    return 0
-                new_profit = self._calc_future_profit((balance_pegged - balance_peg) / 5, False)  # this pumps stablecoin
+    balance_pegged: uint256 = POOL.balances(I)
+    balance_peg: uint256 = POOL.balances(1 - I) * PEG_MUL
 
-            if new_profit < initial_profit:
-                return 0
-            lp_amount: uint256 = new_profit - initial_profit
+    initial_profit: uint256 = self._calc_profit()
 
-            return lp_amount * self.caller_share / SHARE_PRECISION
-        ```
+    p_agg: uint256 = AGGREGATOR.price()  # Current USD per stablecoin
 
-    === "Example"
+    # Checking the balance will ensure no-loss of the stabilizer, but to ensure stabilization
+    # we need to exclude "bad" p_agg, so we add an extra check for it
 
-        ```shell
-        >>> PegKepper.estimate_caller_profit()
-        0
-        ```
+    new_profit: uint256 = 0
+    if balance_peg > balance_pegged:
+        if p_agg < 10**18:
+            return 0
+        new_profit = self._calc_future_profit((balance_peg - balance_pegged) / 5, True)  # this dumps stablecoin
 
+    else:
+        if p_agg > 10**18:
+            return 0
+        new_profit = self._calc_future_profit((balance_pegged - balance_peg) / 5, False)  # this pumps stablecoin
+
+    if new_profit < initial_profit:
+        return 0
+    lp_amount: uint256 = new_profit - initial_profit
+
+    return lp_amount * self.caller_share / SHARE_PRECISION
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.estimate_caller_profit()
+0
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `caller_share`
-!!! description "`PegKeeper.caller_share() -> uint256: view`"
+:::description[`PegKeeper.caller_share() -> uint256: view`]
 
-    Getter for the caller share which is the share of the profit generated when calling the `update()` function. The share is intended to incentivize the call of the function. The precision of the variable is set to $10^5$.
 
-    Returns: caller share (`uint256`).
+Getter for the caller share which is the share of the profit generated when calling the `update()` function. The share is intended to incentivize the call of the function. The precision of the variable is set to $10^5$.
 
-    ??? quote "Source code"
+Returns: caller share (`uint256`).
 
-        ```vyper 
-        SHARE_PRECISION: constant(uint256) = 10 ** 5
-        caller_share: public(uint256)
+<details>
+<summary>Source code</summary>
 
-        @external
-        def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
-            """
-            @notice Contract constructor
-            @param _pool Contract pool address
-            @param _index Index of the pegged
-            @param _receiver Receiver of the profit
-            @param _caller_share Caller's share of profit
-            @param _factory Factory which should be able to take coins away
-            @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
-            @param _admin Admin account
-            """
-            assert _index < 2
-            POOL = _pool
-            I = _index
-            pegged: address = _pool.coins(_index)
-            PEGGED = pegged
-            ERC20(pegged).approve(_pool.address, max_value(uint256))
-            ERC20(pegged).approve(_factory, max_value(uint256))
 
-            PEG_MUL = 10 ** (18 - ERC20(_pool.coins(1 - _index)).decimals())
+```vyper 
+SHARE_PRECISION: constant(uint256) = 10 **5
+caller_share: public(uint256)
 
-            self.admin = _admin
-            assert _receiver != empty(address)
-            self.receiver = _receiver
-            log ApplyNewAdmin(msg.sender)
-            log ApplyNewReceiver(_receiver)
+@external
+def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
+    """
+    @notice Contract constructor
+    @param _pool Contract pool address
+    @param _index Index of the pegged
+    @param _receiver Receiver of the profit
+    @param _caller_share Caller's share of profit
+    @param _factory Factory which should be able to take coins away
+    @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
+    @param _admin Admin account
+    """
+    assert _index < 2
+    POOL = _pool
+    I = _index
+    pegged: address = _pool.coins(_index)
+    PEGGED = pegged
+    ERC20(pegged).approve(_pool.address, max_value(uint256))
+    ERC20(pegged).approve(_factory, max_value(uint256))
 
-            assert _caller_share <= SHARE_PRECISION  # dev: bad part value
-            self.caller_share = _caller_share
-            log SetNewCallerShare(_caller_share)
+    PEG_MUL = 10 **(18 - ERC20(_pool.coins(1 - _index)).decimals())
 
-            FACTORY = _factory
-            AGGREGATOR = _aggregator
-            IS_INVERSE = (_index == 0)
-        ```
+    self.admin = _admin
+    assert _receiver != empty(address)
+    self.receiver = _receiver
+    log ApplyNewAdmin(msg.sender)
+    log ApplyNewReceiver(_receiver)
 
-    === "Example"
+    assert _caller_share <= SHARE_PRECISION  # dev: bad part value
+    self.caller_share = _caller_share
+    log SetNewCallerShare(_caller_share)
 
-        ```shell
-        >>> PegKepper.caller_share()
-        20000
-        ```
+    FACTORY = _factory
+    AGGREGATOR = _aggregator
+    IS_INVERSE = (_index == 0)
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.caller_share()
+20000
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `set_new_caller_share`
-!!! description "`PegKeeper.set_new_caller_share(_new_caller_share: uint256):`"
+:::description[`PegKeeper.set_new_caller_share(_new_caller_share: uint256):`]
 
-    !!!guard "Guarded Method" 
-        This function is only callable by the `admin` of the contract.
 
-    Function to set the caller share to `_new_caller_share`.
+:::guard[Guarded Method]
 
-    Emits: `SetNewCallerShare`
+This function is only callable by the `admin` of the contract.
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `_new_caller_share` |  `uint256` | New caller share |
 
-    ??? quote "Source code"
+:::
 
-        ```vyper
-        event SetNewCallerShare:
-            caller_share: uint256
+Function to set the caller share to `_new_caller_share`.
 
-        SHARE_PRECISION: constant(uint256) = 10 ** 5
-        caller_share: public(uint256)
+Emits: `SetNewCallerShare`
 
-        @external
-        @nonpayable
-        def set_new_caller_share(_new_caller_share: uint256):
-            """
-            @notice Set new update caller's part
-            @param _new_caller_share Part with SHARE_PRECISION
-            """
-            assert msg.sender == self.admin  # dev: only admin
-            assert _new_caller_share <= SHARE_PRECISION  # dev: bad part value
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_new_caller_share` |  `uint256` | New caller share |
 
-            self.caller_share = _new_caller_share
+<details>
+<summary>Source code</summary>
 
-            log SetNewCallerShare(_new_caller_share)
 
-        ```
+```vyper
+event SetNewCallerShare:
+    caller_share: uint256
 
-    === "Example"
+SHARE_PRECISION: constant(uint256) = 10 **5
+caller_share: public(uint256)
 
-        ```shell
-        >>> PegKepper.set_new_caller_share(30000)
-        ```
+@external
+@nonpayable
+def set_new_caller_share(_new_caller_share: uint256):
+    """
+    @notice Set new update caller's part
+    @param _new_caller_share Part with SHARE_PRECISION
+    """
+    assert msg.sender == self.admin  # dev: only admin
+    assert _new_caller_share <= SHARE_PRECISION  # dev: bad part value
 
+    self.caller_share = _new_caller_share
+
+    log SetNewCallerShare(_new_caller_share)
+
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.set_new_caller_share(30000)
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `withdraw_profit`
-!!! description "`PegKeeper.withdraw_profit() -> uint256:`"
-
-    Function to withdraw the profit generated by the PegKeeper.
-
-    Returns: amount of LP tokens (`uint256`).
-
-    Emits: `Profit`
-
-    ??? quote "Source code"
-
-        ```vyper 
-        event Profit:
-            lp_amount: uint256
-
-        @external
-        @nonpayable
-        def withdraw_profit() -> uint256:
-            """
-            @notice Withdraw profit generated by Peg Keeper
-            @return Amount of LP Token received
-            """
-            lp_amount: uint256 = self._calc_profit()
-            POOL.transfer(self.receiver, lp_amount)
-
-            log Profit(lp_amount)
-
-            return lp_amount
-        ```
-
-    === "Example"
-
-        ```shell
-        >>> PegKepper.withdraw_profit():
-        1222209056795882453168
-        ```
+:::description[`PegKeeper.withdraw_profit() -> uint256:`]
 
 
-## **Admin and Receiver**
+Function to withdraw the profit generated by the PegKeeper.
 
-PegKeepers have an `admin` and a `receiver`. Both of these variables can be changed by calling the respective admin-guarded functions, but such changes must first be approved by a DAO vote.  
+Returns: amount of LP tokens (`uint256`).
+
+Emits: `Profit`
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper 
+event Profit:
+    lp_amount: uint256
+
+@external
+@nonpayable
+def withdraw_profit() -> uint256:
+    """
+    @notice Withdraw profit generated by Peg Keeper
+    @return Amount of LP Token received
+    """
+    lp_amount: uint256 = self._calc_profit()
+    POOL.transfer(self.receiver, lp_amount)
+
+    log Profit(lp_amount)
+
+    return lp_amount
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.withdraw_profit():
+1222209056795882453168
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
+
+## **Admin and Receiver**PegKeepers have an `admin` and a `receiver`. Both of these variables can be changed by calling the respective admin-guarded functions, but such changes must first be approved by a DAO vote.  
 After approval, the newly designated admin or receiver is required to apply these changes within a timeframe of `3 * 86400` seconds, which equates to a timespan of *three days*. Should there be an attempt to implement these changes after this period, the function will revert.
 
 
 ### `admin`
-!!! description "`PegKeeper.admin() -> address: view`"
+:::description[`PegKeeper.admin() -> address: view`]
 
-    Getter for the admin of the PegKeeper.
 
-    Returns: admin (`address`).
+Getter for the admin of the PegKeeper.
 
-    ??? quote "Source code"
+Returns: admin (`address`).
 
-        ```vyper 
-        admin: public(address)
+<details>
+<summary>Source code</summary>
 
-        @external
-        def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
-            """
-            @notice Contract constructor
-            @param _pool Contract pool address
-            @param _index Index of the pegged
-            @param _receiver Receiver of the profit
-            @param _caller_share Caller's share of profit
-            @param _factory Factory which should be able to take coins away
-            @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
-            @param _admin Admin account
-            """
-            ...
 
-            self.admin = _admin
-            
-            ...
-        ```
+```vyper 
+admin: public(address)
 
-    === "Example"
+@external
+def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
+    """
+    @notice Contract constructor
+    @param _pool Contract pool address
+    @param _index Index of the pegged
+    @param _receiver Receiver of the profit
+    @param _caller_share Caller's share of profit
+    @param _factory Factory which should be able to take coins away
+    @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
+    @param _admin Admin account
+    """
+    ...
 
-        ```shell
-        >>> PegKepper.admin()
-        '0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
-        ```
+    self.admin = _admin
+    
+    ...
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.admin()
+'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `future_admin`
-!!! description "`PegKeeper.future_admin() -> address: view`"
+:::description[`PegKeeper.future_admin() -> address: view`]
 
-    Getter for the future admin of the PegKeeper.
 
-    Returns: future admin (`address`).
+Getter for the future admin of the PegKeeper.
 
-    ??? quote "Source code"
+Returns: future admin (`address`).
 
-        ```vyper
-        future_admin: public(address)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> PegKepper.future_admin()
-        '0x0000000000000000000000000000000000000000'
-        ```
+```vyper
+future_admin: public(address)
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.future_admin()
+'0x0000000000000000000000000000000000000000'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `commit_new_admin`
-!!! description "`PegKeeper.commit_new_admin(_new_admin: address):`"
+:::description[`PegKeeper.commit_new_admin(_new_admin: address):`]
 
-    !!!guard "Guarded Method" 
-        This function is only callable by the `admin` of the contract.
 
-    Function to commit a new admin.
+:::guard[Guarded Method]
 
-    Emits: `CommitNewAdmin`
+This function is only callable by the `admin` of the contract.
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `_new_admin` |  `address` | new admin address |
 
-    ??? quote "Source code"
+:::
 
-        ```vyper 
-        event CommitNewAdmin:
-            admin: address
+Function to commit a new admin.
 
-        @external
-        @nonpayable
-        def commit_new_admin(_new_admin: address):
-            """
-            @notice Commit new admin of the Peg Keeper
-            @param _new_admin Address of the new admin
-            """
-            assert msg.sender == self.admin  # dev: only admin
-            assert self.new_admin_deadline == 0 # dev: active action
+Emits: `CommitNewAdmin`
 
-            deadline: uint256 = block.timestamp + ADMIN_ACTIONS_DELAY
-            self.new_admin_deadline = deadline
-            self.future_admin = _new_admin
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_new_admin` |  `address` | new admin address |
 
-            log CommitNewAdmin(_new_admin)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> PegKepper.commit_new_admin("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")
-        ```
+```vyper 
+event CommitNewAdmin:
+    admin: address
 
+@external
+@nonpayable
+def commit_new_admin(_new_admin: address):
+    """
+    @notice Commit new admin of the Peg Keeper
+    @param _new_admin Address of the new admin
+    """
+    assert msg.sender == self.admin  # dev: only admin
+    assert self.new_admin_deadline == 0 # dev: active action
+
+    deadline: uint256 = block.timestamp + ADMIN_ACTIONS_DELAY
+    self.new_admin_deadline = deadline
+    self.future_admin = _new_admin
+
+    log CommitNewAdmin(_new_admin)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.commit_new_admin("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `apply_new_admin`
-!!! description "`PegKeeper.apply_new_admin():`"
+:::description[`PegKeeper.apply_new_admin():`]
 
-    !!!guard "Guarded Method" 
-        This function is only callable by the `future_admin` of the contract.
 
-    Function to apply the new admin of the PegKeeper.
+:::guard[Guarded Method]
 
-    Emits: `ApplyNewAdmin`
+This function is only callable by the `future_admin` of the contract.
 
-    ??? quote "Source code"
 
-        ```vyper 
-        event ApplyNewAdmin:
-            admin: address
+:::
 
-        @external
-        @nonpayable
-        def apply_new_admin():
-            """
-            @notice Apply new admin of the Peg Keeper
-            @dev Should be executed from new admin
-            """
-            new_admin: address = self.future_admin
-            assert msg.sender == new_admin  # dev: only new admin
-            assert block.timestamp >= self.new_admin_deadline  # dev: insufficient time
-            assert self.new_admin_deadline != 0  # dev: no active action
+Function to apply the new admin of the PegKeeper.
 
-            self.admin = new_admin
-            self.new_admin_deadline = 0
+Emits: `ApplyNewAdmin`
 
-            log ApplyNewAdmin(new_admin)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> PegKepper.apply_new_admin()
-        ```
+```vyper 
+event ApplyNewAdmin:
+    admin: address
 
+@external
+@nonpayable
+def apply_new_admin():
+    """
+    @notice Apply new admin of the Peg Keeper
+    @dev Should be executed from new admin
+    """
+    new_admin: address = self.future_admin
+    assert msg.sender == new_admin  # dev: only new admin
+    assert block.timestamp >= self.new_admin_deadline  # dev: insufficient time
+    assert self.new_admin_deadline != 0  # dev: no active action
+
+    self.admin = new_admin
+    self.new_admin_deadline = 0
+
+    log ApplyNewAdmin(new_admin)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.apply_new_admin()
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `new_admin_deadline`
-!!! description "`PegKeeper.new_admin_deadline() -> uint256: view`"
+:::description[`PegKeeper.new_admin_deadline() -> uint256: view`]
 
-    Getter for the timestamp indicating the deadline by which the `future_admin` can apply the admin change. Once the deadline is over, the address will no longer be able to apply the changes. The deadline is set for a **timeperiod of three days**.
 
-    Returns: timestamp (`uint256`).
+Getter for the timestamp indicating the deadline by which the `future_admin` can apply the admin change. Once the deadline is over, the address will no longer be able to apply the changes. The deadline is set for a **timeperiod of three days**.
 
-    ??? quote "Source code"
+Returns: timestamp (`uint256`).
 
-        ```vyper
-        new_admin_deadline: public(uint256)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> PegKepper.new_admin_deadline()
-        0
-        ```
+```vyper
+new_admin_deadline: public(uint256)
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.new_admin_deadline()
+0
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `receiver`
-!!! description "`PegKeeper.receiver() -> address: view`"
+:::description[`PegKeeper.receiver() -> address: view`]
 
-    Getter for the receiver of the PegKeeper's profits.
 
-    Returns: receiver (`address`).
+Getter for the receiver of the PegKeeper's profits.
 
-    ??? quote "Source code"
+Returns: receiver (`address`).
 
-        ```vyper 
-        receiver: public(address)
+<details>
+<summary>Source code</summary>
 
-        @external
-        def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
-            """
-            @notice Contract constructor
-            @param _pool Contract pool address
-            @param _index Index of the pegged
-            @param _receiver Receiver of the profit
-            @param _caller_share Caller's share of profit
-            @param _factory Factory which should be able to take coins away
-            @param _aggregator Price aggregator which shows the price pegged in real "dollars"
-            @param _admin Admin account
-            """
-            ...
 
-            assert _receiver != empty(address)
-            self.receiver = _receiver
-            
-            ...
-        ```
+```vyper 
+receiver: public(address)
 
-    === "Example"
+@external
+def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
+    """
+    @notice Contract constructor
+    @param _pool Contract pool address
+    @param _index Index of the pegged
+    @param _receiver Receiver of the profit
+    @param _caller_share Caller's share of profit
+    @param _factory Factory which should be able to take coins away
+    @param _aggregator Price aggregator which shows the price pegged in real "dollars"
+    @param _admin Admin account
+    """
+    ...
 
-        ```shell
-        >>> PegKepper.receiver()
-        '0xeCb456EA5365865EbAb8a2661B0c503410e9B347'
-        ```
+    assert _receiver != empty(address)
+    self.receiver = _receiver
+    
+    ...
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.receiver()
+'0xeCb456EA5365865EbAb8a2661B0c503410e9B347'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `future_receiver`
-!!! description "`PegKeeper.future_receiver() -> address: view`"
+:::description[`PegKeeper.future_receiver() -> address: view`]
 
-    Getter for the future receiver of the PegKeeper's profit.
 
-    Returns: future receiver (`address`).
+Getter for the future receiver of the PegKeeper's profit.
 
-    ??? quote "Source code"
+Returns: future receiver (`address`).
 
-        ```vyper 
-        future_admin: public(address)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> PegKepper.future_receiver()
-        '0x0000000000000000000000000000000000000000'
-        ```
+```vyper 
+future_admin: public(address)
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.future_receiver()
+'0x0000000000000000000000000000000000000000'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `commit_new_receiver`
-!!! description "`PegKeeper.commit_new_receiver(_new_receiver: address):`"
+:::description[`PegKeeper.commit_new_receiver(_new_receiver: address):`]
 
-    !!!guard "Guarded Method" 
-        This function is only callable by the `admin` of the contract.
 
-    Function to commit a new receiver address.
+:::guard[Guarded Method]
 
-    Emits: `CommitNewReceiver`
+This function is only callable by the `admin` of the contract.
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `_new_receiver` |  `address` | new receiver address | 
 
-    ??? quote "Source code"
+:::
 
-        ```vyper
-        event CommitNewReceiver:
-            receiver: address
+Function to commit a new receiver address.
 
-        @external
-        @nonpayable
-        def commit_new_receiver(_new_receiver: address):
-            """
-            @notice Commit new receiver of profit
-            @param _new_receiver Address of the new receiver
-            """
-            assert msg.sender == self.admin  # dev: only admin
-            assert self.new_receiver_deadline == 0 # dev: active action
+Emits: `CommitNewReceiver`
 
-            deadline: uint256 = block.timestamp + ADMIN_ACTIONS_DELAY
-            self.new_receiver_deadline = deadline
-            self.future_receiver = _new_receiver
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_new_receiver` |  `address` | new receiver address | 
 
-            log CommitNewReceiver(_new_receiver)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> PegKepper.commit_new_receiver("0x0000000000000000000000000000000000000000")
-        ```
+```vyper
+event CommitNewReceiver:
+    receiver: address
 
+@external
+@nonpayable
+def commit_new_receiver(_new_receiver: address):
+    """
+    @notice Commit new receiver of profit
+    @param _new_receiver Address of the new receiver
+    """
+    assert msg.sender == self.admin  # dev: only admin
+    assert self.new_receiver_deadline == 0 # dev: active action
+
+    deadline: uint256 = block.timestamp + ADMIN_ACTIONS_DELAY
+    self.new_receiver_deadline = deadline
+    self.future_receiver = _new_receiver
+
+    log CommitNewReceiver(_new_receiver)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.commit_new_receiver("0x0000000000000000000000000000000000000000")
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `apply_new_receiver`
-!!! description "`PegKeeper.apply_new_receiver():`"
+:::description[`PegKeeper.apply_new_receiver():`]
 
-    Function to apply the new receiver address of the PegKeeper's profit.
 
-    Emits: `ApplyNewReceiver`
+Function to apply the new receiver address of the PegKeeper's profit.
 
-    ??? quote "Source code"
+Emits: `ApplyNewReceiver`
 
-        ```vyper 
-        event ApplyNewReceiver:
-            receiver: address
+<details>
+<summary>Source code</summary>
 
-        @external
-        @nonpayable
-        def apply_new_receiver():
-            """
-            @notice Apply new receiver of profit
-            """
-            assert block.timestamp >= self.new_receiver_deadline  # dev: insufficient time
-            assert self.new_receiver_deadline != 0  # dev: no active action
 
-            new_receiver: address = self.future_receiver
-            self.receiver = new_receiver
-            self.new_receiver_deadline = 0
+```vyper 
+event ApplyNewReceiver:
+    receiver: address
 
-            log ApplyNewReceiver(new_receiver)
-        ```
+@external
+@nonpayable
+def apply_new_receiver():
+    """
+    @notice Apply new receiver of profit
+    """
+    assert block.timestamp >= self.new_receiver_deadline  # dev: insufficient time
+    assert self.new_receiver_deadline != 0  # dev: no active action
 
-    === "Example"
+    new_receiver: address = self.future_receiver
+    self.receiver = new_receiver
+    self.new_receiver_deadline = 0
 
-        ```shell
-        >>> PegKepper.apply_new_receiver():
-        ```
+    log ApplyNewReceiver(new_receiver)
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.apply_new_receiver():
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `new_receiver_deadline`
-!!! description "`PegKeeper.new_receiver_deadline() -> uint256: view`"
+:::description[`PegKeeper.new_receiver_deadline() -> uint256: view`]
 
-    Getter for the timestamp indicating the deadline by which the `future_receiver` can apply the receiver change. Once the deadline is over, the address will no longer be able to apply the changes. The deadline is set for a **timeperiod of three days**.
 
-    Returns: timestamp (`uint256`).
+Getter for the timestamp indicating the deadline by which the `future_receiver` can apply the receiver change. Once the deadline is over, the address will no longer be able to apply the changes. The deadline is set for a **timeperiod of three days**.
 
-    ??? quote "Source code"
+Returns: timestamp (`uint256`).
 
-        ```vyper
-        new_receiver_deadline: public(uint256)
-        ```
+<details>
+<summary>Source code</summary>
 
-    === "Example"
 
-        ```shell
-        >>> PegKepper.new_receiver_deadline()
-        0
-        ```
+```vyper
+new_receiver_deadline: public(uint256)
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.new_receiver_deadline()
+0
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `revert_new_option`
-!!! description "`PegKeeper.revert_new_options():`"
-
-    !!!guard "Guarded Method" 
-        This function is only callable by the `admin` of the contract.
-
-    Function to revert admin or receiver changes. Calling this function sets the admin and receiver deadline back to 0 and emits ApplyNewAdmin and ApplyNewReceiver events to revert the changes.
-
-    Emits: `ApplyNewAdmin` and `ApplyNewReceiver`
-
-    ??? quote "Source code"
-
-        ```vyper 
-        event ApplyNewReceiver:
-            receiver: address
-
-        event ApplyNewAdmin:
-            admin: address
-
-        @external
-        @nonpayable
-        def revert_new_options():
-            """
-            @notice Revert new admin of the Peg Keeper or new receiver
-            @dev Should be executed from admin
-            """
-            assert msg.sender == self.admin  # dev: only admin
-
-            self.new_admin_deadline = 0
-            self.new_receiver_deadline = 0
-
-            log ApplyNewAdmin(self.admin)
-            log ApplyNewReceiver(self.receiver)
-        ```
-
-    === "Example"
-
-        ```shell
-        >>> PegKepper.revert_new_options():
-        ```
+:::description[`PegKeeper.revert_new_options():`]
 
 
-## **Contract Info Methods**
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the contract.
 
 
-### `debt`
-!!! description "`PegKeeper.debt() -> uint256: view`"
+:::
 
-    Getter for the crvUSD debt of the PegKeeper. When the PegKeeper deposits crvUSD into the pool, the debt is incremented by the deposited amount. Conversely, if the PegKeeper withdraws, the debt is reduced by the withdrawn amount. `debt` is used to calculate the DebtFraction of the PegKeepers.
+Function to revert admin or receiver changes. Calling this function sets the admin and receiver deadline back to 0 and emits ApplyNewAdmin and ApplyNewReceiver events to revert the changes.
 
-    Returns: debt (`uint256`).
+Emits: `ApplyNewAdmin` and `ApplyNewReceiver`
 
-    ??? quote "Source code"
+<details>
+<summary>Source code</summary>
 
-        ```vyper
-        debt: public(uint256)
-        ```
 
-    === "Example"
+```vyper 
+event ApplyNewReceiver:
+    receiver: address
 
-        ```shell
-        >>> PegKepper.debt()
-        10569198033275719942044356
-        ```
+event ApplyNewAdmin:
+    admin: address
 
+@external
+@nonpayable
+def revert_new_options():
+    """
+    @notice Revert new admin of the Peg Keeper or new receiver
+    @dev Should be executed from admin
+    """
+    assert msg.sender == self.admin  # dev: only admin
+
+    self.new_admin_deadline = 0
+    self.new_receiver_deadline = 0
+
+    log ApplyNewAdmin(self.admin)
+    log ApplyNewReceiver(self.receiver)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.revert_new_options():
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
+
+## **Contract Info Methods**### `debt`
+:::description[`PegKeeper.debt() -> uint256: view`]
+
+
+Getter for the crvUSD debt of the PegKeeper. When the PegKeeper deposits crvUSD into the pool, the debt is incremented by the deposited amount. Conversely, if the PegKeeper withdraws, the debt is reduced by the withdrawn amount. `debt` is used to calculate the DebtFraction of the PegKeepers.
+
+Returns: debt (`uint256`).
+
+<details>
+<summary>Source code</summary>
+
+
+```vyper
+debt: public(uint256)
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.debt()
+10569198033275719942044356
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `FACTORY`
-!!! description "`PegKeeper.FACTORY() -> address: view`"
+:::description[`PegKeeper.FACTORY() -> address: view`]
 
-    Getter for the address of the factory contract.
 
-    Returns: factory contract (`address`).
+Getter for the address of the factory contract.
 
-    ??? quote "Source code"
+Returns: factory contract (`address`).
 
-        ```vyper 
-        FACTORY: immutable(address)
+<details>
+<summary>Source code</summary>
 
-        @external
-        def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
-            """
-            @notice Contract constructor
-            @param _pool Contract pool address
-            @param _index Index of the pegged
-            @param _receiver Receiver of the profit
-            @param _caller_share Caller's share of profit
-            @param _factory Factory which should be able to take coins away
-            @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
-            @param _admin Admin account
-            """
-            ...
 
-            FACTORY = _factory
+```vyper 
+FACTORY: immutable(address)
 
-            ...
-        ```
+@external
+def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
+    """
+    @notice Contract constructor
+    @param _pool Contract pool address
+    @param _index Index of the pegged
+    @param _receiver Receiver of the profit
+    @param _caller_share Caller's share of profit
+    @param _factory Factory which should be able to take coins away
+    @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
+    @param _admin Admin account
+    """
+    ...
 
-    === "Example"
+    FACTORY = _factory
 
-        ```shell
-        >>> PegKepper.FACTORY()
-        '0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC'
-        ```
+    ...
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.FACTORY()
+'0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `PEGGED`
-!!! description "`PegKeeper.PEGGED() -> address: view`"
+:::description[`PegKeeper.PEGGED() -> address: view`]
 
-    Getter for the address of the pegged token (crvUSD). Pegged asset is determined by the index of the token in the corresponding `pool`. Index value is stored in `I`.
 
-    Returns: pegged token contract (`address`).
+Getter for the address of the pegged token (crvUSD). Pegged asset is determined by the index of the token in the corresponding `pool`. Index value is stored in `I`.
 
-    ??? quote "Source code"
+Returns: pegged token contract (`address`).
 
-        ```vyper 
-        PEGGED: immutable(address)
+<details>
+<summary>Source code</summary>
 
-        @external
-        def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
-            """
-            @notice Contract constructor
-            @param _pool Contract pool address
-            @param _index Index of the pegged
-            @param _receiver Receiver of the profit
-            @param _caller_share Caller's share of profit
-            @param _factory Factory which should be able to take coins away
-            @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
-            @param _admin Admin account
-            """
-            ...
 
-            PEGGED = pegged
-            
-            ...
-        ```
+```vyper 
+PEGGED: immutable(address)
 
-    === "Example"
+@external
+def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
+    """
+    @notice Contract constructor
+    @param _pool Contract pool address
+    @param _index Index of the pegged
+    @param _receiver Receiver of the profit
+    @param _caller_share Caller's share of profit
+    @param _factory Factory which should be able to take coins away
+    @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
+    @param _admin Admin account
+    """
+    ...
 
-        ```shell
-        >>> PegKepper.PEGGED()
-        '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
-        ```
+    PEGGED = pegged
+    
+    ...
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.PEGGED()
+'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `POOL`
-!!! description "`PegKeeper.POOL() -> address: view`"
+:::description[`PegKeeper.POOL() -> address: view`]
 
-    Getter for the pool contract address in which the PegKeeper deposits and withdraws.
 
-    Returns: pool contract (`address`).
+Getter for the pool contract address in which the PegKeeper deposits and withdraws.
 
-    ??? quote "Source code"
+Returns: pool contract (`address`).
 
-        ```vyper
-        POOL: immutable(CurvePool)
+<details>
+<summary>Source code</summary>
 
-        @external
-        def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
-            """
-            @notice Contract constructor
-            @param _pool Contract pool address
-            @param _index Index of the pegged
-            @param _receiver Receiver of the profit
-            @param _caller_share Caller's share of profit
-            @param _factory Factory which should be able to take coins away
-            @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
-            @param _admin Admin account
-            """
-            ...
 
-            POOL = _pool
-            
-            ...
-        ```
+```vyper
+POOL: immutable(CurvePool)
 
-    === "Example"
+@external
+def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
+    """
+    @notice Contract constructor
+    @param _pool Contract pool address
+    @param _index Index of the pegged
+    @param _receiver Receiver of the profit
+    @param _caller_share Caller's share of profit
+    @param _factory Factory which should be able to take coins away
+    @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
+    @param _admin Admin account
+    """
+    ...
 
-        ```shell
-        >>> PegKepper.POOL()
-        '0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E'
-        ```
+    POOL = _pool
+    
+    ...
+```
 
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.POOL()
+'0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::
 
 ### `AGGREGATOR`
-!!! description "`PegKeeper.AGGREGATOR() -> address: view`"
+:::description[`PegKeeper.AGGREGATOR() -> address: view`]
 
-    Getter for the price aggregator contract for crvUSD. This contract is used to determine the value of crvUSD.
 
-    Returns: price aggregator contract (`address`).
+Getter for the price aggregator contract for crvUSD. This contract is used to determine the value of crvUSD.
 
-    ??? quote "Source code"
+Returns: price aggregator contract (`address`).
 
-        ```vyper
-        AGGREGATOR: immutable(StableAggregator)
+<details>
+<summary>Source code</summary>
 
-        @external
-        def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
-            """
-            @notice Contract constructor
-            @param _pool Contract pool address
-            @param _index Index of the pegged
-            @param _receiver Receiver of the profit
-            @param _caller_share Caller's share of profit
-            @param _factory Factory which should be able to take coins away
-            @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
-            @param _admin Admin account
-            """
-            ...
 
-            AGGREGATOR = _aggregator
+```vyper
+AGGREGATOR: immutable(StableAggregator)
 
-            ...
-        ```
+@external
+def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_share: uint256, _factory: address, _aggregator: StableAggregator, _admin: address):
+    """
+    @notice Contract constructor
+    @param _pool Contract pool address
+    @param _index Index of the pegged
+    @param _receiver Receiver of the profit
+    @param _caller_share Caller's share of profit
+    @param _factory Factory which should be able to take coins away
+    @param _aggregator Price aggregator which shows the price of pegged in real "dollars"
+    @param _admin Admin account
+    """
+    ...
 
-    === "Example"
+    AGGREGATOR = _aggregator
 
-        ```shell
-        >>> PegKepper.AGGREGATOR()
-        '0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7'
-        ```
+    ...
+```
+
+
+</details>
+
+<Tabs>
+<TabItem value="example" label="Example">
+
+
+```shell
+>>> PegKepper.AGGREGATOR()
+'0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7'
+```
+
+
+</TabItem>
+</Tabs>
+
+
+:::

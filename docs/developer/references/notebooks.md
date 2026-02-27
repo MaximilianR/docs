@@ -1,43 +1,39 @@
-<h1>Notebooks</h1>
-
+# Notebooks
 Notebooks are easy-to-use notebooks written in Python aiming to showcase the usage of smart contracts and their functionalities. They can be interactively designed and directly run in the browser to make the user experience as easy and smooth as possible.
 
-!!!github "GitHub"
-    All hosted Jupyter notebooks can also be found in the [:material-github: `curve-notebooks`](https://github.com/CurveDocs/curve-notebook) repository. A full list of all hosted notebooks can be found [here](#notebook-list).
+:::github[GitHub]
+
+All hosted Jupyter notebooks can also be found in the [ `curve-notebooks`](https://github.com/CurveDocs/curve-notebook) repository. A full list of all hosted notebooks can be found [here](#notebook-list).
 
 
----
-
-## **Google Colab and JupyterHub**
-
-The first notebooks were hosted on a [JupyterHub server from Vyper](https://try.vyperlang.org/hub/). Due to performance issues, hosting was switched to [Google Colab](https://colab.google/). Old notebooks remain hosted on the JupyterHub server, but all new ones will be hosted on Google Colab.
+:::
 
 ---
 
-## **Vyper and Titanoboa**
+## **Google Colab and JupyterHub**The first notebooks were hosted on a [JupyterHub server from Vyper](https://try.vyperlang.org/hub/). Due to performance issues, hosting was switched to [Google Colab](https://colab.google/). Old notebooks remain hosted on the JupyterHub server, but all new ones will be hosted on Google Colab.
 
-All Curve Smart Contracts are written in [Vyper](https://github.com/vyperlang).
+---
+
+## **Vyper and Titanoboa**All Curve Smart Contracts are written in [Vyper](https://github.com/vyperlang).
 
 For notebooks, mostly [Titanoboa](https://github.com/vyperlang/titanoboa) is used. Titanoboa is a Vyper interpreter with pretty tracebacks, forking, debugging features, and more! Titanoboa's goal is to provide a modern, advanced, and integrated development experience for Vyper users.
 
-!!!colab "Notebook: Titanoboa Guide"
-    A very simple notebook on the basic usage of Titanoboa and how it's used throughout all the notebooks can be found here: [https://colab.research.google.com/drive/1zHMuvNVZP8oB-Q1dA8NqgGLFpLI2JGni?usp=sharing](https://colab.research.google.com/drive/1zHMuvNVZP8oB-Q1dA8NqgGLFpLI2JGni).
+:::colab[Notebook: Titanoboa Guide]
+
+A very simple notebook on the basic usage of Titanoboa and how it's used throughout all the notebooks can be found here: [https://colab.research.google.com/drive/1zHMuvNVZP8oB-Q1dA8NqgGLFpLI2JGni?usp=sharing](https://colab.research.google.com/drive/1zHMuvNVZP8oB-Q1dA8NqgGLFpLI2JGni).
+
+
+:::
 
 ---
 
-## **How to run Notebooks**
-
-For notebooks hosted on Google Colab, a user only needs to set up two "Secrets." For consistency, all notebooks use a secret named `RPC_ETHEREUM` for HTTP API keys (e.g., from [Alchemy](https://www.alchemy.com/)) and a `ETHERSCAN_API_KEY` secret holding a valid [Etherscan API key](https://docs.etherscan.io/getting-started/viewing-api-usage-statistics).
+## **How to run Notebooks**For notebooks hosted on Google Colab, a user only needs to set up two "Secrets." For consistency, all notebooks use a secret named `RPC_ETHEREUM` for HTTP API keys (e.g., from [Alchemy](https://www.alchemy.com/)) and a `ETHERSCAN_API_KEY` secret holding a valid [Etherscan API key](https://docs.etherscan.io/getting-started/viewing-api-usage-statistics).
 
 After setting up these two secrets, the notebook can successfully be run directly in the browser.
 
 ---
 
-## **Notebook List**
-
-### **Curve Lending**
-
-| Conatract | Description | Link    |
+## **Notebook List**### **Curve Lending**| Conatract | Description | Link    |
 | :-------: | ----------- | :-----: |
 | [`Vault`](../lending/contracts/vault.md) | Obtaining Vault Shares: `deposit` and `mint` | [:logos-googlecolab: here](https://colab.research.google.com/drive/1Qj9nOk5TYXp6j6go3VIh6--r5VILnoo9?usp=sharing)  |
 | [`Vault`](../lending/contracts/vault.md) | Withdrawing Assets: `withdraw` and `redeem`  | [:logos-googlecolab: here](https://colab.research.google.com/drive/1Ta69fsIc7zmtjFlQ94a8MDYYLeo4GJJI?usp=sharing)  |

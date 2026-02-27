@@ -15,19 +15,12 @@ checks if the largest price is smaller than the difference of the price within t
 finally, takes pegkeeper debt and total crvusd of the pegkeeper (debt + balanceOf) and calculates a maximum ratio using `_get_max_ratio`.
 
 
-
-
-
 flow:
 
 
 call update() -> check if allowed to provide or withdraw (`provide_allowed` or `withdraw_allowed`) in regulator contract.
 
 if killed, the regulator prohibits the provision or withdrawl of crvusd to the pools. --> allowance is regulated in the `PegKeeperRegulator.vy`
-
-
-
-
 
 
 highest value of `price_oracle` across all the stableswap pools, essentially the largest price.
@@ -44,12 +37,11 @@ price = 1.01
 worst_price_threshold = 0.0003
 
 
-
 The individual debt ratios of pegkeepers are stored in a `debt_ratios` list in `_provide` function hold the debt ratios of the pegkeepers calculated as followed:
 
-$$\frac{\text{debt} * 10^{18}}{(1 + \text{debt} + \text{crvusd_balance_of_pegkeeper})}$$
+$$\frac\{\text\{debt\} * 10^\{18\}\}\{(1 + \text\{debt\} + \text\{crvusd_balance_of_pegkeeper\})\}$$
 
 
 *`_get_max_ratio` takes the entire `debt_ratios` list as input and calculated a maximum ratio based on the values as follows:*`
 
-$$\text{maxRatio} = \frac{(\text{alpha} + \text{beta} * \frac{\text{rsum}}{10^{18}})^2}{10^{18}}$$
+$$\text\{maxRatio\} = \frac\{(\text\{alpha\} + \text\{beta\} * \frac\{\text\{rsum\}\}\{10^\{18\}\})^2\}\{10^\{18\}\}$$
