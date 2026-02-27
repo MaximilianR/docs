@@ -102,10 +102,6 @@ export default {
                     type: 'doc',
                     id: 'gauge/guides/adding-permissionless-rewards',
                 },
-                {
-                    type: 'doc',
-                    id: 'gauge/building-liquidity',
-                },
             ],
         },
         {
