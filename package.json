@@ -26,7 +26,6 @@
     "chartjs-adapter-date-fns": "^3.0.0",
     "clsx": "^2.0.0",
     "date-fns": "^4.1.0",
-    "docusaurus-plugin-plausible": "^0.0.5",
     "ethers": "^6.15.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
@@ -35,8 +34,7 @@
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "swagger-ui-react": "^5.31.0",
-    "unist-util-visit": "^5.0.0",
-    "web3": "^4.16.0"
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.2",

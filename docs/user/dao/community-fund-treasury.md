@@ -4,8 +4,9 @@ title: Community Fund & Treasury
 sidebar_label: Community Fund & Treasury
 ---
 
-import CommunityFundBalance from '@site/src/components/LiveComponents/CommunityFundBalance';
-import TreasuryBalance from '@site/src/components/LiveComponents/TreasuryBalance';
+import TokenBalance from '@site/src/components/LiveComponents/TokenBalance';
+import CrvLogo from '@site/static/img/logos/CRV_xs.png';
+import CrvusdLogo from '@site/static/img/logos/crvUSD_xs.png';
 
 ## Community Fund
 
@@ -13,7 +14,13 @@ Curve initially distributed around 151M CRV to a Community Fund fully controlled
 
 The Community Fund is deployed on Ethereum at [`0xe3997288987e6297ad550a69b31439504f513267`](https://etherscan.io/address/0xe3997288987e6297ad550a69b31439504f513267).
 
-<CommunityFundBalance />
+<TokenBalance
+  tokenAddress="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  holderAddress="0xe3997288987e6297ad550a69b31439504f513267"
+  tokenName="CRV"
+  logo={CrvLogo}
+  priceApiUrl="https://prices.curve.finance/v1/usd_price/ethereum/0xD533a949740bb3306d119CC777fa900bA034cd52"
+/>
 
 :::info Looking for a Grant?
     If you are building something which in our view deserves a grant from Curve, please feel free to reach out in the dedicated Telegram channel: [Curve Ecosystem Grants](https://t.me/curve_grants) or create a proposal on the [Governance Forum].
@@ -27,4 +34,10 @@ In comparison to the community fund, assets do not require a one-year vesting pe
 
 The Treasury is deployed on Ethereum at [`0x6508ef65b0bd57eabd0f1d52685a70433b2d290b`](https://etherscan.io/address/0x6508ef65b0bd57eabd0f1d52685a70433b2d290b).
 
-<TreasuryBalance />
+<TokenBalance
+  tokenAddress="0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+  holderAddress="0x6508eF65b0Bd57eaBD0f1D52685A70433B2d290B"
+  tokenName="crvUSD"
+  logo={CrvusdLogo}
+  priceApiUrl="https://prices.curve.finance/v1/usd_price/ethereum/0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+/>

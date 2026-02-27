@@ -6,7 +6,16 @@ import rehypeKatex from 'rehype-katex';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-const SITE_DOMAIN = 'docs.curve.finance';
+const SITE_DOMAIN = 'dev.curve.finance';
+
+// Shared doc plugin options (used by both user and protocol sections)
+const sharedDocOptions = {
+  remarkPlugins: [remarkMath],
+  rehypePlugins: [rehypeKatex],
+  admonitions: {
+    keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'danger', 'example'],
+  },
+};
 
 const config: Config = {
   title: 'Curve Knowledge Hub',
@@ -49,26 +58,16 @@ const config: Config = {
     '@docusaurus/theme-mermaid'],
 
   themeConfig: {
-    // Replace with your project's social card
-    // image: 'img/docusaurus-social-card.jpg',
     algolia: {
-      // The application ID provided by Algolia
       appId: '0JUF43T81Z',
-      // Public API key: it is safe to commit it
       apiKey: '924b8a275700d8f67826ed2ed67671bb',
       indexName: 'algolia branch',
-      // Optional: see doc section below
       contextualSearch: true,
-      // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-      externalUrlRegex: 'external\\.com|domain\\.com',
-      // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
       replaceSearchResultPathname: {
-        from: '/docs/', // or as RegExp: /\/docs\//
+        from: '/docs/',
         to: '/',
       },
-      // Optional: Algolia search parameters
       searchParameters: {},
-      // Optional: path for search page that enabled by default (`false` to disable it)
       searchPagePath: 'search',
       askAi: {
         assistantId: 'IYRY71AZnunB',
@@ -181,11 +180,7 @@ const config: Config = {
           sidebarPath: './sidebars/sidebarUser.js',
           sidebarCollapsed: true,
           breadcrumbs: false,
-          remarkPlugins: [remarkMath],
-          rehypePlugins: [rehypeKatex],
-          admonitions: {
-            keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'danger', 'example'],
-          },
+          ...sharedDocOptions,
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -195,12 +190,29 @@ const config: Config = {
   ],
 
   plugins: [
-    [
-      'docusaurus-plugin-plausible',
-      {
-        domain: SITE_DOMAIN,
-      },
-    ],
+    function plausibleAnalytics() {
+      return {
+        name: 'plausible-analytics',
+        injectHtmlTags() {
+          return {
+            headTags: [
+              {
+                tagName: 'script',
+                attributes: {
+                  defer: 'true',
+                  'data-domain': SITE_DOMAIN,
+                  src: 'https://plausible.io/js/script.js',
+                },
+              },
+              {
+                tagName: 'script',
+                innerHTML: 'window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }',
+              },
+            ],
+          };
+        },
+      };
+    },
     function latestAnnouncement() {
       return {
         name: 'latest-announcement-client-module',
@@ -235,39 +247,9 @@ const config: Config = {
         sidebarPath: './sidebars/sidebarProtocol.js',
         sidebarCollapsed: true,
         breadcrumbs: false,
-        remarkPlugins: [remarkMath],
-        rehypePlugins: [rehypeKatex],
-        admonitions: {
-          keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'danger', 'example'],
-        },
+        ...sharedDocOptions,
       },
     ],
-    //[
-    //  '@docusaurus/plugin-content-docs',
-    //  {
-    //    id: 'guides',
-    //    path: 'docs/guides',
-    //    routeBasePath: 'guides',
-    //    includeCurrentVersion: true,
-    //    sidebarPath: './sidebars/sidebarGuides.js',
-    //    sidebarCollapsed: true,
-    //    breadcrumbs: false,
-    //  },
-    //],
-    // [
-      // '@docusaurus/plugin-content-docs',
-      // {
-        // id: 'developer',
-        // path: 'docs/developer',
-        // routeBasePath: 'developer',
-        // includeCurrentVersion: true,
-        // sidebarPath: './sidebars/sidebarTechnicalDocs.js',
-        // sidebarCollapsed: true,
-        // breadcrumbs: false,
-        // remarkPlugins: [math],
-        // rehypePlugins: [katex],
-      // },
-    // ],
   ],
 
   stylesheets: [
