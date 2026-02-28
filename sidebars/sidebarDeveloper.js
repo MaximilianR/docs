@@ -513,6 +513,9 @@ export default {
             ],
         },
 
+        // --- Security & Audits ---
+        { type: 'doc', id: 'security/security', label: 'Security & Audits' },
+
         // --- Deployments ---
         { type: 'doc', id: 'deployments', label: 'Deployments' },
 
@@ -521,7 +524,6 @@ export default {
             type: 'category',
             label: 'Resources',
             items: [
-                { type: 'doc', id: 'security/security', label: 'Security & Audits' },
                 { type: 'doc', id: 'references/whitepaper', label: 'Whitepapers' },
                 { type: 'doc', id: 'references/derivations', label: 'Derivations' },
                 { type: 'doc', id: 'references/notebooks', label: 'Notebooks' },
