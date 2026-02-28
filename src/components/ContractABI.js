@@ -14,9 +14,9 @@ export default function ContractABI({ children }) {
       >
         <span className={styles.icon}>{'{ }'}</span>
         <span className={styles.label}>Contract ABI</span>
-        <span className={`${styles.chevron} ${open ? styles.chevronOpen : ''}`}>▼</span>
+        <span className={open ? `${styles.chevron} ${styles.chevronOpen}` : styles.chevron}>▼</span>
       </button>
-      <div className={`${styles.content} ${open ? styles.contentOpen : ''}`}>
+      <div className={open ? `${styles.content} ${styles.contentOpen}` : styles.content}>
         {children}
       </div>
     </div>
