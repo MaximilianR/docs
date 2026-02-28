@@ -1,6 +1,7 @@
 import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 
 # Tricrypto-NG Overview
+
 :::deploy[Contract Source & Deployment]
 
 Source code is available on [ GitHub](https://github.com/curvefi/tricrypto-ng). The following documentation covers source code up until commit number [`33707fc`](https://github.com/curvefi/tricrypto-ng/commit/33707fc8b84e08786acf184fcfdb744eb4657a99).

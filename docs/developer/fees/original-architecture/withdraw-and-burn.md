@@ -20,6 +20,7 @@ Admin fees can either be claimed through the corresponding PoolProxy or directly
 :::
 
 ### `admin_balances`
+
 ::::description[`Pool.admin_balances(i: uint256) -> uint256:`]
 
 
@@ -58,6 +59,7 @@ def admin_balances(i: uint256) -> uint256:
 ::::
 
 ### `withdraw_admin_fees`
+
 ::::description[`PoolProxy.withdraw_admin_fees(_pool: address):`]
 
 
@@ -108,6 +110,7 @@ def withdraw_admin_fees(_pool: address):
 ::::
 
 ### `withdraw_many`
+
 ::::description[`PoolProxy.withdraw_many(_pools: address[20]):`]
 
 
@@ -168,6 +171,7 @@ Fees are mostly claimed directly from the pool.
 
 
 ### `claim_admin_fees`
+
 ::::description[`Pool.claim_admin_fees():`]
 
 
@@ -281,6 +285,7 @@ def _claim_admin_fees():
 ## Curve StablecoincrvUSD fees are based on the borrow rate of the corresponding markets. Fees are accurred in crvUSD token. They can be claimed from the according Controller.
 
 ### `admin_fees`
+
 ::::description[`Controller.admin_fees() -> uint256:`]
 
 
@@ -321,6 +326,7 @@ def admin_fees() -> uint256:
 ::::
 
 ### `collect_fees`
+
 ::::description[`Controller.collect_fees():`]
 
 
@@ -391,6 +397,7 @@ All admin fees are accumulated in the [0xECB](https://etherscan.io/address/0xeCb
 
 
 ### `burn`
+
 ::::description[`0xECB.burn(_coin: address):`]
 
 
@@ -438,6 +445,7 @@ def burn(_coin: address):
 ::::
 
 ### `burn_many`
+
 ::::description[`0xECB.burn_many(_coins: address[20]):`]
 
 
@@ -493,6 +501,7 @@ def burn_many(_coins: address[20]):
 ::::
 
 ### `donate_admin_fees`
+
 ::::description[`0xECB.donate_admin_fees(_pool: address):`]
 
 
@@ -539,6 +548,7 @@ def donate_admin_fees(_pool: address):
 :::
 
 ### `donate_admin_fees`
+
 ::::description[`0xECB.set_donate_approval(_pool: address, _caller: address, _is_approved: bool):`]
 
 
