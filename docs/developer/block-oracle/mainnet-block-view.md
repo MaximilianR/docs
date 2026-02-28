@@ -1,16 +1,12 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # MainnetBlockView
 
 A viewer contract deployed to Ethereum mainnet that provides access to block numbers and hashes. This contract is useful for cross-chain applications that need to verify block data from Ethereum mainnet. To prevent reorg-related issues, it only returns hashes for blocks that are at least 65 blocks old.
 
 This contract is called off-chain via LayerZero's `lzRead` functionality.
 
-<details open>
-<summary><code>MainnetBlockView.vy</code></summary>
+:::vyper[`MainnetBlockView.vy`]
 
-The source code for the `MainnetBlockView.vy` contract can be found on [GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/MainnetBlockView.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
+The source code for the `MainnetBlockView.vy` contract can be found on [ GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/MainnetBlockView.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0xb10CfacE69cc0B7F1AE0Dc8E6aD186914f6e7EEA`](https://etherscan.io/address/0xb10CfacE69cc0B7F1AE0Dc8E6aD186914f6e7EEA).
 
@@ -23,13 +19,13 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0xb10CfacE69cc0B7F1AE
 
 </details>
 
-</details>
+:::
 
 ---
 
 
 ### `get_blockhash`
-:::description[`MainnetBlockView.get_blockhash(_block_number: uint256 = block.number - 65, _avoid_failure: bool = False) -> (uint256, bytes32)`]
+::::description[`MainnetBlockView.get_blockhash(_block_number: uint256 = block.number - 65, _avoid_failure: bool = False) -> (uint256, bytes32)`]
 
 Retrieves the block hash for a given block number. The valid range for historical block hashes is between the last 64 and the last 8192 blocks.
 
@@ -46,13 +42,9 @@ Block Range Constraints:
 | `_block_number` | `uint256` | Block number to get the hash for. Defaults to `block.number - 65` |
 | `_avoid_failure` | `bool` | If `True`, returns `(0, 0x0)` on failure instead of reverting. Useful for cross-chain calls. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-<Tabs>
-<TabItem value="MainnetBlockView.vy" label="MainnetBlockView.vy">
-
-```python
+```vyper
 from snekmate.utils import block_hash as snekmate_block_hash
 
 @view
@@ -94,12 +86,11 @@ def get_blockhash(
     return requested_block_number, snekmate_block_hash._block_hash(requested_block_number)
 ```
 
-</TabItem>
-<TabItem value="block_hash.vy" label="block_hash.vy">
+```vyper
+# block_hash.vy
+# Source code of this Vyper module can be found here:
+# https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/utils/block_hash.vy
 
-Source code of this Vyper module can be found [here](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/utils/block_hash.vy).
-
-```python
 # pragma version ~=0.4.3
 # pragma nonreentrancy off
 """
@@ -209,13 +200,9 @@ def _get_history_storage(block_number: uint256) -> bytes32:
     )
 ```
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example1" label="Example 1">
+<Example>
 
 Get the default block hash (65 blocks ago)
 
@@ -224,18 +211,12 @@ Get the default block hash (65 blocks ago)
 (22787735, 0x74fd0de77691b8408e795cfea10366f6ba340fcf2800d019abea8945d07fcb72)
 ```
 
-</TabItem>
-<TabItem value="example2" label="Example 2">
-
 Get a specific block hash
 
 ```shell
 >>> MainnetBlockView.get_blockhash(22787600)
 (22787600, 0x4bdaa00a7e9b85a9ab25565ef2d2de8817cbba08dd0c6880ecee4ac4674e1378)
 ```
-
-</TabItem>
-<TabItem value="example3" label="Example 3">
 
 Use avoid_failure parameter
 
@@ -244,9 +225,6 @@ Use avoid_failure parameter
 (0, 0x0000000000000000000000000000000000000000000000000000000000000000)
 ```
 
-</TabItem>
-<TabItem value="example4" label="Example 4">
-
 Error when block is too recent (without avoid_failure)
 
 ```shell
@@ -254,7 +232,6 @@ Error when block is too recent (without avoid_failure)
 Error: Returned error: execution reverted: Block is too recent or too old
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
-:::
+::::

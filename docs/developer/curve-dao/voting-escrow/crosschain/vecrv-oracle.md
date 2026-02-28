@@ -2,9 +2,7 @@
 
 The `L2VotingEscrowOracle` contract is used to fetch information from the `VotingEscrow` from Ethereum. This data can then be used to calculate boost rates for providing liquidity.
 
-
-<details open>
-<summary><code>L2VotingEscrowOracle.vy</code></summary>
+:::vyper[`L2VotingEscrowOracle.vy`]
 
 The source code for the `L2VotingEscrowOracle.vy` contract is available on [GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/vecrv/VecrvOracle.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.4.0`.
 
@@ -20,14 +18,14 @@ The `L2VotingEscrowOracle` contract is deployed at the following addresses and i
 - :logos-base: Base: [`0xeB896fB7D1AaE921d586B0E5a037496aFd3E2412`](https://basescan.org/address/0xeB896fB7D1AaE921d586B0E5a037496aFd3E2412)
 - :logos-taiko: Taiko: [`0x5C57BdcFF69B4F1D894EA70c0470D39C8FA0ee30`](https://taikoscan.io/address/0x5C57BdcFF69B4F1D894EA70c0470D39C8FA0ee30)
 
+:::
+
 <details>
 <summary>Contract ABI</summary>
 
 ```json
 [{"anonymous":false,"inputs":[{"indexed":false,"name":"_epoch","type":"uint256"}],"name":"UpdateTotal","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_user","type":"address"},{"indexed":false,"name":"_user_point_epoch","type":"uint256"}],"name":"UpdateBalance","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_from","type":"address"},{"indexed":false,"name":"_to","type":"address"}],"name":"Delegate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"role","type":"bytes32"},{"indexed":true,"name":"account","type":"address"},{"indexed":true,"name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"role","type":"bytes32"},{"indexed":true,"name":"previousAdminRole","type":"bytes32"},{"indexed":true,"name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"role","type":"bytes32"},{"indexed":true,"name":"account","type":"address"},{"indexed":true,"name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"inputs":[{"name":"interface_id","type":"bytes4"}],"name":"supportsInterface","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"bytes32"},{"name":"arg1","type":"address"}],"name":"hasRole","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"role","type":"bytes32"},{"name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"role","type":"bytes32"},{"name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_from","type":"address"}],"name":"delegated","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_to","type":"address"}],"name":"delegator","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_user","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_user","type":"address"},{"name":"_timestamp","type":"uint256"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_timestamp","type":"uint256"}],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_addr","type":"address"}],"name":"get_last_user_slope","outputs":[{"name":"","type":"int128"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_addr","type":"address"}],"name":"locked__end","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_user","type":"address"},{"name":"_user_point_epoch","type":"uint256"},{"components":[{"name":"bias","type":"int128"},{"name":"slope","type":"int128"},{"name":"ts","type":"uint256"},{"name":"blk","type":"uint256"}],"name":"_user_point_history","type":"tuple"},{"components":[{"name":"amount","type":"int128"},{"name":"end","type":"uint256"}],"name":"_locked","type":"tuple"},{"name":"_block_number","type":"uint256"}],"name":"update_balance","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_epoch","type":"uint256"},{"components":[{"name":"bias","type":"int128"},{"name":"slope","type":"int128"},{"name":"ts","type":"uint256"},{"name":"blk","type":"uint256"}],"name":"_point_history","type":"tuple"},{"name":"_slope_changes","type":"int128[]"},{"name":"_block_number","type":"uint256"}],"name":"update_total","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_block_number","type":"uint256"}],"name":"update_delegation","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"BALANCE_VERIFIER","outputs":[{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"TOTAL_VERIFIER","outputs":[{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DELEGATION_VERIFIER","outputs":[{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"epoch","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"uint256"}],"name":"point_history","outputs":[{"components":[{"name":"bias","type":"int128"},{"name":"slope","type":"int128"},{"name":"ts","type":"uint256"},{"name":"blk","type":"uint256"}],"name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"address"}],"name":"user_point_epoch","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"address"},{"name":"arg1","type":"uint256"}],"name":"user_point_history","outputs":[{"components":[{"name":"bias","type":"int128"},{"name":"slope","type":"int128"},{"name":"ts","type":"uint256"},{"name":"blk","type":"uint256"}],"name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"address"}],"name":"locked","outputs":[{"components":[{"name":"amount","type":"int128"},{"name":"end","type":"uint256"}],"name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"uint256"}],"name":"slope_changes","outputs":[{"name":"","type":"int128"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"last_block_number","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"version","outputs":[{"name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"outputs":[],"stateMutability":"nonpayable","type":"constructor"}]
 ```
-
-</details>
 
 </details>
 
@@ -58,9 +56,6 @@ Emits: `UpdateBalance`
 | `_user_point_history` | `Point` | Last `_user`s point history |
 | `_locked` | `LockedBalance` | _user`s locked balance |
 | `_block_number` | `uint256` | block number |
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -106,13 +101,13 @@ def update_balance(
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 ```shell
 >>> soon
 ```
+
+</Example>
 
 ::::
 
@@ -128,9 +123,6 @@ Returns: veCRV balance of the user at a specific timestamp (`uint256`).
 | ---------- | --------- | ------------------------------------------- |
 | `_user`    | `address` | Address of the user                        |
 | `_timestamp` | `uint256` | Timestamp for balance check; defaults to current ts |
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -168,9 +160,7 @@ def _balanceOf(user: address, timestamp: uint256) -> uint256:
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the veCRV balance of `0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683` on Optimism.
 
@@ -178,6 +168,8 @@ This example returns the veCRV balance of `0x71F718D3e4d1449D1502A6A7595eb84eBcC
 >>> L2VotingEscrowOracle.balanceOf("0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683")
 2036475234652423013212
 ```
+
+</Example>
 
 ::::
 
@@ -199,9 +191,6 @@ Emits: `UpdateTotal`
 | `_point_history`| `Point`                              | Last epoch point history                    |
 | `_slope_changes`| `DynArray[int128, SLOPE_CHANGES_CNT]`| Slope changes for upcoming epochs           |
 | `_block_number` | `uint256`                            | Block number for update linearization       |
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -245,13 +234,13 @@ def update_total(
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 ```shell
 >>> soon
 ```
+
+</Example>
 
 ::::
 
@@ -266,9 +255,6 @@ Returns: total veCRV supply at a specific timestamp (`uint256`).
 | Input      | Type      | Description                                 |
 | ---------- | --------- | ------------------------------------------- |
 | `_timestamp` | `uint256` | Timestamp for total supply check; defaults to current ts |
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -310,9 +296,7 @@ def totalSupply(_timestamp: uint256 = block.timestamp) -> uint256:
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the total veCRV supply on a specific Layer 2 network.
 
@@ -320,6 +304,8 @@ This example returns the total veCRV supply on a specific Layer 2 network.
 >>> L2VotingEscrowOracle.totalSupply(1751872783)
 799701502604227430381519403
 ```
+
+</Example>
 
 ::::
 
@@ -340,9 +326,6 @@ Returns: address receiving the delegation (`address`).
 | Input      | Type      | Description              |
 | ---------- | --------- | ------------------------ |
 | `_from`    | `address` | Address of the delegator |
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -366,9 +349,7 @@ def delegated(_from: address) -> address:
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example shows the delegation of `0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462` to `0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683`.
 
@@ -376,6 +357,8 @@ This example shows the delegation of `0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462
 >>> L2VotingEscrowOracle.delegated("0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462")
 "0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683"
 ```
+
+</Example>
 
 ::::
 
@@ -390,9 +373,6 @@ Returns: address of the delegator (`address`).
 | Input      | Type      | Description                                 |
 | ---------- | --------- | ------------------------------------------- |
 | `_to`      | `address` | Address of the delegatee                   |
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -415,9 +395,7 @@ def delegator(_to: address) -> address:
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the delegator of `0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683`.
 
@@ -425,6 +403,8 @@ This example returns the delegator of `0x71F718D3e4d1449D1502A6A7595eb84eBcCB168
 >>> L2VotingEscrowOracle.delegator("0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683")
 "0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462"            # no delegation
 ```
+
+</Example>
 
 ::::
 
@@ -443,9 +423,6 @@ Function to update the delegation of veCRV balance from `_from` to `_to`.
 | `_from`       | `address` | Address being delegated                     |
 | `_to`         | `address` | Address delegated to                        |
 | `_block_number`| `uint256`| Block number at which delegation holds true       |
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -482,13 +459,13 @@ def update_delegation(_from: address, _to: address, _block_number: uint256):
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 ```shell
 >>> soon
 ```
+
+</Example>
 
 ::::
 
@@ -506,9 +483,6 @@ The role identifier for accounts allowed to update user balances.
 
 Returns: role hash (`bytes32`)
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -524,9 +498,7 @@ def __init__():
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the `BALANCE_VERIFIER` role as `bytes32` of the veCRV Oracle on Optimism.
 
@@ -534,6 +506,8 @@ This example returns the `BALANCE_VERIFIER` role as `bytes32` of the veCRV Oracl
 >>> L2VotingEscrowOracle.BALANCE_VERIFIER()
 '0x91ecbab409000ca436e362529d6a0ee19bfacafc306d0b7328e4b31a37513d1c'
 ```
+
+</Example>
 
 ::::
 
@@ -544,9 +518,6 @@ This example returns the `BALANCE_VERIFIER` role as `bytes32` of the veCRV Oracl
 The role identifier for accounts allowed to update total supply.
 
 Returns: role hash (`bytes32`)
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -563,9 +534,7 @@ def __init__():
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the `TOTAL_VERIFIER` role as `bytes32` of the veCRV Oracle on Optimism.
 
@@ -573,6 +542,8 @@ This example returns the `TOTAL_VERIFIER` role as `bytes32` of the veCRV Oracle 
 >>> L2VotingEscrowOracle.TOTAL_VERIFIER()
 '0x91bab4a1f219aaf3591b80c219b7a6eda6e5ddcadf2001c395591dcc40ecfbb7'
 ```
+
+</Example>
 
 ::::
 
@@ -583,9 +554,6 @@ This example returns the `TOTAL_VERIFIER` role as `bytes32` of the veCRV Oracle 
 The role identifier for accounts allowed to update delegation.
 
 Returns: role hash (`bytes32`)
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -602,9 +570,7 @@ def __init__():
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the `DELEGATION_VERIFIER` role as `bytes32` of the veCRV Oracle on Optimism.
 
@@ -612,6 +578,8 @@ This example returns the `DELEGATION_VERIFIER` role as `bytes32` of the veCRV Or
 >>> L2VotingEscrowOracle.DELEGATION_VERIFIER()
 '0xe887cc0717dab2ad628f68695129fefff34ee397bdd39e44a259e2cae80f49b7'
 ```
+
+</Example>
 
 ::::
 
@@ -622,9 +590,6 @@ This example returns the `DELEGATION_VERIFIER` role as `bytes32` of the veCRV Or
 Getter for the default admin role.
 
 Returns: default admin (`bytes32`).
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -643,9 +608,7 @@ exports: (
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the `DEFAULT_ADMIN_ROLE` role as `bytes32` of the veCRV Oracle on Optimism.
 
@@ -653,6 +616,8 @@ This example returns the `DEFAULT_ADMIN_ROLE` role as `bytes32` of the veCRV Ora
 >>> L2VotingEscrowOracle.DEFAULT_ADMIN_ROLE()
 '0x0000000000000000000000000000000000000000000000000000000000000000'
 ```
+
+</Example>
 
 ::::
 
@@ -671,9 +636,6 @@ Function to grant a role to an account.
 | `role`     | `bytes32` | Role identifier                             |
 | `account`  | `address` | Address to grant the role to                |
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -690,8 +652,6 @@ exports: (
 ```
 
 </SourceCode>
-
-</details>
 
 ::::
 
@@ -710,9 +670,6 @@ Function to revoke a role from an account.
 | `role`     | `bytes32` | Role identifier                             |
 | `account`  | `address` | Address to revoke the role from             |
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -729,8 +686,6 @@ exports: (
 ```
 
 </SourceCode>
-
-</details>
 
 ::::
 
@@ -746,9 +701,6 @@ Returns: true or false (`bool`).
 | ------------- | --------- | ------------------------------------------- |
 | `interfaceId` | `bytes4`  | Interface identifier                        |
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -766,14 +718,14 @@ exports: (
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 ```shell
 >>> L2VotingEscrowOracle.supportsInterface("0x01FFC9A7")
 'true'
 ```
+
+</Example>
 
 ::::
 
@@ -790,9 +742,6 @@ Returns: true or false (`bool`).
 | `role`     | `bytes32` | Role identifier                             |
 | `account`  | `address` | Address to check                            |
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -810,14 +759,14 @@ exports: (
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 ```shell
 >>> L2VotingEscrowOracle.hasRole('0xe887cc0717dab2ad628f68695129fefff34ee397bdd39e44a259e2cae80f49b7', '0x1d04Fcb6293690D75E9262A89Ac3B816772E6841')
 'true'
 ```
+
+</Example>
 
 ::::
 
@@ -842,9 +791,6 @@ Returns: last user slope (`int128`).
 | Input      | Type      | Description                                 |
 | ---------- | --------- | ------------------------------------------- |
 | `_addr`    | `address` | Address of the user                        |
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -882,14 +828,14 @@ def _get_user_after_delegation(_user: address) -> address:
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 ```shell
 >>> L2VotingEscrowOracle.get_last_user_slope("0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683")
 31709791983764
 ```
+
+</Example>
 
 ::::
 
@@ -904,9 +850,6 @@ Returns: ts when the lock ends (`uint256`).
 | Input      | Type      | Description                                 |
 | ---------- | --------- | ------------------------------------------- |
 | `_addr`    | `address` | Address of the user                        |
-
-<details>
-<summary>Source code</summary>
 
 <SourceCode>
 
@@ -942,9 +885,7 @@ def _get_user_after_delegation(_user: address) -> address:
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the timestamp when the user's veCRV lock ends.
 
@@ -952,6 +893,8 @@ This example returns the timestamp when the user's veCRV lock ends.
 >>> L2VotingEscrowOracle.locked__end("0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683")
 1816214400
 ```
+
+</Example>
 
 ::::
 
@@ -963,9 +906,6 @@ The current epoch of the `VotingEscrow` contract.
 
 Returns: current epoch (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -974,14 +914,14 @@ epoch: public(uint256)
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 ```shell
 >>> L2VotingEscrowOracle.epoch()
 58959
 ```
+
+</Example>
 
 ::::
 
@@ -997,9 +937,6 @@ Returns: bias (`int128`), slope (`int128`), ts (`uint256`) and blk (`uint256`).
 | ------ | --------- | ----------- |
 | `arg0` | `uint256` | value of the point to check |
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -1014,9 +951,7 @@ point_history: public(HashMap[uint256, Point])
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the point history of an epoch.
 
@@ -1024,6 +959,8 @@ This example returns the point history of an epoch.
 >>> L2VotingEscrowOracle.point_history(58959)
 800073125242408678972029063, 6788868070537972059, 1751818043, 22861249
 ```
+
+</Example>
 
 ::::
 
@@ -1039,9 +976,6 @@ Returns: last checkpointed epoch (`uint256`).
 | ---------- | --------- | --------------------- |
 | `_addr`    | `address` | Address of the user   |
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -1056,9 +990,7 @@ user_point_history: public(HashMap[address, HashMap[uint256, Point]])
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the user point epoch of an address.
 
@@ -1066,6 +998,8 @@ This example returns the user point epoch of an address.
 >>> L2VotingEscrowOracle.user_point_epoch("0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683")
 5
 ```
+
+</Example>
 
 ::::
 
@@ -1082,9 +1016,6 @@ Returns: `Point` struct containing bias (`int128`), slope (`int128`), ts (`uint2
 | `_addr`    | `address` | Address of the user   |
 | `epoch`    | `uint256` | Epoch index           |
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -1099,9 +1030,7 @@ user_point_history: public(HashMap[address, HashMap[uint256, Point]])
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the user point history of the address `0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683` at epoch `5`.
 
@@ -1109,6 +1038,8 @@ This example returns the user point history of the address `0x71F718D3e4d1449D15
 >>> L2VotingEscrowOracle.user_point_history("0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683", 5)
 3740249651192218998932, 1709791983764, 1712172287, 19577313
 ```
+
+</Example>
 
 ::::
 
@@ -1124,9 +1055,6 @@ Returns: `LockedBalance` struct containing amount (`int128`) and end timestamp (
 | ---------- | --------- | ------------------------------------------- |
 | `arg0`    | `address` | Address of the user                        |
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -1139,9 +1067,7 @@ locked: public(HashMap[address, LockedBalance])
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the total amount of CRV tokens locked, along with the timestamp when the lock ends.
 
@@ -1149,6 +1075,8 @@ This example returns the total amount of CRV tokens locked, along with the times
 >>> L2VotingEscrowOracle.locked("0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683")
 4000000000000000000000, 1830124800
 ```
+
+</Example>
 
 ::::
 
@@ -1164,9 +1092,6 @@ Returns: slope change (`uint256`).
 | ---------- | --------- | ------------------------------------------- |
 | `timestamp`| `uint256` | Timestamp                                   |
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -1175,14 +1100,14 @@ slope_changes: public(HashMap[uint256, int128])
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 ```shell
 >>> L2VotingEscrowOracle.slope_changes(1760971290)
 0
 ```
+
+</Example>
 
 ::::
 
@@ -1194,9 +1119,6 @@ Getter for the last ETH block number at which an update was made.
 
 Returns: block number (`uint256`)
 
-<details>
-<summary>Source code</summary>
-
 <SourceCode>
 
 ```vyper title="L2VotingEscrowOracle.vy"
@@ -1205,9 +1127,7 @@ last_block_number: public(uint256)
 
 </SourceCode>
 
-</details>
-
-**Example**
+<Example>
 
 This example returns the last Ethereum mainnet block at which an update to either the total supply or a user's veCRV balance was made.
 
@@ -1215,5 +1135,7 @@ This example returns the last Ethereum mainnet block at which an update to eithe
 >>> L2VotingEscrowOracle.last_block_number()
 22861295
 ```
+
+</Example>
 
 ::::

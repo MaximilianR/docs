@@ -1,14 +1,10 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # HeaderVerifier
 
 The `HeaderVerifier` contract decodes RLP-encoded Ethereum block headers and forwards the extracted data to oracle contracts. It uses the `BlockHeaderRLPDecoder` module to parse block headers and extract key information such as block hash, parent hash, state root, receipt root, block number, and timestamp. The contract serves as a bridge between raw block header data and oracle systems, enabling cross-chain verification and data availability without implementing security checks or validation logic.
 
-<details open>
-<summary><code>HeaderVerifier.vy</code></summary>
+:::vyper[`HeaderVerifier.vy`]
 
-The source code for the `HeaderVerifier.vy` contract can be found on [GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/HeaderVerifier.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
+The source code for the `HeaderVerifier.vy` contract can be found on [ GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/HeaderVerifier.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
 
 The contract is deployed on all supported chains at `0xB10CDEC0DE69c88a47c280a97A5AEcA8b0b83385`.
 
@@ -21,11 +17,11 @@ The contract is deployed on all supported chains at `0xB10CDEC0DE69c88a47c280a97
 
 </details>
 
-</details>
+:::
 
 
 ### `decode_block_header`
-:::description[`HeaderVerifier.decode_block_header(encoded_header: Bytes[BLOCK_HEADER_SIZE]) -> BlockHeader`]
+::::description[`HeaderVerifier.decode_block_header(encoded_header: Bytes[BLOCK_HEADER_SIZE]) -> BlockHeader`]
 
 Function to decode RLP encoded block header into a BlockHeader struct.
 
@@ -35,24 +31,19 @@ Returns: A `BlockHeader` struct containing decoded block data
 | ------ | --------- | --------------------- |
 | `encoded_header` | `Bytes[BLOCK_HEADER_SIZE]` | RLP encoded header data |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-<Tabs>
-<TabItem value="HeaderVerifier.vy" label="HeaderVerifier.vy">
-
-```python
+```vyper
 from modules import BlockHeaderRLPDecoder as bh_rlp
 
 exports: (bh_rlp.decode_block_header,)
 ```
 
-</TabItem>
-<TabItem value="BlockHeaderRLPDecoder.vy" label="BlockHeaderRLPDecoder.vy">
+```vyper
+# BlockHeaderRLPDecoder.vy
+# Source code of this Vyper module can be found here:
+# https://github.com/curvefi/blockhash-oracle/blob/main/contracts/modules/BlockHeaderRLPDecoder.vy
 
-Source code of this Vyper module can be found [here](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/modules/BlockHeaderRLPDecoder.vy).
-
-```python
 # pragma version 0.4.3
 
 """
@@ -265,26 +256,21 @@ def _read_rlp_number(encoded: Bytes[BLOCK_HEADER_SIZE], pos: uint256) -> (uint25
     return value, pos + 1 + length
 ```
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
-:::
+::::
 
 
 ### `submit_block_header`
-:::description[`HeaderVerifier.submit_block_header(_oracle_address: address, _encoded_header: Bytes[bh_rlp.BLOCK_HEADER_SIZE])`]
+::::description[`HeaderVerifier.submit_block_header(_oracle_address: address, _encoded_header: Bytes[bh_rlp.BLOCK_HEADER_SIZE])`]
 
 Function to submit a block header. Decodes the RLP-encoded header and forwards it to the specified oracle contract.
 
@@ -295,13 +281,9 @@ Returns: None
 | `_oracle_address` | `address` | The address of the oracle contract to submit the decoded header to |
 | `_encoded_header` | `Bytes[bh_rlp.BLOCK_HEADER_SIZE]` | RLP-encoded block header data |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-<Tabs>
-<TabItem value="HeaderVerifier.vy" label="HeaderVerifier.vy">
-
-```python
+```vyper
 interface IBlockOracle:
     def submit_block_header(block_header: bh_rlp.BlockHeader): nonpayable
 
@@ -323,10 +305,8 @@ def submit_block_header(_oracle_address: address, _encoded_header: Bytes[bh_rlp.
     extcall IBlockOracle(_oracle_address).submit_block_header(decoded_header)
 ```
 
-</TabItem>
-<TabItem value="BlockOracle.vy" label="BlockOracle.vy">
-
-```python
+```vyper
+# BlockOracle.vy
 @external
 def submit_block_header(_header_data: bh_rlp.BlockHeader):
     """
@@ -354,19 +334,14 @@ def submit_block_header(_header_data: bh_rlp.BlockHeader):
     )
 ```
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
-:::
+::::
