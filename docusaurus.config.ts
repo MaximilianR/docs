@@ -417,6 +417,10 @@ const config: Config = {
       href: '/katex/katex.min.css',
       type: 'text/css',
     },
+    {
+      href: '/fonts/fonts.css',
+      type: 'text/css',
+    },
   ],
 };
 
