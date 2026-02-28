@@ -5,10 +5,9 @@ import TabItem from '@theme/TabItem';
 
 The vault is an **implementation of a [ERC-4626](https://ethereum.org/developers/docs/standards/tokens/erc-4626)**vault which **deposits the underlying asset into the controller**and **tracks the progress of the fees earned**. 
 
-:::github[GitHub]
+:::vyper[`Vault.vy`]
 
-The source code of the `Vault.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/Vault.vy).
-
+The source code for the `Vault.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/Vault.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
@@ -152,8 +151,7 @@ Emits: `Deposit`, `Transfer` and `SetRate`
 | `assets`    | `uint256` | Amount of assets to deposit.                                          |
 | `receiver`  | `address` | Receiver of the minted shares. Defaults to `msg.sender`.              |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -328,10 +326,9 @@ def _rate_mul() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  Vault.balanceOf(trader)
@@ -344,8 +341,7 @@ Out [3]:  997552662404145514069
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -362,8 +358,7 @@ Returns: maximum depositable assets (`uint256`).
 |-------------|-----------|----------------------|
 | `receiver`  | `address` | Address of the user. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -387,10 +382,9 @@ def maxDeposit(receiver: address) -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.maxDeposit("0x7a16fF8270133F063aAb6C9977183D9e72835428"):
@@ -398,8 +392,7 @@ should return borrowed_token.balanceOf("0x7a16fF8270133F063aAb6C9977183D9e728354
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -416,8 +409,7 @@ Returns: amount of shares to be received (`uint256`).
 |-----------|-----------|------------------------|
 | `assets`  | `uint256` | Number of assets to deposit. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -455,10 +447,9 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.previewDeposit(1000000000000000000):      # depositing 1 crvusd 
@@ -466,8 +457,7 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -487,8 +477,7 @@ Emits: `Deposit`, `Transfer` and `SetRate`
 | `shares`    | `uint256` | Number of shares to be minted.                                   |
 | `receiver`  | `address` | Receiver of the minted shares. Defaults to `msg.sender`.         |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -663,10 +652,9 @@ def _rate_mul() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  Vault.balanceOf(trader)
@@ -679,8 +667,7 @@ Out [3]:  1097552662404145514069
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -697,8 +684,7 @@ Returns: maximum mintable shares (`uint256`).
 |------------|-----------|-------------------|
 | `receiver` | `address` | Address of the user. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -736,10 +722,9 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.maxMint("0x7a16fF8270133F063aAb6C9977183D9e72835428"):    
@@ -747,8 +732,7 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -766,8 +750,7 @@ Returns: Number of assets required (`uint256`).
 | `shares`  | `uint256` | Number of shares to mint. |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -805,10 +788,9 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.previewMint(1000000000000000000):     # mint 1 share
@@ -816,8 +798,7 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -835,8 +816,7 @@ Returns: amount of shares received (`uint256`).
 | `assets` | `uint256` | Amount of assets to convert.  |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -874,10 +854,9 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.convertToShares(1000000000000000000):
@@ -885,8 +864,7 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -899,8 +877,7 @@ Getter for the maximum amount of assets that can be supplied to the vault. This 
 
 Returns: maximum supply (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -928,10 +905,9 @@ def set_max_supply(max_supply: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.maxSupply()
@@ -939,8 +915,7 @@ def set_max_supply(max_supply: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -964,8 +939,7 @@ Emits: `SetMaxSupply`
 |------------|-----------|-------------------------------|
 | `max_supply` | `uint256` | Maximum amount of assets to set. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -993,10 +967,9 @@ def set_max_supply(max_supply: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.maxSupply()
@@ -1004,8 +977,7 @@ def set_max_supply(max_supply: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1051,8 +1023,7 @@ Emits: `Withdraw`, `Transfer` and `SetRate`
 | `receiver` | `address` | Receiver of the shares. Defaults to `msg.sender`. |
 | `owner`    | `address` | Address of whose shares to burn. Defaults to `msg.sender`. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1234,10 +1205,9 @@ def _rate_mul() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  Vault.balanceOf(trader)
@@ -1256,8 +1226,7 @@ Out [5]:  999999899754665824864192
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1274,8 +1243,7 @@ Returns: withdrawable assets (`uint256`).
 |---------|----------|------------------------------------|
 | `owner` | `address` | Address of the user to withdraw from. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1315,10 +1283,9 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.maxWithdraw("0x7a16fF8270133F063aAb6C9977183D9e72835428")
@@ -1326,8 +1293,7 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1344,8 +1310,7 @@ Returns: number of shares burned (`uint256`).
 |---------|-----------|----------------------------------|
 | `asset` | `address` | Number of assets to withdraw. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1384,10 +1349,9 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.previewWithdraw(1000000000000000000):     # withdrawing 1 crvusd
@@ -1395,8 +1359,7 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1417,8 +1380,7 @@ Emits: `Withdraw`, `Transfer` and `SetRate`
 | `receiver`| `address` | Receiver of the shares. Defaults to `msg.sender`. |
 | `owner`   | `address` | Address of whose shares to burn. Defaults to `msg.sender`. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1605,10 +1567,9 @@ def _rate_mul() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  Vault.balanceOf(trader)
@@ -1627,8 +1588,7 @@ Out [5]:  999999999999999999999998
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1645,8 +1605,7 @@ Returns: maximum redeemable shares (`uint256`).
 |---------|-----------|---------------------------------------|
 | `owner` | `address` | Address of the user to redeem shares from.   |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1686,10 +1645,9 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.maxRedeem("0x7a16fF8270133F063aAb6C9977183D9e72835428")
@@ -1697,8 +1655,7 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1715,8 +1672,7 @@ Returns: obtainable assets (`uint256`).
 |----------|-----------|----------------------------------|
 | `shares` | `uint256` | Number of shares to redeem.      |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1761,10 +1717,9 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.previewRedeem(1000000000000000000):
@@ -1772,8 +1727,7 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1791,8 +1745,7 @@ Returns: amount of assets received (`uint256`).
 | `shares` | `uint256` | Amount of shares to convert to assets. |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1830,10 +1783,9 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.convertToAssets(1000000000000000000):
@@ -1841,8 +1793,7 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1899,8 +1850,7 @@ Getter for the annualized borrow APR. The user pays this rate on the assets borr
 
 Returns: borrow rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1941,10 +1891,9 @@ rate: public(uint256)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.borrow_apr():
@@ -1952,8 +1901,7 @@ rate: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1967,8 +1915,7 @@ Getter for the annualized lending APR. The value is based on the utilization is 
 Returns: lending rate (`uint256`).
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2020,10 +1967,9 @@ rate: public(uint256)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.lend_apr():
@@ -2031,8 +1977,7 @@ rate: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2050,8 +1995,7 @@ Getter for the underlying asset used by the vault, which is the `borrowed_token`
 
 Returns: underlying asset (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2073,10 +2017,9 @@ def asset() -> ERC20:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.asset():
@@ -2084,8 +2027,7 @@ def asset() -> ERC20:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2098,8 +2040,7 @@ Getter for the total amount of the underlying asset (`borrowed_token`) held by t
 
 Returns: total assets in the vault (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2129,10 +2070,9 @@ def _total_assets() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.totalAssets():
@@ -2140,8 +2080,7 @@ def _total_assets() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2158,8 +2097,7 @@ Returns: asset price per share (`uint256`).
 |------------|--------|-------------|
 | `is_floor` | `bool` | - |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2202,10 +2140,9 @@ def _total_assets() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.pricePerShare(true):
@@ -2215,8 +2152,7 @@ def _total_assets() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2229,8 +2165,7 @@ Getter for the admin of the vault.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2264,10 +2199,9 @@ admin: public(address)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.admin():
@@ -2275,8 +2209,7 @@ admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2289,8 +2222,7 @@ Getter for the borrowable token in the vault.
 
 Returns: borrowable token (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2306,10 +2238,9 @@ borrowed_token: public(ERC20)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.borrowed_token():
@@ -2317,8 +2248,7 @@ borrowed_token: public(ERC20)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2331,8 +2261,7 @@ Getter for the collateral token of the lending market which is deposited into th
 
 Returns: collateral token (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2348,10 +2277,9 @@ collateral_token: public(ERC20)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.collateral_token():
@@ -2359,8 +2287,7 @@ collateral_token: public(ERC20)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2373,8 +2300,7 @@ Getter for the price oracle contract used in the vault.
 
 Returns: oracle (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2390,10 +2316,9 @@ price_oracle: public(PriceOracle)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.price_oracle():
@@ -2401,8 +2326,7 @@ price_oracle: public(PriceOracle)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2415,8 +2339,7 @@ Getter for the AMM of the vault.
 
 Returns: AMM (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2432,10 +2355,9 @@ amm: public(AMM)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.amm():
@@ -2443,8 +2365,7 @@ amm: public(AMM)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2457,8 +2378,7 @@ Getter for the Controller of the vault.
 
 Returns: Controller (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2474,10 +2394,9 @@ controller: public(Controller)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.controller():
@@ -2485,8 +2404,7 @@ controller: public(Controller)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2499,8 +2417,7 @@ Getter for the Factory of the vault.
 
 Returns: Factory (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2516,10 +2433,9 @@ factory: public(Factory)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Vault.factory():
@@ -2527,8 +2443,7 @@ factory: public(Factory)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::

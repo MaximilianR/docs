@@ -7,10 +7,9 @@ The `SecondaryMonetaryPolicy` contract calculates borrow rates based on the util
 
 This design ensures that when the target utilization is met, the borrow rate in the lending market matches the borrow rate of the minting market. At 0% utilization, the rate is defined as \(\alpha \times \text\{rate\}_\{\text\{AMM\}\}\) and at 100% utilization as \(\beta \times \text\{rate\}_\{\text\{AMM\}\}\).
 
-:::github[GitHub]
+:::vyper[`SecondaryMonetaryPolicy.vy`]
 
-The source code of the `SecondaryMonetaryPolicy.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/mpolicies/SecondaryMonetaryPolicy.vy).
-
+The source code for the `SecondaryMonetaryPolicy.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/mpolicies/SecondaryMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
@@ -75,8 +74,7 @@ $$\text\{borrowAPR\} = \frac\{\text\{rate\} * 365 * 86400\}\{10^\{18\}\}$$
 
 Rate calculations occur within the MonetaryPolicy contract. The rate is regularly updated by the internal `_save_rate` method in the Controller. This happens whenever a new loan is initiated (`_create_loan`), collateral is either added (`add_collateral`) or removed (`remove_collateral`), additional debt is incurred (`borrow_more` and `borrow_more_extended`), debt is repaid (`repay`, `repay_extended`), or a loan undergoes liquidation (`_liquidate`).
 
-<details>
-<summary>Source Code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -162,7 +160,7 @@ def set_rate(rate: uint256) -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
 ### `rate`
 :::description[`MonetaryPolicy.rate(_for: address = msg.sender) -> uint256`]
@@ -176,8 +174,7 @@ Returns: rate (`uint256`).
 | ------- | --------- | ---------------------------------------------------------------------------------------------------- |
 | `_for`  | `address` | Contract to calculate the rate for. Defaults to `msg.sender`, as the caller of the function is usually the Controller. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -213,18 +210,16 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 :::
@@ -243,8 +238,7 @@ Returns: future borrow rate (`uint256`).
 | `d_reserves` | `int256`  | Change in reserve assets.|
 | `d_debt`     | `int256`  | Change in debt.          |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -280,18 +274,16 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 :::
@@ -308,8 +300,7 @@ Returns: updated rate (`uint256`).
 | ------- | --------- | ---------------------------------------------------------------------------------------------------- |
 | `_for`  | `address` | Contract to calculate the rate for. Defaults to `msg.sender`, as the caller of the function is usually the Controller. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -344,18 +335,16 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 :::
@@ -399,8 +388,7 @@ Getter for the parameters of the monetary policy. These parameters can be change
 
 Returns: u_inf (`uint256`), A (`uint256`), r_minf (`uint256`) and shift (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -422,10 +410,9 @@ parameters: public(Parameters)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MonetaryPolicy.parameters()         # mp for BTC lending market (follows wBTC mint market)
@@ -436,8 +423,7 @@ parameters: public(Parameters)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note[Added shift in wstETH Lending Market]
 
@@ -473,8 +459,7 @@ Emits: `SetParameters`
 | `high_ratio`         | `uint256` | High ratio. Needs to be lower than 100%.                                              |
 | `rate_shift`         | `uint256` | Value by which the rate curve is shifted.                                                |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -538,18 +523,16 @@ def get_params(u_0: uint256, alpha: uint256, beta: uint256, rate_shift: uint256)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 :::
@@ -567,8 +550,7 @@ Getter for the AMM contract (used for minting crvUSD), which is used for rate co
 
 Returns: AMM contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -610,10 +592,9 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MonetaryPolicy.AMM()
@@ -621,8 +602,7 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 :::
@@ -635,8 +615,7 @@ Getter for the token borrowed from the lending market.
 
 Returns: token contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -678,10 +657,9 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MonetaryPolicy.BORROWED_TOKEN()
@@ -689,8 +667,7 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 :::
@@ -703,8 +680,7 @@ Getter for the lending factory contract.
 
 Returns: factory contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -746,10 +722,9 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MonetaryPolicy.FACTORY()
@@ -757,8 +732,7 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 :::

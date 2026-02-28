@@ -7,12 +7,9 @@ This oracle contract takes the **price oracle from a Curve liquidity pool and ap
 
 These kinds of oracle contracts **need to be deployed manually**, as there is currently no `Factory` to do so.
 
-:::github[GitHub]
+:::vyper[`CryptoFromPoolVault.vy`]
 
-The source code for the following price oracle contracts can be found on  GitHub:
-
-- [`CryptoFromPoolVault.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVault.vy)
-- [`CryptoFromPoolVaultWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVaultWAgg.vy)
+The source code for the `CryptoFromPoolVault.vy` contract can be found on [:logos-github: GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVault.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolVaultWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVaultWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::warning[Oracle Suitability]
 
@@ -20,7 +17,6 @@ The source code for the following price oracle contracts can be found on  GitHub
 
 
 :::
-
 
 :::
 
@@ -140,8 +136,7 @@ The [oracle contract](https://etherscan.io/address/0x002688C4296A2C4d800F271fe6F
 
 Additionally, the `CryptoFromPoolVault.vy` contract has a **built-in mechanism that considers a certain maximum speed of price change within the vault**when calculating the oracle price. This feature is not included in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
 
-<details>
-<summary>Source Code</summary>
+<SourceCode>
 
 
 *The formula to calculate the applied redemption rate is the following:*
@@ -181,7 +176,7 @@ def _pps_w() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
 ### `price`
 ::::description[`CryptoFromPoolVault.price() -> uint256`]
@@ -191,8 +186,7 @@ Getter for the price of the collateral asset denominated against the borrowed to
 
 Returns: oracle price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
@@ -320,10 +314,9 @@ def _raw_price() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPoolVault.price()
@@ -331,8 +324,7 @@ def _raw_price() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -345,8 +337,7 @@ This function calculates and writes the price while updating `cached_rate` and `
 
 Returns: oracle price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
@@ -474,10 +465,9 @@ def _raw_price() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPoolVault.price_w()
@@ -485,8 +475,7 @@ def _raw_price() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -504,8 +493,7 @@ Getter for the vault contract from which the redemption rate (`convertToAssets` 
 
 Returns: vault contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -535,10 +523,9 @@ VAULT: public(immutable(Vault))
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -547,8 +534,7 @@ VAULT: public(immutable(Vault))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -561,8 +547,7 @@ Getter for the liquidity pool used to fetch the `price_oracle`.
 
 Returns: pool contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -592,10 +577,9 @@ POOL: public(immutable(Pool))
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -604,8 +588,7 @@ POOL: public(immutable(Pool))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -618,8 +601,7 @@ Getter for the coin index of the borrowed token within the pool from which `pric
 
 Returns: coin index (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -649,10 +631,9 @@ BORROWED_IX: public(immutable(uint256))
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 `BORROWED_IX` of `1` means the borrowed token in the pool, from which the price oracle value is fetched, is at coin index `1` (`Pool.coins(1)`).
@@ -663,8 +644,7 @@ BORROWED_IX: public(immutable(uint256))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -677,8 +657,7 @@ Getter for the coin index of the collateral token within the pool from which `pr
 
 Returns: coin index (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -708,10 +687,9 @@ COLLATERAL_IX: public(immutable(uint256))
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 `COLLATERAL_IX` of `0` means the borrowed token in the pool, from which the price oracle value is fetched, is at coin index `0` (`Pool.coins(0)`).
@@ -722,8 +700,7 @@ COLLATERAL_IX: public(immutable(uint256))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -736,8 +713,7 @@ Getter for the number of coins in `POOL`.
 
 Returns: number of coins (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -767,10 +743,9 @@ N_COINS: public(immutable(uint256))
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -779,8 +754,7 @@ N_COINS: public(immutable(uint256))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -793,8 +767,7 @@ Getter for the `NO_ARGUMENT` storage variable. This is an additional variable to
 
 Returns: true or false (`bool`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -812,10 +785,9 @@ NO_ARGUMENT: public(immutable(bool))
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -824,8 +796,7 @@ NO_ARGUMENT: public(immutable(bool))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -845,8 +816,7 @@ Getter for the crvUSD `PriceAggregator` contract. This value is immutable and se
 
 Returns: `PriceAggregator` (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -869,10 +839,9 @@ AGG: public(immutable(StableAggregator))
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -881,8 +850,7 @@ AGG: public(immutable(StableAggregator))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::

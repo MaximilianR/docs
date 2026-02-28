@@ -6,10 +6,9 @@ import TabItem from '@theme/TabItem';
 The **borrow rate**in the semi-logarithmic MonetaryPolicy contract is **intricately linked to the utilization ratio of the lending markets**. This ratio plays a crucial role in determining the cost of borrowing, with its value ranging between 0 and 1. At a **utilization rate of 0**, indicating no borrowed assets, the borrowing **rate aligns with the minimum threshold, `min_rate`**. Conversely, a **utilization rate of 1**, where all available assets are borrowed, escalates the **borrowing rate to its maximum limit, `max_rate`**.
 
 
-:::github[GitHub]
+:::vyper[`SemilogMonetaryPolicy.vy`]
 
-The source code of the `SemilogMonetaryPolicy.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/mpolicies/SemilogMonetaryPolicy.vy).
-
+The source code for the `SemilogMonetaryPolicy.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/mpolicies/SemilogMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
@@ -53,8 +52,7 @@ $$\text\{borrowAPR\} = \frac\{\text\{rate\} * 365 * 86400\}\{10^\{18\}\}$$
 Rate calculations occur within the MonetaryPolicy contract. The rate is regularly updated by the internal `_save_rate` method in the Controller. This happens whenever a new loan is initiated (`_create_loan`), collateral is either added (`add_collateral`) or removed (`remove_collateral`), additional debt is incurred (`borrow_more` and `borrow_more_extended`), debt is repaid (`repay`, `repay_extended`), or a loan undergoes liquidation (`_liquidate`).
 
 
-<details>
-<summary>Source Code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -135,7 +133,7 @@ def set_rate(rate: uint256) -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
 ### `rate`
 ::::description[`SemiLogMonetaryPolicy.rate(_for: address = msg.sender) -> uint256`]
@@ -149,8 +147,7 @@ Returns: rate (`uint256`).
 | ---------- | --------- | -------------- |
 | `_for`     | `address` | Controller contract; Defaults to `msg.sender`, because the caller of the function is usually the Controller. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -184,10 +181,9 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.rate("0x7443944962D04720f8c220C0D25f56F869d6EfD4")
@@ -195,8 +191,7 @@ Out [1]:  6113754953
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -215,8 +210,7 @@ Returns: future borrow rate (`uint256`).
 | `d_reserves` | `int256`  | Change of reserve asset. |
 | `d_debt`     | `int256`  | Change of debt. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -250,10 +244,9 @@ Returns: future borrow rate (`uint256`).
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.future_rate(controller.address, 0, 10000000000000000000000)
@@ -261,8 +254,7 @@ Out [1]:  7882992245
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -275,8 +267,7 @@ Function to update the rate of a lending market.
 
 Returns: rate (`uint256`)
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -309,10 +300,9 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.rate_write()
@@ -320,8 +310,7 @@ Out [1]:  6113754953
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -368,8 +357,7 @@ Emits: `SetRates`
 | `min_rate` | `uint256` | New value for the minimum rate. |
 | `max_rate` | `uint256` | New value for the maximum rate. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -409,10 +397,9 @@ def set_rates(min_rate: uint256, max_rate: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.min_rate()
@@ -425,8 +412,7 @@ Out [3]:  31709791
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -439,8 +425,7 @@ Getter for the current minimum borrow rate. This value is set to the input given
 
 Returns: minimum interest rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -468,10 +453,9 @@ def __init__(borrowed_token: ERC20, min_rate: uint256, max_rate: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.min_rate()
@@ -479,8 +463,7 @@ Out [1]:  158548959
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -493,8 +476,7 @@ Getter for the current maximum borrow rate. This value is set to the input given
 
 Returns: maximum interest rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -522,10 +504,9 @@ def __init__(borrowed_token: ERC20, min_rate: uint256, max_rate: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.max_rate()
@@ -533,8 +514,7 @@ Out [1]:  15854895991
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -547,8 +527,7 @@ Getter for the logarithm ln() function of `min_rate`, based on log2.
 
 Returns: semi-log minimum rate (`int256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -610,10 +589,9 @@ def ln_int(_x: uint256) -> int256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.log_min_rate()
@@ -621,8 +599,7 @@ Out [1]:  -22564957680717876419
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -635,8 +612,7 @@ Getter for the logarithm ln() function of `max_rate`, based on log2.
 
 Returns: semi-log maximum rate (`int256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -698,10 +674,9 @@ def ln_int(_x: uint256) -> int256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.log_max_rate()
@@ -709,8 +684,7 @@ Out [1]:  -17959787488990232781
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -723,8 +697,7 @@ Getter for the lowest possible rate for the MonetaryPolicy. When setting new rat
 
 Returns: absolute minimum rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -740,10 +713,9 @@ MIN_RATE: public(constant(uint256)) = 10**15 / (365 * 86400)  # 0.1%
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.MIN_RATE()
@@ -751,8 +723,7 @@ Out [1]:  31709791
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -765,8 +736,7 @@ Getter for the highest possible rate for the MonetaryPolicy. When setting new ra
 
 Returns: absolute maximum rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -782,10 +752,9 @@ MAX_RATE: public(constant(uint256)) = 10**19 / (365 * 86400)  # 1000%
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.MAX_RATE()
@@ -793,8 +762,7 @@ Out [1]:  317097919837
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -812,8 +780,7 @@ Getter for the borrowed token. This is a immutable variable and is set at deploy
 
 Returns: borrowable token from the lending market (`address`)
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -841,10 +808,9 @@ def __init__(borrowed_token: ERC20, min_rate: uint256, max_rate: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.BORROWED_TOKEN()
@@ -852,8 +818,7 @@ Out [1]:  '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -866,8 +831,7 @@ Getter for the Factory contract. This is a immutable variable and is set at depl
 
 Returns: Factory (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -895,18 +859,16 @@ def __init__(borrowed_token: ERC20, min_rate: uint256, max_rate: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  SemilogMonetaryPolicy.FACTORY()
 Out [1]:  '0xc67a44D958eeF0ff316C3a7c9E14FB96f6DedAA3'
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::

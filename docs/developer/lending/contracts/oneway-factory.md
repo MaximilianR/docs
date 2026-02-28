@@ -5,10 +5,9 @@ import TabItem from '@theme/TabItem';
 
 A one-way lending market is a **non-rehypothecating**market where one token is considered the collateral token and another token is the borrow token. This means the **deposited collateral cannot be lent out**but can only be used as collateral. 
 
-:::github[GitHub]
+:::vyper[`OneWayLendingFactory.vy`]
 
-The source code of the `OneWayLendingFactory.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/OneWayLendingFactory.vy).
-
+The source code for the `OneWayLendingFactory.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/OneWayLendingFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
@@ -59,8 +58,7 @@ Emits: `NewVault`
 | `min_borrow_rate`      | `uint256`     | Custom minimum borrow rate; if not set will default to `min_default_borrow_rate` |
 | `max_borrow_rate`      | `uint256`     | Custom maximum borrow rate; if not set will default to `max_default_borrow_rate` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -176,10 +174,9 @@ def _create(
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> OneWayLendingVaultFactory.create(
@@ -198,8 +195,7 @@ def _create(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -234,8 +230,7 @@ Emits: `NewVault`
 | `min_borrow_rate`      | `uint256`     | Custom minimum borrow rate; if not set will default to `min_default_borrow_rate` |
 | `max_borrow_rate`      | `uint256`     | Custom maximum borrow rate; if not set will default to `max_default_borrow_rate` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -376,10 +371,9 @@ def _create(
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> OneWayLendingVaultFactory.create_from_pool(
@@ -398,8 +392,7 @@ def _create(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -424,8 +417,7 @@ Emits: `LiquidityGaugeDeployed`
 | `_vault` | `address` | Vault address to deploy the gauge for.|
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -463,10 +455,9 @@ def deploy_gauge(_vault: Vault) -> address:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]: OneWayLendingVaultFactory.deploy_gauge("0xE16D806c4198955534d4EB10E4861Ea94557602E")
@@ -474,8 +465,7 @@ Out [1]: '0xACEBA186aDF691245dfb20365B48DB87DEA7b98F'                # returns a
 ``` 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -511,8 +501,7 @@ Getter for the minimum rate a one-way lending vault can have. This variable is a
 
 Returns: minimum rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -528,10 +517,9 @@ MIN_RATE: public(constant(uint256)) = 10**15 / (365 * 86400)  # 0.1%
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.MIN_RATE()
@@ -539,8 +527,7 @@ Out [1]:  31709791        # 0.1%
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -553,8 +540,7 @@ Getter for the maximum rate a one-way lending vault can have. This variable is a
 
 Returns: maximum rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -570,10 +556,9 @@ MAX_RATE: public(constant(uint256)) = 10**19 / (365 * 86400)  # 1000%
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.MAX_RATE()
@@ -581,8 +566,7 @@ Out [1]:  317097919837    # 1000%
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -595,8 +579,7 @@ Getter for the minimum default borrow rate which is used when creating a new vau
 
 Returns: minimum default borrow rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -631,10 +614,9 @@ def set_default_rates(min_rate: uint256, max_rate: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.min_default_borrow_rate()
@@ -642,8 +624,7 @@ Out [1]:  158548959       # 0.5%
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -656,8 +637,7 @@ Getter for the maximum default borrow rate which is used when creating a new vau
 
 Returns: maximum default borrow rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -692,10 +672,9 @@ def set_default_rates(min_rate: uint256, max_rate: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.max_default_borrow_rate()
@@ -703,8 +682,7 @@ Out [1]:  15854895991     # 50%
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -729,8 +707,7 @@ Emits: `SetDefaultRates`
 | `min_rate` |  `uint256` | New minimum default borrow rate. |
 | `max_rate` |  `uint256` | New maximum default borrow rate. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -770,10 +747,9 @@ def set_default_rates(min_rate: uint256, max_rate: uint256):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.min_default_borrow_rate()
@@ -792,8 +768,7 @@ Out [5]:  16854895991
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -820,8 +795,7 @@ Getter for the controller implementation.
 
 Returns: controller implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -837,10 +811,9 @@ controller_impl: public(address)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.controller_impl()
@@ -848,8 +821,7 @@ Out [1]:  '0x5473B1BcBbC45d38d8fBb50a18a73aFb8B0637A7'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -862,8 +834,7 @@ Getter for the amm implementation.
 
 Returns: amm implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -879,10 +850,9 @@ amm_impl: public(address)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.amm_impl()
@@ -890,8 +860,7 @@ Out [1]:  '0x4f37395BdFbE3A0dca124ad3C9DbFe6A6cbc31D6'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -904,8 +873,7 @@ Getter for the vault implementation.
 
 Returns: vault implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -921,10 +889,9 @@ vault_impl: public(address)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.vault_imp()
@@ -932,8 +899,7 @@ Out [1]:  '0x596F8E49acE6fC8e09B561972360DC216f1c2A1f'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -946,8 +912,7 @@ Getter for the price oracle implementation when creating lending markets from po
 
 Returns: pool price oracle implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -963,10 +928,9 @@ pool_price_oracle_impl: public(address)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.pool_price_oracle_impl()
@@ -974,8 +938,7 @@ Out [1]:  '0x9164e210d123e6566DaF113136a73684C4AB01e2'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -988,8 +951,7 @@ Getter for the monetary policy implementation.
 
 Returns: monetary policy implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1005,10 +967,9 @@ monetary_policy_impl: public(address)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.monetary_policy_impl()
@@ -1016,8 +977,7 @@ Out [1]:  '0xa7E98815c0193E01165720C3abea43B885ae67FD'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1030,8 +990,7 @@ Getter for the gauge implementation.
 
 Returns: gauge implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1047,10 +1006,9 @@ gauge_impl: public(address)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.gauge_impl()
@@ -1058,8 +1016,7 @@ Out [1]:  '0x00B71A425Db7C8B65a46CF39c23A188e10A2DE99'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1088,8 +1045,7 @@ Emits: `SetImplementations`
 | `monetary_policy`   | `address` | New monetary policy implementation. |
 | `gauge`             | `address` | New gauge implementation. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1150,18 +1106,16 @@ def set_implementations(controller: address, amm: address, vault: address,
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1182,8 +1136,7 @@ Getter for the admin of the Factory.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1199,10 +1152,9 @@ admin: public(address)
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.admin()
@@ -1210,8 +1162,7 @@ Out [1]:  '0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1235,8 +1186,7 @@ Emits: `SetAdmin`
 | ---------- | ------ | ----------- |
 | `admin` |  `address` | New admin address.   |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1266,10 +1216,9 @@ def set_admin(admin: address):
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.admin()
@@ -1282,8 +1231,7 @@ Out [3]:  '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1314,8 +1262,7 @@ Returns: vault index (`uint256`)
 | ---------- | ------ | ----------- |
 | `vault` |  `address` | Vault address to get the index for.  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1336,10 +1283,9 @@ def vaults_index(vault: Vault) -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.vaults_index('0x67A18c18709C09D48000B321c6E1cb09F7181211')
@@ -1347,8 +1293,7 @@ Out [1]:  1
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1365,8 +1310,7 @@ Returns: vault (`address`).
 |-------|----------|----------------|
 | `n`   | `uint256` | Vault index. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1382,10 +1326,9 @@ vaults: public(Vault[10**18])
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.vaults(0)
@@ -1396,8 +1339,7 @@ Out [2]:  '0x67A18c18709C09D48000B321c6E1cb09F7181211'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1414,8 +1356,7 @@ Returns: controller (`address`).
 |-------|----------|---------------|
 | `n`   | `uint256` | Vault index. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1439,10 +1380,9 @@ def controllers(n: uint256) -> address:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.controllers(0)
@@ -1453,8 +1393,7 @@ Out [2]:  '0x7443944962D04720f8c220C0D25f56F869d6EfD4'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1471,8 +1410,7 @@ Returns: AMM (`address`).
 |-------|----------|---------------|
 | `n`   | `uint256` | Vault index. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1488,10 +1426,9 @@ amms: public(AMM[10**18])
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.amms(0)
@@ -1502,8 +1439,7 @@ Out [2]:  '0xafC1ab86045Cb2a07C23399dbE64b56D1B8B3239'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1520,8 +1456,7 @@ Returns: borrowable token (`address`).
 |-------|----------|---------------|
 | `n`   | `uint256` | Vault index. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1545,10 +1480,9 @@ def borrowed_tokens(n: uint256) -> address:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.borrowed_tokens(0)
@@ -1559,8 +1493,7 @@ Out [2]:  '0xD533a949740bb3306d119CC777fa900bA034cd52'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1577,8 +1510,7 @@ Returns: borrowable token (`address`).
 |-------|----------|---------------|
 | `n`   | `uint256` | Vault index. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1602,10 +1534,9 @@ def collateral_tokens(n: uint256) -> address:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.collateral_tokens(0)
@@ -1616,8 +1547,7 @@ Out [2]:  '0xD533a949740bb3306d119CC777fa900bA034cd52'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1635,8 +1565,7 @@ Returns: price oracle (`address`).
 | `n`   | `uint256` | Vault index. |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1660,10 +1589,9 @@ def price_oracles(n: uint256) -> address:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.price_oracles(0)
@@ -1674,8 +1602,7 @@ Out [2]:  '0xc17B0451E6d8C0f71297d0f174590632BE81163c'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1692,8 +1619,7 @@ Returns: monetary policy (`address`).
 |-------|----------|---------------|
 | `n`   | `uint256` | Vault index. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1720,10 +1646,9 @@ def monetary_policies(n: uint256) -> address:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.monetary_policies(0)
@@ -1734,8 +1659,7 @@ Out [2]:  '0x5c79C4cFE9D77B3d2385E119fADb4F8ff8c08294'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1753,8 +1677,7 @@ Returns: gauge (`address`).
 | `_vault` | `address` | Vault address to get the gauge for. |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1777,10 +1700,9 @@ def gauge_for_vault(_vault: Vault) -> address:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.gauge_for_vault("0x67A18c18709C09D48000B321c6E1cb09F7181211")
@@ -1788,8 +1710,7 @@ Out [1]:  '0xAA90BE8bd52aeA49314dFc6e385e21A4e9c4ea0c'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1806,8 +1727,7 @@ Returns: borrow and collateral token (`address[2]`).
 |-------|----------|---------------|
 | `vault_id`   | `uint256` | Vault index. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1833,10 +1753,9 @@ def coins(vault_id: uint256) -> address[2]:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.coins(1)
@@ -1845,8 +1764,7 @@ Out [1]:  [Address('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'),
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1859,8 +1777,7 @@ Getter for the crvUSD token. Only crvUSD-containing lending vaults are possible.
 
 Returns: crvUSD (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1899,10 +1816,9 @@ def __init__(
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.STABLECOIN()
@@ -1910,8 +1826,7 @@ Out [1]:  '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1924,8 +1839,7 @@ Getter for the total market count. This value represents the total number of len
 
 Returns: market count (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -1962,10 +1876,9 @@ def _create(
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.market_count()
@@ -1973,8 +1886,7 @@ Out [1]:  3
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -1992,8 +1904,7 @@ Returns: vault (`address`).
 | `arg0`| `address` | Token address.|
 | `arg1`| `uint256` | Vault index.  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2009,10 +1920,9 @@ token_to_vaults: public(HashMap[address, Vault[10**18]])
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.token_to_vaults("0xD533a949740bb3306d119CC777fa900bA034cd52", 0)
@@ -2023,8 +1933,7 @@ Out [2]:  '0x044aC5160e5A04E09EBAE06D786fc151F2BA5ceD'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2041,8 +1950,7 @@ Returns: number of markets (`uint256`).
 |-------|----------|---------------|
 | `arg0`| `address` | Token address.|
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2083,10 +1991,9 @@ def _create(
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.token_market_count("0xD533a949740bb3306d119CC777fa900bA034cd52")
@@ -2097,8 +2004,7 @@ Out [2]:  0     # market count of crvusd will always return 0, because the token
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2115,8 +2021,7 @@ Returns: gauge (`address`).
 |-------|----------|--------------|
 | `arg0`| `uint256` | Vault index. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2132,10 +2037,9 @@ gauges: public(address[10**18])
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.gauges(0)
@@ -2143,8 +2047,7 @@ Out [1]:  '0x3742aCa9ad8655d2d3eab5569eF1BdB4C5d52e5D'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -2161,8 +2064,7 @@ Returns: name (`String[64]`).
 |-------|----------|--------------|
 | `arg0`| `uint256` | Vault index. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -2178,10 +2080,9 @@ names: public(HashMap[uint256, String[64]])
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 In  [1]:  OneWayLendingVaultFactory.names(0)
@@ -2192,8 +2093,7 @@ Out [2]:  'CRV-long'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::

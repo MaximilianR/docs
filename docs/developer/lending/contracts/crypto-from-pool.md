@@ -5,13 +5,9 @@ import TabItem from '@theme/TabItem';
 
 Oracle contract for a collateral token that **fetches its price from a single Curve pool**. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvusd/price-aggregator.md), but experience showed that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
 
-:::github[GitHub]
+:::vyper[`CryptoFromPool.vy`]
 
-The source code of the following price oracle contracts can be found on  GitHub:
-
-- [`CryptoFromPool.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPool.vy)
-- [`CryptoFromPoolWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolWAgg.vy)
-
+The source code for the `CryptoFromPool.vy` contract can be found on [:logos-github: GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPool.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
@@ -140,8 +136,7 @@ Getter function for the price. For example, in a lending market using `CRV` as c
 
 Returns: price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The `CryptoFromPool.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolWAgg.vy` oracle contract.
@@ -228,10 +223,9 @@ def _raw_price() -> uint256:
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPool.price()
@@ -239,8 +233,7 @@ def _raw_price() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -253,8 +246,7 @@ Function to return the price and update the state of the blockchain. This functi
 
 Returns: price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The `CryptoFromPool.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolWAgg.vy` oracle contract.
@@ -375,10 +367,9 @@ def _exchange(i: uint256, j: uint256, amount: uint256, minmax_amount: uint256, _
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPool.price_w()
@@ -386,8 +377,7 @@ def _exchange(i: uint256, j: uint256, amount: uint256, minmax_amount: uint256, _
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -405,8 +395,7 @@ Getter for the liquidity pool the from where the oracle is used.
 
 Returns: liquidity pool (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -451,10 +440,9 @@ def __init__(
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPool.POOL()
@@ -462,8 +450,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -476,8 +463,7 @@ Getter for the total number of coins in the liquidity pool.
 
 Returns: coins count (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 <Tabs>
@@ -521,10 +507,9 @@ The following source code includes all changes up to commit hash [86cae3a](https
     ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPool.N_COINS()
@@ -532,8 +517,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -546,8 +530,7 @@ Getter for the index of the borrowed coin in the liquidity pool from which the p
 
 Returns: coin index (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -592,10 +575,9 @@ def __init__(
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPool.BORROWED_IX()
@@ -603,8 +585,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -617,8 +598,7 @@ Getter for the index of the collateral coin in the liquidity pool from which the
 
 Returns: coin index (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -663,10 +643,9 @@ def __init__(
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPool.COLLATERAL_IX()
@@ -674,8 +653,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -689,8 +667,7 @@ The variable is set to `false` if the pool from which the price oracle is taken 
 
 Returns: true or false (`bool`)
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -735,10 +712,9 @@ def __init__(
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPool.NO_ARGUMENT()
@@ -746,8 +722,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -767,8 +742,7 @@ Getter for the crvUSD `PriceAggregator` contract. This value is immutable and se
 
 Returns: `PriceAggregator` (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -791,10 +765,9 @@ AGG: public(immutable(StableAggregator))
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -803,8 +776,7 @@ AGG: public(immutable(StableAggregator))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -849,8 +821,7 @@ Getter for the `ChainlinkUptimeFeed` contract.
 
 Returns: uptime feed contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -868,10 +839,9 @@ CHAINLINK_UPTIME_FEED: public(constant(address)) = 0xFdB631F5EE196F0ed6FAa767959
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPool.CHAINLINK_UPTIME_FEED()
@@ -879,8 +849,7 @@ CHAINLINK_UPTIME_FEED: public(constant(address)) = 0xFdB631F5EE196F0ed6FAa767959
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::
@@ -893,8 +862,7 @@ Getter for the required time to wait after the sequencer was down.
 
 Returns: time to wait (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -912,10 +880,9 @@ DOWNTIME_WAIT: public(constant(uint256)) = 3988  # 866 * log(100) s
 </Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CryptoFromPool.DOWNTIME_WAIT()
@@ -923,8 +890,7 @@ DOWNTIME_WAIT: public(constant(uint256)) = 3988  # 866 * log(100) s
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
 ::::

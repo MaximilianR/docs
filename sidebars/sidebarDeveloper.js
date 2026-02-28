@@ -434,33 +434,27 @@ export default {
             label: 'Llamalend',
             items: [
                 { type: 'doc', id: 'lending/overview', label: 'Overview' },
+                { type: 'doc', id: 'lending/contracts/oneway-factory', label: 'OneWay Lending Factory' },
+                { type: 'doc', id: 'lending/contracts/vault', label: 'Vault' },
+                { type: 'doc', id: 'lending/contracts/controller-llamma', label: 'Controller & LLAMMA' },
+                { type: 'doc', id: 'lending/contracts/leverage', label: 'Leverage' },
                 {
                     type: 'category',
-                    label: 'Contracts',
+                    label: 'Oracles',
                     items: [
-                        { type: 'doc', id: 'lending/contracts/oneway-factory', label: 'OneWay Lending Factory' },
-                        { type: 'doc', id: 'lending/contracts/vault', label: 'Vault' },
-                        { type: 'doc', id: 'lending/contracts/controller-llamma', label: 'Controller & LLAMMA' },
-                        { type: 'doc', id: 'lending/contracts/leverage', label: 'Leverage' },
-                        {
-                            type: 'category',
-                            label: 'Oracles',
-                            items: [
-                                { type: 'doc', id: 'lending/contracts/oracle-overview', label: 'Overview' },
-                                { type: 'doc', id: 'lending/contracts/crypto-from-pool', label: 'CryptoFromPool' },
-                                { type: 'doc', id: 'lending/contracts/crypto-from-pool-vault', label: 'CryptoFromPoolVault' },
-                                { type: 'doc', id: 'lending/contracts/crypto-from-pools-rate', label: 'CryptoFromPoolsRate' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Monetary Policy',
-                            items: [
-                                { type: 'doc', id: 'lending/contracts/mp-overview', label: 'Overview' },
-                                { type: 'doc', id: 'lending/contracts/semilog-mp', label: 'SemiLog Monetary Policy' },
-                                { type: 'doc', id: 'lending/contracts/secondary-mp', label: 'Secondary Monetary Policy' },
-                            ],
-                        },
+                        { type: 'doc', id: 'lending/contracts/oracle-overview', label: 'Overview' },
+                        { type: 'doc', id: 'lending/contracts/crypto-from-pool', label: 'CryptoFromPool' },
+                        { type: 'doc', id: 'lending/contracts/crypto-from-pool-vault', label: 'CryptoFromPoolVault' },
+                        { type: 'doc', id: 'lending/contracts/crypto-from-pools-rate', label: 'CryptoFromPoolsRate' },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Monetary Policy',
+                    items: [
+                        { type: 'doc', id: 'lending/contracts/mp-overview', label: 'Overview' },
+                        { type: 'doc', id: 'lending/contracts/semilog-mp', label: 'SemiLog Monetary Policy' },
+                        { type: 'doc', id: 'lending/contracts/secondary-mp', label: 'Secondary Monetary Policy' },
                     ],
                 },
             ],
