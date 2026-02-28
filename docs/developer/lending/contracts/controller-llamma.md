@@ -1,8 +1,7 @@
 # LLAMMA and Controller
-:::github[GitHub]
+:::vyper[`AMM.vy` & `Controller.vy`]
 
-The source code for both contracts, `AMM.vy` and `Controller.vy`, is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/lending/contracts).
-
+The source code for both contracts, `AMM.vy` and `Controller.vy`, can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/lending/contracts). The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 

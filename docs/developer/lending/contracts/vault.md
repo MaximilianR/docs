@@ -138,7 +138,7 @@ A newer version of the vault contract allows for setting a maximum supply of ass
 :::
 
 ### `deposit`
-:::description[`Vault.deposit(assets: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`Vault.deposit(assets: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to deposit a specified number of assets of the underlying token (`borrowed_token`) into the vault and mint the corresponding amount of shares to `receiver`. There is no cap when depositing assets into the vault - as many token as desired can be deposited into it.
@@ -348,10 +348,10 @@ Out [3]:  997552662404145514069
 </Tabs>
 
 
-:::
+::::
 
 ### `maxDeposit`
-:::description[`Vault.maxDeposit(receiver: address) -> uint256:`]
+::::description[`Vault.maxDeposit(receiver: address) -> uint256:`]
 
 
 Getter for the maximum amount of assets `receiver` can deposit. Essentially equals to `max_value(uint256)`.
@@ -402,10 +402,10 @@ should return borrowed_token.balanceOf("0x7a16fF8270133F063aAb6C9977183D9e728354
 </Tabs>
 
 
-:::
+::::
 
 ### `previewDeposit`
-:::description[`Vault.previewDeposit(assets: uint256) -> uint256:`]
+::::description[`Vault.previewDeposit(assets: uint256) -> uint256:`]
 
 
 Function to simulate the effects of depositing `assets` into the vault based on the current state.
@@ -470,10 +470,10 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-:::
+::::
 
 ### `mint`
-:::description[`Vault.mint(shares: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`Vault.mint(shares: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to mint a specific amount of shares (`shares`) to `receiver` by depositing the necessary number of assets into the vault. 
@@ -683,10 +683,10 @@ Out [3]:  1097552662404145514069
 </Tabs>
 
 
-:::
+::::
 
 ### `maxMint`
-:::description[`Vault.maxMint(receiver: address) -> uint256:`]
+::::description[`Vault.maxMint(receiver: address) -> uint256:`]
 
 
 Getter for the maximum amount of shares a user can mint. Essentially equals to `max_value(uint256)`.
@@ -751,10 +751,10 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-:::
+::::
 
 ### `previewMint`
-:::description[`Vault.previewMint(shares: uint256) -> uint256:`]
+::::description[`Vault.previewMint(shares: uint256) -> uint256:`]
 
 
 Function to simulate the number of assets required to mint a specified amount of shares (`shares`) given the current state of the vault.
@@ -820,10 +820,10 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 </Tabs>
 
 
-:::
+::::
 
 ### `convertToShares`
-:::description[`Vault.convertToShares(assets: uint256) -> uint256:`]
+::::description[`Vault.convertToShares(assets: uint256) -> uint256:`]
 
 
 Function to calculate the amount of shares received for a given amount of `assets` provided.
@@ -889,10 +889,10 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-:::
+::::
 
 ### `maxSupply`
-:::description[`Vault.maxSupply() -> uint256: view`]
+::::description[`Vault.maxSupply() -> uint256: view`]
 
 
 Getter for the maximum amount of assets that can be supplied to the vault. This function is only avaliable in a newer version of the vault contract.
@@ -943,10 +943,10 @@ def set_max_supply(max_supply: uint256):
 </Tabs>
 
 
-:::
+::::
 
 ### `set_max_supply `
-:::description[`Vault.set_max_supply(max_supply: uint256):`]
+::::description[`Vault.set_max_supply(max_supply: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -1008,7 +1008,7 @@ def set_max_supply(max_supply: uint256):
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -1036,7 +1036,7 @@ To prevent this scenario, the borrow rate is based on the utilization rate of th
 :::
 
 ### `withdraw`
-:::description[`Vault.withdraw(assets: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`]
+::::description[`Vault.withdraw(assets: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`]
 
 
 Function to withdraw `assets` from `owner` to the `receiver` and burn the corresponding amount of shares.
@@ -1260,10 +1260,10 @@ Out [5]:  999999899754665824864192
 </Tabs>
 
 
-:::
+::::
 
 ### `maxWithdraw`
-:::description[`Vault.maxWithdraw(owner: address) -> uint256:`]
+::::description[`Vault.maxWithdraw(owner: address) -> uint256:`]
 
 
 Getter for the maximum amount of assets withdrawable by `owner`.
@@ -1330,10 +1330,10 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 </Tabs>
 
 
-:::
+::::
 
 ### `previewWithdraw`
-:::description[`Vault.previewWithdraw(assets: uint256) -> uint256:`]
+::::description[`Vault.previewWithdraw(assets: uint256) -> uint256:`]
 
 
 Function to simulate the amount of shares getting burned when withdrawing `assets`.
@@ -1399,10 +1399,10 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-:::
+::::
 
 ### `redeem`
-:::description[`Vault.redeem(shares: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`]
+::::description[`Vault.redeem(shares: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`]
 
 
 Function to redeem (and burn) `shares` from `owner` and send the received assets to `receiver`. Shares are burned when they are redeemed.
@@ -1631,10 +1631,10 @@ Out [5]:  999999999999999999999998
 </Tabs>
 
 
-:::
+::::
 
 ### `maxRedeem`
-:::description[`Vault.maxRedeem(owner: address) -> uint256:`]
+::::description[`Vault.maxRedeem(owner: address) -> uint256:`]
 
 
 Getter for the maximum redeemable shares from `owner`.
@@ -1701,10 +1701,10 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 </Tabs>
 
 
-:::
+::::
 
 ### `previewRedeem`
-:::description[`Vault.previewRedeem(shares: uint256) -> uint256:`]
+::::description[`Vault.previewRedeem(shares: uint256) -> uint256:`]
 
 
 Function to simulate the number of assets received when redeeming (burning) `shares`.
@@ -1776,10 +1776,10 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 </Tabs>
 
 
-:::
+::::
 
 ### `convertToAssets`
-:::description[`Vault.convertToAssets(shares: uint256) -> uint256:`]
+::::description[`Vault.convertToAssets(shares: uint256) -> uint256:`]
 
 
 Function to calculate the amount of assets received when converting `shares` to assets.
@@ -1845,7 +1845,7 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -1892,7 +1892,7 @@ $$\text\{utilization\} = \frac\{\text\{debt\}\}\{\text\{totalAssets\}\}$$
 ---
 
 ### `borrow_apr`
-:::description[`Vault.borrow_apr() -> uint256`]
+::::description[`Vault.borrow_apr() -> uint256`]
 
 
 Getter for the annualized borrow APR. The user pays this rate on the assets borrowed.
@@ -1956,10 +1956,10 @@ rate: public(uint256)
 </Tabs>
 
 
-:::
+::::
 
 ### `lend_apr`
-:::description[`Vault.lend_apr() -> uint256:`]
+::::description[`Vault.lend_apr() -> uint256:`]
 
 
 Getter for the annualized lending APR. The value is based on the utilization is awarded to the user for supplying underlying asset (`borrowed_token`) to the vault.
@@ -2035,7 +2035,7 @@ rate: public(uint256)
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -2043,7 +2043,7 @@ rate: public(uint256)
 ## Contract Info Methods
 
 ### `asset`
-:::description[`Vault.asset() -> ERC20:`]
+::::description[`Vault.asset() -> ERC20:`]
 
 
 Getter for the underlying asset used by the vault, which is the `borrowed_token`.
@@ -2088,10 +2088,10 @@ def asset() -> ERC20:
 </Tabs>
 
 
-:::
+::::
 
 ### `totalAssets`
-:::description[`Vault.totalAssets() -> uint256:`]
+::::description[`Vault.totalAssets() -> uint256:`]
 
 
 Getter for the total amount of the underlying asset (`borrowed_token`) held by the vault. These are the total assets that can be lent out.
@@ -2144,10 +2144,10 @@ def _total_assets() -> uint256:
 </Tabs>
 
 
-:::
+::::
 
 ### `pricePerShare`
-:::description[`Vault.pricePerShare(is_floor: bool = True) -> uint256:`]
+::::description[`Vault.pricePerShare(is_floor: bool = True) -> uint256:`]
 
 
 Getter for the price of one share in asset tokens.
@@ -2219,10 +2219,10 @@ def _total_assets() -> uint256:
 </Tabs>
 
 
-:::
+::::
 
 ### `admin`
-:::description[`Vault.admin() -> address: view`]
+::::description[`Vault.admin() -> address: view`]
 
 
 Getter for the admin of the vault.
@@ -2279,10 +2279,10 @@ admin: public(address)
 </Tabs>
 
 
-:::
+::::
 
 ### `borrowed_token`
-:::description[`Vault.borrowed_token() -> address: view`]
+::::description[`Vault.borrowed_token() -> address: view`]
 
 
 Getter for the borrowable token in the vault.
@@ -2321,10 +2321,10 @@ borrowed_token: public(ERC20)
 </Tabs>
 
 
-:::
+::::
 
 ### `collateral_token`
-:::description[`Vault.collateral_token() -> address: view`]
+::::description[`Vault.collateral_token() -> address: view`]
 
 
 Getter for the collateral token of the lending market which is deposited into the AMM.
@@ -2363,10 +2363,10 @@ collateral_token: public(ERC20)
 </Tabs>
 
 
-:::
+::::
 
 ### `price_oracle`
-:::description[`Vault.price_oracle() -> address: view`]
+::::description[`Vault.price_oracle() -> address: view`]
 
 
 Getter for the price oracle contract used in the vault.
@@ -2405,10 +2405,10 @@ price_oracle: public(PriceOracle)
 </Tabs>
 
 
-:::
+::::
 
 ### `amm`
-:::description[`Vault.amm() -> address: view`]
+::::description[`Vault.amm() -> address: view`]
 
 
 Getter for the AMM of the vault.
@@ -2447,10 +2447,10 @@ amm: public(AMM)
 </Tabs>
 
 
-:::
+::::
 
 ### `controller`
-:::description[`Vault.controller() -> address: view`]
+::::description[`Vault.controller() -> address: view`]
 
 
 Getter for the Controller of the vault.
@@ -2489,10 +2489,10 @@ controller: public(Controller)
 </Tabs>
 
 
-:::
+::::
 
 ### `factory`
-:::description[`Vault.factory() -> address: view`]
+::::description[`Vault.factory() -> address: view`]
 
 
 Getter for the Factory of the vault.
@@ -2531,4 +2531,4 @@ factory: public(Factory)
 </Tabs>
 
 
-:::
+::::

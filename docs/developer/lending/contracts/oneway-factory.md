@@ -37,7 +37,7 @@ To find optimal values for the parameters, check out: https://github.com/curvefi
 :::
 
 ### `create`
-:::description[`OneWayLendingVaultFactory.create(borrowed_token: address, collateral_token: address, A: uint256, fee: uint256, loan_discount: uint256, liquidation_discount: uint256, price_oracle: address, name: String[64], min_borrow_rate: uint256 = 0, max_borrow_rate: uint256 = 0) -> Vault:`]
+::::description[`OneWayLendingVaultFactory.create(borrowed_token: address, collateral_token: address, A: uint256, fee: uint256, loan_discount: uint256, liquidation_discount: uint256, price_oracle: address, name: String[64], min_borrow_rate: uint256 = 0, max_borrow_rate: uint256 = 0) -> Vault:`]
 
 
 Function to create a new vault using a user-supplied price oracle contract. 
@@ -202,10 +202,10 @@ def _create(
 </Tabs>
 
 
-:::
+::::
 
 ### `create_from_pool`
-:::description[`OneWayLendingVaultFactory.create(borrowed_token: address, collateral_token: address, A: uint256, fee: uint256, loan_discount: uint256, liquidation_discount: uint256, price_oracle: address, name: String[64], min_borrow_rate: uint256 = 0, max_borrow_rate: uint256 = 0) -> Vault:`]
+::::description[`OneWayLendingVaultFactory.create(borrowed_token: address, collateral_token: address, A: uint256, fee: uint256, loan_discount: uint256, liquidation_discount: uint256, price_oracle: address, name: String[64], min_borrow_rate: uint256 = 0, max_borrow_rate: uint256 = 0) -> Vault:`]
 
 
 :::warning[Valid Pool Oracles]
@@ -402,7 +402,7 @@ def _create(
 </Tabs>
 
 
-:::
+::::
 
 ## Deploying Gauges
 
@@ -410,7 +410,7 @@ Just like pools, vaults can have liquidity gauges. Once they are added to the `G
 
 
 ### `deploy_gauge`
-:::description[`OneWayLendingVaultFactory.deploy_gauge(_vault: Vault) -> address:`]
+::::description[`OneWayLendingVaultFactory.deploy_gauge(_vault: Vault) -> address:`]
 
 
 Function to deploy a liquidity gauge for a vault.
@@ -478,7 +478,7 @@ Out [1]: '0xACEBA186aDF691245dfb20365B48DB87DEA7b98F'                # returns a
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -504,7 +504,7 @@ A notebook on how to change default borrow rates and how to calculate annualized
 :::
 
 ### `MIN_RATE`
-:::description[`OneWayLendingVaultFactory.MIN_RATE() -> uint256: view`]
+::::description[`OneWayLendingVaultFactory.MIN_RATE() -> uint256: view`]
 
 
 Getter for the minimum rate a one-way lending vault can have. This variable is a constant and can therefore not be changed.
@@ -543,10 +543,10 @@ Out [1]:  31709791        # 0.1%
 </Tabs>
 
 
-:::
+::::
 
 ### `MAX_RATE`
-:::description[`OneWayLendingVaultFactory.MAX_RATE() -> uint256: view`]
+::::description[`OneWayLendingVaultFactory.MAX_RATE() -> uint256: view`]
 
 
 Getter for the maximum rate a one-way lending vault can have. This variable is a constant and can therefore not be changed.
@@ -585,10 +585,10 @@ Out [1]:  317097919837    # 1000%
 </Tabs>
 
 
-:::
+::::
 
 ### `min_default_borrow_rate`
-:::description[`OneWayLendingVaultFactory.min_default_borrow_rate() -> uint256: view`]
+::::description[`OneWayLendingVaultFactory.min_default_borrow_rate() -> uint256: view`]
 
 
 Getter for the minimum default borrow rate which is used when creating a new vault. The minimum borrow rate is charged when the utilization is 0. This parameter can be changed via the `set_default_rates` function.
@@ -646,10 +646,10 @@ Out [1]:  158548959       # 0.5%
 </Tabs>
 
 
-:::
+::::
 
 ### `max_default_borrow_rate`
-:::description[`OneWayLendingVaultFactory.max_default_borrow_rate() -> uint256: view`]
+::::description[`OneWayLendingVaultFactory.max_default_borrow_rate() -> uint256: view`]
 
 
 Getter for the maximum default borrow rate which is used when creating a new vault. The maximum borrow rate is charged when the utilization is 100%. This parameter can be changed via the `set_default_rates` function.
@@ -707,10 +707,10 @@ Out [1]:  15854895991     # 50%
 </Tabs>
 
 
-:::
+::::
 
 ### `set_default_rates`
-:::description[`OneWayLendingVaultFactory.set_default_rates(min_rate: uint256, max_rate: uint256):`]
+::::description[`OneWayLendingVaultFactory.set_default_rates(min_rate: uint256, max_rate: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -796,7 +796,7 @@ Out [5]:  16854895991
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -813,7 +813,7 @@ A notebook on how to change implementations using the `set_implementations` func
 :::
 
 ### `controller_impl`
-:::description[`OneWayLendingVaultFactory.controller_impl() -> address: view`]
+::::description[`OneWayLendingVaultFactory.controller_impl() -> address: view`]
 
 
 Getter for the controller implementation.
@@ -852,10 +852,10 @@ Out [1]:  '0x5473B1BcBbC45d38d8fBb50a18a73aFb8B0637A7'
 </Tabs>
 
 
-:::
+::::
 
 ### `amm_impl`
-:::description[`OneWayLendingVaultFactory.amm_impl() -> address: view`]
+::::description[`OneWayLendingVaultFactory.amm_impl() -> address: view`]
 
 
 Getter for the amm implementation.
@@ -894,10 +894,10 @@ Out [1]:  '0x4f37395BdFbE3A0dca124ad3C9DbFe6A6cbc31D6'
 </Tabs>
 
 
-:::
+::::
 
 ### `vault_imp`
-:::description[`OneWayLendingVaultFactory.vault_imp() -> address: view`]
+::::description[`OneWayLendingVaultFactory.vault_imp() -> address: view`]
 
 
 Getter for the vault implementation.
@@ -936,10 +936,10 @@ Out [1]:  '0x596F8E49acE6fC8e09B561972360DC216f1c2A1f'
 </Tabs>
 
 
-:::
+::::
 
 ### `pool_price_oracle_impl`
-:::description[`OneWayLendingVaultFactory.pool_price_oracle_impl() -> address: view`]
+::::description[`OneWayLendingVaultFactory.pool_price_oracle_impl() -> address: view`]
 
 
 Getter for the price oracle implementation when creating lending markets from pools.
@@ -978,10 +978,10 @@ Out [1]:  '0x9164e210d123e6566DaF113136a73684C4AB01e2'
 </Tabs>
 
 
-:::
+::::
 
 ### `monetary_policy_impl`
-:::description[`OneWayLendingVaultFactory.monetary_policy_impl() -> address: view`]
+::::description[`OneWayLendingVaultFactory.monetary_policy_impl() -> address: view`]
 
 
 Getter for the monetary policy implementation.
@@ -1020,10 +1020,10 @@ Out [1]:  '0xa7E98815c0193E01165720C3abea43B885ae67FD'
 </Tabs>
 
 
-:::
+::::
 
 ### `gauge_impl`
-:::description[`OneWayLendingVaultFactory.gauge_impl() -> address: view`]
+::::description[`OneWayLendingVaultFactory.gauge_impl() -> address: view`]
 
 
 Getter for the gauge implementation.
@@ -1062,10 +1062,10 @@ Out [1]:  '0x00B71A425Db7C8B65a46CF39c23A188e10A2DE99'
 </Tabs>
 
 
-:::
+::::
 
 ### `set_implementations`
-:::description[`OneWayLendingVaultFactory.set_implementations(controller: address, amm: address, vault: address, pool_price_oracle: address, monetary_policy: address, gauge: address):`]
+::::description[`OneWayLendingVaultFactory.set_implementations(controller: address, amm: address, vault: address, pool_price_oracle: address, monetary_policy: address, gauge: address):`]
 
 
 :::guard[Guarded Method]
@@ -1164,7 +1164,7 @@ def set_implementations(controller: address, amm: address, vault: address,
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -1175,7 +1175,7 @@ The Factory contract is owned by the DAO ([CurveOwnershipAdmin](https://ethersca
 
 
 ### `admin`
-:::description[`OneWayLendingVaultFactory.admin -> address: view`]
+::::description[`OneWayLendingVaultFactory.admin -> address: view`]
 
 
 Getter for the admin of the Factory.
@@ -1214,10 +1214,10 @@ Out [1]:  '0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
 </Tabs>
 
 
-:::
+::::
 
 ### `set_admin`
-:::description[`OneWayLendingVaultFactory.set_admin(admin: address):`]
+::::description[`OneWayLendingVaultFactory.set_admin(admin: address):`]
 
 
 :::guard[Guarded Method]
@@ -1286,7 +1286,7 @@ Out [3]:  '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -1303,7 +1303,7 @@ Most informations are queried based on vault indices. The first deployed vault i
 ```
 
 ### `vaults_index`
-:::description[`OneWayLendingVaultFactory.vaults_index(vault: Vault) -> uint256:`]
+::::description[`OneWayLendingVaultFactory.vaults_index(vault: Vault) -> uint256:`]
 
 
 Getter for the vault index within the factory by using the vault address.
@@ -1351,10 +1351,10 @@ Out [1]:  1
 </Tabs>
 
 
-:::
+::::
 
 ### `vaults`
-:::description[`OneWayLendingVaultFactory.vaults(arg0: uint256): view`]
+::::description[`OneWayLendingVaultFactory.vaults(arg0: uint256): view`]
 
 
 Getter for the vault at index `arg0`.
@@ -1400,10 +1400,10 @@ Out [2]:  '0x67A18c18709C09D48000B321c6E1cb09F7181211'
 </Tabs>
 
 
-:::
+::::
 
 ### `controllers`
-:::description[`OneWayLendingVaultFactory.controllers(n: uint256) -> address: view`]
+::::description[`OneWayLendingVaultFactory.controllers(n: uint256) -> address: view`]
 
 
 Getter for the controller of the vault at index `n`. This variable holds all controllers of vaults deployed through this factory.
@@ -1457,10 +1457,10 @@ Out [2]:  '0x7443944962D04720f8c220C0D25f56F869d6EfD4'
 </Tabs>
 
 
-:::
+::::
 
 ### `amms`
-:::description[`OneWayLendingVaultFactory.amms(n: uint256) -> address: view`]
+::::description[`OneWayLendingVaultFactory.amms(n: uint256) -> address: view`]
 
 
 Getter for the AMM of the vault at index `n`. This variable holds all AMMs of vaults deployed through this factory.
@@ -1506,10 +1506,10 @@ Out [2]:  '0xafC1ab86045Cb2a07C23399dbE64b56D1B8B3239'
 </Tabs>
 
 
-:::
+::::
 
 ### `borrowed_tokens`
-:::description[`OneWayLendingVaultFactory.borrowed_tokens(n: uint256) -> address::`]
+::::description[`OneWayLendingVaultFactory.borrowed_tokens(n: uint256) -> address::`]
 
 
 Getter for the borrow token for the vault at index `n`. This variable holds all borrowable tokens of vaults deployed through this factory.
@@ -1563,10 +1563,10 @@ Out [2]:  '0xD533a949740bb3306d119CC777fa900bA034cd52'
 </Tabs>
 
 
-:::
+::::
 
 ### `collateral_tokens`
-:::description[`OneWayLendingVaultFactory.collateral_tokens(n: uint256) -> address::`]
+::::description[`OneWayLendingVaultFactory.collateral_tokens(n: uint256) -> address::`]
 
 
 Getter for the collateral token for the vault at index `n`. This variable holds all collateral tokens of vaults deployed through this factory.
@@ -1620,10 +1620,10 @@ Out [2]:  '0xD533a949740bb3306d119CC777fa900bA034cd52'
 </Tabs>
 
 
-:::
+::::
 
 ### `price_oracles`
-:::description[`OneWayLendingVaultFactory.price_oracles(n: uint256) -> address::`]
+::::description[`OneWayLendingVaultFactory.price_oracles(n: uint256) -> address::`]
 
 
 Getter for the price oracle contracts for the vault at index `n`. This variable holds all price oracles of vaults deployed through this factory.
@@ -1678,10 +1678,10 @@ Out [2]:  '0xc17B0451E6d8C0f71297d0f174590632BE81163c'
 </Tabs>
 
 
-:::
+::::
 
 ### `monetary_policies`
-:::description[`OneWayLendingVaultFactory.monetary_policies(n: uint256) -> address::`]
+::::description[`OneWayLendingVaultFactory.monetary_policies(n: uint256) -> address::`]
 
 
 Getter for the monetary policy contracts for the vault at index `n`. This variable holds all monetary policies of vaults deployed through this factory.
@@ -1738,10 +1738,10 @@ Out [2]:  '0x5c79C4cFE9D77B3d2385E119fADb4F8ff8c08294'
 </Tabs>
 
 
-:::
+::::
 
 ### `gauge_for_vault`
-:::description[`OneWayLendingVaultFactory.gauge_for_vault(_vault: Vault) -> address:`]
+::::description[`OneWayLendingVaultFactory.gauge_for_vault(_vault: Vault) -> address:`]
 
 
 Getter for the liquidity gauge of `vault`.
@@ -1792,10 +1792,10 @@ Out [1]:  '0xAA90BE8bd52aeA49314dFc6e385e21A4e9c4ea0c'
 </Tabs>
 
 
-:::
+::::
 
 ### `coins`
-:::description[`OneWayLendingVaultFactory.coins(vault_id: uint256) -> address[2]: view`]
+::::description[`OneWayLendingVaultFactory.coins(vault_id: uint256) -> address[2]: view`]
 
 
 Getter for the borrow and collateral token of `vault_id`.
@@ -1849,10 +1849,10 @@ Out [1]:  [Address('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'),
 </Tabs>
 
 
-:::
+::::
 
 ### `STABLECOIN`
-:::description[`OneWayLendingVaultFactory.STABLECOIN() -> address: view:`]
+::::description[`OneWayLendingVaultFactory.STABLECOIN() -> address: view:`]
 
 
 Getter for the crvUSD token. Only crvUSD-containing lending vaults are possible.
@@ -1914,10 +1914,10 @@ Out [1]:  '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
 </Tabs>
 
 
-:::
+::::
 
 ### `market_count`
-:::description[`OneWayLendingVaultFactory.():`]
+::::description[`OneWayLendingVaultFactory.():`]
 
 
 Getter for the total market count. This value represents the total number of lending vaults created through this factory. This value is incremented by 1 whenever the internal `_create` function is called.
@@ -1977,10 +1977,10 @@ Out [1]:  3
 </Tabs>
 
 
-:::
+::::
 
 ### `token_to_vaults`
-:::description[`OneWayLendingVaultFactory.token_to_vaults(arg0: address, arg1: uint256) -> address: view`]
+::::description[`OneWayLendingVaultFactory.token_to_vaults(arg0: address, arg1: uint256) -> address: view`]
 
 
 Getter for the vault at index `arg1` which includes coin `arg0`.
@@ -2027,10 +2027,10 @@ Out [2]:  '0x044aC5160e5A04E09EBAE06D786fc151F2BA5ceD'
 </Tabs>
 
 
-:::
+::::
 
 ### `token_market_count`
-:::description[`OneWayLendingVaultFactory.token_market_count(arg0: address) -> uint256: view`]
+::::description[`OneWayLendingVaultFactory.token_market_count(arg0: address) -> uint256: view`]
 
 
 Getter for the amount of markets coin `arg0` is in.
@@ -2101,10 +2101,10 @@ Out [2]:  0     # market count of crvusd will always return 0, because the token
 </Tabs>
 
 
-:::
+::::
 
 ### `gauges`
-:::description[`OneWayLendingVaultFactory.gauges(arg0: uint256) -> address: view`]
+::::description[`OneWayLendingVaultFactory.gauges(arg0: uint256) -> address: view`]
 
 
 Getter for the gauge of the vault at index `arg0`.
@@ -2147,10 +2147,10 @@ Out [1]:  '0x3742aCa9ad8655d2d3eab5569eF1BdB4C5d52e5D'
 </Tabs>
 
 
-:::
+::::
 
 ### `names`
-:::description[`OneWayLendingVaultFactory.names(arg0: uint256) -> String[64]: view`]
+::::description[`OneWayLendingVaultFactory.names(arg0: uint256) -> String[64]: view`]
 
 
 Getter for the name of the vault at index `arg0`.
@@ -2196,4 +2196,4 @@ Out [2]:  'CRV-long'
 </Tabs>
 
 
-:::
+::::

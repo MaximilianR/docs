@@ -209,7 +209,7 @@ This calculation indicates that one Token is equivalent to 50 crvUSD.
 :::
 
 ### `price`
-:::description[`CryptoFromPoolsRate.price() -> uint256`]
+::::description[`CryptoFromPoolsRate.price() -> uint256`]
 
 
 Getter for the price of the collateral denominated against the borrowed token. E.g. a market with pufETH as collateral and crvUSD borrowable, the price will return the pufETH price with regard to crvUSD.
@@ -399,10 +399,10 @@ def _raw_stored_rate() -> (uint256, bool):
 </Tabs>
 
 
-:::
+::::
 
 ### `price_w`
-:::description[`CryptoFromPoolsRate.price_w() -> uint256`]
+::::description[`CryptoFromPoolsRate.price_w() -> uint256`]
 
 
 This function calculates and writes the price while updating `cached_rate` and `cached_timestamp`. It is invoked whenever the `_exchange` function is called within the AMM contract of the lending market.
@@ -578,7 +578,7 @@ def _stored_rate() -> (uint256, bool):
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -631,7 +631,7 @@ Based on the values of `rate` and `cached_rate`, specific calculations are requi
 
 
 ### `stored_rate`
-:::description[`CryptoFromPoolsRate.stored_rate() -> uint256`]
+::::description[`CryptoFromPoolsRate.stored_rate() -> uint256`]
 
 
 Getter for the stored rates fetched from a stableswap pool. 
@@ -718,10 +718,10 @@ def _raw_stored_rate() -> (uint256, bool):
 </Tabs>
 
 
-:::
+::::
 
 ### `cached_rate`
-:::description[`CryptoFromPoolsRate.cached_rate() -> uint256: view`]
+::::description[`CryptoFromPoolsRate.cached_rate() -> uint256: view`]
 
 
 Getter for the cached rate. This value is updated whenever the `price_w` method is called.
@@ -776,10 +776,10 @@ def _stored_rate_w() -> uint256:
 </Tabs>
 
 
-:::
+::::
 
 ### `cached_timestamp`
-:::description[`CryptoFromPoolsRate.cached_timestamp() -> uint256: view`]
+::::description[`CryptoFromPoolsRate.cached_timestamp() -> uint256: view`]
 
 
 Getter for the cached timestamp. This value is updated whenever the `price_w` method is called.
@@ -834,10 +834,10 @@ def _stored_rate_w() -> uint256:
 </Tabs>
 
 
-:::
+::::
 
 ### `USE_RATES`
-:::description[`CryptoFromPoolsRate.USE_RATES(arg0: uint256) -> bool: view`]
+::::description[`CryptoFromPoolsRate.USE_RATES(arg0: uint256) -> bool: view`]
 
 
 Getter method to check wether the pool at index `arg0` uses rates or not. Pool indices are fetched via [`POOLS`](#pools).
@@ -885,7 +885,7 @@ USE_RATES: public(immutable(DynArray[bool, MAX_POOLS]))
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -893,7 +893,7 @@ USE_RATES: public(immutable(DynArray[bool, MAX_POOLS]))
 ## Contract Info Methods
 
 ### `POOLS`
-:::description[`CryptoFromPoolsRate.POOLS(arg0: uint256) -> address: view`]
+::::description[`CryptoFromPoolsRate.POOLS(arg0: uint256) -> address: view`]
 
 
 Getter for the liquidity pools used in the oracle contract.
@@ -941,10 +941,10 @@ POOLS: public(immutable(DynArray[Pool, MAX_POOLS]))
 </Tabs>
 
 
-:::
+::::
 
 ### `POOL_COUNT`
-:::description[`CryptoFromPoolsRate.POOL_COUNT() -> uint256: view`]
+::::description[`CryptoFromPoolsRate.POOL_COUNT() -> uint256: view`]
 
 
 Getter for the total amount of pools used in the oracle contract.
@@ -985,10 +985,10 @@ POOL_COUNT: public(immutable(uint256))
 </Tabs>
 
 
-:::
+::::
 
 ### `BORROWED_IX`
-:::description[`CryptoFromPoolsRate.BORROWED_IX(arg0: uint256) -> uint256: view`]
+::::description[`CryptoFromPoolsRate.BORROWED_IX(arg0: uint256) -> uint256: view`]
 
 
 Getter for the index of the borrowed token in the chain together pools. If the oracle contract is for an asset that has a rate, this method will return the coin indices of the "base asset". E.g., for pufETH, this method will return the index of wstETH in the pools and later, when calculating the price of pufETH, the rates are applied.
@@ -1036,10 +1036,10 @@ BORROWED_IX: public(immutable(DynArray[uint256, MAX_POOLS]))
 </Tabs>
 
 
-:::
+::::
 
 ### `COLLATERAL_IX`
-:::description[`CryptoFromPoolsRate.COLLATERAL_IX(arg0: uint256) -> uint256: view`]
+::::description[`CryptoFromPoolsRate.COLLATERAL_IX(arg0: uint256) -> uint256: view`]
 
 
 Getter for the index of the collateral token within the pool.
@@ -1087,10 +1087,10 @@ COLLATERAL_IX: public(immutable(DynArray[uint256, MAX_POOLS]))
 </Tabs>
 
 
-:::
+::::
 
 ### `NO_ARGUMENT`
-:::description[`CryptoFromPoolsRate.NO_ARGUMENT(arg0: uin256) -> bool: view`]
+::::description[`CryptoFromPoolsRate.NO_ARGUMENT(arg0: uin256) -> bool: view`]
 
 
 Getter for the `NO_ARGUMENT` storage variable. This is an additional variable to ensure the correct price oracle is fetched from a pool.
@@ -1138,10 +1138,10 @@ NO_ARGUMENT: public(immutable(DynArray[bool, MAX_POOLS]))
 </Tabs>
 
 
-:::
+::::
 
 ### `AGG`
-:::description[`CryptoFromPoolsRate.AGG() -> address: view`]
+::::description[`CryptoFromPoolsRate.AGG() -> address: view`]
 
 
 :::info
@@ -1195,4 +1195,4 @@ AGG: public(immutable(StableAggregator))
 </Tabs>
 
 
-:::
+::::

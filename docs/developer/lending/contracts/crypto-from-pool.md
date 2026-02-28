@@ -133,7 +133,7 @@ collateral_ix = 2           # CRV
 ## Oracle Price
 
 ### `price`
-:::description[`CryptoFromPool.price() -> uint256`]
+::::description[`CryptoFromPool.price() -> uint256`]
 
 
 Getter function for the price. For example, in a lending market using `CRV` as collateral and `crvUSD` as the borrowable token, it returns the price of `CRV` relative to `crvUSD`. Conversely, in the inverse market scenario, it returns the price of `crvUSD` relative to `CRV`. This function is view-only and does not modify the state. For contracts applying the aggregated crvUSD price, it essentially multiplies the collateral price with the aggregated crvUSD price.
@@ -243,10 +243,10 @@ def _raw_price() -> uint256:
 </Tabs>
 
 
-:::
+::::
 
 ### `price_w`
-:::description[`CryptoFromPool.price_w() -> uint256:`]
+::::description[`CryptoFromPool.price_w() -> uint256:`]
 
 
 Function to return the price and update the state of the blockchain. This function is called whenever the `_exchange` function from the LLAMMA is called. For contracts applying the aggregated crvUSD price, it essentially multiplies the collateral price with the aggregated crvUSD price.
@@ -390,7 +390,7 @@ def _exchange(i: uint256, j: uint256, amount: uint256, minmax_amount: uint256, _
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -398,7 +398,7 @@ def _exchange(i: uint256, j: uint256, amount: uint256, minmax_amount: uint256, _
 ## Contract Info Methods
 
 ### `POOL`
-:::description[`CryptoFromPool.POOL() -> address: view`]
+::::description[`CryptoFromPool.POOL() -> address: view`]
 
 
 Getter for the liquidity pool the from where the oracle is used.
@@ -466,10 +466,10 @@ def __init__(
 </Tabs>
 
 
-:::
+::::
 
 ### `N_COINS`
-:::description[`CryptoFromPool.N_COINS() -> uint256: view`]
+::::description[`CryptoFromPool.N_COINS() -> uint256: view`]
 
 
 Getter for the total number of coins in the liquidity pool.
@@ -536,10 +536,10 @@ The following source code includes all changes up to commit hash [86cae3a](https
 </Tabs>
 
 
-:::
+::::
 
 ### `BORROWED_IX`
-:::description[`CryptoFromPool.BORROWED_IX() -> uint256: view`]
+::::description[`CryptoFromPool.BORROWED_IX() -> uint256: view`]
 
 
 Getter for the index of the borrowed coin in the liquidity pool from which the price oracle is taken from.
@@ -607,10 +607,10 @@ def __init__(
 </Tabs>
 
 
-:::
+::::
 
 ### `COLLATERAL_IX`
-:::description[`CryptoFromPool.COLLATERAL_IX() -> uint256: view`]
+::::description[`CryptoFromPool.COLLATERAL_IX() -> uint256: view`]
 
 
 Getter for the index of the collateral coin in the liquidity pool from which the price oracle is taken from.
@@ -678,10 +678,10 @@ def __init__(
 </Tabs>
 
 
-:::
+::::
 
 ### `NO_ARGUMENT`
-:::description[`CryptoFromPool.NO_ARGUMENT() -> bool: view`]
+::::description[`CryptoFromPool.NO_ARGUMENT() -> bool: view`]
 
 
 Getter for the `NO_ARGUMENT` storage variable. This is an additional variable to ensure the correct price oracle is fetched from a pool with more than two coins.
@@ -750,10 +750,10 @@ def __init__(
 </Tabs>
 
 
-:::
+::::
 
 ### `AGG`
-:::description[`CryptoFromPoolWAgg.AGG() -> address: view`]
+::::description[`CryptoFromPoolWAgg.AGG() -> address: view`]
 
 
 :::info
@@ -807,7 +807,7 @@ AGG: public(immutable(StableAggregator))
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -842,7 +842,7 @@ def _raw_price() -> uint256:
 
 
 ### `CHAINLINK_UPTIME_FEED`
-:::description[`CryptoFromPool.CHAINLINK_UPTIME_FEED() -> address: view`]
+::::description[`CryptoFromPool.CHAINLINK_UPTIME_FEED() -> address: view`]
 
 
 Getter for the `ChainlinkUptimeFeed` contract.
@@ -883,10 +883,10 @@ CHAINLINK_UPTIME_FEED: public(constant(address)) = 0xFdB631F5EE196F0ed6FAa767959
 </Tabs>
 
 
-:::
+::::
 
 ### `DOWNTIME_WAIT`
-:::description[`CryptoFromPool.DOWNTIME_WAIT() -> uint256: view`]
+::::description[`CryptoFromPool.DOWNTIME_WAIT() -> uint256: view`]
 
 
 Getter for the required time to wait after the sequencer was down.
@@ -927,4 +927,4 @@ DOWNTIME_WAIT: public(constant(uint256)) = 3988  # 866 * log(100) s
 </Tabs>
 
 
-:::
+::::

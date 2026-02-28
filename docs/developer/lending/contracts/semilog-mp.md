@@ -138,7 +138,7 @@ def set_rate(rate: uint256) -> uint256:
 </details>
 
 ### `rate`
-:::description[`SemiLogMonetaryPolicy.rate(_for: address = msg.sender) -> uint256`]
+::::description[`SemiLogMonetaryPolicy.rate(_for: address = msg.sender) -> uint256`]
 
 
 Getter for the borrow rate for a specific lending market.
@@ -199,10 +199,10 @@ Out [1]:  6113754953
 </Tabs>
 
 
-:::
+::::
 
 ### `future_rate`
-:::description[`SemiLogMonetaryPolicy.future_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256`]
+::::description[`SemiLogMonetaryPolicy.future_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256`]
 
 
 Function to calculate the future borrow rate for a lending market given a specific change of reserves and debt.
@@ -265,10 +265,10 @@ Out [1]:  7882992245
 </Tabs>
 
 
-:::
+::::
 
 ### `rate_write`
-:::description[`SemiLogMonetaryPolicy.rate_write(_for: address = msg.sender) -> uint256:`]
+::::description[`SemiLogMonetaryPolicy.rate_write(_for: address = msg.sender) -> uint256:`]
 
 
 Function to update the rate of a lending market.
@@ -324,7 +324,7 @@ Out [1]:  6113754953
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -346,7 +346,7 @@ Rates within the MonetaryPolicy contract can only be **changed by the `admin` of
 
 
 ### `set_rates`
-:::description[`SemiLogMonetaryPolicy.set_rates(min_rate: uint256, max_rate: uint256)`]
+::::description[`SemiLogMonetaryPolicy.set_rates(min_rate: uint256, max_rate: uint256)`]
 
 
 :::guard[Guarded Methods]
@@ -429,10 +429,10 @@ Out [3]:  31709791
 </Tabs>
 
 
-:::
+::::
 
 ### `min_rate`
-:::description[`SemiLogMonetaryPolicy.min_rate() -> uint256: view`]
+::::description[`SemiLogMonetaryPolicy.min_rate() -> uint256: view`]
 
 
 Getter for the current minimum borrow rate. This value is set to the input given for `min_default_borrow_rate` when [creating a new market](./oneway-factory.md#creating-lending-markets). The rate is charged when utilization is 0 and can be changed by the admin of the lending factory.
@@ -483,10 +483,10 @@ Out [1]:  158548959
 </Tabs>
 
 
-:::
+::::
 
 ### `max_rate`
-:::description[`SemiLogMonetaryPolicy.max_rate() -> uint256: view`]
+::::description[`SemiLogMonetaryPolicy.max_rate() -> uint256: view`]
 
 
 Getter for the current maximum borrow rate. This value is set to the input given for `max_default_borrow_rate` when [creating a new market](./oneway-factory.md#creating-lending-markets). The rate is charged when utilization is 1 and can be changed by the admin of the lending factory.
@@ -537,10 +537,10 @@ Out [1]:  15854895991
 </Tabs>
 
 
-:::
+::::
 
 ### `log_min_rate`
-:::description[`SemiLogMonetaryPolicy.log_min_rate() -> int256: view`]
+::::description[`SemiLogMonetaryPolicy.log_min_rate() -> int256: view`]
 
 
 Getter for the logarithm ln() function of `min_rate`, based on log2.
@@ -625,10 +625,10 @@ Out [1]:  -22564957680717876419
 </Tabs>
 
 
-:::
+::::
 
 ### `log_max_rate`
-:::description[`SemiLogMonetaryPolicy.log_max_rate() -> int256: view`]
+::::description[`SemiLogMonetaryPolicy.log_max_rate() -> int256: view`]
 
 
 Getter for the logarithm ln() function of `max_rate`, based on log2.
@@ -713,10 +713,10 @@ Out [1]:  -17959787488990232781
 </Tabs>
 
 
-:::
+::::
 
 ### `MIN_RATE`
-:::description[`SemiLogMonetaryPolicy.MIN_RATE() -> uint256: view`]
+::::description[`SemiLogMonetaryPolicy.MIN_RATE() -> uint256: view`]
 
 
 Getter for the lowest possible rate for the MonetaryPolicy. When setting new rates via `set_rates()`, `MIN_RATE` is the lowest possible value. This variable is a constant and therefore cannot be changed.
@@ -755,10 +755,10 @@ Out [1]:  31709791
 </Tabs>
 
 
-:::
+::::
 
 ### `MAX_RATE`
-:::description[`SemiLogMonetaryPolicy.MAX_RATE() -> uint256: view`]
+::::description[`SemiLogMonetaryPolicy.MAX_RATE() -> uint256: view`]
 
 
 Getter for the highest possible rate for the MonetaryPolicy. When setting new rates via `set_rates()`, `MAX_RATE` is the highest possible value. This variable is a constant and therefore cannot be changed.
@@ -797,7 +797,7 @@ Out [1]:  317097919837
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -805,7 +805,7 @@ Out [1]:  317097919837
 ## Contract Info Methods
 
 ### `BORROWED_TOKEN`
-:::description[`SemiLogMonetaryPolicy.BORROWED_TOKEN() -> address: view`]
+::::description[`SemiLogMonetaryPolicy.BORROWED_TOKEN() -> address: view`]
 
 
 Getter for the borrowed token. This is a immutable variable and is set at deployment (`__init__()`).
@@ -856,10 +856,10 @@ Out [1]:  '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
 </Tabs>
 
 
-:::
+::::
 
 ### `FACTORY`
-:::description[`SemiLogMonetaryPolicy.FACTORY() -> address: view`]
+::::description[`SemiLogMonetaryPolicy.FACTORY() -> address: view`]
 
 
 Getter for the Factory contract. This is a immutable variable and is set at deployment (`__init__()`).
@@ -909,4 +909,4 @@ Out [1]:  '0xc67a44D958eeF0ff316C3a7c9E14FB96f6DedAA3'
 </Tabs>
 
 
-:::
+::::

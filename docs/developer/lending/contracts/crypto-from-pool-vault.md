@@ -184,7 +184,7 @@ def _pps_w() -> uint256:
 </details>
 
 ### `price`
-:::description[`CryptoFromPoolVault.price() -> uint256`]
+::::description[`CryptoFromPoolVault.price() -> uint256`]
 
 
 Getter for the price of the collateral asset denominated against the borrowed token and applying the conversion rate form a vault.
@@ -335,10 +335,10 @@ def _raw_price() -> uint256:
 </Tabs>
 
 
-:::
+::::
 
 ### `price_w`
-:::description[`CryptoFromPoolVault.price_w() -> uint256`]
+::::description[`CryptoFromPoolVault.price_w() -> uint256`]
 
 
 This function calculates and writes the price while updating `cached_rate` and `cached_timestamp`. It method is called whenever the `_exchange` function is called within the AMM contract of the lending market.
@@ -489,7 +489,7 @@ def _raw_price() -> uint256:
 </Tabs>
 
 
-:::
+::::
 
 ---
 
@@ -497,7 +497,7 @@ def _raw_price() -> uint256:
 ## Contract Info Methods
 
 ### `VAULT`
-:::description[`CryptoFromPoolVault.VAULT() -> address: view`]
+::::description[`CryptoFromPoolVault.VAULT() -> address: view`]
 
 
 Getter for the vault contract from which the redemption rate (`convertToAssets` or similar functions) is fetched. This value is immutable and set at contract initialization.
@@ -551,10 +551,10 @@ VAULT: public(immutable(Vault))
 </Tabs>
 
 
-:::
+::::
 
 ### `POOL`
-:::description[`CryptoFromPoolVault.POOL() -> address: view`]
+::::description[`CryptoFromPoolVault.POOL() -> address: view`]
 
 
 Getter for the liquidity pool used to fetch the `price_oracle`.
@@ -608,10 +608,10 @@ POOL: public(immutable(Pool))
 </Tabs>
 
 
-:::
+::::
 
 ### `BORROWED_IX`
-:::description[`CryptoFromPoolVault.BORROWED_IX() -> uint256: view`]
+::::description[`CryptoFromPoolVault.BORROWED_IX() -> uint256: view`]
 
 
 Getter for the coin index of the borrowed token within the pool from which `price_oracle` is fetched. This value is immutable and set at contract initialization.
@@ -667,10 +667,10 @@ BORROWED_IX: public(immutable(uint256))
 </Tabs>
 
 
-:::
+::::
 
 ### `COLLATERAL_IX`
-:::description[`CryptoFromPoolVault.COLLATERAL_IX() -> uint256: view`]
+::::description[`CryptoFromPoolVault.COLLATERAL_IX() -> uint256: view`]
 
 
 Getter for the coin index of the collateral token within the pool from which `price_oracle` is fetched. This value is immutable and set at contract initialization.
@@ -726,10 +726,10 @@ COLLATERAL_IX: public(immutable(uint256))
 </Tabs>
 
 
-:::
+::::
 
 ### `N_COINS`
-:::description[`CryptoFromPoolVault.N_COINS() -> uint256: view`]
+::::description[`CryptoFromPoolVault.N_COINS() -> uint256: view`]
 
 
 Getter for the number of coins in `POOL`.
@@ -783,10 +783,10 @@ N_COINS: public(immutable(uint256))
 </Tabs>
 
 
-:::
+::::
 
 ### `NO_ARGUMENT`
-:::description[`CryptoFromPoolVault.NO_ARGUMENT() -> bool: view`]
+::::description[`CryptoFromPoolVault.NO_ARGUMENT() -> bool: view`]
 
 
 Getter for the `NO_ARGUMENT` storage variable. This is an additional variable to ensure the correct price oracle is fetched from a `POOL`. This value is immutable and set at contract initialization.
@@ -828,10 +828,10 @@ NO_ARGUMENT: public(immutable(bool))
 </Tabs>
 
 
-:::
+::::
 
 ### `AGG`
-:::description[`CryptoFromPoolVaultWAgg.AGG() -> address: view`]
+::::description[`CryptoFromPoolVaultWAgg.AGG() -> address: view`]
 
 
 :::info
@@ -885,4 +885,4 @@ AGG: public(immutable(StableAggregator))
 </Tabs>
 
 
-:::
+::::
