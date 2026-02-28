@@ -154,4 +154,59 @@ A simple Google Colab notebook that simulates the commit + apply pattern can be 
 
 ## `snekmate`
 
-> *sneks coming soon* 🐍🐍🐍
+[Snekmate](https://github.com/pcaversaccio/snekmate) is a collection of production-grade, secure Vyper smart contract building blocks maintained by [pcaversaccio](https://github.com/pcaversaccio). It provides reusable modules for common patterns including ownership management, token standards (ERC-20, ERC-721, ERC-1155, ERC-4626), and various utility functions.
+
+Snekmate's **authentication modules** offer ready-to-use implementations of the ownership patterns described above:
+
+| Module | Description |
+|---|---|
+| `ownable` | Single-step ownership transfer via `transfer_ownership` |
+| `ownable_2step` | Two-step ownership transfer matching Curve's **commit + accept** pattern |
+| `access_control` | Multi-role-based access control with admin-managed role assignments |
+
+### `ownable_2step`
+
+The `ownable_2step` module implements a two-step ownership transfer mechanism functionally equivalent to Curve's commit + accept pattern. The current owner initiates a transfer with `transfer_ownership`, setting a `pending_owner`. The pending owner must then call `accept_ownership` to finalize the transfer.
+
+<Dropdown title="Example usage">
+
+
+```vyper
+from snekmate.auth import ownable_2step as ow
+
+initializes: ow
+
+@deploy
+def __init__():
+    ow.__init__()
+
+@external
+def protected_function():
+    ow._check_owner()
+    # only the owner can execute this
+    ...
+```
+
+
+</Dropdown>
+
+### Installation
+
+Snekmate can be installed via multiple package managers:
+
+```bash
+# PyPI
+pip install snekmate
+
+# Foundry
+forge install pcaversaccio/snekmate
+
+# npm / yarn / pnpm
+npm install --save-dev snekmate
+```
+
+:::info
+
+For full documentation, module references, and examples, see the [**snekmate GitHub repository**](https://github.com/pcaversaccio/snekmate).
+
+:::
