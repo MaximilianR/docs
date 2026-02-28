@@ -2,7 +2,7 @@
 
 The FastBridgeL2 contract serves as the Layer 2 coordinator for the FastBridge system, handling the initiation of both native and fast bridge transactions. This contract is deployed on each supported L2 network (Arbitrum, Optimism, Fraxtal) and manages the user-facing interface for bridging crvUSD tokens to Ethereum mainnet.
 
-The contract implements a dual-bridge mechanism that simultaneously initiates both the slow native bridge and the fast LayerZero messaging system. It enforces daily limits, minimum amounts, and manages native token fees to ensure the system operates efficiently while maintaining security and economic sustainability.
+The contract implements a dual-bridge mechanism that simultaneously initiates both the slow native bridge and the fast LayerZero messaging system. It enforces rate limits per 42-hour interval, minimum amounts, and manages native token fees to ensure the system operates efficiently while maintaining security and economic sustainability.
 
 :::vyper[`FastBridgeL2.vy`]
 
@@ -21,7 +21,7 @@ The FastBridgeL2 contract provides essential functions for initiating bridge tra
 ### `bridge`
 ::::description[`FastBridgeL2.bridge(_token: IERC20, _to: address, _amount: uint256, _min_amount: uint256=0) -> uint256`]
 
-Function to initiate a fast bridge transaction for crvUSD tokens from L2 to mainnet. This function handles both the native bridge (slow) and fast bridge (immediate) mechanisms. Users must provide native tokens to cover bridge and messaging fees. The function enforces daily limits and minimum amounts.
+Function to initiate a fast bridge transaction for crvUSD tokens from L2 to mainnet. This function handles both the native bridge (slow) and fast bridge (immediate) mechanisms. Users must provide native tokens to cover bridge and messaging fees. The function enforces rate limits per 42-hour interval and minimum amounts.
 
 | Input      | Type      | Description |
 | ---------- | --------- | ------------ |
@@ -42,7 +42,7 @@ interface IMessenger:
 CRVUSD: public(immutable(IERC20))
 VAULT: public(immutable(address))
 
-INTERVAL: constant(uint256) = 86400  # 1 day
+INTERVAL: constant(uint256) = 86400 * 7 // 4  # 42 hours
 min_amount: public(uint256)  # Minimum amount to initiate bridge. Might be costy to claim on Ethereum
 limit: public(uint256)  # Maximum amount to bridge in an INTERVAL, so there's no queue to resolve to claim on Ethereum
 bridged: public(HashMap[uint256, uint256])  # Amounts of bridge coins per INTERVAL
@@ -101,7 +101,7 @@ def bridge(_token: IERC20, _to: address, _amount: uint256, _min_amount: uint256=
 ### `allowed_to_bridge`
 ::::description[`FastBridgeL2.allowed_to_bridge(_ts: uint256=block.timestamp) -> (uint256, uint256)`]
 
-Checks how much crvUSD can be bridged at a specific timestamp, considering daily limits and minimum requirements. Returns both the minimum and maximum amounts that can be bridged in the current interval.
+Checks how much crvUSD can be bridged at a specific timestamp, considering the rate limit and minimum requirements. Returns both the minimum and maximum amounts that can be bridged in the current 42-hour interval.
 
 | Input      | Type      | Description |
 | ---------- | --------- | ------------ |
@@ -112,7 +112,7 @@ Returns: A tuple of (minimum_amount, maximum_amount) that can be bridged (`(uint
 <SourceCode>
 
 ```vyper
-INTERVAL: constant(uint256) = 86400  # 1 day
+INTERVAL: constant(uint256) = 86400 * 7 // 4  # 42 hours
 min_amount: public(uint256)  # Minimum amount to initiate bridge. Might be costly to claim on Ethereum
 limit: public(uint256)  # Maximum amount to bridge in an INTERVAL, so there's no queue to resolve to claim on Ethereum
 bridged: public(HashMap[uint256, uint256])  # Amounts of bridge coins per INTERVAL
@@ -228,9 +228,9 @@ min_amount: public(uint256)  # Minimum amount to initiate bridge. Might be costl
 ### `limit`
 ::::description[`FastBridgeL2.limit() -> uint256`]
 
-The maximum amount of crvUSD that can be bridged within a 24-hour interval. This daily limit prevents overwhelming the Ethereum claim queue and ensures smooth processing of bridge transactions. Can be changed using the [`set_limit`](#set_limit) function.
+The maximum amount of crvUSD that can be bridged within a 42-hour interval. This limit prevents overwhelming the Ethereum claim queue and ensures smooth processing of bridge transactions. Can be changed using the [`set_limit`](#set_limit) function.
 
-Returns: Maximum crvUSD amount that can be bridged per day (`uint256`).
+Returns: Maximum crvUSD amount that can be bridged per interval (`uint256`).
 
 <SourceCode>
 
@@ -246,11 +246,11 @@ limit: public(uint256)  # Maximum amount to bridge in an INTERVAL, so there's no
 ### `bridged`
 ::::description[`FastBridgeL2.bridged(arg0: uint256) -> uint256`]
 
-Tracks the total amount of crvUSD that has been bridged in each 24-hour interval. The key is the timestamp divided by the interval (86400 seconds), and the value is the cumulative amount bridged.
+Tracks the total amount of crvUSD that has been bridged in each 42-hour interval. The key is the timestamp divided by the interval (151,200 seconds), and the value is the cumulative amount bridged.
 
 | Input      | Type      | Description |
 | ---------- | --------- | ------------ |
-| `arg0` | `uint256` | Time interval key (timestamp // 86400) |
+| `arg0` | `uint256` | Time interval key (timestamp // 151200) |
 
 Returns: Total crvUSD amount bridged in the specified time interval (`uint256`).
 
@@ -401,11 +401,11 @@ This function is only callable by the `owner` of the contract.
 
 :::
 
-Updates the daily limit for crvUSD bridging. Only the contract owner can call this function. This limit prevents overwhelming the Ethereum claim queue and ensures smooth processing of bridge transactions.
+Updates the rate limit for crvUSD bridging per 42-hour interval. Only the contract owner can call this function. This limit prevents overwhelming the Ethereum claim queue and ensures smooth processing of bridge transactions.
 
 | Input      | Type      | Description |
 | ---------- | --------- | ------------ |
-| `_limit` | `uint256` | New daily limit for crvUSD bridging |
+| `_limit` | `uint256` | New limit for crvUSD bridging per interval |
 
 Returns: None.
 

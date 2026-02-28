@@ -13,13 +13,13 @@ FastBridge implements a dual-bridge mechanism that combines:
 
 ---
 
-## **System Components**
+## System Components
 
 The FastBridge system consists of several key components that work together to enable fast cross-chain transfers. These components are distributed across Layer 2 networks and Ethereum mainnet, each serving a specific role in the bridging process.
 
 - L2 Networks (Arbitrum, Optimism, Fraxtal)
 
-    The `FastBridgeL2.vy` contract serves as the primary coordinator on each L2 network. It initiates both native and fast bridge transactions while enforcing daily limits and minimum amounts. The contract manages native token fees for bridge operations and tracks bridged amounts per 24-hour interval.
+    The `FastBridgeL2.vy` contract serves as the primary coordinator on each L2 network. It initiates both native and fast bridge transactions while enforcing rate limits and minimum amounts. The contract manages native token fees for bridge operations and tracks bridged amounts per 42-hour interval.
 
     The `L2MessengerLZ.vy` contract handles LayerZero messaging from L2 to Ethereum mainnet. It encodes bridge requests and sends them through the LayerZero network to the corresponding messenger contract on Ethereum mainnet.
 
@@ -31,7 +31,7 @@ The FastBridge system consists of several key components that work together to e
 
 ---
 
-## **Deployments**
+## Deployments
 
 Live monitoring of FastBridge activity is available at the [FastBridge Monitor](https://curvefi.github.io/fast-bridge/).
 
@@ -53,7 +53,7 @@ Live monitoring of FastBridge activity is available at the [FastBridge Monitor](
 
 ---
 
-## **How It Works**
+## How It Works
 
 The FastBridge process involves a carefully orchestrated sequence of events that ensures both immediate access to funds and long-term security. The system operates through four main phases that work in parallel to provide users with the best possible experience.
 
@@ -75,7 +75,7 @@ The FastBridge process involves a carefully orchestrated sequence of events that
 
 ---
 
-## **Security Model**
+## Security Model
 
 The FastBridge system implements a comprehensive security model that addresses both technical and economic risks. The security architecture is built around multiple layers of verification, emergency controls, and risk management mechanisms that ensure the system's integrity and user fund safety.
 
@@ -87,7 +87,7 @@ Messages are proven by 2/2 DVNs (Decentralized Verifier Networks). The LayerZero
 
 The system includes a DAO Emergency Stop that can halt any mints immediately, along with kill switches that can disable specific minters or all operations. Role-based access control provides different roles for different administrative functions.
 
-## **Debt Ceilings and Limits**
+## Debt Ceilings and Limits
 
 The FastBridge system implements multiple layers of limits to manage risk. These limits control how much crvUSD can be bridged and when.
 
@@ -95,17 +95,17 @@ Risk management is a critical aspect of the FastBridge system, as it involves pr
 
 ---
 
-**Daily Bridge Limits**
+**Bridge Limits**
 
-Each L2 network has a daily limit on how much crvUSD can be bridged within a 24-hour period:
+Each L2 network has a rate limit on how much crvUSD can be bridged within a 42-hour interval:
 
 | Limit Type | Description | Purpose |
 |------------|-------------|---------|
-| **Daily Limit** | Maximum crvUSD that can be bridged per 24-hour interval | Prevents overwhelming the Ethereum claim queue |
-| **Interval Tracking** | 24-hour periods (86400 seconds) | Ensures smooth processing of bridge transactions |
-| **Reset Mechanism** | Limits reset every 24 hours | Allows continuous bridging while maintaining caps |
+| **Interval Limit** | Maximum crvUSD that can be bridged per 42-hour interval | Prevents overwhelming the Ethereum claim queue |
+| **Interval Tracking** | 42-hour periods (151,200 seconds) | Ensures smooth processing of bridge transactions |
+| **Reset Mechanism** | Limits reset every 42 hours | Allows continuous bridging while maintaining caps |
 
-Limits are enforced by the `FastBridgeL2` contract, where each bridge transaction reduces the available daily limit. Limits are tracked using `block.timestamp // INTERVAL` where `INTERVAL = 86400`, and users can check available amounts using `allowed_to_bridge()`.
+Limits are enforced by the `FastBridgeL2` contract, where each bridge transaction reduces the available limit for the current interval. Limits are tracked using `block.timestamp // INTERVAL` where `INTERVAL = 86400 * 7 // 4` (151,200 seconds), and users can check available amounts using `allowed_to_bridge()`.
 
 **Minimum Bridge Amounts**
 
@@ -115,15 +115,15 @@ The minimum amount can be adjusted by the DAO.
 
 ---
 
-## **Emergency Controls**
+## Emergency Controls
 
-In case of emergencies, the system includes additional controls. The Kill Switch can stop all minting operations (KILLER_ROLE), Individual Kills can stop specific minters (KILLER_ROLE), Limit Adjustment can modify daily limits (DEFAULT_ADMIN_ROLE), and Debt Ceiling Updates can modify debt ceilings (Governance).
+In case of emergencies, the system includes additional controls. The Kill Switch can stop all minting operations (KILLER_ROLE), Individual Kills can stop specific minters (KILLER_ROLE), Limit Adjustment can modify interval limits (DEFAULT_ADMIN_ROLE), and Debt Ceiling Updates can modify debt ceilings (Governance).
 
 ---
 
-## **Fee Structure**
+## Fee Structure
 
-The FastBridge system implements a carefully designed fee structure that balances user accessibility with operational sustainability. Initially, there will be fee-free transfers for the first 1-4 weeks to encourage adoption and gather usage data. After this initial period, fees are set to cover the keeper operational expenses and ensure the system's long-term viability.
+The FastBridge system implements a fee structure that balances user accessibility with operational sustainability. The vault fee is currently set to zero but is adjustable by the admin to cover operational expenses if needed.
 
 - Native token fees on L2: Callers of `FastBridgeL2.bridge()` must provide `msg.value` covering both the native bridge fee and the LayerZero messaging fee. Any excess `msg.value` is refunded to the caller.
 - Vault fee on mainnet: The vault may take a fee (with 10^18 precision) from amounts released via fast bridge. The fee is sent to `fee_receiver` and is adjustable by admin within a hard cap of 100%.

@@ -23,12 +23,14 @@ The FastBridgeVault provides essential functions for managing the fast bridge pr
 
 Releases pre-minted crvUSD from the vault's balance to the receiver. For callers with `MINTER_ROLE`, the function can additionally increase the receiver's claimable balance by `_amount`. The operation applies fees and respects kill switches for emergency situations. The vault's fast releases are economically backed by the incoming native-bridge transfers and debt-ceiling rug mechanism; it does not increase total crvUSD supply beyond what is backed by the slow bridge path.
 
+If the vault does not have enough crvUSD at the time of the call (e.g. the native bridge transfer has not yet arrived), the receiver's pending balance is recorded in `balanceOf[_receiver]`. The receiver (or anyone) can later call `mint(_receiver, 0)` to claim the pending amount once the vault has been replenished.
+
 | Input      | Type      | Description |
 | ---------- | --------- | ------------ |
 | `_receiver` | `address` | Receiver of crvUSD tokens |
-| `_amount` | `uint256` | Amount of crvUSD to mint (0 if not minter) |
+| `_amount` | `uint256` | Amount of crvUSD to mint (0 if not minter); use `0` to claim a pending balance |
 
-Returns: Amount of crvUSD actually minted to the receiver (`uint256`).
+Returns: Amount of crvUSD actually transferred to the receiver (`uint256`).
 
 <SourceCode>
 
