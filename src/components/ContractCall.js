@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 const RPC_URL = 'https://eth.llamarpc.com';
 const MULTICALL3 = '0xcA11bde05977b3631167028862bE2a173976CA11';
 const MULTICALL3_ABI = [
-  'function aggregate3((address target, bool allowFailure, bytes callData)[] calls) payable returns ((bool success, bytes returnData)[])',
+  'function aggregate3((address target, bool allowFailure, bytes callData)[] calls) view returns ((bool success, bytes returnData)[])',
 ];
 
 // --- Module-level batch manager ---
@@ -105,7 +106,7 @@ const buttonStyle = {
   marginTop: '4px',
 };
 
-export default function ContractCall({ address, abi, method, args = [], labels = [], contractName = 'Contract' }) {
+function ContractCallInner({ address, abi, method, args = [], labels = [], contractName = 'Contract' }) {
   const hasInputs = labels.length > 0;
   const [inputValues, setInputValues] = useState(args.map(String));
   const [currentArgs, setCurrentArgs] = useState(args.map(String));
@@ -219,5 +220,13 @@ export default function ContractCall({ address, abi, method, args = [], labels =
         </div>
       )}
     </div>
+  );
+}
+
+export default function ContractCall(props) {
+  return (
+    <BrowserOnly fallback={<div />}>
+      {() => <ContractCallInner {...props} />}
+    </BrowserOnly>
   );
 }
