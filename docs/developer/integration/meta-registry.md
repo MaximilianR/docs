@@ -93,7 +93,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ---
 
 
-## **Finding Pools**
+## Finding Pools
 
 Because the deployment of liquidity pools is permissionless, a significant number of pools are being deployed. Managing this vast array of pools can be challenging, and relying solely on a UI may not be the most effective and reliable approach. The `MetaRegistry` serves as an ideal tool for querying specific pools directly on-chain.
 
@@ -307,7 +307,7 @@ In this example, we search for a single pool at index `i` which includes `crvUSD
 ---
 
 
-## **Pool Specific Informations**
+## Pool Specific Informations
 
 All relevant pool and coin data for liquidity pools are stored in the `MetaRegistry`. This registry includes various functions that provide a wide range of data, such as pool balances, fees, decimals, and more.
 
@@ -2370,7 +2370,7 @@ The first example checks the index of `DAI` and `USDC` within the 3pool. The sec
 ---
 
 
-## **Handlers and Registries**
+## Handlers and Registries
 
 The `MetaRegistry` makes use of `Handlers`, which are essentially wrappers around other contracts (mostly Pool Factories) to ensure ABI compatibility with the contract itself.
 
@@ -2646,7 +2646,7 @@ def __init__(_address_provider: address):
 ---
 
 
-## **Adding and Updating Registries**
+## Adding and Updating Registries
 
 New registries can be added by the `owner` of the contract using the [`add_registry_handler`](#add_registry_handler) function. Existing ones can be updated using the [`update_registry_handler`](#update_registry_handler) function.
 

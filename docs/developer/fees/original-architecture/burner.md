@@ -1,7 +1,7 @@
 
 # Burner
 
-## **Overview**
+## Overview
 
 Burning is handled on a per-coin basis. The process is initiated by calling the `PoolProxy.burn` or `PoolProxy.burn_many` functions. Calling to burn a coin transfers that coin into the burner and then calls the `burn` function on the burner.
 
@@ -66,21 +66,21 @@ Source code for burners is available on [Github](https://github.com/curvefi/curv
 |`crvUSD Burner`| `Withdraws LP tokens from crvUSD pools and exchanges crvUSD`|[0xA6a0103f8F185786143f3EFe3Ddf268d8E070813](https://etherscan.io/address/0xA6a0103f8F185786143f3EFe3Ddf268d8E070813#code)|
 
 
-## **Burners**
+## Burners
 
-### **ABurner / CBurner / YBurner**`ABurner`, `CBurner` and `YBurner` are collectively known as “lending burners”. They unwrap lending tokens into the underlying asset and transfer those assets onward into the underlying burner.
+### ABurner / CBurner / YBurner`ABurner`, `CBurner` and `YBurner` are collectively known as “lending burners”. They unwrap lending tokens into the underlying asset and transfer those assets onward into the underlying burner.
 
 *There is no configuration required for this burner.*
 
-### **CryptoSwap Burner**
+### CryptoSwap Burner
 
 The CryptoSwapBurner is used to burn fees from Crypto Pools.
 
-### **StableSwap Burner**
+### StableSwap Burner
 
 Swaps an asset into another asset using a Stable pool and forwards to another burner.
 
-### **LP Burner**
+### LP Burner
 
 The LP Burner handles non-3CRV LP tokens. This burner is primarily used for [FRAXBP LP tokens](https://etherscan.io/address/0x3175df0976dfa876431c2e9ee6bc45b65d3473cc#code) which are converted to USDC and then sent to 0xECB for a further burn process.
 
@@ -229,14 +229,14 @@ def set_swap_data(_lp_token: address, _coin: address, _burner: address) -> bool:
 
 ::::
 
-### **MetaBurner**
+### MetaBurner
 
 The MetaBurner converts Metapool-paried coins to 3CRV and transfers to the FeeDistributor. It uses the registry’s **`exchange_with_best_rate`**and transfers 3CRV directly to the fee distributor.
 
 *There is no configuration required for this burner.*
 
 
-### **SynthBurner**
+### SynthBurner
 
 Swaps non-USD denominated assets for synths, converts synths to sUSD and transfers to `UnderlyingBurner`.
 The synth burner is used to convert non-USD denominated assets into sUSD. This is accomplished via synth conversion, the same mechanism used in cross-asset swaps.
@@ -353,12 +353,12 @@ def add_synths(_synths: address[10]) -> bool:
 
 ::::
 
-### **Wrapped stETH Burner**
+### Wrapped stETH Burner
 
 This burner unwraps wstETH to stETH and sends it back to 0xECB.
 
 
-### **UnderlyingBurner**
+### UnderlyingBurner
 
 The underlying burner handles assets that can be directly swapped to USDC and deposits DAI/USDC/USDT into [3pool](https://curve.fi/#/ethereum/pools/3pool/deposit/) to obtain 3CRV. This is the **final step of the burn process**for many assets that require multiple intermediate swaps.
 
@@ -421,7 +421,7 @@ This is the final function to be called in the burn process, after all other ste
 
 ::::
 
-### **Stable Deposit Burner**
+### Stable Deposit Burner
 
 This burner converts DAI, USDC and USDT into 3CRV by adding liquidity to the 3pool and then transfers them to the FeeDistributor.
 
@@ -476,7 +476,7 @@ def _burn(_amounts: uint256[N_COINS]):
 
 ::::
 
-### **Metapool Burner**
+### Metapool Burner
 
 This is not a burner contract in itself. Some metapools transfer *coin 0* of the admin fees to the Factory, where it is swapped for *coin 1* (e.g., 3CRV), which is then sent directly to the FeeDistributor.
 
@@ -526,7 +526,7 @@ def withdraw_admin_fees():
 
 </SourceCode>
 
-## **Configuring Fee Bruners****Burners are configured within the 0xECB contract.**### `burners`
+## Configuring Fee Bruners**Burners are configured within the 0xECB contract.**### `burners`
 ::::description[`PoolProxy.burners(coin: address) -> address: view`]
 
 

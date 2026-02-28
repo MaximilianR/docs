@@ -12,7 +12,7 @@ The oracle contracts are deployed on various chains at: *soon*
 ---
 
 
-## **Price Methods**
+## Price Methods
 
 The contract has three different functions for the scrvUSD share price (or its inverse when setting `_i = 1`) using different approximations:
 
@@ -614,7 +614,7 @@ This example returns the block number of the most recent update.
 ---
 
 
-## **Adjustable Parameters**
+## Adjustable Parameters
 
 The oracle has the following adjustable parameters:
 
@@ -976,6 +976,6 @@ This example updates the `max_v2_duration` value.
 ---
 
 
-## **Snekmate Access Control**
+## Snekmate Access Control
 
 The contract makes use of the `access_control.vy` module for access control. More [here](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/access_control.vy).

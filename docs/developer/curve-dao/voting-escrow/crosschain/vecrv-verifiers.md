@@ -4,7 +4,7 @@ L2 verifier contracts are used to securely synchronize veCRV and related state f
 
 ---
 
-## **veCRV Verifier**
+## veCRV Verifier
 
 The `VecrvVerifier` contract is used to verify and update the total supply and individual balances of veCRV on L2s by validating state proofs from L1. It enables trust-minimized synchronization of veCRV state by accepting Merkle proofs and block data, and updating the canonical veCRV oracle with supply and balance changes. This contract is typically called by relayers or bridges to reflect L1 veCRV state on L2.
 
@@ -390,7 +390,7 @@ function verifyTotalByStateRoot(
 ---
 
 
-## **Delegation Verifier**
+## Delegation Verifier
 
 The `DelegationVerifier` contract is used to verify and update veCRV delegation state on L2s by validating state proofs from L1. It enables trust-minimized synchronization of delegated veCRV balances by accepting Merkle proofs and block data, and updating the canonical veCRV oracle with delegation changes. This contract is typically called by relayers or bridges to reflect L1 delegation state on L2.
 

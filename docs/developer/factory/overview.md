@@ -22,7 +22,7 @@ Each Factory contract includes **built-in functions designed to populate the [Me
 ---
 
 
-## **Available Factories**
+## Available Factories
 
 Curve Factories facilitate the deployment of pools containing almost any combination of assets, whether they are stable or volatile, rebasing or not. Note that some variations (e.g., cryptoswap pool) might not yet be supported on sidechains or Layer 2 networks.
 
@@ -55,7 +55,7 @@ Factories for older stableswap, twocrypto, or tricrypto pools.
 ---
 
 
-## **Implementations**
+## Implementations
 
 Liquidity pools, gauges, and LP token contracts are created based on their respective implementation contracts within the Factory. Newer implementations (NG pools) integrate both the liquidity pool and LP token, while older implementations require separate contracts.
 
@@ -76,7 +76,7 @@ Liquidity pools, gauges, and LP token contracts are created based on their respe
 ---
 
 
-## **Fee Receiver**
+## Fee Receiver
 
 Users interacting with liquidity pools, such as for exchanging tokens, are required to pay fees. Each factory contains a universal `fee_receiver` variable, where all fees from pools deployed through that factory are collected. This address can usually be changed by the `owner` of the factory via a `set_fee_receiver` function, which is typically the Curve DAO. Therefore, to change the fee receiver address, an approved on-chain vote must pass.
 
@@ -159,7 +159,7 @@ def set_fee_receiver(_fee_receiver: address):
 ---
 
 
-## **Contract Ownership**
+## Contract Ownership
 
 Each Factory is controlled by an `admin`, which is typically set to the DAO; thus, any changes to the contract require approval by the Curve DAO.
 

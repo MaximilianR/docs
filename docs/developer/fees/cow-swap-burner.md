@@ -26,7 +26,7 @@ The old system used various kinds of burners with hardcoded routes, which often 
 ---
 
 
-## **Conditional Orders**
+## Conditional Orders
 
 Conditional CowSwap orders are automatically created for each token to be burned using the `burn` function. This function is not directly externally callable by users through this contract; instead, it is called when the `collect` function within the `FeeCollector` contract is invoked. Additionally, there is a caller fee to incentivize this contract call.
 
@@ -606,7 +606,7 @@ def set_target_threshold(_target_threshold: uint256):
 ---
 
 
-## **Pushing and Recovering Coins**
+## Pushing and Recovering Coins
 
 The `push_target` function is used to transfer any leftover target coins from the burner to the `FeeCollector`.
 
@@ -696,7 +696,7 @@ def recover(_coins: DynArray[ERC20, MAX_COINS_LEN]):
 ---
 
 
-## **Valid Interface a la ERC-165**
+## Valid Interface a la ERC-165
 
 In order for the burner contract to be fully compatible with the `FeeCollector`, a specific interface needs to hold up as per [ERC-165](https://eips.ethereum.org/EIPS/eip-165):
 
@@ -777,7 +777,7 @@ def supportsInterface(_interface_id: bytes4) -> bool:
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `fee_collector`
 ::::description[`CowSwapBurner.fee_collector() -> address: view`]

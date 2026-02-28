@@ -10,7 +10,7 @@ Relevant contract deployments can be found [here](../deployments.md).
 
 :::
 
-## **Interest Rate Mechanics**
+## Interest Rate Mechanics
 
 The interest rates in crvUSD markets are not static but fluctuate based on a set of factors, including:
 
@@ -423,7 +423,7 @@ def set_target_debt_fraction(target_debt_fraction: uint256):
 
 ::::
 
-## **PegKeepers**
+## PegKeepers
 
 PegKeepers must be added to the MonetaryPolicy contract to calculate the rate as it depends on the *DebtFraction*. They can be added by calling `add_peg_keeper` and removed via `remove_peg_keeper`.
 
@@ -602,7 +602,7 @@ def remove_peg_keeper(pk: PegKeeper):
 
 ::::
 
-## **Admin Ownership**
+## Admin Ownership
 
 ### `admin`
 ::::description[`MonetaryPolicy.admin() -> address: view`]
@@ -699,7 +699,7 @@ def set_admin(admin: address):
 
 ::::
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `PRICE_ORACLE`
 ::::description[`MonetaryPolicy.PRICE_ORACLE() -> address: view`]

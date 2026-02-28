@@ -27,7 +27,7 @@ The available 3CRV balance to distribute is tracked via the “**token checkpoin
 ---
 
 
-## **Claiming Fees**
+## Claiming Fees
 
 ### `token`
 ::::description[`FeeDistributor.token() -> address: view`]
@@ -609,7 +609,7 @@ def burn(_coin: address) -> bool:
 ---
 
 
-## **Killing The FeeDistributor**
+## Killing The FeeDistributor
 
 The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and block the ability to claim or burn. The contract can not be unkilled. 
 
@@ -791,7 +791,7 @@ def recover_balance(_coin: address) -> bool:
 ---
 
 
-## **Admin Ownership**
+## Admin Ownership
 
 ### `admin`
 ::::description[`FeeDistributor.admin() -> address: view`]
@@ -945,7 +945,7 @@ def apply_admin():
 ---
 
 
-## **Query Contract Informations**
+## Query Contract Informations
 
 ### `ve_for_at`
 ::::description[`FeeDistributor.ve_for_at(_user: address, _timestamp: uint256) -> uint256:`]

@@ -33,7 +33,7 @@ This zap makes use of the **Odos router** and works for crvUSD and lending marke
 
 ---
 
-## **How Leverage is Built**
+## How Leverage is Built
 
 Leverage is built through a process known as "looping." The concept is straightforward: A user puts up some collateral (e.g., ETH) and takes on debt against it, let's say crvUSD. Because they want to use leverage and increase their exposure to ETH, they loop their position by selling crvUSD for more ETH and adding it as collateral to their loan. They then borrow more crvUSD again, sell it for ETH, and add it again. This process can be repeated as often as they wish.
 

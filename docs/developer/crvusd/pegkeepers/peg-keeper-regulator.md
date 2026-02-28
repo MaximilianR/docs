@@ -15,7 +15,7 @@ Technically speaking, allowance is always granted but if certain checks do not p
 
 ---
 
-## **Providing***The Regulator will only grant allowance to the PegKeeper to provide crvUSD to the pool if the following requirements are met. If any of these conditions are not satisfied, the function will return 0, causing the transaction to ultimately revert:*
+## Providing*The Regulator will only grant allowance to the PegKeeper to provide crvUSD to the pool if the following requirements are met. If any of these conditions are not satisfied, the function will return 0, causing the transaction to ultimately revert:*
 
 - **Providing is not paused**: This is checked using the `is_killed` method. If providing is paused, no crvUSD can be added to the pool.
 - **Aggregated crvUSD price is higher than 1.0**: The crvUSD price, obtained from the `aggregator` contract, must be above 1.0 (`10**18`). If the price is equal to or below 1.0, providing crvUSD is not allowed.
@@ -215,7 +215,7 @@ def _get_max_ratio(_debt_ratios: DynArray[uint256, MAX_LEN]) -> uint256:
 ---
 
 
-## **Withdrawing***The Regulator will grant allowance to the PegKeeper to withdraw crvUSD from the pool if the following requirements are met. If any of these conditions are not met, the function will return 0, causing the transaction to ultimately revert:*
+## Withdrawing*The Regulator will grant allowance to the PegKeeper to withdraw crvUSD from the pool if the following requirements are met. If any of these conditions are not met, the function will return 0, causing the transaction to ultimately revert:*
 
 - **Withdrawing is not paused**: This is checked using the `is_killed` method. If withdrawing is paused, no crvUSD can be removed from the pool.
 - **Aggregated crvUSD price is less than 1.0**: The crvUSD price, obtained from the `aggregator` contract, must be above 1.0 (`10**18`). If the price is equal to or below 1.0, withdrawing crvUSD is not allowed.
@@ -341,7 +341,7 @@ def _get_price(_info: PegKeeperInfo) -> uint256:
 ---
 
 
-## **Parameters***The Regulator uses several parameters:*
+## Parameters*The Regulator uses several parameters:*
 
 - `worst_price_threshold` is a threshold value for the price of the pegged coin. If the threshold is exceeded, providing crvUSD will not be allowed as the pegged coin is potentially depegged (too far away from other pegged coins' prices).
 - `price_deviation` represents an absolute error value and is used to check if prices (`get_p` and `price_oracle`) are within a certain range of each other in order to prevent spam attacks.
@@ -711,7 +711,7 @@ def set_debt_parameters(_alpha: uint256, _beta: uint256):
 ---
 
 
-## **Adding and Removing PegKeepers**
+## Adding and Removing PegKeepers
 
 PegKeepers rely on the Regulator, as it provides the contract with information on whether they are allowed to provide or withdraw crvUSD from the pool. These PegKeepers need to be added by `admin` using the [`add_peg_keepers`](#add_peg_keepers) function and are then stored within the [`peg_keepers`](#peg_keepers) variable.
 
@@ -911,7 +911,7 @@ def remove_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN]):
 ---
 
 
-## **Pausing and Unpausing PegKeepers**
+## Pausing and Unpausing PegKeepers
 
 In this context, **"killing"**refers to either **pausing or unpausing PegKeepers**. When the Regulator is "killed," it means the contract **restricts the PegKeeper from performing one or both of the following actions: providing or withdrawing crvUSD.**Both actions, providing and withdrawing, can be killed separately. For example, the Regulator can kill the permission to provide any additional crvUSD to pools but keep the withdrawing action "unkilled" so that it is still possible to unload debt.
 
@@ -1025,7 +1025,7 @@ def set_killed(_is_killed: Killed):
 ---
 
 
-## **Contract Ownership**
+## Contract Ownership
 
 The Regulator contract has two types of ownerships, the `admin` and the `emergency_admin`.
 
@@ -1218,7 +1218,7 @@ def set_emergency_admin(_admin: address):
 ---
 
 
-## **Fee Receiver and Aggregator Contract**
+## Fee Receiver and Aggregator Contract
 
 ### `fee_receiver`
 ::::description[`PegKeeperRegulator.fee_receiver() -> address: view`]
@@ -1407,7 +1407,7 @@ def set_aggregator(_agg: Aggregator):
 ---
 
 
-## **Other Methods**
+## Other Methods
 
 ### `stablecoin`
 ::::description[`PegKeeperRegulator.stablecoin() -> address: view`]

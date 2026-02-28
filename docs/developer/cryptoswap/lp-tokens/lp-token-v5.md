@@ -21,7 +21,7 @@ Newer deployments might make use of blueprint contracts ([EIP-5202](https://eips
 ```
 
 
-## **LP Token Info Methods**
+## LP Token Info Methods
 
 ### `name`
 ::::description[`LPTokenV5.name() -> String[64]: view`]
@@ -316,7 +316,7 @@ def initialize(_name: String[64], _symbol: String[32], _pool: address):
 
 ::::
 
-## **Allowance and Transfer Methods**
+## Allowance and Transfer Methods
 
 ### `transfer`
 ::::description[`LPTokenV5.transfer(_to: address, _value: uint256) -> bool`]
@@ -743,7 +743,7 @@ def decreaseAllowance(_spender: address, _subtracted_value: uint256) -> bool:
 
 ::::
 
-## **Minting and Burning**
+## Minting and Burning
 
 LP Tokens are minted when users deposit funds into the liquidity pool. Upon calling the `add_liquidity` function on the pool, it triggers the `mint` function of the LP Token to mint the corresponding tokens.
 When liquidity is withdrawn using `remove_liquidity`, the LP tokens are burned through the `burnFrom` method.
@@ -874,7 +874,7 @@ def burnFrom(_to: address, _value: uint256) -> bool:
 
 ::::
 
-## **Initialize Method**
+## Initialize Method
 
 ### `initialize`
 ::::description[`LPTokenV5.initialize(_name: String[64], _symbol: String[32], _pool: address):`]

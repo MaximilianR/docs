@@ -3,7 +3,7 @@
 The following are methods that **may only be called by the owner of the contract,**which is the **CurveOwnershipAgent**.
 
 
-## **Adjusting Debt Ceilings**
+## Adjusting Debt Ceilings
 
 ### `set_debt_ceiling`
 ::::description[`ControllerFactory.set_debt_ceiling(_to: address, debt_ceiling: uint256):`]
@@ -125,7 +125,7 @@ def burn(_value: uint256) -> bool:
 
 ::::
 
-## **Fee Receiver**
+## Fee Receiver
 
 ### `set_fee_receiver`
 ::::description[`ControllerFactory.set_fee_receiver(fee_receiver: address):`]
@@ -240,7 +240,7 @@ def collect_fees_above_ceiling(_to: address):
 
 ::::
 
-## **Implementations (Blueprint Contracts)**
+## Implementations (Blueprint Contracts)
 
 ### `set_implementations`
 ::::description[`ControllerFactory.set_implementations(controller: address, amm: address):`]
@@ -304,7 +304,7 @@ def set_implementations(controller: address, amm: address):
 
 ::::
 
-## **Admin Ownership**
+## Admin Ownership
 
 ### `admin`
 ::::description[`ControllerFactory.admin() -> address: view`]

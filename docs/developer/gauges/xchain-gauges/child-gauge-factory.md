@@ -13,7 +13,7 @@ A full list of all deployed `ChildGaugeFactory` contracts can be found [here](..
 
 ---
 
-## **Deploy Child Gauge**
+## Deploy Child Gauge
 
 Child gauges can either be deployed from the `RootChainFactory` or directly from the according `ChildGaugeFactory`.
 
@@ -135,7 +135,7 @@ def deploy_gauge(_lp_token: address, _salt: bytes32, _manager: address = msg.sen
 
 ---
 
-## **Minting Emissions**
+## Minting Emissions
 
 CRV emissions are minted directly from the child gauge and can be claimed by the user. They can not be claimed from the `ChildGauge` contract itself.
 
@@ -354,7 +354,7 @@ minted: public(HashMap[address, HashMap[address, uint256]])
 
 ---
 
-## **Gauge Data**
+## Gauge Data
 
 The `ChildGaugeFactory` contract stores different gauge data for all the child gauges deployed via the factory.
 
@@ -695,7 +695,7 @@ def set_mirrored(_gauge: address, _mirrored: bool):
 
 ---
 
-## **Child Gauge Implementation**
+## Child Gauge Implementation
 
 ### `get_implementation`
 ::::description[`ChildGaugeFactory.get_implementation() -> address: view`]
@@ -792,7 +792,7 @@ def set_implementation(_implementation: address):
 
 ---
 
-## **Root Factory and Implementation**
+## Root Factory and Implementation
 
 The `root_factory` and `root_implementation` variables store the addresses of the root factory and implementation, respectively. They are only used as helper variables within this contract. Both variables can be updated by the `owner` or `manager` of the contract via the `set_root` function.
 
@@ -956,7 +956,7 @@ def set_root(_factory: address, _implementation: address):
 
 ---
 
-## **CRV Token and Voting Escrow**
+## CRV Token and Voting Escrow
 
 The `crv` and `voting_escrow` variables store the addresses of the CRV token and `VotingEscrow` contract, respectively. `crv` represents a bridged version of the CRV token, whereas `voting_escrow` represents a `L2 VotingEscrow Oracle` contract. This oracle is responsible for providing data from the `VotingEscrow` contract on Ethereum to the child chain in order to make boosts on sidechains work. If there is no `L2 VotingEscrow Oracle` set, the boosts on the child chain will not work.
 
@@ -1156,7 +1156,7 @@ def set_voting_escrow(_voting_escrow: address):
 
 ---
 
-## **Manager**
+## Manager
 
 ### `manager`
 ::::description[`ChildGaugeFactory.manager() -> address: view`]
@@ -1262,7 +1262,7 @@ def set_manager(_new_manager: address):
 
 ---
 
-## **Call Proxy**
+## Call Proxy
 
 ### `call_proxy`
 ::::description[`ChildGaugeFactory.call_proxy() -> address: view`]
@@ -1376,6 +1376,6 @@ def set_call_proxy(_new_call_proxy: address):
 
 ---
 
-## **Ownership**
+## Ownership
 
 For contract ownership details, see [here](../../references/curve-practices.md#commit--accept).

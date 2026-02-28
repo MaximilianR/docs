@@ -20,7 +20,7 @@ If you are running or planning to run fee collection for Curve DAO, there is a T
 ---
 
 
-## **System Overview**
+## System Overview
 
 The state of the system can be roughly summarized as follows:
 
@@ -35,7 +35,7 @@ The state of the system can be roughly summarized as follows:
 ---
 
 
-## **Key Contracts**
+## Key Contracts
 
 The fee collection, burning, and distribution system of Curve involves the following main contracts:
 
@@ -71,7 +71,7 @@ The `FeeDistributor` is the contract which distributes the fee token to veCRV ho
 ---
 
 
-## **Fee Burning**
+## Fee Burning
 
 The process of burning coins into the target coin involves the following flow:
 
@@ -106,7 +106,7 @@ This page will primarily focus on the CowSwap fee system while also providing in
 
 ---
 
-## **CowSwap Fee System**
+## CowSwap Fee System
 
 The current fee system utilizes a set of contracts to efficiently collect, convert, and distribute fees:
 
@@ -125,12 +125,12 @@ For chains not yet using this new system, admin fees are burned using the [origi
 
 :::
 
-## **Previous Architecture**
+## Previous Architecture
 
 Prior to this system, Curve used multiple different kinds of burners where the **exchange routes for the to-be-burned coins had to be manually added**. Additionally, exchange routes were hardcoded, which often led to semi-efficient fee burning. If coins were not manually added to the burners, they could not be burned, which resulted in unburned (but obviously not lost) fees. The old burner contracts required lots of maintenance and dev resources.
 
 The new system can and is deployed on other chains besides Ethereum but is **partly dependent on, e.g., CoWSwap deployments**if the `CowSwapBurner` is used. **If the CowSwap protocol is deployed on a sidechain, fees can be burned there. For chains where this is not the case, the admin fees are still being burned using the [original architecture](./original-architecture/sidechains.md) and then transfered via a bridging contract to Ethereum.**---
 
-## **Further Reading**- [Old Fee Burning Architecture](./original-architecture/overview.md)
+## Further Reading- [Old Fee Burning Architecture](./original-architecture/overview.md)
 - [CowSwap Protocol Documentation](https://docs.cow.fi/)
 - [veCRV Documentation](../curve-dao/voting-escrow/voting-escrow.md)

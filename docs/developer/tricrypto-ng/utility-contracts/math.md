@@ -10,7 +10,7 @@ Full list of all deployments can be found [here](../../deployments.md).
 ---
 
 
-## **AMM Math Functions**
+## AMM Math Functions
 
 ### `get_y`
 ::::description[`Math.get_y(_ANN: uint256, _gamma: uint256, x: uint256[N_COINS], _D: uint256, i: uint256) -> uint256[2]:`]
@@ -591,7 +591,7 @@ def get_p(
 
 ::::
 
-## **Math Utilities**
+## Math Utilities
 
 ### `cbrt`
 ::::description[`Math.cbrt(x: uint256) -> uint256:`]

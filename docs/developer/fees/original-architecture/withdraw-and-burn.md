@@ -6,7 +6,7 @@ In order to be able to burn admin fees into the fee token, those fees have to be
 
 Claiming fees can differ based on which source they are claimed from:
 
-## **StableSwap Pools**
+## StableSwap Pools
 
 Admin fees are stored within each exchange contract and viewable via the public getter method **`admin_balances`**. Users may call **`withdraw_admin_fees`**to claim the fees at any time.
 
@@ -160,7 +160,7 @@ def withdraw_many(_pools: address[20]):
 
 ::::
 
-## **CryptoSwap Pools**
+## CryptoSwap Pools
 
 Fees of crypto pools are a bit different from stableswap pools. These pools have an auto-rebalancing mechanism which uses parts of the admin fees for rebalancing purposes. After taking this into consideration, fees are claimed by minting the admin's share (which essentially is the admin fee) of the pool as LP tokens.
 
@@ -278,7 +278,7 @@ def _claim_admin_fees():
 
 ::::
 
-## **Curve Stablecoin**crvUSD fees are based on the borrow rate of the corresponding markets. Fees are accurred in crvUSD token. They can be claimed from the according Controller.
+## Curve StablecoincrvUSD fees are based on the borrow rate of the corresponding markets. Fees are accurred in crvUSD token. They can be claimed from the according Controller.
 
 ### `admin_fees`
 ::::description[`Controller.admin_fees() -> uint256:`]

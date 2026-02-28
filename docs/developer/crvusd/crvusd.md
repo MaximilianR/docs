@@ -33,7 +33,7 @@ Since the initial deployment of crvUSD, the token was bridged to several chains,
 ---
 
 
-## **Mint and Burn**- crvUSD can only be minted by the `minter` of the contract, which is the Factory contract
+## Mint and Burn- crvUSD can only be minted by the `minter` of the contract, which is the Factory contract
 - crvUSD is minted in accordance with the `debt_ceiling`, either when **adding a new market**or when **raising its debt ceiling**. This is accomplished by calling the `set_new_debt_ceiling` function within the Factory contract.  
 - Burning crvUSD typically occurs when a **lower debt ceiling is set**, or if a user decides to burn their crvUSD for whatever reason.
 
@@ -324,7 +324,7 @@ The `burnFrom` function is called when the debt ceiling is reduced via `set_debt
 
 ::::
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `decimals`
 ::::description[`crvUSD.decimals() -> uint8: view`]
@@ -560,7 +560,7 @@ totalSupply: public(uint256)
 
 ::::
 
-## **Allowances and Approvals**
+## Allowances and Approvals
 
 ### `allowance`
 ::::description[`crvUSD.allowance(arg0: address, arg1: address) -> uint256`]

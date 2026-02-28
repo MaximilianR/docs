@@ -37,7 +37,7 @@ If you are running or planning to run fee collection for Curve DAO, there is a T
 ---
 
 
-## **Compensation Strategy**
+## Compensation Strategy
 
 Each `hook` includes a `compensation_strategy` that defines how and when the executor of the hook will be compensated. This ensures that there is an incentive to call hooks according to predefined rules.
 
@@ -70,7 +70,7 @@ struct CompensationCooldown:
 ---
 
 
-## **Hooks**
+## Hooks
 
 Before hooks can be executed, they need to be added via `set_hooks`. These hooks can then be externally executed by anyone.
 
@@ -224,7 +224,7 @@ This example sets a new hook with the target address `0xD16d5eC345Dd86Fb63C6a9C4
 ---
 
 
-## **Executing Hooks**
+## Executing Hooks
 
 There are two functions to execute hooks: `duty_act` and `act`.
 
@@ -778,7 +778,7 @@ buffer_amount: public(uint256)
 ---
 
 
-## **Valid Interface a la ERC-165**
+## Valid Interface a la ERC-165
 
 In order for the Burner contract to be fully compatible with the `FeeCollector`, a specific interface needs to hold up as per [ERC-165](https://eips.ethereum.org/EIPS/eip-165):
 
@@ -850,7 +850,7 @@ def supportsInterface(_interface_id: bytes4) -> bool:
 ---
 
 
-## **Recovering ERC-20 Tokens and ETH**
+## Recovering ERC-20 Tokens and ETH
 
 ### `recover`
 ::::description[`Hooker.recover(_coins: DynArray[ERC20, MAX_LEN])`]

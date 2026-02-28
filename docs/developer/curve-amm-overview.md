@@ -8,7 +8,7 @@ For the mathematical foundations, see the [StableSwap whitepaper](./assets/pdf/w
 
 ---
 
-## **Current Implementations**
+## Current Implementations
 
 <DocCardGrid>
   <DocCard title="Stableswap-NG" link="./stableswap-ng/overview" linkText="Stableswap-NG">

@@ -4,7 +4,7 @@
 **The following functions are admin-only functions.**Pools created through the Factory are 'owned' by the factory **`admin`**(DAO). Ownership can be transferred only within the Factory contract, and this is done through the use of the **`commit_transfer_ownership()`**and **`accept_transfer_ownership()`**functions.
 
 
-## **Parameter Controls**
+## Parameter Controls
 
 More informations about the parameters [here](../../overview.md).
 
@@ -387,7 +387,7 @@ def revert_new_parameters():
 
 ::::
 
-## **Admin Control Info Methods**
+## Admin Control Info Methods
 
 ### `admin_actions_deadline`
 ::::description[`CryptoSwap.admin_actions_deadline() -> uint256: view`]

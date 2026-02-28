@@ -13,7 +13,7 @@ An accompanying JavaScript library for Curve Lending can be found here: [ GitHub
 
 ---
 
-## **Callback**
+## Callback
 
 This leverage zap allows up to five values to be passed for `callback_args`, but only the first two are needed:
 
@@ -262,7 +262,7 @@ def exchange_multiple(
 
 ---
 
-## **Helper Functions***The contract indludes various helper functions:*
+## Helper Functions*The contract indludes various helper functions:*
 
 ### `get_collateral`
 ::::description[`LeverageZap.get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256`]
@@ -1029,7 +1029,7 @@ def _calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256) -> int256
 
 ---
 
-## **Routes**
+## Routes
 
 Routes are predetermined paths for token exchanges. These routes are added when initializing the contract. Additional routes cannot be added after the contract's deployment.
 

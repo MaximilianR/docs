@@ -15,7 +15,7 @@ The source code for all releveant stablecoin contract can be found on [GitHub ](
 ---
 
 
-## **Curve Stablecoin Infrastructure Components**
+## Curve Stablecoin Infrastructure Components
 
 <DocCardGrid>
   <DocCard title="crvUSD" icon="crvusd" link="./crvusd" linkText="crvUSD.vy">

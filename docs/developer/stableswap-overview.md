@@ -7,7 +7,7 @@ A Curve pool, at its core, is a smart contract that implements the StableSwap in
 
 ---
 
-## **Implementations**:::github[GitHub]
+## Implementations:::github[GitHub]
 
 
 The source code for the Curve Finance StableSwap contracts is openly accessible on GitHub:

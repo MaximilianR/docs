@@ -14,7 +14,7 @@ The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www
 
 ---
 
-## **General Explainer**
+## General Explainer
 
 The weight allocated to the `RewardsHandler` in the `FeeSplitter` is determined by the time-weighted average of the ratio of crvUSD deposited into the Vault compared to the total circulating supply of crvUSD. The weight allocated to the `RewardsHandler` can be permissionlessly distributed as rewards to the `Savings Vault (scrvUSD)` by anyone calling the [`process_rewards`](#process_rewards) function.
 
@@ -91,7 +91,7 @@ def _take_snapshot(_value: uint256):
 
 ---
 
-## **Snapshots**
+## Snapshots
 
 Snapshots are used to calculate the time-weighted average (TWA) of the ratio between crvUSD deposited into the Vault and the total circulating supply of crvUSD. Each snapshot stores the ratio of crvUSD deposited in the Vault to the circulating supply of crvUSD, along with the timestamp when the snapshot was taken. Taking a snapshot is fully permissionless—anyone can take one by calling the [`take_snapshot`](#take_snapshot) function. The snapshot values are stored in a `Snapshot` struct, and each struct is saved in a dynamic array called `snapshots`.
 
@@ -329,7 +329,7 @@ def get_len_snapshots() -> uint256:
 
 ---
 
-## **Weights and TWA**
+## Weights and TWA
 
 The `weight` represents the percentage of the total rewards requested from the `FeeSplitter`. This value is denominated in 10000 BPS (100%). E.g. if the weight is 500, then RewardsHandler will request 5% of the total rewards from the `FeeSplitter`.
 
@@ -571,7 +571,7 @@ scaling_factor: public(uint256)
 
 ---
 
-## **Reward Distribution**
+## Reward Distribution
 
 Rewards are distributed to the Vault thought the `RewardsHandler` contract using a simple `process_rewards` function. This function permnissionlessly lets anyone distribute rewards to the Savings Vault.
 
@@ -659,7 +659,7 @@ def distribution_time() -> uint256:
 
 ---
 
-## **Admin Controls**
+## Admin Controls
 
 The contract uses the [Multi-Role-Based Access Control Module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/access_control.vy) from [Snekmate](https://github.com/pcaversaccio/snekmate) to manage roles and permissions. This module ensures that only specific addresses assigned the `RATE_MANAGER` role can modify key parameters such as the Time-Weighted Average (TWA) window, the minimum time between snapshots, and the distribution time. Roles can only be granted or revoked by the `DEFAULT_ADMIN_ROLE` defined in the access module.
 
@@ -1077,7 +1077,7 @@ This example sets the scaling factor from 10000 to 15000.
 
 ---
 
-## **Other Methods**
+## Other Methods
 
 ### `vault`
 ::::description[`RewardsHandler.vault() -> address: view`]
@@ -1303,7 +1303,7 @@ In this example, all [`wETH`](https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5
 
 ---
 
-## **Access Control Module (Snekmate 🐍)**
+## Access Control Module (Snekmate 🐍)
 
 Ownership in this contract is handled by the [Access Control Module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/access_control.vy) provided by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate).
 

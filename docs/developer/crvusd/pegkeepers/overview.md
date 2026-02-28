@@ -10,7 +10,7 @@ A list of all contract deployments can be found [here](../../deployments.md).
 
 # **General Concepts**
 
-## **Stabilization Method**PegKeepers are specialized contracts **designed to maintain the stability of the crvUSD peg**. They hold a pre-minted supply of crvUSD tokens to be utilized for peg stabilization efforts. The operation of PegKeepers is **restricted to only two actions: depositing and withdrawing from liquidity pools**. As long as these pre-minted crvUSD tokens are not deposited anywhere, they can and should be counted as out-of-circulation.
+## Stabilization MethodPegKeepers are specialized contracts **designed to maintain the stability of the crvUSD peg**. They hold a pre-minted supply of crvUSD tokens to be utilized for peg stabilization efforts. The operation of PegKeepers is **restricted to only two actions: depositing and withdrawing from liquidity pools**. As long as these pre-minted crvUSD tokens are not deposited anywhere, they can and should be counted as out-of-circulation.
 
 These contracts are each associated with a specific liquidity pool that includes crvUSD and another fiat-redeemable USD stablecoin.
 
@@ -21,7 +21,7 @@ Conversely, should the crvUSD **price drop below 1.0**, signaling a downward peg
 Moreover, the **`update` function**that deposits and withdraws crvUSD is **callable by any EOA or smart contract**. To foster engagement, callers are rewarded with a caller share as an incentive.
 
 
-## **Impact on crvUSD Interest Rate**
+## Impact on crvUSD Interest Rate
 
 PegKeepers significantly influence the interest rate of crvUSD markets. The interest rate is affected by various factors, including the DebtFraction across all PegKeepers. A higher debt accumulated by PegKeepers[^1] increases the DebtFraction, which, in turn, leads to a lower interest rate.
 
@@ -41,14 +41,14 @@ For a comprehensive understanding of the factors influencing the interest rate, 
 
 The initial version of `PegKeeper.vy` encountered two significant problems:
 
-## **Spam Attack Issue**
+## Spam Attack Issue
 
 A notable challenge in the first version of PegKeepers was its **susceptibility to spam attacks**.  
 This issue stemmed from the ability of an attacker to manipulate the price of crvUSD very close to 1, followed by executing the `update` function to make a minimal deposit (or withdrawal), before moving the price back. With a mandatory **15-minute cooldown**before the `update` function could be called again, an attacker could exploit this interval to periodically disrupt the PegKeepers' capacity for peg stabilization.  
 Although executing such an attack would entail **significant costs for the attacker**, resulting in **substantial revenue for the liquidity pool**, the potential for continuous exploitation was still present. This issue highlighted the need for a refined approach to prevent such manipulative activities and ensure the effective stabilization of the peg.
 
 
-## **Depegging Scenario**
+## Depegging Scenario
 
 A more critical issue arose when a PegKeeper engaged in a deposit, essentially taking on debt by depositing crvUSD into the pool. If the coin paired with crvUSD in the pool experienced a **significant depeg**, the PegKeeper could find itself **unable to off-load its debt by withdrawing its crvUSD**. This situation would leave a quantity of unbacked crvUSD in circulation.
 
@@ -72,7 +72,7 @@ Central to this new structure is the `PegKeeperRegulator.vy` contract, which gra
 *Additionally, this version introduces robust solutions to previously identified issues, such as susceptibility to spam attacks and challenges in managing depeg situations:*
 
 
-## **Mitigating Spam Attacks with Oracle Price Verification**
+## Mitigating Spam Attacks with Oracle Price Verification
 
 To address the spam attack issue in the first version of PegKeepers, an innovative solution involving the `price_oracle` and `get_p` function from stableswap pools was implemented. This approach allows the system to verify if the current AMM market prices significantly deviate from the pool's oracle's EMA price, thereby ensuring actions to stabilize the peg are only taken when the price is within an accepted deviation.
 
@@ -100,7 +100,7 @@ This function effectively measures if the current price (`_p1`) is within an acc
 Further details on setting the price_deviation parameter can be found in the Curve Finance stablecoin research documentation: [Deviation Parameter Explanation](https://github.com/curvefi/curve-stablecoin-researches/tree/main/peg_keeper#deviation).
 
 
-## **Mitigating Depeg Issue using Absolute Deviation Error**
+## Mitigating Depeg Issue using Absolute Deviation Error
 
 In order to mitigate potential depged risk and therefore leaving the PegKeeper with debt, a `worst_price_threshold` variable was introduced.
 

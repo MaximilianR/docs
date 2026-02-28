@@ -4109,7 +4109,7 @@ def _rate_mul() -> uint256:
 ---
 
 
-## **Admin Ownership**
+## Admin Ownership
 
 The `admin` of each AMM is usually set to the corresponding `Controller` contract of the according market. This variable can only be set once and not updated agian as the `set_admin` function checks the follwoing: `assert self.admin == empty(address)`.
 

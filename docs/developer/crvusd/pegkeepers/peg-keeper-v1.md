@@ -1,6 +1,6 @@
 # PegKeeperV1
 
-## **Concept of PegKeepers**
+## Concept of PegKeepers
 
 PegKeepers are contracts that help stabilize the peg of crvUSD. Each Keeper is allocated a specific amount of crvUSD to secure the peg. 
 The DAO decides this balance and can be **raised or lowered**by calling `set_debt_ceiling()` in the [Factory](../factory/overview.md).
@@ -34,7 +34,7 @@ Source code for this contract is available on [Github](https://github.com/curvef
 
 :::
 
-## **Stabilisation Method**
+## Stabilisation Method
 
 The most important function in the PegKeeper contract is the `update()` function. When invoked, the PegKeeper either mints and single-sidedly deposits crvUSD into the StableSwap pool, or it withdraws crvUSD from the pool by redeeming the LP tokens received from previous deposits.
 
@@ -242,7 +242,7 @@ last_change: public(uint256)
 
 ::::
 
-## **Calculating and Withdrawing Profits**
+## Calculating and Withdrawing Profits
 
 ### `calc_profit` 
 ::::description[`PegKeeper.calc_profit() -> uint256:`]
@@ -558,7 +558,7 @@ def withdraw_profit() -> uint256:
 
 ::::
 
-## **Admin and Receiver**
+## Admin and Receiver
 
 PegKeepers have an `admin` and a `receiver`. Both of these variables can be changed by calling the respective admin-guarded functions, but such changes must first be approved by a DAO vote.  
 After approval, the newly designated admin or receiver is required to apply these changes within a timeframe of `3 * 86400` seconds, which equates to a timespan of *three days*. Should there be an attempt to implement these changes after this period, the function will revert.
@@ -1071,7 +1071,7 @@ def revert_new_options():
 
 ::::
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `debt`
 ::::description[`PegKeeper.debt() -> uint256: view`]

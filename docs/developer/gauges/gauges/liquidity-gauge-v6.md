@@ -1,7 +1,7 @@
 # Liquidity Gauge V6
 
 
-## **Depositing and Withdrawing**
+## Depositing and Withdrawing
 
 Liquidity pool (LP) tokens can be deposited into or withdrawn from a gauge at any time.
 
@@ -158,7 +158,7 @@ def withdraw(_value: uint256, _claim_rewards: bool = False):
 ---
 
 
-## **Claiming Rewards**
+## Claiming Rewards
 
 Reward tokens can be claimed using the `claim_rewards` function. This function claims all externally added rewards from the gauge in a single transaction.
 
@@ -520,7 +520,7 @@ def set_rewards_receiver(_receiver: address):
 ---
 
 
-## **Permissionless Rewards**
+## Permissionless Rewards
 
 Newer liquidity gauges (from `LiquidityGaugeV3.vy` and upwards) introduce the possibility to add what are termed "permissionless rewards." However, the term "permissionless" might be misleading as only a `distributor` address, set by the gauge's `manager`, can add these rewards. The `manager` address is set to [`tx.origin`](https://docs.vyperlang.org/en/stable/constants-and-vars.html?highlight=tx.origin#block-and-transaction-properties) at the time of contract deployment.
 
@@ -940,7 +940,7 @@ def deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint2
 ---
 
 
-## **Boosting Your LP Tokens**
+## Boosting Your LP Tokens
 
 Provided liquidity is boosted by the veCRV balance of the user, allowing for boosts up to 2.5 times. Gauges measure liquidity with respect to the user's boost in the `working_balances` variable. The total liquidity deposited in the gauge is represented by the `working_supply` method.
 
@@ -1186,7 +1186,7 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
 ---
 
 
-## **Checkpoints**
+## Checkpoints
 
 ### `user_checkpoint`
 ::::description[`LiquidityGaugeV6.user_checkpoint(addr: address) -> bool`]
@@ -1493,7 +1493,7 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
 
 ---
 
-## **Killing Gauges**
+## Killing Gauges
 
 Liquidity gauges have a "killed status" stored in the `is_killed` variable. This status can be set by the `admin` of the Factory, which was used to initially deploy the gauge, using the `set_killed` function. If the status is set to `True`, the gauges' `rate` and `future_rate` will be set to zero, and it will not be eligible to receive any more CRV emissions.
 
@@ -1608,7 +1608,7 @@ def set_killed(_is_killed: bool):
 ---
 
 
-## **Contract Info Methods***Basic contract informations:*
+## Contract Info Methods*Basic contract informations:*
 
 ### `integrate_fraction`
 ::::description[`LiquidityGaugeV6.integrate_fraction(arg0: address) -> uint256: view`]

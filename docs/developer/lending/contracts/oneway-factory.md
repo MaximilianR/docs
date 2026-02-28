@@ -18,7 +18,7 @@ The source code of the `OneWayLendingFactory.vy` contract can be found on [ GitH
 ---
 
 
-## **Creating Lending Markets**
+## Creating Lending Markets
 
 A lending market **must always include crvUSD, either as collateral or as the borrowable token**.
 
@@ -404,7 +404,7 @@ def _create(
 
 :::
 
-## **Deploying Gauges**
+## Deploying Gauges
 
 Just like pools, vaults can have liquidity gauges. Once they are added to the `GaugeController` by the DAO, they are eligible to receive CRV emissions.
 
@@ -483,7 +483,7 @@ Out [1]: '0xACEBA186aDF691245dfb20365B48DB87DEA7b98F'                # returns a
 ---
 
 
-## **Rates**
+## Rates
 
 The Factory has a `MIN_RATE` and `MAX_RATE`. These variables are constants and can not be changed. The minimum rate is 0.1%, the maximum rate is 1000%.
 
@@ -801,7 +801,7 @@ Out [5]:  16854895991
 ---
 
 
-## **Implementations**
+## Implementations
 
 The implementations of the Factory can be upgraded by the `admin`, which is the Curve DAO. 
 
@@ -1169,7 +1169,7 @@ def set_implementations(controller: address, amm: address, vault: address,
 ---
 
 
-## **Contract Ownership**
+## Contract Ownership
 
 The Factory contract is owned by the DAO ([CurveOwnershipAdmin](https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968)). Ownership can be transferred using the `set_admin` function.
 
@@ -1291,7 +1291,7 @@ Out [3]:  '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 Most informations are queried based on vault indices. The first deployed vault is vault index 0, second one index 1, etc.
 

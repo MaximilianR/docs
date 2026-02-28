@@ -13,7 +13,7 @@ It utilizes three different implementations:
 - **`gauge_implementation`**, containing a blueprint contract that is used when deploying gauges for pools.
 
 
-## **Query Implementations**
+## Query Implementations
 
 ### `pool_implementations`
 ::::description[`Factory.pool_implementations() -> address: view`]
@@ -108,7 +108,7 @@ gauge_implementation: public(address)
 
 ::::
 
-## **Set New Implementation***New implementations can be set via these admin-only functions:*
+## Set New Implementation*New implementations can be set via these admin-only functions:*
 
 ### `set_pool_implementation`
 ::::description[`Factory.set_pool_implementation(_pool_implementation: address):`]

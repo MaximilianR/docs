@@ -15,7 +15,7 @@ Root gauges are deployed from the `RootGaugeFactory` and makes use of Vyper's bu
 
 ---
 
-## **Initialization**
+## Initialization
 
 Because the root gauges are deployed using a proxy pattern, they are automatically initialized directly after deployment.
 
@@ -75,7 +75,7 @@ This example initializes a root gauge with a bridger contract on Arbitrum.
 
 ---
 
-## **Checkpointing & CRV Emissions**
+## Checkpointing & CRV Emissions
 
 ### `user_checkpoint`
 ::::description[`RootGauge.user_checkpoint(_user: address) -> bool`]
@@ -347,7 +347,7 @@ total_emissions: public(uint256)
 
 ---
 
-## **Bridger Contracts**
+## Bridger Contracts
 
 The contract makes use of wrapper contracts around different bridging architectures to bridge CRV emissions to child gauges on other chains. These contracts are granted max approval when initialized in order for being able to transmit CRV tokens. The bridger contract used depends on the chain the child gauge is on. The `RootGaugeFactory` holds different bridger implementations for each chain.
 
@@ -476,7 +476,7 @@ This function updates the `bridger` contract. Updating this variable is only pos
 
 ---
 
-## **Child Gauge**
+## Child Gauge
 
 If a according child gauge is deployed with the same salt as the root gauge, the `child_gauge` variable will hold the address of the child gauge. Additionally, there is a function to set the child gauge in case something went wrong (e.g. between implementation updates or zkSync).
 
@@ -596,7 +596,7 @@ This example returns the chain ID on which the corresponding child gauge is depl
 
 ---
 
-## **Killing Root Gauges**
+## Killing Root Gauges
 
 Root gauges can be killed by the `owner` of the `RootGaugeFactory` to disable emissions of the specific gauge. Killed gauges will have their inflation rate be set to 0 and therefor restrict any minting of CRV emissions.
 
@@ -703,7 +703,7 @@ True
 
 ---
 
-## **Other Methods**
+## Other Methods
 
 ### `factory`
 ::::description[`RootGauge.factory() -> Factory: view`]

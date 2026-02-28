@@ -1,7 +1,7 @@
 # Twocrypto-NG Oracles
 
 
-## **Price Oracle***Twocrypto-NG pools contains the following built-in oracle:*
+## Price Oracle*Twocrypto-NG pools contains the following built-in oracle:*
 
 
 -   **`price_oracle`**---
@@ -330,7 +330,7 @@ Out [1]:  3501656271269889041418
 ---
 
 
-## **Updating Oracles**
+## Updating Oracles
 
 The AMM has an internal `tweak_price` function that updates `price_oracle`, `xcp_oracle`, and `last_prices`, and conditionally adjusts `price_scale` based on the new invariant and xcp profit. The function includes logic to adjust the `price_scale` if certain conditions are met, such as sufficient profits being made within the pool. This mechanism ensures the pool remains balanced.
 
@@ -586,7 +586,7 @@ def tweak_price(
 ---
 
 
-## **Other Methods**
+## Other Methods
 
 ### `last_prices`
 ::::description[`CurveTwocryptoOptimized.last_prices -> uint256: view`]

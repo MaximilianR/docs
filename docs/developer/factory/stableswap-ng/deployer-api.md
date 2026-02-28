@@ -1,7 +1,7 @@
 # Stableswap-NG Factory: Deployer API
 
 
-## **Name and Symbol**
+## Name and Symbol
 
 The input values of `_name` or `_symbol` are obviously non-trivial for the performance of the pool. These parameters should visualize, what kind of tokens are included in the pool.
 
@@ -12,7 +12,7 @@ _symbol = "rETH/wETH"
 
 ---
 
-## **Coins**`_coins` includes all tokens included in the pool as a `DynArray`.
+## Coins`_coins` includes all tokens included in the pool as a `DynArray`.
 
 ```shell
 _coins = ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0xae78736Cd615f374D3085123A210448E74Fc6393"]
@@ -20,7 +20,7 @@ _coins = ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0xae78736Cd615f374D3085
 
 ---
 
-## **A, Fee, Off-Peg Fee Multiplier, and MA-Exp-Time**- `_A` represents the amplification coefficient of the pool, signifying its density.
+## A, Fee, Off-Peg Fee Multiplier, and MA-Exp-Time- `_A` represents the amplification coefficient of the pool, signifying its density.
 - `_fee` is referred to as the "base fee."
 - The `offpeg_fee_multiplier` parameter enables the system to dynamically adjust fees according to the pool's state.
 - `ma_exp_time` denotes the time window for the moving average oracle.
@@ -53,7 +53,7 @@ The time window of the moving average exponential oracle is calculated using `ti
 
 ---
 
-## **Implemention ID**
+## Implemention ID
 
 Pools are **created from implementation contracts**(blueprints). These contracts are added to the Factory and must be choosen when deploying a pool.
 
@@ -77,7 +77,7 @@ To query the factory-specific implementations:
 
 ---
 
-## **Assets Types**
+## Assets Types
 
 Stableswap-NG infrastructure supports pools with the following asset types:
 
@@ -126,7 +126,7 @@ _asset_types = [0, 2]   # coin(0) = asset type 0; coin(1) = asset type 2
 
 ---
 
-## **Method IDs and Rate Oracles**`method_ids` and `_oracles` are required for rate oracles to function. ERC-4626 does not need either of these. The sole requirement for those is to have a `convertToAssets` method.
+## Method IDs and Rate Oracles`method_ids` and `_oracles` are required for rate oracles to function. ERC-4626 does not need either of these. The sole requirement for those is to have a `convertToAssets` method.
 
 
 :::info
@@ -170,7 +170,7 @@ _oracles = ["0x0000000000000000000000000000000000000000", "0xae78736cd615f374d30
 ---
 
 
-## **Deploying Plain- and Metapools**
+## Deploying Plain- and Metapools
 
 ### `deploy_plain_pool`
 
@@ -580,7 +580,7 @@ def deploy_metapool(
 
 ---
 
-## **Deploying Liquidity Gauges**
+## Deploying Liquidity Gauges
 
 Liquidity gauges for pools can also be deployed from this contract, but deploying gauges through a factory contract is only possible using the same factory contract that was used for deploying the pool. This feature is only available on the Ethereum mainnet, as liquidity gauges on sidechains need to be deployed through the [RootChainGaugeFactory](../../gauges/xchain-gauges/root-gauge-factory.md).
 

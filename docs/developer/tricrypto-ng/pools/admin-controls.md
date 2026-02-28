@@ -4,7 +4,7 @@
 Applying new parameters or transferring the ownership of the factory involves a **two-step model**. In the first step, changes need to be committed. The second step involves applying these changes.
 
 
-## **Pool Ownership**
+## Pool Ownership
 
 All pools created through the Factory are "owned" by the admin of the Factory, which is the Curve DAO. Ownership can only be changed within the factory contract via `commit_transfer_ownership` and `accept_transfer_ownership`. 
 
@@ -12,7 +12,7 @@ All pools created through the Factory are "owned" by the admin of the Factory, w
 ---
 
 
-## **Amplification Coefficient and Gamma**
+## Amplification Coefficient and Gamma
 
 More informations about the parameters [here](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters).
 
@@ -179,7 +179,7 @@ def stop_ramp_A_gamma():
 
 ::::
 
-## **Changing Parameters**
+## Changing Parameters
 
 ### `commit_new_parameters`
 ::::description[`CryptoSwap.commit_new_parameters(_new_mid_fee: uint256, _new_out_fee: uint256, _new_fee_gamma: uint256, _new_allowed_extra_profit: uint256, _new_adjustment_step: uint256, _new_ma_time: uint256):`]

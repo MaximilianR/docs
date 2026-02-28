@@ -193,7 +193,7 @@ def __init__(
 ---
 
 
-## **Oracle Price**
+## Oracle Price
 
 The price is determined by combining two different oracle prices. When necessary, `stored_rates` are used to adjust the final computed price from these combined oracles.
 
@@ -583,7 +583,7 @@ def _stored_rate() -> (uint256, bool):
 ---
 
 
-## **Rates**
+## Rates
 
 The oracle contract utilizes the `stored_rates` from a stableswap pool and considers these rates accordingly. The application of these rates is governed by the `USE_RATES` variable. If set to `true`, the rates are applied; if set to `false`, they are not.
 
@@ -890,7 +890,7 @@ USE_RATES: public(immutable(DynArray[bool, MAX_POOLS]))
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `POOLS`
 :::description[`CryptoFromPoolsRate.POOLS(arg0: uint256) -> address: view`]

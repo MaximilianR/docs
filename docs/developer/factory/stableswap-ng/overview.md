@@ -249,7 +249,7 @@ The Stableswap-NG Factory makes use of **blueprint contracts**to deploy its cont
 *More on the [**Math Implementation**](../../stableswap-ng/utility-contracts/math.md) and [**Views Implementation**](../../stableswap-ng/utility-contracts/views.md).* 
 
 
-## **Query Implementations**
+## Query Implementations
 
 ### `pool_implementations`
 ::::description[`CurveStableSwapFactoryNG.pool_implementations(arg0: uint256) -> address: view`]
@@ -404,7 +404,7 @@ views_implementation: public(address)
 
 ::::
 
-## **Setting New Implementations**
+## Setting New Implementations
 
 New implementation can be by the `admin` of the contract using the following functions:
 

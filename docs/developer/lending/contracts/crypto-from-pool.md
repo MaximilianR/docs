@@ -130,7 +130,7 @@ collateral_ix = 2           # CRV
 ---
 
 
-## **Oracle Price**
+## Oracle Price
 
 ### `price`
 :::description[`CryptoFromPool.price() -> uint256`]
@@ -395,7 +395,7 @@ def _exchange(i: uint256, j: uint256, amount: uint256, minmax_amount: uint256, _
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `POOL`
 :::description[`CryptoFromPool.POOL() -> address: view`]
@@ -812,7 +812,7 @@ AGG: public(immutable(StableAggregator))
 ---
 
 
-## **Arbitrum**
+## Arbitrum
 
 In addition to the aforementioned functions, oracle contracts on Arbitrum use a [Chainlink Uptime Feed Oracle](https://arbiscan.io/address/0xFdB631F5EE196F0ed6FAa767959853A9F217697D) to monitor and validate any potential downtime of the [sequencer](https://docs.arbitrum.io/sequencer).
 

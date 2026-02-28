@@ -13,7 +13,7 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0x306A45a1478A000dC70
 
 ---
 
-## **Deploying Gauges**
+## Deploying Gauges
 
 The `RootGaugeFactory` allows the deployment of root gauges on Ethereum and child gauges on the child chains. Root gauges can only be deployed if there is a `bridger` contract set for the given chain ID, otherwise the chain is not supported.
 
@@ -205,7 +205,7 @@ This example deploys a `ChildGauge` on Optimism for the `0xb757fc30bb2d96782188c
 
 ---
 
-## **Transmitting Emissions**
+## Transmitting Emissions
 
 Once a root gauge has received emissions, they can be transmitted to the child gauge. This is done by calling the `transmit_emissions` function. Emissions can only be transmitted from the `RootGaugeFactory`.
 
@@ -305,7 +305,7 @@ get_bridger: public(HashMap[uint256, Bridger])
 
 ---
 
-## **Gauge Information**
+## Gauge Information
 
 The `RootGaugeFactory` contract also provides a few getters to retrieve information about the deployed `RootGauges`.
 
@@ -414,7 +414,7 @@ is_valid_gauge: public(HashMap[RootGauge, bool])
 
 ---
 
-## **Child and Root Implementations and Factories**
+## Child and Root Implementations and Factories
 
 The `RootGaugeFactory` contract also provides a few getters to retrieve information about the deployed `ChildGauge` implementations and factories.
 
@@ -674,7 +674,7 @@ This example sets the following properties for chain ID `252`:
 
 ---
 
-## **Call Proxy**
+## Call Proxy
 
 ### `call_proxy`
 ::::description[`RootGaugeFactory.call_proxy() -> CallProxy: view`]
@@ -788,6 +788,6 @@ This example sets the call proxy to `0x1234567890123456789012345678901234567890`
 
 ---
 
-## **Contract Ownership**
+## Contract Ownership
 
 For contract ownership details, see [here](../../references/curve-practices.md#commit--accept).

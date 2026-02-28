@@ -1,5 +1,5 @@
 
-## **Liquidity Pools**:::warning
+## Liquidity Pools:::warning
 
 The transaction will revert if the following requirements are not met.
 
@@ -266,7 +266,7 @@ def deploy_pool(
 
 ::::
 
-## **Liquidity Gauge**:::info
+## Liquidity Gauge:::info
 
 Liquidity gauges can only be successfully deployed from the same contract from which the pool was deployed!
 

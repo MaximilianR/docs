@@ -8,7 +8,7 @@ Source code for the `PegKeeperV2.vy` contract is available on [ GitHub](https://
 
 :::
 
-## **Stabilization Method Enhancement in PegKeeperV2**
+## Stabilization Method Enhancement in PegKeeperV2
 
 The `PegKeeperV2` retains the overarching stabilization approach of its predecessor, `PegKeeperV1`, through the `update` function. This function adapts its operations based on varying conditions to take appropriate measures for maintaining stability.
 
@@ -343,7 +343,7 @@ last_change: public(uint256)
 ---
 
 
-## **Calculating and Withdrawing Profits**
+## Calculating and Withdrawing Profits
 
 By providing and withdrawing assets through liquidity pools, the PegKeeper generates profit. 
 
@@ -716,7 +716,7 @@ def _calc_profit_from(lp_balance: uint256, virtual_price: uint256, debt: uint256
 ---
 
 
-## **Action Delay**
+## Action Delay
 
 The `action_delay` variable determines the time delay that needs to pass before the PegKeeper can provide or withdraw liquidity again via the `update` function.
 
@@ -826,7 +826,7 @@ def set_new_action_delay(_new_action_delay: uint256):
 ---
 
 
-## **PegKeeperRegulator Contract**
+## PegKeeperRegulator Contract
 
 The main use case of the `PegKeeperRegulator` contract is to supervise prices and other parameters, and to inform the PegKeeper whether it is allowed to provide or withdraw crvUSD. All PegKeepers share the same universal Regulator contract. More details on the `PegKeeperRegulator` contract can be found [here](./peg-keeper-regulator.md).
 
@@ -944,7 +944,7 @@ def set_new_regulator(_new_regulator: Regulator):
 ---
 
 
-## **Contract Ownership**
+## Contract Ownership
 
 Ownership of the PegKeepers adheres to the standard procedure. The transition of ownership can only be done by the `admin`. Following this commit, the designated `future_admin`, specified at the time of commitment, is required to apply the changes to complete the change of ownership.
 
@@ -1190,7 +1190,7 @@ new_admin_deadline: public(uint256)
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `debt`
 ::::description[`PegKeeperV2.debt() -> uint256: view`]

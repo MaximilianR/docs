@@ -46,7 +46,7 @@ $$\text\{rate\} = \text\{rate\}_\{\text\{min\}\} \cdot \left(\frac\{\text\{rate\
 ---
 
 
-## **Rates****The rate values are based on 1e18 and NOT annualized.***To calculate the Borrow APR:*
+## Rates**The rate values are based on 1e18 and NOT annualized.***To calculate the Borrow APR:*
 
 $$\text\{borrowAPR\} = \frac\{\text\{rate\} * 365 * 86400\}\{10^\{18\}\}$$
 
@@ -329,7 +329,7 @@ Out [1]:  6113754953
 ---
 
 
-## **Changing Rates**
+## Changing Rates
 
 Rates within the MonetaryPolicy contract can only be **changed by the `admin` of the lending factory**, which is the Curve DAO.
 
@@ -802,7 +802,7 @@ Out [1]:  317097919837
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `BORROWED_TOKEN`
 :::description[`SemiLogMonetaryPolicy.BORROWED_TOKEN() -> address: view`]

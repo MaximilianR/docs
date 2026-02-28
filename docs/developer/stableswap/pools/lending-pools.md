@@ -46,7 +46,7 @@ Lending pools also implement the ABI from plain pools. Refer to the plan pools d
 
 :::
 
-## **Pool Info Methods**
+## Pool Info Methods
 
 ### `underlying_coins`
 
@@ -134,7 +134,7 @@ def __init__(
 
 ::::
 
-## **Exchange Methods**
+## Exchange Methods
 
 Like plain pools, lending pools have the ``exchange`` method. However, in the case of lending pools, calling ``exchange`` 
 performs a swap between two wrapped tokens in the pool.
@@ -239,7 +239,7 @@ pool does not return anything for ``exchange_underlying`` and therefore costs mo
 
 ::::
 
-## **Add/Remove Liquidity Methods**
+## Add/Remove Liquidity Methods
 
 The function signatures for adding and removing liquidity to a lending pool are mostly the same as for a plain pool. 
 However, for lending pools, liquidity is added and removed in the wrapped token, not the underlying.

@@ -59,7 +59,7 @@ def initialize(
 
 </details>
 
-## **Exchange Methods**
+## Exchange Methods
 
 ### `exchange`
 ::::description[`CryptoSwap.exchange(i: uint256, j: uint256, dx: uint256, min_dy: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
@@ -677,7 +677,7 @@ def get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:
 
 ::::
 
-## **Adding/Removing Liquidity**
+## Adding/Removing Liquidity
 
 ### `add_liquidity`
 ::::description[`CryptoSwap.add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
@@ -1157,7 +1157,7 @@ def _calc_withdraw_one_coin(A_gamma: uint256[2], token_amount: uint256, i: uint2
 
 ::::
 
-## **Oracles Methods**
+## Oracles Methods
 
 Oracle prices are updated whenever the `tweak_price` function is called. This occurs when any of the `_exchange()`, `add_liquidity()`, or `remove_liquidity_one_coin()` functions are called.
 
@@ -1581,7 +1581,7 @@ def get_virtual_price() -> uint256:
 
 ::::
 
-## **Fee Methods**
+## Fee Methods
 
 Fees are charged based on the balance/imbalance of the pool. Fee is low when the pool is balanced and increases the more it is imbalanced.
 
@@ -1905,7 +1905,7 @@ def _claim_admin_fees():
 
 ::::
 
-## **Price Scaling**
+## Price Scaling
 
 Curve v2 pools adaptively adjust liquidity to optimize depth near prevailing market prices, thereby reducing slippage. This is achieved by maintaining a continuous EMA (exponential moving average) of the pool's recent exchange rates (termed "internal oracle"), and relocating liquidity around this EMA when it's economically sensible for LPs.
 
@@ -1978,7 +1978,7 @@ adjustment_step: public(uint256)
 
 ::::
 
-## **Bonding Curve Parameters**
+## Bonding Curve Parameters
 
 Similar to many AMMs, Curve v2 employs a bonding curve to determine asset prices based on the pool's availability of each asset. To centralize liquidity near the bonding curve's midpoint, Curve v2 utilizes an invariant that sits between the Stableswap (Curve v1) and the constant-product models (like Uniswap, Balancer, and others).
 
@@ -2113,7 +2113,7 @@ def _A_gamma() -> uint256[2]:
 
 ::::
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `coins`
 ::::description[`CryptoSwap.coins(arg0: uint256) -> address: view`]
@@ -2283,7 +2283,7 @@ factory: public(address)
 
 ::::
 
-## **Internal Math Functions**
+## Internal Math Functions
 
 All these math functions are interally embedded into the contract. They can not be called externally.
 

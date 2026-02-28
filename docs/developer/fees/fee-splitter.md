@@ -22,7 +22,7 @@ The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www
 ---
 
 
-## **Dispatching Fees, Receivers and Weights**
+## Dispatching Fees, Receivers and Weights
 
 The contract consolidates the process of claiming and distributing fees into a single external function called `dispatch_fees`. Calling this function is fully permissionless and can be done by anyone.
 
@@ -523,7 +523,7 @@ If, later on, a third receiver with a weight of 1000 (at the cost of reducing th
 ---
 
 
-## **Controller Management**
+## Controller Management
 
 The contract maintains a list of [`controllers`](#controllers) from which fees can be claimed. This list is updated to match the controllers registered in the crvUSD Factory contract. The [`update_controllers`](#update_controllers) function is used to keep this list current.
 
@@ -815,7 +815,7 @@ In this example, the `update_controllers` function is called to synchronize the 
 ---
 
 
-## **Contract Ownership**
+## Contract Ownership
 
 Ownership of the contract is managed using the [`ownable.vy`](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) module from 🐍 [Snekmate](https://github.com/pcaversaccio/snekmate) which implements a basic control access mechanism, where there is an `owner` that can be granted exclusive access to specific functions.
 
@@ -1176,7 +1176,7 @@ In this example, the ownership of the contract is renounced.
 ---
 
 
-## **Other Methods**
+## Other Methods
 
 ### `version`
 ::::description[`FeeSplitter.version() -> String[8]: view`]

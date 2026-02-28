@@ -17,7 +17,7 @@ For abbreviations, see [here](./oracle.md#terminology-used-in-code).
 
 :::
 
-## **EMA of TVL**`_ema_tvl()` calculates the *exponential moving average* (EMA) of the *total value locked* (TVL) for `TRICRYPTO` pools.
+## EMA of TVL`_ema_tvl()` calculates the *exponential moving average* (EMA) of the *total value locked* (TVL) for `TRICRYPTO` pools.
 
 This value is subsequently used in the internal function `_raw_price()` to compute the *weighted price of ETH*.
 
@@ -149,7 +149,7 @@ last_tvl: public(uint256[N_POOLS])
 
 ::::
 
-## **Calculate Raw Price**
+## Calculate Raw Price
 
 The internal `_raw_price()` function calculates the *raw price of the collateral token*.
 
@@ -300,7 +300,7 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 
 ::::
 
-## **Chainlink Limits**
+## Chainlink Limits
 
 The oracle contracts have the option to utilize Chainlink prices, which serve as safety limits. When enabled, these limits are triggered if the Chainlink price deviates by more than 1.5% (represented by `BOUND_SIZE`) from the internal price oracles.
 
@@ -389,7 +389,7 @@ def set_use_chainlink(do_it: bool):
 
 ::::
 
-## **Terminology used in Code**| terminology used in code | |
+## Terminology used in Code| terminology used in code | |
 |-----------|----------------|
 | $\alpha$ | `alpha` |
 | $\exp$  | `exp(power: int256) -> uint256:` |
@@ -402,7 +402,7 @@ def set_use_chainlink(do_it: bool):
 | $totalETH_{price}$ | `crv_p` |
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `N_POOLS`
 ::::description[`Oracle.N_POOLS() -> uint256:`]

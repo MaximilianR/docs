@@ -116,7 +116,7 @@ Additionally, methods like `mint()`, `deposit()`, `redeem()`, and `withdraw()` c
 ---
 
 
-## **Depositing Assets and Minting Shares**:::colab[Google Colab Notebook]
+## Depositing Assets and Minting Shares:::colab[Google Colab Notebook]
 
 A google colab notebook on how to use the `deposit` and `mint` functions can be found here: [https://colab.research.google.com/drive/1Qj9nOk5TYXp6j6go3VIh6--r5VILnoo9?usp=sharing](https://colab.research.google.com/drive/1Qj9nOk5TYXp6j6go3VIh6--r5VILnoo9?usp=sharing).
 
@@ -1013,7 +1013,7 @@ def set_max_supply(max_supply: uint256):
 ---
 
 
-## **Withdrawing Assets and Redeeming Shares**:::colab[Google Colab Notebook]
+## Withdrawing Assets and Redeeming Shares:::colab[Google Colab Notebook]
 
 A Google Colab notebook on how to use the `withdraw` and `mint` functions, as well as how shares are priced, can be found here: [https://colab.research.google.com/drive/1Ta69fsIc7zmtjFlQ94a8MDYYLeo4GJJI?usp=sharing](https://colab.research.google.com/drive/1Ta69fsIc7zmtjFlQ94a8MDYYLeo4GJJI?usp=sharing).
 
@@ -1850,7 +1850,7 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 ---
 
 
-## **Interest Rates**
+## Interest Rates
 
 Interest rates within lending markets are intricately linked to the market's utilization rate. Essentially, as market utilization increases, so too do the interest rates. This dynamic relationship underscores the market's demand-supply equilibrium, directly influencing the cost of borrowing and the returns on lending.
 
@@ -2040,7 +2040,7 @@ rate: public(uint256)
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `asset`
 :::description[`Vault.asset() -> ERC20:`]

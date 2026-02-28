@@ -18,7 +18,7 @@ pools may be viewed on
 [GitHub](https://github.com/curvefi/curve-contract/blob/master/contracts/pool-templates/base/SwapTemplateBase.vy).
 
 
-## **Pool Info Methods**
+## Pool Info Methods
 
 ### `coins`
 
@@ -484,7 +484,7 @@ def __init__(
 
 ::::
 
-## **Exchange Methods**
+## Exchange Methods
 
 ### `get_dy`
 
@@ -649,7 +649,7 @@ def exchange(i: int128, j: int128, dx: uint256, min_dy: uint256) -> uint256:
 
 ::::
 
-## **Add/Remove Liquidity Methods**
+## Add/Remove Liquidity Methods
 
 ### `calc_token_amount`
 

@@ -15,7 +15,7 @@ The contract also **acts as a registry for the gauges**, storing information suc
 
 ---
 
-## **Adding Gauges and Gauge Data**
+## Adding Gauges and Gauge Data
 
 After a liquidity gauge was deployed, it can be added to the `GaugeController` for it to be elegible to recieve CRV emissions. Adding a gauge requires a successfully passed DAO vote.
 
@@ -179,7 +179,7 @@ n_gauges: public(int128)
 
 ---
 
-## **Vote-Weighting and Gauge Weights**
+## Vote-Weighting and Gauge Weights
 
 Users who have a positive veCRV balance can use their voting power to vote for specific gauges. Only gauges who have been added to the `GaugeController` by the DAO can be voted for. These gauge weights define how much CRV emissions a gauge receives.
 
@@ -632,7 +632,7 @@ def get_weights_sum_per_type(type_id: int128) -> uint256:
 
 ---
 
-## **Points**
+## Points
 
 GaugeController records points (bias + slope) per gauge in `vote_points`, and scheduled changes in biases and slopes for those points in `vote_bias_changes` and `vote_slope_changes`. New changes are applied at the start of each epoch week.
 
@@ -861,7 +861,7 @@ time_type_weight: public(uint256[1000000000])  # type_id -> last scheduled time 
 
 ---
 
-## **Gauge Types**
+## Gauge Types
 
 Each liquidity gauge is assigned a type within the `GaugeController`. Grouping gauges by type allows the DAO to adjust the emissions according to type, making it possible to e.g. end all emissions for a single type.
 
@@ -1229,7 +1229,7 @@ This example changes the weight of a gauge type with ID `14` to `100000000000000
 
 ---
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `token`
 ::::description[`GaugeController.token() -> address: view`]
@@ -1303,7 +1303,7 @@ def __init__(_token: address, _voting_escrow: address):
 
 ---
 
-## **Contract Ownership**
+## Contract Ownership
 
 Admin ownership can be commited by calling `commit_transfer_ownership`. Changes then need to be applied. The current `admin` is the OwnershipAgent, which would require a DAO vote to change it.
 

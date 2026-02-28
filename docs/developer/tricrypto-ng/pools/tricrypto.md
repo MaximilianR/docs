@@ -54,7 +54,7 @@ def _unpack(_packed: uint256) -> uint256[3]:
 ---
 
 
-## **Exchange Methods***The contract offers two different ways to exchange tokens:*
+## Exchange Methods*The contract offers two different ways to exchange tokens:*
 
 - A regular `exchange` method.
 - A `exchange_underlying` method, which swaps tokens based on native token transfers into the pool. More [here](../../stableswap-ng/pools/overview.md#exchange_received).
@@ -834,7 +834,7 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 ---
 
 
-## **Adding and Removing Liquidity***The tricrypto-ng implementation utilizes the usual methods to add and remove liquidity.*
+## Adding and Removing Liquidity*The tricrypto-ng implementation utilizes the usual methods to add and remove liquidity.*
 
 **Adding liquidity**can be done via the `add_liquidity` method. The code uses a list of unsigned integers `uint256[N_COINS]` as input for the pools underlying tokens to add. **Any proportion is possible**. For example, adding fully single-sided can be done using `[0, 1e18]` or `[1e18, 0]`, but again, any variation is possible, e.g., `[1e18, 1e19]`.
 
@@ -2642,7 +2642,7 @@ def get_y(
 ---
 
 
-## **Fees and Pool Profits**
+## Fees and Pool Profits
 
 The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
 
@@ -3343,7 +3343,7 @@ xcp_profit_a: public(uint256)  # <--- Full profit at last claim of admin fees.
 ---
 
 
-## **Price Scaling**
+## Price Scaling
 
 Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
 
@@ -3723,7 +3723,7 @@ packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 ---
 
 
-## **Bonding Curve Parameters**
+## Bonding Curve Parameters
 
 A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../overview.md#bonding-curve-parameters).
 
@@ -3861,7 +3861,7 @@ def _A_gamma() -> uint256[2]:
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `coins`
 ::::description[`TriCrypto.coins(arg0: uint256) -> uint256: view`]

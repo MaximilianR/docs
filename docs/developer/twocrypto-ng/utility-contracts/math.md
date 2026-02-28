@@ -12,7 +12,7 @@ Full list of all deployments can be found [here](../../deployments.md).
 ---
 
 
-## **AMM Math Functions**
+## AMM Math Functions
 
 ### `snekmate_log_2`
 ::::description[`Math._snekmate_log_2(x: uint256, roundup: bool) -> uint256:`]

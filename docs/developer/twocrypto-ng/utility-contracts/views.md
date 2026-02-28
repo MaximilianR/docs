@@ -14,7 +14,7 @@ Full list of all deployments can be found [here](../../deployments.md).
 ---
 
 
-## **Exchange Methods**
+## Exchange Methods
 
 ### `get_dy`
 ::::description[`Views.get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256: view`]
@@ -785,7 +785,7 @@ returns approx_fee
 
 ::::
 
-## **Methods for Adding/Removing Liquidity**
+## Methods for Adding/Removing Liquidity
 
 ### `calc_withdraw_one_coin`
 ::::description[`Views.calc_withdraw_one_coin(token_amount: uint256, i: uint256, swap: address) -> uint256: view`]

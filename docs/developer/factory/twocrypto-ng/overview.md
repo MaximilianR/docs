@@ -14,7 +14,7 @@ A full list of all deployments can be found [here](../../deployments.md).
 ---
 
 
-## **Implementations**
+## Implementations
 
 The Twocrypto-NG Factory makes use of **blueprint contracts**([EIP-5202](https://eips.ethereum.org/EIPS/eip-5202)) to deploy liquidity pools and gauges.
 
@@ -35,7 +35,7 @@ It utilizes four different implementations:
 *More on the [**Math Implementation**](../../twocrypto-ng/utility-contracts/math.md) and [**Views Implementation**](../../twocrypto-ng/utility-contracts/views.md).*
 
 
-## **Query Implementations**
+## Query Implementations
 
 ### `pool_implementations`
 ::::description[`Factory.pool_implementations(arg0: uint256) -> address: view`]
@@ -153,7 +153,7 @@ math_implementation: public(address)
 
 ::::
 
-## **Set New Implementations***New implementations can be set via the following admin-only functions:*
+## Set New Implementations*New implementations can be set via the following admin-only functions:*
 
 
 ### `set_pool_implementation`
@@ -381,7 +381,7 @@ def set_math_implementation(_math_implementation: address):
 
 ::::
 
-## **Fee Receiver**
+## Fee Receiver
 
 ### `fee_receiver`
 ::::description[`Factory.fee_receiver() -> address: view`]

@@ -17,7 +17,7 @@ Relevant contract deployments can be found [here](../deployments.md).
 
 The `PriceAggregator` contract calculates the weighted average price of crvUSD across multiple liquidity pools, considering only those pools with sufficient liquidity (`MIN_LIQUIDITY` = 100,000 * 10**18). This calculation is based on the exponential moving-average (EMA) of the Total Value Locked (TVL) for each pool, determining the liquidity considered in the price aggregation.
 
-## **EMA TVL Calculation**
+## EMA TVL Calculation
 
 The price calculation begins with determining the EMA of the TVL from different Curve Stableswap liquidity pools using the `_ema_tvl` function. This internal function computes the EMA TVLs based on the following formula, which adjusts for the time since the last update to smooth out short-term volatility in the TVL data, providing a more stable and representative average value over the specified time window (`TVL_MA_TIME` set to 50,000 seconds):
 
@@ -66,7 +66,7 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 
 </details>
 
-## **Aggregated Price Calculation**
+## Aggregated Price Calculation
 
 The `_price` function then uses these EMA TVLs to calculate the aggregated prices by considering the liquidity of each pool. A pool's liquidity must meet or exceed `100,000 * 10**18` to be included in the calculation. The function adjusts the price from the pool's `price_oracle` based on the position of crvUSD in the liquidity pair, ensuring consistent price representation across pools.
 

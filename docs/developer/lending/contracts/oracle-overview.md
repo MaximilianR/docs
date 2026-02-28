@@ -25,19 +25,19 @@ EMA oracle for collateral tokens using **a single Curve pool to fetch the price 
 ---
 
 
-## **Oracle Examples**
+## Oracle Examples
 
 This sections aims to give examples on the various oracle contract combinations, focusing on [`CryptoFromPool.vy`](../contracts/crypto-from-pool.md) and [`CryptoFromPoolsRate.vy`](../contracts/crypto-from-pools-rate.md).
 
 
-## **Single Curve-Pool Oracle (e.g. CRV)**
+## Single Curve-Pool Oracle (e.g. CRV)
 
 The [oracle contract](https://etherscan.io/address/0xE0a4C53408f5ACf3246c83b9b8bD8d36D5ee38B8) for the CRV market fetches the price oracle from a single Curve pool, the [triCRV pool](https://etherscan.io/address/0x4eBdF703948ddCEA3B11f675B4D1Fba9d2414A14) consisting of crvUSD, wETH and wBTC. This oracle can even be deployed automatically using the [`create_from_pool`](../contracts/oneway-factory.md#create_from_pool) method on the [`OneWayLendingFactory`](../contracts/oneway-factory.md).
 
 *The `CryptoFromPool.vy` contract is specifically designed for these types of oracles. Full documentation is available [here](../contracts/crypto-from-pool.md).*
 
 
-## **Chained Oracles without Rates (FXN)**
+## Chained Oracles without Rates (FXN)
 
 This [oracle contract](https://arbiscan.io/address/0xbB82bf9a0C6739c0bacFdFFbcE3D2Ec4AA97970E) utilizes two Curve pool oracles to derive the price of the [FXN token](https://arbiscan.io/address/0x179F38f78346F5942E95C5C59CB1da7F55Cf7CAd) relative to the crvUSD token. Importantly, this oracle does not apply any conversion rates; it strictly uses the raw prices provided by the oracles.
 
@@ -66,7 +66,7 @@ $$\text\{price\} = \frac\{43130436331749331 \times 3011786169374663706441\}\{10^
 *This final value represents the price of FXN in terms of crvUSD by chaining together two oracles. All values are based on a scale of 1e18; hence, 129899651623057139817 would approximate to 129.71 crvUSD per FXN token.*
 
 
-## **Chained Oracles with Rates (pufETH)**
+## Chained Oracles with Rates (pufETH)
 
 The [oracle contract](https://etherscan.io/address/0xb08eB288C57a37bC82238168ad96e15975602cd9) for the pufETH lending market integrates two Curve pool oracles and applies the `stored_rates` from the [pufETH/wstETH pool](https://etherscan.io/address/0xeeda34a377dd0ca676b9511ee1324974fa8d980d) due to the nature of the tokens.
 

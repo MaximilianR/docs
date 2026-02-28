@@ -12,7 +12,7 @@ It utilizes three different implementations:
 - **`gauge_implementation`**, containing a contract which is used when deploying liquidity gauges for pools.
 
 
-## **Query Implementations**
+## Query Implementations
 
 ### `metapool_implementations`
 ::::description[`Factory.metapool_implementations(_base_pool: address) -> address[10]:`]
@@ -191,7 +191,7 @@ def get_implementation_address(_pool: address) -> address:
 
 ::::
 
-## **Set New Implementation***New implementations can be set via these admin-only functions:*
+## Set New Implementation*New implementations can be set via these admin-only functions:*
 
 ### `set_metapool_implementation`
 ::::description[`Factory.set_metapool_implementations(_base_pool: address, _implementations: address[10]):`]

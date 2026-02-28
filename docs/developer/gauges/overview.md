@@ -7,7 +7,7 @@ Users who have veCRV, Curve's voting-escrowed token, can vote on DAO-approved ga
 
 ---
 
-## **Smart Contracts**
+## Smart Contracts
 
 Allocation, distribution and minting of CRV are managed via several related DAO contracts:
 
@@ -37,7 +37,7 @@ Liquidity gauges on EVM sidechains use a system of Root and Child Liquidity Gaug
 
 ---
 
-## **Implementation Details**
+## Implementation Details
 
 ## CRV Inflation
 CRV follows a piecewise linear inflation schedule. The inflation is reduced by around 15.9% each year. Each time the inflation reduces, a new mining epoch starts.

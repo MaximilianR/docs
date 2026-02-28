@@ -11,7 +11,7 @@ All Views contract deployments can be found in the [Deployment Addresses](../../
 
 :::
 
-## **Token Exchange Methods**
+## Token Exchange Methods
 
 ### `get_dx`
 ::::description[`StableSwap.get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256:`]
@@ -513,7 +513,7 @@ def get_dy_underlying(
 
 ::::
 
-## **Deposit / Withdrawl Methods**
+## Deposit / Withdrawl Methods
 
 ### `calc_token_amount`
 ::::description[`StableSwap.calc_token_amount(_amounts: DynArray[uint256, MAX_COINS], _is_deposit: bool, pool: address) -> uint256:`]
@@ -724,7 +724,7 @@ def calc_withdraw_one_coin(_burn_amount: uint256, i: int128, pool: address) -> u
 
 ::::
 
-## **Dynamic Fee Method**
+## Dynamic Fee Method
 
 ### `dynamic_fee`
 ::::description[`StableSwap.dynamic_fee(i: int128, j: int128, pool:address) -> uint256:`]

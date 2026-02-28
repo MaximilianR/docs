@@ -21,7 +21,7 @@ Metapools also implement the ABI from plain pools. The template source code for 
 
 :::
 
-## **Pool Info Methods**
+## Pool Info Methods
 
 ### `base_coins`
 

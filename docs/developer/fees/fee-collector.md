@@ -29,7 +29,7 @@ If you are running or planning to run fee collection for Curve DAO, there is a T
 ---
 
 
-## **Epochs**
+## Epochs
 
 The contract operates in different [epochs](#epochs) (phases) in which certain actions are possible.
 
@@ -193,7 +193,7 @@ def _epoch_time_frame(epoch: Epoch, ts: uint256) -> (uint256, uint256):
 ---
 
 
-## **Keeper's Fee**
+## Keeper's Fee
 
 The `FeeCollector` contract has a keeper's fee, which incentivizes external users or bots to perform specific actions at the appropriate times within the different epochs. The fee mechanism ensures that these operations are carried out reliably and efficiently by rewarding the entities that execute them.
 
@@ -402,7 +402,7 @@ This example sets the maximum fee for the `COLLECT` epoch to `0.05`.
 ---
 
 
-## **Burn Process**
+## Burn Process
 
 The `FeeCollector` contract has a [`target`](#target) variable, which represents the coin into which all the collected fees are "burned" into. This variable can be changed by the [`owner`](#owner) of the contract using the [`set_target`](#set_target) function. As the owner of the contract is the Curve DAO, a on-chain proposal needs to be successfully passed to make any changes.
 
@@ -1196,7 +1196,7 @@ def recover(_recovers: DynArray[RecoverInput, MAX_LEN], _receiver: address):
 ---
 
 
-## **Burner and Hooker Contracts**
+## Burner and Hooker Contracts
 
 Burner contracts are used to convert collected coins into the target coins. Hooker contracts facilitate the execution of predefined actions (hooks) through the `Hooker` contract.
 
@@ -1452,7 +1452,7 @@ This example sets the `hooker` contract to `0x0000000000000000000000000000000000
 ---
 
 
-## **Ownership and Killing Coins**
+## Ownership and Killing Coins
 
 The `FeeCollector` contract features a dual ownership structure, consisting of a regular `owner` and an `emergency_owner`.
 

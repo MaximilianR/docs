@@ -12,7 +12,7 @@ In order for a sidechain gauge to receive CRV emissions, the system uses a two-g
 ---
 
 
-## **Smart Contracts**
+## Smart Contracts
 
 The cross-chain gauge factory requires components to be deployed both on Ethereum and on an alternate EVM compatible network.
 
@@ -58,7 +58,7 @@ Contract used to store veCRV information on child chains.
 
 ---
 
-## **Boosting on Sidechains**
+## Boosting on Sidechains
 
 Before reading this section, it is recommended to understand how boosting works in general.
 
@@ -171,7 +171,7 @@ def update(_user: address = msg.sender, _gas_limit: uint32 = 0):
 
 ---
 
-## **Deploying a Sidechain Gauge**
+## Deploying a Sidechain Gauge
 
 A sidechain gauge can be deployed by calling the `deploy_gauge` function of the `ChildGaugeFactory` on the respective chain. This creates a minimal proxy using Vyper’s built-in [`create_from_minimal_proxy`](https://docs.vyperlang.org/en/stable/built-in-functions.html#create_minimal_proxy_to) function, which points to the `ChildGauge` implementation and initializes the `ChildGauge` with the provided parameters, such as LP token, salt, and manager.
 
@@ -188,7 +188,7 @@ It does not matter if a root gauge is deployed before or after the child gauge. 
 Additionally, a sidechain gauge can also be deployed directly from the `RootGaugeFactory` on Ethereum. This is achieved using a `call_proxy`, which acts as an intermediary contract to facilitate cross-chain calls. **Currently, this feature is not enabled, and the `call_proxy` contract has not been set.**---
 
 
-## **Killing Sidechain Gauges**
+## Killing Sidechain Gauges
 
 Killing a gauge essentially means cutting off all CRV emissions to the gauge by setting the inflation rate to 0.
 

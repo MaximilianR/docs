@@ -23,7 +23,7 @@ The contract is deployed on all supported chains at `0xFacEFeeD696BFC0ebe7EaD3FF
 
 ---
 
-## **Configuration & Ownership**
+## Configuration & Ownership
 
 This section covers owner-only functions for configuring LayerZero channels, peers, delegates, and the block oracle. These functions are critical for secure cross-chain operation and must be managed by the contract owner (DAO).
 

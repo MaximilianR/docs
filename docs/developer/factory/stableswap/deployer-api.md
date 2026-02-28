@@ -1,5 +1,5 @@
 
-## **Liquidity Pools**:::warning
+## Liquidity Pools:::warning
 
 Transaction will fail if the requirements are not met.
 
@@ -329,7 +329,7 @@ def deploy_metapool(
 
 ::::
 
-## **Liquidity Gauge**:::info
+## Liquidity Gauge:::info
 
 Liquidity gauges can only be successfully deployed from the same contract from which the pool was deployed!
 

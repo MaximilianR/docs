@@ -21,7 +21,7 @@ The `VotingEscrow` on :logos-ethereum: Ethereum is deployed at [`0xde1e6A7E82970
 
 ---
 
-## **Delegation**
+## Delegation
 
 The delegation system in `L2veCRVDelegation` is designed to be flexible and secure. Users can delegate their veCRV voting power to another address on a specific chain, revoke delegation, or allow others to delegate to them. The contract also provides DAO-level controls for exceptional cases, ensuring that delegation can be managed even if a user is unable to interact directly. The following functions describe the available delegation mechanisms and their intended use cases.
 
@@ -359,6 +359,6 @@ This example returns the address which delegated their veCRV balance on chain `1
 
 ---
 
-## **Contract Ownership**
+## Contract Ownership
 
 Contract ownership is handled via the snekmate `ownable` module. The `owner` of the contract is the DAO, and ownership can be transferred using the `transfer_ownership()` function.

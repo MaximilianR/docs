@@ -10,7 +10,7 @@ The source code for the `ChildGauge.vy` contract can be found on [ GitHub](https
 
 ---
 
-## **Initialization**
+## Initialization
 
 ### `initialize`
 ::::description[`ChildGauge.initialize(_lp_token: address, _root: address, _manager: address)`]
@@ -72,7 +72,7 @@ def initialize(_lp_token: address, _root: address, _manager: address):
 ---
 
 
-## **Depositing & Withdrawing**
+## Depositing & Withdrawing
 
 ### `deposit`
 ::::description[`ChildGauge.deposit(_value: uint256, _addr: address = msg.sender, _claim_rewards: bool = False)`]
@@ -355,13 +355,13 @@ def _checkpoint(_user: address):
 ---
 
 
-## **External Rewards**
+## External Rewards
 
 External rewards are externally added rewards (not coming from the CRV emissions) and are not boostable. They are distributed linearly over the chosen period to users based on their liquidity share of the gauge. Between 3 days and a year, week by default.
 
 The following functions allow for claiming external rewards (not CRV emissions). CRV emissions can only be claimed directly from the `ChildGaugeFactory`.
 
-## **Claiming Rewards**
+## Claiming Rewards
 
 ### `claim_rewards`
 ::::description[`ChildGauge.claim_rewards(_addr: address = msg.sender, _receiver: address = empty(address))`]
@@ -650,7 +650,7 @@ def set_rewards_receiver(_receiver: address):
 ---
 
 
-## **Reward Data**
+## Reward Data
 
 The following functions allow for retrieving reward data for a specific reward token.
 
@@ -930,7 +930,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 
 ---
 
-## **Depositing Rewards**
+## Depositing Rewards
 
 The process for adding external reward tokens follows two steps:
 
@@ -1323,7 +1323,7 @@ This example changes the manager of the gauge from `0x12345678901234567890123456
 
 ---
 
-## **Checkpoints and Boosting**
+## Checkpoints and Boosting
 
 For more information on how boosting works, please refer to the [Boosting Explainer](./overview.md#boosting) page.
 
@@ -1905,7 +1905,7 @@ This example returns the inverse supply of CRV at the first period for `0x20a440
 
 ---
 
-## **RootGauge and VotingEscrow**
+## RootGauge and VotingEscrow
 
 ### `root_gauge`
 ::::description[`ChildGauge.root_gauge() -> address: view`]
@@ -2056,7 +2056,7 @@ This example shows the following: The gauge has been deployed without a voting e
 
 ---
 
-## **Killing Gauges**
+## Killing Gauges
 
 ### `is_killed`
 ::::description[`ChildGauge.is_killed() -> bool: view`]
@@ -2144,7 +2144,7 @@ True
 ---
 
 
-## **ERC20 and Other Methods**
+## ERC20 and Other Methods
 
 The contract inherits the ERC20 interface and follows the standard ERC20 methods. These methods are not further documented here. Some notable methods are documented below.
 

@@ -137,7 +137,7 @@ def toggle_allow_checkpoint_token():
 ---
 
 
-## **ve-Supply Checkpoint**
+## ve-Supply Checkpoint
 
 Checkpointing the ve-Supply is an essential process to ensure fair reward distribution. It involves periodically recording the total supply of veCRV for each epoch. This process is crucial for accurately distributing fees to veCRV holders based on their balances.
 

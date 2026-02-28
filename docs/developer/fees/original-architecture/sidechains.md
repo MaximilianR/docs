@@ -49,7 +49,7 @@ def bridge(_coin: address):
 
 </details>
 
-## **Bridging**:::warning
+## Bridging:::warning
 
 The methods to burn and bridge assets *might slightly vary based on the chain*. The examples down below are taken from [Optimism](https://www.optimism.io/).
 
@@ -148,7 +148,7 @@ def bridge(coin: address) -> bool:
 
 ::::
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `PROXY_OFT`
 ::::description[`Bridge.PROXY_OFT():`]
@@ -228,7 +228,7 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 
 ::::
 
-## **Receiver**
+## Receiver
 
 Receiver of the bridged funds is the 0xECB contract on Ethereum Mainnet.
 

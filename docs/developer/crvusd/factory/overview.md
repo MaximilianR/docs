@@ -12,7 +12,7 @@ Source code available on [Github](https://github.com/curvefi/curve-stablecoin/bl
 
 :::
 
-## **Debt Ceilings**
+## Debt Ceilings
 
 ### `debt_ceiling`
 ::::description[`ControllerFactory.debt_ceiling(agr0: address) -> uint256: view`]
@@ -149,7 +149,7 @@ def _set_debt_ceiling(addr: address, debt_ceiling: uint256, update: bool):
 
 ::::
 
-## **Fee Receiver**
+## Fee Receiver
 
 The fee receiver is the address that receives the claimed fees when calling `collect_fees()` on the Controller.
 A new receiver can be set by the `admin` of the contract, which is the CurveOwnershipAgent.
@@ -202,7 +202,7 @@ def __init__(stablecoin: ERC20,
 
 ::::
 
-## **Implementations**
+## Implementations
 
 Implementations are blueprint contracts used to deploy new markets. When calling `add_market`, Controller and AMM are created from the current implementations.
 
@@ -269,7 +269,7 @@ amm_implementation: public(address)
 
 ::::
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `stablecoin`
 ::::description[`ControllerFactory.stablecoin() -> address: view`]

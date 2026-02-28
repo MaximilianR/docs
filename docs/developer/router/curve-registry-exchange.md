@@ -15,7 +15,7 @@ A new and updated version is available here: [`CurveRouterNG`](./curve-router-ng
 ---
 
 
-## **Exchanging Tokens**:::warning
+## Exchanging Tokens:::warning
 
 This contract only considers liquidity sources that have been added to it. These sources are primarily the liquidity pools registered in `factory_registry` and `crypto_registry`.
 
@@ -1110,7 +1110,7 @@ def get_exchange_multiple_amount(
 ---
 
 
-## **Registry Contracts**:::warning[Outdated]
+## Registry Contracts:::warning[Outdated]
 
 The contract retrieves pool data from various registries sourced from the [`AddressProvider`](https://etherscan.io/address/0x0000000022d53366457f9d5e68ec105046fc4383). Since its deployment, a [new `AddressProvider`](../integration/address-provider.md) along with additional registries have been deployed.
 
@@ -1275,7 +1275,7 @@ def update_registry_address() -> bool:
 ---
 
 
-## **Calculator Contract**
+## Calculator Contract
 
 The contract is designed to set a calculator contract that can perform various tasks. However, this has not been configured.
 
@@ -1453,7 +1453,7 @@ def set_default_calculator(_calculator: address) -> bool:
 ---
 
 
-## **Killing the Router**
+## Killing the Router
 
 The `admin` of the `AddressProvider` contract has the ability to set the `is_killed` status of the `CurveRegistryExchange` contract via the `set_killed` function. Setting this status to `true` disables all exchanges in the contract. The status can be reversed, or "unkilled," to allow token exchanges to resume.
 
@@ -1533,7 +1533,7 @@ def set_killed(_is_killed: bool) -> bool:
 ---
 
 
-## **Transfering Funds**
+## Transfering Funds
 
 In the event that the contract holds an ERC20 or ETH balance, these tokens can be claimed by the `admin` of the `AddressProvider` contract. Although this should not occur at all, a possible scenario in which this could happen is when users mistakenly send their tokens directly to the contract address.
 

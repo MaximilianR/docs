@@ -66,11 +66,11 @@ The cross-chain scrvUSD system operates through three main components working to
 ---
 
 
-## **scrvUSD Oracle**
+## scrvUSD Oracle
 
 Contract that contains information about the price of scrvUSD. It uses a `max_acceleration` parameter to limit the rate of price updates. The oracle includes a `price_oracle` method to ensure compatibility with other smart contracts, such as Stableswap implementations.
 
-## **Price Methods**
+## Price Methods
 
 ### `update_price`
 ::::description[`scrvUSDOracle.update_price(_parameters: uint256[ASSETS_PARAM_CNT + SUPPLY_PARAM_CNT]) -> uint256`]
@@ -433,7 +433,7 @@ def _price_per_share(ts: uint256) -> uint256:
 ---
 
 
-## **Oracle Acceleration**
+## Oracle Acceleration
 
 Because the rates are stored over time, the price can change suddenly and can lead to sandwich attacks. To prevent this, the `max_acceleration` parameter is used to limit the rate of price updates.
 
@@ -532,7 +532,7 @@ def set_max_acceleration(_max_acceleration: uint256):
 ---
 
 
-## **Prover**
+## Prover
 
 ### `prover`
 ::::description[`scrvUSDOracle.prover() -> address: view`]
@@ -615,7 +615,7 @@ This example sets the prover to the `0x47ca04Ee05f167583122833abfb0f14aC5677Ee4`
 ---
 
 
-## **Block Hash Oracle**
+## Block Hash Oracle
 
 The `BlockHashOracle` contract is providing Ethereum's `blockhash(block number)` values. Optimism stores some latest known blockhash, so the OP stack oracle works like simply saving latest known.
 
@@ -866,7 +866,7 @@ commitments: public(HashMap[address, HashMap[uint256, bytes32]])
 ---
 
 
-## **scrvUSD Prover**
+## scrvUSD Prover
 
 ### `prove`
 ::::description[`ScrvusdProver.prove(bytes, bytes) -> bool`]

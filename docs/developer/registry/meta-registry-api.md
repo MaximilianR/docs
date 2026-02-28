@@ -9,7 +9,7 @@ A full list of all deployment addresses can be found [here](../deployments.md).
 ---
 
 
-## **Finding Pools**:::colab[Google Colab Notebook]
+## Finding Pools:::colab[Google Colab Notebook]
 
 A guide on how to find liquidity pools which hold specific coins can be found [here](../integration/meta-registry.md#fetching-liquidity-pools).
 
@@ -161,7 +161,7 @@ def find_pool_for_coins(_from: address, _to: address, i: uint256 = 0) -> address
 ---
 
 
-## **MetaRegistry Specific Informations**
+## MetaRegistry Specific Informations
 
 The factory has a similar API to that of the main Registry, which can be used to query information about existing pools.
 
@@ -264,7 +264,7 @@ def pool_list(_index: uint256) -> address:
 ---
 
 
-## **Pool Specific Informations***The following methods are used to fetch pool specific informations:*
+## Pool Specific Informations*The following methods are used to fetch pool specific informations:*
 
 ### `get_pool_name`
 ::::description[`MetaRegistry.get_pool_name(_pool: address, _handler_id: uint256 = 0) -> String[64]:`]
@@ -878,7 +878,7 @@ def get_gauge_type(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 
 ---
 
 
-## **Coin Specific Informations***The following methods are used to fetch coin specific informations:*
+## Coin Specific Informations*The following methods are used to fetch coin specific informations:*
 
 ### `get_coins`
 ::::description[`MetaRegistry.get_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]:`]
@@ -1372,7 +1372,7 @@ def get_coin_indices(_pool: address, _from: address, _to: address, _handler_id: 
 ---
 
 
-## **Handler and Registry Specific Informations***The following methods are used to fetch handler and registry specific informations and function to add or update handlers:*
+## Handler and Registry Specific Informations*The following methods are used to fetch handler and registry specific informations and function to add or update handlers:*
 
 
 ### `get_registry_handerls_from_pool`
@@ -1599,7 +1599,7 @@ def __init__(_address_provider: address):
 ---
 
 
-## **Adding and Updating Registries**
+## Adding and Updating Registries
 
 New registries can be added by the `owner` of the contract using the [`add_registry_handler`](#add_registry_handler) function. Existing ones can be updated using the [`update_registry_handler`](#update_registry_handler) function.
 

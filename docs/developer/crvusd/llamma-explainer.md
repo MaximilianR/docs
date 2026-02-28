@@ -20,7 +20,7 @@ Before explaining the heart of the system, the liquidation process, in more deta
 ---
 
 
-## **Bands**
+## Bands
 
 Bands in LLAMMA function similarly to Uniswap V3, concentrating liquidity between two prices. A band is a range of prices into which liquidity is deposited. LLAMMA consists of multiple bands forming a fixed price grid, and when creating a loan, liquidity is equally distributed across the number of bands (`N`) chosen when opening the loan. The minimum number is `4`, and the maximum is `50`. These bands where liquidity is deposited define the total liquidation range of the loan.[^1]
 
@@ -36,7 +36,7 @@ The graph shows how liquidity is distributed equally across the chosen number of
 
 ---
 
-## **Liquidation**
+## Liquidation
 
 The liquidation aspect of LLAMMA is very different from other lending protocols. LLAMMA has a liquidation range, whereas most other lending protocols have a single liquidation price, and their loan can be liquidated when that price is crossed.
 
@@ -63,7 +63,7 @@ Liquidation is not done on a user basis but rather on a band basis, making the l
 
 :::
 
-### **Soft-Liquidation**
+### Soft-Liquidation
 
 Soft-liquidation is the process which sells the collateral asset (`ETH`) for the borrowable (`crvUSD`) asset because the asset price of the collateral is going down. This reduces the overall exposure to the volatile asset (ETH) of the loan. But keep in mind, as long as the price is above the liquidation range, there is no need to liquidate anything; all the bands are 100% in ETH.
 
@@ -76,7 +76,7 @@ This can lead to the following: It is possible that the price of the collateral 
 *Summary: If the price goes down, LLAMMA starts selling the collateral asset for the borrow asset.*
 
 
-### **De-Liquidation**
+### De-Liquidation
 
 De-liquidation is essentially exactly the same as soft-liquidation, but the other way around when the price of the collateral asset rises again. De-liquidation means converting the crvUSD backing the loan obtained through earlier soft-liquidation back into the collateral token (ETH) again. Logically, for a de-liquidation to happen, the loan first needs to be soft-liquidated. Otherwise, there is no crvUSD to convert to ETH.
 
@@ -84,7 +84,7 @@ De-liquidation can happen until all the assets backing the loan are converted ba
 
 *Summary: If the price of the collateral rises, LLAMMA starts buying back the collateral for the borrow asset.*
 
-### **Hard-Liquidation**
+### Hard-Liquidation
 
 Hard-liquidation is the process where other users can repay the debt of a user and in exchange receive their collateral. A loan is only eligible for hard-liquidation when the health of the loan is below 0%. It is very important to understand that the liquidation range does not reflect prices where a loan is hard-liquidated. It really only depends on the health of the loan.
 
@@ -116,7 +116,7 @@ A loan's health can be read directly from the `Controller.vy` contract of the co
 ```
 
 
-## **Possible Scenarios of Band Compositions***Now that we know how the liquidation mechanism of LLAMMA works, we can define three possible scenarios for bands regarding their asset composition:*
+## Possible Scenarios of Band Compositions*Now that we know how the liquidation mechanism of LLAMMA works, we can define three possible scenarios for bands regarding their asset composition:*
 
 1. **Band contains both collateral and borrowable token:**Indicates continuous liquidation mode. The band in which the collateral price is currently located is defined as the [`active_band`](amm.md#active_band).
 
@@ -150,7 +150,7 @@ A loan's health can be read directly from the `Controller.vy` contract of the co
 ---
 
 
-## **How does LLAMMA liquidate the Collateral?**
+## How does LLAMMA liquidate the Collateral?
 
 Liquidation happens on a band basis, not on an individual user basis. This means that if multiple users have liquidity deposited into the same band that is currently being soft- or de-liquidated, the liquidation happens for all users together and not just for a single user.
 
@@ -167,16 +167,16 @@ When the price oracle fetched from an external price source (using oracles of Cu
 </figure>
 
 
-### **Oracle Price Decrease (Soft-Liquidation)**
+### Oracle Price Decrease (Soft-Liquidation)
 
 When the `price_oracle` starts to fall, `get_p` falls faster than `price_oracle`. For example, if `get_p` is 830 and `price_oracle` is 850, arbitrage traders can buy ETH for 830 in the LLAMMA and sell it for 850 elsewhere. This process decreases ETH in the bands (because it’s bought) and increases crvUSD (because it’s being sold).
 
-### **Price Oracle Increase (De-Liquidation)**
+### Price Oracle Increase (De-Liquidation)
 
 When the `price_oracle` rises, `get_p` increases faster than `price_oracle`. For example, if `get_p` is 860 and `price_oracle` is 850, arbitrage traders can buy ETH outside of the AMM for 850 and sell it in the AMM for 860. This results in ETH being deposited into the AMM and crvUSD being removed.
 
 
-### **How is it arbitraged?**
+### How is it arbitraged?
 
 The arbitrage opportunity lies within the difference between `get_p` and `price_oracle`. As long as `get_p ≠ price_oracle`, there is an arbitrage opportunity. The static exchange fee can be adjusted by governance using the `set_fee` function.
 
@@ -192,7 +192,7 @@ Arbitrage traders should observe `get_p` and `price_oracle` inside the AMM. The 
 
 # **Loan Parameters**
 
-## **Maximum LTV**The loan-to-value (LTV) ratio depends on the number of bands (`N`) and the band width factor (`A`). The higher the number of bands, the lower the LTV. The maximum LTV can be approximated using the following function:
+## Maximum LTVThe loan-to-value (LTV) ratio depends on the number of bands (`N`) and the band width factor (`A`). The higher the number of bands, the lower the LTV. The maximum LTV can be approximated using the following function:
 
 $$LTV = \text\{100%\} - \text\{loan_discount\} - 100 * \frac\{N\}\{2*A\}$$
 
@@ -211,7 +211,7 @@ $\text{LTV (50 bands)} = 1 - 0.09 - 1 \times \frac{50}{2 \times 100} = 0.66 ≈ 
 
 </Example>
 
-## **Liquidation Range**
+## Liquidation Range
 
 The start of the liquidation range is also determined by the LTV:
 

@@ -147,7 +147,7 @@ struct AtomicAmountAndFee:
 ---
 
 
-## **Route and Swap Parameters**
+## Route and Swap Parameters
 
 The two most curcial input values when using the `CurveRouter` are `_route`, which determines the route of the exchange and `_swap_params`, which includes swap parameters such as input and output token, swap type, pool type and number of coins in the pool.
 
@@ -241,7 +241,7 @@ The array structure includes the following elements: **`[i, j, swap_type, pool_t
 ---
 
 
-## **Exchanging Tokens**
+## Exchanging Tokens
 
 The router has a single `exchange` function, which allows up to 5 swaps in a single transaction. 
 
@@ -506,7 +506,7 @@ def exchange(
 ---
 
 
-## **Helper Functions**
+## Helper Functions
 
 There are two function to estimate input and output token amounts:
 

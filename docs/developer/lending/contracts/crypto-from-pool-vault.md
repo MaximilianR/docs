@@ -125,7 +125,7 @@ def __init__(
 ---
 
 
-## **Oracle Price**
+## Oracle Price
 
 The oracle price is calculated by taking the `price_oracle` of a Curve pool and then adjusting it by the redemption rate of a vault, using methods such as `convertToAssets`, `pricePerShare` or really any other equvalent function which returns the rate of the vault token and the underlying asset.
 
@@ -494,7 +494,7 @@ def _raw_price() -> uint256:
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `VAULT`
 :::description[`CryptoFromPoolVault.VAULT() -> address: view`]

@@ -22,7 +22,7 @@ The `AddressProvider` contract is managed by an `admin` who is currently an indi
 ---
 
 
-## **Reading IDs**
+## Reading IDs
 
 For the full mapping of IDs please see [`get_id_info`](#get_id_info).
 
@@ -298,7 +298,7 @@ This method returns the total number of IDs added to the `AddressProvider`.
 ---
 
 
-## **Adding, Removing and Updating IDs**
+## Adding, Removing and Updating IDs
 
 IDs can be added, removed, or adjusted by the `admin` of the contract. 
 
@@ -856,7 +856,7 @@ def _remove_id(_id: uint256) -> bool:
 ---
 
 
-## **Contract Ownership**
+## Contract Ownership
 
 The ownership of the contract follows the classic two-step ownership model used across most Curve contracts.
 

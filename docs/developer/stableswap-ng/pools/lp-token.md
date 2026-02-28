@@ -2,7 +2,7 @@
 **Pool and LP tokens are the same smart contract. The pool itself acts as a LP Token.**When coins are deposited into a Curve pool, the depositor receives pool LP (liquidity provider) tokens in return. Each Curve pool has its unique ERC20 contract representing these LP tokens, making them transferable. Holding these LP tokens allows for their deposit and staking in the pool's liquidity gauge, earning CRV token rewards.Additionally, if a metapool supports the LP token, it can be deposited there to receive the metapool's distinct LP tokens.
 
 
-## **Transfer Methods**
+## Transfer Methods
 
 ### `transfer`
 ::::description[`LPToken.transfer(_to : address, _value : uint256) -> bool:`]
@@ -111,7 +111,7 @@ def _transfer(_from: address, _to: address, _value: uint256):
 
 ::::
 
-## **Allowance Methods**
+## Allowance Methods
 
 ### `allowance`
 ::::description[`LPToken.allowance(arg0: address, arg1: address) -> uint256: view`]
@@ -274,7 +274,7 @@ def permit(
 
 ::::
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `name`
 ::::description[`LPToken.name() -> String[64]: view`]

@@ -57,7 +57,7 @@ An excellent deep-dive article on the parameters: [https://nagaking.substack.com
 
 :::
 
-## **Bonding Curve Parameters**
+## Bonding Curve Parameters
 
 Similar to many AMMs, Curve v2 employs a bonding curve to determine asset prices according to the pool's supply of each asset. To centralize liquidity around the midpoint of the bonding curve, Curve v2 adopts an invariant that falls between the StableSwap (Curve v1) approach and the constant-product method used by platforms like Uniswap and Balancer.
 
@@ -65,7 +65,7 @@ Similar to many AMMs, Curve v2 employs a bonding curve to determine asset prices
 - **`gamma`**: regulates the overall breadth of the curve
 
 
-## **Price Scaling**
+## Price Scaling
 
 Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. This is achieved by tracking a continuous EMA (exponential moving average) of the pool's latest exchange rates (referred to as an "internal oracle") and reallocating liquidity around this EMA only when it's economically beneficial for LPs.
 
@@ -74,7 +74,7 @@ Curve v2 pools automatically adjust liquidity to optimize depth close to the pre
 - **`adjustment_step`**: minimum size of price scale adjustments
 
 
-## **Fees**
+## Fees
 
 Fees are charged based on the balance/imbalance of the pool. Fee is low when the pool is balanced and increases the more it is imbalanced.
 

@@ -11,7 +11,7 @@ Source code for all lending-relevant contracts is available on [GitHub](https://
 
 :::
 
-## **Overview***The entire system is similar to the one for minting crvUSD. Every lending market has a individual **Controller**, **LLAMMA**, and **Vault**.*
+## Overview*The entire system is similar to the one for minting crvUSD. Every lending market has a individual **Controller**, **LLAMMA**, and **Vault**.*
 
 <figure>
   <img src="../assets/images/lending_overview.svg" alt="" width="600" />
@@ -28,14 +28,14 @@ The **Vault**is where willing *lenders provide assets to be borrowed*. The contr
 ---
 
 
-## **LLAMMA and Controller**
+## LLAMMA and Controller
 
 Because Curve Lending operates very similarly to the system for minting crvUSD, both `Controller.vy` and `AMM.vy` (LLAMMA) can be used for lending markets. To ensure full compatibility with both systems, **several modifications have been made to their codebases**:
 
 [→ More here](./contracts/controller-llamma.md)
 
 
-## **Vault**
+## Vault
 
 The Vault is an **implementation of the ERC4626 vault which deposits assets into the Controller contract**and tracks the **progress of fees earned**. It is a standard factory (non-blueprint) contract that also creates the AMM and Controller using `initialize()`.
 
@@ -128,7 +128,7 @@ def initialize(
 [→ More here](./contracts/vault.md)
 
 
-## **OneWay Lending Factory**
+## OneWay Lending Factory
 
 The factory allows the **permissionless creation of borrowing/lending markets without rehypothecation**, meaning the collateral asset cannot be lent out. A distinctive feature is its ability to generate markets from Curve pools with a `price_oracle()` method, eliminating the need for a separate price oracle. Nonetheless, these pools must adhere to one of the following standards: 
 
@@ -139,14 +139,14 @@ The factory allows the **permissionless creation of borrowing/lending markets wi
 [→ More here](./contracts/oneway-factory.md)
 
 
-## **Oracles**
+## Oracles
 
 Curve lending markets use **EMA oracles**as price sources to value the underlying collaterals. There are **multiple different oracles in use**. For example, one version uses the `price_oracle` of a single Curve pool, while another version uses an oracle contract that chains together multiple price oracles from different liquidity pools.
 
 [→ More here](./contracts/oracle-overview.md)
 
 
-## **Monetary Policies**
+## Monetary Policies
 
 Lending markets uses a semi-log monetary policy for lending markets where the **borrow rate does not depend on the price of crvUSD**but just on the **utilization of the market**.
 

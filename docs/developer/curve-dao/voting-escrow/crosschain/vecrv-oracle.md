@@ -33,7 +33,7 @@ The `L2VotingEscrowOracle` contract is deployed at the following addresses and i
 ---
 
 
-## **Updating the Oracle**
+## Updating the Oracle
 
 The "Updating the Oracle" section describes the privileged functions that allow authorized verifiers to update the state of the L2VotingEscrowOracle contract. These include updating individual user veCRV balances (`update_balance`) and the global voting power state (`update_total`). Each function is protected by role-based access control, ensuring only designated accounts (with roles like `BALANCE_VERIFIER` or `TOTAL_VERIFIER`) can perform updates. Updates are linearized using a block number check to prevent outdated data from overwriting newer state. This mechanism ensures the oracle remains synchronized with the canonical VotingEscrow contract on Ethereum, providing accurate and secure off-chain voting power data for L2 environments.
 
@@ -471,7 +471,7 @@ def update_delegation(_from: address, _to: address, _block_number: uint256):
 
 ---
 
-## **Roles and Ownership Management**
+## Roles and Ownership Management
 
 The `L2VotingEscrowOracle` contract uses a role-based access control system, implemented via the Snekmate `access_control` module, to manage permissions for sensitive operations. Roles such as `BALANCE_VERIFIER`, `TOTAL_VERIFIER`, and `DELEGATION_VERIFIER` restrict who can update user balances, total supply, and delegation mappings, respectively. The `DEFAULT_ADMIN_ROLE` acts as the admin for all roles, and only accounts with the appropriate admin role can grant or revoke roles. This structure ensures that only authorized entities can perform privileged actions, providing robust security and flexibility for contract management.
 
@@ -772,7 +772,7 @@ exports: (
 
 ---
 
-## **User Info**
+## User Info
 
 The contract provides getter functions that allow querying detailed information about user voting power, lock status, and historical checkpoints in the `L2VotingEscrowOracle` contract. These functions enable users and integrators to track veCRV balances, lock expirations, voting power decay (slope), and historical states for any address.
 

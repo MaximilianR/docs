@@ -192,7 +192,7 @@ def _transfer_out(_coin_idx: uint256, _amount: uint256, receiver: address):
 ---
 
 
-## **Exchange Methods***The contract offers two different ways to exchange tokens:*
+## Exchange Methods*The contract offers two different ways to exchange tokens:*
 
 - A regular `exchange` method.
 - A novel `exchange_received` method, which swaps tokens based on the *"internal balances"* of the pool. This method is of great use for aggregators, as it **does not require token approval**of the pool, which eliminates certain smart contract risks and *can* remove one redundant ERC-20 transfer. More [here](../../stableswap-ng/pools/overview.md#exchange_received).
@@ -1535,7 +1535,7 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
 ---
 
 
-## **Adding and Removing Liquidity***The twocrypto-ng implementation utilizes the usual methods to add and remove liquidity.*
+## Adding and Removing Liquidity*The twocrypto-ng implementation utilizes the usual methods to add and remove liquidity.*
 
 **Adding liquidity**can be done via the `add_liquidity` method. The code uses a list of unsigned integers `uint256[N_COINS]` as input for the pools underlying tokens to add. **Any proportion is possible**. For example, adding fully single-sided can be done using `[0, 1e18]` or `[1e18, 0]`, but again, any variation is possible, e.g., `[1e18, 1e19]`.
 
@@ -3004,7 +3004,7 @@ Out [2]:  150537307454780254829
 ---
 
 
-## **Fees and Pool Profits**
+## Fees and Pool Profits
 
 The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
 
@@ -3397,7 +3397,7 @@ Out [1]:  4177413767556756716238
 ---
 
 
-## **Price Scaling**
+## Price Scaling
 
 Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
 
@@ -3551,7 +3551,7 @@ Out [1]:  680564733841876929619973849625130958848000000000600
 ---
 
 
-## **Bonding Curve Parameters**
+## Bonding Curve Parameters
 
 A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../overview.md#bonding-curve-parameters).
 
@@ -3680,7 +3680,7 @@ Out [1]:  145000000000000
 ---
 
 
-## **Oracle Methods***All pools have their own built in exponential moving average price oracle.*
+## Oracle Methods*All pools have their own built in exponential moving average price oracle.*
 
 Prices and oracles are adjusted by when calling the internal `tweak_price` method, which happens at `add_liquidity`, `remove_liquidity_one_coin` and `_exchange`.
 
@@ -4481,7 +4481,7 @@ Out [1]:  581843605731969082977825518885220002649556567303
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `admin`
 ::::description[`TwoCrypto.admin() -> address:`]

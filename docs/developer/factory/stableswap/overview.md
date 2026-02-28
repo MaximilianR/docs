@@ -6,6 +6,6 @@ A list of all deployed contracts can be found [here](../../deployments.md).
 
 :::
 
-## **Implementations**
+## Implementations
 
 More on [implementations](./implementations.md).

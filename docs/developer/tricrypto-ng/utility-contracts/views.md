@@ -12,7 +12,7 @@ Full list of all deployments can be found [here](../../deployments.md).
 ---
 
 
-## **Exchange Methods**
+## Exchange Methods
 
 ### `get_dy`
 ::::description[`ViewMethodContract.get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256:`]
@@ -327,7 +327,7 @@ def _calc_dtoken_nofee(
 
 ::::
 
-## **Calculating Fees Methods**
+## Calculating Fees Methods
 
 Methods to calculate fees for **`get_dy`**, **`withdraw_one_coin`**and **`calc_token_amount`**.
 

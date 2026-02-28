@@ -13,7 +13,7 @@ The contract is deployed on :logos-ethereum: Ethereum at [0xd061D61a4d941c39E545
 
 ---
 
-## **Minting CRV**
+## Minting CRV
 
 CRV tokens can be minted in several ways:
 
@@ -352,7 +352,7 @@ True
 
 ---
 
-## **Other Methods**
+## Other Methods
 
 ### `token`
 ::::description[`Minter.token() -> address: view`]

@@ -193,7 +193,7 @@ E.g., in the USDV&lt;&gt;3CRV pool: `coin[0]` = USDV, `coin[1]` = DAI, `coin[2]`
 ---
 
 
-## **Exchange Methods***Three functions for token exchanges:*
+## Exchange Methods*Three functions for token exchanges:*
 
 - The regular `exchange` function.
 - A novel `exchange_received` function that executes a token exchange based on the internal balances of the pool.
@@ -1258,7 +1258,7 @@ def calc_withdraw_one_coin(_burn_amount: uint256, i: int128, pool: address) -> u
 ---
 
 
-## **Adding and Removing Liquidity**
+## Adding and Removing Liquidity
 
 There are no restrictions on how liquidity can be added or removed. Liquidity can be provided or removed in any proportion. However, there are fees associated with adding and removing liquidity that depend on the balances within the pool.
 
@@ -2090,7 +2090,7 @@ def _calc_withdraw_one_coin(
 ---
 
 
-## **Fee Methods**
+## Fee Methods
 
 Stableswap-ng introduces a dynamic fee based on the imbalance of the coins within the pool and their pegs:
 
@@ -2572,7 +2572,7 @@ def _withdraw_admin_fees():
 ---
 
 
-## **Amplification Coefficient**
+## Amplification Coefficient
 
 The amplification coefficient **`A`**determines a pool’s tolerance for imbalance between the assets within it. A higher value means that trades will incur slippage sooner as the assets within the pool become imbalanced.
 
@@ -2943,7 +2943,7 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 ### `BASE_POOL`
 ::::description[`StableSwap.BASE_POOL() -> address: view`]

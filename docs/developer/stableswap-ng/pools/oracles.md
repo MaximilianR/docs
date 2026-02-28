@@ -48,7 +48,7 @@ To **manually verify if a pool is using a correct (bug-free) implementation**, o
 ---
 
 
-## **Price and D Oracles***Stableswap-NG pools have the following oracles:*
+## Price and D Oracles*Stableswap-NG pools have the following oracles:*
 
 
 -   **`price_oracle`**---
@@ -306,7 +306,7 @@ def _calc_moving_average(
 ---
 
 
-## **Other Methods**
+## Other Methods
 
 ### `last_price`
 ::::description[`StableSwap.last_price(i: uint256) -> uint256:`]
@@ -661,7 +661,7 @@ It returns: [1702584895, 1702584895], meaning both moving-average oracles were u
 ---
 
 
-## **Updating Oracles**
+## Updating Oracles
 
 The internal `upkeep_oracles` method is responsible for updating the price and D oracle.
 

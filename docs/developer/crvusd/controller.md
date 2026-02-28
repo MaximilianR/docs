@@ -41,7 +41,7 @@ The Controller contract acts as a on-chain interface for **creating loans and fu
 ---
 
 
-## **Creating and Repaying Loans**
+## Creating and Repaying Loans
 
 New loans are created via the **`ceate_loan`**function. When creating a loan the user needs to specify the **amount of collateral**, **debt**and the **number of bands**to deposit the collateral into. 
 
@@ -2467,7 +2467,7 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 --- 
 
 
-## **Adjusting Existing Loans**
+## Adjusting Existing Loans
 
 An already existing loan can be managed in different ways:
 
@@ -5421,7 +5421,7 @@ This example returns a list of all users with negative health and therefore elig
 ---
 
 
-## **Loan Info Methods***All user information, such as `debt`, `health`, etc., is stored within the Controller contract.*
+## Loan Info Methods*All user information, such as `debt`, `health`, etc., is stored within the Controller contract.*
 
 ### `debt`
 ::::description[`Controller.debt(user: address) -> uint256`]

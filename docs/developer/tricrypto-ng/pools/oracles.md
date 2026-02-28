@@ -367,7 +367,7 @@ def _unpack_prices(_packed_prices: uint256) -> uint256[2]:
 ---
 
 
-## **Oracle and Price Methods**
+## Oracle and Price Methods
 
 ### `price_oracle`
 ::::description[`CurveTricryptoOptimizedWETH.price_oracle(k: uint256) -> uint256:`]
@@ -762,7 +762,7 @@ virtual_price: public(uint256)  # <------ Cached (fast to read) virtual price.
 ---
 
 
-## **Updating Oracles and Other Storage Variables**
+## Updating Oracles and Other Storage Variables
 
 The EMA oracle and other storage variables are updated each time the internal `tweak_price` function is called. This function tweaks`price_oracle` and `last_price`, and conditionally adjusts `price_scale`.
 

@@ -18,7 +18,7 @@ Easiest way to obtain the gauge address of a liquidity pool is by querying [`get
 
 *Liquidity gauges have two types of rewards:*
 
-## **Rewards**
+## Rewards
 
 ### CRV Emissions
 
@@ -37,7 +37,7 @@ Unlike native CRV rewards, these kinds of rewards cannot be boosted.
 ---
 
 
-## **Versions**
+## Versions
 
 Over time, several improvements and enhancements were made to the liquidity gauges. This documentation will mainly cover the most recent one, `LiquidityGaugeV6`. Source code for all other gauges can be found on [ GitHub](https://github.com/curvefi/curve-dao-contracts/tree/master/contracts/gauges).
 
@@ -45,7 +45,7 @@ Over time, several improvements and enhancements were made to the liquidity gaug
 ---
 
 
-## **How to Deploy a Gauge**
+## How to Deploy a Gauge
 
 Liquidity gauges for liquidity pools can be deployed using the Factory contract. The Factory contract, which initially deployed the liquidity pool, utilizes the `deploy_gauge` function for this purpose.
 
@@ -101,7 +101,7 @@ def deploy_gauge(_pool: address) -> address:
 ---
 
 
-## **Adding a Gauge to the `GaugeController`**
+## Adding a Gauge to the `GaugeController`
 
 To make a liquidity gauge eligible to receive CRV emissions, it needs to be added to the `GaugeController.vy` contract. This is accomplished through an on-chain vote in which veCRV holders vote on.
 

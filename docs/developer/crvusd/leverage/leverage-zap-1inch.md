@@ -91,7 +91,7 @@ To enable the functionality of such Zap contracts, minor modifications were nece
 ---
 
 
-## **Building Leverage**
+## Building Leverage
 
 To build up leverage, the `LeverageZap1inch.vy` contract uses the `callback_deposit` function. Additionally, there is a `max_borrowable` function that calculates the maximum borrowable amount when using leverage. For an accompanying JavaScript library, see [ GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
 
@@ -455,7 +455,7 @@ def _max_p_base(controller: address) -> uint256:
 ---
 
 
-## **Unwinding Leverage**
+## Unwinding Leverage
 
 To deleverage loans, the `LeverageZap1inch.vy` contract uses the `callback_repay` function.
 
@@ -651,7 +651,7 @@ def _transferFrom(token: address, _from: address, _to: address, amount: uint256)
 ---
 
 
-## **Contract Info Methods**
+## Contract Info Methods
 
 The contract has two public getters, one for the 1inch router contract and one for the two factory contracts for crvUSD and lending markets.
 

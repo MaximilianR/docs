@@ -13,7 +13,7 @@ In its simplest form, a Curve pool is an implementation of the Stableswap invari
 ---
 
 
-## **Supported Assets**
+## Supported Assets
 
 Stableswap-NG pools supports the following asset types:
 
@@ -34,7 +34,7 @@ Stableswap-NG pools supports the following asset types:
 - ERC4626 tokens with arbitrary percision (&lt;=18) of Vault token and underlying asset
 
 
-### **Rebasing Tokens**:::warning[Rebasing Tokens]
+### Rebasing Tokens:::warning[Rebasing Tokens]
 
 Pools including rebasing tokens work a bit differently compared to others. 
 The internal `**_balance()**` function - which is used to calculate the coin balances within the pool - makes sure that **LP's keep all rebases**.
@@ -82,14 +82,14 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
 ---
 
 
-## **Dynamic Fees**
+## Dynamic Fees
 
 Stableswap-NG introduces dynamic fees. The use of the **`offpeg_fee_multiplier`**allows the system to dynamically adjust fees based on the pool's state. 
 
 The internal **`_dynamic_fee()`**function calculates the fee **based on the balances and rates**of the tokens being exchanged. If the balances of the tokens being exchanged are highly imbalanced or significantly differ from its peg, the fee is adjusted using the **`offpeg_fee_multiplier`**.
 
 
-### **Dynamic Fee Formula**:::bug
+### Dynamic Fee Formula:::bug
 
 If the formulas below do not render, please make sure to refresh the site. A solution is being worked on.
 
@@ -183,14 +183,14 @@ def _get_rates_balances_xp(pool: address, N_COINS: uint256) -> (
 
 </details>
 
-### **Interactive Graph**
+### Interactive Graph
 
 The embedded graph has limited features, such as the inability to modify the axis. However, by clicking the *"edit graph on desmos"* button at the bottom right, one is redirected to the main Desmos site. There, a wider range of functionalities is available, allowing for further adjustments and detailed exploration of the graph.
 
 ---
 
 
-## **Oracles**
+## Oracles
 
 The new generation (NG) of stableswap introduces two new pool-built-in oracles:
 
@@ -201,7 +201,7 @@ The new generation (NG) of stableswap introduces two new pool-built-in oracles:
 ---
 
 
-## **`exchange_received`**
+## `exchange_received`
 
 This new function **allows the exchange of tokens without actually transfering tokens in**, as the exchange is based on the change of the coins balances within the pool.
 
