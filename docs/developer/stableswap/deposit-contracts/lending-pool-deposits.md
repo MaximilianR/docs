@@ -995,7 +995,7 @@ def withdraw_donated_dust():
 
 ::::
 
-# Deposit Zap (New)
+## Deposit Zap (New)
 
 Compared to the older deposit zaps, the newer zaps mainly optimize for gas efficiency. The API is only modified 
 in part, specifically with regards to `return` values and variable naming.

@@ -13,7 +13,7 @@ Relevant contract deployments can be found [here](../deployments.md).
 
 ---
 
-# **Calculations**
+## Calculations
 
 The `PriceAggregator` contract calculates the weighted average price of crvUSD across multiple liquidity pools, considering only those pools with sufficient liquidity (`MIN_LIQUIDITY` = 100,000 * 10**18). This calculation is based on the exponential moving-average (EMA) of the Total Value Locked (TVL) for each pool, determining the liquidity considered in the price aggregation.
 
@@ -150,7 +150,7 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 
 ---
 
-# **Prices**
+## Prices
 
 ### `price`
 ::::description[`PriceAggregator.price() -> uint256:`]
@@ -481,7 +481,7 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 ---
 
 
-# **Adding and Removing Price Pairs**
+## Adding and Removing Price Pairs
 
 All price pairs added to the contract are considered when calculating the `price` of crvUSD. Adding or removing price pairs can only be done by the `admin` of the contract, which is the Curve DAO.
 
@@ -645,7 +645,7 @@ def remove_price_pair(n: uint256):
 ---
 
 
-# **Admin Ownership**
+## Admin Ownership
 
 ### `admin`
 ::::description[`PriceAggregator.admin() -> address: view`]
@@ -741,7 +741,7 @@ def set_admin(_admin: address):
 ---
 
 
-# **Contract Info Methods**
+## Contract Info Methods
 
 ### `SIGMA`
 ::::description[`PriceAggregator.SIGMA() -> uint256: view`]

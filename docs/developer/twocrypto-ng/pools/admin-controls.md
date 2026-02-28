@@ -1,7 +1,7 @@
 # Pool: Admin Controls
 
 
-# **Pool Ownership**
+## Pool Ownership
 
 Liquidity pools are deployed via the [Factory](../../factory/twocrypto-ng/deployer-api.md). All pools deployed **share the same admin**defined within the Factory contract.  
 Transfering the ownership of a pool is only possible by changing the ownership of the Factory. Admin is the Curve DAO (OwnershipAdmin).
@@ -14,7 +14,7 @@ The same applies to the fee receiver of the pools.
 ---
 
 
-# **Parameter Changes**
+## Parameter Changes
 
 For more information about parameters: [https://nagaking.substack.com/p/deep-dive-curve-v2-parameters](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters).
 
@@ -317,7 +317,7 @@ def apply_new_parameters(
 
 ::::
 
-# **Contract Info Methods**
+## Contract Info Methods
 
 ### `initial_A_gamma`
 ::::description[`TwoCrypto.initial_A_gamma -> uint256: view`]

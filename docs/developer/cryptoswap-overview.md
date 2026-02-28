@@ -17,7 +17,7 @@ For a detailed overview of the design, please read the official [whitepaper](../
 ---
 
 
-# **Implementations***There have been several implementations of the CryptoSwap algorithm:*
+## Implementations*There have been several implementations of the CryptoSwap algorithm:*
 
 :::deploy[Contract Source]
 
@@ -42,7 +42,7 @@ For a detailed overview of the design, please read the official [whitepaper](../
 ---
 
 
-# **Parameters**
+## Parameters
 
 Because different trading pairs can exhibit drastically different price dynamics, Curve v2 offers a variety of tunable parameters that can be used to optimize for different types of assets.
 

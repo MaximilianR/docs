@@ -8,7 +8,7 @@ A list of all contract deployments can be found [here](../../deployments.md).
 
 :::
 
-# **General Concepts**
+## General Concepts
 
 ## Stabilization MethodPegKeepers are specialized contracts **designed to maintain the stability of the crvUSD peg**. They hold a pre-minted supply of crvUSD tokens to be utilized for peg stabilization efforts. The operation of PegKeepers is **restricted to only two actions: depositing and withdrawing from liquidity pools**. As long as these pre-minted crvUSD tokens are not deposited anywhere, they can and should be counted as out-of-circulation.
 
@@ -37,7 +37,7 @@ For a comprehensive understanding of the factors influencing the interest rate, 
 ---
 
 
-# **PegKeeperV1**
+## PegKeeperV1
 
 The initial version of `PegKeeper.vy` encountered two significant problems:
 
@@ -58,7 +58,7 @@ A more critical issue arose when a PegKeeper engaged in a deposit, essentially t
 ---
 
 
-# **PegKeeperV2 and Regulator**:::github[GitHub]
+## PegKeeperV2 and Regulator:::github[GitHub]
 
 Research regarding PegKeeperV2 can be found here: [`curve-stablecoin-researches`](https://github.com/curvefi/curve-stablecoin-researches/tree/main/peg_keeper).
 

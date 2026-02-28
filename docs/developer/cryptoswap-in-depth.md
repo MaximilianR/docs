@@ -12,7 +12,7 @@ To understand Cryptoswap, it's helpful to first understand Stableswap, Curve's o
 
 :::
 
-# **Understanding Stableswap**
+## Understanding Stableswap
 
 Stableswap was designed for pools of similarly priced assets, like stablecoins, to **concentrate liquidity** around their pegged price (e.g., 1 `USDC` = 1 `USDT`). This allows for large swaps with very low slippage, even when the pool is imbalanced.
 
@@ -37,7 +37,7 @@ The shape of this liquidity bonding curve and how imbalanced a pool can become b
 - A **lower `A`** (e.g., 50–200) distributes liquidity more evenly. The price will deviate more gradually from the peg as the pool becomes imbalanced, avoiding sharp jumps.
 
 
-# **Understanding Cryptoswap**
+## Understanding Cryptoswap
 
 Cryptoswap pools build upon the core Stableswap algorithm, but with a key innovation: *where* liquidity is concentrated. Instead of targeting a fixed peg, Cryptoswap automatically concentrates and rebalances liquidity around the pool's **recent average price**.  This allows it to efficiently support **volatile asset pairs** (e.g., `crvUSD/ETH`) while making the entire process **fully passive for liquidity providers**.
 

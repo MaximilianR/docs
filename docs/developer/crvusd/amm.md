@@ -29,7 +29,7 @@ Before interacting with the `LLAMMA` contract, it is highly advised to read the 
 ---
 
 
-# **Depositing and Withdrawing Collateral**
+## Depositing and Withdrawing Collateral
 
 Whenever a user performs a collateral-specific action such as creating a new loan or adding more collateral, the collateral asset is deposited or withdrawn from the AMM. These functions are only callable by the admin of the AMM, which is the Controller.
 
@@ -343,7 +343,7 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ---
 
 
-# **Exchanging Tokens**
+## Exchanging Tokens
 
 The LLAMMA can be used to exchange tokens, just like any other AMM. This is crucial as arbitrage opportunities are created by the LLAMMA, which can be exploited by buying and selling tokens in the AMM.
 
@@ -1788,7 +1788,7 @@ def get_amount_for_price(p: uint256) -> (uint256, bool):
 ---
 
 
-# **Bands***"Each band works like Uniswap V3, concentrating liquidity between two prices, and being all in the collateral at the lower price and all in crvUSD at the higher price. However since the entire interval of prices are aggressively placed with respect to the market (higher than oracle price when it's moving up and lower when it's moving down), each band gets arbed to hold all of either collateral or stablecoin in the opposite manner than expected when LP-ing with Uniswap V3."*[^2]
+## Bands*"Each band works like Uniswap V3, concentrating liquidity between two prices, and being all in the collateral at the lower price and all in crvUSD at the higher price. However since the entire interval of prices are aggressively placed with respect to the market (higher than oracle price when it's moving up and lower when it's moving down), each band gets arbed to hold all of either collateral or stablecoin in the opposite manner than expected when LP-ing with Uniswap V3."*[^2]
 
 [^2]: https://github.com/chanhosuh/curvefi-math/blob/master/LLAMMA.ipynb
 
@@ -2832,7 +2832,7 @@ def can_skip_bands(n_end: int256) -> bool:
 ---
 
 
-# **AMM and Oracle Prices**:::info[A user's loan is only in soft-liquidation when the price oracle is within the bands of the deposited collateral]
+## AMM and Oracle Prices:::info[A user's loan is only in soft-liquidation when the price oracle is within the bands of the deposited collateral]
 
 A position enters soft-liquidation mode only when the price oracle falls within a band where the user has deposited collateral. For example, if a user has collateral deposited between bands 10 and 0, they will not enter soft-liquidation as long as the oracle price stays outside these bands. In this scenario, the only "loss" the user faces is the variable interest rate of the market. Additionally, there is a rather rare possibility that a user's loan was fully soft-liquidated, resulting in all their collateral being converted to the borrowable asset. In such a case, the user would be out of soft-liquidation because the price oracle is below the lowest band.
 
@@ -3506,7 +3506,7 @@ def __init__(
 ---
 
 
-# **Fees and Interest Rates****There are three different types of "fees" within the AMM:**- **`fee`**: This is charged on token exchanges within the AMM.
+## Fees and Interest Rates**There are three different types of "fees" within the AMM:**- **`fee`**: This is charged on token exchanges within the AMM.
 - **`admin_fee`**: This determines the percentage of the total fees that are distributed to veCRV holders.
 - **`rate`**: This represents the borrow rate a user pays on their loan.
 
@@ -4212,7 +4212,7 @@ def approve_max(token: ERC20, _admin: address):
 ---
 
 
-# **Contract Info Methods**
+## Contract Info Methods
 
 ### `coins`
 ::::description[`AMM.coins(i: uint256) -> address`]

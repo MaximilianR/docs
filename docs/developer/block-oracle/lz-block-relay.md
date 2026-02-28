@@ -202,7 +202,7 @@ def withdraw_eth(_amount: uint256):
 ---
 
 
-# **LayerZero Messaging & Peers**
+## LayerZero Messaging & Peers
 
 This section documents LayerZero-specific configuration and peer management. These functions are critical for secure cross-chain communication. Only trusted peers should be set to avoid malicious message injection.
 
@@ -660,7 +660,7 @@ def nextNonce(_srcEid: uint32, _sender: bytes32) -> uint64:
 ---
 
 
-# **Block Hash Operations**
+## Block Hash Operations
 
 This section covers the core cross-chain and block hash relay logic. These functions are responsible for requesting, broadcasting, and receiving block hashes.
 
@@ -954,7 +954,7 @@ struct Origin:
 ---
 
 
-# **Fee Quoting**
+## Fee Quoting
 
 ### `quote_read_fee`
 ::::description[`LZBlockRelay.quote_read_fee(_read_gas_limit: uint128, _value: uint128) -> uint256: view`]
@@ -1276,7 +1276,7 @@ def _getPeerOrRevert(_eid: uint32) -> bytes32:
 ---
 
 
-# **State & Utility Views**
+## State & Utility Views
 
 ### `read_enabled`
 ::::description[`LZBlockRelay.read_enabled() -> bool: view`]
@@ -1412,7 +1412,7 @@ block_oracle: public(IBlockOracle)
 ---
 
 
-# **Ownership**
+## Ownership
 
 Standard Ownable interface for querying the current owner and transferring or renouncing ownership. Ownership controls all privileged operations, including configuration and peer management. Owner of the contract is the DAO.
 

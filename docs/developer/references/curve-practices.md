@@ -23,7 +23,7 @@ In these specific cases, ownership may be delegated to specialized administrativ
 
 ---
 
-# **Ownership Transfer Patterns**
+## Ownership Transfer Patterns
 
 Curve uses different ownership transfer patterns in its contracts. The most common ones are described below.
 

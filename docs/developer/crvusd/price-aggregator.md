@@ -18,7 +18,7 @@ This aggregated price of crvUSD is used in multiple different components in the 
 ---
 
 
-# **Calculations**
+## Calculations
 
 The `AggregateStablePrice` contract calculates the **weighted average price of crvUSD across multiple liquidity pools**, considering only those pools with sufficient liquidity (`MIN_LIQUIDITY = 100,000 * 10**18`). The calculation is based on the **exponential moving average (EMA) of the Total-Value-Locked (TVL)**for each pool, determining the liquidity considered in the price aggregation.
 
@@ -156,7 +156,7 @@ $$\text\{final price\} = \frac\{\text\{wp_sum\}\}\{\text\{w_sum\}\}$$
 ---
 
 
-# **Price and TVL Methods**
+## Price and TVL Methods
 
 ### `price`
 ::::description[`PriceAggregator3.price() -> uint256`]
@@ -637,7 +637,7 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 ---
 
 
-# **Contract Info Methods**
+## Contract Info Methods
 
 ### `sigma`
 ::::description[`PriceAggregator3.SIGMA() -> uint256: view`]
@@ -728,7 +728,7 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ---
 
 
-# **Price Pairs**
+## Price Pairs
 
 All liquidity pools used to calculate the aggregated price are stored in `price_pairs`. New price pairs can be added or removed by the DAO using `add_price_pair` and `remove_price_pair`.
 
@@ -927,7 +927,7 @@ def remove_price_pair(n: uint256):
 ---
 
 
-# **Contract Ownership**
+## Contract Ownership
 
 The contract follows the classical two-step ownership model used in various other Curve contracts:
 

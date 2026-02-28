@@ -6459,7 +6459,7 @@ def _remove_from_list(_for: address):
 ---
 
 
-# **Fees***There are two types of fees:*
+## Fees*There are two types of fees:*
 
 1. `Borrowing-based fee`: Borrowers pay **interest**on the debt borrowed.
 2. `AMM-based fee`: **Swap fee**for trades within the AMM. There is also the option for an **admin fee**, but at the time of writing, admin fees are set to zero[^2], meaning all swap fees go to the liquidity providers, who are the borrowers themselves.
@@ -6951,7 +6951,7 @@ This example shows the effect of claiming fees. Before calling `collect_fees`, t
 ---
 
 
-# **Loan and Liquidation Discount***New values for `loan_discount` and `liquidation_discount` can be assigned by the admin of the Factory, which is the DAO.*
+## Loan and Liquidation Discount*New values for `loan_discount` and `liquidation_discount` can be assigned by the admin of the Factory, which is the DAO.*
 
 The **loan discount**is the percentage used to discount the collateral for calculating the maximum borrowable amount when creating a loan.
 
@@ -7271,7 +7271,7 @@ log SetBorrowingDiscounts(loan_discount, liquidation_discount)
 ---
 
 
-# **Monetary Policy**
+## Monetary Policy
 
 Each controller has a monetary policy contract. This contract is responsible for the interest rates within the markets. 
 
@@ -7435,7 +7435,7 @@ def rate_write(_for: address = msg.sender) -> uint256:
 ---
 
 
-# **Contract Info Methods**
+## Contract Info Methods
 
 ### `FACTORY`
 ::::description[`Controller.factory() -> address: view`]
@@ -7948,7 +7948,7 @@ redeemed: public(uint256)
 ---
 
 
-# **Callbacks**
+## Callbacks
 
 ### `set_callback`
 ::::description[`Controller.set_callback(cb: address) -> uint256: view`]

@@ -380,7 +380,7 @@ ve_supply: public(uint256[1000000000000000])  # VE total supply at week bounds
 ---
 
 
-# **Killing The FeeDistributor**
+## Killing The FeeDistributor
 
 The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and block the ability to claim or burn. The contract can not be unkilled. 
 
@@ -592,7 +592,7 @@ true
 ---
 
 
-# **Admin Ownership**
+## Admin Ownership
 
 ### `admin`
 ::::description[`FeeDistributor.admin() -> address: view`]
@@ -784,7 +784,7 @@ This example applies the transfer of the ownership.
 ---
 
 
-# **Other Methods**
+## Other Methods
 
 ### `start_time`
 ::::description[`FeeDistributor.start_time() -> uint256: view`]

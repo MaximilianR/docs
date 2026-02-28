@@ -15,7 +15,7 @@ A list of all deployments can be found [here](../../deployments.md).
 ---
 
 
-# **Asset Types**
+## Asset Types
 
 Stableswap-NG pools supports various tokens with different [asset types](../../stableswap-ng/pools/overview.md#supported-assets). New asset types can be added by the `admin` of the contract via the `add_asset_type` method.
 For a list of all supported assets, please see [Deployer API](deployer-api.md#assets-types).
@@ -96,7 +96,7 @@ def add_asset_type(_id: uint8, _name: String[10]):
 ---
 
 
-# **Base Pools**
+## Base Pools
 
 Stableswap pools also allow the deployment of metapools (an asset paired against a base pool). When deploying a new Factory, the existing base pools must be manually added to the contract for them to be used for metapools.
 
@@ -225,7 +225,7 @@ base_pool_list: public(address[4294967296])   # list of base pools
 ---
 
 
-# **Implementations**
+## Implementations
 
 The Stableswap-NG Factory makes use of **blueprint contracts**to deploy its contracts from the implementations.
 

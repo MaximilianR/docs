@@ -384,7 +384,7 @@ def collect_fees() -> uint256:
 
 ::::
 
-# **Burning Admin Fees**
+## Burning Admin Fees
 
 All admin fees are accumulated in the [0xECB](https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347) \{ title="shhhh!! don't tell Christine Lagarde!" \} contract and are burned according to the fee-burner settings designated for each specific coin.   
 *These functions need to be called from the 0xECB contract.*

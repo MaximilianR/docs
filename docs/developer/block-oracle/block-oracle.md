@@ -24,7 +24,7 @@ The contract is deployed on all supported chains at `0xb10cface69821Ff7b245Cf5f2
 ---
 
 
-# **Committers**
+## Committers
 
 Committers are tracked on-chain and are required for consensus operations. Only the contract owner can modify the committer set; all users can query committer status.
 
@@ -331,7 +331,7 @@ threshold: public(uint256)
 
 ---
 
-# **Committing Block Hashes**
+## Committing Block Hashes
 
 Only registered committers may call commit functions. The contract maintains a mapping of committer votes and a count of votes per block hash. Commitments are mutable until a block is confirmed; after confirmation, the block hash is immutable.
 
@@ -465,7 +465,7 @@ commitment_count: public(
 
 ---
 
-# **Block Application**
+## Block Application
 
 Block application includes both permissionless (anyone can call) and owner-only (admin) application. Also provides views for querying confirmed block hashes and the most recent confirmed block number. Once applied, block hashes are immutable and serve as the canonical record for the oracle.
 
@@ -642,7 +642,7 @@ last_confirmed_block_number: public(uint256)  # number of the last confirmed blo
 
 ---
 
-# **Block Headers**
+## Block Headers
 
 Functions for submitting and retrieving full block headers. Only the designated verifier contract may submit headers, which must match a previously confirmed block hash. Includes views for retrieving the state root, full header data, and the most recently confirmed header. These features enable advanced use cases such as state proofs and cross-chain verification.
 
@@ -810,7 +810,7 @@ last_confirmed_header: public(bh_rlp.BlockHeader)  # last confirmed header
 
 ---
 
-# **Verifier**
+## Verifier
 
 Owner-only functions for setting and querying the verifier contract address. The verifier is responsible for submitting RLP-encoded block headers. Proper verifier management is essential for the integrity of header submissions and downstream state proof operations.
 
@@ -892,6 +892,6 @@ header_verifier: public(address)  # address of the header verifier
 
 ---
 
-# **Ownership**
+## Ownership
 
 Standard Ownable interface for querying the current owner and transferring or renouncing ownership. Ownership controls all privileged operations, including committer management, threshold updates, and verifier assignment. Owner of the contract is the DAO.
