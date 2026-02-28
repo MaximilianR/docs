@@ -8,14 +8,14 @@ The source code for the `HeaderVerifier.vy` contract can be found on [ GitHub](h
 
 The contract is deployed on all supported chains at `0xB10CDEC0DE69c88a47c280a97A5AEcA8b0b83385`.
 
-<details>
-<summary>Contract ABI</summary>
+<ContractABI>
+
 
 ```json
 [{"inputs":[{"name":"encoded_header","type":"bytes"}],"name":"decode_block_header","outputs":[{"components":[{"name":"block_hash","type":"bytes32"},{"name":"parent_hash","type":"bytes32"},{"name":"state_root","type":"bytes32"},{"name":"receipt_root","type":"bytes32"},{"name":"block_number","type":"uint256"},{"name":"timestamp","type":"uint256"}],"name":"","type":"tuple"}],"stateMutability":"pure","type":"function"},{"inputs":[{"name":"_oracle_address","type":"address"},{"name":"_encoded_header","type":"bytes"}],"name":"submit_block_header","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 ```
 
-</details>
+</ContractABI>
 
 :::
 

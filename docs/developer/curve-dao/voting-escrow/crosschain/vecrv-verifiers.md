@@ -14,14 +14,14 @@ The source code for the `VecrvVerifier` contract is available on [GitHub](https:
 
 :::
 
-<details>
-<summary>Contract ABI</summary>
+<ContractABI>
+
 
 ```json
 [{"inputs":[{"internalType":"address","name":"_block_hash_oracle","type":"address"},{"internalType":"address","name":"_vecrv_oracle","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"BLOCK_HASH_ORACLE","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MIN_SLOPE_CHANGES_CNT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"VE_ORACLE","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"bytes","name":"_block_header_rlp","type":"bytes"},{"internalType":"bytes","name":"_proof_rlp","type":"bytes"}],"name":"verifyBalanceByBlockHash","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"uint256","name":"_block_number","type":"uint256"},{"internalType":"bytes","name":"_proof_rlp","type":"bytes"}],"name":"verifyBalanceByStateRoot","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes","name":"_block_header_rlp","type":"bytes"},{"internalType":"bytes","name":"_proof_rlp","type":"bytes"}],"name":"verifyTotalByBlockHash","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_block_number","type":"uint256"},{"internalType":"bytes","name":"_proof_rlp","type":"bytes"}],"name":"verifyTotalByStateRoot","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 ```
 
-</details>
+</ContractABI>
 
 
 ### `BLOCK_HASH_ORACLE`
@@ -400,14 +400,14 @@ The source code for the `DelegationVerifier` contract is available on [GitHub](h
 
 :::
 
-<details>
-<summary>Contract ABI</summary>
+<ContractABI>
+
 
 ```json
 [{"inputs":[{"internalType":"address","name":"_block_hash_oracle","type":"address"},{"internalType":"address","name":"_vecrv_oracle","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"BLOCK_HASH_ORACLE","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"VE_ORACLE","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_from","type":"address"},{"internalType":"bytes","name":"_block_header_rlp","type":"bytes"},{"internalType":"bytes","name":"_proof_rlp","type":"bytes"}],"name":"verifyDelegationByBlockHash","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_from","type":"address"},{"internalType":"uint256","name":"_block_number","type":"uint256"},{"internalType":"bytes","name":"_proof_rlp","type":"bytes"}],"name":"verifyDelegationByStateRoot","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 ```
 
-</details>
+</ContractABI>
 
 
 ### `BLOCK_HASH_ORACLE`

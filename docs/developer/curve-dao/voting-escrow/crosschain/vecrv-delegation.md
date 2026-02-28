@@ -10,14 +10,14 @@ The `VotingEscrow` on :logos-ethereum: Ethereum is deployed at [`0xde1e6A7E82970
 
 :::
 
-<details>
-<summary>Contract ABI</summary>
+<ContractABI>
+
 
 ```json
 [{"anonymous":false,"inputs":[{"indexed":true,"name":"_chain_id","type":"uint256"},{"indexed":true,"name":"_to","type":"address"}],"name":"AllowDelegation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_chain_id","type":"uint256"},{"indexed":true,"name":"_from","type":"address"},{"indexed":false,"name":"_to","type":"address"}],"name":"Delegate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previous_owner","type":"address"},{"indexed":true,"name":"new_owner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"inputs":[{"name":"new_owner","type":"address"}],"name":"transfer_ownership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_from","type":"address"}],"name":"delegated","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_to","type":"address"}],"name":"delegator","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_to","type":"address"}],"name":"delegation_allowed","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_to","type":"address"}],"name":"delegate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_chain_id","type":"uint256"}],"name":"allow_delegation","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_allow","type":"bool"}],"name":"allow_delegation","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_from","type":"address"},{"name":"_to","type":"address"}],"name":"delegate_from","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"version","outputs":[{"name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_owner","type":"address"}],"outputs":[],"stateMutability":"nonpayable","type":"constructor"}]
 ```
 
-</details>
+</ContractABI>
 
 ---
 

@@ -10,14 +10,14 @@ The source code for the `MainnetBlockView.vy` contract can be found on [ GitHub]
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0xb10CfacE69cc0B7F1AE0Dc8E6aD186914f6e7EEA`](https://etherscan.io/address/0xb10CfacE69cc0B7F1AE0Dc8E6aD186914f6e7EEA).
 
-<details>
-<summary>Contract ABI</summary>
+<ContractABI>
+
 
 ```json
 [{"inputs":[],"name":"get_blockhash","outputs":[{"name":"","type":"uint256"},{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_block_number","type":"uint256"}],"name":"get_blockhash","outputs":[{"name":"","type":"uint256"},{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_block_number","type":"uint256"},{"name":"_avoid_failure","type":"bool"}],"name":"get_blockhash","outputs":[{"name":"","type":"uint256"},{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"}]
 ```
 
-</details>
+</ContractABI>
 
 :::
 
