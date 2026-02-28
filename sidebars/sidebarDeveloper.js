@@ -16,7 +16,7 @@ export default {
                     type: 'category',
                     label: 'Voting Escrow (veCRV)',
                     items: [
-                        { type: 'doc', id: 'curve-dao/voting-escrow/voting-escrow', label: 'Overview' },
+                        { type: 'doc', id: 'curve-dao/voting-escrow/voting-escrow', label: 'VotingEscrow (veCRV)' },
                         {
                             type: 'category',
                             label: 'Cross-chain veCRV',

@@ -8,8 +8,6 @@ The source code for the `L2veCRVDelegation.vy` contract is available on [GitHub]
 
 The `VotingEscrow` on :logos-ethereum: Ethereum is deployed at [`0xde1e6A7E8297076f070E857130E593107A0E0cF5`](https://etherscan.io/address/0xde1e6A7E8297076f070E857130E593107A0E0cF5) and contract version is `0.0.1`.
 
-:::
-
 <ContractABI>
 
 
@@ -18,6 +16,8 @@ The `VotingEscrow` on :logos-ethereum: Ethereum is deployed at [`0xde1e6A7E82970
 ```
 
 </ContractABI>
+
+:::
 
 ---
 

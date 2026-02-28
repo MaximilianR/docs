@@ -12,8 +12,6 @@ The `VecrvVerifier` contract is used to verify and update the total supply and i
 
 The source code for the `VecrvVerifier` contract is available on [GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/vecrv/verifiers/VecrvVerifier.sol). The contract is written in [Solidity](https://soliditylang.org/) version `0.8.18`.
 
-:::
-
 <ContractABI>
 
 
@@ -22,6 +20,8 @@ The source code for the `VecrvVerifier` contract is available on [GitHub](https:
 ```
 
 </ContractABI>
+
+:::
 
 
 ### `BLOCK_HASH_ORACLE`
@@ -398,8 +398,6 @@ The `DelegationVerifier` contract is used to verify and update veCRV delegation 
 
 The source code for the `DelegationVerifier` contract is available on [GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/vecrv/verifiers/DelegationVerifier.sol). The contract is written in [Solidity](https://soliditylang.org/) version `0.8.18`.
 
-:::
-
 <ContractABI>
 
 
@@ -408,6 +406,8 @@ The source code for the `DelegationVerifier` contract is available on [GitHub](h
 ```
 
 </ContractABI>
+
+:::
 
 
 ### `BLOCK_HASH_ORACLE`

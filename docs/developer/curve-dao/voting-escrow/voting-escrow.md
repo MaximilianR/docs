@@ -8,6 +8,15 @@ The source code for the `VotingEscrow.vy` contract can be found on [GitHub](http
 
 The contract is deployed on Ethereum at [`0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2`](https://etherscan.io/address/0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2).
 
+<ContractABI>
+
+
+```json
+[{"name":"CommitOwnership","inputs":[{"type":"address","name":"admin","indexed":false}],"anonymous":false,"type":"event"},{"name":"ApplyOwnership","inputs":[{"type":"address","name":"admin","indexed":false}],"anonymous":false,"type":"event"},{"name":"Deposit","inputs":[{"type":"address","name":"provider","indexed":true},{"type":"uint256","name":"value","indexed":false},{"type":"uint256","name":"locktime","indexed":true},{"type":"int128","name":"type","indexed":false},{"type":"uint256","name":"ts","indexed":false}],"anonymous":false,"type":"event"},{"name":"Withdraw","inputs":[{"type":"address","name":"provider","indexed":true},{"type":"uint256","name":"value","indexed":false},{"type":"uint256","name":"ts","indexed":false}],"anonymous":false,"type":"event"},{"name":"Supply","inputs":[{"type":"uint256","name":"prevSupply","indexed":false},{"type":"uint256","name":"supply","indexed":false}],"anonymous":false,"type":"event"},{"outputs":[],"inputs":[{"type":"address","name":"token_addr"},{"type":"string","name":"_name"},{"type":"string","name":"_symbol"},{"type":"string","name":"_version"}],"stateMutability":"nonpayable","type":"constructor"},{"name":"commit_transfer_ownership","outputs":[],"inputs":[{"type":"address","name":"addr"}],"stateMutability":"nonpayable","type":"function"},{"name":"apply_transfer_ownership","outputs":[],"inputs":[],"stateMutability":"nonpayable","type":"function"},{"name":"commit_smart_wallet_checker","outputs":[],"inputs":[{"type":"address","name":"addr"}],"stateMutability":"nonpayable","type":"function"},{"name":"apply_smart_wallet_checker","outputs":[],"inputs":[],"stateMutability":"nonpayable","type":"function"},{"name":"create_lock","outputs":[],"inputs":[{"type":"uint256","name":"_value"},{"type":"uint256","name":"_unlock_time"}],"stateMutability":"nonpayable","type":"function"},{"name":"increase_amount","outputs":[],"inputs":[{"type":"uint256","name":"_value"}],"stateMutability":"nonpayable","type":"function"},{"name":"increase_unlock_time","outputs":[],"inputs":[{"type":"uint256","name":"_unlock_time"}],"stateMutability":"nonpayable","type":"function"},{"name":"deposit_for","outputs":[],"inputs":[{"type":"address","name":"_addr"},{"type":"uint256","name":"_value"}],"stateMutability":"nonpayable","type":"function"},{"name":"withdraw","outputs":[],"inputs":[],"stateMutability":"nonpayable","type":"function"},{"name":"checkpoint","outputs":[],"inputs":[],"stateMutability":"nonpayable","type":"function"},{"name":"changeController","outputs":[],"inputs":[{"type":"address","name":"_newController"}],"stateMutability":"nonpayable","type":"function"},{"name":"get_last_user_slope","outputs":[{"type":"int128","name":""}],"inputs":[{"type":"address","name":"addr"}],"stateMutability":"view","type":"function"},{"name":"user_point_history__ts","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"_addr"},{"type":"uint256","name":"_idx"}],"stateMutability":"view","type":"function"},{"name":"locked__end","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"_addr"}],"stateMutability":"view","type":"function"},{"name":"balanceOf","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"addr"}],"stateMutability":"view","type":"function"},{"name":"balanceOf","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"addr"},{"type":"uint256","name":"_t"}],"stateMutability":"view","type":"function"},{"name":"balanceOfAt","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"addr"},{"type":"uint256","name":"_block"}],"stateMutability":"view","type":"function"},{"name":"totalSupply","outputs":[{"type":"uint256","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"totalSupply","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"uint256","name":"t"}],"stateMutability":"view","type":"function"},{"name":"totalSupplyAt","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"uint256","name":"_block"}],"stateMutability":"view","type":"function"},{"name":"token","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"supply","outputs":[{"type":"uint256","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"locked","outputs":[{"type":"int128","name":"amount"},{"type":"uint256","name":"end"}],"inputs":[{"type":"address","name":"arg0"}],"stateMutability":"view","type":"function"},{"name":"epoch","outputs":[{"type":"uint256","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"point_history","outputs":[{"type":"int128","name":"bias"},{"type":"int128","name":"slope"},{"type":"uint256","name":"ts"},{"type":"uint256","name":"blk"}],"inputs":[{"type":"uint256","name":"arg0"}],"stateMutability":"view","type":"function"},{"name":"user_point_history","outputs":[{"type":"int128","name":"bias"},{"type":"int128","name":"slope"},{"type":"uint256","name":"ts"},{"type":"uint256","name":"blk"}],"inputs":[{"type":"address","name":"arg0"},{"type":"uint256","name":"arg1"}],"stateMutability":"view","type":"function"},{"name":"user_point_epoch","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"arg0"}],"stateMutability":"view","type":"function"},{"name":"slope_changes","outputs":[{"type":"int128","name":""}],"inputs":[{"type":"uint256","name":"arg0"}],"stateMutability":"view","type":"function"},{"name":"controller","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"transfersEnabled","outputs":[{"type":"bool","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"name","outputs":[{"type":"string","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"symbol","outputs":[{"type":"string","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"version","outputs":[{"type":"string","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"decimals","outputs":[{"type":"uint256","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"future_smart_wallet_checker","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"smart_wallet_checker","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"admin","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function"},{"name":"future_admin","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function"}]
+```
+
+</ContractABI>
+
 :::
 
 `locktime` is denominated in years. The *maximum lock duration is four years* and the *minimum is one week*.
@@ -58,6 +67,12 @@ Emits: `Deposit` and `Supply`
 <SourceCode>
 
 ```vyper
+struct LockedBalance:
+    amount: int128
+    end: uint256
+
+locked: public(HashMap[address, LockedBalance])
+
 WEEK: constant(uint256) = 7 * 86400  # all future times are rounded by week
 MAXTIME: constant(uint256) = 4 * 365 * 86400  # 4 years
 
@@ -85,6 +100,8 @@ def create_lock(_value: uint256, _unlock_time: uint256):
 
 <Example>
 
+This example creates a new lock of 100 CRV tokens until a specified unlock timestamp.
+
 ```shell
 >>> VotingEscrow.create_lock(100000000000000000000, 1694003759)
 ```
@@ -109,6 +126,12 @@ Emits: `Deposit` and `Supply`
 <SourceCode>
 
 ```vyper
+struct LockedBalance:
+    amount: int128
+    end: uint256
+
+locked: public(HashMap[address, LockedBalance])
+
 @external
 @nonreentrant('lock')
 def increase_amount(_value: uint256):
@@ -130,6 +153,8 @@ def increase_amount(_value: uint256):
 </SourceCode>
 
 <Example>
+
+This example adds 100 CRV tokens to an existing lock.
 
 ```shell
 >>> VotingEscrow.increase_amount(100000000000000000000)
@@ -155,6 +180,15 @@ Emits: `Deposit` and `Supply`
 <SourceCode>
 
 ```vyper
+struct LockedBalance:
+    amount: int128
+    end: uint256
+
+locked: public(HashMap[address, LockedBalance])
+
+WEEK: constant(uint256) = 7 * 86400  # all future times are rounded by week
+MAXTIME: constant(uint256) = 4 * 365 * 86400  # 4 years
+
 @external
 @nonreentrant('lock')
 def increase_unlock_time(_unlock_time: uint256):
@@ -177,6 +211,8 @@ def increase_unlock_time(_unlock_time: uint256):
 </SourceCode>
 
 <Example>
+
+This example extends the unlock time of an existing lock to a new timestamp.
 
 ```shell
 >>> VotingEscrow.increase_unlock_time(1694003759)
@@ -203,6 +239,12 @@ Emits: `Deposit` and `Supply`
 <SourceCode>
 
 ```vyper
+struct LockedBalance:
+    amount: int128
+    end: uint256
+
+locked: public(HashMap[address, LockedBalance])
+
 @external
 @nonreentrant('lock')
 def deposit_for(_addr: address, _value: uint256):
@@ -226,6 +268,8 @@ def deposit_for(_addr: address, _value: uint256):
 
 <Example>
 
+This example deposits 100 CRV tokens into an existing lock owned by another address.
+
 ```shell
 >>> VotingEscrow.deposit_for("0x7a16fF8270133F063aAb6C9977183D9e72835428", 100000000000000000000)
 ```
@@ -246,6 +290,14 @@ Emits: `Withdraw` and `Supply`
 <SourceCode>
 
 ```vyper
+struct LockedBalance:
+    amount: int128
+    end: uint256
+
+locked: public(HashMap[address, LockedBalance])
+supply: public(uint256)
+token: public(address)
+
 @external
 @nonreentrant('lock')
 def withdraw():
@@ -279,6 +331,8 @@ def withdraw():
 
 <Example>
 
+This example withdraws all CRV tokens after the lock has expired.
+
 ```shell
 >>> VotingEscrow.withdraw()
 ```
@@ -297,6 +351,12 @@ Function to record global data to a checkpoint. This updates the global `point_h
 <SourceCode>
 
 ```vyper
+ZERO_ADDRESS: constant(address) = 0x0000000000000000000000000000000000000000
+
+struct LockedBalance:
+    amount: int128
+    end: uint256
+
 @external
 def checkpoint():
     """
@@ -308,6 +368,8 @@ def checkpoint():
 </SourceCode>
 
 <Example>
+
+This example records a global data checkpoint, updating the `point_history` and `epoch`.
 
 ```shell
 >>> VotingEscrow.checkpoint()
@@ -344,6 +406,15 @@ Returns: voting power (`uint256`).
 <SourceCode>
 
 ```vyper
+struct Point:
+    bias: int128
+    slope: int128  # - dweight / dt
+    ts: uint256
+    blk: uint256  # block
+
+user_point_epoch: public(HashMap[address, uint256])
+user_point_history: public(HashMap[address, Point[1000000000]])  # user -> Point[user_epoch]
+
 @external
 @view
 def balanceOf(addr: address, _t: uint256 = block.timestamp) -> uint256:
@@ -369,12 +440,16 @@ def balanceOf(addr: address, _t: uint256 = block.timestamp) -> uint256:
 
 <Example>
 
-This example queries the current veCRV balance (voting power) of an address.
+This example returns the current veCRV balance (voting power) of an address. Enter an address and click **Query** to fetch the value live from the blockchain.
 
-```shell
->>> VotingEscrow.balanceOf("0x7a16fF8270133F063aAb6C9977183D9e72835428")
-25298857242406003682652005
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function balanceOf(address) view returns (uint256)"]}
+  method="balanceOf"
+  args={["0x7a16fF8270133F063aAb6C9977183D9e72835428"]}
+  labels={["address"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -397,6 +472,17 @@ Returns: voting power (`uint256`) at a specific block.
 <SourceCode>
 
 ```vyper
+struct Point:
+    bias: int128
+    slope: int128  # - dweight / dt
+    ts: uint256
+    blk: uint256  # block
+
+epoch: public(uint256)
+point_history: public(Point[100000000000000000000000000000])  # epoch -> unsigned point
+user_point_epoch: public(HashMap[address, uint256])
+user_point_history: public(HashMap[address, Point[1000000000]])  # user -> Point[user_epoch]
+
 @external
 @view
 def balanceOfAt(addr: address, _block: uint256) -> uint256:
@@ -450,6 +536,8 @@ def balanceOfAt(addr: address, _block: uint256) -> uint256:
 
 <Example>
 
+This example returns the veCRV balance (voting power) of an address at a specific block height.
+
 ```shell
 >>> VotingEscrow.balanceOfAt("0x7a16fF8270133F063aAb6C9977183D9e72835428", 18483472)
 27109584974408936745457887
@@ -475,6 +563,15 @@ Returns: total voting power (`uint256`).
 <SourceCode>
 
 ```vyper
+struct Point:
+    bias: int128
+    slope: int128  # - dweight / dt
+    ts: uint256
+    blk: uint256  # block
+
+epoch: public(uint256)
+point_history: public(Point[100000000000000000000000000000])  # epoch -> unsigned point
+
 @external
 @view
 def totalSupply(t: uint256 = block.timestamp) -> uint256:
@@ -492,10 +589,14 @@ def totalSupply(t: uint256 = block.timestamp) -> uint256:
 
 <Example>
 
-```shell
->>> VotingEscrow.totalSupply()
-627628632729421346293548458
-```
+This example returns the current total veCRV voting power. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function totalSupply() view returns (uint256)"]}
+  method="totalSupply"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -517,6 +618,15 @@ Returns: total voting power (`uint256`) at a specific block.
 <SourceCode>
 
 ```vyper
+struct Point:
+    bias: int128
+    slope: int128  # - dweight / dt
+    ts: uint256
+    blk: uint256  # block
+
+epoch: public(uint256)
+point_history: public(Point[100000000000000000000000000000])  # epoch -> unsigned point
+
 @external
 @view
 def totalSupplyAt(_block: uint256) -> uint256:
@@ -547,6 +657,8 @@ def totalSupplyAt(_block: uint256) -> uint256:
 
 <Example>
 
+This example returns the total veCRV voting power at a specific block height.
+
 ```shell
 >>> VotingEscrow.totalSupplyAt(18483472)
 652219245965489504779222536
@@ -575,10 +687,14 @@ supply: public(uint256)
 
 <Example>
 
-```shell
->>> VotingEscrow.supply()
-656407031422810196416981172
-```
+This example returns the total amount of CRV tokens locked in the contract. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function supply() view returns (uint256)"]}
+  method="supply"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -611,6 +727,8 @@ locked: public(HashMap[address, LockedBalance])
 
 <Example>
 
+This example returns the locked CRV amount and unlock timestamp for a given address.
+
 ```shell
 >>> VotingEscrow.locked("0x7a16fF8270133F063aAb6C9977183D9e72835428")
 27191329036660104386777000, 1808956800
@@ -636,6 +754,12 @@ Returns: unlock timestamp (`uint256`).
 <SourceCode>
 
 ```vyper
+struct LockedBalance:
+    amount: int128
+    end: uint256
+
+locked: public(HashMap[address, LockedBalance])
+
 @external
 @view
 def locked__end(_addr: address) -> uint256:
@@ -650,6 +774,8 @@ def locked__end(_addr: address) -> uint256:
 </SourceCode>
 
 <Example>
+
+This example returns the unlock timestamp for a given address.
 
 ```shell
 >>> VotingEscrow.locked__end("0x7a16fF8270133F063aAb6C9977183D9e72835428")
@@ -676,6 +802,15 @@ Returns: slope value (`int128`).
 <SourceCode>
 
 ```vyper
+struct Point:
+    bias: int128
+    slope: int128  # - dweight / dt
+    ts: uint256
+    blk: uint256  # block
+
+user_point_epoch: public(HashMap[address, uint256])
+user_point_history: public(HashMap[address, Point[1000000000]])  # user -> Point[user_epoch]
+
 @external
 @view
 def get_last_user_slope(addr: address) -> int128:
@@ -691,6 +826,8 @@ def get_last_user_slope(addr: address) -> int128:
 </SourceCode>
 
 <Example>
+
+This example returns the most recent rate of voting power decrease for a given address.
 
 ```shell
 >>> VotingEscrow.get_last_user_slope("0x7a16fF8270133F063aAb6C9977183D9e72835428")
@@ -724,10 +861,14 @@ epoch: public(uint256)
 
 <Example>
 
-```shell
->>> VotingEscrow.epoch()
-48610
-```
+This example returns the current global epoch. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function epoch() view returns (uint256)"]}
+  method="epoch"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -762,6 +903,8 @@ point_history: public(Point[100000000000000000000000000000])  # epoch -> unsigne
 
 <Example>
 
+This example returns the global point history at epoch 3 (bias, slope, timestamp, block number).
+
 ```shell
 >>> VotingEscrow.point_history(3)
 127357905207521710167, 4570173769659, 1597370987, 10655341
@@ -793,6 +936,8 @@ user_point_epoch: public(HashMap[address, uint256])
 </SourceCode>
 
 <Example>
+
+This example returns the current checkpoint epoch for a specific user.
 
 ```shell
 >>> VotingEscrow.user_point_epoch("0x7a16fF8270133F063aAb6C9977183D9e72835428")
@@ -827,6 +972,8 @@ user_point_history: public(HashMap[address, Point[1000000000]])  # user -> Point
 
 <Example>
 
+This example returns the point history for a user at their first checkpoint (bias, slope, timestamp, block number).
+
 ```shell
 >>> VotingEscrow.user_point_history("0x7a16fF8270133F063aAb6C9977183D9e72835428", 1)
 127357905207521710167, 4570173769659, 1597565455, 10655341
@@ -853,6 +1000,14 @@ Returns: timestamp (`uint256`).
 <SourceCode>
 
 ```vyper
+struct Point:
+    bias: int128
+    slope: int128  # - dweight / dt
+    ts: uint256
+    blk: uint256  # block
+
+user_point_history: public(HashMap[address, Point[1000000000]])  # user -> Point[user_epoch]
+
 @external
 @view
 def user_point_history__ts(_addr: address, _idx: uint256) -> uint256:
@@ -868,6 +1023,8 @@ def user_point_history__ts(_addr: address, _idx: uint256) -> uint256:
 </SourceCode>
 
 <Example>
+
+This example returns the timestamp of the first checkpoint for a given address.
 
 ```shell
 >>> VotingEscrow.user_point_history__ts("0x7a16fF8270133F063aAb6C9977183D9e72835428", 1)
@@ -900,6 +1057,8 @@ slope_changes: public(HashMap[uint256, int128])  # time -> signed slope change
 </SourceCode>
 
 <Example>
+
+This example returns the scheduled slope change at a specific future timestamp.
 
 ```shell
 >>> VotingEscrow.slope_changes(1808956800)
@@ -955,6 +1114,8 @@ smart_wallet_checker: public(address)
 
 <Example>
 
+This example returns the current SmartWalletChecker contract address.
+
 ```shell
 >>> VotingEscrow.smart_wallet_checker()
 '0xca719728Ef172d0961768581fdF35CB116e0B7a4'
@@ -982,6 +1143,8 @@ future_smart_wallet_checker: public(address)
 </SourceCode>
 
 <Example>
+
+This example returns the future SmartWalletChecker contract address (zero address means no pending change).
 
 ```shell
 >>> VotingEscrow.future_smart_wallet_checker()
@@ -1012,6 +1175,8 @@ Function to commit a new SmartWalletChecker contract address. Changes need to be
 <SourceCode>
 
 ```vyper
+future_smart_wallet_checker: public(address)
+
 @external
 def commit_smart_wallet_checker(addr: address):
     """
@@ -1025,6 +1190,8 @@ def commit_smart_wallet_checker(addr: address):
 </SourceCode>
 
 <Example>
+
+This example commits a new SmartWalletChecker contract address.
 
 ```shell
 >>> VotingEscrow.commit_smart_wallet_checker("0x1234567890abcdef1234567890abcdef12345678")
@@ -1050,6 +1217,9 @@ Function to apply the previously committed SmartWalletChecker address.
 <SourceCode>
 
 ```vyper
+smart_wallet_checker: public(address)
+future_smart_wallet_checker: public(address)
+
 @external
 def apply_smart_wallet_checker():
     """
@@ -1062,6 +1232,8 @@ def apply_smart_wallet_checker():
 </SourceCode>
 
 <Example>
+
+This example applies the previously committed SmartWalletChecker address.
 
 ```shell
 >>> VotingEscrow.apply_smart_wallet_checker()
@@ -1100,6 +1272,8 @@ def __init__(token_addr: address, _name: String[64], _symbol: String[32], _versi
 
 <Example>
 
+This example returns the CRV token address locked in the contract.
+
 ```shell
 >>> VotingEscrow.token()
 '0xD533a949740bb3306d119CC777fa900bA034cd52'
@@ -1127,6 +1301,8 @@ name: public(String[64])
 </SourceCode>
 
 <Example>
+
+This example returns the name of the token.
 
 ```shell
 >>> VotingEscrow.name()
@@ -1156,6 +1332,8 @@ symbol: public(String[32])
 
 <Example>
 
+This example returns the symbol of the token.
+
 ```shell
 >>> VotingEscrow.symbol()
 'veCRV'
@@ -1183,6 +1361,8 @@ version: public(String[32])
 </SourceCode>
 
 <Example>
+
+This example returns the version of the contract.
 
 ```shell
 >>> VotingEscrow.version()
@@ -1212,6 +1392,8 @@ decimals: public(uint256)
 
 <Example>
 
+This example returns the number of decimals of the token.
+
 ```shell
 >>> VotingEscrow.decimals()
 18
@@ -1239,6 +1421,8 @@ controller: public(address)
 </SourceCode>
 
 <Example>
+
+This example returns the Aragon controller address.
 
 ```shell
 >>> VotingEscrow.controller()
@@ -1269,6 +1453,8 @@ Dummy method required for Aragon compatibility.
 <SourceCode>
 
 ```vyper
+controller: public(address)
+
 @external
 def changeController(_newController: address):
     """
@@ -1307,6 +1493,8 @@ def __init__(token_addr: address, _name: String[64], _symbol: String[32], _versi
 
 <Example>
 
+This example returns whether transfers are enabled (always `True` for Aragon compatibility).
+
 ```shell
 >>> VotingEscrow.transfersEnabled()
 True
@@ -1341,6 +1529,8 @@ admin: public(address)  # Can and will be a smart contract
 
 <Example>
 
+This example returns the current admin of the contract (CurveOwnershipAgent).
+
 ```shell
 >>> VotingEscrow.admin()
 '0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
@@ -1368,6 +1558,8 @@ future_admin: public(address)
 </SourceCode>
 
 <Example>
+
+This example returns the future admin address (zero address means no pending transfer).
 
 ```shell
 >>> VotingEscrow.future_admin()
@@ -1403,6 +1595,8 @@ Emits: `CommitOwnership`
 event CommitOwnership:
     admin: address
 
+future_admin: public(address)
+
 @external
 def commit_transfer_ownership(addr: address):
     """
@@ -1417,6 +1611,8 @@ def commit_transfer_ownership(addr: address):
 </SourceCode>
 
 <Example>
+
+This example commits a new admin address for the ownership transfer.
 
 ```shell
 >>> VotingEscrow.commit_transfer_ownership("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")
@@ -1447,6 +1643,9 @@ Emits: `ApplyOwnership`
 event ApplyOwnership:
     admin: address
 
+admin: public(address)  # Can and will be a smart contract
+future_admin: public(address)
+
 @external
 def apply_transfer_ownership():
     """
@@ -1462,6 +1661,8 @@ def apply_transfer_ownership():
 </SourceCode>
 
 <Example>
+
+This example applies the previously committed ownership transfer.
 
 ```shell
 >>> VotingEscrow.apply_transfer_ownership()

@@ -34,7 +34,7 @@
 .theme-admonition-colab     { --adm-color: #f59e0b; --adm-bg: rgba(245,158,11,0.06);  --adm-icon: '▶'; }
 .theme-admonition-telegram  { --adm-color: #0088cc; --adm-bg: rgba(0,136,204,0.06);   --adm-icon: '✈'; }
 .theme-admonition-notebook  { --adm-color: #f59e0b; --adm-bg: rgba(245,158,11,0.06);  --adm-icon: '▶'; }
-.theme-admonition-solidity  { --adm-color: #374151; --adm-bg: rgba(55,65,81,0.06);    --adm-icon: 'S'; }
+.theme-admonition-solidity  { --adm-color: #2b5ea7; --adm-bg: rgba(43,94,167,0.06);   --adm-icon: 'S'; }
 .theme-admonition-bug       { --adm-color: #ef4444; --adm-bg: rgba(239,68,68,0.06);   --adm-icon: '⚠'; }
 .theme-admonition-pdf       { --adm-color: #6366f1; --adm-bg: rgba(99,102,241,0.06);  --adm-icon: '⎙'; }
 .theme-admonition-abstract  { --adm-color: #0ea5e9; --adm-bg: rgba(14,165,233,0.06);  --adm-icon: '◇'; }
@@ -56,7 +56,7 @@
 [data-theme='dark'] .theme-admonition-colab     { --adm-bg: rgba(245,158,11,0.10); }
 [data-theme='dark'] .theme-admonition-telegram  { --adm-bg: rgba(0,136,204,0.10); }
 [data-theme='dark'] .theme-admonition-notebook  { --adm-bg: rgba(245,158,11,0.10); }
-[data-theme='dark'] .theme-admonition-solidity  { --adm-color: #9ca3af; --adm-bg: rgba(156,163,175,0.10); }
+[data-theme='dark'] .theme-admonition-solidity  { --adm-color: #5b8fd9; --adm-bg: rgba(43,94,167,0.10); }
 [data-theme='dark'] .theme-admonition-bug       { --adm-bg: rgba(239,68,68,0.10); }
 [data-theme='dark'] .theme-admonition-pdf       { --adm-bg: rgba(99,102,241,0.10); }
 [data-theme='dark'] .theme-admonition-abstract  { --adm-bg: rgba(14,165,233,0.10); }
@@ -65,7 +65,7 @@
    Base container (all types except description)
    ========================================================================== */
 
-.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) {
   background: var(--adm-bg, var(--Layer-2-Fill)) !important;
   border: 2px solid var(--Layer-2-Outline) !important;
   border-left: 4px solid var(--adm-color, #6b7280) !important;
@@ -79,7 +79,7 @@
 }
 
 /* Icon badge centered on the left border */
-.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper)::after {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity)::after {
   content: var(--adm-icon, '•');
   position: absolute;
   top: 50%;
@@ -103,7 +103,7 @@
    ========================================================================== */
 
 /* Hide the heading entirely (type is conveyed by the left-border icon) */
-.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) > [class^="admonitionHeading"] {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionHeading"] {
   display: none !important;
 }
 
@@ -111,32 +111,32 @@
    Content
    ========================================================================== */
 
-.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) > [class^="admonitionContent"] {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] {
   color: var(--Text-TextColors-Secondary) !important;
   font-size: var(--Typography-FontSize-md);
   line-height: var(--Typography-LineHeight-md);
   padding: 0 !important;
 }
 
-.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) > [class^="admonitionContent"] p {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] p {
   margin: 0 0 var(--Spacing-sm) 0 !important;
   color: var(--Text-TextColors-Secondary) !important;
 }
 
-.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) > [class^="admonitionContent"] p:last-child {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] p:last-child {
   margin-bottom: 0 !important;
 }
 
-.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) > [class^="admonitionContent"] a {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] a {
   color: var(--Text-TextColors-Highlight) !important;
   text-decoration: none !important;
 }
 
-.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) > [class^="admonitionContent"] a:hover {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] a:hover {
   text-decoration: underline !important;
 }
 
-.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) > [class^="admonitionContent"] strong {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] strong {
   color: var(--Text-TextColors-Primary) !important;
 }
 
@@ -144,7 +144,7 @@
    Dark mode
    ========================================================================== */
 
-[data-theme='dark'] .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) {
+[data-theme='dark'] .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) {
   background: var(--adm-bg, var(--Layer-2-Fill)) !important;
   background-color: var(--adm-bg, var(--Layer-2-Fill)) !important;
   border-color: var(--Layer-2-Outline) !important;
@@ -153,14 +153,14 @@
 
 /* Override Infima's dark alert backgrounds — these variables cascade into
    background-color: var(--ifm-alert-background-color) on .alert */
-[data-theme='dark'] .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper).alert {
+[data-theme='dark'] .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity).alert {
   --ifm-alert-background-color: transparent;
   --ifm-alert-background-color-highlight: rgba(255,255,255,0.08);
   --ifm-code-background: rgba(255,255,255,0.08);
 }
 
 /* Remove dark background from inline code inside admonitions in dark mode */
-[data-theme='dark'] .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) code {
+[data-theme='dark'] .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) code {
   background: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -169,7 +169,7 @@
    ========================================================================== */
 
 @media (max-width: 768px) {
-  .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper) {
+  .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) {
     padding: var(--Spacing-sm) var(--Spacing-md) !important;
     margin: var(--Spacing-sm) 0 !important;
   }
@@ -328,4 +328,81 @@
 [data-theme='dark'] .theme-admonition-vyper > [class^="admonitionHeading"] {
   background: rgba(159,76,242,0.12) !important;
   border-bottom-color: rgba(159,76,242,0.25) !important;
+}
+
+/* ==========================================================================
+   Solidity admonition (developer docs: Solidity contract info blocks)
+   Rendered class: .theme-admonition-solidity
+   Modeled on the vyper type but with Solidity dark-grey branding.
+   ========================================================================== */
+
+.theme-admonition-solidity {
+  background: transparent !important;
+  border: 1.5px solid rgba(43,94,167,0.30) !important;
+  border-top: 3px solid #2b5ea7 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: var(--Spacing-xl) 0 !important;
+  position: relative;
+  box-shadow: none !important;
+  display: block !important;
+  overflow: hidden;
+}
+
+/* Title bar */
+.theme-admonition-solidity > [class^="admonitionHeading"] {
+  display: flex !important;
+  align-items: center !important;
+  background: rgba(43,94,167,0.08) !important;
+  border-bottom: 1px solid rgba(43,94,167,0.20) !important;
+  padding: var(--Spacing-md) var(--Spacing-lg) !important;
+  margin: 0 !important;
+  font-family: var(--Text-FontFamily-Mono) !important;
+  font-size: var(--Typography-FontSize-sm) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  word-break: break-all;
+}
+
+/* Replace the default SVG icon with the Solidity logo */
+.theme-admonition-solidity > [class^="admonitionHeading"] [class^="admonitionIcon"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  background: transparent !important;
+  border-radius: 4px !important;
+  margin-right: var(--Spacing-sm) !important;
+  flex-shrink: 0 !important;
+}
+
+.theme-admonition-solidity > [class^="admonitionHeading"] [class^="admonitionIcon"] svg {
+  display: none !important;
+}
+
+.theme-admonition-solidity > [class^="admonitionHeading"] [class^="admonitionIcon"]::after {
+  content: '' !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  background: url('/img/logos/solidity.svg') no-repeat center / contain !important;
+}
+
+/* Content area below the title bar */
+.theme-admonition-solidity > [class^="admonitionContent"] {
+  padding: var(--Spacing-sm) var(--Spacing-lg) var(--Spacing-lg) var(--Spacing-lg) !important;
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Dark mode for solidity */
+[data-theme='dark'] .theme-admonition-solidity {
+  border: 1.5px solid rgba(43,94,167,0.30) !important;
+  border-top: 3px solid #5b8fd9 !important;
+}
+
+[data-theme='dark'] .theme-admonition-solidity > [class^="admonitionHeading"] {
+  background: rgba(43,94,167,0.12) !important;
+  border-bottom-color: rgba(43,94,167,0.25) !important;
 }

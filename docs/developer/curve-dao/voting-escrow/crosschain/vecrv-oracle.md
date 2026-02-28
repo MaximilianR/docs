@@ -18,8 +18,6 @@ The `L2VotingEscrowOracle` contract is deployed at the following addresses and i
 - :logos-base: Base: [`0xeB896fB7D1AaE921d586B0E5a037496aFd3E2412`](https://basescan.org/address/0xeB896fB7D1AaE921d586B0E5a037496aFd3E2412)
 - :logos-taiko: Taiko: [`0x5C57BdcFF69B4F1D894EA70c0470D39C8FA0ee30`](https://taikoscan.io/address/0x5C57BdcFF69B4F1D894EA70c0470D39C8FA0ee30)
 
-:::
-
 <ContractABI>
 
 
@@ -28,6 +26,8 @@ The `L2VotingEscrowOracle` contract is deployed at the following addresses and i
 ```
 
 </ContractABI>
+
+:::
 
 
 ---
