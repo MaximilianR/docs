@@ -70,7 +70,7 @@ def approve(_spender : address, _value : uint256) -> bool:
 
 <Example>
 
-This example approves the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address to transfer 1 CRV tokens on behalf of the caller (`msg.sender`).
+This example approves `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` to transfer 1 CRV token on behalf of `msg.sender`.
 
 ```shell
 >>> CRV.approve('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 1000000000000000000)
@@ -116,7 +116,7 @@ def allowance(_owner : address, _spender : address) -> uint256:
 
 <Example>
 
-This example queries the amount of CRV tokens that `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` is allowed to spend on behalf of `0x7a16fF8270133F063aAb6C9977183D9e72835428`.
+This example returns the amount of CRV tokens that `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` is allowed to spend on behalf of `0x7a16fF8270133F063aAb6C9977183D9e72835428`.
 
 ```shell
 >>> CRV.allowance('0x7a16fF8270133F063aAb6C9977183D9e72835428', '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
@@ -183,7 +183,7 @@ def transfer(_to : address, _value : uint256) -> bool:
 
 <Example>
 
-This example transfers 1 CRV token from the `msg.sender` to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`.
+This example transfers 1 CRV token from `msg.sender` to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`.
 
 ```shell
 >>> CRV.transfer('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 1000000000000000000)
@@ -254,7 +254,7 @@ def transferFrom(_from : address, _to : address, _value : uint256) -> bool:
 
 <Example>
 
-This example transfers 1 CRV token from the `0x7a16fF8270133F063aAb6C9977183D9e72835428` address to the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address.
+This example transfers 1 CRV token from `0x7a16fF8270133F063aAb6C9977183D9e72835428` to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`.
 
 ```shell
 >>> CRV.transferFrom('0x7a16fF8270133F063aAb6C9977183D9e72835428', '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 1000000000000000000)
@@ -309,7 +309,7 @@ minter: public(address)
 
 <Example>
 
-This example queries the minter contract address.
+This example returns the minter contract address.
 
 ```shell
 >>> CRV.minter()
@@ -384,7 +384,7 @@ def mint(_to: address, _value: uint256) -> bool:
 
 <Example>
 
-This example mints 1 CRV token to the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address.
+This example mints 1 CRV token to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`.
 
 ```shell
 >>> CRV.mint('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 1000000000000000000)
@@ -461,7 +461,7 @@ def mintable_in_timeframe(start: uint256, end: uint256) -> uint256:
 
 <Example>
 
-This example queries the mintable CRV supply between two timestamps.
+This example returns the mintable CRV supply between two timestamps (`1704067200` to `1704153600`).
 
 ```shell
 >>> CRV.mintable_in_timeframe(1704067200, 1704153600)
@@ -517,7 +517,7 @@ def burn(_value: uint256) -> bool:
 
 <Example>
 
-This example burns 1 CRV token from `msg.sender`.
+This example burns 1 CRV token belonging to `msg.sender`.
 
 ```shell
 >>> CRV.burn(1000000000000000000)
@@ -582,7 +582,7 @@ def _update_mining_parameters():
 
 <Example>
 
-This example queries the current mining epoch.
+This example returns the current mining epoch. The value is fetched live from the blockchain.
 
 <ContractCall
   address="0xD533a949740bb3306d119CC777fa900bA034cd52"
@@ -628,7 +628,7 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 <Example>
 
-This example queries the start timestamp of the current mining epoch.
+This example returns the start timestamp of the current mining epoch. The value is fetched live from the blockchain.
 
 <ContractCall
   address="0xD533a949740bb3306d119CC777fa900bA034cd52"
@@ -668,7 +668,7 @@ rate: public(uint256)
 
 <Example>
 
-This example queries the current CRV emission rate per second.
+This example returns the current CRV emission rate per second. The value is fetched live from the blockchain.
 
 <ContractCall
   address="0xD533a949740bb3306d119CC777fa900bA034cd52"
@@ -753,7 +753,7 @@ def _update_mining_parameters():
 
 <Example>
 
-This example updates the mining parameters for the CRV token.
+This example updates the mining parameters for the CRV token, applying the newly decreased inflation rate.
 
 ```shell
 >>> CRV.update_mining_parameters()
@@ -796,7 +796,7 @@ def start_epoch_time_write() -> uint256:
 
 <Example>
 
-This example calls `start_epoch_time_write` to get the current epoch start timestamp while updating mining parameters if applicable.
+This example returns the current epoch start timestamp while updating mining parameters if applicable.
 
 ```shell
 >>> CRV.start_epoch_time_write()
@@ -838,7 +838,7 @@ def future_epoch_time_write() -> uint256:
 
 <Example>
 
-This example calls `future_epoch_time_write` to get the next epoch start timestamp while updating mining parameters if applicable.
+This example returns the next epoch start timestamp while updating mining parameters if applicable.
 
 ```shell
 >>> CRV.future_epoch_time_write()
@@ -890,7 +890,7 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 <Example>
 
-This example queries the current admin of the CRV token contract.
+This example returns the current admin of the CRV token contract.
 
 ```shell
 >>> CRV.admin()
@@ -945,6 +945,8 @@ def set_admin(_admin: address):
 
 <Example>
 
+This example sets a new admin for the CRV token contract.
+
 ```shell
 >>> CRV.set_admin("0x0000000000000000000000000000000000000000")
 ```
@@ -985,7 +987,7 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 <Example>
 
-This example queries the name of the CRV token.
+This example returns the name of the CRV token.
 
 ```shell
 >>> CRV.name()
@@ -1029,7 +1031,7 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 <Example>
 
-This example queries the symbol of the CRV token.
+This example returns the symbol of the CRV token.
 
 ```shell
 >>> CRV.symbol()
@@ -1082,7 +1084,7 @@ def set_name(_name: String[64], _symbol: String[32]):
 
 <Example>
 
-This example changes the name and symbol of the token.
+This example changes the name and symbol of the CRV token.
 
 ```shell
 >>> CRV.set_name("New Name", "New Symbol")
@@ -1144,7 +1146,7 @@ def set_minter(_minter: address):
 
 <Example>
 
-This example tries to change the `minter` contract address of the token. Because the `minter` is already set, the function will revert.
+This example attempts to set the minter contract address. Since the minter is already set, this call will revert.
 
 ```shell
 >>> CRV.set_minter("0x0000000000000000000000000000000000000000")
@@ -1184,7 +1186,7 @@ def available_supply() -> uint256:
 
 <Example>
 
-This example queries the current available supply of CRV tokens.
+This example returns the current available supply of CRV tokens. The value is fetched live from the blockchain.
 
 <ContractCall
   address="0xD533a949740bb3306d119CC777fa900bA034cd52"
@@ -1224,7 +1226,7 @@ def totalSupply() -> uint256:
 
 <Example>
 
-This example queries the total supply of CRV tokens.
+This example returns the total supply of CRV tokens. The value is fetched live from the blockchain.
 
 <ContractCall
   address="0xD533a949740bb3306d119CC777fa900bA034cd52"
@@ -1268,7 +1270,7 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 <Example>
 
-This example queries the number of decimals of the CRV token.
+This example returns the number of decimals of the CRV token.
 
 ```shell
 >>> CRV.decimals()
@@ -1302,7 +1304,7 @@ balanceOf: public(HashMap[address, uint256])
 
 <Example>
 
-This example queries the CRV token balance of the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address.
+This example returns the CRV token balance for a given address. Enter an address and click **Query** to fetch the value live from the blockchain.
 
 <ContractCall
   address="0xD533a949740bb3306d119CC777fa900bA034cd52"
