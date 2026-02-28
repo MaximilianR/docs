@@ -1,7 +1,5 @@
 # Curve Registry Exchange Contract
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The `CurveRegistryExchange` contract serves as a router for Curve liquidity pools. Users can utilize this contract to find pools, query exchange rates, and execute swaps directly.
 
@@ -9,7 +7,7 @@ The `CurveRegistryExchange` contract serves as a router for Curve liquidity pool
 
 The `CurveRegistryExchange` contract was deployed in December 2022 at [`0x99a58482bd75cbab83b27ec03ca68ff489b5788f`](https://etherscan.io/address/0x99a58482bd75cbab83b27ec03ca68ff489b5788f#code) on the Ethereum Mainnet. This contract does not support all pools due to newer versions of exchange contracts.
 
-A new and updated version is available here: [`CurveRouterNG`](./CurveRouterNG.md).
+A new and updated version is available here: [`CurveRouterNG`](./curve-router-ng.md).
 
 
 :::
@@ -34,7 +32,7 @@ Additionally, there are helper functions available to retrieve essential data, s
 
 
 ### `exchange`
-:::description[`CurveRegistryExchange.exchange(_pool: address, _from: address, _to: address, _amount: uint256, _expected: uint256, _receiver: address = msg.sender) -> uint256`]
+::::description[`CurveRegistryExchange.exchange(_pool: address, _from: address, _to: address, _amount: uint256, _expected: uint256, _receiver: address = msg.sender) -> uint256`]
 
 
 Function to perform a token exchange using a specific pool. Prior to calling this function, the caller must approve this contract to transfer `_amount` of coins from `_from`.
@@ -52,14 +50,7 @@ Emits: `TokenExchange`
 | `_expected`  | `uint256` | Minimum amount of coins to receive.                 |
 | `_receiver`  | `address` | Receiver of the tokens. Defaults to `msg.sender`.   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 event TokenExchange:
     buyer: indexed(address)
@@ -290,19 +281,13 @@ def _exchange(
 
     return received_amount
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `exchange_with_best_rate`
-:::description[`CurveRegistryExchange.exchange_with_best_rate(_from: address, _to: address, _amount: uint256, _expected: uint256, _receiver: address = msg.sender) -> uint256`]
+::::description[`CurveRegistryExchange.exchange_with_best_rate(_from: address, _to: address, _amount: uint256, _expected: uint256, _receiver: address = msg.sender) -> uint256`]
 
 
 :::warning
@@ -326,14 +311,7 @@ Emits: `TokenExchange`
 | `_expected` | `uint256` | Minimum amount of coins to receive.                 |
 | `_receiver` | `address` | Receiver of the tokens. Defaults to `msg.sender`.   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 event TokenExchange:
     buyer: indexed(address)
@@ -508,19 +486,13 @@ def _exchange(
 
     return received_amount
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `exchange_multiple`
-:::description[`CurveRegistryExchange.exchange_multiple(_route: address[9], _swap_params: uint256[3][4], _amount: uint256, _expected: uint256, _pools: address[4]=[ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS], _receiver: address=msg.sender) -> uint256`]
+::::description[`CurveRegistryExchange.exchange_multiple(_route: address[9], _swap_params: uint256[3][4], _amount: uint256, _expected: uint256, _pools: address[4]=[ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS], _receiver: address=msg.sender) -> uint256`]
 
 
 Function to perform up to four token exchanges in a single transaction. Prior to calling this function, the caller must approve this contract to transfer `_amount` coins from `_from`.
@@ -550,14 +522,7 @@ Emits: `ExchangeMultiple`
 | `_pools`       | `address[4]`    | Array of pools for swaps via zap contracts. This parameter is only needed for Polygon meta-factories underlying swaps. |
 | `_receiver`    | `address`       | Receiver of the tokens. Defaults to `msg.sender`. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 event ExchangeMultiple:
     buyer: indexed(address)
@@ -744,19 +709,13 @@ def exchange_multiple(
 
     return amount
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `get_exchange_amount`
-:::description[`CurveRegistryExchange.get_exchange_amount(_pool: address, _from: address, _to: address, _amount: uint256) -> uint256`]
+::::description[`CurveRegistryExchange.get_exchange_amount(_pool: address, _from: address, _to: address, _amount: uint256) -> uint256`]
 
 
 Getter for the current number of coins received in an exchange.
@@ -770,14 +729,7 @@ Returns: amount of tokens received (`uint256`).
 | `_to`     | `address` | Address of the coin being received. |
 | `_amount` | `uint256` | Amount of coins to exchange.     |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 @view
 @external
@@ -859,16 +811,9 @@ def _get_crypto_exchange_amount(
 
     return CryptoPool(_pool).get_dy(i, j, _amount) 
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveRegistryExchange.get_exchange_amount('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7', '0x6b175474e89094c44da98b954eedeac495271d0f', '0xdac17f958d2ee523a2206206994597c13d831ec7', 1000000000000000000000000)
@@ -879,14 +824,13 @@ def _get_crypto_exchange_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_best_rate`
-:::description[`CurveRegistryExchange.get_best_rate(_from: address, _to: address, _amount: uint256, _exclude_pools: address[8] = EMPTY_POOL_LIST) -> (address, uint256)`]
+::::description[`CurveRegistryExchange.get_best_rate(_from: address, _to: address, _amount: uint256, _exclude_pools: address[8] = EMPTY_POOL_LIST) -> (address, uint256)`]
 
 
 :::info
@@ -907,14 +851,7 @@ Returns: pool address and amount received (`address`, `uint256`).
 | `_amount`        | `uint256`    | Amount of coins to send.                             |
 | `_exclude_pools` | `address[8]` | List of up to 8 pools which should not be returned.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 @view
 @external
@@ -1036,16 +973,9 @@ def _get_crypto_exchange_amount(
 
     return CryptoPool(_pool).get_dy(i, j, _amount)    
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveRegistryExchange.get_best_rate('0x6b175474e89094c44da98b954eedeac495271d0f', '0xdac17f958d2ee523a2206206994597c13d831ec7', 1000000000000000000000000)
@@ -1053,14 +983,13 @@ def _get_crypto_exchange_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_exchange_multiple_amount`
-:::description[`CurveRegistryExchange.get_exchange_multiple_amount(_route: address[9], _swap_params: uint256[3][4], _amount: uint256, _pools: address[4]=[ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS]) -> uint256`]
+::::description[`CurveRegistryExchange.get_exchange_multiple_amount(_route: address[9], _swap_params: uint256[3][4], _amount: uint256, _pools: address[4]=[ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS]) -> uint256`]
 
 
 Getter for the amount of output tokens when performing a swap with multiple steps. The function iterates over the route addresses and, once the `ZERO_ADDRESS` is reached, the last given token is transferred to `_receiver`.
@@ -1086,14 +1015,7 @@ Returns: expected amount of the final output token (`uint256`).
 | `_amount`      | `uint256`       | Amount of initial tokens (`_route[0]`) to exchange. |
 | `_pools`       | `address[4]`    | Array of pools for swaps via zap contracts. This parameter is only needed for Polygon meta-factories underlying swaps. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 @view
 @external
@@ -1181,27 +1103,9 @@ def get_exchange_multiple_amount(
 
     return amount
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> todo
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
@@ -1214,21 +1118,14 @@ The contract retrieves pool data from various registries sourced from the [`Addr
 :::
 
 ### `registry`
-:::description[`CurveRegistryExchange.registry() -> address: view`]
+::::description[`CurveRegistryExchange.registry() -> address: view`]
 
 
 Getter for the registry contract.
 
 Returns: registry (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 registry: public(address)
 
@@ -1245,16 +1142,9 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 
     WETH_ADDRESS = _weth
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveRegistryExchange.registry()
@@ -1262,28 +1152,20 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `factory_registry`
-:::description[`CurveRegistryExchange.factory_registry() -> address: view`]
+::::description[`CurveRegistryExchange.factory_registry() -> address: view`]
 
 
 Getter for the factory regstiry contract.
 
 Returns: factory registry (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 factory_registry: public(address)
 
@@ -1300,16 +1182,9 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 
     WETH_ADDRESS = _weth
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveRegistryExchange.factory_registry()
@@ -1317,28 +1192,20 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `crypto_registry`
-:::description[`CurveRegistryExchange.crypto_registry() -> address: view`]
+::::description[`CurveRegistryExchange.crypto_registry() -> address: view`]
 
 
 Getter for the crypto registry contract.
 
 Returns: crypto registry (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 crypto_registry: public(address)
 
@@ -1355,16 +1222,9 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 
     WETH_ADDRESS = _weth
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveRegistryExchange.crypto_registry()
@@ -1372,28 +1232,20 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `update_registry_address`
-:::description[`CurveRegistryExchange.update_registry_address() -> bool`]
+::::description[`CurveRegistryExchange.update_registry_address() -> bool`]
 
 
 Function to update `registry`, `factory_registry` and `crypto_registry`. This function is callable by anyone and sets the variables to the current vaules in the `AddressProvider` contract. 
 
 Returns: True (`bool`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 address_provider: AddressProvider
 registry: public(address)
@@ -1416,50 +1268,27 @@ def update_registry_address() -> bool:
 
     return True
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
 
-## **Calculator Contract**The contract is designed to set a calculator contract that can perform various tasks. However, this has not been configured.
+## **Calculator Contract**
+
+The contract is designed to set a calculator contract that can perform various tasks. However, this has not been configured.
 
 
 ### `default_calculator`
-:::description[`CurveRegistryExchange.default_calculator() -> address: view`]
+::::description[`CurveRegistryExchange.default_calculator() -> address: view`]
 
 
 Getter for the default calculator. The default calculator can be set by the `admin` of the `AddressProvider` contract using the `set_default_calculator` function.
 
 Returns: calculator contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 default_calculator: public(address)
 
@@ -1476,16 +1305,9 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 
     WETH_ADDRESS = _weth
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveRegistryExchange.default_calculator()
@@ -1493,14 +1315,13 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_calculator`
-:::description[`CurveRegistryExchange.get_calculator(_pool: address) -> address: view`]
+::::description[`CurveRegistryExchange.get_calculator(_pool: address) -> address: view`]
 
 
 Getter for the calculator contract of `_pool`. The calculator of pool can be set by the `admin` of the `AddressProvider` contract using the `set_calculator` function.
@@ -1511,14 +1332,7 @@ Returns: calculator contract (`address`).
 | ------- | --------- | ------------ |
 | `_pool` | `address` | Liquidity pool address. | 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 @view
 @external
@@ -1535,16 +1349,9 @@ def get_calculator(_pool: address) -> address:
     else:
         return calculator
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveRegistryExchange.get_calculator('0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7')
@@ -1552,14 +1359,13 @@ def get_calculator(_pool: address) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_calculator`
-:::description[`CurveRegistryExchange.set_calculator(_pool: address, _calculator: address) -> bool`]
+::::description[`CurveRegistryExchange.set_calculator(_pool: address, _calculator: address) -> bool`]
 
 
 :::guard[Guarded Method]
@@ -1578,14 +1384,7 @@ Returns: True (`bool`).
 | `_pool` | `address` | Liquidity pool to set the calculator for. | 
 | `_calculator` | `address` | Calculator contract. | 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 pool_calculator: HashMap[address, address]
 
@@ -1604,19 +1403,13 @@ def set_calculator(_pool: address, _calculator: address) -> bool:
 
     return True
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `set_default_calculator`
-:::description[`CurveRegistryExchange.set_default_calculator(_calculator: address) -> bool`]
+::::description[`CurveRegistryExchange.set_default_calculator(_calculator: address) -> bool`]
 
 
 :::guard[Guarded Method]
@@ -1634,14 +1427,7 @@ Returns: True (`bool`).
 | ------- | --------- | ------------ |
 | `_calculator` | `address` | Calculator address. | 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 default_calculator: public(address)
 
@@ -1659,25 +1445,21 @@ def set_default_calculator(_calculator: address) -> bool:
 
     return True
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ---
 
 
-## **Killing the Router**The `admin` of the `AddressProvider` contract has the ability to set the `is_killed` status of the `CurveRegistryExchange` contract via the `set_killed` function. Setting this status to `true` disables all exchanges in the contract. The status can be reversed, or "unkilled," to allow token exchanges to resume.
+## **Killing the Router**
+
+The `admin` of the `AddressProvider` contract has the ability to set the `is_killed` status of the `CurveRegistryExchange` contract via the `set_killed` function. Setting this status to `true` disables all exchanges in the contract. The status can be reversed, or "unkilled," to allow token exchanges to resume.
 
 
 ### `is_killed`
-:::description[`CurveRegistryExchange.is_killed() -> boool: view`]
+::::description[`CurveRegistryExchange.is_killed() -> boool: view`]
 
 
 :::warning
@@ -1691,27 +1473,13 @@ Getter for the `is_killed` status of the contract. The status can be set by the 
 
 Returns: true or false (`bool`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 is_killed: public(bool)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveRegistryExchange.is_killed()
@@ -1719,14 +1487,13 @@ is_killed: public(bool)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_killed`
-:::description[`CurveRegistryExchange.set_killed(_is_killed: bool) -> bool`]
+::::description[`CurveRegistryExchange.set_killed(_is_killed: bool) -> bool`]
 
 
 :::guard[Guarded Method]
@@ -1744,14 +1511,7 @@ Returns: True (`bool`).
 | ------------ | ------ | ------------ |
 | `_is_killed` | `bool` | `true` or `false`. | 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 @external
 def set_killed(_is_killed: bool) -> bool:
@@ -1765,25 +1525,21 @@ def set_killed(_is_killed: bool) -> bool:
 
     return True
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ---
 
 
-## **Transfering Funds**In the event that the contract holds an ERC20 or ETH balance, these tokens can be claimed by the `admin` of the `AddressProvider` contract. Although this should not occur at all, a possible scenario in which this could happen is when users mistakenly send their tokens directly to the contract address.
+## **Transfering Funds**
+
+In the event that the contract holds an ERC20 or ETH balance, these tokens can be claimed by the `admin` of the `AddressProvider` contract. Although this should not occur at all, a possible scenario in which this could happen is when users mistakenly send their tokens directly to the contract address.
 
 
 ### `claim_balance`
-:::description[`CurveRegistryExchange.claim_balance(_token: address) -> bool`]
+::::description[`CurveRegistryExchange.claim_balance(_token: address) -> bool`]
 
 
 :::guard[Guarded Method]
@@ -1801,14 +1557,7 @@ Returns: True (`bool`).
 | ------- | --------- | ------------ |
 | `_token` | `address` | Token to transfer. | 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curveregistryexchange-vy" label="CurveRegistryExchange.vy">
-
-
+<SourceCode>
 ```python
 @external
 def claim_balance(_token: address) -> bool:
@@ -1838,13 +1587,7 @@ def claim_balance(_token: address) -> bool:
 
     return True
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
