@@ -1,3 +1,8 @@
+---
+id: curve-prices
+title: curve-prices API
+sidebar_label: curve-prices
+hide_table_of_contents: true
+---
 
-# 
-<swagger-ui src="https://prices.curve.fi/feeds-docs/openapi.json"></swagger-ui>
+<SwaggerUI src="https://prices.curve.finance/feeds-docs/openapi.json" />
