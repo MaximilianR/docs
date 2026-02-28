@@ -15,8 +15,7 @@ ERC-4626 vaults are **yield-bearing**, meaning the shares received when depositi
 
 It is a proxy contract (EIP1167-compliant) duplicating the logic of the factory's vault implementation contract. Upon initialization it also creates the market's AMM and Controller using blueprint contracts.
 
-<details>
-<summary>`initialize()`</summary>
+<Dropdown title="`initialize()`">
 
 
 Function which initializes a vault and creates the corresponding Controller and AMM from their blueprint implementations.
@@ -99,7 +98,7 @@ def initialize(
 ```
 
 
-</details>
+</Dropdown>
 
 The Vault itself does not hold any tokens, as the deposited tokens are forwarded to the Controller contract where it can be borrowed from.
 

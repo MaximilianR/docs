@@ -353,8 +353,7 @@ The contract makes use of wrapper contracts around different bridging architectu
 
 If a bridger contract needs to be updated for whatever reason, this can only be done within the `RootGaugeFactory` using the `set_child` function. After the bridger has been updated, the `update_bridger()` function needs to be called on the specific gauge to update the bridger contract used by the gauge. This sets the CRV token approval of the "old" bridger to 0 and the new bridger to `max_value(uint256)`.
 
-<details>
-<summary>`RootGaugeFactory.set_child(_chain_id: uint256, _bridger: Bridger, _child_factory: address, _child_impl: address)`</summary>
+<Dropdown title="`RootGaugeFactory.set_child(_chain_id: uint256, _bridger: Bridger, _child_factory: address, _child_impl: address)`">
 
 
 Source code for the `set_child` function, which is used to set the bridger for a specific chain ID.
@@ -388,7 +387,7 @@ def set_child(_chain_id: uint256, _bridger: Bridger, _child_factory: address, _c
 ```
 
 
-</details>
+</Dropdown>
 
 ### `bridger`
 ::::description[`RootGauge.bridger() -> Bridger: view`]

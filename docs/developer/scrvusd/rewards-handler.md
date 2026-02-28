@@ -20,8 +20,7 @@ The weight allocated to the `RewardsHandler` in the `FeeSplitter` is determined 
 
 To calculate this time-weighted average, the `RewardsHandler` uses a `TWA module` that takes snapshots of the deposited supply ratio and stores them in a `Snapshot` struct. All structs are stored in a dynamic array called `snapshots`. Each snapshot includes a ratio value and the timestamp at which it was taken.
 
-<details>
-<summary>Source code for snapshot calculation and storage</summary>
+<Dropdown title="Source code for snapshot calculation and storage">
 
 ```vyper
 from contracts.interfaces import IStablecoinLens
@@ -87,7 +86,7 @@ def _take_snapshot(_value: uint256):
         log SnapshotTaken(_value, block.timestamp)
 ```
 
-</details>
+</Dropdown>
 
 ---
 

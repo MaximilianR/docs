@@ -22,8 +22,7 @@ Additionally, each `MetaRegistry` is integrated into the chain-specific [`Addres
 
 *The contract utilizes `RegistryHandlers` interfaces to return data for most of the methods documented in this section:*
 
-<details>
-<summary>`_get_registry_handlers_from_pool(_pool: address) -&gt; address[MAX_REGISTRIES]:`</summary>
+<Dropdown title="`_get_registry_handlers_from_pool(_pool: address) -&gt; address[MAX_REGISTRIES]:`">
 
 
 ```py
@@ -88,7 +87,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 

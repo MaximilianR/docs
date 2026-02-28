@@ -77,8 +77,7 @@ The idea of the system is pretty straight forward: an `Updater` contract on Ethe
 
 The [`Updater`](https://etherscan.io/address/0xc73e8d8f7A68Fc9d67e989250484E57Ae03a5Da3) contract on Ethereum makes use of the `update` function to query and transmit the veCRV information of a user from the [`VotingEscrow`](https://etherscan.io/address/0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2) on Ethereum to the [`L2 VotingEscrow Oracle`](https://fraxscan.com/address/0xc73e8d8f7A68Fc9d67e989250484E57Ae03a5Da3) on Fraxtal. For messaging, the [`Fraxtal: L1 Cross Domain Messenger Proxy`](https://etherscan.io/address/0x126bcc31bc076b3d515f60fbc81fdde0b0d542ed) is used to send the message. To relay the message, the [`Fraxtal: Cross Domain Messenger`](https://fraxscan.com/address/0x4200000000000000000000000000000000000007) is used.
 
-<details>
-<summary>:logos-vyper: `Updater.vy`</summary>
+<Dropdown title=":logos-vyper: `Updater.vy`">
 
 
 ```vyper
@@ -164,7 +163,7 @@ def update(_user: address = msg.sender, _gas_limit: uint32 = 0):
 ```
 
 
-</details>
+</Dropdown>
 
 
 :::

@@ -13,8 +13,7 @@ The contract owner can bridge any token in any quantity, other accounts can only
 
 :::
 
-<details>
-<summary>Proxy Source Code</summary>
+<Dropdown title="Proxy Source Code">
 
 
 ```vyper
@@ -47,7 +46,7 @@ def bridge(_coin: address):
 ```
 
 
-</details>
+</Dropdown>
 
 ## Bridging:::warning
 

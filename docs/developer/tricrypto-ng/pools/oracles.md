@@ -36,8 +36,7 @@ $\frac{10^{36}}{\text{price_oracle(0)}} = 2.7240908e+14$
 
 *The formula to calculate the exponential moving-average essentially comes down to:*
 
-<details>
-<summary>Source Code for Calculating the EMA</summary>
+<Dropdown title="Source Code for Calculating the EMA">
 
 
 ```vyper
@@ -249,7 +248,7 @@ def tweak_price(
 ```
 
 
-</details>
+</Dropdown>
 
 $$\alpha = e^\{\text\{power\}\}$$
 
@@ -282,8 +281,7 @@ $$\text\{EMA\} = \frac\{\min(\text\{last_prices\}, 2 \times \text\{price_scale\}
 
 Some storage variables pack multiple values into a single entry to save on gas costs. These values are unpacked when needed for use.
 
-<details>
-<summary>Source Code</summary>
+<Dropdown title="Source Code">
 
 
 <Tabs>
@@ -350,7 +348,7 @@ def _unpack_prices(_packed_prices: uint256) -> uint256[2]:
 </Tabs>
 
 
-</details>
+</Dropdown>
 
 
 :::
@@ -773,8 +771,7 @@ The `tweak_price` function is called whenever there is an unbalanced liquidity o
 - `remove_liquidity_one_coin`
 
 
-<details>
-<summary>Source Code</summary>
+<Dropdown title="Source Code">
 
 
 ```vyper
@@ -986,4 +983,4 @@ def tweak_price(
 ```
 
 
-</details>
+</Dropdown>

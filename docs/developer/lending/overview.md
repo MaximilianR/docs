@@ -39,8 +39,7 @@ Because Curve Lending operates very similarly to the system for minting crvUSD, 
 
 The Vault is an **implementation of the ERC4626 vault which deposits assets into the Controller contract**and tracks the **progress of fees earned**. It is a standard factory (non-blueprint) contract that also creates the AMM and Controller using `initialize()`.
 
-<details>
-<summary>`initialize()`</summary>
+<Dropdown title="`initialize()`">
 
 
 Function which initializes a vault and creates the corresponding Controller and AMM contract from their blueprint implementations.
@@ -123,7 +122,7 @@ def initialize(
 ```
 
 
-</details>
+</Dropdown>
 
 [→ More here](./contracts/vault.md)
 

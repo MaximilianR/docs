@@ -16,8 +16,7 @@ Source code for the contract can be found on [ GitHub](https://github.com/curvef
 
 The contract utilizes **interfaces for all relevant Curve pools**, such as Stableswap, CryptoSwap, LLAMMA, and others, to execute swaps.
 
-<details>
-<summary>Interfaces</summary>
+<Dropdown title="Interfaces">
 
 
 ```vyper
@@ -142,7 +141,7 @@ struct AtomicAmountAndFee:
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 

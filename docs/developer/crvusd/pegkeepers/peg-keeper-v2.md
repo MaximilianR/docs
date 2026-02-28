@@ -34,8 +34,7 @@ Emits: `Provide` or `Withdraw`
 | -------------- | --------- | ----------- |
 | `_beneficiary` | `address` | Address to receive the caller profit. Defaults to `msg.sender` |
 
-<details>
-<summary>Source code for providing crvUSD to the pool</summary>
+<Dropdown title="Source code for providing crvUSD to the pool">
 
 
 ```vyper
@@ -172,10 +171,9 @@ def provide_allowed(_pk: address=msg.sender) -> uint256:
 ```
 
 
-</details>
+</Dropdown>
 
-<details>
-<summary>Source code for withdrawing crvUSD from the pool</summary>
+<Dropdown title="Source code for withdrawing crvUSD from the pool">
 
 
 ```vyper
@@ -295,7 +293,7 @@ def withdraw_allowed(_pk: address=msg.sender) -> uint256:
 ```
 
 
-</details>
+</Dropdown>
 
 <Example>
 

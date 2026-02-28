@@ -63,8 +63,7 @@ There is an `ACTION_DELAY` of 15 minutes before calling the function again.
 
 :::
 
-<details>
-<summary>Source code: **Mint and Deposit**</summary>
+<Dropdown title="Source code: **Mint and Deposit**">
 
 
 ```vyper
@@ -127,10 +126,9 @@ def _provide(_amount: uint256):
 ```
 
 
-</details>
+</Dropdown>
 
-<details>
-<summary>Source code: **Withdraw and Burn**</summary>
+<Dropdown title="Source code: **Withdraw and Burn**">
 
 
 ```vyper
@@ -195,7 +193,7 @@ def _withdraw(_amount: uint256):
 ```
 
 
-</details>
+</Dropdown>
 
 <Example>
 

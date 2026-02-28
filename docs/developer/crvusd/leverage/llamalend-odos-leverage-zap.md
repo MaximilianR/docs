@@ -21,8 +21,7 @@ Previously, building leverage for crvUSD markets relied solely on predefined rou
 
 Leverage is built using a **callback method**. The function to execute callbacks is located in the `Controller.vy` contract:
 
-<details>
-<summary>`execute_callback`</summary>
+<Dropdown title="`execute_callback`">
 
 
 :::bug
@@ -31,77 +30,6 @@ Leverage is built using a **callback method**. The function to execute callbacks
 
 
 :::
-
-
-```py
-struct CallbackData:
-    active_band: int256
-    stablecoins: uint256
-    collateral: uint256
-
-CALLBACK_DEPOSIT: constant(bytes4) = method_id("callback_deposit(address,uint256,uint256,uint256,uint256[])", output_type=bytes4)
-CALLBACK_REPAY: constant(bytes4) = method_id("callback_repay(address,uint256,uint256,uint256,uint256[])", output_type=bytes4)
-CALLBACK_LIQUIDATE: constant(bytes4) = method_id("callback_liquidate(address,uint256,uint256,uint256,uint256[])", output_type=bytes4)
-
-CALLBACK_DEPOSIT_WITH_BYTES: constant(bytes4) = method_id("callback_deposit(address,uint256,uint256,uint256,uint256[],bytes)", output_type=bytes4)
-# CALLBACK_REPAY_WITH_BYTES: constant(bytes4) = method_id("callback_repay(address,uint256,uint256,uint256,uint256[],bytes)", output_type=bytes4) <-- BUG! The reason is 0 at the beginning of method_id
-CALLBACK_REPAY_WITH_BYTES: constant(bytes4) = 0x008ae188
-CALLBACK_LIQUIDATE_WITH_BYTES: constant(bytes4) = method_id("callback_liquidate(address,uint256,uint256,uint256,uint256[],bytes)", output_type=bytes4)
-
-@internal
-def execute_callback(callbacker: address, callback_sig: bytes4,
-                    user: address, stablecoins: uint256, collateral: uint256, debt: uint256,
-                    callback_args: DynArray[uint256, 5], callback_bytes: Bytes[10**4]) -> CallbackData:
-    assert callbacker != COLLATERAL_TOKEN.address
-
-    data: CallbackData = empty(CallbackData)
-    data.active_band = AMM.active_band()
-    band_x: uint256 = AMM.bands_x(data.active_band)
-    band_y: uint256 = AMM.bands_y(data.active_band)
-
-    # Callback
-    response: Bytes[64] = raw_call(
-        callbacker,
-        concat(callback_sig, _abi_encode(user, stablecoins, collateral, debt, callback_args, callback_bytes)),
-        max_outsize=64
-    )
-    data.stablecoins = convert(slice(response, 0, 32), uint256)
-    data.collateral = convert(slice(response, 32, 32), uint256) 
-
-    # Checks after callback
-    assert data.active_band == AMM.active_band()
-    assert band_x == AMM.bands_x(data.active_band)
-    assert band_y == AMM.bands_y(data.active_band)
-
-    return data
-```
-
-
-</details>
-
-:::info[Required Changes to `Controller.vy`]
-
-This zap only works for crvUSD and lending markets which were deployed using the blueprint implementation at [`0x4c5d4F542765B66154B2E789abd8E69ed4504112`](https://etherscan.io/address/0x4c5d4F542765B66154B2E789abd8E69ed4504112). Markets deployed prior to that can only make use of the regular [`LeverageZap.vy`](./leverage-zap.md).
-
-To enable the functionality of such Zap contracts, minor modifications were necessary in the `Controller.vy` contract. Functions such as `create_loan_extended`, `borrow_more_extended`, `repay_extended`, `_liquidity`, and `liquidate_extended` were enhanced with an additional constructor argument `callback_bytes: Bytes[10**4]`. This allows users to pass bytes to the Zap contract. Additionally, the internal `execute_callback` function, which manages the callbacks, was also updated.
-
-
-:::
-
----
-
-## Building Leverage
-
-To build up leverage, the `LlamaLendOdosLeverageZap.vy` contract uses the `callback_deposit` function. Additionally, there is a `max_borrowable` function that calculates the maximum borrowable amount when using leverage.
-
-*Flow of building leverage:*
-
-1. User calls [`create_loan_extended`](../controller.md#create_loan_extended) or [`borrow_more_extended`](../controller.md#borrow_more_extended) and passes `collateral`, `debt`, `N`, `callbacker`, `callback_args`, and `callback_bytes` into the function.[^2]
-2. The debt which is taken on by the user is then transferred to the `callbacker`, in our case the `LlamaLendOdosLeverageZap.vy` contract.
-3. After the transfer, the callback is executed using the internal `execute_callback` in the `Controller.vy` contract. This step builds up the leverage.
-
-<details>
-<summary>`execute_callback`</summary>
 
 
 ```py
@@ -148,7 +76,77 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</details>
+</Dropdown>
+
+:::info[Required Changes to `Controller.vy`]
+
+This zap only works for crvUSD and lending markets which were deployed using the blueprint implementation at [`0x4c5d4F542765B66154B2E789abd8E69ed4504112`](https://etherscan.io/address/0x4c5d4F542765B66154B2E789abd8E69ed4504112). Markets deployed prior to that can only make use of the regular [`LeverageZap.vy`](./leverage-zap.md).
+
+To enable the functionality of such Zap contracts, minor modifications were necessary in the `Controller.vy` contract. Functions such as `create_loan_extended`, `borrow_more_extended`, `repay_extended`, `_liquidity`, and `liquidate_extended` were enhanced with an additional constructor argument `callback_bytes: Bytes[10**4]`. This allows users to pass bytes to the Zap contract. Additionally, the internal `execute_callback` function, which manages the callbacks, was also updated.
+
+
+:::
+
+---
+
+## Building Leverage
+
+To build up leverage, the `LlamaLendOdosLeverageZap.vy` contract uses the `callback_deposit` function. Additionally, there is a `max_borrowable` function that calculates the maximum borrowable amount when using leverage.
+
+*Flow of building leverage:*
+
+1. User calls [`create_loan_extended`](../controller.md#create_loan_extended) or [`borrow_more_extended`](../controller.md#borrow_more_extended) and passes `collateral`, `debt`, `N`, `callbacker`, `callback_args`, and `callback_bytes` into the function.[^2]
+2. The debt which is taken on by the user is then transferred to the `callbacker`, in our case the `LlamaLendOdosLeverageZap.vy` contract.
+3. After the transfer, the callback is executed using the internal `execute_callback` in the `Controller.vy` contract. This step builds up the leverage.
+
+<Dropdown title="`execute_callback`">
+
+
+```py
+struct CallbackData:
+    active_band: int256
+    stablecoins: uint256
+    collateral: uint256
+
+CALLBACK_DEPOSIT: constant(bytes4) = method_id("callback_deposit(address,uint256,uint256,uint256,uint256[])", output_type=bytes4)
+CALLBACK_REPAY: constant(bytes4) = method_id("callback_repay(address,uint256,uint256,uint256,uint256[])", output_type=bytes4)
+CALLBACK_LIQUIDATE: constant(bytes4) = method_id("callback_liquidate(address,uint256,uint256,uint256,uint256[])", output_type=bytes4)
+
+CALLBACK_DEPOSIT_WITH_BYTES: constant(bytes4) = method_id("callback_deposit(address,uint256,uint256,uint256,uint256[],bytes)", output_type=bytes4)
+# CALLBACK_REPAY_WITH_BYTES: constant(bytes4) = method_id("callback_repay(address,uint256,uint256,uint256,uint256[],bytes)", output_type=bytes4) <-- BUG! The reason is 0 at the beginning of method_id
+CALLBACK_REPAY_WITH_BYTES: constant(bytes4) = 0x008ae188
+CALLBACK_LIQUIDATE_WITH_BYTES: constant(bytes4) = method_id("callback_liquidate(address,uint256,uint256,uint256,uint256[],bytes)", output_type=bytes4)
+
+@internal
+def execute_callback(callbacker: address, callback_sig: bytes4,
+                    user: address, stablecoins: uint256, collateral: uint256, debt: uint256,
+                    callback_args: DynArray[uint256, 5], callback_bytes: Bytes[10**4]) -> CallbackData:
+    assert callbacker != COLLATERAL_TOKEN.address
+
+    data: CallbackData = empty(CallbackData)
+    data.active_band = AMM.active_band()
+    band_x: uint256 = AMM.bands_x(data.active_band)
+    band_y: uint256 = AMM.bands_y(data.active_band)
+
+    # Callback
+    response: Bytes[64] = raw_call(
+        callbacker,
+        concat(callback_sig, _abi_encode(user, stablecoins, collateral, debt, callback_args, callback_bytes)),
+        max_outsize=64
+    )
+    data.stablecoins = convert(slice(response, 0, 32), uint256)
+    data.collateral = convert(slice(response, 32, 32), uint256)
+
+    # Checks after callback
+    assert data.active_band == AMM.active_band()
+    assert band_x == AMM.bands_x(data.active_band)
+    assert band_y == AMM.bands_y(data.active_band)
+
+    return data
+```
+
+
+</Dropdown>
 
     The function uses Vyper's built-in [`raw_call`](https://docs.vyperlang.org/en/stable/built-in-functions.html?highlight=raw_call#raw_call) function to call the desired method (in this case `callback_deposit`) with the according `callback_bytes`.
 
@@ -444,8 +442,7 @@ To deleverage loans, the `LlamaLendOdosLeverageZap.vy` contract uses the `callba
 2. The Controller withdraws 100% of the collateral from the AMM and transfers all of it to the `callbacker` contract.
 3. After the transfer, the callback is executed using the internal `execute_callback` in the `Controller.vy` contract. This function unwinds the leverage.
 
-<details>
-<summary>`execute_callback`</summary>
+<Dropdown title="`execute_callback`">
 
 
 ```py
@@ -492,7 +489,7 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</details>
+</Dropdown>
 
     The function uses Vyper's built-in [`raw_call`](https://docs.vyperlang.org/en/stable/built-in-functions.html?highlight=raw_call#raw_call) function to call the desired method (in this case `callback_repay`) with the according `callback_bytes`.
 

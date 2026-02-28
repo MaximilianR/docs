@@ -8,8 +8,7 @@
 
 Admin fees of a Curve pool are usually claimed through an external function, callable by anyone. **Twocrypto-NG does not have any external function to directly claim fees**. Admin fees are claimed through an internal function, which is called when liquidity is removed single-sidedly via the `_remove_liquidity_one_coin` function, and then sent to the fee receiver determined within the Factory contract.
 
-<details>
-<summary>`_claim_admin_fees()`</summary>
+<Dropdown title="`_claim_admin_fees()`">
 
 
 ```vyper
@@ -137,15 +136,14 @@ def _claim_admin_fees():
 ```
 
 
-</details>
+</Dropdown>
 
 ## `exchange_received`
 
 This new function **allows the exchange of tokens without actually transfering tokens in**, as the exchange is based on the change of the coins balances within the pool (see code below).    
 Users of this method are dex aggregators, arbitrageurs, or other users who **do not wish to grant approvals to the contract**. They can instead send tokens directly to the contract and call **`exchange_received()`**.
 
-<details>
-<summary>Transfer logic when using `exchange_received()`</summary>
+<Dropdown title="Transfer logic when using `exchange_received()`">
 
 
 ```vyper
@@ -202,7 +200,7 @@ def _transfer_in(
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 

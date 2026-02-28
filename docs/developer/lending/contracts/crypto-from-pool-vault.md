@@ -24,8 +24,7 @@ The source code for the `CryptoFromPoolVault.vy` contract can be found on [:logo
 
 The oracle contracts are fully immutable. Once deployed, they cannot change any parameters, stop the price updates, or alter the pools used to calculate the prices. However, because the contract relies on other pools, it's important to keep in mind that changing parameters in the pool, such as the periodicity of the oracle, can influence these oracle contracts. All relevant data required for the oracle to function is passed into the `__init__` function during the deployment of the contract.
 
-<details>
-<summary>`__init__`</summary>
+<Dropdown title="`__init__`">
 
 
 <Tabs>
@@ -113,7 +112,7 @@ def __init__(
 </Tabs>
 
 
-</details>
+</Dropdown>
 
 
 :::

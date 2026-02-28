@@ -8,6 +8,7 @@ import SwaggerUIComponent from '../../components/SwaggerUI';
 import SourceCode from '../../components/SourceCode';
 import Example from '../../components/Example';
 import ContractABI from '../../components/ContractABI';
+import Dropdown from '../../components/Dropdown';
 
 export default {
   ...MDXComponents,
@@ -19,4 +20,5 @@ export default {
   SourceCode,
   Example,
   ContractABI,
+  Dropdown,
 };

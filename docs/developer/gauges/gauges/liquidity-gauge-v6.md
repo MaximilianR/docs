@@ -173,8 +173,7 @@ CRV emissions directed to the gauge are claimable from the [`Minter.vy`](../mint
 
 The liquidity gauge records checkpoints to determine how much external rewards each user is entitled to claim. 
 
-<details>
-<summary>`_checkpoint_rewards`</summary>
+<Dropdown title="`_checkpoint_rewards`">
 
 
 ```py
@@ -230,7 +229,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 ```
 
 
-</details>
+</Dropdown>
 
 *These checkpoints occur:*
 
@@ -953,8 +952,7 @@ The [`working_balances`](#working_balances) of a user and the total [`working_su
 - **When a User is 'Kicked' for Abusing Their Boost**: For more information on what constitutes abuse and the repercussions, see [here](#kick).
 
 
-<details>
-<summary>`_update_liquidity_limit`</summary>
+<Dropdown title="`_update_liquidity_limit`">
 
 
 ```py
@@ -988,7 +986,7 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
 ```
 
 
-</details>
+</Dropdown>
 
 *General formula for calculating the boost:*
 

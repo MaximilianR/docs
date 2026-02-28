@@ -4,8 +4,7 @@
 The pool is then initialized via the **`initialize()`**function of the pool implementation contract, which sets all the relevant variables, such as paired tokens, prices, and parameters.
 
 
-<details>
-<summary>Initializing the Pool</summary>
+<Dropdown title="Initializing the Pool">
 
 
 ```vyper
@@ -57,7 +56,7 @@ def initialize(
 ```
 
 
-</details>
+</Dropdown>
 
 ## Exchange Methods
 

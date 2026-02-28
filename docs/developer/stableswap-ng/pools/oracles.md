@@ -91,8 +91,7 @@ The AMM implementation utilizes two private variables, `last_prices_packed` and 
 The spot price cannot be immediately used for the calculation of the moving average, as this would permit single-block oracle manipulation. Consequently, the `_calc_moving_average` method, which calculates the moving average of the oracle, uses `last_prices_packed` or `last_D_packed`. These variables retain prices from previous actions.
 
 
-<details>
-<summary>`_calc_moving_average`</summary>
+<Dropdown title="`_calc_moving_average`">
 
 
 ```vyper
@@ -119,7 +118,7 @@ def _calc_moving_average(
 ```
 
 
-</details>
+</Dropdown>
 
 
 :::
@@ -674,8 +673,7 @@ The rationale behind this approach is that all transactions within a block share
 
 :::
 
-<details>
-<summary>Source code for the internal **`upkeep_oracle`**function</summary>
+<Dropdown title="Source code for the internal **`upkeep_oracle`**function">
 
 
 ```vyper
@@ -732,7 +730,7 @@ def upkeep_oracles(xp: DynArray[uint256, MAX_COINS], amp: uint256, D: uint256):
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 
@@ -774,8 +772,7 @@ self.last_prices_packed = last_prices_packed_new
 
 1. `last_price` which represents the last stored spot price within the AMM is calculated using `_get_p`. Additionally, the value is capped at `2 * 10**18` to prevent price oracle manipulation. Note: It's not actually the spot price which is capped, but rather the spot price that is used in the calculation for the EMA price oracle.
 
-<details>
-<summary>`_get_p`</summary>
+<Dropdown title="`_get_p`">
 
 
 ```vyper
@@ -808,12 +805,11 @@ def _get_p(
 ```
 
 
-</details>
+</Dropdown>
 
 2. The moving-average price (`ema_price`) is calculated using `_calc_moving_average`. This value can only be updated once per block. If there are two actions which would update the value, only the first action will update it. For the second action, only the `last_price` is updated, while `ema_price` will not be updated and have the same value as in the first action.
 
-<details>
-<summary>`_calc_moving_average`</summary>
+<Dropdown title="`_calc_moving_average`">
 
 
 ```vyper
@@ -840,7 +836,7 @@ def _calc_moving_average(
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 

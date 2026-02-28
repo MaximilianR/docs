@@ -29,8 +29,7 @@ Curve uses different ownership transfer patterns in its contracts. The most comm
 
 ## `commit + accept`
 
-<details>
-<summary>Source code</summary>
+<Dropdown title="Source code">
 
 
 The implementation of the commit + accept pattern might vary slightly. Nontheless, the general idea is the same.
@@ -67,7 +66,7 @@ def accept_transfer_ownership():
 ```
 
 
-</details>
+</Dropdown>
 
 The ownership transfer mechanism implements a secure two-step process that prevents accidental or malicious ownership transfers. At its core, the implementation revolves around two state variables: `owner` and `future_owner`, both public addresses that track the current and prospective contract owners respectively.
 
@@ -88,8 +87,7 @@ A simple Google Colab notebook that simulates the commit + accept pattern can be
 
 ## `commit + apply`
 
-<details>
-<summary>Source code</summary>
+<Dropdown title="Source code">
 
 
 The implementation of the commit + apply pattern might vary slightly. Nontheless, the general idea is the same.
@@ -128,7 +126,7 @@ def apply_transfer_ownership():
 ```
 
 
-</details>
+</Dropdown>
 
 This implementation presents another variation of the two-step ownership transfer pattern, commonly used in Curve's contracts, particularly in the GaugeController. Instead of requiring the future owner to accept the transfer, this pattern allows the current admin to both initiate and complete the transfer process.
 

@@ -38,8 +38,7 @@ $$\text\{ema_tvl\}_\{i\} = \frac\{\text\{new_tvl\}_i * (10^\{18\} - \alpha) + \t
 
 *The code snippet provided illustrates the implementation of the above formula in the contract.*
 
-<details>
-<summary>Source code for `_ema_tvl`</summary>
+<Dropdown title="Source code for `_ema_tvl`">
 
 
 ```py
@@ -70,14 +69,13 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</details>
+</Dropdown>
 
 ## Aggregated crvUSD Price Calculation
 
 The `_price` function then uses these EMA TVLs to calculate the aggregated price of `crvUSD` by considering the liquidity of each pool. The function adjusts the price from the pool's `price_oracle` based on the coin index of `crvUSD` in the liquidity pool.
 
-<details>
-<summary>Source code for `_price`</summary>
+<Dropdown title="Source code for `_price`">
 
 
 ```py
@@ -125,7 +123,7 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 ```
 
 
-</details>
+</Dropdown>
 
 *In the calculation process, the contract iterates over all price pairs to perform the following steps:*
 

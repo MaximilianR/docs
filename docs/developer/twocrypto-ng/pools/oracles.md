@@ -339,8 +339,7 @@ The function is called whenever `add_liquidity`, `remove_liquidity_one_coin`, or
 To prevent oracle manipulation, `price_oracle` and `xcp_oracle` are only **updated once per block**.
 
 
-<details>
-<summary>`tweak_price`</summary>
+<Dropdown title="`tweak_price`">
 
 
 *The function takes the following inputs:*
@@ -581,7 +580,7 @@ def tweak_price(
 </Tabs>
 
 
-</details>
+</Dropdown>
 
 ---
 

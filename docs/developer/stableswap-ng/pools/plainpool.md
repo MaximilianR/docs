@@ -27,8 +27,7 @@ Comprehensive documentation for Oracle Methods is available on a dedicated page,
 
 - **`_transfer_in()`**
 
-<details>
-<summary>`_transfer_in(coin_idx: int128, dx: uint256, sender: address, expect_optimistic_transfer: bool) -&gt; uint256:`</summary>
+<Dropdown title="`_transfer_in(coin_idx: int128, dx: uint256, sender: address, expect_optimistic_transfer: bool) -> uint256:`">
 
 
 `expect_optimistic_transfer` is relevant when using the [`exchange_received()`](#exchange_received) function.
@@ -86,12 +85,11 @@ def _transfer_in(
 ```
 
 
-</details>
+</Dropdown>
 
 - **`_transfer_out()`**
 
-<details>
-<summary>`_transfer_out(_coin_idx: int128, _amount: uint256, receiver: address):`</summary>
+<Dropdown title="`_transfer_out(_coin_idx: int128, _amount: uint256, receiver: address):`">
 
 
 | Input      | Type      | Description                               |
@@ -130,7 +128,7 @@ def _transfer_out(_coin_idx: int128, _amount: uint256, receiver: address):
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 
@@ -1510,8 +1508,7 @@ def _calc_withdraw_one_coin(
 
 Stableswap-ng introduces a dynamic fee based on the imbalance of the coins within the pool and their pegs:
 
-<details>
-<summary>`_dynamic_fee`</summary>
+<Dropdown title="`_dynamic_fee`">
 
 
 ```vyper
@@ -1533,7 +1530,7 @@ def _dynamic_fee(xpi: uint256, xpj: uint256, _fee: uint256) -> uint256:
 ```
 
 
-</details>
+</Dropdown>
 
 More on dynamic fees [here](../pools/overview.md#dynamic-fees).
 

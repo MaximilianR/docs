@@ -42,8 +42,7 @@ The internal `**_balance()**` function - which is used to calculate the coin bal
 
 :::
 
-<details>
-<summary>`_balances()`</summary>
+<Dropdown title="`_balances()`">
 
 
 ```vyper
@@ -77,7 +76,7 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 
@@ -117,8 +116,7 @@ $xps2 = (xp_{i} + xp_{j})^2$
 **The dynamic fee is calculated by the following formula:**$$\text\{dynamic fee\} = \frac\{\{fee_\{m\} \times fee\}\}\{\frac\{(fee_\{m\} - 10^\{10\}) \times 4 \times xp_\{i\} \times xp_\{j\}\}\{xps2\}+ 10^\{10\}\}$$
 
 
-<details>
-<summary>`dynamic_fee` method</summary>
+<Dropdown title="`dynamic_fee` method">
 
 
 ```vyper
@@ -181,7 +179,7 @@ def _get_rates_balances_xp(pool: address, N_COINS: uint256) -> (
 ```
 
 
-</details>
+</Dropdown>
 
 ### Interactive Graph
 

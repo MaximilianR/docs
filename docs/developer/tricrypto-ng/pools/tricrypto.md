@@ -9,8 +9,7 @@ The token has the regular ERC-20 methods, which will not be further documented.
 
 For Tricrypto-NG pools, price scaling and fee parameters are bundled and stored as a single unsigned integer. This consolidation reduces storage read and write operations, leading to more cost-efficient calls. When these parameters are accessed, they are subsequently unpacked.
 
-<details>
-<summary>_pack()</summary>
+<Dropdown title="_pack()">
 
 
 ```vyper
@@ -26,10 +25,9 @@ def _pack(x: uint256[3]) -> uint256:
 ```
 
 
-</details>
+</Dropdown>
 
-<details>
-<summary>_unpack()</summary>
+<Dropdown title="_unpack()">
 
 
 ```vyper
@@ -49,7 +47,7 @@ def _unpack(_packed: uint256) -> uint256[3]:
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 

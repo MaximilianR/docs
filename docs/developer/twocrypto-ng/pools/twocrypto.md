@@ -12,13 +12,12 @@ The token has the regular ERC-20 methods, which will not be further documented.
 In Twocrypto-NG pools, price scaling and fee **parameters are bundled and stored as a single unsigned integer**. This consolidation reduces storage read and write operations, leading to more cost-efficient calls.
 
 
-<details>
-<summary>pack</summary>
+<Dropdown title="pack">
 
 
 This internal function packs two or three integers into a single uint256.
 
-    ```vyper 
+    ```vyper
     @pure
     @internal
     def _pack_2(p1: uint256, p2: uint256) -> uint256:
@@ -36,10 +35,9 @@ This internal function packs two or three integers into a single uint256.
     ```
 
 
-</details>
+</Dropdown>
 
-<details>
-<summary>unpack</summary>
+<Dropdown title="unpack">
 
 
 This internal function unpacks a single uin256 into two or three integers.
@@ -66,15 +64,14 @@ This internal function unpacks a single uin256 into two or three integers.
     ```
 
 
-</details>
+</Dropdown>
 
 *The AMM contract utilizes two internal functions to transfer coins in and out of the pool e.g. when exchanging tokens or adding/removing liquidity:*
 
 
 **Token transfer into the AMM:**
 
-<details>
-<summary>`_transfer_in(_coin_idx: uint256, _dx: uint256, sender: address, expect_optimistic_transfer: bool) -&gt; uint256:`</summary>
+<Dropdown title="`_transfer_in(_coin_idx: uint256, _dx: uint256, sender: address, expect_optimistic_transfer: bool) -> uint256:`">
 
 
 Internal function to transfer tokens into the AMM, called by `exchange`, `exchange_received` or `add_liquidity`.
@@ -144,12 +141,11 @@ def _transfer_in(
 ```
 
 
-</details>
+</Dropdown>
 
 **Token transfer out of the AMM:**
 
-<details>
-<summary>`_transfer_out(_coin_idx: int128, _amount: uint256, receiver: address):`</summary>
+<Dropdown title="`_transfer_out(_coin_idx: int128, _amount: uint256, receiver: address):`">
 
 
 Internal function to transfer tokens out of the AMM, called by the `remove_liquidity`, `remove_liquidity_one`, `_claim_admin_fees`, and `_exchange` methods.
@@ -187,7 +183,7 @@ def _transfer_out(_coin_idx: uint256, _amount: uint256, receiver: address):
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 
@@ -3686,8 +3682,7 @@ Prices and oracles are adjusted by when calling the internal `tweak_price` metho
 
 It is not called when removing liquidity one sided with `remove_liquidity` as this function does not alter prices.
 
-<details>
-<summary>tweak_price(A_gamma: uint256[2], _xp: uint256[N_COINS], new_D: uint256, K0_prev: uint256 = 0) -&gt; uint256:</summary>
+<Dropdown title="tweak_price(A_gamma: uint256[2], _xp: uint256[N_COINS], new_D: uint256, K0_prev: uint256 = 0) -> uint256:">
 
 
 ```vyper
@@ -3911,7 +3906,7 @@ def tweak_price(
 ```
 
 
-</details>
+</Dropdown>
 
 ### `price_oracle`
 ::::description[`TwoCrypto.price_oracle() -> uint256:`]

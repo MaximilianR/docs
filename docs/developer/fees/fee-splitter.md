@@ -40,8 +40,7 @@ The weight assigned to a receiver is set when a receiver address is added using 
 
 If a weight is dynamic, the `weight` value in the struct acts as an upper cap. If the actual dynamic weight returned by the receiving contract is less than the defined weight in the struct, the unused weight is rolled over to the weight of the `excess_receiver`.
 
-<details>
-<summary>Weight Example</summary>
+<Dropdown title="Weight Example">
 
 The FeeSplitter supports both static and dynamic weights for fee distribution. Dynamic weights allow for more flexible allocation based on changing conditions, while still respecting a maximum cap.
 
@@ -85,7 +84,7 @@ flowchart TD
 ```
 
 
-</details>
+</Dropdown>
 
 ---
 

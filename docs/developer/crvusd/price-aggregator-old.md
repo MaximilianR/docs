@@ -32,8 +32,7 @@ $$\text\{ema_tvl\}_\{i\} = \frac\{\text\{new_tvl\}_i * (10^\{18\} - \alpha) + \t
 
 *The code snippet provided illustrates the implementation of the above formula in the contract.*
 
-<details>
-<summary>**`_ema_tvl`**</summary>
+<Dropdown title="**`_ema_tvl`**">
 
 
 ```py
@@ -64,14 +63,13 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</details>
+</Dropdown>
 
 ## Aggregated Price Calculation
 
 The `_price` function then uses these EMA TVLs to calculate the aggregated prices by considering the liquidity of each pool. A pool's liquidity must meet or exceed `100,000 * 10**18` to be included in the calculation. The function adjusts the price from the pool's `price_oracle` based on the position of crvUSD in the liquidity pair, ensuring consistent price representation across pools.
 
-<details>
-<summary>**`_price`**</summary>
+<Dropdown title="**`_price`**">
 
 
 ```py
@@ -119,7 +117,7 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 ```
 
 
-</details>
+</Dropdown>
 
 *The process involves:*
 

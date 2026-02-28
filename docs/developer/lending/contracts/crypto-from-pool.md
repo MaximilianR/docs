@@ -17,8 +17,7 @@ The [`OneWayLendingFactory.vy`](./oneway-factory.md) has a [`create_from_pool`](
 
 The oracle contracts are fully immutable. Once deployed, they cannot change any parameters, stop the price updates, or alter the pools used to calculate the prices. All relevant data required for the oracle to function is passed into the `__init__` function during the deployment of the contract.
 
-<details>
-<summary>`__init__`</summary>
+<Dropdown title="`__init__`">
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -100,7 +99,7 @@ def __init__(
 </Tabs>
 
 
-</details>
+</Dropdown>
 
 
 :::

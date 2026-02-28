@@ -22,8 +22,7 @@ For abbreviations, see [here](./oracle.md#terminology-used-in-code).
 This value is subsequently used in the internal function `_raw_price()` to compute the *weighted price of ETH*.
 
 
-<details>
-<summary>`_ema_tvl() -&gt; uint256[N_POOLS]:`</summary>
+<Dropdown title="`_ema_tvl() -&gt; uint256[N_POOLS]:`">
 
 
 ```vyper
@@ -49,7 +48,7 @@ def _ema_tvl() -> uint256[N_POOLS]:
 ```
 
 
-</details>
+</Dropdown>
 
 $$tvl_\{i\} = \frac\{TS_i * VP_i\}\{10^\{18\}\}$$
 
@@ -153,8 +152,7 @@ last_tvl: public(uint256[N_POOLS])
 
 The internal `_raw_price()` function calculates the *raw price of the collateral token*.
 
-<details>
-<summary>`_raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -&gt; uint256:`</summary>
+<Dropdown title="`_raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -&gt; uint256:`">
 
 
 ```vyper
@@ -203,7 +201,7 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 ```   
 
 
-</details>
+</Dropdown>
 
 $$price_\{weighted\} = (\frac\{price_\{eth\} * price_\{crvusd\}\}\{price_\{usd\}\}) * weight$$
 
