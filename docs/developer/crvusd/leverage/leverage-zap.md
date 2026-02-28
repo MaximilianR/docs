@@ -1,32 +1,21 @@
 # LeverageZap.vy
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 This Zap contract is specifically designed to **create leveraged loans**using **predetermined routes that only utilize Curve pools**.
 
-:::github[GitHub]
-
-The source code for `LeverageZap.vy` is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/zaps/LeverageZap.vy).
-
-JavaScript library for Curve Lending can be found here: [ GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay)
-
-
-:::
-
-<details open>
-<summary>`LeverageZap.vy`</summary>
+:::vyper[`LeverageZap.vy`]
 
 The source code for the `LeverageZap.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/zaps/LeverageZap.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
-An accompanying JavaScript library for Curve Lending can be found here: [ GitHub](https://github.com/curvefi/curve-lending-js).
+An accompanying JavaScript library for Curve Lending can be found here: [ GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
 
-
-</details>
+:::
 
 ---
 
-## **Callback**This leverage zap allows up to five values to be passed for `callback_args`, but only the first two are needed:
+## **Callback**
+
+This leverage zap allows up to five values to be passed for `callback_args`, but only the first two are needed:
 
 - `callback_args[0]` represents the route used for leveraging.
 - `callback_args[1]` is the minimum amount of collateral tokens to receive.
@@ -39,7 +28,7 @@ A simple Jupyter notebook on how to create a leveraged position using this zap c
 :::
 
 ### `callback_deposit`
-:::description[`LeverageZap.callback_deposit(user: address, stablecoins: uint256, collateral: uint256, debt: uint256, callback_args: DynArray[uint256, 5]) -> uint256[2]`]
+::::description[`LeverageZap.callback_deposit(user: address, stablecoins: uint256, collateral: uint256, debt: uint256, callback_args: DynArray[uint256, 5]) -> uint256[2]`]
 
 
 :::guard[Guarded Method]
@@ -61,12 +50,7 @@ Returns: [0 and leveraged collateral] (`uint256[2]`), which is the amount of col
 | `debt`          | `uint256`              | Amount of be borrowed. | 
 | `callback_args` | `DynArray[uint256, 5]` | Array of callback arguments consisting of `[route_idx, min_recv]` | 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -90,13 +74,6 @@ def callback_deposit(user: address, stablecoins: uint256, collateral: uint256, d
 
     return [0, leverage_collateral]
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curverouter-vy" label="CurveRouter.vy">
 
 
 ```py
@@ -278,21 +255,17 @@ def exchange_multiple(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ---
 
 ## **Helper Functions***The contract indludes various helper functions:*
 
 ### `get_collateral`
-:::description[`LeverageZap.get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256`]
+::::description[`LeverageZap.get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256`]
 
 
 Function to calculate the expected amount of collateral tokens for 'exchanging' a given amount of stablecoins using a specific route.
@@ -304,12 +277,7 @@ Returns: expected amount of collateral (`uint256`).
 | `stablecoin` | `uint256` | Amount of stablecoins to exchange. | 
 | `route_idx`  | `uint256` | Index of the route to use.         |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -336,13 +304,6 @@ def _get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curveregistryexchangecontract-vy" label="CurveRegistryExchangeContract.vy">
-
-
 ```python
 @view
 @external
@@ -432,14 +393,9 @@ def get_exchange_multiple_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LeverageZap.get_collateral(100000000000000000000000, 0)        # 100,000 crvUSD using route 0
@@ -450,14 +406,13 @@ def get_exchange_multiple_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_collateral_underlying`
-:::description[`LeverageZap.get_collateral_underlying(stablecoin: uint256, route_idx: uint256) -> uint256`]
+::::description[`LeverageZap.get_collateral_underlying(stablecoin: uint256, route_idx: uint256) -> uint256`]
 
 
 Function to calculate the expected amount of collateral for a given amount of `stablecoin`. This is exactly the same function as `get_collateral` but is needed to make the ABI the same as the ABI for sfrxETH and wstETH.
@@ -469,12 +424,7 @@ Returns: amount of collateral (`uint256`).
 | `stablecoin` | `uint256` | Amount of stablecoins to exchange. | 
 | `route_idx`  | `uint256` | Index of the route to use.         |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -498,13 +448,6 @@ def _get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curveregistryexchangecontract-vy" label="CurveRegistryExchangeContract.vy">
-
-
 ```python
 @view
 @external
@@ -594,14 +537,9 @@ def get_exchange_multiple_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This function is used for markets like sfrxETH or wstETH to fetch the amount of underlying ETH. For markets that do not use "underlying" tokens, the function will return the same value as `get_collateral`.
@@ -617,14 +555,13 @@ This function is used for markets like sfrxETH or wstETH to fetch the amount of 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `max_borrowable`
-:::description[`LeverageZap.max_borrowable(collateral: uint256, N: uint256, route_idx: uint256) -> uint256`]
+::::description[`LeverageZap.max_borrowable(collateral: uint256, N: uint256, route_idx: uint256) -> uint256`]
 
 
 :::warning
@@ -644,12 +581,7 @@ Returns: maximum borrowable amount (`uint256`).
 | `N`          | `uint256` | Number of bands to deposit into.                    |
 | `route_idx`  | `uint256` | Index of the route to be used for exchanging stablecoin to collateral. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -701,14 +633,9 @@ def _max_borrowable(collateral: uint256, N: uint256, route_idx: uint256) -> uint
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -723,14 +650,13 @@ def _max_borrowable(collateral: uint256, N: uint256, route_idx: uint256) -> uint
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `max_collateral`
-:::description[`LeverageZap.max_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256`]
+::::description[`LeverageZap.max_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256`]
 
 
 :::warning
@@ -750,12 +676,7 @@ Returns: total amount of collateral, i.e., user_collateral + max_leverage collat
 | `N`          | `uint256` | Number of bands to deposit into.                    |
 | `route_idx`  | `uint256` | Index of the route to be used for exchanging stablecoin to collateral. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -814,13 +735,6 @@ def _get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curverouter-vy" label="CurveRouter.vy">
-
-
 ```python
 @view
 @external
@@ -910,14 +824,9 @@ def get_exchange_multiple_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -932,14 +841,13 @@ def get_exchange_multiple_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `max_borrowable_and_collateral`
-:::description[`LeverageZap.max_borrowable_and_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256[2]`]
+::::description[`LeverageZap.max_borrowable_and_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256[2]`]
 
 
 :::warning
@@ -959,12 +867,7 @@ Returns: maximum borrowable crvUSD and maximum collateral for the position.
 | `N`          | `uint256` | Number of bands to deposit into.                    |
 | `route_idx`  | `uint256` | Index of the route to be used for exchanging stablecoin to collateral. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -984,14 +887,9 @@ def max_borrowable_and_collateral(collateral: uint256, N: uint256, route_idx: ui
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LeverageZap.max_borrowable_and_collateral(100000000, 4, 0)
@@ -1005,14 +903,13 @@ def max_borrowable_and_collateral(collateral: uint256, N: uint256, route_idx: ui
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calculate_debt_n1`
-:::description[`LeverageZap.calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256, route_idx: uint256) -> int256`]
+::::description[`LeverageZap.calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256, route_idx: uint256) -> int256`]
 
 
 Function to calculate the upper band number for the deposit to sit in, to support the given debt with full leverage. This essentially means that all borrowed stablecoin is converted to the collateral token and deposited in addition to the collateral provided by the user. The method reverts if the requested debt is too high.
@@ -1027,12 +924,7 @@ Returns: upper band to deposit into (`int256`).
 | `route_idx`  | `uint256` | Index of the route to be used for conversion.|
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -1053,13 +945,6 @@ def calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256, route_idx:
     leverage_collateral: uint256 = self._get_collateral(debt, route_idx)
     return Controller(CONTROLLER).calculate_debt_n1(collateral + leverage_collateral, debt, N)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```py
@@ -1127,14 +1012,9 @@ def _calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256) -> int256
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LeverageZap.calculate_debt_n1(100000000, 300000000000000000000000. 4, 0)
@@ -1142,18 +1022,19 @@ def _calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256) -> int256
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
-## **Routes**Routes are predetermined paths for token exchanges. These routes are added when initializing the contract. Additional routes cannot be added after the contract's deployment.
+## **Routes**
+
+Routes are predetermined paths for token exchanges. These routes are added when initializing the contract. Additional routes cannot be added after the contract's deployment.
 
 ### `routes`
-:::description[`LeverageZap.routes(arg0: uint256, arg1: uint256) -> address: view`]
+::::description[`LeverageZap.routes(arg0: uint256, arg1: uint256) -> address: view`]
 
 
 Getter for the specific route of a route index. The route consists of alternating tokens and pools, formatted as `token -> pool -> token -> pool`, etc.
@@ -1165,12 +1046,7 @@ Returns: address of the pool or coin (`address`).
 | `arg0` | `uint256` | Index of the route.                  |
 | `arg1` | `uint256` | Position in the route to retrieve the pool or coin. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -1212,27 +1088,22 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
+
+<Example>
 
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-
-*This example shows the route for the route at index 0 `'crvUSD/USDC --> 3pool --> tricrypto2'`.*
+*This example shows the route for the route at index 0 `'crvusd/USDC --> 3pool --> tricrypto2'`.*
 
 ```shell
 >>> LeverageZap.route_name(0) 
-'crvUSD/USDC --> 3pool --> tricrypto2'
+'crvusd/USDC --> 3pool --> tricrypto2'
 
 >>> LeverageZap.routes(0, 0)
 '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'    # crvUSD
 
 >>> LeverageZap.routes(0, 1)
-'0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E'    # crvUSD/USDC pool
+'0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E'    # crvusd/USDC pool
 
 >>> LeverageZap.routes(0, 2)
 '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'    # USDC
@@ -1251,14 +1122,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `route_params`
-:::description[`LeverageZap.route_params(arg0: uint256, arg1: uint256, arg2: uint256) -> uint256: view`]
+::::description[`LeverageZap.route_params(arg0: uint256, arg1: uint256, arg2: uint256) -> uint256: view`]
 
 
 Getter for the route parameters.
@@ -1271,12 +1141,7 @@ Returns: route parameter (`uint256`).
 | `arg1` | `uint256` | Exchange index within the route. The first exchange is indexed as 0, the second as 1, etc. |
 | `arg2` | `uint256` | Route parameter value. `0` for input token, `1` for output token, `2` for swap type. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -1318,18 +1183,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
-# first exchange: exchanging crvUSD for USDC using crvUSD/USDC pool
+# first exchange: exchanging crvUSD for USDC using crvusd/USDC pool
 >>> LeverageZap.route_params(0, 0, 0)   # route 0, first exchange (index 0), fist parameter value (index 0) 
 1                                       # i = crvUSD
 >>> LeverageZap.route_params(0, 0, 1)   # route 0, first exchange (index 0), second parameter value (index 1)
@@ -1358,14 +1218,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `route_pools`
-:::description[`LeverageZap.route_pools(arg0: uint256, arg1: uint256) -> address: view`]
+::::description[`LeverageZap.route_pools(arg0: uint256, arg1: uint256) -> address: view`]
 
 
 Getter for the zap contracts used for a specific exchange in a route, if there are any.
@@ -1377,12 +1236,7 @@ Returns: zap contract (`address`).
 | `arg0` | `uint256` | Index of the route.                                 |
 | `arg1` | `uint256` | Index of the exchange. The first exchange is index 0, the second exchange is index 1, etc. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -1424,14 +1278,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LeverageZap.route_pools(0, 0)
@@ -1442,14 +1291,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `route_names`
-:::description[`LeverageZap.route_names(arg0: uint256) -> String[64]: view`]
+::::description[`LeverageZap.route_names(arg0: uint256) -> String[64]: view`]
 
 
 Getter for the route name of a route.
@@ -1460,12 +1308,7 @@ Returns: route name (`String[64]`).
 | ------| --------- | -------------------- |
 | `arg0`| `uint256` | Index of the route.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -1494,44 +1337,33 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LeverageZap.route_names(0)
-'crvUSD/USDC --> 3pool --> tricrypto2'
+'crvusd/USDC --> 3pool --> tricrypto2'
 
 >>> LeverageZap.route_names(1)
-'crvUSD/USDT --> tricrypto2'
+'crvusd/USDT --> tricrypto2'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `route_count`
-:::description[`LeverageZap.route_count() -> uint256: view`]
+::::description[`LeverageZap.route_count() -> uint256: view`]
 
 
 Getter for the total amount of routes included.
 
 Returns: amount of routes (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap-vy" label="LeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -1560,14 +1392,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LeverageZap.route_count()
@@ -1575,8 +1402,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,11 +1,9 @@
 # MetaRegistry: API 
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The MetaRegistry offers an **on-chain API**for various properties of Curve pools.  
 
-A full list of all deployment addresses can be found [here](../references/deployed-contracts.md#metaregistry).
+A full list of all deployment addresses can be found [here](../deployments.md).
 
 
 ---
@@ -13,7 +11,7 @@ A full list of all deployment addresses can be found [here](../references/deploy
 
 ## **Finding Pools**:::colab[Google Colab Notebook]
 
-A guide on how to find liquidity pools which hold specific coins can be found [here](../integration/metaregistry.md#fetching-liquidity-pools).
+A guide on how to find liquidity pools which hold specific coins can be found [here](../integration/meta-registry.md#fetching-liquidity-pools).
 
 A Jupyter notebook showcasing how to fetch pools directly from the blockchain, which contain two specific assets, can be found [here](https://colab.research.google.com/drive/1QsxqxQu7Um8gYPda30304W8ZcYbnbr1b?usp=sharing).
 
@@ -21,7 +19,7 @@ A Jupyter notebook showcasing how to fetch pools directly from the blockchain, w
 :::
 
 ### `find_pools_for_coins`
-:::description[`MetaRegistry.find_pools_for_coins(_from: address, _to: address) -> DynArray[address, 1000]:`]
+::::description[`MetaRegistry.find_pools_for_coins(_from: address, _to: address) -> DynArray[address, 1000]:`]
 
 
 Getter method for a list of pools that holds `_from` and `_to` coins.
@@ -33,8 +31,7 @@ Returns: pool list (`DynArray[address, 1000]`).
 | `_from` | `address` | Address of coin to be sent     |
 | `_to`   | `address` | Address of coin to be received |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -68,10 +65,9 @@ def find_pools_for_coins(_from: address, _to: address) -> DynArray[address, 1000
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.find_pool_for_coins("0x6B175474E89094C44Da98b954EedeAC495271d0F", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
@@ -88,14 +84,13 @@ def find_pools_for_coins(_from: address, _to: address) -> DynArray[address, 1000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `find_pool_for_coins`
-:::description[`MetaRegistry.find_pool_for_coins(_from: address, _to: address, i: uint256 = 0) -> address:`]
+::::description[`MetaRegistry.find_pool_for_coins(_from: address, _to: address, i: uint256 = 0) -> address:`]
 
 
 Getter method for a pool that holds two coins (even if the pool is a metapool). The index in the query returns the index of the list of pools containing the two coins.
@@ -108,8 +103,7 @@ Returns: pool (`address`).
 | `_to`   | `address` | Address of coin to be received |
 | `i`     | `uint256` | Index of the pool to return    |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -146,10 +140,9 @@ def find_pool_for_coins(_from: address, _to: address, i: uint256 = 0) -> address
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.find_pool_for_coins("0x6B175474E89094C44Da98b954EedeAC495271d0F", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 0)
@@ -160,27 +153,27 @@ def find_pool_for_coins(_from: address, _to: address, i: uint256 = 0) -> address
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **MetaRegistry Specific Informations**The factory has a similar API to that of the main Registry, which can be used to query information about existing pools.
+## **MetaRegistry Specific Informations**
+
+The factory has a similar API to that of the main Registry, which can be used to query information about existing pools.
 
 ### `pool_count`
-:::description[`MetaRegistry.pool_count() -> uint256:`]
+::::description[`MetaRegistry.pool_count() -> uint256:`]
 
 
 Getter for the total number of pools of all registries registered in the metaregistry.
 
 Returns: number of pools (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -201,10 +194,9 @@ def pool_count() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.pool_count()
@@ -212,14 +204,13 @@ def pool_count() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `pool_list`
-:::description[`MetaRegistry.pool_list(_index: uint256) -> address:`]
+::::description[`MetaRegistry.pool_list(_index: uint256) -> address:`]
 
 
 Getter for the pool at `_index`.
@@ -230,8 +221,7 @@ Returns: pool (`address`)
 | -------  | --------- | ----------------- |
 | `_index` | `uint256` | Index of the pool |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -256,10 +246,9 @@ def pool_list(_index: uint256) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.pool_list(0)
@@ -267,11 +256,10 @@ def pool_list(_index: uint256) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -279,7 +267,7 @@ def pool_list(_index: uint256) -> address:
 ## **Pool Specific Informations***The following methods are used to fetch pool specific informations:*
 
 ### `get_pool_name`
-:::description[`MetaRegistry.get_pool_name(_pool: address, _handler_id: uint256 = 0) -> String[64]:`]
+::::description[`MetaRegistry.get_pool_name(_pool: address, _handler_id: uint256 = 0) -> String[64]:`]
 
 
 Getter for the name of the pool.
@@ -291,8 +279,7 @@ Returns: pool name (`String[64]`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -308,10 +295,9 @@ def get_pool_name(_pool: address, _handler_id: uint256 = 0) -> String[64]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_pool_name("0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA")
@@ -319,14 +305,13 @@ def get_pool_name(_pool: address, _handler_id: uint256 = 0) -> String[64]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `is_meta`
-:::description[`MetaRegistry.is_meta(_pool: address, _handler_id: uint256 = 0) -> bool:`]
+::::description[`MetaRegistry.is_meta(_pool: address, _handler_id: uint256 = 0) -> bool:`]
 
 
 Getter method to check if a pool is a metapool. Metapools are pools that pair a coin to a base pool comprising of multiple coins.
@@ -345,8 +330,7 @@ An example is the [LUSD-3CRV](https://etherscan.io/address/0xed279fdd11ca84beef1
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -363,10 +347,9 @@ def is_meta(_pool: address, _handler_id: uint256 = 0) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.is_meta("0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA")
@@ -374,14 +357,13 @@ def is_meta(_pool: address, _handler_id: uint256 = 0) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_base_pool`
-:::description[`MetaRegistry.get_base_pool(_pool: address, _handler_id: uint256 = 0) -> address:`]
+::::description[`MetaRegistry.get_base_pool(_pool: address, _handler_id: uint256 = 0) -> address:`]
 
 
 Getter for the base pool of a metapool. If there is no base pool, it will return `ZERO_ADDRESS`.
@@ -400,8 +382,7 @@ In the case of the LUSD-3CRV pool example, the pool containing 3CRV underlying c
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -419,10 +400,9 @@ def get_base_pool(_pool: address, _handler_id: uint256 = 0) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_base_pool("0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA")
@@ -430,14 +410,13 @@ def get_base_pool(_pool: address, _handler_id: uint256 = 0) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_fees`
-:::description[`MetaRegistry.get_fees(_pool: address, _handler_id: uint256 = 0) -> uint256[10]:`]
+::::description[`MetaRegistry.get_fees(_pool: address, _handler_id: uint256 = 0) -> uint256[10]:`]
 
 
 Getter for the fees that a Curve pool charges per swap. The fee data returned varies depending on the type of pool:
@@ -450,8 +429,7 @@ Getter for the fees that a Curve pool charges per swap. The fee data returned va
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -473,12 +451,11 @@ def get_fees(_pool: address, _handler_id: uint256 = 0) -> uint256[10]:
 ```
 
 
-</details>
+</SourceCode>
 
 For Stableswap, the getter returns the `fee` per swap and the `admin_fee` percentage. For the `3pool`, it shows that the pool charges 1 basis point per swap, 50% of which goes to the DAO.
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_fees("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
@@ -486,15 +463,13 @@ For Stableswap, the getter returns the `fee` per swap and the `admin_fee` percen
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 ---
 
 For **CryptoSwap**, the getter returns: `fee`, `admin_fee` percentage, `mid_fee` and `out_fee`. The fee is the dynamic fee charged per swap, and depends on the `mid_fee` (fee when the CryptoSwap pool is pegged) and the `out_fee`. To understand the dynamic fee algorithm, the reader is pointed to the CryptoSwap Paper.
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_fees("0xd51a44d3fae010294c616388b506acda1bfaae46")
@@ -502,14 +477,13 @@ For **CryptoSwap**, the getter returns: `fee`, `admin_fee` percentage, `mid_fee`
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_pool_params`
-:::description[`MetaRegistry.get_pool_params(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_POOL_PARAMS]:`]
+::::description[`MetaRegistry.get_pool_params(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_POOL_PARAMS]:`]
 
 
 Getter for the parameters of a pool.
@@ -521,8 +495,7 @@ Returns: parameters (`uint256[MAX_POOL_PARAMS]`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -540,12 +513,11 @@ def get_pool_params(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_POO
 ```
 
 
-</details>
+</SourceCode>
 
 For **StableSwap**, the getter returns the pool's amplification coefficient (`A`).
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.metaregistry.get_pool_params("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
@@ -553,8 +525,7 @@ For **StableSwap**, the getter returns the pool's amplification coefficient (`A`
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 ---
 
@@ -568,8 +539,7 @@ For **CryptoSwap**, the getter returns:
 6. Adjustment step  
 7. MA (moving average) half time  
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.metaregistry.get_pool_params("0xd51a44d3fae010294c616388b506acda1bfaae46")
@@ -577,14 +547,13 @@ For **CryptoSwap**, the getter returns:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_lp_token`
-:::description[`MetaRegistry.get_lp_token(_pool: address, _handler_id: uint256 = 0) -> address:`]
+::::description[`MetaRegistry.get_lp_token(_pool: address, _handler_id: uint256 = 0) -> address:`]
 
 
 Getter for the LP token of a liquidity pool.
@@ -596,8 +565,7 @@ Returns: LP Token (`address`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -614,10 +582,9 @@ def get_lp_token(_pool: address, _handler_id: uint256 = 0) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_lp_token("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
@@ -625,14 +592,13 @@ def get_lp_token(_pool: address, _handler_id: uint256 = 0) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_pool_asset_type`
-:::description[`MetaRegistry.get_pool_asset_type(_pool: address, _handler_id: uint256 = 0) -> uint256:`]
+::::description[`MetaRegistry.get_pool_asset_type(_pool: address, _handler_id: uint256 = 0) -> uint256:`]
 
 
 Getter for the asset type of a pool. **`0 = USD`, `1 = ETH`, `2 = BTC`, `3 = Other`, `4 = CryptoPool`**token. The asset type is a property of StableSwaps, and is not enforced in CryptoSwap pools (which always return 4).
@@ -644,8 +610,7 @@ Returns: asset type id (`uint256`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -662,10 +627,9 @@ def get_pool_asset_type(_pool: address, _handler_id: uint256 = 0) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_pool_asset_type("0xed279fdd11ca84beef15af5d39bb4d4bee23f0ca")
@@ -673,14 +637,13 @@ def get_pool_asset_type(_pool: address, _handler_id: uint256 = 0) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_pool_from_lp_token`
-:::description[`MetaRegistry.get_pool_from_lp_token(_token: address, _handler_id: uint256 = 0) -> address:`]
+::::description[`MetaRegistry.get_pool_from_lp_token(_token: address, _handler_id: uint256 = 0) -> address:`]
 
 
 Getter for the liquidity pool associated with a LP token.
@@ -692,8 +655,7 @@ Returns: liquidity pool (`address`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -709,10 +671,9 @@ def get_pool_from_lp_token(_token: address, _handler_id: uint256 = 0) -> address
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_pool_from_lp_token("0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490")
@@ -720,14 +681,13 @@ def get_pool_from_lp_token(_token: address, _handler_id: uint256 = 0) -> address
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_virtual_price_from_lp_token`
-:::description[`MetaRegistry.get_virtual_price_from_lp_token(_token: address, _handler_id: uint256 = 0) -> uint256:`]
+::::description[`MetaRegistry.get_virtual_price_from_lp_token(_token: address, _handler_id: uint256 = 0) -> uint256:`]
 
 
 Getter for a token's virtual price. The virtual price of any pool begins with `1`, and increases as the pool accrues fees. This number constantly increases for StableSwap pools, unless the pool's amplification coefficient changes. For CryptoSwap pools, there are moments when the virtual price can go down (admin fee claims, changes to pool's parameters).
@@ -739,8 +699,7 @@ Returns: virtual price of the lp token (`uint256`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -759,10 +718,9 @@ def get_virtual_price_from_lp_token(_token: address, _handler_id: uint256 = 0) -
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_virtual_price_from_lp_token("0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490")
@@ -770,14 +728,13 @@ def get_virtual_price_from_lp_token(_token: address, _handler_id: uint256 = 0) -
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `is_registered`
-:::description[`MetaRegistry.is_registered(_pool: address, _handler_id: uint256 = 0) -> bool:`]
+::::description[`MetaRegistry.is_registered(_pool: address, _handler_id: uint256 = 0) -> bool:`]
 
 
 Method to check if a pool is in the `MetaRegistry` using `get_n_coins`.
@@ -789,8 +746,7 @@ Returns: true or false (`bool`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -807,10 +763,9 @@ def is_registered(_pool: address, _handler_id: uint256 = 0) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.is_registered('0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7')
@@ -818,14 +773,13 @@ def is_registered(_pool: address, _handler_id: uint256 = 0) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_gauge`
-:::description[`MetaRegistry.get_gauge(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) -> address:`]
+::::description[`MetaRegistry.get_gauge(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) -> address:`]
 
 
 Getter for the liquidity gauge of a pool.
@@ -837,8 +791,7 @@ Returns: gauge address (`address`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -858,10 +811,9 @@ def get_gauge(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) 
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_gauge("0xd51a44d3fae010294c616388b506acda1bfaae46")
@@ -869,14 +821,13 @@ def get_gauge(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_gauge_type`
-:::description[`MetaRegistry.get_gauge_type(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) -> int128:`]
+::::description[`MetaRegistry.get_gauge_type(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) -> int128:`]
 
 
 Getter for the gauge type of the gauge associated with a liquidity pool.
@@ -889,8 +840,7 @@ Returns: gauge type (`int128`).
 | `gauge_idx`   | `uint256` | Index of gauge to return; defaults to 0 |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -910,10 +860,9 @@ def get_gauge_type(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_gauge_type("0xd51a44d3fae010294c616388b506acda1bfaae46")
@@ -921,11 +870,10 @@ def get_gauge_type(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -933,7 +881,7 @@ def get_gauge_type(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 
 ## **Coin Specific Informations***The following methods are used to fetch coin specific informations:*
 
 ### `get_coins`
-:::description[`MetaRegistry.get_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]:`]
+::::description[`MetaRegistry.get_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]:`]
 
 
 Getter method for the coins in a pool. If the pool is a metapool, it then returns the LP token of the base pool, and not the underlying coins.
@@ -945,8 +893,7 @@ Retuns: coin addresses (`address[MAX_COINS]`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -964,10 +911,9 @@ def get_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_coins("0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA")    # LUSD-3CRV pool
@@ -982,14 +928,13 @@ def get_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_n_coins`
-:::description[`MetaRegistry.get_n_coins(_pool: address, _handler_id: uint256 = 0) -> uint256:`]
+::::description[`MetaRegistry.get_n_coins(_pool: address, _handler_id: uint256 = 0) -> uint256:`]
 
 
 Getter for the number of coins in a pool.
@@ -1001,8 +946,7 @@ Returns: number of coins (`uint256`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1019,10 +963,9 @@ def get_n_coins(_pool: address, _handler_id: uint256 = 0) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_n_coins("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
@@ -1030,14 +973,13 @@ def get_n_coins(_pool: address, _handler_id: uint256 = 0) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_decimals`
-:::description[`MetaRegistry.get_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]:`]
+::::description[`MetaRegistry.get_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]:`]
 
 
 Getter for the decimals of the coins that are returned by `get_coins`. When querying for metapools, this method returns the decimals of the metapool token and the LP token of the basepool.
@@ -1049,8 +991,7 @@ Returns: number of decimals (`uint256[MAX_COINS]`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1068,10 +1009,9 @@ def get_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_decimals("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
@@ -1082,14 +1022,13 @@ def get_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_balances`
-:::description[`MetaRegistry.get_balances(_pool: address, _handler_id: uint256 = 0)  -> uint256[MAX_COINS]:`]
+::::description[`MetaRegistry.get_balances(_pool: address, _handler_id: uint256 = 0)  -> uint256[MAX_COINS]:`]
 
 
 Getter for the balance of each coin within a pool. When querying for metapools, this method returns the balances of the metapool token and the LP token of the basepool. To also fetch the underlying balances of the basepool, see [`get_underlying_balances`](#get_underlying_balances).
@@ -1101,8 +1040,7 @@ Returns: balances (`uint256[MAX_COINS]`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1120,10 +1058,9 @@ def get_balances(_pool: address, _handler_id: uint256 = 0)  -> uint256[MAX_COINS
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_balances("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
@@ -1134,14 +1071,13 @@ def get_balances(_pool: address, _handler_id: uint256 = 0)  -> uint256[MAX_COINS
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_underlying_coins`
-:::description[`MetaRegistry.get_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]:`]
+::::description[`MetaRegistry.get_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]:`]
 
 
 Getter for the underlying coins in a metapool. For non-metapools it returns the same value as **`get_coins`**.
@@ -1153,8 +1089,7 @@ Returns: underlying coins (`address[MAX_COINS]`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1172,10 +1107,9 @@ def get_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> address[MA
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_underlying_coins("0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA")
@@ -1190,14 +1124,13 @@ def get_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> address[MA
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_n_underlying_coins`
-:::description[`MetaRegistry.get_n_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> uint256:`]
+::::description[`MetaRegistry.get_n_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> uint256:`]
 
 
 Getter method for the total number of underlying coins in a pool. For non-metapools it returns the same value as [`get_n_coins`](#get_n_coins).
@@ -1209,8 +1142,7 @@ Returns: number of underlying coins (`uin256`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1227,10 +1159,9 @@ def get_n_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_n_underlying_coins("0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA")
@@ -1238,14 +1169,13 @@ def get_n_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_underlying_decimals`
-:::description[`MetaRegistry.get_underlying_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]:`]
+::::description[`MetaRegistry.get_underlying_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]:`]
 
 
 Getter method for the decimal of each underlying coin within a pool.
@@ -1257,8 +1187,7 @@ Returns: number of decimals (`uint256[MAX_COINS]`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1276,10 +1205,9 @@ def get_underlying_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_decimals("0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA")
@@ -1287,14 +1215,13 @@ def get_underlying_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_underlying_balances`
-:::description[`MetaRegistry.get_underlying_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]:`]
+::::description[`MetaRegistry.get_underlying_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]:`]
 
 
 Getter method for a pool's balances of the underlying coins which are returned by [`get_underlying_coins`](#get_underlying_coins).
@@ -1306,8 +1233,7 @@ Returns: balances (`uint256[MAX_COINS]`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1325,10 +1251,9 @@ def get_underlying_balances(_pool: address, _handler_id: uint256 = 0) -> uint256
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_balances("0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA")
@@ -1337,14 +1262,13 @@ def get_underlying_balances(_pool: address, _handler_id: uint256 = 0) -> uint256
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_admin_balances`
-:::description[`MetaRegistry.get_admin_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]:`]
+::::description[`MetaRegistry.get_admin_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]:`]
 
 
 Getter for the pool's admin balances. The balances represent the balances per coin, and retain the coin's precision.
@@ -1356,8 +1280,7 @@ Returns: admin balances (`uint256[MAX_COINS]`).
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1375,10 +1298,9 @@ def get_admin_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_admin_balances("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
@@ -1389,14 +1311,13 @@ def get_admin_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_coin_indices` todo
-:::description[`MetaRegistry.get_coin_indices(_pool: address, _from: address, _to: address, _handler_id: uint256 = 0) -> (int128, int128, bool):`]
+::::description[`MetaRegistry.get_coin_indices(_pool: address, _from: address, _to: address, _handler_id: uint256 = 0) -> (int128, int128, bool):`]
 
 
 Getter method which converts coin addresses to indices for use with pool methods.
@@ -1410,8 +1331,7 @@ Returns: from index (`int128`), to index (`int128`) and whether the market is un
 | `_to`         | `address` | Coin address to be used as `j` within the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0     |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1430,10 +1350,9 @@ def get_coin_indices(_pool: address, _from: address, _to: address, _handler_id: 
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.metaregistry.get_coin_indices("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7", "0x6B175474E89094C44Da98b954EedeAC495271d0F", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
@@ -1445,11 +1364,10 @@ def get_coin_indices(_pool: address, _from: address, _to: address, _handler_id: 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -1458,7 +1376,7 @@ def get_coin_indices(_pool: address, _from: address, _to: address, _handler_id: 
 
 
 ### `get_registry_handerls_from_pool`
-:::description[`MetaRegistry.get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:`]
+::::description[`MetaRegistry.get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:`]
 
 
 Getter for the `RegistryHandler` that a pool has been registered in. Usually, each pool is registered in a single registry.
@@ -1469,8 +1387,7 @@ Returns: `RegistryHandler` (`address[MAX_REGISTRIES]`).
 | ------------- | --------- | ------------------- |
 | `_pool`       | `address` | Address of the pool |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1515,10 +1432,9 @@ def get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_registry_handlers_from_pool("0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7")
@@ -1526,14 +1442,13 @@ def get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_base_registry`
-:::description[`MetaRegistry.get_base_registry(registry_handler: address) -> address:`]
+::::description[`MetaRegistry.get_base_registry(registry_handler: address) -> address:`]
 
 
 Getter for the registry associated with a registry handler.
@@ -1544,8 +1459,7 @@ Returns: base registry (`address`).
 | ------------------ | --------- | -------------------------- |
 | `registry_handler` | `address` | `RegistryHandler` contract |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1561,10 +1475,9 @@ def get_base_registry(registry_handler: address) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_base_registry("0x46a8a9CF4Fc8e99EC3A14558ACABC1D93A27de68")
@@ -1572,14 +1485,13 @@ def get_base_registry(registry_handler: address) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_registry`
-:::description[`MetaRegistry.get_registry(arg0: uint256) -> address:`]
+::::description[`MetaRegistry.get_registry(arg0: uint256) -> address:`]
 
 
 Getter for the `RegistryHandler` at index `arg0`. New handlers can be added via [`add_registry_handler`](#add_registry_handler).
@@ -1590,8 +1502,7 @@ Returns: Registry (`address`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | index (starts with 0) |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1601,10 +1512,9 @@ registry_length: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.get_registry(0)
@@ -1612,22 +1522,20 @@ registry_length: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `registry_length`
-:::description[`MetaRegistry.registry_length() -> uin256:`]
+::::description[`MetaRegistry.registry_length() -> uin256:`]
 
 
 Getter for the registry length.
 
 Returns: number of registries added (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1637,10 +1545,9 @@ registry_length: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.registry_length(0)
@@ -1648,22 +1555,20 @@ registry_length: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `address_provider`
-:::description[`MetaRegistry.address_provider() -> address:`]
+::::description[`MetaRegistry.address_provider() -> address:`]
 
 
 Getter for the `AddressProvider` contract.
 
 Returns: `AddressProvider` (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1676,10 +1581,9 @@ def __init__(_address_provider: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.address_provider()
@@ -1687,16 +1591,17 @@ def __init__(_address_provider: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Adding and Updating Registries**New registries can be added by the `owner` of the contract using the [`add_registry_handler`](#add_registry_handler) function. Existing ones can be updated using the [`update_registry_handler`](#update_registry_handler) function.
+## **Adding and Updating Registries**
+
+New registries can be added by the `owner` of the contract using the [`add_registry_handler`](#add_registry_handler) function. Existing ones can be updated using the [`update_registry_handler`](#update_registry_handler) function.
 
 :::colab[Google Colab Notebook]
 
@@ -1706,15 +1611,14 @@ A Google Colab notebook showcasing how to query registries or add/update them ca
 :::
 
 ### `owner`
-:::description[`MetaRegistry.owner() -> address:`]
+::::description[`MetaRegistry.owner() -> address:`]
 
 
 Getter for the owner of the contract. This address can perfom owner-guarded functions (see below).
 
 Returns: owner (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1727,10 +1631,9 @@ def __init__(_address_provider: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> MetaRegistry.owner()
@@ -1738,14 +1641,13 @@ def __init__(_address_provider: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `add_registry_handler`
-:::description[`MetaRegistry.add_registry_handler(_registry_handler: address):`]
+::::description[`MetaRegistry.add_registry_handler(_registry_handler: address):`]
 
 
 :::guard[Guarded Method]
@@ -1761,8 +1663,7 @@ Function to add a registry handler to the `MetaRegistry`.
 | ------------------- | --------- | -------------------------------- |
 | `_registry_handler` | `address` | `RegistryHandler` address to add |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1787,13 +1688,13 @@ def _update_single_registry(_index: uint256, _registry_handler: address):
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `update_registry_handler`
-:::description[`MetaRegistry.update_registry_handler(_index: uint256, _registry_handler: address):`]
+::::description[`MetaRegistry.update_registry_handler(_index: uint256, _registry_handler: address):`]
 
 
 :::guard[Guarded Method]
@@ -1810,8 +1711,7 @@ Function to update the `RegistryHandler` for a already existing one.
 | `_index` |  `uint256` | index of registry according to `get_registry` |
 | `registry_handler` |  `address` | address of the new handler contract |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1837,7 +1737,7 @@ def _update_single_registry(_index: uint256, _registry_handler: address):
     self.get_registry[_index] = _registry_handler
 ```
 
-</details>
+</SourceCode>
 
 
-:::
+::::

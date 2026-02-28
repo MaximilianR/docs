@@ -1,8 +1,9 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
+# Burner
 
-## **Overview**Burning is handled on a per-coin basis. The process is initiated by calling the `PoolProxy.burn` or `PoolProxy.burn_many` functions. Calling to burn a coin transfers that coin into the burner and then calls the `burn` function on the burner.
+## **Overview**
+
+Burning is handled on a per-coin basis. The process is initiated by calling the `PoolProxy.burn` or `PoolProxy.burn_many` functions. Calling to burn a coin transfers that coin into the burner and then calls the `burn` function on the burner.
 
 Each `burn` action typically performs one conversion into another asset; either 3CRV itself, or something that is a step closer to reaching 3CRV. As an example, here is the sequence of conversions required to burn wstETH:  
 
@@ -65,20 +66,28 @@ Source code for burners is available on [Github](https://github.com/curvefi/curv
 |`crvUSD Burner`| `Withdraws LP tokens from crvUSD pools and exchanges crvUSD`|[0xA6a0103f8F185786143f3EFe3Ddf268d8E070813](https://etherscan.io/address/0xA6a0103f8F185786143f3EFe3Ddf268d8E070813#code)|
 
 
-## **Burners**### **ABurner / CBurner / YBurner**`ABurner`, `CBurner` and `YBurner` are collectively known as “lending burners”. They unwrap lending tokens into the underlying asset and transfer those assets onward into the underlying burner.
+## **Burners**
+
+### **ABurner / CBurner / YBurner**`ABurner`, `CBurner` and `YBurner` are collectively known as “lending burners”. They unwrap lending tokens into the underlying asset and transfer those assets onward into the underlying burner.
 
 *There is no configuration required for this burner.*
 
-### **CryptoSwap Burner**The CryptoSwapBurner is used to burn fees from Crypto Pools.
+### **CryptoSwap Burner**
 
-### **StableSwap Burner**Swaps an asset into another asset using a Stable pool and forwards to another burner.
+The CryptoSwapBurner is used to burn fees from Crypto Pools.
 
-### **LP Burner**The LP Burner handles non-3CRV LP tokens. This burner is primarily used for [FRAXBP LP tokens](https://etherscan.io/address/0x3175df0976dfa876431c2e9ee6bc45b65d3473cc#code) which are converted to USDC and then sent to 0xECB for a further burn process.
+### **StableSwap Burner**
+
+Swaps an asset into another asset using a Stable pool and forwards to another burner.
+
+### **LP Burner**
+
+The LP Burner handles non-3CRV LP tokens. This burner is primarily used for [FRAXBP LP tokens](https://etherscan.io/address/0x3175df0976dfa876431c2e9ee6bc45b65d3473cc#code) which are converted to USDC and then sent to 0xECB for a further burn process.
 
 LP burner calls to **`StableSwap.remove_liquidity_one_coin`**to unwrap the LP token. The new asset is then transferred on to another burner.
 
 #### `swap_data`
-:::description[`LPBurner.swap_data(arg0: adress) -> pool: address, coin: address, burner: address, i: int128`]
+::::description[`LPBurner.swap_data(arg0: adress) -> pool: address, coin: address, burner: address, i: int128`]
 
 
 Getter method for informations about the LP Token burn process.
@@ -89,8 +98,7 @@ Retuns: pool (`address`) of the LP token, coin (`address`) in which the LP token
 | ----------- | -------| ----|
 | `arg0` |  `address` | LP Token Address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -102,10 +110,9 @@ struct SwapData:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LPBurner.swap_data("0x3175df0976dfa876431c2e9ee6bc45b65d3473cc")
@@ -116,14 +123,13 @@ i: 1
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 #### `set_swap_data`
-:::description[`LPBurner.set_swap_data(_lp_token: address, _coin: address, _burner: address) -> bool:`]
+::::description[`LPBurner.set_swap_data(_lp_token: address, _coin: address, _burner: address) -> bool:`]
 
 
 :::guard[Guarded Method]
@@ -143,8 +149,7 @@ Returns: true (`bool`).
 | `_coin` |  `address` | coin address to swap the LP token to |
 | `_burner` |  `address` | burner address to forward to  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="2"
@@ -209,10 +214,9 @@ def set_swap_data(_lp_token: address, _coin: address, _burner: address) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LPBurner.set_swap_data("0x3175df0976dfa876431c2e9ee6bc45b65d3473cc", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "0x786B374B5eef874279f4B7b4de16940e57301A58")
@@ -220,18 +224,21 @@ def set_swap_data(_lp_token: address, _coin: address, _burner: address) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-### **MetaBurner**The MetaBurner converts Metapool-paried coins to 3CRV and transfers to the FeeDistributor. It uses the registry’s **`exchange_with_best_rate`**and transfers 3CRV directly to the fee distributor.
+### **MetaBurner**
+
+The MetaBurner converts Metapool-paried coins to 3CRV and transfers to the FeeDistributor. It uses the registry’s **`exchange_with_best_rate`**and transfers 3CRV directly to the fee distributor.
 
 *There is no configuration required for this burner.*
 
 
-### **SynthBurner**Swaps non-USD denominated assets for synths, converts synths to sUSD and transfers to `UnderlyingBurner`.
+### **SynthBurner**
+
+Swaps non-USD denominated assets for synths, converts synths to sUSD and transfers to `UnderlyingBurner`.
 The synth burner is used to convert non-USD denominated assets into sUSD. This is accomplished via synth conversion, the same mechanism used in cross-asset swaps.
 
 When the synth burner is called to burn a non-synthetic asset, it uses `RegistrySwap.exchange_with_best_rate` to swap into a related synth. If no direct path to a synth is avaialble, a swap is made into an intermediate asset.
@@ -247,7 +254,7 @@ The optimal sequence when burning assets using the synth burner is thus:
 *The burner is configurable via the following functions:*
 
 #### `set_swap_for`
-:::description[`SynthBurner.set_swap_for(_coins: address[10], _targets: address[10]) -> bool:`]
+::::description[`SynthBurner.set_swap_for(_coins: address[10], _targets: address[10]) -> bool:`]
 
 
 Function to set target coins that the burner will swap into.
@@ -267,8 +274,7 @@ The address as index `n` within this list corresponds to the address at index `n
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="2"
@@ -299,25 +305,12 @@ def set_swap_for(_coins: address[10], _targets: address[10]) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> SynthBurner.set_swap_for(todo)
-'true'
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 #### `add_synths`
-:::description[`SynthBurner.add_synths(_synths: address[10]) -> bool:`]
+::::description[`SynthBurner.add_synths(_synths: address[10]) -> bool:`]
 
 
 Register synthetic assets within the burner. This function is unguarded. For each synth to be added, a call is made to Synth.currencyKey to validate the addresss and obtain the synth currency key.
@@ -334,8 +327,7 @@ The address as index `n` within this list corresponds to the address at index `n
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="3"
@@ -357,27 +349,18 @@ def add_synths(_synths: address[10]) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+::::
 
-```shell
->>> SynthBurner.add_synths(todo)
-'true'
-```
+### **Wrapped stETH Burner**
+
+This burner unwraps wstETH to stETH and sends it back to 0xECB.
 
 
-</TabItem>
-</Tabs>
+### **UnderlyingBurner**
 
-
-:::
-
-### **Wrapped stETH Burner**This burner unwraps wstETH to stETH and sends it back to 0xECB.
-
-
-### **UnderlyingBurner**The underlying burner handles assets that can be directly swapped to USDC and deposits DAI/USDC/USDT into [3pool](https://curve.fi/#/ethereum/pools/3pool/deposit/) to obtain 3CRV. This is the **final step of the burn process**for many assets that require multiple intermediate swaps.
+The underlying burner handles assets that can be directly swapped to USDC and deposits DAI/USDC/USDT into [3pool](https://curve.fi/#/ethereum/pools/3pool/deposit/) to obtain 3CRV. This is the **final step of the burn process**for many assets that require multiple intermediate swaps.
 
 :::note
 
@@ -394,13 +377,12 @@ The burn process consists of:
 
 *Once the entire burn process has been completed you must call **`execute`**as the final action:*
 
-:::description[`UnderlyingBurner.execute() -> bool:`]
+::::description[`UnderlyingBurner.execute() -> bool:`]
 
 
 Function to deposit all the tokens into 3pool and transfer the recieved 3CRV to the FeeDistributor contract.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -427,7 +409,7 @@ def execute() -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
 :::note
 
@@ -437,17 +419,18 @@ This is the final function to be called in the burn process, after all other ste
 :::
 
 
-:::
+::::
 
-### **Stable Deposit Burner**This burner converts DAI, USDC and USDT into 3CRV by adding liquidity to the 3pool and then transfers them to the FeeDistributor.
+### **Stable Deposit Burner**
 
-:::description[`StableDepositBurner.burn(_coin: ERC20) -> bool:`]
+This burner converts DAI, USDC and USDT into 3CRV by adding liquidity to the 3pool and then transfers them to the FeeDistributor.
+
+::::description[`StableDepositBurner.burn(_coin: ERC20) -> bool:`]
 
 
 Function to add the entire burner's balance of `_coin` to the 3pool.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -488,16 +471,17 @@ def _burn(_amounts: uint256[N_COINS]):
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
-### **Metapool Burner**This is not a burner contract in itself. Some metapools transfer *coin 0* of the admin fees to the Factory, where it is swapped for *coin 1* (e.g., 3CRV), which is then sent directly to the FeeDistributor.
+### **Metapool Burner**
+
+This is not a burner contract in itself. Some metapools transfer *coin 0* of the admin fees to the Factory, where it is swapped for *coin 1* (e.g., 3CRV), which is then sent directly to the FeeDistributor.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -540,10 +524,10 @@ def withdraw_admin_fees():
 ```
 
 
-</details>
+</SourceCode>
 
 ## **Configuring Fee Bruners****Burners are configured within the 0xECB contract.**### `burners`
-:::description[`PoolProxy.burners(coin: address) -> address: view`]
+::::description[`PoolProxy.burners(coin: address) -> address: view`]
 
 
 Getter for the burner contract address for `coin`.
@@ -554,8 +538,7 @@ Returns: burner of a coin (`address`).
 | ----------- | -------| ----|
 | `coin` |  `address` | Token Address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -563,10 +546,9 @@ burners: public(HashMap[address, address])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> GaugeController.burners("0x056fd409e1d7a124bd7017459dfea2f387b6d5cd")
@@ -574,14 +556,13 @@ burners: public(HashMap[address, address])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_burner`
-:::description[`PoolProxy.set_burner(_coin: address, _burner: address):`]
+::::description[`PoolProxy.set_burner(_coin: address, _burner: address):`]
 
 
 :::guard[Guarded Method]
@@ -600,8 +581,7 @@ Emits: `AddBurner`
 | `_coin` |  `address` | Token Address |
 | `_burner` |  `address` | Burner Address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 6 12 14 17"
@@ -659,25 +639,12 @@ def _set_burner(_coin: address, _burner: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> GaugeController.(todo)
-todo
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `set_many_burners`
-:::description[`PoolProxy.set_many_burners(_coins: address[20], _burners: address[20]):`]
+::::description[`PoolProxy.set_many_burners(_coins: address[20], _burners: address[20]):`]
 
 
 :::guard[Guarded Method]
@@ -696,8 +663,7 @@ Emits: `AddBurner`
 | `_coins` |  `address[20]` | Token Addresses. The address at index `n` within this list corresponds to the address at index `n` within `coins` |
 | `_burners` |  `address[20]` | Burner Addresses. If less than 20 burners are set, the remaining array slots need to be filled with `ZERO_ADDRESS`. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 5 38 42"
@@ -758,25 +724,12 @@ def set_many_burners(_coins: address[20], _burners: address[20]):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> GaugeController.set_many_burners(todo)
-'todo'
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `set_kill_burner`
-:::description[`PoolProxy.set_burner_kill(_is_killed: bool):`]
+::::description[`PoolProxy.set_burner_kill(_is_killed: bool):`]
 
 
 :::guard[Guarded Method]
@@ -794,8 +747,7 @@ Disable or enable the process of fee burning.
 | `_caller` |  `address` | Caller Address |
 | `_is_approved` |  `boolean` | True or False |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 2 5 10 11"
@@ -813,18 +765,16 @@ def set_burner_kill(_is_killed: bool):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> GaugeController.set_burner_kill("False")
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

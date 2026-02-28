@@ -1,13 +1,11 @@
 # Address Provider
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The `AddressProvider` serves as the **entry point contract for Curve's various registries**and is deployed on all chains where Curve is operational. The contract holds the most important contract addresses.
 
 :::github[GitHub]
 
-Source code of the `AddressProvider.vy` contract can be found on [ GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/AddressProviderNG.vy). A list of all deployed contracts can be found [here](../references/deployed-contracts.md#address-provider).
+Source code of the `AddressProvider.vy` contract can be found on [ GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/AddressProviderNG.vy). A list of all deployed contracts can be found [here](../deployments.md).
 
 
 :::
@@ -24,7 +22,9 @@ The `AddressProvider` contract is managed by an `admin` who is currently an indi
 ---
 
 
-## **Reading IDs**For the full mapping of IDs please see [`get_id_info`](#get_id_info).
+## **Reading IDs**
+
+For the full mapping of IDs please see [`get_id_info`](#get_id_info).
 
 *ID information is stored in a `struct`, containing an address, a detailed description, its version, and the timestamp marking its most recent modification:*
 
@@ -51,19 +51,16 @@ A Google Colab notebook that provides a full mapping of IDs by iterating over al
 :::
 
 ### `ids`
-:::description[`AddressProvider.ids() -> DynArray[uint256, 1000]`]
+::::description[`AddressProvider.ids() -> DynArray[uint256, 1000]`]
 
 
 Getter function for all the IDs of active registry items in the AddressProvider.
 
 Returns: active ids (`DynArray[uint256, 1000]`)
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -85,14 +82,11 @@ def ids() -> DynArray[uint256, 1000]:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This method returns all populated IDs.
@@ -103,14 +97,13 @@ This method returns all populated IDs.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_id_info`
-:::description[`AddressProvider.get_id_info(arg0: uint256) -> tuple: view`]
+::::description[`AddressProvider.get_id_info(arg0: uint256) -> tuple: view`]
 
 
 Getter function to retrieve informations about a specific ID.
@@ -121,12 +114,9 @@ Returns: `AddressInfo` struct containing the addr (`address`), description (`Str
 | ------ | --------- | ------------------------------ |
 | `arg0` | `uint256` | ID to get the informations for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -140,14 +130,11 @@ get_id_info: public(HashMap[uint256, AddressInfo])
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This method returns the address of the contract, the description, the ID version (which is incremented by 1 each time the ID is updated), and the timestamp of the last modification. When calling the function for an unpopulated ID, it returns an empty `AddressInfo` struct.
@@ -161,14 +148,13 @@ This method returns the address of the contract, the description, the ID version
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_address`
-:::description[`AddressProvider.get_address(arg0: uint256) -> address: view`]
+::::description[`AddressProvider.get_address(arg0: uint256) -> address: view`]
 
 
 Getter for the contract address of a ID.
@@ -179,12 +165,9 @@ Returns: contract (`address`).
 | ------ | --------- | ---------------------------------- |
 | `arg0` | `uint256` | ID to get the contract address for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -209,14 +192,11 @@ def get_address(_id: uint256) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This method returns the address of an ID.
@@ -227,14 +207,13 @@ This method returns the address of an ID.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `check_id_exists`
-:::description[`AddressProvider.check_id_exists(arg0: uint256) -> bool: view`]
+::::description[`AddressProvider.check_id_exists(arg0: uint256) -> bool: view`]
 
 
 Function to check if an ID exists.
@@ -245,12 +224,9 @@ Returns: true or false (`bool`).
 | ------ | --------- | ----------- |
 | `arg0` | `uint256` | ID to check |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -258,14 +234,11 @@ check_id_exists: public(HashMap[uint256, bool])
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This method checks if a certain ID exists.
@@ -279,26 +252,22 @@ This method checks if a certain ID exists.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `num_entries`
-:::description[`AddressProvider.num_entries() -> uint256: view`]
+::::description[`AddressProvider.num_entries() -> uint256: view`]
 
 
 Getter for the number of entries. The count increments by one upon calling `_add_new_id` and decreases by one upon calling `_remove_id`.
 
 Returns: number of entries (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -306,14 +275,11 @@ num_entries: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This method returns the total number of IDs added to the `AddressProvider`.
@@ -324,16 +290,17 @@ This method returns the total number of IDs added to the `AddressProvider`.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Adding, Removing and Updating IDs**IDs can be added, removed, or adjusted by the `admin` of the contract. 
+## **Adding, Removing and Updating IDs**
+
+IDs can be added, removed, or adjusted by the `admin` of the contract. 
 
 :::warning[Contract Upgradability]
 
@@ -345,7 +312,7 @@ The `AddressProvider` contract is managed by an `admin` who is currently an indi
 :::
 
 ### `update_id`
-:::description[`AddressProvider.update_id(_id: uint256, _new_address: address, _new_description: String[64])`]
+::::description[`AddressProvider.update_id(_id: uint256, _new_address: address, _new_description: String[64])`]
 
 
 :::guard[Guarded Methods]
@@ -365,12 +332,9 @@ Emits: `EntryModified`
 | `_new_address`     | `address`    | New address     |
 | `_new_description` | `String[64]` | New description |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -411,14 +375,11 @@ def _update_entry_metadata(_id: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This function updates the ID at index `0`.
@@ -428,14 +389,13 @@ This function updates the ID at index `0`.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `update_address`
-:::description[`AddressProvider.update_address(_id: uint256, _address: address)`]
+::::description[`AddressProvider.update_address(_id: uint256, _address: address)`]
 
 
 :::guard[Guarded Methods]
@@ -454,12 +414,9 @@ Emits: `EntryModified`
 | `_id`      | `uint256` | ID to change the address for |
 | `_address` | `address` | New address to change it to  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -497,14 +454,11 @@ def _update_entry_metadata(_id: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example changes the 
@@ -514,14 +468,13 @@ This example changes the
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `update_description`
-:::description[`AddressProvider.update_description(_id: uint256, _description: String[256])`]
+::::description[`AddressProvider.update_description(_id: uint256, _description: String[256])`]
 
 
 :::guard[Guarded Methods]
@@ -540,12 +493,9 @@ Emits: `EntryModified`
 | `_id`          | `uint256`     | ID to change the description for |
 | `_description` | `String[256]` | New description                  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -583,28 +533,14 @@ def _update_entry_metadata(_id: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `add_new_id`
-:::description[`AddressProvider.add_new_id(_id: uint256, _address: address, _description: String[64])`]
+::::description[`AddressProvider.add_new_id(_id: uint256, _address: address, _description: String[64])`]
 
 
 :::guard[Guarded Methods]
@@ -624,12 +560,9 @@ Emits: `NewEntry`
 | `_address`     | `address`    | New address                                     |
 | `_description` | `String[64]` | New description                                 |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -681,28 +614,14 @@ def _add_new_id(
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `add_new_ids`
-:::description[`AddressProvider.add_new_ids(_ids: DynArray[uint256, 25], _addresses: DynArray[address, 25], _descriptions: DynArray[String[64], 25])`]
+::::description[`AddressProvider.add_new_ids(_ids: DynArray[uint256, 25], _addresses: DynArray[address, 25], _descriptions: DynArray[String[64], 25])`]
 
 
 :::guard[Guarded Methods]
@@ -722,12 +641,9 @@ Emits: `NewEntry`
 | `_addresss`     | `DynArray[address, 25]`    | ID addresses                                     |
 | `_descriptions` | `DynArray[String[64], 25]` | ID descriptions                                  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -788,28 +704,14 @@ def _add_new_id(
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `remove_id`
-:::description[`AddressProvider.remove_id(_id: uint256) -> bool`]
+::::description[`AddressProvider.remove_id(_id: uint256) -> bool`]
 
 
 :::guard[Guarded Methods]
@@ -829,12 +731,9 @@ Emits: `EntryRemoved`
 | ----- | --------- | ------------ |
 | `_id` | `uint256` | ID to remove |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -875,28 +774,14 @@ def _remove_id(_id: uint256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `remove_ids`
-:::description[`AddressProvider.remove_ids(_ids: DynArray[uint256, 20]) -> bool`]
+::::description[`AddressProvider.remove_ids(_ids: DynArray[uint256, 20]) -> bool`]
 
 
 :::guard[Guarded Methods]
@@ -916,12 +801,9 @@ Emits: `EntryRemoved`
 | ------ | ----------------------- | ------------- |
 | `_ids` | `DynArray[uint256, 20]` | IDs to remove |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper 
@@ -965,46 +847,31 @@ def _remove_id(_id: uint256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
 
-## **Contract Ownership**The ownership of the contract follows the classic two-step ownership model used across most Curve contracts.
+## **Contract Ownership**
+
+The ownership of the contract follows the classic two-step ownership model used across most Curve contracts.
 
 
 ### `admin`
-:::description[`AddressProvider.admin() -> address: view`]
+::::description[`AddressProvider.admin() -> address: view`]
 
 
 Getter for the admin of the contract. This address can add, remove or update ID's.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper
@@ -1016,14 +883,11 @@ def __init__():
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1032,26 +896,22 @@ def __init__():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_admin`
-:::description[`AddressProvider.future_admin() -> address: view`]
+::::description[`AddressProvider.future_admin() -> address: view`]
 
 
 Getter for the future admin of the contract.
 
 Returns: future admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper
@@ -1059,14 +919,11 @@ future_admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1075,14 +932,13 @@ future_admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `commit_transfer_ownership`
-:::description[`AddressProvider.commit_transfer_ownership(_new_admin: address) -> bool`]
+::::description[`AddressProvider.commit_transfer_ownership(_new_admin: address) -> bool`]
 
 
 :::guard[Guarded Methods]
@@ -1102,12 +958,9 @@ Events: `CommitNewAdmin`
 | ------------ | --------- | ------------------------------------ |
 | `_new_admin` | `address` | Address to transfer the ownership to |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper
@@ -1133,29 +986,14 @@ def commit_transfer_ownership(_new_admin: address) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `apply_transfer_ownership`
-:::description[`AddressProvider.apply_transfer_ownership() -> bool`]
+::::description[`AddressProvider.apply_transfer_ownership() -> bool`]
 
 
 :::guard[Guarded Methods]
@@ -1171,12 +1009,9 @@ Returns: true (`bool`).
 
 Emits: `NewAdmin`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper
@@ -1204,29 +1039,14 @@ def apply_transfer_ownership() -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `revert_transfer_ownership`
-:::description[`AddressProvider.revert_transfer_ownership() -> bool`]
+::::description[`AddressProvider.revert_transfer_ownership() -> bool`]
 
 
 :::guard[Guarded Methods]
@@ -1240,12 +1060,9 @@ Function to revert the transfer of contract ownership.
 
 Returns: true (`bool`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curveaddressprovider-vy" label="CurveAddressProvider.vy">
 
 
 ```vyper
@@ -1266,23 +1083,8 @@ def revert_transfer_ownership() -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::

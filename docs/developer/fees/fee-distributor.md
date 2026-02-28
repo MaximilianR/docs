@@ -1,13 +1,10 @@
 # FeeDistributor
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 
 Fees used to be distributed to [`veCRV`](https://etherscan.io/address/0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2) in the form of [`3CRV`](https://etherscan.io/address/0x6c3f90f043a72fa612cbac8115ee7e52bde6e490) tokens, the LP token of the [`threepool`](https://etherscan.io/address/0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7), which consists of `USDT`, `USDC`, and `DAI`. After the release of Curve's own stablecoin [`crvUSD`](https://etherscan.io/token/0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E) and following a successful DAO vote to change the reward token to it, a new `FeeDistributor` contract was deployed to distribute fees in the form of `crvUSD` tokens. **Fee claiming always takes place on Ethereum**.
 
-<details open>
-<summary>`FeeDistributor.vy`</summary>
+:::vyper[`FeeDistributor.vy`]
 
 The source code for the `FeeDistributor.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/FeeDistributor.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.2.7` and `0.3.7`.
 
@@ -16,25 +13,21 @@ There are two different `FeeDistributor` contracts deployed on Ethereum, dependi
 - <img src="../assets/images/logos/3crv.png" alt="" width="18" height="18" /> `3CRV`: [0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc](https://etherscan.io/address/0xa464e6dcda8ac41e03616f95f4bc98a13b8922dc)
 - :logos-crvusd: `crvUSD`: [0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914](https://etherscan.io/address/0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914)
 
-
-</details>
+:::
 
 ---
 
 ### `last_token_time`
-:::description[`FeeDistributor.last_token_time() -> uint256: view`]
+::::description[`FeeDistributor.last_token_time() -> uint256: view`]
 
 
 Getter for the timestamp of the last token checkpoint.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper
@@ -42,39 +35,32 @@ last_token_time: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `can_checkpoint_token`
-:::description[`FeeDistributor.can_checkpoint_token() -> bool: view`]
+::::description[`FeeDistributor.can_checkpoint_token() -> bool: view`]
 
 
 Function to check whether the `checkpoint_token` function can be called by anyone or only by the admin. The state of this variable can be changed using the `toggle_allow_checkpoint_token` function. 
 
 Returns: true or flase (`bool`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -82,27 +68,23 @@ can_checkpoint_token: public(bool)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `toggle_allow_checkpoint_token`
-:::description[`FeeDistributor.toggle_allow_checkpoint_token()`]
+::::description[`FeeDistributor.toggle_allow_checkpoint_token()`]
 
 
 :::guard[Guarded Method]
@@ -114,12 +96,9 @@ This function is only callable by the `admin` of the contract.
 
 Funtion to toggle permission for checkpointing by an account.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -138,14 +117,11 @@ def toggle_allow_checkpoint_token():
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -153,30 +129,28 @@ def toggle_allow_checkpoint_token():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **ve-Supply Checkpoint**Checkpointing the ve-Supply is an essential process to ensure fair reward distribution. It involves periodically recording the total supply of veCRV for each epoch. This process is crucial for accurately distributing fees to veCRV holders based on their balances.
+## **ve-Supply Checkpoint**
+
+Checkpointing the ve-Supply is an essential process to ensure fair reward distribution. It involves periodically recording the total supply of veCRV for each epoch. This process is crucial for accurately distributing fees to veCRV holders based on their balances.
 
 
 ### `checkpoint_total_supply`
-:::description[`FeeDistributor.checkpoint_total_supply()`]
+::::description[`FeeDistributor.checkpoint_total_supply()`]
 
 
 Function to update the total supply checkpoint of veCRV for each epoch. The checkpoint is also updated by the first claimant of each new epoch week. This function can be called independently of a claim to reduce claiming gas costs. It ensures that the contract maintains an accurate record of the total veCRV supply at the start of each week, which is essential for correctly distributing fees based on veCRV holdings.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -215,14 +189,11 @@ def _checkpoint_total_supply():
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example checkpoints the total supply of veCRV.
@@ -232,26 +203,22 @@ This example checkpoints the total supply of veCRV.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `time_cursor`
-:::description[`FeeDistributor.time_cursor() -> uint256: view`]
+::::description[`FeeDistributor.time_cursor() -> uint256: view`]
 
 
 Getter for the timestamp of the last `checkpoint_total_supply` of veCRV.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper
@@ -259,27 +226,23 @@ time_cursor: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `time_cursor_of`
-:::description[`FeeDistributor.time_cursor_of(arg0: address) -> uint256: view`]
+::::description[`FeeDistributor.time_cursor_of(arg0: address) -> uint256: view`]
 
 
 Getter for the timestamp of the last `checkpoint_total_supply` of veCRV.
@@ -290,12 +253,9 @@ Returns: timestamp (`uin256`).
 | ------ | --------- | -------------------- |
 | `arg0` | `address` | Address to check for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper
@@ -303,14 +263,11 @@ time_cursor_of: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the `time_cursor_of` for a given address.
@@ -321,14 +278,13 @@ This example returns the `time_cursor_of` for a given address.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ve_for_at`
-:::description[`FeeDistributor.ve_for_at(_user: address, _timestamp: uint256) -> uint256`]
+::::description[`FeeDistributor.ve_for_at(_user: address, _timestamp: uint256) -> uint256`]
 
 
 Getter for the veCRV balance of a user at a certain timestamp.
@@ -340,12 +296,9 @@ Returns: veCRV balance (`uint256`).
 | `_user`      | `address` | Address to query the veCRV balance for |
 | `_timestamp` | `uint256` | Timestamp                              |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -366,14 +319,11 @@ def ve_for_at(_user: address, _timestamp: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -382,14 +332,13 @@ def ve_for_at(_user: address, _timestamp: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ve_supply`
-:::description[`FeeDistributor.ve_supply(arg0: uint256) -> uint256: view`]
+::::description[`FeeDistributor.ve_supply(arg0: uint256) -> uint256: view`]
 
 
 Getter for the total supply of veCRV at the beginning of an epoch.
@@ -400,12 +349,9 @@ Returns: vecrv supply (`uint256`).
 | ------ | --------- | ---------------------------- |
 | `arg0` | `uint256` | Timestamp of the epoch start |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper
@@ -413,14 +359,11 @@ ve_supply: public(uint256[1000000000000000])  # VE total supply at week bounds
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -429,16 +372,17 @@ ve_supply: public(uint256[1000000000000000])  # VE total supply at week bounds
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Killing The FeeDistributor**The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and block the ability to claim or burn. The contract can not be unkilled. 
+# **Killing The FeeDistributor**
+
+The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and block the ability to claim or burn. The contract can not be unkilled. 
 
 :::colab[Google Colab Notebook]
 
@@ -448,19 +392,16 @@ A Google Colab notebook that simulates killing the `FeeDistributor` and its resp
 :::
 
 ### `is_killed`
-:::description[`FeeDistributor.is_killed() -> bool: view`]
+::::description[`FeeDistributor.is_killed() -> bool: view`]
 
 
 Getter method to check if the `FeeDistributor` contract is killed. When killed, the contract blocks `claim` and `burn` and the entire token balance is transfered to the `emergency_return` address.
 
 Returns: true or flase (`bool`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -468,27 +409,23 @@ is_killed: public(bool)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `kill_me`
-:::description[`FeeDistributor.kill_me()`]
+::::description[`FeeDistributor.kill_me()`]
 
 
 By killing the `FeeDistributor`, the entire token balance is transferred to the [`emergency_return`](#emergency_return) address, and the ability to further call the `claim`, `claim_many`, or `burn` functions is blocked.
@@ -502,12 +439,9 @@ This function is only callable by the `admin` of the contract.
 
 Function to kill the `FeeDistributor` contract.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -529,14 +463,11 @@ def kill_me():
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -544,26 +475,22 @@ def kill_me():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `emergency_return`
-:::description[`FeeDistributor.emergency_return() -> address: view`]
+::::description[`FeeDistributor.emergency_return() -> address: view`]
 
 
 Getter for the emergency return address. This address can not be changed.
 
 Returns: emergency return (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper
@@ -571,14 +498,11 @@ emergency_return: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 Due to the fact that the emergency return address can not be changed and Curve used a ownership agent back then when the distributor contract for 3CRV was deployed, this one was set as the emergency return address.
@@ -594,14 +518,13 @@ The second fee distributor contract (crvUSD) uses a 5 of 9 multisig, which repla
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `recover_balance`
-:::description[`FeeDistributor.recover_balance(_coin: address) -> bool`]
+::::description[`FeeDistributor.recover_balance(_coin: address) -> bool`]
 
 
 Function to recover ERC20 tokens from the contract. Tokens are sent to the emergency return address. This function only works for tokens other than the address set for `token`. E.g. this function on the 3CRV distributor contract can not be called to transfer 3CRV. The same applied to crvUSD distributor.
@@ -612,12 +535,9 @@ Returns: true (`bool`).
 | ------- | --------- | ----------------- |
 | `_coin` | `address` | Tokens to recover |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -649,14 +569,11 @@ def recover_balance(_coin: address) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example recovers the balance of a given token.
@@ -667,29 +584,27 @@ true
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Admin Ownership**### `admin`
-:::description[`FeeDistributor.admin() -> address: view`]
+# **Admin Ownership**
+
+### `admin`
+::::description[`FeeDistributor.admin() -> address: view`]
 
 
 Getter for the admin of the contract.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -697,39 +612,32 @@ admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_admin`
-:::description[`FeeDistributor.future_admin() -> address: view`]
+::::description[`FeeDistributor.future_admin() -> address: view`]
 
 
 Getter for the future admin of the contract.
 
 Returns: future admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -737,27 +645,23 @@ future_admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `commit_admin`
-:::description[`FeeDistributor.commit_admin(_addr: address)`]
+::::description[`FeeDistributor.commit_admin(_addr: address)`]
 
 
 :::guard[Guarded Method]
@@ -775,12 +679,9 @@ Emits: `CommitAdmin`
 | ----------- | -------| ---- |
 | `_addr` |  `address` | Address to commit the ownership transfer to. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -802,14 +703,11 @@ def commit_admin(_addr: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example commits the transfer of the ownership.
@@ -819,14 +717,13 @@ This example commits the transfer of the ownership.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `apply_admin`
-:::description[`FeeDistributor.apply_admin()`]
+::::description[`FeeDistributor.apply_admin()`]
 
 
 :::guard[Guarded Method]
@@ -840,12 +737,9 @@ Function to apply the transfer of the ownership.
 
 Emits: `ApplyAdmin`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -868,14 +762,11 @@ def apply_admin():
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example applies the transfer of the ownership.
@@ -885,29 +776,27 @@ This example applies the transfer of the ownership.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Other Methods**### `start_time`
-:::description[`FeeDistributor.start_time() -> uint256: view`]
+# **Other Methods**
+
+### `start_time`
+::::description[`FeeDistributor.start_time() -> uint256: view`]
 
 
 Getter for the epoch time for fee distribution to start.
 
 Returns: epoch time (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -941,14 +830,11 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the `start_time` of the first distribution of rewards.
@@ -962,26 +848,22 @@ This example returns the `start_time` of the first distribution of rewards.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `voting_escrow`
-:::description[`FeeDistributor.voting_escrow() -> address: view`]
+::::description[`FeeDistributor.voting_escrow() -> address: view`]
 
 
 Getter for the voting escrow contract.
 
 Returns: voting escrow (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -1015,39 +897,32 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `token`
-:::description[`FeeDistributor.token() -> address: view`]
+::::description[`FeeDistributor.token() -> address: view`]
 
 
 Getter for the token address in which the fees are distributed.
 
 Returns: reward token (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -1081,27 +956,23 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `user_epoch_of`
-:::description[`FeeDistributor.user_epoch_of(arg0: address) -> uint256: view`]
+::::description[`FeeDistributor.user_epoch_of(arg0: address) -> uint256: view`]
 
 
 Getter for the user epoch of an address. This value increments by one each time rewards are claimed.
@@ -1112,12 +983,9 @@ Returns: user epoch (`uint256`).
 | ------ | --------- | --------------------------------- |
 | `arg0` | `address` | Address to get the user epoch for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feedistributor-vy" label="FeeDistributor.vy">
 
 
 ```vyper 
@@ -1125,14 +993,11 @@ user_epoch_of: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the user epoch of a given address.
@@ -1142,8 +1007,7 @@ This example returns the user epoch of a given address.
 7739
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

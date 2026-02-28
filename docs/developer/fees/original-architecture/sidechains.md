@@ -1,6 +1,5 @@
 
-# **Collecting and Burning Fees on Sidechains**import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Sidechains
 
 
 Fee collection on sidechains works similarly to that on the Ethereum mainnet. Collected fees are sent to a fee receiver contract and then burned. On most sidechains, tokens are burnt for [MIM](https://etherscan.io/address/0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3), as it's an easy asset to bridge back to the mainnet. These proxy contracts have a `bridge()` function to bridge the tokens to the Ethereum mainnet. 
@@ -58,7 +57,7 @@ The methods to burn and bridge assets *might slightly vary based on the chain*. 
 :::
 
 ### `brigde`
-:::description[`Bridge.bridge(coin: address) -> bool:`]
+::::description[`Bridge.bridge(coin: address) -> bool:`]
 
 
 :::guard[Guarded Method]
@@ -78,8 +77,7 @@ Emits: `AssetBridged`
 | ----------- | -------| ----|
 | `_coin` |  `address` | coin to bridge |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -136,30 +134,29 @@ def bridge(coin: address) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Bridge.bridge('0xB153FB3d196A8eB25522705560ac152eeEc57901')
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Contract Info Methods**### `PROXY_OFT`
-:::description[`Bridge.PROXY_OFT():`]
+## **Contract Info Methods**
+
+### `PROXY_OFT`
+::::description[`Bridge.PROXY_OFT():`]
 
 
 Getter for the OFT bridger.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -177,10 +174,9 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Bridge.PROXY_OFT()
@@ -188,20 +184,18 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `TOKEN`
-:::description[`Bridge.TOKEN():`]
+::::description[`Bridge.TOKEN():`]
 
 
 Getter for the bridge token.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -219,10 +213,9 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Bridge.TOKEN()
@@ -230,16 +223,17 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Receiver**Receiver of the bridged funds is the 0xECB contract on Ethereum Mainnet.
+## **Receiver**
+
+Receiver of the bridged funds is the 0xECB contract on Ethereum Mainnet.
 
 ### `receiver`
-:::description[`Bridge.receiver():`]
+::::description[`Bridge.receiver():`]
 
 
 Getter for the receiver address of the bridged funds.
@@ -251,8 +245,7 @@ Receiver is the 0xECB contract (FeeCollector/Proxy on Ethereum Mainnet).
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -270,10 +263,9 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Bridge.receiver()
@@ -281,14 +273,13 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_root_receiver`
-:::description[`Bridge.set_root_receiver(receiver: address):`]
+::::description[`Bridge.set_root_receiver(receiver: address):`]
 
 
 :::guard[Guarded Method]
@@ -304,8 +295,7 @@ Function to set a new receiver address for the bridged funds.
 | ----------- | -------| ----|
 | `receiver` |  `address` | new receiver address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -318,17 +308,15 @@ def set_root_receiver(receiver: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Bridge.set_root_receiver('0x0000000000000000000000000000000000000000')
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

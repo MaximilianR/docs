@@ -1,7 +1,5 @@
 # Rate Provider
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The `RateProvider` contract is designed to provide rates for token swaps.
 
@@ -27,8 +25,6 @@ The logic of the contract is to identify the pool type used to facilitate the de
 
 [^1]: All old liquidity pools are integrated into the `Metaregistry`. Newly deployed ones are automatically picked up. Therefore, all pools *should* be included.
 
-<Tabs>
-<TabItem value="abi" label="ABI">
 
 
 ```vyper
@@ -38,14 +34,12 @@ CRYPTOSWAP_ABI: constant(String[64]) = "get_dy(uint256,uint256,uint256)"
 ```
 
 
-</TabItem>
-</Tabs>
 
 ---
 
 
 ### `get_quotes`
-:::description[`CurveRateProvider.get_quotes(source_token: address, destination_token: address, amount_in: uint256) -> DynArray[Quote, MAX_QUOTES]`]
+::::description[`CurveRateProvider.get_quotes(source_token: address, destination_token: address, amount_in: uint256) -> DynArray[Quote, MAX_QUOTES]`]
 
 
 Getter method which returns quotes for a specified `source_token` compared to a `destination_token` based on the input ampount `amount_in`.
@@ -67,12 +61,9 @@ Returns: A dynamic array of `Quote` structs containing the following data:
 | `destination_token` | `address` | Destination token.           |
 | `amount_in`         | `uint256` | Amount of tokens the provided rate is based on. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curverateprovider-vy" label="CurveRateProvider.vy">
 
 
 ```vyper
@@ -237,14 +228,11 @@ def _get_pool_type(pool: address, metaregistry: Metaregistry) -> uint8:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the quotes when swapping 1000 `CRV` for `asdCRV`. The `get_quotes` method returns two `Quote` structs because there are two pools that can facilitate the trade:
@@ -256,14 +244,13 @@ This example shows the quotes when swapping 1000 `CRV` for `asdCRV`. The `get_qu
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_aggregated_rate`
-:::description[`CurveRateProvider.get_aggregated_rate(source_token: address, destination_token: address) -> uint256`]
+::::description[`CurveRateProvider.get_aggregated_rate(source_token: address, destination_token: address) -> uint256`]
 
 
 Getter for the weighted aggregated rate of all quotes from the `source_token` to the `destination_token`. The calculations are based on an input amount of 1 unit of the source token. The aggregated rate is calculated as follows:
@@ -279,12 +266,9 @@ Returns: aggregated rate (`uint256`).
 | `source_token`      | `address` | Source token.                |
 | `destination_token` | `address` | Destination token.           |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curverateprovider-vy" label="CurveRateProvider.vy">
 
 
 ```vyper
@@ -332,14 +316,11 @@ def weighted_average_quote(
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -348,26 +329,22 @@ def weighted_average_quote(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `version`
-:::description[`CurveRateProvider.version() -> String[8]: view`]
+::::description[`CurveRateProvider.version() -> String[8]: view`]
 
 
 Getter for the version of the rate provider contract.
 
 Returns: contract version (`String[8]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curverateprovider-vy" label="CurveRateProvider.vy">
 
 
 ```vyper
@@ -375,14 +352,11 @@ version: public(constant(String[8])) = "1.1.0"
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -391,26 +365,22 @@ version: public(constant(String[8])) = "1.1.0"
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ADDRESS_PROVIDER`
-:::description[`CurveRateProvider.ADDRESS_PROVIDER() -> address: view`]
+::::description[`CurveRateProvider.ADDRESS_PROVIDER() -> address: view`]
 
 
 Getter for the address provider contract. This variable is set when initializing the contract and cannot be changed afterward. Documentation for the address provider can be found [here](../integration/address-provider.md).
 
 Returns: address provider contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="curverateprovider-vy" label="CurveRateProvider.vy">
 
 
 ```vyper
@@ -425,14 +395,11 @@ def __init__(address_provider: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -441,8 +408,7 @@ def __init__(address_provider: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

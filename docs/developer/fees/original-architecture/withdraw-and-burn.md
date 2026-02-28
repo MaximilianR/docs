@@ -1,13 +1,14 @@
 
-# **Withdrawing Admin Fees**import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Withdraw & Burn
 
 
 In order to be able to burn admin fees into the fee token, those fees have to be claimed prior. **Admin fees can be claimed by anyone.**Somethimes, the function to claim the fees is guarded and therefore only called by the proxy contract (admin or owner of the pool). If thats the case, users can just call the claim function via the proxy contract (as the function is not guarded there).
 
 Claiming fees can differ based on which source they are claimed from:
 
-## **StableSwap Pools**Admin fees are stored within each exchange contract and viewable via the public getter method **`admin_balances`**. Users may call **`withdraw_admin_fees`**to claim the fees at any time.
+## **StableSwap Pools**
+
+Admin fees are stored within each exchange contract and viewable via the public getter method **`admin_balances`**. Users may call **`withdraw_admin_fees`**to claim the fees at any time.
 
 Fees are usually claimed via the **`withdraw_many`**function of the PoolProxy. This withdraws fees from multiple pools at once, pulling them into the [PoolProxy](https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347#writeContract) contract.
 
@@ -19,7 +20,7 @@ Admin fees can either be claimed through the corresponding PoolProxy or directly
 :::
 
 ### `admin_balances`
-:::description[`Pool.admin_balances(i: uint256) -> uint256:`]
+::::description[`Pool.admin_balances(i: uint256) -> uint256:`]
 
 
 Getter for the admin fees of coin `i` in a specific pool.
@@ -30,8 +31,7 @@ Returns: admin balances (`uint256`).
 | ----------- | -------| ----|
 | `i` |  `uint256` | coin index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -42,10 +42,9 @@ def admin_balances(i: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Pool.admin_balances(0)
@@ -53,14 +52,13 @@ def admin_balances(i: uint256) -> uint256:
 ```   
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `withdraw_admin_fees`
-:::description[`PoolProxy.withdraw_admin_fees(_pool: address):`]
+::::description[`PoolProxy.withdraw_admin_fees(_pool: address):`]
 
 
 :::info
@@ -76,8 +74,7 @@ Function to claim admin fees from `pool` into this contract. This is the first s
 | ----------- | -------| ----|
 | `_pool` |  `address` | pool address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -95,10 +92,9 @@ def withdraw_admin_fees(_pool: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PoolProxy.withdraw_admin_fees("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
@@ -106,14 +102,13 @@ def withdraw_admin_fees(_pool: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `withdraw_many`
-:::description[`PoolProxy.withdraw_many(_pools: address[20]):`]
+::::description[`PoolProxy.withdraw_many(_pools: address[20]):`]
 
 
 :::info
@@ -129,8 +124,7 @@ Function to withdraw fees from multiple pools in a single call.
 | ----------- | -------| ----|
 | `_pool` |  `address` | Pool Address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -151,10 +145,9 @@ def withdraw_many(_pools: address[20]):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PoolProxy.withdraw_many("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7", "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD")
@@ -162,25 +155,25 @@ def withdraw_many(_pools: address[20]):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **CryptoSwap Pools**Fees of crypto pools are a bit different from stableswap pools. These pools have an auto-rebalancing mechanism which uses parts of the admin fees for rebalancing purposes. After taking this into consideration, fees are claimed by minting the admin's share (which essentially is the admin fee) of the pool as LP tokens.
+## **CryptoSwap Pools**
+
+Fees of crypto pools are a bit different from stableswap pools. These pools have an auto-rebalancing mechanism which uses parts of the admin fees for rebalancing purposes. After taking this into consideration, fees are claimed by minting the admin's share (which essentially is the admin fee) of the pool as LP tokens.
 
 Fees are mostly claimed directly from the pool.
 
 
 ### `claim_admin_fees`
-:::description[`Pool.claim_admin_fees():`]
+::::description[`Pool.claim_admin_fees():`]
 
 
 Function to claim admin fees from a crypto pool.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -271,32 +264,29 @@ def _claim_admin_fees():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Pool.claim_admin_fees()
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## **Curve Stablecoin**crvUSD fees are based on the borrow rate of the corresponding markets. Fees are accurred in crvUSD token. They can be claimed from the according Controller.
 
 ### `admin_fees`
-:::description[`Controller.admin_fees() -> uint256:`]
+::::description[`Controller.admin_fees() -> uint256:`]
 
 
 Getter for the currently claimable admin fees form a Controller. These fees can be collected via the `collect_fees()` function (see below).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -315,10 +305,9 @@ def admin_fees() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Controller.admin_fees()
@@ -326,20 +315,18 @@ def admin_fees() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `collect_fees`
-:::description[`Controller.collect_fees():`]
+::::description[`Controller.collect_fees():`]
 
 
 Function to collects all fees, including borrowing-based fees (interest rate) and AMM-based fees (swap fee, if applicable).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -383,28 +370,28 @@ def collect_fees() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Controller.collect_fees()
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-# **Burning Admin Fees**All admin fees are accumulated in the [0xECB](https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347) \{ title="shhhh!! don't tell Christine Lagarde!" \} contract and are burned according to the fee-burner settings designated for each specific coin.   
+# **Burning Admin Fees**
+
+All admin fees are accumulated in the [0xECB](https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347) \{ title="shhhh!! don't tell Christine Lagarde!" \} contract and are burned according to the fee-burner settings designated for each specific coin.   
 *These functions need to be called from the 0xECB contract.*
 
 
 ### `burn`
-:::description[`0xECB.burn(_coin: address):`]
+::::description[`0xECB.burn(_coin: address):`]
 
 
 :::guard[Guarded Method]
@@ -420,8 +407,7 @@ Transfer the contract’s balance of `coin` into the according burner and execut
 | ----------- | -------| ----|
 | `_coin` |  `address` | Token Address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -447,25 +433,12 @@ def burn(_coin: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> 0xECB.burn("todo")
-todo
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `burn_many`
-:::description[`0xECB.burn_many(_coins: address[20]):`]
+::::description[`0xECB.burn_many(_coins: address[20]):`]
 
 
 :::guard[Guarded Method]
@@ -488,8 +461,7 @@ Burning can be very gas intensive. In some cases burning 20 coins at once is not
 | ----------- | -------| ----|
 | `_coins` |  `address[20]` | Token Addresses |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -516,25 +488,12 @@ def burn_many(_coins: address[20]):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> 0xECB.burn_many("todo")
-todo
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `donate_admin_fees`
-:::description[`0xECB.donate_admin_fees(_pool: address):`]
+::::description[`0xECB.donate_admin_fees(_pool: address):`]
 
 
 :::warning
@@ -554,8 +513,7 @@ Function donate a pool’s current admin fees to the pool LPs.
 | ----------- | -------| ----|
 | `_pool` |  `address` | pool addresses |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -576,25 +534,12 @@ def donate_admin_fees(_pool: address):
 ```
 
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> 0xECB.donate_admin_fees("todo")
-todo
-```
-
-
-</TabItem>
-</Tabs>
-
+</SourceCode>
 
 :::
 
 ### `donate_admin_fees`
-:::description[`0xECB.set_donate_approval(_pool: address, _caller: address, _is_approved: bool):`]
+::::description[`0xECB.set_donate_approval(_pool: address, _caller: address, _is_approved: bool):`]
 
 
 :::warning
@@ -616,8 +561,7 @@ Function to set donation approval for `_pool` to `_caller`.
 | `_caller` |  `address` | address to set approval for |
 | `_is_approved` |  `bool` | approval status |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -638,18 +582,6 @@ def set_donate_approval(_pool: address, _caller: address, _is_approved: bool):
 ```
 
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> 0xECB.set_donate_approval("todo")
-todo
-```
-
-</TabItem>
-</Tabs>
-
+</SourceCode>
 
 :::

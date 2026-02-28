@@ -1,15 +1,12 @@
 # FeeSplitter
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 
 The `FeeSplitter` is a contract that collects and splits accumulated crvUSD fees from crvUSD Controllers[^1] in a single transaction and distributes them across other contracts according to predetermined weights.
 
 [^1]: These are Controllers from where crvUSD is minted. See here: https://crvusd.curve.fi/
 
-<details open>
-<summary>`FeeSplitter.vy`</summary>
+:::vyper[`FeeSplitter.vy`]
 
 The source code for the `FeeSplitter.vy` contract can be found on [ GitHub](https://github.com/curvefi/fee-splitter/blob/main/contracts/FeeSplitter.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.0` and utilizes a [snekmate module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) to handle contract ownership.
 
@@ -17,8 +14,7 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0x2dFd89449faff8a5327
 
 The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](https://github.com/curvefi/fee-splitter/blob/main/audits/ChainSecurity.pdf).
 
-
-</details>
+:::
 
 ![](../assets/images/fees/fee_splitter_flow.svg)
 
@@ -26,7 +22,9 @@ The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www
 ---
 
 
-## **Dispatching Fees, Receivers and Weights**The contract consolidates the process of claiming and distributing fees into a single external function called `dispatch_fees`. Calling this function is fully permissionless and can be done by anyone.
+## **Dispatching Fees, Receivers and Weights**
+
+The contract consolidates the process of claiming and distributing fees into a single external function called `dispatch_fees`. Calling this function is fully permissionless and can be done by anyone.
 
 The function makes use of a helper module called `ControllerMulticlaim.vy`, which aims to track all `crvUSD Controllers` from the `Factory` and provides an interface for claiming fees from them. By default, the `dispatch_fees` function claims fees from all the controllers registered in the [`controllers`](#controllers) array of the `ControllerMulticlaim.vy` module, but the function also allows for only claiming fees from specified controllers.
 
@@ -93,7 +91,7 @@ flowchart TD
 
 
 ### `dispatch_fees`
-:::description[`FeeSplitter.dispatch_fees(controllers: DynArray[multiclaim.Controller, multiclaim.MAX_CONTROLLERS]=[])`]
+::::description[`FeeSplitter.dispatch_fees(controllers: DynArray[multiclaim.Controller, multiclaim.MAX_CONTROLLERS]=[])`]
 
 
 :::warning[Claiming from Controllers not in `controllers`]
@@ -109,12 +107,9 @@ Function to claim crvUSD fees from crvUSD Controllers and distribute them to add
 | ------------- | ------------------------------------------------------------- | ----------- |
 | `controllers` | `DynArray[multiclaim.Controller, multiclaim.MAX_CONTROLLERS]` | Array of `Controllers` to claim from; defaults to claiming fees from all Controllers in [`controllers`](#controllers) |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 ```python
@@ -204,11 +199,7 @@ def _is_dynamic(addr: address) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="controllermulticlaim-vy" label="ControllerMulticlaim.vy">
 
 
 ```python
@@ -268,14 +259,11 @@ def update_controllers():
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 The following example demonstrates how to dispatch fees from all `Controller` contracts listed in the [`controllers`](#controllers) section.
@@ -293,14 +281,13 @@ The next example shows how to dispatch fees from specific `Controller` contracts
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `receivers`
-:::description[`FeeSplitter.receivers(arg0: uint256) -> Receiver: view`]
+::::description[`FeeSplitter.receivers(arg0: uint256) -> Receiver: view`]
 
 
 Getter for the addresses and weights of receivers at index `arg0`. Receivers can be added/removed/modified by the DAO using the `set_receivers` function.
@@ -311,12 +298,9 @@ Returns: `Receiver` struct consisting of `address` and `weight`.
 | ------ | --------- | --------------------- |
 | `arg0` | `uint256` | Index of the receiver |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 ```python
@@ -328,39 +312,32 @@ receivers: public(DynArray[Receiver, MAX_RECEIVERS])
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `n_receivers`
-:::description[`FeeSplitter.n_receivers() -> uint256`]
+::::description[`FeeSplitter.n_receivers() -> uint256`]
 
 
 Getter for the total number of receivers the fees are split to.
 
 Returns: number of receivers (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 ```python
@@ -377,39 +354,32 @@ def n_receivers() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `excess_receiver`
-:::description[`FeeSplitter.excess_receiver() -> address`]
+::::description[`FeeSplitter.excess_receiver() -> address`]
 
 
 Getter for the excess receiver. That is the last receiver address in [`receivers`](#receivers) and is the one that receives additional weight ontop of his on weight, if prior receivers with a dynamic weight allocate less than their cap (see this example at the top).
 
 Returns: excess receiver (`address`)
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 ```python
@@ -430,27 +400,23 @@ def excess_receiver() -> address:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_receivers`
-:::description[`FeeSplitter.set_receivers(receivers: DynArray[Receiver, MAX_RECEIVERS])`]
+::::description[`FeeSplitter.set_receivers(receivers: DynArray[Receiver, MAX_RECEIVERS])`]
 
 
 :::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
@@ -472,12 +438,9 @@ Emits: `SetReceivers`
 | ----------- | ----------------------------------- | ------------------------------------------------------------ |
 | `receivers` | `DynArray[Receiver, MAX_RECEIVERS]` | Array of `Receiver` structs containing of address and weight |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
@@ -524,14 +487,11 @@ def _set_receivers(receivers: DynArray[Receiver, MAX_RECEIVERS]):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 In this example, two receiver addresses are set with specific weights:
@@ -555,23 +515,24 @@ If, later on, a third receiver with a weight of 1000 (at the cost of reducing th
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Controller Management**The contract maintains a list of [`controllers`](#controllers) from which fees can be claimed. This list is updated to match the controllers registered in the crvUSD Factory contract. The [`update_controllers`](#update_controllers) function is used to keep this list current.
+## **Controller Management**
+
+The contract maintains a list of [`controllers`](#controllers) from which fees can be claimed. This list is updated to match the controllers registered in the crvUSD Factory contract. The [`update_controllers`](#update_controllers) function is used to keep this list current.
 
 
 The contract maintains a list of allowed `Controller` contracts from which fees can be claimed. This list is updated to match the controllers registered in the crvUSD Factory contract. The `update_controllers` function is used to keep this list current.
 
 
 ### `controllers`
-:::description[`FeeSplitter.controllers(arg0: uint256) -> IController: view`]
+::::description[`FeeSplitter.controllers(arg0: uint256) -> IController: view`]
 
 
 Getter for the `Controller` at index `arg0`.
@@ -582,12 +543,9 @@ Returns: controller (`address`).
 | ------ | --------- | --------------------- |
 | `arg0` | `uint256` | Index of the `Controller` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 ```python
@@ -602,11 +560,7 @@ exports: (
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="controllermulticlaim-vy" label="ControllerMulticlaim.vy">
 
 
 ```python
@@ -618,11 +572,7 @@ MAX_CONTROLLERS: constant(uint256) = 50
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="icontroller-vy" label="IController.vy">
 
 
 ```python
@@ -632,27 +582,23 @@ def collect_fees() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `allowed_controllers`
-:::description[`FeeSplitter.allowed_controllers(arg0: address) -> bool: view`]
+::::description[`FeeSplitter.allowed_controllers(arg0: address) -> bool: view`]
 
 
 Getter for the allowed controller address at index `arg0`.
@@ -663,12 +609,9 @@ Returns: allowed controller address (`address`).
 | ------ | --------- | --------------------- |
 | `arg0` | `address` | Address of the `Controller` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
@@ -685,11 +628,7 @@ exports: (
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="controllermulticlaim-vy" label="ControllerMulticlaim.vy">
 
 
 ```python
@@ -699,39 +638,32 @@ allowed_controllers: public(HashMap[IController, bool])
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `n_controllers`
-:::description[`FeeSplitter.n_controllers() -> uint256: view`]
+::::description[`FeeSplitter.n_controllers() -> uint256: view`]
 
 
 Getter for the number of `Controllers` added to the contract from which potentially (if they are allowed) fees can be claimed from.
 
 Returns: number of controllers (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
@@ -748,11 +680,7 @@ exports: (
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="controllermulticlaim-vy" label="ControllerMulticlaim.vy">
 
 
 ```python
@@ -767,39 +695,32 @@ def n_controllers() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `update_controllers`
-:::description[`FeeSplitter.update_controllers()`]
+::::description[`FeeSplitter.update_controllers()`]
 
 
 Function to update the list of `Controllers` to correspond with the list of `Controllers` in the `Factory`. Calling this function is fully permissionless and can be done by anyone.
 
 This function uses the `n_collaterals` function from the `IControllerFactory` interface to determine the total number of Controllers. If the local list of Controllers is not up to date, the function adds the missing Controllers to the dynamic array in `controllers`. Simultaneously, it updates the `allowed_controllers` mapping to permit claiming from the newly added Controllers.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
@@ -816,11 +737,7 @@ exports: (
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="controllermulticlaim-vy" label="ControllerMulticlaim.vy">
 
 
 ```python
@@ -853,11 +770,7 @@ def update_controllers():
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="icontrollerfactory-vy" label="IControllerFactory.vy">
 
 
 ```python
@@ -874,14 +787,11 @@ def n_collaterals() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 In this example, the `update_controllers` function is called to synchronize the list of `Controllers` with the actual list in the `Factory`. To demonstrate the function's functionality, we assume an additional `Controller` has been created since the last update.
@@ -897,32 +807,30 @@ In this example, the `update_controllers` function is called to synchronize the 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Contract Ownership**Ownership of the contract is managed using the [`ownable.vy`](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) module from 🐍 [Snekmate](https://github.com/pcaversaccio/snekmate) which implements a basic control access mechanism, where there is an `owner` that can be granted exclusive access to specific functions.
+## **Contract Ownership**
+
+Ownership of the contract is managed using the [`ownable.vy`](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) module from 🐍 [Snekmate](https://github.com/pcaversaccio/snekmate) which implements a basic control access mechanism, where there is an `owner` that can be granted exclusive access to specific functions.
 
 
 ### `owner`
-:::description[`FeeSplitter.owner() -> address: view`]
+::::description[`FeeSplitter.owner() -> address: view`]
 
 
 Getter for the owner of the contract. This is the address that can call restricted functions like `transfer_ownership`, `renounce_ownership` or `set_receivers`.
 
 Returns: contract owner (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
@@ -966,11 +874,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="ownable-vy" label="Ownable.vy">
 
 
 ```python
@@ -990,27 +894,23 @@ def __init__():
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `transfer_ownership`
-:::description[`FeeSplitter.transfer_ownership(new_owner: address)`]
+::::description[`FeeSplitter.transfer_ownership(new_owner: address)`]
 
 
 :::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
@@ -1026,12 +926,9 @@ Function to transfer the ownership of the contract to a new address.
 | ---------- | --------- | ------------ |
 | `new_owner` | `address` | New owner of the contract |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
@@ -1075,11 +972,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="ownable-vy" label="Ownable.vy">
 
 
 ```python
@@ -1125,14 +1018,11 @@ def _transfer_ownership(new_owner: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 In this example, the ownership of the contract is transferred to a new address. The ownership is transfered from the Curve DAO to our overlord Vitalik Buterin.
@@ -1148,14 +1038,13 @@ In this example, the ownership of the contract is transferred to a new address. 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `renounce_ownership`
-:::description[`FeeSplitter.renounce_ownership()`]
+::::description[`FeeSplitter.renounce_ownership()`]
 
 
 :::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
@@ -1169,12 +1058,9 @@ Function to renounce the ownership of the contract. Calling this method will lea
 
 Emits: `OwnershipTransferred` from `Ownable.vy`.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
@@ -1218,11 +1104,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="ownable-vy" label="Ownable.vy">
 
 
 ```python
@@ -1266,14 +1148,11 @@ def _transfer_ownership(new_owner: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 In this example, the ownership of the contract is renounced.
@@ -1289,29 +1168,27 @@ In this example, the ownership of the contract is renounced.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Other Methods**### `version`
-:::description[`FeeSplitter.version() -> String[8]: view`]
+## **Other Methods**
+
+### `version`
+::::description[`FeeSplitter.version() -> String[8]: view`]
 
 
 Getter for the version of the contract.
 
 Returns: version (`String[8]`). 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feesplitter-vy" label="FeeSplitter.vy">
 
 
 ```python
@@ -1319,14 +1196,11 @@ version: public(constant(String[8])) = "0.1.0" # no guarantees on abi stability
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example fetches the version of the `FeeSplitter` contract.
@@ -1334,8 +1208,7 @@ This example fetches the version of the `FeeSplitter` contract.
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

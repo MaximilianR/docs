@@ -1,23 +1,19 @@
 # Hooker
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 
 The `Hooker` contract is a versatile and essential component within the Curve Finance ecosystem, designed to support and manage hooks that interact with the `FeeCollector` contract. This contract enables the execution of predefined actions (hooks) that can be triggered under specific conditions, such as during the fee collection process. It handles the calculation and distribution of compensations, ensuring that hooks are executed correctly and at the appropriate times.
 
-<details open>
-<summary>`Hooker.vy`</summary>
+:::vyper[`Hooker.vy`]
 
 The source code for the `Hooker.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-burners/blob/main/contracts/hooks/Hooker.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 The `Hooker` contract is deployed on the following chains:
 
-- :logos-ethereum: Ethereum at [`0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D`](https://etherscan.io/address/0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D) 
+- :logos-ethereum: Ethereum at [`0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D`](https://etherscan.io/address/0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D)
 - :logos-gnosis: Gnosis at [`0xE898893ebAe7b75dc4cAB0fb16e24137309ff178`](https://gnosisscan.io/address/0xE898893ebAe7b75dc4cAB0fb16e24137309ff178)
 
-
-</details>
+:::
 
 *The contract has the following key features:*
 
@@ -41,7 +37,9 @@ If you are running or planning to run fee collection for Curve DAO, there is a T
 ---
 
 
-## **Compensation Strategy**Each `hook` includes a `compensation_strategy` that defines how and when the executor of the hook will be compensated. This ensures that there is an incentive to call hooks according to predefined rules.
+## **Compensation Strategy**
+
+Each `hook` includes a `compensation_strategy` that defines how and when the executor of the hook will be compensated. This ensures that there is an incentive to call hooks according to predefined rules.
 
 The `CompensationStrategy` consists of the following values:
 
@@ -72,11 +70,13 @@ struct CompensationCooldown:
 ---
 
 
-## **Hooks**Before hooks can be executed, they need to be added via `set_hooks`. These hooks can then be externally executed by anyone.
+## **Hooks**
+
+Before hooks can be executed, they need to be added via `set_hooks`. These hooks can then be externally executed by anyone.
 
 
 ### `hooks`
-:::description[`Hooker.hooks(arg0: uint256) -> Hook: view`]
+::::description[`Hooker.hooks(arg0: uint256) -> Hook: view`]
 
 
 Getter for the hooks recorded in the contract.
@@ -87,12 +87,9 @@ Returns: `Hook` struct consisting of the target address (`address`), a byte arra
 | ------- | --------- | ----------------- |
 | `arg0`  | `uint256` | Index of the hook |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -106,27 +103,23 @@ hooks: public(DynArray[Hook, MAX_HOOKS_LEN])
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_hooks`
-:::description[`Hooker.set_hooks(_new_hooks: DynArray[Hook, MAX_HOOKS_LEN])`]
+::::description[`Hooker.set_hooks(_new_hooks: DynArray[Hook, MAX_HOOKS_LEN])`]
 
 
 :::guard[Guarded Method]
@@ -150,12 +143,9 @@ Function to set new hooks.
 - `duty`: A flag bool if the hook is mandatory or not.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -195,14 +185,11 @@ def _set_hooks(new_hooks: DynArray[Hook, MAX_HOOKS_LEN]):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets a new hook with the target address `0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914`.
@@ -229,16 +216,17 @@ This example sets a new hook with the target address `0xD16d5eC345Dd86Fb63C6a9C4
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Executing Hooks**There are two functions to execute hooks: `duty_act` and `act`.
+## **Executing Hooks**
+
+There are two functions to execute hooks: `duty_act` and `act`.
 
 The `duty_act` method is designed to be called by the `FeeCollector` contract during the `FORWARD` epoch. This function is called when coins are forwarded from the `FeeCollector` using the `forward` function.
 
@@ -284,7 +272,7 @@ struct CompensationCooldown:
 
 
 ### `duty_act`
-:::description[`Hooker.duty_act(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _receiver: address=msg.sender) -> uint256`]
+::::description[`Hooker.duty_act(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _receiver: address=msg.sender) -> uint256`]
 
 
 Function which executes hooks as part of the fee collection process. It ensures all mandatory hooks, which are marked with the `duty` flag, are executed and handles the distribution of any associated compensation. The function checks that all mandatory duty hooks are included in the `_hook_inputs`.
@@ -305,12 +293,9 @@ Emits: `DutyAct`, `HookShot` and `Act`
 - `data:` `Bytes[8192]` - The data payload for the hook, including the method identifier and parameters.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -399,14 +384,11 @@ def _shot(hook: Hook, hook_input: HookInput):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -414,26 +396,22 @@ def _shot(hook: Hook, hook_input: HookInput):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `duty_counter`
-:::description[`Hooker.duty_counter() -> uint64: view`]
+::::description[`Hooker.duty_counter() -> uint64: view`]
 
 
 Getter for the duty counter value. This varaible is used to record the current week number and is used to manage and reset the cooldown periods for hook compensations, ensuring that hooks do not exceed their compensation limits within a given week.
 
 Returns: duty counter (`uint64`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -441,27 +419,23 @@ duty_counter: public(uint64)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `act`
-:::description[`Hooker.act(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _receiver: address=msg.sender) -> uint256`]
+::::description[`Hooker.act(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _receiver: address=msg.sender) -> uint256`]
 
 
 Function to execute hooks. Unlike, `duty_act` (which is specifically for the fee distribution process), this function allows the execuction of more general hooks.
@@ -482,12 +456,9 @@ Emits: `HookShot` and `Act`
 - `data:` `Bytes[8192]` - The data payload for the hook, including the method identifier and parameters.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -562,14 +533,11 @@ def _shot(hook: Hook, hook_input: HookInput):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -577,14 +545,13 @@ def _shot(hook: Hook, hook_input: HookInput):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_compensation`
-:::description[`Hooker.calc_compensation(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _duty: bool=False, _ts: uint256=block.timestamp) -> uint256`]
+::::description[`Hooker.calc_compensation(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _duty: bool=False, _ts: uint256=block.timestamp) -> uint256`]
 
 
 Function to calculate the compensation for executing specific hooks.
@@ -604,12 +571,9 @@ Returns: amount of target coins to receive as compensation (`uint256`).
 - `data:` `Bytes[8192]` - The data payload for the hook, including the method identifier and parameters.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -662,14 +626,11 @@ def calc_compensation(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN],
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -678,14 +639,13 @@ def calc_compensation(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN],
 ``` 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `one_time_hooks`
-:::description[`Hooker.one_time_hooks(_hooks: DynArray[Hook, MAX_HOOKS_LEN], _inputs: DynArray[HookInput, MAX_HOOKS_LEN])`]
+::::description[`Hooker.one_time_hooks(_hooks: DynArray[Hook, MAX_HOOKS_LEN], _inputs: DynArray[HookInput, MAX_HOOKS_LEN])`]
 
 
 :::guard[Guarded Method]
@@ -716,12 +676,9 @@ Function to execute one-time-hooks. These are hooks that only need to be execute
 - `data:` `Bytes[8192]` - The data payload for the hook, including the method identifier and parameters.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -769,40 +726,33 @@ def _shot(hook: Hook, hook_input: HookInput):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Hooker.one_time_hooks([Hooker.Hook(to=address("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"), foreplay=b"", compensation_strategy=Hooker.CompensationStrategy(amount=1000000000000000000, cooldown=Hooker.CompensationCooldown(duty_counter=0, used=0, limit=1000000000000000000), start=0, end=WEEK, dutch=True), duty=True)], [Hooker.HookInput(hook_id=0, value=1000000000000000000, data=b"")])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `buffer_amount`
-:::description[`Hooker.buffer_amount() -> uint256: view`]
+::::description[`Hooker.buffer_amount() -> uint256: view`]
 
 
 Getter for the buffer amount which represents the total potential compensation amount that might be required to execute all the hooks under their respective compensation strategies. 
 
 Returns: buffer amount (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -810,29 +760,27 @@ buffer_amount: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Valid Interface a la ERC-165**In order for the Burner contract to be fully compatible with the `FeeCollector`, a specific interface needs to hold up as per [ERC-165](https://eips.ethereum.org/EIPS/eip-165):
+## **Valid Interface a la ERC-165**
+
+In order for the Burner contract to be fully compatible with the `FeeCollector`, a specific interface needs to hold up as per [ERC-165](https://eips.ethereum.org/EIPS/eip-165):
 
 ```vyper
 SUPPORTED_INTERFACES: constant(bytes4[2]) = [
@@ -847,7 +795,7 @@ SUPPORTED_INTERFACES: constant(bytes4[2]) = [
 
 
 ### `supportsInterface`
-:::description[`Hooker.supportsInterface(_interface_id: bytes4) -> bool`]
+::::description[`Hooker.supportsInterface(_interface_id: bytes4) -> bool`]
 
 
 Function to check if the burner supports the correct interface, as specified by the [ERC-165](https://eips.ethereum.org/EIPS/eip-165) standard. This method makes sure the contract is compatible with the `FeeCollector` contract.
@@ -858,12 +806,9 @@ Returns: true or false (`bool`)
 | ------- | --------- | ------------------------------ |
 | `_interface_id` | `bytes4` | ID of the interface.     |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -887,30 +832,28 @@ def supportsInterface(_interface_id: bytes4) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Recovering ERC-20 Tokens and ETH**### `recover`
-:::description[`Hooker.recover(_coins: DynArray[ERC20, MAX_LEN])`]
+## **Recovering ERC-20 Tokens and ETH**
+
+### `recover`
+::::description[`Hooker.recover(_coins: DynArray[ERC20, MAX_LEN])`]
 
 
 :::guard[Guarded Method]
@@ -926,12 +869,9 @@ Function to recover ERC20 tokens or ETH from the contract by transferring them t
 | -------- | -------------------------- | ---------------------------------- |
 | `_coins` | `DynArray[ERC20, MAX_LEN]` | Array of coin addresses to recover |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -952,14 +892,11 @@ def recover(_coins: DynArray[ERC20, MAX_LEN]):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example recovers ETH from the Hooker contract and transfers it to the address defined in `fee_collector`.
@@ -969,26 +906,22 @@ This example recovers ETH from the Hooker contract and transfers it to the addre
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `fee_collector`
-:::description[`Hooker.fee_collector() -> address: view`]
+::::description[`Hooker.fee_collector() -> address: view`]
 
 
 Getter for the `FeeCollector` contract.
 
 Returns: fee collector (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -1012,21 +945,17 @@ def __init__(_fee_collector: FeeCollector,
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

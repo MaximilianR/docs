@@ -1,24 +1,20 @@
 # CowSwapBurner
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The `CowSwapBurner` is an essential component of the fee burning architecture, designed to facilitate the efficient and automated exchange of admin fees using [conditional orders](https://docs.cow.fi/cow-protocol/concepts/order-types/programmatic-orders) of the CoWSwap protocol.
 
-<details open>
-<summary>`CowSwapBurner.vy`</summary>
+:::vyper[`CowSwapBurner.vy`]
 
 The source code for the `CowSwapBurner.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-burners/blob/main/contracts/burners/CowSwapBurner.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 The `CowSwapBurner` is only deployed on Ethereum and Gnosis so far, as CowSwap is only deployed on these chains.[^1]
 
-- :logos-ethereum: Ethereum at [`0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b`](https://etherscan.io/address/0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b) 
+- :logos-ethereum: Ethereum at [`0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b`](https://etherscan.io/address/0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b)
 - :logos-gnosis: Gnosis at [`0x566b9F24200A9B51b76792D4e81B569AF27eda83`](https://gnosisscan.io/address/0x566b9F24200A9B51b76792D4e81B569AF27eda83)
 
 [^1]: CowSwap recently deployed on Arbitrum. In the future, a new burner contract will be deployed on Arbitrum as well.
 
-
-</details>
+:::
 
 This system simplifies fee burning by requiring only a single burner contract. A simple function call can create an order that sells a accrued fee token into the target token.
 
@@ -30,7 +26,9 @@ The old system used various kinds of burners with hardcoded routes, which often 
 ---
 
 
-## **Conditional Orders**Conditional CowSwap orders are automatically created for each token to be burned using the `burn` function. This function is not directly externally callable by users through this contract; instead, it is called when the `collect` function within the `FeeCollector` contract is invoked. Additionally, there is a caller fee to incentivize this contract call.
+## **Conditional Orders**
+
+Conditional CowSwap orders are automatically created for each token to be burned using the `burn` function. This function is not directly externally callable by users through this contract; instead, it is called when the `collect` function within the `FeeCollector` contract is invoked. Additionally, there is a caller fee to incentivize this contract call.
 
 
 ```vyper
@@ -51,7 +49,7 @@ composable_cow.create(ConditionalOrderParams({
 
 
 ### `created`
-:::description[`CowSwapBurner.created(arg0: address) -> bool: view`]
+::::description[`CowSwapBurner.created(arg0: address) -> bool: view`]
 
 
 Getter method to check if a conditional order for coin `arg0` has been created. If there is not an existing order, a new order will be created when the `burn` function is called.[^2]
@@ -64,12 +62,9 @@ Returns: true or false (`bool`).
 | ------ | --------- | ------------------------ |
 | `arg0` | `address` | Address of coin to check |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -106,14 +101,11 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CowSwapBurner.created('0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83')
@@ -121,14 +113,13 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_current_order`
-:::description[`CowSwapBurner.get_current_order(sell_token: address=empty(address)) -> GPv2Order_Data`]
+::::description[`CowSwapBurner.get_current_order(sell_token: address=empty(address)) -> GPv2Order_Data`]
 
 
 Getter for the current order parameters of a token.
@@ -152,12 +143,9 @@ Returns: GPv2Order_Data consisting of:
 | ------------ | --------- | ------------------------------------- |
 | `sell_token` | `address` | Token address to check parameters for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -192,14 +180,11 @@ def _get_order(sell_token: ERC20) -> GPv2Order_Data:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CowSwapBurner.get_current_order('0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83')
@@ -207,14 +192,13 @@ def _get_order(sell_token: ERC20) -> GPv2Order_Data:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `burn`
-:::description[`CowSwapBurner.burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address)`]
+::::description[`CowSwapBurner.burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address)`]
 
 
 :::guard[Guarded Method]
@@ -231,12 +215,9 @@ Function to create a conditional CowSwap order for coins.
 | `_coins`    | `DynArray[ERC20, MAX_COINS_LEN]` | Coins to burn                                                                          |
 | `_receiver` | `address`                        | Receiver of the keeper fee specified in when calling `collect` within the FeeCollector |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -297,28 +278,14 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `getTradableOrder`
-:::description[`CowSwapBurner.getTradeableOrder(_owner: address, _sender: address, _ctx: bytes32, _static_input: Bytes[STATIC_DATA_LEN], _offchain_input: Bytes[OFFCHAIN_DATA_LEN]) -> GPv2Order_Data`]
+::::description[`CowSwapBurner.getTradeableOrder(_owner: address, _sender: address, _ctx: bytes32, _static_input: Bytes[STATIC_DATA_LEN], _offchain_input: Bytes[OFFCHAIN_DATA_LEN]) -> GPv2Order_Data`]
 
 
 Function to generate a order for the WatchTower.
@@ -333,12 +300,9 @@ Returns: order parameters (`GPv2Order_Data`).
 | `_static_input`   | `Bytes[STATIC_DATA_LEN]`   | `sellToken` encoded as `bytes(Bytes[20])`       |
 | `_offchain_input` | `Bxtes[OFFCHAIN_DATA_LEN]` | Not used, zero-length bytes                     |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -410,29 +374,14 @@ def _get_order(sell_token: ERC20) -> GPv2Order_Data:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> CowSwapBurner.
-''
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `verify`
-:::description[`CowSwapBurner.verify(_owner: address, _sender: address, _hash: bytes32, _domain_separator: bytes32, _ctx: bytes32, _static_input: Bytes[STATIC_DATA_LEN], _offchain_input: Bytes[OFFCHAIN_DATA_LEN], _order: GPv2Order_Data)`]
+::::description[`CowSwapBurner.verify(_owner: address, _sender: address, _hash: bytes32, _domain_separator: bytes32, _ctx: bytes32, _static_input: Bytes[STATIC_DATA_LEN], _offchain_input: Bytes[OFFCHAIN_DATA_LEN], _order: GPv2Order_Data)`]
 
 
 Function to verify CowSwap orders to ensure that the order adheres to the conditions set by the contract and can be executed properly.
@@ -448,12 +397,9 @@ Function to verify CowSwap orders to ensure that the order adheres to the condit
 | `_offchain_input`   | `Bytes[OFFCHAIN_DATA_LEN]` | Conditional order type-specific data NOT known at time of creation for a specific discrete order (or zero-length bytes if not applicable).  |
 | `_order`            | `GPv2Order_Data`           | The proposed discrete order's `GPv2Order.Data` struct  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -508,28 +454,14 @@ def verify(
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `isValidSignature`
-:::description[`CowSwapBurner.isValidSignature(_hash: bytes32, signature: Bytes[1792]) -> bytes4`]
+::::description[`CowSwapBurner.isValidSignature(_hash: bytes32, signature: Bytes[1792]) -> bytes4`]
 
 
 Function to verify a ERC-1271 signature for a given hash.
@@ -541,12 +473,9 @@ Returns: `ERC1271_MAGIC_VALUE` if signature is OK (`bytes4`).
 | `_hash`     | `bytes32`     | Hash of a signed data                                                  |
 | `signature` | `Bytes[1792]` | Signature for the object. (GPv2Order.Data, PayloadStruct) in this case |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -573,28 +502,14 @@ def isValidSignature(_hash: bytes32, signature: Bytes[1792]) -> bytes4:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `target_threshold`
-:::description[`CowSwapBurner.target_threshold() -> uint256: view`]
+::::description[`CowSwapBurner.target_threshold() -> uint256: view`]
 
 
 Getter for the minimum amount of target token to be bought in an order. This value ensure that each executed order meets a certain minimum value. This variable can be changed by the `owner` of the `FeeCollector` using the [`set_target_threshold`](#set_target_threshold) function. Due to the gas efficiency of L2's, the value can be set much lower e.g. on Gnosis than on Ethereum.[^3]
@@ -603,12 +518,9 @@ Getter for the minimum amount of target token to be bought in an order. This val
 
 Returns: target threshold (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -630,14 +542,11 @@ def __init__(_fee_collector: FeeCollector,
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CowSwapBurner.target_threshold()
@@ -645,14 +554,13 @@ def __init__(_fee_collector: FeeCollector,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_target_threshold`
-:::description[`CowSwapBurner.set_target_threshold(_target_threshold: uint256)`]
+::::description[`CowSwapBurner.set_target_threshold(_target_threshold: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -668,12 +576,9 @@ Function to set the a new `target_threshold` value.
 | ------------------- | --------- | -------------------------- |
 | `_target_threshold` | `uint256` | New target threshold value |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -692,48 +597,33 @@ def set_target_threshold(_target_threshold: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
 
-## **Pushing and Recovering Coins**The `push_target` function is used to transfer any leftover target coins from the burner to the `FeeCollector`.
+## **Pushing and Recovering Coins**
+
+The `push_target` function is used to transfer any leftover target coins from the burner to the `FeeCollector`.
 
 Additionally, there is a recover function which lets the `owner` or `emergency_owner` of the `FeeCollector` to recover ERC20 or ETH.
 
 
 ### `push_target`
-:::description[`CowSwapBurner.push_target() -> uint256`]
+::::description[`CowSwapBurner.push_target() -> uint256`]
 
 
 Function to push the entire balance of the target coin to the `FeeCollector`. This function can be called externally, but is also called directly by the `FeeCollector` before the target coins are forwarded to the hooker contract using the `forward` function.
 
 Returns: amout of target coins pushed (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -751,28 +641,14 @@ def push_target() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `recover`
-:::description[`CowSwapBurner.recover(_coins: DynArray[ERC20, MAX_COINS_LEN])`]
+::::description[`CowSwapBurner.recover(_coins: DynArray[ERC20, MAX_COINS_LEN])`]
 
 
 :::guard[Guarded Method]
@@ -788,12 +664,9 @@ Function to recover ERC20 tokens or ETH from this contract. Calling this functio
 | -------- | -------------------------------- | ----------------------------------------------- |
 | `_coins` | `DynArray[ERC20, MAX_COINS_LEN]` | Dynamic array of the token addresses to recover |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -814,30 +687,18 @@ def recover(_coins: DynArray[ERC20, MAX_COINS_LEN]):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
 
-## **Valid Interface a la ERC-165**In order for the burner contract to be fully compatible with the `FeeCollector`, a specific interface needs to hold up as per [ERC-165](https://eips.ethereum.org/EIPS/eip-165):
+## **Valid Interface a la ERC-165**
+
+In order for the burner contract to be fully compatible with the `FeeCollector`, a specific interface needs to hold up as per [ERC-165](https://eips.ethereum.org/EIPS/eip-165):
 
 ```vyper
 SUPPORTED_INTERFACES: constant(bytes4[4]) = [
@@ -859,7 +720,7 @@ SUPPORTED_INTERFACES: constant(bytes4[4]) = [
 
 
 ### `supportsInterface`
-:::description[`CowSwapBurner.supportsInterface(_interface_id: bytes4) -> bool`]
+::::description[`CowSwapBurner.supportsInterface(_interface_id: bytes4) -> bool`]
 
 
 Function to check if the burner supports the correct interface, as specified by the [ERC-165](https://eips.ethereum.org/EIPS/eip-165) standard. This method makes sure the contract is compatible with the `FeeCollector` contract.
@@ -870,12 +731,9 @@ Returns: true or false (`bool`)
 | --------------- | -------- | ------------------- |
 | `_interface_id` | `bytes4` | ID of the interface |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -910,43 +768,28 @@ def supportsInterface(_interface_id: bytes4) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
 
-## **Contract Info Methods**### `fee_collector`
-:::description[`CowSwapBurner.fee_collector() -> address: view`]
+## **Contract Info Methods**
+
+### `fee_collector`
+::::description[`CowSwapBurner.fee_collector() -> address: view`]
 
 
 Getter for the Fee Collector address to anchor to.
 
 Returns: fee collector (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -976,14 +819,11 @@ def __init__(_fee_collector: FeeCollector,
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CowSwapBurner.fee_collector()
@@ -991,26 +831,22 @@ def __init__(_fee_collector: FeeCollector,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `composable_cow`
-:::description[`CowSwapBurner.composable_cow() -> address: view`]
+::::description[`CowSwapBurner.composable_cow() -> address: view`]
 
 
 Getter for the ComposableCow contract. ComposableCow is a framework for smoothing developer experience when building conditional orders on the CoW Protocol. For the official documentation, see [here](https://docs.cow.fi/cow-protocol/reference/contracts/periphery/composable-cow).
 
 Returns: ComposableCow contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -1041,14 +877,11 @@ def __init__(_fee_collector: FeeCollector,
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CowSwapBurner.composable_cow()
@@ -1056,26 +889,22 @@ def __init__(_fee_collector: FeeCollector,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `vault_relayer`
-:::description[`CowSwapBurner.vault_relayer() -> address: view`]
+::::description[`CowSwapBurner.vault_relayer() -> address: view`]
 
 
 Getter for CoW Protocols Vault Relayer contract. This is the contract where all approvals go to. For the official documentation, see [here](https://docs.cow.fi/cow-protocol/reference/contracts/core/vault-relayer).
 
 Returns: Vault Relayer (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -1097,14 +926,11 @@ def __init__(_fee_collector: FeeCollector,
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CowSwapBurner.vault_relayer()
@@ -1112,26 +938,22 @@ def __init__(_fee_collector: FeeCollector,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ADD_DATA`
-:::description[`CowSwapBurner.ADD_DATA() -> bytes32: view`]
+::::description[`CowSwapBurner.ADD_DATA() -> bytes32: view`]
 
 
 Getter for the additional data applied in the internal `_get_order` function. The data is shown as metadata on the [CowSwap explorer](https://explorer.cow.fi/) and allows distinguishing Curve orders (e.g., see this [transaction](https://explorer.cow.fi/gc/orders/0x2bd5604e60cda24f80da9a0a5b2e69598620e383c1a074b234a86489fe1856b1566b9f24200a9b51b76792d4e81b569af27eda8366721f80?tab=overview)).
 
 Returns: additional data (`bytes32`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -1139,14 +961,11 @@ ADD_DATA: public(constant(bytes32)) = 0x058315b749613051abcbf50cf2d605b4fa4a4155
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CowSwapBurner.ADD_DATA()
@@ -1154,26 +973,22 @@ ADD_DATA: public(constant(bytes32)) = 0x058315b749613051abcbf50cf2d605b4fa4a4155
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `VERSION`
-:::description[`CowSwapBurner.VERSION() -> String[20]: view`]
+::::description[`CowSwapBurner.VERSION() -> String[20]: view`]
 
 
 Getter for the burner version. 
 
 Returns: version (`String[20]`)
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -1181,14 +996,11 @@ VERSION: public(constant(String[20])) = "CowSwap"
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CowSwapBurner.VERSION()
@@ -1196,8 +1008,7 @@ VERSION: public(constant(String[20])) = "CowSwap"
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

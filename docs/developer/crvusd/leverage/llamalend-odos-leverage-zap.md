@@ -1,12 +1,9 @@
 # LeverageZapOdos
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 This Zap contract is specifically designed to **create or repay leveraged loans**using the [**Odos router**](https://odos.xyz/).
 
-<details open>
-<summary>`LeverageZapOdos.vy`</summary>
+:::vyper[`LeverageZapOdos.vy`]
 
 The source code for the `LlamaLendOdosLeverageZap.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/zaps/LeverageZapOdos.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
@@ -14,8 +11,7 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0xc5898606bdb494a9945
 
 An accompanying JavaScript library for Curve Lending can be found here: [ GitHub](https://github.com/curvefi/curve-lending-js).
 
-
-</details>
+:::
 
 Previously, building leverage for crvUSD markets relied solely on predefined routes using only Curve pools. Leveraging large positions often led to significant price impact due to the exclusive use of Curve liquidity pools. This new Zap contract allows users to leverage loans for crvUSD and lending markets using the Odos router, which considers liquidity sources across DeFi.[^1]
 
@@ -35,9 +31,6 @@ Leverage is built using a **callback method**. The function to execute callbacks
 
 
 :::
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```py
@@ -84,15 +77,11 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
-
-
 </details>
 
 :::info[Required Changes to `Controller.vy`]
 
-This zap only works for crvUSD and lending markets which were deployed using the blueprint implementation at [`0x4c5d4F542765B66154B2E789abd8E69ed4504112`](https://etherscan.io/address/0x4c5d4F542765B66154B2E789abd8E69ed4504112). Markets deployed prior to that can only make use of the regular [`LeverageZap.vy`](./LeverageZap.md).
+This zap only works for crvUSD and lending markets which were deployed using the blueprint implementation at [`0x4c5d4F542765B66154B2E789abd8E69ed4504112`](https://etherscan.io/address/0x4c5d4F542765B66154B2E789abd8E69ed4504112). Markets deployed prior to that can only make use of the regular [`LeverageZap.vy`](./leverage-zap.md).
 
 To enable the functionality of such Zap contracts, minor modifications were necessary in the `Controller.vy` contract. Functions such as `create_loan_extended`, `borrow_more_extended`, `repay_extended`, `_liquidity`, and `liquidate_extended` were enhanced with an additional constructor argument `callback_bytes: Bytes[10**4]`. This allows users to pass bytes to the Zap contract. Additionally, the internal `execute_callback` function, which manages the callbacks, was also updated.
 
@@ -101,7 +90,9 @@ To enable the functionality of such Zap contracts, minor modifications were nece
 
 ---
 
-## **Building Leverage**To build up leverage, the `LlamaLendOdosLeverageZap.vy` contract uses the `callback_deposit` function. Additionally, there is a `max_borrowable` function that calculates the maximum borrowable amount when using leverage.
+## **Building Leverage**
+
+To build up leverage, the `LlamaLendOdosLeverageZap.vy` contract uses the `callback_deposit` function. Additionally, there is a `max_borrowable` function that calculates the maximum borrowable amount when using leverage.
 
 *Flow of building leverage:*
 
@@ -111,10 +102,6 @@ To enable the functionality of such Zap contracts, minor modifications were nece
 
 <details>
 <summary>`execute_callback`</summary>
-
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```py
@@ -161,10 +148,6 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
-
-
 </details>
 
     The function uses Vyper's built-in [`raw_call`](https://docs.vyperlang.org/en/stable/built-in-functions.html?highlight=raw_call#raw_call) function to call the desired method (in this case `callback_deposit`) with the according `callback_bytes`.
@@ -174,7 +157,7 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 [^2]: `collateral` is the amount of collateral tokens used, `debt` is the amount of debt to take on, `N` represents the number of bands, `callbacker` is the callback contract, `callback_args` are some extra arguments passed to the callbacker, and `callback_bytes`.
 
 ### `callback_deposit`
-:::description[`LlamaLendOdosLeverageZap.callback_deposit(user: address, stablecoins: uint256, user_collateral: uint256, d_debt: uint256, callback_args: DynArray[uint256, 10], callback_bytes: Bytes[10**4] = b]
+::::description[`LlamaLendOdosLeverageZap.callback_deposit(user: address, stablecoins: uint256, user_collateral: uint256, d_debt: uint256, callback_args: DynArray[uint256, 10], callback_bytes: Bytes[10**4] = b]
 
 
 :::guard[Guarded Method]
@@ -205,12 +188,7 @@ Emits: `Deposit`
 | `callback_args`   | `DynArray[uint256, 10]` | Callback arguments. |
 | `callback_bytes`  | `Bytes[10**4] = b""`    | Callback bytes. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="llamalendodosleveragezap-vy" label="LlamaLendOdosLeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -268,13 +246,6 @@ def _approve(coin: address, spender: address):
     if ERC20(coin).allowance(self, spender) == 0:
         assert ERC20(coin).approve(spender, max_value(uint256), default_return_value=True)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```python
@@ -336,17 +307,13 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ### `max_borrowable`
-:::description[`LlamaLendOdosLeverageZap.max_borrowable(controller: address, _user_collateral: uint256, _leverage_collateral: uint256, N: uint256, p_avg: uint256) -> uint256`]
+::::description[`LlamaLendOdosLeverageZap.max_borrowable(controller: address, _user_collateral: uint256, _leverage_collateral: uint256, N: uint256, p_avg: uint256) -> uint256`]
 
 
 Function to calculate the maximum borrowable using leverage. The maximum borrowable amount essentially comes down to:
@@ -366,12 +333,7 @@ Returns: maximum amount to borrow (`uint256`). The maximum value to return is ei
 | `p_avg`                | `uint256` | Average price of the collateral. | 
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="llamalendodosleveragezap-vy" label="LlamaLendOdosLeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -465,18 +427,16 @@ def _max_p_base(controller: address) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ---
 
-## **Unwinding Leverage**To deleverage loans, the `LlamaLendOdosLeverageZap.vy` contract uses the `callback_repay` function.
+## **Unwinding Leverage**
+
+To deleverage loans, the `LlamaLendOdosLeverageZap.vy` contract uses the `callback_repay` function.
 
 *Flow of deleveraging:*
 
@@ -486,10 +446,6 @@ def _max_p_base(controller: address) -> uint256:
 
 <details>
 <summary>`execute_callback`</summary>
-
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```py
@@ -536,10 +492,6 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
-
-
 </details>
 
     The function uses Vyper's built-in [`raw_call`](https://docs.vyperlang.org/en/stable/built-in-functions.html?highlight=raw_call#raw_call) function to call the desired method (in this case `callback_repay`) with the according `callback_bytes`.
@@ -547,7 +499,7 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 4. After executing the callback, the Controller checks and does a full repayment and closes the position when possible. Else, it does a partial repayment (deleverage).
 
 ### `callback_repay`
-:::description[`LlamaLendOdosLeverageZap.callback_repay(user: address, stablecoins: uint256, collateral: uint256, debt: uint256, callback_args: DynArray[uint256,10], callback_bytes: Bytes[10 **4] = b]
+::::description[`LlamaLendOdosLeverageZap.callback_repay(user: address, stablecoins: uint256, collateral: uint256, debt: uint256, callback_args: DynArray[uint256,10], callback_bytes: Bytes[10 **4] = b]
 
 
 :::guard[Guarded Method]
@@ -579,12 +531,7 @@ Emits: `Repay`
 | `callback_args`   | `DynArray[uint256, 10]` | Callback arguments. |
 | `callback_bytes`  | `Bytes[10**4] = b""`    | Callback bytes. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="llamalendodosleveragezap-vy" label="LlamaLendOdosLeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -664,33 +611,26 @@ def _approve(coin: address, spender: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ---
 
-## **Contract Info Methods**The contract has two public getters, one for the [Odos Router](https://docs.odos.xyz/build/quickstart/sor) contract and one for the two factory contracts for crvUSD and lending markets.
+## **Contract Info Methods**
+
+The contract has two public getters, one for the [Odos Router](https://docs.odos.xyz/build/quickstart/sor) contract and one for the two factory contracts for crvUSD and lending markets.
 
 ### `ROUTER`
-:::description[`LlamaLendOdosLeverageZap.ROUTER() -> address: view`]
+::::description[`LlamaLendOdosLeverageZap.ROUTER() -> address: view`]
 
 
 Getter method for the [Odos Router](https://docs.odos.xyz/build/quickstart/sor) contract. This variable is immutable, set at initialization and can not be changed.
 
 Returns: Odos Router (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="llamalendodosleveragezap-vy" label="LlamaLendOdosLeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -703,14 +643,9 @@ def __init__(_router: address, _factories: DynArray[address, 2]):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the contract address of the Odos Router.
@@ -721,14 +656,13 @@ This example returns the contract address of the Odos Router.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `FACTORIES`
-:::description[`LlamaLendOdosLeverageZap.FACTORIES(arg0: uint256) -> address: view`]
+::::description[`LlamaLendOdosLeverageZap.FACTORIES(arg0: uint256) -> address: view`]
 
 
 Getter method for the `Factory` contract at index `arg0`. 
@@ -739,12 +673,7 @@ Returns: Factory contract (`address`).
 | ------ | --------- | -------------------- |
 | `arg0` | `uint256` | Index of the Factory contract to use. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="llamalendodosleveragezap-vy" label="LlamaLendOdosLeverageZap.vy">
+<SourceCode>
 
 
 ```python
@@ -757,14 +686,9 @@ def __init__(_router: address, _factories: DynArray[address, 2]):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the contract address of the `Factory` contract at a specific index.
@@ -778,8 +702,7 @@ This example returns the contract address of the `Factory` contract at a specifi
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,6 +1,5 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
+# Distributor
 
 Fees are distributed to veCRV holders through the FeeDistributor contract in the form of 3CRV tokens.
 
@@ -28,16 +27,17 @@ The available 3CRV balance to distribute is tracked via the “**token checkpoin
 ---
 
 
-## **Claiming Fees**### `token`
-:::description[`FeeDistributor.token() -> address: view`]
+## **Claiming Fees**
+
+### `token`
+::::description[`FeeDistributor.token() -> address: view`]
 
 
 Getter for the token address in which the fees are distributed.
 
 Returns: reward token (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -71,10 +71,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.token()
@@ -82,14 +81,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `claim`
-:::description[`FeeDistributor.claim(_addr: address = msg.sender) -> uint256:`]
+::::description[`FeeDistributor.claim(_addr: address = msg.sender) -> uint256:`]
 
 
 Functions to claim fees for an account.  
@@ -109,8 +107,7 @@ Every veCRV related action (locking, extending a lock, increasing the locktime) 
 | ------- | ------- | ----|
 | `_addr` |  `address` | Addresses to claim for. Defaults to `msg.sender`. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -224,24 +221,12 @@ def _claim(addr: address, ve: address, _last_token_time: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `claim_many`
-:::description[`FeeDistributor.claim_many(_receivers: address[20]) -> bool:`]
+::::description[`FeeDistributor.claim_many(_receivers: address[20]) -> bool:`]
 
 
 Function to perform multiple claims in a single call. This is useful to claim for multiple accounts at once, or for making many claims against the same account if that account has performed more than 50 veCRV related actions.
@@ -252,8 +237,7 @@ Returns: true (`boolean`).
 | ------- | ------- | ----|
 | `_addr` |  `address[20]` | List of addresses to claim for. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -375,10 +359,9 @@ def _claim(addr: address, ve: address, _last_token_time: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.claim_many()
@@ -386,22 +369,20 @@ def _claim(addr: address, ve: address, _last_token_time: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `can_checkpoint_token`
-:::description[`FeeDistributor.can_checkpoint_token() -> bool: view`]
+::::description[`FeeDistributor.can_checkpoint_token() -> bool: view`]
 
 
 Getter to check if tokens can be checkpointed.
 
 Returns: true or flase (`bool`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -409,10 +390,9 @@ can_checkpoint_token: public(bool)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.can_checkpoint_token()
@@ -420,20 +400,18 @@ can_checkpoint_token: public(bool)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `checkpoint_token`
-:::description[`FeeDistributor.checkpoint_token()`]
+::::description[`FeeDistributor.checkpoint_token()`]
 
 
 Function to update the token checkpoint. The token checkpoint tracks the balance of 3CRV within the distributor to determine the amount of fees to distribute in the given week. The checkpoint can be updated at most once every 24 hours. Fees that are received between the last checkpoint of the previous week and first checkpoint of the new week will be split evenly between the weeks. To ensure full distribution of fees in the current week, the burn process must be completed prior to the last checkpoint within the week. A token checkpoint is automatically taken during any `claim` action, if the last checkpoint is more than 24 hours old. 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -488,24 +466,12 @@ def _checkpoint_token():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `toggle_allow_checkpoint_token`
-:::description[`FeeDistributor.toggle_allow_checkpoint_token():`]
+::::description[`FeeDistributor.toggle_allow_checkpoint_token():`]
 
 
 :::guard[Guarded Method]
@@ -517,8 +483,7 @@ This function is only callable by the `admin` of the contract.
 
 Funtion to toggle permission for checkpointing by an account.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -537,10 +502,9 @@ def toggle_allow_checkpoint_token():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.toggle_allow_checkpoint_token()
@@ -548,22 +512,20 @@ def toggle_allow_checkpoint_token():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `checkpoint_total_supply`
-:::description[`FeeDistributor.checkpoint_total_supply()`]
+::::description[`FeeDistributor.checkpoint_total_supply()`]
 
 
 Function to perform multiple claims in a single call. This is useful to claim for multiple accounts at once, or for making many claims against the same account if that account has performed more than 50 veCRV related actions.
 
 Returns: true (`boolean`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -602,24 +564,12 @@ def _checkpoint_total_supply():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `burn`
-:::description[`FeeDistributor.burn(_coin: address) -> bool:`]
+::::description[`FeeDistributor.burn(_coin: address) -> bool:`]
 
 
 Function to receive 3CRV or crvUSD into the contract and trigger a token checkpoint.
@@ -628,8 +578,7 @@ Function to receive 3CRV or crvUSD into the contract and trigger a token checkpo
 | ------- | -------| ----|
 | `_coin` |  `address` | Address of the coin being received. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -653,38 +602,27 @@ def burn(_coin: address) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
 
-## **Killing The FeeDistributor**The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and block the ability to claim or burn. The contract can not be unkilled. 
+## **Killing The FeeDistributor**
+
+The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and block the ability to claim or burn. The contract can not be unkilled. 
 
 
 ### `is_killed`
-:::description[`FeeDistributor.is_killed() -> bool: view`]
+::::description[`FeeDistributor.is_killed() -> bool: view`]
 
 
 Getter method to check if the `FeeDistributor` contract is killed. When killed, the contract blocks `claim` and `burn` and the entire token balance is transfered to the `emergency_return` address.
 
 Returns: true or flase (`bool`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -692,10 +630,9 @@ is_killed: public(bool)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.is_killed()
@@ -703,14 +640,13 @@ is_killed: public(bool)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `kill_me`
-:::description[`FeeDistributor.kill_me()`]
+::::description[`FeeDistributor.kill_me()`]
 
 
 :::danger
@@ -729,8 +665,7 @@ This function is only callable by the `admin` of the contract.
 
 Function to kill the `FeeDistributor` contract.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -752,32 +687,29 @@ def kill_me():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.kill_me()
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `emergency_return`
-:::description[`FeeDistributor.emergency_return() -> address: view`]
+::::description[`FeeDistributor.emergency_return() -> address: view`]
 
 
 Getter for the emergency return address. This address can not be changed.
 
 Returns: emergency return (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -785,10 +717,9 @@ emergency_return: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 Due to the fact that the emergency return address can not be changed and Curve used a ownership agent back then when the distributor contract for 3CRV was deployed, this one was set as the emergency return address.
@@ -804,14 +735,13 @@ The second fee distributor contract (crvUSD) uses a 5 of 9 multisig, which repla
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `recover_balance`
-:::description[`FeeDistributor.recover_balance(_coin: address) -> bool:`]
+::::description[`FeeDistributor.recover_balance(_coin: address) -> bool:`]
 
 
 Function to recover ERC20 tokens from the contract. Tokens are sent to the emergency return address. This function only works for tokens other than the address set for `token`. E.g. this function on the 3CRV distributor contract can not be called to transfer 3CRV. The same applied to crvUSD distributor.
@@ -822,8 +752,7 @@ Returns: true (`bool`).
 | ----------- | -------| ----|
 | `_coin` |  `address` | Coin Address to recover |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -855,35 +784,24 @@ def recover_balance(_coin: address) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
 
-## **Admin Ownership**### `admin`
-:::description[`FeeDistributor.admin() -> address: view`]
+## **Admin Ownership**
+
+### `admin`
+::::description[`FeeDistributor.admin() -> address: view`]
 
 
 Getter for the admin of the contract.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -891,10 +809,9 @@ admin: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.admin()
@@ -902,22 +819,20 @@ admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_admin`
-:::description[`FeeDistributor.future_admin() -> address: view`]
+::::description[`FeeDistributor.future_admin() -> address: view`]
 
 
 Getter for the future admin of the contract.
 
 Returns: future admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -925,10 +840,9 @@ future_admin: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.future_admin()
@@ -936,14 +850,13 @@ future_admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `commit_admin`
-:::description[`FeeDistributor.commit_admin(_addr: address):`]
+::::description[`FeeDistributor.commit_admin(_addr: address):`]
 
 
 :::guard[Guarded Method]
@@ -959,8 +872,7 @@ Function to commit transfer of the ownership.
 | ----------- | -------| ---- |
 | `_addr` |  `address` | Address to commit the ownership transfer to. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -982,24 +894,12 @@ def commit_admin(_addr: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `apply_admin`
-:::description[`FeeDistributor.apply_admin():`]
+::::description[`FeeDistributor.apply_admin():`]
 
 
 :::guard[Guarded Method]
@@ -1015,8 +915,7 @@ Function to apply the transfer of the ownership.
 | ----------- | -------| ----|
 | `_addr` |  `address` | Address to transfer ownership to |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1039,27 +938,17 @@ def apply_admin():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
 
-## **Query Contract Informations**### `ve_for_at`
-:::description[`FeeDistributor.ve_for_at(_user: address, _timestamp: uint256) -> uint256:`]
+## **Query Contract Informations**
+
+### `ve_for_at`
+::::description[`FeeDistributor.ve_for_at(_user: address, _timestamp: uint256) -> uint256:`]
 
 
 Getter for the veCRV balance for `_user` at `_timestamp`.
@@ -1071,8 +960,7 @@ Returns: veCRV balance (`uint256`).
 | `_user` |  `address` | Address to query the veCRV balance for. |
 | `_timestamp` |  `uint256` | Timestamp. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1093,10 +981,9 @@ def ve_for_at(_user: address, _timestamp: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.ve_for_at("0x989AEb4d175e16225E39E87d0D97A3360524AD80", 1685972555)
@@ -1104,22 +991,20 @@ def ve_for_at(_user: address, _timestamp: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `start_time`
-:::description[`FeeDistributor.start_time() -> uint256: view`]
+::::description[`FeeDistributor.start_time() -> uint256: view`]
 
 
 Getter for the epoch time for fee distribution to start.
 
 Returns: epoch time (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1153,10 +1038,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.start_time()
@@ -1164,14 +1048,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `user_epoch_of`
-:::description[`FeeDistributor.user_epoch_of(arg0: address) -> uint256: view`]
+::::description[`FeeDistributor.user_epoch_of(arg0: address) -> uint256: view`]
 
 
 Getter for the user epoch of `arg0`.
@@ -1180,8 +1063,7 @@ Getter for the user epoch of `arg0`.
 | ----------- | -------| ----|
 | `arg0` |  `address` | Address to get the user epoch for. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1189,10 +1071,9 @@ user_epoch_of: public(HashMap[address, uint256])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.user_epoch_of("0x989AEb4d175e16225E39E87d0D97A3360524AD80")
@@ -1200,22 +1081,20 @@ user_epoch_of: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `voting_escrow`
-:::description[`FeeDistributor.voting_escrow() -> address: view`]
+::::description[`FeeDistributor.voting_escrow() -> address: view`]
 
 
 Getter for the voting escrow contract.
 
 Returns: voting-escrow (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1249,10 +1128,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.voting_escrow()
@@ -1260,22 +1138,20 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `token_last_balance`
-:::description[`FeeDistributor.token_last_balance() -> uint256: view`]
+::::description[`FeeDistributor.token_last_balance() -> uint256: view`]
 
 
 Getter for the token balance of `token`.
 
 Returns: last token balance (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1283,18 +1159,16 @@ token_last_balance: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeDistributor.token_last_balance()
 4576710126386983907488318
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,12 +1,9 @@
 # LeverageZap1inch.vy
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 This Zap contract is specifically designed to **create or repay leveraged loans**using the [**1inch router**](https://1inch.io/aggregation-protocol/).
 
-<details open>
-<summary>`LeverageZap1inch.vy`</summary>
+:::vyper[`LeverageZap1inch.vy`]
 
 The source code for the `LeverageZap1inch.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/zaps/LeverageZap1inch.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
@@ -14,8 +11,7 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0x3294514B78Df4Bb9013
 
 An accompanying JavaScript library for Curve Lending can be found here: [ GitHub](https://github.com/curvefi/curve-lending-js).
 
-
-</details>
+:::
 
 Previously, building leverage for crvUSD markets relied solely on predefined routes using only Curve pools. Leveraging large positions often led to significant price impact due to the exclusive use of Curve liquidity pools. This new Zap contract allows users to leverage loans for crvUSD and lending markets using the 1inch router, which considers liquidity sources across DeFi.[^1]
 
@@ -35,9 +31,6 @@ Leverage is built using a **callback method**. The function to execute callbacks
 
 
 :::
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```py
@@ -84,15 +77,11 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
-
-
 </details>
 
 :::info[Required Changes to `Controller.vy`]
 
-This zap only works for crvUSD and lending markets which were deployed using the blueprint implementation at [`0x4c5d4F542765B66154B2E789abd8E69ed4504112`](https://etherscan.io/address/0x4c5d4F542765B66154B2E789abd8E69ed4504112). Markets deployed prior to that can only make use of the regular [`LeverageZap.vy`](./LeverageZap.md).
+This zap only works for crvUSD and lending markets which were deployed using the blueprint implementation at [`0x4c5d4F542765B66154B2E789abd8E69ed4504112`](https://etherscan.io/address/0x4c5d4F542765B66154B2E789abd8E69ed4504112). Markets deployed prior to that can only make use of the regular [`LeverageZap.vy`](./leverage-zap.md).
 
 To enable the functionality of such Zap contracts, minor modifications were necessary in the `Controller.vy` contract. Functions such as `create_loan_extended`, `borrow_more_extended`, `repay_extended`, `_liquidity`, and `liquidate_extended` were enhanced with an additional constructor argument `callback_bytes: Bytes[10**4]`. This allows users to pass bytes to the Zap contract. Additionally, the internal `execute_callback` function, which manages the callbacks, was also updated.
 
@@ -102,7 +91,9 @@ To enable the functionality of such Zap contracts, minor modifications were nece
 ---
 
 
-## **Building Leverage**To build up leverage, the `LeverageZap1inch.vy` contract uses the `callback_deposit` function. Additionally, there is a `max_borrowable` function that calculates the maximum borrowable amount when using leverage. For an accompanying JavaScript library, see [ GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
+## **Building Leverage**
+
+To build up leverage, the `LeverageZap1inch.vy` contract uses the `callback_deposit` function. Additionally, there is a `max_borrowable` function that calculates the maximum borrowable amount when using leverage. For an accompanying JavaScript library, see [ GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
 
 
 *Flow of building leverage:*
@@ -113,10 +104,6 @@ To enable the functionality of such Zap contracts, minor modifications were nece
 
 <details>
 <summary>`execute_callback`</summary>
-
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```py
@@ -163,10 +150,6 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
-
-
 </details>
 
     The function uses Vyper's built-in [`raw_call`](https://docs.vyperlang.org/en/stable/built-in-functions.html?highlight=raw_call#raw_call) function to call the desired method (in this case `callback_deposit`) with the according `callback_bytes`.
@@ -178,7 +161,7 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 
 
 ### `callback_deposit`
-:::description[`LeverageZap1inch.callback_deposit(user: address, stablecoins: uint256, user_collateral: uint256, d_debt: uint256, callback_args: DynArray[uint256, 10], callback_bytes: Bytes[10**4] = b]
+::::description[`LeverageZap1inch.callback_deposit(user: address, stablecoins: uint256, user_collateral: uint256, d_debt: uint256, callback_args: DynArray[uint256, 10], callback_bytes: Bytes[10**4] = b]
 
 
 :::guard[Guarded Method]
@@ -209,12 +192,7 @@ Emits: `Deposit`
 | `callback_args`   | `DynArray[uint256, 10]` | Callback arguments. |
 | `callback_bytes`  | `Bytes[10**4] = b""`    | Callback bytes. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap1inch-vy" label="LeverageZap1inch.vy">
+<SourceCode>
 
 
 ```python
@@ -271,13 +249,6 @@ def _transferFrom(token: address, _from: address, _to: address, amount: uint256)
     if amount > 0:
         assert ERC20(token).transferFrom(_from, _to, amount, default_return_value=True)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```python
@@ -339,28 +310,22 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `max_borrowable`
-:::description[`LeverageZap1inch.max_borrowable(controller: address, _user_collateral: uint256, _leverage_collateral: uint256, N: uint256, p_avg: uint256) -> uint256`]
+::::description[`LeverageZap1inch.max_borrowable(controller: address, _user_collateral: uint256, _leverage_collateral: uint256, N: uint256, p_avg: uint256) -> uint256`]
 
 
 Function to calculate the maximum borrowable using leverage. The maximum borrowable amount essentially comes down to:
@@ -380,12 +345,7 @@ Returns: maximum amount to borrow (`uint256`). The maximum value to return is ei
 | `p_avg`                | `uint256` | Average price of the collateral. | 
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap1inch-vy" label="LeverageZap1inch.vy">
+<SourceCode>
 
 
 ```python
@@ -478,30 +438,26 @@ def _max_p_base(controller: address) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Unwinding Leverage**To deleverage loans, the `LeverageZap1inch.vy` contract uses the `callback_repay` function.
+## **Unwinding Leverage**
+
+To deleverage loans, the `LeverageZap1inch.vy` contract uses the `callback_repay` function.
 
 For an accompanying JavaScript library, see [ GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
 
@@ -513,10 +469,6 @@ For an accompanying JavaScript library, see [ GitHub](https://github.com/curvefi
 
 <details>
 <summary>`execute_callback`</summary>
-
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```py
@@ -563,10 +515,6 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
-
-
 </details>
 
     The function uses Vyper's built-in [`raw_call`](https://docs.vyperlang.org/en/stable/built-in-functions.html?highlight=raw_call#raw_call) function to call the desired method (in this case `callback_repay`) with the according `callback_bytes`.
@@ -575,7 +523,7 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 
 
 ### `callback_repay`
-:::description[`LeverageZap1inch.callback_repay(user: address, stablecoins: uint256, collateral: uint256, debt: uint256, callback_args: DynArray[uint256,10], callback_bytes: Bytes[10 **4] = b]
+::::description[`LeverageZap1inch.callback_repay(user: address, stablecoins: uint256, collateral: uint256, debt: uint256, callback_args: DynArray[uint256,10], callback_bytes: Bytes[10 **4] = b]
 
 
 :::guard[Guarded Method]
@@ -607,12 +555,7 @@ Emits: `Repay`
 | `callback_args`   | `DynArray[uint256, 10]` | Callback arguments. |
 | `callback_bytes`  | `Bytes[10**4] = b""`    | Callback bytes. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap1inch-vy" label="LeverageZap1inch.vy">
+<SourceCode>
 
 
 ```python
@@ -691,45 +634,36 @@ def _transferFrom(token: address, _from: address, _to: address, amount: uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Contract Info Methods**The contract has two public getters, one for the 1inch router contract and one for the two factory contracts for crvUSD and lending markets.
+## **Contract Info Methods**
+
+The contract has two public getters, one for the 1inch router contract and one for the two factory contracts for crvUSD and lending markets.
 
 ### `ROUTER_1INCH`
-:::description[`LeverageZap1inch.ROUTER_1INCH() -> address: view`]
+::::description[`LeverageZap1inch.ROUTER_1INCH() -> address: view`]
 
 
 Getter method for the 1inch router contract. This variable is immutable and can not be changed.
 
 Returns: 1inch router (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap1inch-vy" label="LeverageZap1inch.vy">
+<SourceCode>
 
 
 ```python
@@ -742,14 +676,9 @@ def __init__(_router_1inch: address, _factories: DynArray[address, 2]):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LeverageZap1inch.ROUTER_1INCH()
@@ -757,14 +686,13 @@ def __init__(_router_1inch: address, _factories: DynArray[address, 2]):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `FACTORIES`
-:::description[`LeverageZap1inch.FACTORIES(arg0: uint256) -> address: view`]
+::::description[`LeverageZap1inch.FACTORIES(arg0: uint256) -> address: view`]
 
 
 Getter method for the factory contract at index `arg0`. 
@@ -775,12 +703,7 @@ Returns: Factory contract (`address`).
 | ------ | --------- | -------------------- |
 | `arg0` | `uint256` | Index of the Factory contract to use. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="leveragezap1inch-vy" label="LeverageZap1inch.vy">
+<SourceCode>
 
 
 ```python
@@ -793,14 +716,9 @@ def __init__(_router_1inch: address, _factories: DynArray[address, 2]):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LeverageZap1inch.FACTORIES(0)
@@ -811,8 +729,7 @@ def __init__(_router_1inch: address, _factories: DynArray[address, 2]):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

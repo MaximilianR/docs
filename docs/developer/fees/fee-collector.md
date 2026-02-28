@@ -1,23 +1,19 @@
 # FeeCollector
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 
 The `FeeCollector` serves as an entry point for the fee burning and distribution mechanism, acting as a universal contract that collects all admin fees from various revenue sources within the Curve ecosystem. 
 
-<details open>
-<summary>`FeeCollector.vy`</summary>
+:::vyper[`FeeCollector.vy`]
 
 The source code for the `FeeCollector.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-burners/blob/main/contracts/FeeCollector.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 This version of `FeeCollector` is only deployed on the following chains, as CowSwap is only deployed on these chains:
 
-- :logos-ethereum: Ethereum at [`0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00`](https://etherscan.io/address/0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00) 
+- :logos-ethereum: Ethereum at [`0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00`](https://etherscan.io/address/0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00)
 - :logos-gnosis: Gnosis at [`0xBb7404F9965487a9DdE721B3A5F0F3CcfA9aa4C5`](https://gnosisscan.io/address/0xBb7404F9965487a9DdE721B3A5F0F3CcfA9aa4C5)
 
-
-</details>
+:::
 
 This new architecture simplifies the collection of fees and the burning of these fees into a designated fee token. The `FeeCollector` introduces a [`target`](#target) variable that represents the token into which all collected fees are burned. This variable can be changed to any token, but such a change requires a successfully passed on-chain vote, as the contract is fully controlled by the Curve DAO.
 
@@ -33,7 +29,9 @@ If you are running or planning to run fee collection for Curve DAO, there is a T
 ---
 
 
-## **Epochs**The contract operates in different [epochs](#epochs) (phases) in which certain actions are possible.
+## **Epochs**
+
+The contract operates in different [epochs](#epochs) (phases) in which certain actions are possible.
 
 The `epoch` function and its related internal functions are used to determine the current operational phase of the contract based on the timestamp. The contract operates in different phases (epochs) that dictate what actions can be performed at any given time. This helps in organizing the contract's workflow and ensuring that certain operations only occur during specific periods.
 
@@ -77,7 +75,7 @@ Epoch start is not on Monday. The first fee distribution started on `Thu Sep 17 
 :::
 
 ### `epoch`
-:::description[`FeeCollector.epoch(ts: uint256=block.timestamp) -> Epoch`]
+::::description[`FeeCollector.epoch(ts: uint256=block.timestamp) -> Epoch`]
 
 
 Getter for the current epoch based on a given timestamp.
@@ -88,12 +86,9 @@ Returns: current epoch value which corresponds to the `Epoch enum `(`uint256`).
 | ----- | --------- | ----------------------------------- |
 | `ts`  | `uint256` | Timestamp; defaults to `msg.sender` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -124,27 +119,23 @@ def _epoch_ts(ts: uint256) -> Epoch:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `epoch_time_frame`
-:::description[`FeeCollector.epoch_time_frame(_epoch: Epoch, _ts: uint256=block.timestamp) -> (uint256, uint256)`]
+::::description[`FeeCollector.epoch_time_frame(_epoch: Epoch, _ts: uint256=block.timestamp) -> (uint256, uint256)`]
 
 
 Getter for the time frame for a specific epoch and timestamp.
@@ -156,12 +147,9 @@ Returns: start and end of the epoch (`uint256`).
 | `_epoch` | `uint256` | Index of the Epoch enum for which to check start and end for            |
 | `_ts`    | `uint256` | Timestamp to anochr to. Defaults to the current one (`block.timestamp`) |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -187,33 +175,31 @@ def _epoch_time_frame(epoch: Epoch, ts: uint256) -> (uint256, uint256):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Keeper's Fee**The `FeeCollector` contract has a keeper's fee, which incentivizes external users or bots to perform specific actions at the appropriate times within the different epochs. The fee mechanism ensures that these operations are carried out reliably and efficiently by rewarding the entities that execute them.
+## **Keeper's Fee**
+
+The `FeeCollector` contract has a keeper's fee, which incentivizes external users or bots to perform specific actions at the appropriate times within the different epochs. The fee mechanism ensures that these operations are carried out reliably and efficiently by rewarding the entities that execute them.
 
 
 ### `fee`
-:::description[`FeeCollector.fee(_epoch: Epoch=empty(Epoch), _ts: uint256=block.timestamp) -> uint256`]
+::::description[`FeeCollector.fee(_epoch: Epoch=empty(Epoch), _ts: uint256=block.timestamp) -> uint256`]
 
 
 Getter for the caller fee based on an epoch and timestamp. If no input is given, it returns the caller fee of the current epoch. The fee is dependent on the current epoch. The `fee` (except the one for the `forward` function) is optional and up to the burner implementation. The value starts at `0` and continuously increases to `max_fee` (`1%`), but burner contracts *can* have their own fee values. The reason for this is that it makes sense to pay the fee in the `target` token instead of many different coins, but the current CoWSwap architecture makes this very complicated to do.
@@ -225,12 +211,9 @@ Returns: fee of the epoch (`uint256`).
 | `_epoch` | `uint256` | Index of the epoch; defaults to the current epoch |
 | `_ts`    | `uint256` | Timestamp; defaults to `block.timestamp`          |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -268,27 +251,23 @@ def _epoch_ts(ts: uint256) -> Epoch:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `max_fee`
-:::description[`FeeCollector.max_fee(arg0: uint256) -> uint256: view`]
+::::description[`FeeCollector.max_fee(arg0: uint256) -> uint256: view`]
 
 
 Getter for the maximum fee of an epoch. Maximum fee is set to 1% for the `COLLECT` and `FORWARD` epochs. This value can be changed by the `owner` of the contract using the [`set_max_fee`](#set_max_fee) function.
@@ -301,12 +280,9 @@ Emits: `SetMaxFee` at contract initialization
 | -------- | --------- | ---------------------------------------------- |
 | `_epoch` | `uint256` | Epoch enum for which to check the maximum fee. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -341,27 +317,23 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_max_fee`
-:::description[`FeeCollector.set_max_fee(_epoch: uin256, _max_fee: uint256)`]
+::::description[`FeeCollector.set_max_fee(_epoch: uin256, _max_fee: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -380,12 +352,9 @@ Emits: `SetMaxFee`
 | `_epoch`   | `uint256` | Index of the Epoch enum for which to set the maximum fee |
 | `_max_fee` | `uint256` | Maximum fee                                              |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -411,14 +380,11 @@ def set_max_fee(_epoch: Epoch, _max_fee: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the maximum fee for the `COLLECT` epoch to `0.05`.
@@ -428,16 +394,17 @@ This example sets the maximum fee for the `COLLECT` epoch to `0.05`.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Burn Process**The `FeeCollector` contract has a [`target`](#target) variable, which represents the coin into which all the collected fees are "burned" into. This variable can be changed by the [`owner`](#owner) of the contract using the [`set_target`](#set_target) function. As the owner of the contract is the Curve DAO, a on-chain proposal needs to be successfully passed to make any changes.
+## **Burn Process**
+
+The `FeeCollector` contract has a [`target`](#target) variable, which represents the coin into which all the collected fees are "burned" into. This variable can be changed by the [`owner`](#owner) of the contract using the [`set_target`](#set_target) function. As the owner of the contract is the Curve DAO, a on-chain proposal needs to be successfully passed to make any changes.
 
 *The general flow of the fee burning process is the following:*
 
@@ -447,7 +414,7 @@ This example sets the maximum fee for the `COLLECT` epoch to `0.05`.
 
 
 ### `target`
-:::description[`FeeCollector.target() -> address: view`]
+::::description[`FeeCollector.target() -> address: view`]
 
 
 Getter for the target coin to which the fees are converted to. This is essentially the reward token that is being distributed to veCRV holders.
@@ -456,12 +423,9 @@ Returns: target coin (`address`).
 
 Emits: `SetTarget` at contract initialization
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -486,27 +450,23 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_target`
-:::description[`FeeCollector.set_target(_new_target: ERC20)`]
+::::description[`FeeCollector.set_target(_new_target: ERC20)`]
 
 
 :::guard[Guarded Method]
@@ -524,12 +484,9 @@ Emits: `SetTarget`
 | ------------- | --------- | ------------------------------------ |
 | `_new_target` | `address` | Token address of the new target coin |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -558,14 +515,11 @@ def set_target(_new_target: ERC20):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the `target` coin to `0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2`.
@@ -581,14 +535,13 @@ This example sets the `target` coin to `0xc02aaa39b223fe8d0a0e5c4f27ead9083c756c
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `withdraw_many`
-:::description[`FeeCollector.withdraw_many(_pools: DynArray[address, MAX_LEN])`]
+::::description[`FeeCollector.withdraw_many(_pools: DynArray[address, MAX_LEN])`]
 
 
 :::guard[Guarded]
@@ -604,12 +557,9 @@ Function to withdraw admin fees from multiple Curve pools. Maximum amount of poo
 | -------- | ---------------------------- | ------------------------------------------------------------------------ |
 | `_pools` | `DynArray[address, MAX_LEN]` | Dynamic array containing the pool addresses to claim the admin fees from |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -629,14 +579,11 @@ def withdraw_many(_pools: DynArray[address, MAX_LEN]):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -644,14 +591,13 @@ def withdraw_many(_pools: DynArray[address, MAX_LEN]):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `collect` 
-:::description[`FeeCollector.collect(_coins: DynArray[ERC20, MAX_LEN], _receiver: address=msg.sender)`]
+::::description[`FeeCollector.collect(_coins: DynArray[ERC20, MAX_LEN], _receiver: address=msg.sender)`]
 
 
 Function that is the primary mechanism for burning coins and can only be called during the `COLLECT` epoch. It calls the `burn` function of the burner contract, which creates a [conditional order](https://github.com/cowprotocol/composable-cow) on CowSwap if one has not already been created. This process effectively "burns" the collected coins by swapping them into the target coin. Additionally, the caller is awarded a [keeper fee](#keepers-fee) for their role in the process.
@@ -670,12 +616,9 @@ A Google Colab notebook that converts addresses into `uint160` and orders them b
 | `_coins`    | `DynArray[ERC20, MAX_LEN]` | Dynamic array of coin addresses sorted in ascending order  |
 | `_receiver` | `address`                  | Receiver of keeper fee                                     |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -702,11 +645,7 @@ def collect(_coins: DynArray[ERC20, MAX_LEN], _receiver: address=msg.sender):
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -767,14 +706,11 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -782,14 +718,13 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `can_exchange`
-:::description[`FeeCollector.can_exchange(_coins: DynArray[ERC20, MAX_LEN]) -> bool`]
+::::description[`FeeCollector.can_exchange(_coins: DynArray[ERC20, MAX_LEN]) -> bool`]
 
 
 Function to check whether specified coins are allowed to be exchanged at the current timestamp. It verifies that the current epoch is `EXCHANGE` and that the coins to be exchanged are not marked as killed.
@@ -800,12 +735,9 @@ Returns: true or false (`bool`).
 | -------------- | -------------------------- | ------------------------------------------------------------------------ |
 | `can_exchange` | `DynArray[ERC20, MAX_LEN]` | Dynamic array of ERC20 token addresses to check for exchange eligibility |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -829,27 +761,23 @@ def can_exchange(_coins: DynArray[ERC20, MAX_LEN]) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `transfer`
-:::description[`FeeCollector.transfer(_transfers: DynArray[Transfer, MAX_LEN])`]
+::::description[`FeeCollector.transfer(_transfers: DynArray[Transfer, MAX_LEN])`]
 
 
 :::guard[Guarded Method]
@@ -872,12 +800,9 @@ Function to transfer coins. This function can only be called during the `COLLECT
 - `amount`: `uint256` - The amount of tokens to transfer. If set to 2^256-1, it transfers the entire balance.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -909,11 +834,7 @@ def transfer(_transfers: DynArray[Transfer, MAX_LEN]):
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -957,28 +878,24 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeCollector.transfer([Transfer({coin: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", to: "0x090D543868463090389830384630903846309038", amount: 1000000000000000000})])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `forward`
-:::description[`FeeCollector.forward(_hook_inputs: DynArray[HookInput, MAX_HOOK_LEN], _receiver: address=msg.sender) -> uint256`]
+::::description[`FeeCollector.forward(_hook_inputs: DynArray[HookInput, MAX_HOOK_LEN], _receiver: address=msg.sender) -> uint256`]
 
 
 Function to transfer the target coin to the hooker address. This function can only be called during the `FORWARD` epoch. It charges a keeper fee on the entire balance of the forwarded coins and awards it to the caller. The function also calls the `push_target` function of the burner contract to transfer any remaining target coins back into the `FeeCollector` contract before forwarding the total balance to the hooker. Additionally, the function calls the `duty_act` method of the hooker contract, applying any specified hooks and adjusting the fee accordingly.
@@ -997,12 +914,9 @@ Returns: received keeper fee (`uint256`)
 - `data`: `Bytes[8192]` - Additional data required by the hook, encoded as bytes. This can include various parameters or instructions specific to the hook's functionality.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1046,11 +960,7 @@ def forward(_hook_inputs: DynArray[HookInput, MAX_HOOK_LEN], _receiver: address=
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="cowswapburner-vy" label="CowSwapBurner.vy">
 
 
 ```vyper
@@ -1068,11 +978,7 @@ def push_target() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
 
-<Tabs>
-<TabItem value="hooker-vy" label="Hooker.vy">
 
 
 ```vyper
@@ -1140,14 +1046,11 @@ def _act(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _receiver: address) -
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1155,14 +1058,13 @@ def _act(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _receiver: address) -
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `burn`
-:::description[`FeeCollector.burn(_coin: address)`]
+::::description[`FeeCollector.burn(_coin: address)`]
 
 
 :::guard[Guarded Method]
@@ -1178,12 +1080,9 @@ Function to transfer coins from the contract with approval. This function is nee
 | ------- | --------- | ------------------------------------ |
 | `_coin` | `address` | Token address of the new target coin |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1205,28 +1104,24 @@ def burn(_coin: address) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeCollector.burn("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `recover`
-:::description[`FeeCollector.recover(_recovers: DynArray[RecoverInput, MAX_LEN], _receiver: address):`]
+::::description[`FeeCollector.recover(_recovers: DynArray[RecoverInput, MAX_LEN], _receiver: address):`]
 
 
 :::guard[Guarded Method]
@@ -1249,12 +1144,9 @@ Function to recover ERC20 tokens or ETH from the contract by transferring them t
 - `amount`: `uint256` - The amount of the token to recover. Use `2^256-1` to recover the entire balance.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1285,48 +1177,43 @@ def recover(_recovers: DynArray[RecoverInput, MAX_LEN], _receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> FeeCollector.recover([RecoverInput({coin: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", amount: 1000000000000000000})], "0x090D543868463090389830384630903846309038")
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Burner and Hooker Contracts**Burner contracts are used to convert collected coins into the target coins. Hooker contracts facilitate the execution of predefined actions (hooks) through the `Hooker` contract.
+## **Burner and Hooker Contracts**
+
+Burner contracts are used to convert collected coins into the target coins. Hooker contracts facilitate the execution of predefined actions (hooks) through the `Hooker` contract.
 
 When setting up a burner or hooker, they need to support a specific interface structure to comply with the functions used in the FeeCollector contract. Each `burner` and `hooker` contract must implement a `supportsInterface(_interface_id: bytes4)` method, which identifies the interface according to [ERC-165](https://eips.ethereum.org/EIPS/eip-165). This method ensures the contract is compatible with the FeeCollector.
 
 
 ### `burner`
-:::description[`FeeCollector.burner() -> address: view`]
+::::description[`FeeCollector.burner() -> address: view`]
 
 
 Getter for the burner contract. The burner can be set and changed via [`set_burner`](#set_burner).
 
 Returns: burner contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1350,39 +1237,32 @@ def set_burner(_new_burner: Burner):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `hooker`
-:::description[`FeeCollector.hooker() -> address: view`]
+::::description[`FeeCollector.hooker() -> address: view`]
 
 
 Getter for the hooker contract. The hooker can be set and changed via [`set_hooker`](#set_hooker).
 
 Returns: hooker contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1397,27 +1277,23 @@ hooker: public(Hooker)
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_burner`
-:::description[`FeeCollector.set_burner(_new_burner: Burner)`]
+::::description[`FeeCollector.set_burner(_new_burner: Burner)`]
 
 
 :::guard[Guarded Method]
@@ -1435,12 +1311,9 @@ Emits: `SetBurner`
 | ------------- | --------- | ---------------------------------- |
 | `_new_burner` | `address` | Contract address of the new burner |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1471,14 +1344,11 @@ def set_burner(_new_burner: Burner):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the `burner` contract to `0x0000000000000000000000000000000000000000`. 
@@ -1494,14 +1364,13 @@ This example sets the `burner` contract to `0x0000000000000000000000000000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_hooker`
-:::description[`FeeCollector.set_hooker(_new_hooker: Hooker)`]
+::::description[`FeeCollector.set_hooker(_new_hooker: Hooker)`]
 
 
 :::guard[Guarded Method]
@@ -1519,12 +1388,9 @@ Emits: `SetHooker`
 | ------------- | --------- | --------------------------------- |
 | `_new_hooker` | `address` | Address of hooker contract to set |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1558,14 +1424,11 @@ def set_hooker(_new_hooker: Hooker):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the `hooker` contract to `0x0000000000000000000000000000000000000000`. 
@@ -1581,16 +1444,17 @@ This example sets the `hooker` contract to `0x0000000000000000000000000000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Ownership and Killing Coins**The `FeeCollector` contract features a dual ownership structure, consisting of a regular `owner` and an `emergency_owner`.
+## **Ownership and Killing Coins**
+
+The `FeeCollector` contract features a dual ownership structure, consisting of a regular `owner` and an `emergency_owner`.
 
 The contract includes a mechanism to "kill" certain coins across specific epochs. When a coin is killed, certain functions related to that coin will no longer be callable. This capability is crucial for managing and mitigating risks associated with specific tokens.
 
@@ -1618,7 +1482,7 @@ The contract includes a mechanism to "kill" certain coins across specific epochs
 
 
 ### `is_killed`
-:::description[`FeeCollector.is_killed(arg0: address) -> uint256: view`]
+::::description[`FeeCollector.is_killed(arg0: address) -> uint256: view`]
 
 
 Function to check if a coin is killed for a certain epoch. Depending on the epoch the coin is killed for, the contract restricts function calls. For example, if a coin is killed for the `COLLECT` epoch, the `collect` function cannot be called for that coin.
@@ -1629,12 +1493,9 @@ Returns: sum of the epoch indices in the enum (`uint256`).
 | ------- | --------- | ------------------------------ |
 | `arg0`  | `address` | Address of the coin to check   |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1644,27 +1505,23 @@ struct KilledInput:
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_killed`
-:::description[`FeeCollector.set_killed(_input: DynArray[KilledInput, MAX_LEN])`]
+::::description[`FeeCollector.set_killed(_input: DynArray[KilledInput, MAX_LEN])`]
 
 
 :::guard[Guarded Method]
@@ -1688,12 +1545,9 @@ Emits: `SetKilled`
 - `killed`: `Epoch` - The sum of the epoch indices during which the coin is killed.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1722,14 +1576,11 @@ def set_killed(_input: DynArray[KilledInput, MAX_LEN]):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 The first example kills wETH for the `SLEEP` epoch. The second example kills wETH for the `COLLECT` and `EXCHANGE` epochs.
@@ -1743,14 +1594,13 @@ The first example kills wETH for the `SLEEP` epoch. The second example kills wET
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `owner`
-:::description[`FeeCollector.owner() -> address: view`]
+::::description[`FeeCollector.owner() -> address: view`]
 
 
 Getter for the current owner of the contract.
@@ -1759,12 +1609,9 @@ Returns: owner (`address`).
 
 Emits: `SetOwner` at contract initialization
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1790,27 +1637,23 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `emergency_owner`
-:::description[`FeeCollector.emergency_owner() -> address: view`]
+::::description[`FeeCollector.emergency_owner() -> address: view`]
 
 
 Getter for the current emergency owner of the contract.
@@ -1819,12 +1662,9 @@ Returns: emergency owner (`address`).
 
 Emits: `SetEmergencyOwner` at contract initialization
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```py
@@ -1850,27 +1690,23 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_owner`
-:::description[`FeeCollector.set_owner(_new_owner: address)`]
+::::description[`FeeCollector.set_owner(_new_owner: address)`]
 
 
 :::guard[Guarded Method]
@@ -1888,12 +1724,9 @@ Emits: `SetOwner`
 | ------------ | --------- | ------------------------ |
 | `_new_owner` | `address` | Address of the new owner |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1916,14 +1749,11 @@ def set_owner(_new_owner: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the `owner` of the contract to our overlord Vitalik Buterin (`0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`).
@@ -1939,14 +1769,13 @@ This example sets the `owner` of the contract to our overlord Vitalik Buterin (`
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_emergency_owner`
-:::description[`FeeCollector.set_emergency_owner(_new_owner: address)`]
+::::description[`FeeCollector.set_emergency_owner(_new_owner: address)`]
 
 
 :::guard[Guarded Method]
@@ -1964,12 +1793,9 @@ Emits: `SetEmergencyOwner`
 | ------------ | --------- | ---------------------------------- |
 | `_new_owner` | `address` | Address of the new emergency owner |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="feecollector-vy" label="FeeCollector.vy">
 
 
 ```vyper
@@ -1992,14 +1818,11 @@ def set_emergency_owner(_new_owner: address):
 ```
 
 
-</TabItem>
-</Tabs>
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the `emergency_owner` of the contract to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`.
@@ -2015,8 +1838,7 @@ This example sets the `emergency_owner` of the contract to `0xd8dA6BF26964aF9D7e
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
