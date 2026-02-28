@@ -160,6 +160,8 @@ event Transfer:
     _to: indexed(address)
     _value: uint256
 
+balanceOf: public(HashMap[address, uint256])
+
 @external
 def transfer(_to : address, _value : uint256) -> bool:
     """
@@ -225,6 +227,9 @@ event Transfer:
     _from: indexed(address)
     _to: indexed(address)
     _value: uint256
+
+balanceOf: public(HashMap[address, uint256])
+allowances: HashMap[address, HashMap[address, uint256]]
 
 @external
 def transferFrom(_from : address, _to : address, _value : uint256) -> bool:
@@ -345,6 +350,10 @@ event Transfer:
     _from: indexed(address)
     _to: indexed(address)
     _value: uint256
+
+minter: public(address)
+balanceOf: public(HashMap[address, uint256])
+total_supply: uint256
 
 @external
 def mint(_to: address, _value: uint256) -> bool:
@@ -486,6 +495,9 @@ event Transfer:
     _to: indexed(address)
     _value: uint256
 
+balanceOf: public(HashMap[address, uint256])
+total_supply: uint256
+
 @external
 def burn(_value: uint256) -> bool:
     """
@@ -572,10 +584,12 @@ def _update_mining_parameters():
 
 This example queries the current mining epoch.
 
-```shell
->>> CRV.mining_epoch()
-5
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function mining_epoch() view returns (int128)"]}
+  method="mining_epoch"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -616,10 +630,12 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 This example queries the start timestamp of the current mining epoch.
 
-```shell
->>> CRV.start_epoch_time()
-1691625600
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function start_epoch_time() view returns (uint256)"]}
+  method="start_epoch_time"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -634,11 +650,11 @@ Getter for the current inflation rate of the CRV token emission. The rate is den
 
 To calculate the CRV emission per day:
 
-- $\text{daily_emission} = \text{rate} * 86400$
+$$\text{daily\_emission} = \text{rate} \times 86400$$
 
-- $\text{weekly_emission} = \text{rate} * 86400 * 7$
+$$\text{weekly\_emission} = \text{rate} \times 86400 \times 7$$
 
-- $\text{yearly_emission} = \text{rate} * 86400 * 365$
+$$\text{yearly\_emission} = \text{rate} \times 86400 \times 365$$
 
 Returns: current inflation rate (`uint256`).
 
@@ -654,10 +670,12 @@ rate: public(uint256)
 
 This example queries the current CRV emission rate per second.
 
-```shell
->>> CRV.rate()
-6634505564648117039
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function rate() view returns (uint256)"]}
+  method="rate"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -1141,7 +1159,7 @@ This example tries to change the `minter` contract address of the token. Because
 ::::description[`CRV.available_supply() -> uint256`]
 
 
-Getter for the current number of CRV tokens - claimed of unclaimed - in existence.
+Getter for the current number of CRV tokens - claimed or unclaimed - in existence.
 
 Returns: currently existing tokens (`uint256`).
 
@@ -1168,10 +1186,12 @@ def available_supply() -> uint256:
 
 This example queries the current available supply of CRV tokens.
 
-```shell
->>> CRV.available_supply()
-2170703954890498893498803759
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function available_supply() view returns (uint256)"]}
+  method="available_supply"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -1189,6 +1209,8 @@ Returns: total supply (`uint256`).
 <SourceCode>
 
 ```vyper
+total_supply: uint256
+
 @external
 @view
 def totalSupply() -> uint256:
@@ -1204,10 +1226,12 @@ def totalSupply() -> uint256:
 
 This example queries the total supply of CRV tokens.
 
-```shell
->>> CRV.totalSupply()
-1963546752829609097498917498
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function totalSupply() view returns (uint256)"]}
+  method="totalSupply"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -1280,10 +1304,14 @@ balanceOf: public(HashMap[address, uint256])
 
 This example queries the CRV token balance of the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address.
 
-```shell
->>> CRV.balanceOf('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
-187920823398044802467986
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function balanceOf(address) view returns (uint256)"]}
+  method="balanceOf"
+  args={["0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"]}
+  labels={["address"]}
+  contractName="CRV"
+/>
 
 </Example>
 

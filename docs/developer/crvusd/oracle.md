@@ -58,7 +58,7 @@ $$\text\{last_tvl\}_i = \frac\{tvl_i * (10^\{18\} - \alpha) + \text\{last_tvl\}_
 $tvl_i = \text{TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]`  
 $TS_i = \text{total supply of i-th pool}$ in `TRICRYPTO[N_POOLS]`  
 $VP_i = \text{virtual price of i-th pool}$ in `TRICRYPTO[N_POOLS]` 
-$\text{last_tvl}_i = \text{smoothed TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]` 
+$\text{last\_tvl}_i = \text{smoothed TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]`
 
 
 ### `ema_tvl`

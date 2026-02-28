@@ -318,7 +318,7 @@ Function to calculate the maximum borrowable using leverage. The maximum borrowa
 
 $$\text\{max_borrowable\} = \frac\{\text\{collateral\}\}\{\frac\{1\}\{\text\{k_effective\} \times \text\{max_p_base\}\} - \frac\{1\}\{\text\{p_avg\}\}\}$$
 
-with $\text{k_effective}$ and $\text{max_p_base}$ being calculated with the internal `_get_k_effective` and `_max_p_base` methods. $\text{p_avg}$ is the average price of the collateral.
+with $\text{k\_effective}$ and $\text{max\_p\_base}$ being calculated with the internal `_get_k_effective` and `_max_p_base` methods. $\text{p\_avg}$ is the average price of the collateral.
 
 Returns: maximum amount to borrow (`uint256`). The maximum value to return is either the maximum a user can borrow and is ultimately limited by the amount of coins the Controller has.
 

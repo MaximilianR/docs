@@ -1004,8 +1004,8 @@ $$\text\{boost factor\} = \frac\{lim\}\{l \times 0.4\}$$
 | :---------------------: | -------------------------------------------- |
 | $l$                     | User LP tokens deposited into the gauge.[^1] |
 | $L$                     | Total LP tokens deposited into the gauge.    |
-| $\text{voting_balance}$ | Users veCRV balance.                         |
-| $\text{voting_total}$   | Total veCRV balance.                         |
+| $\text{voting\_balance}$ | Users veCRV balance.                         |
+| $\text{voting\_total}$   | Total veCRV balance.                         |
 
 
 [^1]: A user does not neccessarily need to deposit the LP into the gauge himself. Someone else can deposit for him or the "staked LP token" can be transfered to him.
