@@ -36,7 +36,7 @@ The oracle contracts are fully immutable. Once deployed, they cannot change any 
 <TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
 
-```python
+```vyper
 @external
 def __init__(
         pool: Pool,
@@ -79,7 +79,7 @@ def __init__(
 <TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
 
-```python
+```vyper
 @external
 def __init__(
         pool: Pool,
@@ -203,7 +203,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
 
-```python
+```vyper
 interface Pool:
     def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
 
@@ -268,7 +268,7 @@ def _pps() -> uint256:
 <TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
 
-```python
+```vyper
 interface Pool:
     def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
 
@@ -357,7 +357,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
 
-```python
+```vyper
 interface Pool:
     def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
 
@@ -423,7 +423,7 @@ def _pps_w() -> uint256:
 <TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
 
-```python
+```vyper
 interface Pool:
     def price_oracle(i: uint256 = 0) -> uint256: view  # Universal method!
 
@@ -514,7 +514,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
 
-```python
+```vyper
 VAULT: public(immutable(Vault))
 ```
 
@@ -526,7 +526,7 @@ VAULT: public(immutable(Vault))
 <TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAGG.vy">
 
 
-```python
+```vyper
 VAULT: public(immutable(Vault))
 ```
 
@@ -571,7 +571,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
 
-```python
+```vyper
 POOL: public(immutable(Pool))
 ```
 
@@ -583,7 +583,7 @@ POOL: public(immutable(Pool))
 <TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
 
-```python
+```vyper
 POOL: public(immutable(Pool))
 ```
 
@@ -628,7 +628,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
 
-```python
+```vyper
 BORROWED_IX: public(immutable(uint256))
 ```
 
@@ -640,7 +640,7 @@ BORROWED_IX: public(immutable(uint256))
 <TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
 
-```python
+```vyper
 BORROWED_IX: public(immutable(uint256))
 ```
 
@@ -687,7 +687,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
 
-```python
+```vyper
 COLLATERAL_IX: public(immutable(uint256))
 ```
 
@@ -699,7 +699,7 @@ COLLATERAL_IX: public(immutable(uint256))
 <TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
 
-```python
+```vyper
 COLLATERAL_IX: public(immutable(uint256))
 ```
 
@@ -746,7 +746,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
 
-```python
+```vyper
 N_COINS: public(immutable(uint256))
 ```
 
@@ -758,7 +758,7 @@ N_COINS: public(immutable(uint256))
 <TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
 
-```python
+```vyper
 N_COINS: public(immutable(uint256))
 ```
 
@@ -803,7 +803,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolvault-vy" label="CryptoFromPoolVault.vy">
 
 
-```python
+```vyper
 NO_ARGUMENT: public(immutable(bool))
 ```
 
@@ -855,7 +855,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolvaultwagg-vy" label="CryptoFromPoolVaultWAgg.vy">
 
 
-```python
+```vyper
 interface StableAggregator:
     def price() -> uint256: view
     def price_w() -> uint256: nonpayable

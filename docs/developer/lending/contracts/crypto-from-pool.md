@@ -31,7 +31,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="crpyotfrompool-vy" label="CrpyotFromPool.vy">
 
 
-```python
+```vyper
 @external
 def __init__(
         pool: Pool,
@@ -68,7 +68,7 @@ def __init__(
 <TabItem value="crpyotfrompoolwagg-vy" label="CrpyotFromPoolWAgg.vy">
 
 
-```python
+```vyper
 @external
 def __init__(
         pool: Pool,
@@ -777,7 +777,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolwagg-vy" label="CryptoFromPoolWAgg.vy">
 
 
-```python
+```vyper
 interface StableAggregator:
     def price() -> uint256: view
     def price_w() -> uint256: nonpayable

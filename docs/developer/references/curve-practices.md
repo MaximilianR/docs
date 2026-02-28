@@ -35,7 +35,7 @@ Curve uses different ownership transfer patterns in its contracts. The most comm
 
 The implementation of the commit + accept pattern might vary slightly. Nontheless, the general idea is the same.
 
-```python
+```vyper
 owner: public(address)
 future_owner: public(address)
 
@@ -94,7 +94,7 @@ A simple Google Colab notebook that simulates the commit + accept pattern can be
 
 The implementation of the commit + apply pattern might vary slightly. Nontheless, the general idea is the same.
 
-```python
+```vyper
 event CommitOwnership:
     admin: address
 

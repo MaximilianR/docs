@@ -39,7 +39,7 @@ Getter for the admin of the contract. At contract initialization, the address of
 Returns: admin of the contract (`address`).
 
 <SourceCode>
-```python
+```vyper
 @external
 def __init__(
     ...
@@ -89,7 +89,7 @@ Emits: `SetAdmin` event.
 | `_new_admin` | `address` | New admin address. |
 
 <SourceCode>
-```python
+```vyper
 interface Factory:
     def fee_receiver() -> address: view
 
@@ -144,7 +144,7 @@ Getter for the admin fee of the pool. At contract initialization, the admin fee 
 Returns: admin fee (`uint256`).
 
 <SourceCode>
-```python
+```vyper
 @external
 def __init__(
     ...
@@ -194,7 +194,7 @@ Emits: `SetAdmin` event.
 | `_new_admin_fee` | `uint256` | New admin fee value. |
 
 <SourceCode>
-```python
+```vyper
 interface Factory:
     def fee_receiver() -> address: view
 

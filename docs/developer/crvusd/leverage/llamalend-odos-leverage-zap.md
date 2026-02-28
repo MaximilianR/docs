@@ -191,7 +191,7 @@ Emits: `Deposit`
 <SourceCode>
 
 
-```python
+```vyper
 event Deposit:
     user: indexed(address)
     user_collateral: uint256
@@ -248,7 +248,7 @@ def _approve(coin: address, spender: address):
 ```
 
 
-```python
+```vyper
 @external
 @nonreentrant('lock')
 def create_loan_extended(collateral: uint256, debt: uint256, N: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b""):
@@ -336,7 +336,7 @@ Returns: maximum amount to borrow (`uint256`). The maximum value to return is ei
 <SourceCode>
 
 
-```python
+```vyper
 DEAD_SHARES: constant(uint256) = 1000
 MAX_TICKS_UINT: constant(uint256) = 50
 MAX_P_BASE_BANDS: constant(int256) = 5
@@ -534,7 +534,7 @@ Emits: `Repay`
 <SourceCode>
 
 
-```python
+```vyper
 event Repay:
     user: indexed(address)
     state_collateral_used: uint256
@@ -633,7 +633,7 @@ Returns: Odos Router (`address`).
 <SourceCode>
 
 
-```python
+```vyper
 ROUTER: public(immutable(address))
 
 @external
@@ -676,7 +676,7 @@ Returns: Factory contract (`address`).
 <SourceCode>
 
 
-```python
+```vyper
 FACTORIES: public(DynArray[address, 2])
 
 @external

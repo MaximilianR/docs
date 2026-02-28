@@ -195,7 +195,7 @@ Emits: `Deposit`
 <SourceCode>
 
 
-```python
+```vyper
 event Deposit:
     user: indexed(address)
     user_collateral: uint256
@@ -251,7 +251,7 @@ def _transferFrom(token: address, _from: address, _to: address, amount: uint256)
 ```
 
 
-```python
+```vyper
 @external
 @nonreentrant('lock')
 def create_loan_extended(collateral: uint256, debt: uint256, N: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b""):
@@ -348,7 +348,7 @@ Returns: maximum amount to borrow (`uint256`). The maximum value to return is ei
 <SourceCode>
 
 
-```python
+```vyper
 @external
 @view
 def max_borrowable(controller: address, _user_collateral: uint256, _leverage_collateral: uint256, N: uint256, p_avg: uint256) -> uint256:
@@ -558,7 +558,7 @@ Emits: `Repay`
 <SourceCode>
 
 
-```python
+```vyper
 event Repay:
     user: indexed(address)
     state_collateral_used: uint256
@@ -666,7 +666,7 @@ Returns: 1inch router (`address`).
 <SourceCode>
 
 
-```python
+```vyper
 ROUTER_1INCH: public(immutable(address))
 
 @external
@@ -706,7 +706,7 @@ Returns: Factory contract (`address`).
 <SourceCode>
 
 
-```python
+```vyper
 FACTORIES: public(DynArray[address, 2])
 
 @external

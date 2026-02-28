@@ -53,7 +53,7 @@ Returns: [0 and leveraged collateral] (`uint256[2]`), which is the amount of col
 <SourceCode>
 
 
-```python
+```vyper
 @external
 @nonreentrant('lock')
 def callback_deposit(user: address, stablecoins: uint256, collateral: uint256, debt: uint256, callback_args: DynArray[uint256, 5]) -> uint256[2]:
@@ -280,7 +280,7 @@ Returns: expected amount of collateral (`uint256`).
 <SourceCode>
 
 
-```python
+```vyper
 interface Router:
     def exchange_multiple(_route: address[9], _swap_params: uint256[3][4], _amount: uint256, _expected: uint256, _pools: address[4]) -> uint256: payable
     def get_exchange_multiple_amount(_route: address[9], _swap_params: uint256[3][4], _amount: uint256, _pools: address[4]) -> uint256: view
@@ -304,7 +304,7 @@ def _get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256:
 ```
 
 
-```python
+```vyper
 @view
 @external
 def get_exchange_multiple_amount(
@@ -427,7 +427,7 @@ Returns: amount of collateral (`uint256`).
 <SourceCode>
 
 
-```python
+```vyper
 interface Router:
     def exchange_multiple(_route: address[9], _swap_params: uint256[3][4], _amount: uint256, _expected: uint256, _pools: address[4]) -> uint256: payable
     def get_exchange_multiple_amount(_route: address[9], _swap_params: uint256[3][4], _amount: uint256, _pools: address[4]) -> uint256: view
@@ -448,7 +448,7 @@ def _get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256:
 ```
 
 
-```python
+```vyper
 @view
 @external
 def get_exchange_multiple_amount(
@@ -584,7 +584,7 @@ Returns: maximum borrowable amount (`uint256`).
 <SourceCode>
 
 
-```python
+```vyper
 @external
 @view
 def max_borrowable(collateral: uint256, N: uint256, route_idx: uint256) -> uint256:
@@ -679,7 +679,7 @@ Returns: total amount of collateral, i.e., user_collateral + max_leverage collat
 <SourceCode>
 
 
-```python
+```vyper
 @external
 @view
 def max_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256:
@@ -735,7 +735,7 @@ def _get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256:
 ```
 
 
-```python
+```vyper
 @view
 @external
 def get_exchange_multiple_amount(
@@ -870,7 +870,7 @@ Returns: maximum borrowable crvUSD and maximum collateral for the position.
 <SourceCode>
 
 
-```python
+```vyper
 @external
 @view
 def max_borrowable_and_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256[2]:
@@ -927,7 +927,7 @@ Returns: upper band to deposit into (`int256`).
 <SourceCode>
 
 
-```python
+```vyper
 @external
 @view
 def calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256, route_idx: uint256) -> int256:
@@ -1049,7 +1049,7 @@ Returns: address of the pool or coin (`address`).
 <SourceCode>
 
 
-```python
+```vyper
 routes: public(HashMap[uint256, address[9]])
 
 @external
@@ -1144,7 +1144,7 @@ Returns: route parameter (`uint256`).
 <SourceCode>
 
 
-```python
+```vyper
 route_params: public(HashMap[uint256, uint256[3][4]])
 
 @external
@@ -1239,7 +1239,7 @@ Returns: zap contract (`address`).
 <SourceCode>
 
 
-```python
+```vyper
 route_pools: public(HashMap[uint256, address[4]])
 
 @external
@@ -1311,7 +1311,7 @@ Returns: route name (`String[64]`).
 <SourceCode>
 
 
-```python
+```vyper
 route_names: public(HashMap[uint256, String[64]])
 
 @external
@@ -1366,7 +1366,7 @@ Returns: amount of routes (`uint256`).
 <SourceCode>
 
 
-```python
+```vyper
 routes_count: public(uint256)
 
 @external

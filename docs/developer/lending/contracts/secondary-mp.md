@@ -184,7 +184,7 @@ Returns: rate (`uint256`).
 <TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
 
-```python
+```vyper
 @view
 @external
 def rate(_for: address = msg.sender) -> uint256:
@@ -251,7 +251,7 @@ Returns: future borrow rate (`uint256`).
 <TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
 
-```python
+```vyper
 @view
 @external
 def future_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256:
@@ -316,7 +316,7 @@ Returns: updated rate (`uint256`).
 <TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
 
-```python
+```vyper
 @external
 def rate_write(_for: address = msg.sender) -> uint256:
     return self.calculate_rate(_for, 0, 0)
@@ -368,7 +368,7 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 The contract includes a `Parameters` struct that holds values essential for the hyperbolic dependency model used in borrow rate calculations. This struct consists of `u_inf`, `A`, `r_minf`, and `shift`, which are derived from the **target utilization ($u_0$)**, the rate ratio at **0% utilization ($\alpha$)**, and the rate ratio at **maximum utilization ($\beta$)**. These parameters are initially computed using the internal `get_params` function during contract initialization and are recalculated whenever new parameter values are set through the [`set_parameters`](#set_parameters) method. This struct and the associated calculations ensure the borrow rates adjust dynamically based on fund utilization.
 
 
-```python
+```vyper
 struct Parameters:
     u_inf: uint256
     A: uint256
@@ -407,7 +407,7 @@ Returns: u_inf (`uint256`), A (`uint256`), r_minf (`uint256`) and shift (`uint25
 <TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
 
-```python
+```vyper
 struct Parameters:
     u_inf: uint256
     A: uint256
@@ -481,7 +481,7 @@ Emits: `SetParameters`
 <TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
 
-```python
+```vyper
 event SetParameters:
     u_inf: uint256
     A: uint256
@@ -575,7 +575,7 @@ Returns: AMM contract (`address`).
 <TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
 
-```python
+```vyper
 AMM: public(immutable(IAMM))
 
 @external
@@ -643,7 +643,7 @@ Returns: token contract (`address`).
 <TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
 
-```python
+```vyper
 BORROWED_TOKEN: public(immutable(ERC20))
 
 @external
@@ -711,7 +711,7 @@ Returns: factory contract (`address`).
 <TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
 
 
-```python
+```vyper
 FACTORY: public(immutable(Factory))
 
 @external

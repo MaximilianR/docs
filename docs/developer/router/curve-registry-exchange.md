@@ -51,7 +51,7 @@ Emits: `TokenExchange`
 | `_receiver`  | `address` | Receiver of the tokens. Defaults to `msg.sender`.   |
 
 <SourceCode>
-```python
+```vyper
 event TokenExchange:
     buyer: indexed(address)
     receiver: indexed(address)
@@ -312,7 +312,7 @@ Emits: `TokenExchange`
 | `_receiver` | `address` | Receiver of the tokens. Defaults to `msg.sender`.   |
 
 <SourceCode>
-```python
+```vyper
 event TokenExchange:
     buyer: indexed(address)
     receiver: indexed(address)
@@ -523,7 +523,7 @@ Emits: `ExchangeMultiple`
 | `_receiver`    | `address`       | Receiver of the tokens. Defaults to `msg.sender`. |
 
 <SourceCode>
-```python
+```vyper
 event ExchangeMultiple:
     buyer: indexed(address)
     receiver: indexed(address)
@@ -730,7 +730,7 @@ Returns: amount of tokens received (`uint256`).
 | `_amount` | `uint256` | Amount of coins to exchange.     |
 
 <SourceCode>
-```python
+```vyper
 @view
 @external
 def get_exchange_amount(_pool: address, _from: address, _to: address, _amount: uint256) -> uint256:
@@ -852,7 +852,7 @@ Returns: pool address and amount received (`address`, `uint256`).
 | `_exclude_pools` | `address[8]` | List of up to 8 pools which should not be returned.  |
 
 <SourceCode>
-```python
+```vyper
 @view
 @external
 def get_best_rate(
@@ -1016,7 +1016,7 @@ Returns: expected amount of the final output token (`uint256`).
 | `_pools`       | `address[4]`    | Array of pools for swaps via zap contracts. This parameter is only needed for Polygon meta-factories underlying swaps. |
 
 <SourceCode>
-```python
+```vyper
 @view
 @external
 def get_exchange_multiple_amount(
@@ -1126,7 +1126,7 @@ Getter for the registry contract.
 Returns: registry (`address`).
 
 <SourceCode>
-```python
+```vyper
 registry: public(address)
 
 @external
@@ -1166,7 +1166,7 @@ Getter for the factory regstiry contract.
 Returns: factory registry (`address`).
 
 <SourceCode>
-```python
+```vyper
 factory_registry: public(address)
 
 @external
@@ -1206,7 +1206,7 @@ Getter for the crypto registry contract.
 Returns: crypto registry (`address`).
 
 <SourceCode>
-```python
+```vyper
 crypto_registry: public(address)
 
 @external
@@ -1246,7 +1246,7 @@ Function to update `registry`, `factory_registry` and `crypto_registry`. This fu
 Returns: True (`bool`).
 
 <SourceCode>
-```python
+```vyper
 address_provider: AddressProvider
 registry: public(address)
 factory_registry: public(address)
@@ -1289,7 +1289,7 @@ Getter for the default calculator. The default calculator can be set by the `adm
 Returns: calculator contract (`address`).
 
 <SourceCode>
-```python
+```vyper
 default_calculator: public(address)
 
 @external
@@ -1333,7 +1333,7 @@ Returns: calculator contract (`address`).
 | `_pool` | `address` | Liquidity pool address. | 
 
 <SourceCode>
-```python
+```vyper
 @view
 @external
 def get_calculator(_pool: address) -> address:
@@ -1385,7 +1385,7 @@ Returns: True (`bool`).
 | `_calculator` | `address` | Calculator contract. | 
 
 <SourceCode>
-```python
+```vyper
 pool_calculator: HashMap[address, address]
 
 @external
@@ -1428,7 +1428,7 @@ Returns: True (`bool`).
 | `_calculator` | `address` | Calculator address. | 
 
 <SourceCode>
-```python
+```vyper
 default_calculator: public(address)
 
 @external
@@ -1512,7 +1512,7 @@ Returns: True (`bool`).
 | `_is_killed` | `bool` | `true` or `false`. | 
 
 <SourceCode>
-```python
+```vyper
 @external
 def set_killed(_is_killed: bool) -> bool:
     """
@@ -1558,7 +1558,7 @@ Returns: True (`bool`).
 | `_token` | `address` | Token to transfer. | 
 
 <SourceCode>
-```python
+```vyper
 @external
 def claim_balance(_token: address) -> bool:
     """

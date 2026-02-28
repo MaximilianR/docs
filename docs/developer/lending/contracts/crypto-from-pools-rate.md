@@ -30,7 +30,7 @@ The oracle contracts are fully immutable. Once deployed, they cannot change any 
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 @external
 def __init__(
         pools: DynArray[Pool, MAX_POOLS],
@@ -104,7 +104,7 @@ def __init__(
 <TabItem value="cryptofrompoolsratewagg-vy" label="CryptoFromPoolsRateWAgg.vy">
 
 
-```python
+```vyper
 @external
 def __init__(
         pools: DynArray[Pool, MAX_POOLS],
@@ -228,7 +228,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 @external
 @view
 def price() -> uint256:
@@ -304,7 +304,7 @@ def _raw_stored_rate() -> (uint256, bool):
 <TabItem value="cryptofrompoolsratewagg-vy" label="CryptoFromPoolsRateWAgg.vy">
 
 
-```python
+```vyper
 interface StableAggregator:
     def price() -> uint256: view
     def price_w() -> uint256: nonpayable
@@ -421,7 +421,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 @external
 def price_w() -> uint256:
     return self._unscaled_price() * self._stored_rate_w() / 10**18
@@ -490,7 +490,7 @@ def _stored_rate() -> (uint256, bool):
 <TabItem value="cryptofrompoolsratewagg-vy" label="CryptoFromPoolsRateWAgg.vy">
 
 
-```python
+```vyper
 interface StableAggregator:
     def price() -> uint256: view
     def price_w() -> uint256: nonpayable
@@ -652,7 +652,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 @external
 @view
 def stored_rate() -> uint256:
@@ -738,7 +738,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 cached_rate: public(uint256)
 
 @external
@@ -796,7 +796,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 cached_timestamp: public(uint256)
 
 @external
@@ -858,7 +858,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 USE_RATES: public(immutable(DynArray[bool, MAX_POOLS]))
 ```
 
@@ -914,7 +914,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 POOLS: public(immutable(DynArray[Pool, MAX_POOLS]))
 ```
 
@@ -961,7 +961,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 POOL_COUNT: public(immutable(uint256))
 ```
 
@@ -1009,7 +1009,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 BORROWED_IX: public(immutable(DynArray[uint256, MAX_POOLS]))
 ```
 
@@ -1060,7 +1060,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 COLLATERAL_IX: public(immutable(DynArray[uint256, MAX_POOLS]))
 ```
 
@@ -1111,7 +1111,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 NO_ARGUMENT: public(immutable(DynArray[bool, MAX_POOLS]))
 ```
 
@@ -1165,7 +1165,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompoolsrate-vy" label="CryptoFromPoolsRate.vy">
 
 
-```python
+```vyper
 interface StableAggregator:
     def price() -> uint256: view
     def price_w() -> uint256: nonpayable

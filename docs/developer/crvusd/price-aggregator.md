@@ -172,7 +172,7 @@ Returns: aggregated crvUSD price (`uint256`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 MAX_PAIRS: constant(uint256) = 20
 MIN_LIQUIDITY: constant(uint256) = 100_000 * 10**18  # Only take into account pools with enough liquidity
 
@@ -292,7 +292,7 @@ Returns: aggregated crvUSD price (`uint256`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 MAX_PAIRS: constant(uint256) = 20
 MIN_LIQUIDITY: constant(uint256) = 100_000 * 10**18  # Only take into account pools with enough liquidity
 
@@ -422,7 +422,7 @@ Returns: last aggregated price of crvUSD (`uint256`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 last_price: public(uint256)
 
 @external
@@ -465,7 +465,7 @@ Returns: timestamp of the last price write (`uint256`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 last_timestamp: public(uint256)
 ```
 
@@ -500,7 +500,7 @@ Returns: array of ema tvls (`DynArray[uint256, MAX_PAIRS]`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 MAX_PAIRS: constant(uint256) = 20
 MIN_LIQUIDITY: constant(uint256) = 100_000 * 10**18  # Only take into account pools with enough liquidity
 
@@ -575,7 +575,7 @@ Returns: last ema tvl (`uint256`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 last_tvl: public(uint256[MAX_PAIRS])
 ```
 
@@ -613,7 +613,7 @@ Returns: ema periodicity (`uint256`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 ```
 
@@ -653,7 +653,7 @@ Returns: sigma value (`uint256`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 SIGMA: immutable(uint256)
 
 @external
@@ -696,7 +696,7 @@ Returns: crvUSD contract (`address`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 STABLECOIN: immutable(address)
 
 @external
@@ -751,7 +751,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 
 === PriceAggregator3.vy"
 
-    ```python
+    ```vyper
     struct PricePair:
         pool: Stableswap
         is_inverse: bool
@@ -761,7 +761,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
     ```
 
 
-```python
+```vyper
 struct PricePair:
     pool: Stableswap
     is_inverse: bool
@@ -815,7 +815,7 @@ Emits: `AddPricePair`
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 event AddPricePair:
     n: uint256
     pool: Stableswap
@@ -884,7 +884,7 @@ Emits: `RemovePricePair` and conditionally `MovePricePair`[^1].
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 event RemovePricePair:
     n: uint256
 
@@ -945,7 +945,7 @@ Returns: current admin (`address`).
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 admin: public(address)
 
 @external
@@ -998,7 +998,7 @@ Emits: `SetAdmin`
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
-```python
+```vyper
 event SetAdmin:
     admin: address
 

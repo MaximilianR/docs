@@ -56,7 +56,7 @@ Function to broadcast a sequence of messages to the `Relayer` contract on a L2.
 
 <SourceCode>
 
-```python
+```vyper
 enum Agent:
     OWNERSHIP
     PARAMETER

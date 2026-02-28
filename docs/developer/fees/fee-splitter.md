@@ -112,7 +112,7 @@ Function to claim crvUSD fees from crvUSD Controllers and distribute them to add
 
 
 
-```python
+```vyper
 struct Receiver:
     addr: address
     weight: uint256
@@ -202,7 +202,7 @@ def _is_dynamic(addr: address) -> bool:
 
 
 
-```python
+```vyper
 import ControllerFactory
 import Controller
 
@@ -303,7 +303,7 @@ Returns: `Receiver` struct consisting of `address` and `weight`.
 
 
 
-```python
+```vyper
 struct Receiver:
     addr: address
     weight: uint256
@@ -340,7 +340,7 @@ Returns: number of receivers (`uint256`).
 
 
 
-```python
+```vyper
 receivers: public(DynArray[Receiver, MAX_RECEIVERS])
 
 @view
@@ -382,7 +382,7 @@ Returns: excess receiver (`address`)
 
 
 
-```python
+```vyper
 receivers: public(DynArray[Receiver, MAX_RECEIVERS])
 
 @view
@@ -445,7 +445,7 @@ Emits: `SetReceivers`
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
 
-```python
+```vyper
 from snekmate.auth import ownable
 
 struct Receiver:
@@ -563,7 +563,7 @@ exports: (
 
 
 
-```python
+```vyper
 from contracts.interfaces import IController
 
 controllers: public(DynArray[IController, MAX_CONTROLLERS])
@@ -575,7 +575,7 @@ MAX_CONTROLLERS: constant(uint256) = 50
 
 
 
-```python
+```vyper
 @external
 def collect_fees() -> uint256:
     ...
@@ -683,7 +683,7 @@ exports: (
 
 
 
-```python
+```vyper
 controllers: public(DynArray[IController, MAX_CONTROLLERS])
 
 MAX_CONTROLLERS: constant(uint256) = 50
@@ -740,7 +740,7 @@ exports: (
 
 
 
-```python
+```vyper
 from contracts.interfaces import IControllerFactory
 from contracts.interfaces import IController
 
@@ -773,7 +773,7 @@ def update_controllers():
 
 
 
-```python
+```vyper
 @external
 @view
 def controllers(index: uint256) -> address:
@@ -835,7 +835,7 @@ Returns: contract owner (`address`).
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
 
-```python
+```vyper
 from snekmate.auth import ownable
 initializes: ownable
 exports: (
@@ -877,7 +877,7 @@ def __init__(
 
 
 
-```python
+```vyper
 owner: public(address)
 
 @deploy
@@ -933,7 +933,7 @@ Function to transfer the ownership of the contract to a new address.
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
 
-```python
+```vyper
 from snekmate.auth import ownable
 initializes: ownable
 exports: (
@@ -975,7 +975,7 @@ def __init__(
 
 
 
-```python
+```vyper
 owner: public(address)
 
 event OwnershipTransferred:
@@ -1065,7 +1065,7 @@ Emits: `OwnershipTransferred` from `Ownable.vy`.
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
 
-```python
+```vyper
 from snekmate.auth import ownable
 initializes: ownable
 exports: (
@@ -1107,7 +1107,7 @@ def __init__(
 
 
 
-```python
+```vyper
 owner: public(address)
 
 event OwnershipTransferred:
@@ -1191,7 +1191,7 @@ Returns: version (`String[8]`).
 
 
 
-```python
+```vyper
 version: public(constant(String[8])) = "0.1.0" # no guarantees on abi stability
 ```
 
