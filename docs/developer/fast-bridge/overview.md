@@ -1,3 +1,5 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
+
 # FastBridge Overview
 
 FastBridge is a workaround solution for the 7-day delay from L2 native bridges by pre-minting crvUSD. This system enables fast cross-chain transfers of crvUSD from Layer 2 networks (Arbitrum, Optimism, Fraxtal) to Ethereum mainnet.
@@ -9,7 +11,7 @@ FastBridge implements a dual-bridge mechanism that combines:
 1. **Native Bridge** (slow (7d) but reliable): Direct crvUSD transfer from L2 to Ethereum
 2. **Fast Bridge** (immediate): LayerZero messaging + pre-minted crvUSD release
 
-![FastBridge Architecture](pathname://../assets/images/fast-bridge/architecture.png)
+![FastBridge Architecture](../assets/images/fast-bridge/architecture.png)
 
 ---
 
@@ -17,17 +19,28 @@ FastBridge implements a dual-bridge mechanism that combines:
 
 The FastBridge system consists of several key components that work together to enable fast cross-chain transfers. These components are distributed across Layer 2 networks and Ethereum mainnet, each serving a specific role in the bridging process.
 
-- L2 Networks (Arbitrum, Optimism, Fraxtal)
+<DocCardGrid>
+  <DocCard title="FastBridgeL2" link="./fast-bridge-l2" linkText="View contract">
 
-    The `FastBridgeL2.vy` contract serves as the primary coordinator on each L2 network. It initiates both native and fast bridge transactions while enforcing rate limits and minimum amounts. The contract manages native token fees for bridge operations and tracks bridged amounts per 42-hour interval.
+Primary coordinator on each L2 network (Arbitrum, Optimism, Fraxtal). Initiates both native and fast bridge transactions while enforcing rate limits and minimum amounts. Manages native token fees and tracks bridged amounts per 42-hour interval.
 
-    The `L2MessengerLZ.vy` contract handles LayerZero messaging from L2 to Ethereum mainnet. It encodes bridge requests and sends them through the LayerZero network to the corresponding messenger contract on Ethereum mainnet.
+  </DocCard>
+  <DocCard title="L2MessengerLZ" link="./l2-messenger-lz" linkText="View contract">
 
-- Ethereum Mainnet
+Handles LayerZero messaging from L2 to Ethereum mainnet. Encodes bridge requests and sends them through the LayerZero network to the corresponding messenger contract on Ethereum mainnet.
 
-    The `FastBridgeVault.vy` holds pre-minted crvUSD which can be released for fast bridge operations. It manages debt ceilings and fee collection, implements emergency kill switches, and handles token recovery in case of malfunctions.
+  </DocCard>
+  <DocCard title="FastBridgeVault" link="./fast-bridge-vault" linkText="View contract">
 
-    The `VaultMessengerLZ.vy` receives LayerZero messages from L2s, triggers crvUSD minting in the vault, and manages the fast bridge message flow.
+Holds pre-minted crvUSD on Ethereum mainnet which can be released for fast bridge operations. Manages debt ceilings and fee collection, implements emergency kill switches, and handles token recovery.
+
+  </DocCard>
+  <DocCard title="VaultMessengerLZ" link="./vault-messenger-lz" linkText="View contract">
+
+Receives LayerZero messages from L2s on Ethereum mainnet, triggers crvUSD minting in the vault, and manages the fast bridge message flow.
+
+  </DocCard>
+</DocCardGrid>
 
 ---
 
