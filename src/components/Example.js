@@ -1,24 +1,16 @@
-import React, { useState } from 'react';
 import styles from './Example.module.css';
 
 export default function Example({ children }) {
-  const [open, setOpen] = useState(false);
-
   return (
-    <div className={styles.container}>
-      <button
-        className={styles.toggle}
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        type="button"
-      >
+    <details className={styles.container}>
+      <summary className={styles.toggle}>
         <span className={styles.icon}>▶</span>
         <span className={styles.label}>Example</span>
-        <span className={open ? `${styles.chevron} ${styles.chevronOpen}` : styles.chevron}>▼</span>
-      </button>
-      <div className={open ? `${styles.content} ${styles.contentOpen}` : styles.content}>
+        <span className={styles.chevron}>▼</span>
+      </summary>
+      <div className={styles.content}>
         {children}
       </div>
-    </div>
+    </details>
   );
 }
