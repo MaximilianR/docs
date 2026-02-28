@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MDXComponents from '@theme-original/MDXComponents';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -8,8 +8,20 @@ import SwaggerUIComponent from '../../components/SwaggerUI';
 import SourceCode from '../../components/SourceCode';
 import Example from '../../components/Example';
 import ContractABI from '../../components/ContractABI';
-import ContractCall from '../../components/ContractCall';
 import Dropdown from '../../components/Dropdown';
+
+// Lazy-load ContractCall to avoid loading ethers.js on every page.
+// Only pages that render <ContractCall> will load the bundle.
+function LazyContractCall(props) {
+  const [Component, setComponent] = useState(null);
+  useEffect(() => {
+    import('../../components/ContractCall').then((mod) => {
+      setComponent(() => mod.default);
+    });
+  }, []);
+  if (!Component) return null;
+  return <Component {...props} />;
+}
 
 export default {
   ...MDXComponents,
@@ -21,6 +33,6 @@ export default {
   SourceCode,
   Example,
   ContractABI,
-  ContractCall,
+  ContractCall: LazyContractCall,
   Dropdown,
 };
