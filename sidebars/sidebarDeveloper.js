@@ -6,7 +6,95 @@ export default {
             label: 'Overview',
         },
 
-        // --- Curve Pools (all AMM/DEX: pool types, factory, router) ---
+        // --- CRV & Governance ---
+        {
+            type: 'category',
+            label: 'CRV & Governance',
+            items: [
+                { type: 'doc', id: 'curve-dao/crv-token', label: 'CRV Token' },
+                {
+                    type: 'category',
+                    label: 'Voting Escrow (veCRV)',
+                    items: [
+                        { type: 'doc', id: 'curve-dao/voting-escrow/voting-escrow', label: 'VotingEscrow' },
+                        { type: 'doc', id: 'curve-dao/voting-escrow/admin-controls', label: 'Admin Controls' },
+                        { type: 'doc', id: 'curve-dao/voting-escrow/smart-wallet-checker', label: 'SmartWalletChecker' },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Governance & Voting',
+                    items: [
+                        { type: 'doc', id: 'governance/overview', label: 'Overview' },
+                        { type: 'doc', id: 'governance/curve-dao', label: 'Curve DAO' },
+                        {
+                            type: 'category',
+                            label: 'Cross-chain Governance',
+                            items: [
+                                { type: 'doc', id: 'governance/x-gov/overview', label: 'Overview' },
+                                { type: 'doc', id: 'governance/x-gov/broadcaster', label: 'Broadcaster' },
+                                { type: 'doc', id: 'governance/x-gov/relayer', label: 'Relayer' },
+                                { type: 'doc', id: 'governance/x-gov/agents', label: 'Agents' },
+                                { type: 'doc', id: 'governance/x-gov/vault', label: 'Vault' },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+
+        // --- Gauges & Emissions ---
+        {
+            type: 'category',
+            label: 'Gauges & Emissions',
+            items: [
+                { type: 'doc', id: 'gauges/overview', label: 'Overview' },
+                {
+                    type: 'category',
+                    label: 'Liquidity Gauges',
+                    items: [
+                        { type: 'doc', id: 'gauges/gauges/overview', label: 'Overview' },
+                        { type: 'doc', id: 'gauges/gauges/liquidity-gauge-v6', label: 'LiquidityGaugeV6' },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Gauge Controller',
+                    items: [
+                        { type: 'doc', id: 'gauges/gauge-controller/gauge-controller', label: 'GaugeController' },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Minter',
+                    items: [
+                        { type: 'doc', id: 'gauges/minter/minter', label: 'Minter' },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Cross-chain Gauges',
+                    items: [
+                        { type: 'doc', id: 'gauges/xchain-gauges/overview', label: 'Overview' },
+                        { type: 'doc', id: 'gauges/xchain-gauges/root-gauge', label: 'RootGauge' },
+                        { type: 'doc', id: 'gauges/xchain-gauges/root-gauge-factory', label: 'RootGaugeFactory' },
+                        { type: 'doc', id: 'gauges/xchain-gauges/child-gauge', label: 'ChildGauge' },
+                        { type: 'doc', id: 'gauges/xchain-gauges/child-gauge-factory', label: 'ChildGaugeFactory' },
+                        { type: 'doc', id: 'gauges/xchain-gauges/bridgers', label: 'Bridgers' },
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Boosting (Sidechains)',
+                    items: [
+                        { type: 'doc', id: 'gauges/boosting-sidechains/l2-voting-escrow-oracle', label: 'L2 VotingEscrow Oracle' },
+                        { type: 'doc', id: 'gauges/boosting-sidechains/updater', label: 'Updater' },
+                    ],
+                },
+            ],
+        },
+
+        // --- Curve AMM ---
         {
             type: 'category',
             label: 'Curve AMM',
@@ -285,10 +373,10 @@ export default {
             ],
         },
 
-        // --- scrvUSD ---
+        // --- Savings crvUSD ---
         {
             type: 'category',
-            label: 'scrvUSD',
+            label: 'Savings crvUSD',
             items: [
                 { type: 'doc', id: 'scrvusd/overview', label: 'Overview' },
                 { type: 'doc', id: 'scrvusd/rewards-handler', label: 'RewardsHandler' },
@@ -319,10 +407,10 @@ export default {
             ],
         },
 
-        // --- Lending ---
+        // --- LlamaLend ---
         {
             type: 'category',
-            label: 'Lending',
+            label: 'LlamaLend',
             items: [
                 { type: 'doc', id: 'lending/overview', label: 'Overview' },
                 {
@@ -357,116 +445,32 @@ export default {
             ],
         },
 
-        // --- Curve DAO (merges CRV/veCRV, Governance, Gauges, Fees) ---
+        // --- Fees ---
         {
             type: 'category',
-            label: 'Curve DAO',
+            label: 'Fees',
             items: [
-                { type: 'doc', id: 'curve-dao/crv-token', label: 'CRV Token' },
+                { type: 'doc', id: 'fees/overview', label: 'Overview' },
+                { type: 'doc', id: 'fees/fee-collector', label: 'FeeCollector' },
+                { type: 'doc', id: 'fees/fee-distributor', label: 'FeeDistributor' },
+                { type: 'doc', id: 'fees/fee-splitter', label: 'FeeSplitter' },
+                { type: 'doc', id: 'fees/cow-swap-burner', label: 'CowSwapBurner' },
+                { type: 'doc', id: 'fees/hooker', label: 'Hooker' },
                 {
                     type: 'category',
-                    label: 'Voting Escrow',
+                    label: 'Legacy Architecture',
                     items: [
-                        { type: 'doc', id: 'curve-dao/voting-escrow/voting-escrow', label: 'VotingEscrow' },
-                        { type: 'doc', id: 'curve-dao/voting-escrow/admin-controls', label: 'Admin Controls' },
-                        { type: 'doc', id: 'curve-dao/voting-escrow/smart-wallet-checker', label: 'SmartWalletChecker' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Governance & Voting',
-                    items: [
-                        { type: 'doc', id: 'governance/overview', label: 'Overview' },
-                        { type: 'doc', id: 'governance/curve-dao', label: 'Curve DAO' },
-                        {
-                            type: 'category',
-                            label: 'Cross-chain Governance',
-                            items: [
-                                { type: 'doc', id: 'governance/x-gov/overview', label: 'Overview' },
-                                { type: 'doc', id: 'governance/x-gov/broadcaster', label: 'Broadcaster' },
-                                { type: 'doc', id: 'governance/x-gov/relayer', label: 'Relayer' },
-                                { type: 'doc', id: 'governance/x-gov/agents', label: 'Agents' },
-                                { type: 'doc', id: 'governance/x-gov/vault', label: 'Vault' },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Gauges & Emissions',
-                    items: [
-                        { type: 'doc', id: 'gauges/overview', label: 'Overview' },
-                        {
-                            type: 'category',
-                            label: 'Liquidity Gauges',
-                            items: [
-                                { type: 'doc', id: 'gauges/gauges/overview', label: 'Overview' },
-                                { type: 'doc', id: 'gauges/gauges/liquidity-gauge-v6', label: 'LiquidityGaugeV6' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Gauge Controller',
-                            items: [
-                                { type: 'doc', id: 'gauges/gauge-controller/gauge-controller', label: 'GaugeController' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Minter',
-                            items: [
-                                { type: 'doc', id: 'gauges/minter/minter', label: 'Minter' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Cross-chain Gauges',
-                            items: [
-                                { type: 'doc', id: 'gauges/xchain-gauges/overview', label: 'Overview' },
-                                { type: 'doc', id: 'gauges/xchain-gauges/root-gauge', label: 'RootGauge' },
-                                { type: 'doc', id: 'gauges/xchain-gauges/root-gauge-factory', label: 'RootGaugeFactory' },
-                                { type: 'doc', id: 'gauges/xchain-gauges/child-gauge', label: 'ChildGauge' },
-                                { type: 'doc', id: 'gauges/xchain-gauges/child-gauge-factory', label: 'ChildGaugeFactory' },
-                                { type: 'doc', id: 'gauges/xchain-gauges/bridgers', label: 'Bridgers' },
-                            ],
-                        },
-                        {
-                            type: 'category',
-                            label: 'Boosting (Sidechains)',
-                            items: [
-                                { type: 'doc', id: 'gauges/boosting-sidechains/l2-voting-escrow-oracle', label: 'L2 VotingEscrow Oracle' },
-                                { type: 'doc', id: 'gauges/boosting-sidechains/updater', label: 'Updater' },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Fee System',
-                    items: [
-                        { type: 'doc', id: 'fees/overview', label: 'Overview' },
-                        { type: 'doc', id: 'fees/fee-collector', label: 'FeeCollector' },
-                        { type: 'doc', id: 'fees/fee-distributor', label: 'FeeDistributor' },
-                        { type: 'doc', id: 'fees/fee-splitter', label: 'FeeSplitter' },
-                        { type: 'doc', id: 'fees/cow-swap-burner', label: 'CowSwapBurner' },
-                        { type: 'doc', id: 'fees/hooker', label: 'Hooker' },
-                        {
-                            type: 'category',
-                            label: 'Original Architecture',
-                            items: [
-                                { type: 'doc', id: 'fees/original-architecture/overview', label: 'Overview' },
-                                { type: 'doc', id: 'fees/original-architecture/withdraw-and-burn', label: 'Withdraw & Burn' },
-                                { type: 'doc', id: 'fees/original-architecture/burner', label: 'Burner' },
-                                { type: 'doc', id: 'fees/original-architecture/distributor', label: 'Distributor' },
-                                { type: 'doc', id: 'fees/original-architecture/sidechains', label: 'Sidechains' },
-                            ],
-                        },
+                        { type: 'doc', id: 'fees/original-architecture/overview', label: 'Overview' },
+                        { type: 'doc', id: 'fees/original-architecture/withdraw-and-burn', label: 'Withdraw & Burn' },
+                        { type: 'doc', id: 'fees/original-architecture/burner', label: 'Burner' },
+                        { type: 'doc', id: 'fees/original-architecture/distributor', label: 'Distributor' },
+                        { type: 'doc', id: 'fees/original-architecture/sidechains', label: 'Sidechains' },
                     ],
                 },
             ],
         },
 
-        // --- Integration (includes Registry + API) ---
+        // --- Integration ---
         {
             type: 'category',
             label: 'Integration',
@@ -510,7 +514,7 @@ export default {
             ],
         },
 
-        // --- Resources (Security + References) ---
+        // --- Resources ---
         {
             type: 'category',
             label: 'Resources',
