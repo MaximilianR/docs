@@ -3,12 +3,14 @@
 
 Source code of all PegKeepers can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/stabilizer).
 
-A list of all contract deployments can be found [here](../../references/deployed-contracts.md).
+A list of all contract deployments can be found [here](../../deployments.md).
 
 
 :::
 
-# **General Concepts**## **Stabilization Method**PegKeepers are specialized contracts **designed to maintain the stability of the crvUSD peg**. They hold a pre-minted supply of crvUSD tokens to be utilized for peg stabilization efforts. The operation of PegKeepers is **restricted to only two actions: depositing and withdrawing from liquidity pools**. As long as these pre-minted crvUSD tokens are not deposited anywhere, they can and should be counted as out-of-circulation.
+# **General Concepts**
+
+## **Stabilization Method**PegKeepers are specialized contracts **designed to maintain the stability of the crvUSD peg**. They hold a pre-minted supply of crvUSD tokens to be utilized for peg stabilization efforts. The operation of PegKeepers is **restricted to only two actions: depositing and withdrawing from liquidity pools**. As long as these pre-minted crvUSD tokens are not deposited anywhere, they can and should be counted as out-of-circulation.
 
 These contracts are each associated with a specific liquidity pool that includes crvUSD and another fiat-redeemable USD stablecoin.
 
@@ -19,7 +21,9 @@ Conversely, should the crvUSD **price drop below 1.0**, signaling a downward peg
 Moreover, the **`update` function**that deposits and withdraws crvUSD is **callable by any EOA or smart contract**. To foster engagement, callers are rewarded with a caller share as an incentive.
 
 
-## **Impact on crvUSD Interest Rate**PegKeepers significantly influence the interest rate of crvUSD markets. The interest rate is affected by various factors, including the DebtFraction across all PegKeepers. A higher debt accumulated by PegKeepers[^1] increases the DebtFraction, which, in turn, leads to a lower interest rate.
+## **Impact on crvUSD Interest Rate**
+
+PegKeepers significantly influence the interest rate of crvUSD markets. The interest rate is affected by various factors, including the DebtFraction across all PegKeepers. A higher debt accumulated by PegKeepers[^1] increases the DebtFraction, which, in turn, leads to a lower interest rate.
 
 [^1]: PegKeeper debt is accumulated by depositing into the linked liquidity pool. If the contract deposited 100 crvUSD, debt is equal to 100.
 
@@ -27,20 +31,26 @@ Moreover, the **`update` function**that deposits and withdraws crvUSD is **calla
 
 $$\text\{DebtFraction\} = \frac\{\{\text\{PegKeeperDebt\}\}\}\{\{\text\{TotalDebt\}\}\}$$
 
-For a comprehensive understanding of the factors influencing the interest rate, please refer to the [MonetaryPolicy](../monetarypolicy.md#interest-rate) section.
+For a comprehensive understanding of the factors influencing the interest rate, please refer to the [MonetaryPolicy](../monetary-policy.md#interest-rate) section.
 
 
 ---
 
 
-# **PegKeeperV1**The initial version of `PegKeeper.vy` encountered two significant problems:
+# **PegKeeperV1**
 
-## **Spam Attack Issue**A notable challenge in the first version of PegKeepers was its **susceptibility to spam attacks**.  
+The initial version of `PegKeeper.vy` encountered two significant problems:
+
+## **Spam Attack Issue**
+
+A notable challenge in the first version of PegKeepers was its **susceptibility to spam attacks**.  
 This issue stemmed from the ability of an attacker to manipulate the price of crvUSD very close to 1, followed by executing the `update` function to make a minimal deposit (or withdrawal), before moving the price back. With a mandatory **15-minute cooldown**before the `update` function could be called again, an attacker could exploit this interval to periodically disrupt the PegKeepers' capacity for peg stabilization.  
 Although executing such an attack would entail **significant costs for the attacker**, resulting in **substantial revenue for the liquidity pool**, the potential for continuous exploitation was still present. This issue highlighted the need for a refined approach to prevent such manipulative activities and ensure the effective stabilization of the peg.
 
 
-## **Depegging Scenario**A more critical issue arose when a PegKeeper engaged in a deposit, essentially taking on debt by depositing crvUSD into the pool. If the coin paired with crvUSD in the pool experienced a **significant depeg**, the PegKeeper could find itself **unable to off-load its debt by withdrawing its crvUSD**. This situation would leave a quantity of unbacked crvUSD in circulation.
+## **Depegging Scenario**
+
+A more critical issue arose when a PegKeeper engaged in a deposit, essentially taking on debt by depositing crvUSD into the pool. If the coin paired with crvUSD in the pool experienced a **significant depeg**, the PegKeeper could find itself **unable to off-load its debt by withdrawing its crvUSD**. This situation would leave a quantity of unbacked crvUSD in circulation.
 
 *These issues were addressed in the second version of the PegKeeper.*
 
@@ -62,7 +72,9 @@ Central to this new structure is the `PegKeeperRegulator.vy` contract, which gra
 *Additionally, this version introduces robust solutions to previously identified issues, such as susceptibility to spam attacks and challenges in managing depeg situations:*
 
 
-## **Mitigating Spam Attacks with Oracle Price Verification**To address the spam attack issue in the first version of PegKeepers, an innovative solution involving the `price_oracle` and `get_p` function from stableswap pools was implemented. This approach allows the system to verify if the current AMM market prices significantly deviate from the pool's oracle's EMA price, thereby ensuring actions to stabilize the peg are only taken when the price is within an accepted deviation.
+## **Mitigating Spam Attacks with Oracle Price Verification**
+
+To address the spam attack issue in the first version of PegKeepers, an innovative solution involving the `price_oracle` and `get_p` function from stableswap pools was implemented. This approach allows the system to verify if the current AMM market prices significantly deviate from the pool's oracle's EMA price, thereby ensuring actions to stabilize the peg are only taken when the price is within an accepted deviation.
 
 *The solution utilizes two prices from the pools:*
 
@@ -88,7 +100,9 @@ This function effectively measures if the current price (`_p1`) is within an acc
 Further details on setting the price_deviation parameter can be found in the Curve Finance stablecoin research documentation: [Deviation Parameter Explanation](https://github.com/curvefi/curve-stablecoin-researches/tree/main/peg_keeper#deviation).
 
 
-## **Mitigating Depeg Issue using Absolute Deviation Error**In order to mitigate potential depged risk and therefore leaving the PegKeeper with debt, a `worst_price_threshold` variable was introduced.
+## **Mitigating Depeg Issue using Absolute Deviation Error**
+
+In order to mitigate potential depged risk and therefore leaving the PegKeeper with debt, a `worst_price_threshold` variable was introduced.
 
 
 ```vyper
@@ -118,4 +132,4 @@ If `largest_price` is found to be lower than the difference, it **indicates a po
 
 This safeguard acts as a bulwark against significant price divergences between the highest observed price (`largest_price`) and the target price, with the `worst_price_threshold` serving as a key variable in this evaluation. Failure to align with this safeguard (i.e., when `largest_price` significantly undercuts the threshold) triggers a halt in operations, as indicated by a return value of 0. Such a mechanism is vital for mitigating risks tied to price volatility, thereby ensuring the system's stability and preserving the integrity of pegged relationships.
 
-Additionally, to **prevent a single PegKeeper from taking on all the debt, ratio limits were implemented**. More on these limits [here](./PegKeeperRegulator.md#providing).
+Additionally, to **prevent a single PegKeeper from taking on all the debt, ratio limits were implemented**. More on these limits [here](./peg-keeper-regulator.md#providing).

@@ -1,18 +1,19 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 
 # Monetary Policies: Overview
 Lending markets use monetary policies to determine interest rates. Each market has its own policy contract.
 
 *Currently, there are two different kinds of policy contracts in use:*
 
+<DocCardGrid>
+  <DocCard title="SemilogMonetaryPolicy.vy" icon="vyper" link="./semilog-mp" linkText="SemilogMonetaryPolicy.vy">
 
--   **Semilog Monetary Policy**---
+Semi-logarithmic monetary policy based on the utilization of lending markets.
 
-    Semi-logarithmic monetary policy based on the utilization of lending markets.
+  </DocCard>
+  <DocCard title="SecondaryMonetaryPolicy.vy" icon="vyper" link="./secondary-mp" linkText="SecondaryMonetaryPolicy.vy">
 
-    [→ `SemilogMonetaryPolicy.vy`](./semilog-mp.md)
+A monetary policy that follows the rate of crvUSD mint markets based on the utilization of the market.
 
--   **Secondary Monetary Policy**---
-
-    A monetary policy that follows the rate of crvUSD mint markets based on the utilization of the market.
-
-    [→ `SecondaryMonetaryPolicy.vy`](./secondary-mp.md)
+  </DocCard>
+</DocCardGrid>

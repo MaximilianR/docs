@@ -57,11 +57,11 @@ def _unpack(_packed: uint256) -> uint256[3]:
 ## **Exchange Methods***The contract offers two different ways to exchange tokens:*
 
 - A regular `exchange` method.
-- A `exchange_underlying` method, which swaps tokens based on native token transfers into the pool. More [here](../../../stableswap-exchange/stableswap-ng/pools/overview.md#exchange_received).
+- A `exchange_underlying` method, which swaps tokens based on native token transfers into the pool. More [here](../../stableswap-ng/pools/overview.md#exchange_received).
 
 
 ### `exchange`
-:::description[`TriCrypto.exchange(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`TriCrypto.exchange(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to exchange `dx` amount of coin `i` for coin `j` and receive a minimum amount of `min_dy`.
@@ -76,8 +76,7 @@ Returns: amount of output coin `j` received (`uint256`).
 | `min_dy` | `uint256` | Minimum amount of output coin to receive |
 | `receiver` | `address` | Address to send output coin to. Defaults to `msg.sender` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -228,10 +227,9 @@ def _exchange(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -240,17 +238,16 @@ def _exchange(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `exchange_underlying`
-:::description[`TriCrypto.exchange_underlying(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`TriCrypto.exchange_underlying(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
-Function to exchange between two underlying tokens. More [here](../../../stableswap-exchange/stableswap-ng/pools/overview.md#exchange_received).
+Function to exchange between two underlying tokens. More [here](../../stableswap-ng/pools/overview.md#exchange_received).
 
 Returns: amount of output coin `j` received (`uint256`).
 
@@ -264,8 +261,7 @@ Emits: `TokenExchange`
 | `min_dy` |  `uint256` | Minimum amount of output coin to receive. |
 | `receiver` |  `address` | Receiver Address; defaults to msg.sender. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -414,10 +410,9 @@ def _exchange(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -426,14 +421,13 @@ def _exchange(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dy`
-:::description[`TriCrypto.get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:`]
+::::description[`TriCrypto.get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:`]
 
 
 Getter for the received amount of coin `j` for swapping in `dx` amount of coin `i`. This method includes fees.
@@ -446,14 +440,7 @@ Returns: exact amount of output coin `j` (`uint256`).
 | `j`   | `uint256` | Index of output token.    |
 | `dx`  | `uint256` | Amount of input tokens.   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 interface Factory:
     def admin() -> address: view
@@ -485,15 +472,6 @@ def get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:
     view_contract: address = Factory(self.factory).views_implementation()
     return Views(view_contract).get_dy(i, j, dx, self)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptoviews3optimized-vy" label="CurveCryptoViews3Optimized.vy">
-
-
 ```vyper
 @external
 @view
@@ -546,16 +524,9 @@ def _get_dy_nofee(
 
     return dy, xp
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -564,14 +535,13 @@ def _get_dy_nofee(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dx`
-:::description[`TriCrypto.get_dx(i: uint256, j: uint256, dy: uint256) -> uint256:`]
+::::description[`TriCrypto.get_dx(i: uint256, j: uint256, dy: uint256) -> uint256:`]
 
 
 Getter for the required amount of coin `i` to input for swapping out `dy` amount of token `j`.
@@ -584,14 +554,7 @@ Returns: amount of input coin `i` needed (`uint256`).
 | `j`   | `uint256` | Index of output token.    |
 | `dy`  | `uint256` | Amount of output tokens.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 interface Factory:
     def admin() -> address: view
@@ -646,15 +609,6 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
         10**18
     )
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptoviews3optimized-vy" label="CurveCryptoViews3Optimized.vy">
-
-
 ```vyper
 @view
 @external
@@ -744,11 +698,6 @@ def _prep_calc(swap: address) -> (
 
     return xp, D, token_supply, price_scale, A, gamma, precisions
 ```
-
-<Tabs>
-<TabItem value="math-vy" label="Math.vy">
-
-
 ```vyper
 @external
 @view
@@ -783,19 +732,9 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
     return K
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -804,14 +743,13 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `fee_calc`
-:::description[`TriCrypto.fee_calc(xp: uint256[N_COINS]) -> uint256: view`]
+::::description[`TriCrypto.fee_calc(xp: uint256[N_COINS]) -> uint256: view`]
 
 
 Getter for the charged exchange fee by the pool at the current state.
@@ -822,14 +760,7 @@ Returns: fee (`uint256`).
 | ----- | ------------------ | ------------------------------------------------ |
 | `xp`  | `uint256[N_COINS]` | Pool balances multiplied by the coin precisions. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -851,15 +782,6 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
         10**18
     )
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="math-vy" label="Math.vy">
-
-
 ```vyper
 @external
 @view
@@ -893,16 +815,9 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 
     return K
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -911,11 +826,10 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -928,7 +842,7 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 
 
 ### `add_liquidity`
-:::description[`TriCrypto.add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
+::::description[`TriCrypto.add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to add liquidity to the pool and mint the corresponding LP tokens.
@@ -945,14 +859,7 @@ Emits: `AddLiquidity`
 | `receiver`       |  `address`          | Receiver of the LP tokens; defaults to msg.sender.    |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 event AddLiquidity:
     provider: indexed(address)
@@ -1100,15 +1007,6 @@ def add_liquidity(
 
     return d_token
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="math-vy" label="Math.vy">
-
-
 ```vyper
 @external
 @view
@@ -1311,16 +1209,9 @@ def newton_D(
             return D
     raise "Did not converge"
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1329,14 +1220,13 @@ def newton_D(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_token_fee`
-:::description[`TriCrypto.calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:`]
+::::description[`TriCrypto.calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:`]
 
 
 Function to calculate the charged fee on `amounts` when adding liquidity.
@@ -1348,8 +1238,7 @@ Returns: fee (`uint256`).
 | `amounts`| `uint256[N_COINS]`  | Amount of coins added to the pool.               |
 | `xp`     | `uint256[N_COINS]`  | Pool balances multiplied by the coin precisions. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1393,10 +1282,9 @@ def _calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1405,14 +1293,13 @@ def _calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity`
-:::description[`TriCrypto.remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS], use_eth: bool = False, receiver: address = msg.sender, claim_admin_fees: bool = True) -> uint256[N_COINS]:`]
+::::description[`TriCrypto.remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS], use_eth: bool = False, receiver: address = msg.sender, claim_admin_fees: bool = True) -> uint256[N_COINS]:`]
 
 
 Function to remove liquidity from the pool and burn the LP tokens. When removing liquidity with this function, no fees are charged as the coins are withdrawn in balanced proportions.  
@@ -1430,8 +1317,7 @@ Emits: `RemoveLiquidity`
 | `receiver`     | `address`  | Receiver of the coins; defaults to `msg.sender`. |
 | `claim_admin_fees` | `bool` | Whether to claim admin fees; defaults to `True`. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1515,10 +1401,9 @@ def remove_liquidity(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1527,14 +1412,13 @@ def remove_liquidity(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity_one_coin`
-:::description[`TriCrypto.remove_liquidity_one_coin(token_amount: uint256, i: uint256, min_amount: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
+::::description[`TriCrypto.remove_liquidity_one_coin(token_amount: uint256, i: uint256, min_amount: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to burn `token_amount` LP tokens and withdraw liquidity in a single token `i`.
@@ -1552,14 +1436,7 @@ Emits: `RemoveLiquidityOne`
 | `receiver`     | `address`  | Receiver of the coins; defaults to `msg.sender`. |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @nonreentrant("lock")
@@ -1692,15 +1569,6 @@ def _calc_withdraw_one_coin(
 
     return dy, D, xp, approx_fee
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="math-vy" label="Math.vy">
-
-
 ```vyper
 @external
 @view
@@ -2103,16 +1971,9 @@ def get_y(
 
     return out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2121,14 +1982,13 @@ def get_y(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_token_amount`
-:::description[`TriCrypto.def calc_token_amount(amounts: uint256[N_COINS], deposit: bool) -> uint256:`]
+::::description[`TriCrypto.def calc_token_amount(amounts: uint256[N_COINS], deposit: bool) -> uint256:`]
 
 
 Function to calculate the LP tokens to be minted or burned for depositing or removing `amounts` of coins. This method takes fees into consideration.
@@ -2140,14 +2000,7 @@ Returns: amount of LP tokens deposited or withdrawn (`uint256`).
 | `amounts`  | `uint256[N_COINS]` | Amounts of tokens being deposited or withdrawn. |
 | `deposit`  | `bool`             | `true` for deposit, `false` for withdrawal.     |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="tricrypto-pool" label="TriCrypto Pool">
-
-
+<SourceCode>
 ```vyper
 interface Factory:
     def admin() -> address: view
@@ -2216,15 +2069,6 @@ def _calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:
 
     return fee * Sdiff / S + NOISE_FEE
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="views-contract" label="Views Contract">
-
-
 ```vyper
 @view
 @external
@@ -2256,16 +2100,9 @@ def calc_fee_token_amount(
 
     return Curve(swap).calc_token_fee(amountsp, xp) * d_token / 10**10 + 1
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2274,14 +2111,13 @@ def calc_fee_token_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_withdraw_one_coin`
-:::description[`TriCrypto.calc_withdraw_one_coin(token_amount: uint256, i: uint256) -> uint256:`]
+::::description[`TriCrypto.calc_withdraw_one_coin(token_amount: uint256, i: uint256) -> uint256:`]
 
 
 Function to calculate the amount of output token `i` when burning `token_amount` of LP tokens. This method takes fees into consideration.
@@ -2293,14 +2129,7 @@ Returns: amount of tokens to receive (`uint256`).
 | `token_amount`| `uint256` | Amount of LP tokens burned.              |
 | `i`           | `uint256` | Index of the coin to withdraw.           |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 @view
 @external
@@ -2392,15 +2221,6 @@ def _calc_withdraw_one_coin(
 
     return dy, D, xp, approx_fee
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="math-vy" label="Math.vy">
-
-
 ```vyper
 @external
 @view
@@ -2803,16 +2623,9 @@ def get_y(
 
     return out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2821,16 +2634,17 @@ def get_y(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Fees and Pool Profits**The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
+## **Fees and Pool Profits**
+
+The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
 
 Additionally, just as for other curve pools, there is an `ADMIN_FEE`, which is hardcoded to 50%. All twocrypto-ng pools share a universal `fee_receiver`, which is determined within the Factory contract.
 
@@ -2838,21 +2652,14 @@ Additionally, just as for other curve pools, there is an `ADMIN_FEE`, which is h
 
 
 ### `fee`
-:::description[`TriCrypto.fee() -> uint256:`]
+::::description[`TriCrypto.fee() -> uint256:`]
 
 
 Getter for the fee charged by the pool at the current state.
 
 Returns: fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -2876,15 +2683,6 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
         10**18
     )
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="math-vy" label="Math.vy">
-
-
 ```vyper
 @external
 @view
@@ -2918,16 +2716,9 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 
     return K
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2936,22 +2727,20 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `mid_fee`
-:::description[`TriCrypto.mid_fee() -> uint256:`]
+::::description[`TriCrypto.mid_fee() -> uint256:`]
 
 
 Getter for the current `mid_fee`. This is the minimum fee and is charged when the pool is completely balanced.
 
 Returns: mid fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2968,10 +2757,9 @@ def mid_fee() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2980,22 +2768,20 @@ def mid_fee() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `out_fee`
-:::description[`TriCrypto.out_fee() -> uint256:`]
+::::description[`TriCrypto.out_fee() -> uint256:`]
 
 
 Getter for the "out-fee". This is the maximum fee and is charged when the pool is completely imbalanced.
 
 Returns: out fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3012,10 +2798,9 @@ def out_fee() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3024,22 +2809,20 @@ def out_fee() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `fee_gamma`
-:::description[`TriCrypto.fee_gamma() -> uint256:`]
+::::description[`TriCrypto.fee_gamma() -> uint256:`]
 
 
 Getter for the current "fee-gamma". This parameter modifies the rate at which fees rise as imbalance intensifies. Smaller values result in rapid fee hikes with growing imbalances, while larger values lead to more gradual increments in fees as imbalance expands.
 
 Returns: fee gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3056,10 +2839,9 @@ def fee_gamma() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3068,22 +2850,20 @@ def fee_gamma() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `packed_fee_params`
-:::description[`TriCrypto.packed_fee_params() -> uint256: view`]
+::::description[`TriCrypto.packed_fee_params() -> uint256: view`]
 
 
 Getter for the packed fee parameters.
 
 Returns: packed fee params (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3091,10 +2871,9 @@ packed_fee_params: public(uint256)  # <---- Packs mid_fee, out_fee, fee_gamma.
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3103,22 +2882,20 @@ packed_fee_params: public(uint256)  # <---- Packs mid_fee, out_fee, fee_gamma.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `fee_receiver`
-:::description[`TriCrypto.fee_receiver() -> address: view`]
+::::description[`TriCrypto.fee_receiver() -> address: view`]
 
 
 Getter for the fee receiver of the admin fees. This address is set within the Tricrypto Factory. Every pool created through the Factory has the same fee receiver.
 
 Returns: fee receiver (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3138,10 +2915,9 @@ def fee_receiver() -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3150,22 +2926,20 @@ def fee_receiver() -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ADMIN_FEE`
-:::description[`TriCrypto.ADMIN_FEE() -> uint256: view`]
+::::description[`TriCrypto.ADMIN_FEE() -> uint256: view`]
 
 
 Getter for the admin fee of the pool. This value is hardcoded to 50% (5000000000).
 
 Returns: admin fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3173,10 +2947,9 @@ ADMIN_FEE: public(constant(uint256)) = 5 * 10**9  # <----- 50% of earned fees.  
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3185,28 +2958,20 @@ ADMIN_FEE: public(constant(uint256)) = 5 * 10**9  # <----- 50% of earned fees.  
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `claim_admin_fees`
-:::description[`CryptoSwap.claim_admin_fees() -> uint256:`]
+::::description[`CryptoSwap.claim_admin_fees() -> uint256:`]
 
 
 Function to claim the accumulated admin fees from the pool and send them to the fee receiver.
 
 Emits: `ClaimAdminFee`
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 event ClaimAdminFee:
     admin: indexed(address)
@@ -3293,11 +3058,6 @@ def _claim_admin_fees():
     self.virtual_price = 10**18 * self.get_xcp(D) / self.totalSupply
     self.xcp_profit_a = xcp_profit  # <------------ Cache last claimed profit.
 ```
-
-<Tabs>
-<TabItem value="math-vy" label="Math.vy">
-
-
 ```vyper
 @external
 @view
@@ -3501,19 +3261,9 @@ def newton_D(
     raise "Did not converge"
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3521,22 +3271,20 @@ def newton_D(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_profit`
-:::description[`TriCrypto.xcp_profit() -> uint256:`]
+::::description[`TriCrypto.xcp_profit() -> uint256:`]
 
 
 Getter for the current pool profits.
 
 Returns: current profits (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3544,10 +3292,9 @@ xcp_profit: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3556,22 +3303,20 @@ xcp_profit: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_profit_a`
-:::description[`TriCrypto.xcp_profit_a() -> uint256:`]
+::::description[`TriCrypto.xcp_profit_a() -> uint256:`]
 
 
 Getter for the full profit at the last claim of admin fees.
 
 Returns: profit at last claim (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3579,10 +3324,9 @@ xcp_profit_a: public(uint256)  # <--- Full profit at last claim of admin fees.
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3591,19 +3335,20 @@ xcp_profit_a: public(uint256)  # <--- Full profit at last claim of admin fees.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Price Scaling**Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
+## **Price Scaling**
+
+Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
 
 ### `price_scale`
-:::description[`TriCrypto.price_scale(k: uint256) -> uint256:`]
+::::description[`TriCrypto.price_scale(k: uint256) -> uint256:`]
 
 
 Getter for the price scale of the coin at index `k` with regard to the coin at index 0. Price scale determines the price band around which liquidity is concentrated and is conditionally updated when calling the functions `add_liquidity`, `remove_liquidity_one_coin`, `exchange`, `exchange_underlying` or `exchange_extended`.
@@ -3614,8 +3359,7 @@ Returns: last price (`uint256`).
 | ------ | -------- | ------------------- |
 | `k`    | `uint256`| Index of the coin. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3842,10 +3586,9 @@ def tweak_price(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3854,30 +3597,25 @@ def tweak_price(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `allowed_extra_profit`
-:::description[`TriCrypto.allowed_extra_profit() -> uint256:`]
+::::description[`TriCrypto.allowed_extra_profit() -> uint256:`]
 
 
 Getter for the allowed extra profit value.
 
 Returns: allowed extra profit (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
 packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 #               parameters allowed_extra_profit, adjustment_step, and ma_time.
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 
 @view
@@ -3891,10 +3629,9 @@ def allowed_extra_profit() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3903,22 +3640,20 @@ def allowed_extra_profit() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `adjustment_step`
-:::description[`TriCrypto.adjustment_step() -> uint256:`]
+::::description[`TriCrypto.adjustment_step() -> uint256:`]
 
 
 Getter for the adjustment step value.
 
 Returns: adjustment step (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3936,10 +3671,9 @@ def adjustment_step() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3948,22 +3682,20 @@ def adjustment_step() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `packed_rebalancing_params`
-:::description[`TriCrypto.packed_rebalancing_params() -> uint256: view`]
+::::description[`TriCrypto.packed_rebalancing_params() -> uint256: view`]
 
 
 Getter for the packed rebalancing parameters, consisting of `allowed_extra_profit`, `adjustment_step`, and `ma_time`.
 
 Returns: packed rebalancing parameters (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3972,10 +3704,9 @@ packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3984,30 +3715,30 @@ packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Bonding Curve Parameters**A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../overview.md#bonding-curve-parameters).
+## **Bonding Curve Parameters**
+
+A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../overview.md#bonding-curve-parameters).
 
 Bonding curve parameters `A` and `gamma` values are [upgradable](./admin-controls.md#amplification-coefficient-and-gamma) by the the pools admin.
 
 
 ### `A`
-:::description[`CryptoSwap.A() -> uint256:`]
+::::description[`CryptoSwap.A() -> uint256:`]
 
 
 Getter for the current pool amplification parameter.
 
 Returns: A (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -4047,10 +3778,9 @@ def _A_gamma() -> uint256[2]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4059,22 +3789,20 @@ def _A_gamma() -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `gamma`
-:::description[`CryptoSwap.gamma() -> uint256:`]
+::::description[`CryptoSwap.gamma() -> uint256:`]
 
 
 Getter for the current pool gamma parameter.
 
 Returns: gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -4114,10 +3842,9 @@ def _A_gamma() -> uint256[2]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4126,17 +3853,18 @@ def _A_gamma() -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Contract Info Methods**### `coins`
-:::description[`TriCrypto.coins(arg0: uint256) -> uint256: view`]
+## **Contract Info Methods**
+
+### `coins`
+::::description[`TriCrypto.coins(arg0: uint256) -> uint256: view`]
 
 
 Getter for the coin at index `arg0`.
@@ -4147,8 +3875,7 @@ Returns: coin (`address`).
 | ------ | -------- | ------------------- |
 | `k`    | `uint256`| Index of the coin.  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -4156,10 +3883,9 @@ coins: public(immutable(address[N_COINS]))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4168,14 +3894,13 @@ coins: public(immutable(address[N_COINS]))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `balances`
-:::description[`TriCrypto.balances(arg0: uint256) -> uint256: view`]
+::::description[`TriCrypto.balances(arg0: uint256) -> uint256: view`]
 
 
 Getter for the coin balance at index `arg0`.
@@ -4186,8 +3911,7 @@ Returns: coin balance (`address`).
 | ------ | -------- | ------------------- |
 | `k`    | `uint256`| Index of the coin.  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -4195,10 +3919,9 @@ balances: public(uint256[N_COINS])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4207,22 +3930,20 @@ balances: public(uint256[N_COINS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `precisions`
-:::description[`TriCrypto.precisions() -> uint256[N_COINS]: view`]
+::::description[`TriCrypto.precisions() -> uint256[N_COINS]: view`]
 
 
 Getter for the precision of each coin in the pool.
 
 Returns: precisions (`uint256[N_COINS]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -4242,10 +3963,9 @@ def precisions() -> uint256[N_COINS]:  # <-------------- For by view contract.
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4254,22 +3974,20 @@ def precisions() -> uint256[N_COINS]:  # <-------------- For by view contract.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `factory`
-:::description[`TriCrypto.factory() -> address: view`]
+::::description[`TriCrypto.factory() -> address: view`]
 
 
 Getter for the Factory contract.
 
 Returns: Factory (`address`)
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -4277,10 +3995,9 @@ factory: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4289,22 +4006,20 @@ factory: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `MATH`
-:::description[`TriCrypto.MATH() -> address: view`]
+::::description[`TriCrypto.MATH() -> address: view`]
 
 
 Getter for the [math utility contract](../utility-contracts/math.md).
 
 Returns: math contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -4312,10 +4027,9 @@ factory: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4324,22 +4038,20 @@ factory: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `WETH20`
-:::description[`TriCrypto.WETH20() -> address: view`]
+::::description[`TriCrypto.WETH20() -> address: view`]
 
 
 Getter for the wETH contract.
 
 Returns: wETH contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -4347,10 +4059,9 @@ WETH20: public(immutable(address))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4358,8 +4069,7 @@ WETH20: public(immutable(address))
 '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

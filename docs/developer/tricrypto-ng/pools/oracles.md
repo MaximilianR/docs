@@ -1,7 +1,5 @@
 # Tricrypto-NG Oracles
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 *Tricrypto-NG pools have the following oracle:*
 
@@ -369,8 +367,10 @@ def _unpack_prices(_packed_prices: uint256) -> uint256[2]:
 ---
 
 
-## **Oracle and Price Methods**### `price_oracle`
-:::description[`CurveTricryptoOptimizedWETH.price_oracle(k: uint256) -> uint256:`]
+## **Oracle and Price Methods**
+
+### `price_oracle`
+::::description[`CurveTricryptoOptimizedWETH.price_oracle(k: uint256) -> uint256:`]
 
 
 :::warning[Revert]
@@ -390,14 +390,7 @@ Returns: EMA price of coin `k` (`uint256`).
 | ------ | --------- | ------------------ |
 | `k`    | `uint256` | Index of the coin. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 price_scale_packed: uint256  # <------------------------ Internal price scale.
 price_oracle_packed: uint256  # <------- Price target given by moving average.
@@ -442,16 +435,9 @@ def price_oracle(k: uint256) -> uint256:
 
     return price_oracle
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveTricryptoOptimizedWETH.price_oracle(0)
@@ -462,14 +448,13 @@ def price_oracle(k: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_scale`
-:::description[`CurveTricryptoOptimizedWETH.price_scale(k: uint256) -> uint256:`]
+::::description[`CurveTricryptoOptimizedWETH.price_scale(k: uint256) -> uint256:`]
 
 
 :::warning[Revert]
@@ -487,14 +472,7 @@ Returns: price scale of the coin `k` (`uint256`).
 | ------ | -------- | ------------------ |
 | `k`    | `uint256`| Index of the coin. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 price_scale_packed: uint256  # <------------------------ Internal price scale.
 
@@ -511,16 +489,9 @@ def price_scale(k: uint256) -> uint256:
     """
     return self._unpack_prices(self.price_scale_packed)[k]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveTricryptoOptimizedWETH.price_scale(0)
@@ -531,14 +502,13 @@ def price_scale(k: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_prices`
-:::description[`CurveTricryptoOptimizedWETH.last_prices(k: uint256) -> uint256:`]
+::::description[`CurveTricryptoOptimizedWETH.last_prices(k: uint256) -> uint256:`]
 
 
 :::warning[Revert]
@@ -556,14 +526,7 @@ Returns: last stored spot price of coin `k` (`uint256`).
 | ------ | -------- | ------------------ |
 | `k`    | `uint256`| Index of the coin. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 last_prices_packed: uint256
 
@@ -599,16 +562,9 @@ def _unpack_prices(_packed_prices: uint256) -> uint256[2]:
 
     return unpacked_prices
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveTricryptoOptimizedWETH.last_prices(0)
@@ -619,41 +575,26 @@ def _unpack_prices(_packed_prices: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_prices_timestamp`
-:::description[`CurveTricryptoOptimizedWETH.last_prices_timestamp() -> uint256: view`]
+::::description[`CurveTricryptoOptimizedWETH.last_prices_timestamp() -> uint256: view`]
 
 
 Getter for the timestamp when the EMA price oracle was updated the last time. 
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 last_prices_timestamp: public(uint256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveTricryptoOptimizedWETH.last_prices_timestamp()
@@ -661,28 +602,20 @@ last_prices_timestamp: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ma_time`
-:::description[`CurveTricryptoOptimizedWETH.ma_time() -> uint256: view`]
+::::description[`CurveTricryptoOptimizedWETH.ma_time() -> uint256: view`]
 
 
 Getter for the exponential moving average time for the price oracle. This value can be adjusted via `commit_new_parameters()`, as detailed in the [admin controls](./admin-controls.md#commit_new_parameters) section.
 
 Returns: periodicity of the EMA (`uint256`) 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 #               parameters allowed_extra_profit, adjustment_step, and ma_time.
@@ -698,16 +631,9 @@ def ma_time() -> uint256:
     """
     return self._unpack(self.packed_rebalancing_params)[2] * 694 / 1000
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveTricryptoOptimizedWETH.ma_time()
@@ -715,14 +641,13 @@ def ma_time() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `lp_price`
-:::description[`CurveTricryptoOptimizedWETH.lp_price() -> uint256: view`]
+::::description[`CurveTricryptoOptimizedWETH.lp_price() -> uint256: view`]
 
 
 Getter for the price of the LP token, calculated as follows:
@@ -731,14 +656,7 @@ $$\text\{lp token price\} = 3 \times \text\{virtual_price\} \times \sqrt[3]\{\fr
 
 Returns: LP token price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 price_oracle_packed: uint256  # <------- Price target given by moving average.
             
@@ -759,16 +677,9 @@ def lp_price() -> uint256:
         3 * self.virtual_price * MATH.cbrt(price_oracle[0] * price_oracle[1])
     ) / 10**24
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveTricryptoOptimizedWETH.lp_price()
@@ -776,28 +687,20 @@ def lp_price() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_virtual_price`
-:::description[`CurveTricryptoOptimizedWETH.get_virtual_price() -> uint256:`]
+::::description[`CurveTricryptoOptimizedWETH.get_virtual_price() -> uint256:`]
 
 
 Function to calculate the current virtual price of the pool 's LP token.
 
 Returns: virtual price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 totalSupply: public(uint256)
 
@@ -813,16 +716,9 @@ def get_virtual_price() -> uint256:
     """
     return 10**18 * self.get_xcp(self.D) / self.totalSupply
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveTricryptoOptimizedWETH.get_virtual_price()
@@ -830,42 +726,27 @@ def get_virtual_price() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `virtual_price`
-:::description[`CurveTricryptoOptimizedWETH.virtual_price() -> uint256: view`]
+::::description[`CurveTricryptoOptimizedWETH.virtual_price() -> uint256: view`]
 
 
 Getter for the cached virtual price.
 
 Returns: cached virtual price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetricryptooptimizedweth-vy" label="CurveTricryptoOptimizedWETH.vy">
-
-
+<SourceCode>
 ```vyper
 virtual_price: public(uint256)  # <------ Cached (fast to read) virtual price.
 #                          The cached `virtual_price` is also used internally.
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> CurveTricryptoOptimizedWETH.virtual_price()
@@ -873,16 +754,17 @@ virtual_price: public(uint256)  # <------ Cached (fast to read) virtual price.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Updating Oracles and Other Storage Variables**The EMA oracle and other storage variables are updated each time the internal `tweak_price` function is called. This function tweaks`price_oracle` and `last_price`, and conditionally adjusts `price_scale`.
+## **Updating Oracles and Other Storage Variables**
+
+The EMA oracle and other storage variables are updated each time the internal `tweak_price` function is called. This function tweaks`price_oracle` and `last_price`, and conditionally adjusts `price_scale`.
 
 The `tweak_price` function is called whenever there is an unbalanced liquidity operation, including:
 

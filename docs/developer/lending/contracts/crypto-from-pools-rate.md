@@ -3,7 +3,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This oracle contract **chains together two oracles from two different Curve liquidity pools and optionally applies `stored_rates` to tokens with an existing rate oracle**. By chaining oracles together, it facilitates the creation of lending oracle contracts without requiring the collateral asset to be paired directly against crvUSD. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvUSD/priceaggregator.md), but experience has shown that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
+This oracle contract **chains together two oracles from two different Curve liquidity pools and optionally applies `stored_rates` to tokens with an existing rate oracle**. By chaining oracles together, it facilitates the creation of lending oracle contracts without requiring the collateral asset to be paired directly against crvUSD. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvusd/price-aggregator.md), but experience has shown that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
 
 These kinds of oracle contracts **need to be deployed manually**, as there is currently no `Factory` to do so.
 
@@ -193,7 +193,9 @@ def __init__(
 ---
 
 
-## **Oracle Price**The price is determined by combining two different oracle prices. When necessary, `stored_rates` are used to adjust the final computed price from these combined oracles.
+## **Oracle Price**
+
+The price is determined by combining two different oracle prices. When necessary, `stored_rates` are used to adjust the final computed price from these combined oracles.
 
 :::example[Example]
 
@@ -218,7 +220,7 @@ Returns: oracle price (`uint256`).
 <summary>Source code</summary>
 
 
-The `CryptoFromPoolsRate.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvUSD/priceaggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolsRateWAgg.vy` oracle contract.
+The `CryptoFromPoolsRate.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolsRateWAgg.vy` oracle contract.
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
@@ -411,7 +413,7 @@ Returns: oracle price (`uint256`).
 <summary>Source code</summary>
 
 
-The `CryptoFromPoolsRate.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvUSD/priceaggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolsRateWAgg.vy` oracle contract.
+The `CryptoFromPoolsRate.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolsRateWAgg.vy` oracle contract.
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
@@ -581,7 +583,9 @@ def _stored_rate() -> (uint256, bool):
 ---
 
 
-## **Rates**The oracle contract utilizes the `stored_rates` from a stableswap pool and considers these rates accordingly. The application of these rates is governed by the `USE_RATES` variable. If set to `true`, the rates are applied; if set to `false`, they are not.
+## **Rates**
+
+The oracle contract utilizes the `stored_rates` from a stableswap pool and considers these rates accordingly. The application of these rates is governed by the `USE_RATES` variable. If set to `true`, the rates are applied; if set to `false`, they are not.
 
 <details>
 <summary>Source code</summary>
@@ -886,7 +890,9 @@ USE_RATES: public(immutable(DynArray[bool, MAX_POOLS]))
 ---
 
 
-## **Contract Info Methods**### `POOLS`
+## **Contract Info Methods**
+
+### `POOLS`
 :::description[`CryptoFromPoolsRate.POOLS(arg0: uint256) -> address: view`]
 
 

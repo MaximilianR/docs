@@ -1,9 +1,9 @@
-# StableSwap-NG Factory: Deployer API
+# Stableswap-NG Factory: Deployer API
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-## **Name and Symbol**The input values of `_name` or `_symbol` are obviously non-trivial for the performance of the pool. These parameters should visualize, what kind of tokens are included in the pool.
+## **Name and Symbol**
+
+The input values of `_name` or `_symbol` are obviously non-trivial for the performance of the pool. These parameters should visualize, what kind of tokens are included in the pool.
 
 ```shell
 _name = "rETH/wETH Pool"
@@ -53,7 +53,9 @@ The time window of the moving average exponential oracle is calculated using `ti
 
 ---
 
-## **Implemention ID**Pools are **created from implementation contracts**(blueprints). These contracts are added to the Factory and must be choosen when deploying a pool.
+## **Implemention ID**
+
+Pools are **created from implementation contracts**(blueprints). These contracts are added to the Factory and must be choosen when deploying a pool.
 
 :::warning
 
@@ -75,7 +77,9 @@ To query the factory-specific implementations:
 
 ---
 
-## **Assets Types**Stableswap-NG infrastructure supports pools with the following asset types:
+## **Assets Types**
+
+Stableswap-NG infrastructure supports pools with the following asset types:
 
 | Asset Type  | Description            |
 | :---------: | ---------------------- |
@@ -166,7 +170,9 @@ _oracles = ["0x0000000000000000000000000000000000000000", "0xae78736cd615f374d30
 ---
 
 
-## **Deploying Plain- and Metapools**### `deploy_plain_pool`
+## **Deploying Plain- and Metapools**
+
+### `deploy_plain_pool`
 
 *Parameter limitations when deploying a plain pool:*
 
@@ -178,7 +184,7 @@ _oracles = ["0x0000000000000000000000000000000000000000", "0xae78736cd615f374d30
 - No duplicate coins.
 - Valid implementation index.
 
-:::description[`Factory.deploy_plain_pool(_name: String[32], _symbol: String[10], _coins: DynArray[address, MAX_COINS], _A: uint256, _fee: uint256, _offpeg_fee_multiplier: uint256, _ma_exp_time: uint256, _implementation_idx: uint256, _asset_types: DynArray[uint8, MAX_COINS], _method_ids: DynArray[bytes4, MAX_COINS], _oracles: DynArray[address, MAX_COINS], ) -> address:`]
+::::description[`Factory.deploy_plain_pool(_name: String[32], _symbol: String[10], _coins: DynArray[address, MAX_COINS], _A: uint256, _fee: uint256, _offpeg_fee_multiplier: uint256, _ma_exp_time: uint256, _implementation_idx: uint256, _asset_types: DynArray[uint8, MAX_COINS], _method_ids: DynArray[bytes4, MAX_COINS], _oracles: DynArray[address, MAX_COINS], ) -> address:`]
 
 
 Function to deploy a stableswap-ng plain pool. The pool is created from a blueprint contract.
@@ -197,7 +203,7 @@ Emits: `PlainPoolDeployed`
 | `_offpeg_fee_multiplier` | `uint256`               | Off-peg fee multiplier |
 | `_ma_exp_time`       | `uint256`                    | MA time; set as time_in_seconds / ln(2) |
 | `_implementation_idx` | `uint256`                  | Index of the implementation to use |
-| `_asset_types`       | `DynArray[uint8, MAX_COINS]` | Asset type of the pool as an integer; more [here](../../stableswap-exchange/stableswap-ng/pools/overview.md#supported-assets) |
+| `_asset_types`       | `DynArray[uint8, MAX_COINS]` | Asset type of the pool as an integer; more [here](../../stableswap-ng/pools/overview.md#supported-assets) |
 | `_method_ids`        | `DynArray[bytes4, MAX_COINS]` | Array of first four bytes of the Keccak-256 hash of the function signatures of the oracle addresses that give rate oracles |
 | `_oracles`           | `DynArray[address, MAX_COINS]` | Array of rate oracle addresses |
 
@@ -208,14 +214,7 @@ There might be multiple pool implementations. To query all available ones, see [
 
 :::
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 event PlainPoolDeployed:
     coins: DynArray[address, MAX_COINS]
@@ -340,21 +339,14 @@ def deploy_plain_pool(
     log PlainPoolDeployed(_coins, _A, _fee, msg.sender)
     return pool
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> Factory.deploy_plain_pool(
-    "crvUSD/USDT",  # _name
+    "crvusd/USDT",  # _name
     "crvusd-usdt",  # _symbol
     [ # coins:
         "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E", # crvusd 
@@ -374,11 +366,10 @@ def deploy_plain_pool(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `deploy_metapool`
 
@@ -390,7 +381,7 @@ def deploy_plain_pool(
 - Valid implementation index.
 - Maximum of 18 decimals for a coin.
 
-:::description[`Factory.deploy_metapool(_base_pool: address, _name: String[32], _symbol: String[10], _coin: address, _A: uint256, _fee: uint256, _offpeg_fee_multiplier: uint256, _ma_exp_time: uint256, _implementation_idx: uint256, _asset_type: uint8, _method_id: bytes4, _oracle: address) -> address:`]
+::::description[`Factory.deploy_metapool(_base_pool: address, _name: String[32], _symbol: String[10], _coin: address, _A: uint256, _fee: uint256, _offpeg_fee_multiplier: uint256, _ma_exp_time: uint256, _implementation_idx: uint256, _asset_type: uint8, _method_id: bytes4, _oracle: address) -> address:`]
 
 
 Function to deploy a stableswap-ng metapool.
@@ -410,7 +401,7 @@ Emits: `MetaPoolDeployed`
 | `_offpeg_fee_multiplier` | `uint256` | Off-peg multiplier |
 | `_ma_exp_time`       | `uint256`     | MA time; set as time_in_seconds / ln(2) |
 | `_implementation_idx` | `uint256`    | Index of the implementation to use |
-| `_asset_type`        | `uint8`       | Asset type of the pool as an integer; more [here](../../stableswap-exchange/stableswap-ng/pools/overview.md#supported-assets) |
+| `_asset_type`        | `uint8`       | Asset type of the pool as an integer; more [here](../../stableswap-ng/pools/overview.md#supported-assets) |
 | `_method_id`         | `bytes4`      | First four bytes of the Keccak-256 hash of the function signatures of the oracle addresses that give rate oracles |
 | `_oracle`            | `address`     | Rate oracle address |
 
@@ -421,14 +412,7 @@ There might be multiple metapool implementations. To query all available ones, s
 
 :::
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 event MetaPoolDeployed:
     coin: address
@@ -564,22 +548,15 @@ def deploy_metapool(
     log MetaPoolDeployed(_coin, _base_pool, _A, _fee, msg.sender)
     return pool
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> Factory.deploy_metapool(
     "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7", # _base_pool
-    "crvUSD/3CRV", # _name
+    "crvusd/3CRV", # _name
     "crvusd-3crv" # _symbol
     "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E", # _coin
     1500 # _A
@@ -596,19 +573,20 @@ def deploy_metapool(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
-## **Deploying Liquidity Gauges**Liquidity gauges for pools can also be deployed from this contract, but deploying gauges through a factory contract is only possible using the same factory contract that was used for deploying the pool. This feature is only available on the Ethereum mainnet, as liquidity gauges on sidechains need to be deployed through the [RootChainGaugeFactory](../../liquidity-gauges-and-minting-crv/xchain-gauges/RootGaugeFactory.md).
+## **Deploying Liquidity Gauges**
+
+Liquidity gauges for pools can also be deployed from this contract, but deploying gauges through a factory contract is only possible using the same factory contract that was used for deploying the pool. This feature is only available on the Ethereum mainnet, as liquidity gauges on sidechains need to be deployed through the [RootChainGaugeFactory](../../gauges/xchain-gauges/root-gauge-factory.md).
 
 
 ### `deploy_gauge`
-:::description[`Factory.deploy_gauge(_pool: address) -> address:`]
+::::description[`Factory.deploy_gauge(_pool: address) -> address:`]
 
 
 Function to deploy a gauge. The Factory utilizes the `gauge_implementation` to create the contract from a blueprint.
@@ -621,14 +599,7 @@ Emits: `LiquidityGaugeDeployed`
 | -------- | --------- | ------------------------------------- |
 | `_pool`  | `address` | Pool address to deploy the gauge for  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 event LiquidityGaugeDeployed:
     pool: address
@@ -652,16 +623,9 @@ def deploy_gauge(_pool: address) -> address:
     log LiquidityGaugeDeployed(_pool, gauge)
     return gauge
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -670,8 +634,7 @@ def deploy_gauge(_pool: address) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,7 +1,5 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-The simplest Curve pool is a plain pool, which is an implementation of the StableSwap invariant for two or more tokens. 
+The simplest Curve pool is a plain pool, which is an implementation of the Stableswap invariant for two or more tokens. 
 The key characteristic of a plain pool is that the pool contract holds all deposited assets at **all**times.
 
 An example of a Curve plain pool is [3Pool](https://github.com/curvefi/curve-contract/tree/master/contracts/pools/3pool), 
@@ -20,9 +18,11 @@ pools may be viewed on
 [GitHub](https://github.com/curvefi/curve-contract/blob/master/contracts/pool-templates/base/SwapTemplateBase.vy).
 
 
-## **Pool Info Methods**### `coins`
+## **Pool Info Methods**
 
-:::description[`StableSwap.coins(i: uint256) → address: view`]
+### `coins`
+
+::::description[`StableSwap.coins(i: uint256) → address: view`]
 
 
 Getter for the array of swappable coins within the pool.
@@ -33,8 +33,7 @@ Returns: coin address (`address`) for coin index `i`.
 | ----------- | -------| ----|
 | `i`       |  `uint256` | Coin index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 8 17 23 24 25"
@@ -73,10 +72,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -85,15 +83,14 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `balances`
 
-:::description[`StableSwap.balances(i: uint256) → uint256: view`]
+::::description[`StableSwap.balances(i: uint256) → uint256: view`]
 
 
 Getter for the pool balances array.
@@ -104,8 +101,7 @@ Returns: Balance of coin (`uint256`) at index `i`.
 | ----------- | -------| ----|
 | `i`       |  `uint256` | Coin index |
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -114,23 +110,21 @@ Returns: Balance of coin (`uint256`) at index `i`.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `owner`
 
-:::description[`StableSwap.owner() → address: view`]
+::::description[`StableSwap.owner() → address: view`]
 
 
 Getter for the admin/owner of the pool contract.
 
 Returns: `address` of the admin of the pool contract.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 7 16 30"
@@ -169,10 +163,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -181,23 +174,21 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `lp_token`
 
-:::description[`StableSwap.lp_token() → address: view`]
+::::description[`StableSwap.lp_token() → address: view`]
 
 
 Getter for the LP token of the pool.
 
 Returns: `address` of the `lp_token`.
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -206,8 +197,7 @@ Returns: `address` of the `lp_token`.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -218,17 +208,16 @@ In older Curve pools ``lp_token`` may not be ``public`` and thus not visible.
 :::
 
 
-:::
+::::
 
 ### `A (Amplification factor)`
 
-:::description[`StableSwap.A() → uint256: view`]
+::::description[`StableSwap.A() → uint256: view`]
 
 
 Getter for the amplification coefficient of the pool.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -243,10 +232,9 @@ def A() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -255,8 +243,7 @@ def A() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -267,17 +254,16 @@ The amplification coefficient is scaled by ``A_PRECISION`` (``=100``)
 :::
 
 
-:::
+::::
 
 ### `A_precise`
 
-:::description[`StableSwap.A_precise() → uint256: view`]
+::::description[`StableSwap.A_precise() → uint256: view`]
 
 
 Getter for the unscaled amplification coefficient of the pool.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -288,10 +274,9 @@ def A_precise() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -300,21 +285,19 @@ def A_precise() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_virtual_price`
 
-:::description[`StableSwap.get_virtual_price() → uint256: view`]
+::::description[`StableSwap.get_virtual_price() → uint256: view`]
 
 
 Current virtual price of the pool LP token relative to the underlying pool assets.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -334,10 +317,9 @@ def get_virtual_price() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -346,8 +328,7 @@ def get_virtual_price() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -360,17 +341,16 @@ by multiplying it with the price of the underlying assets.
 :::
 
 
-:::
+::::
 
 ### `fee`
 
-:::description[`StableSwap.fee() → uint256: view`]
+::::description[`StableSwap.fee() → uint256: view`]
 
 
 The pool swap fee.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 11 20 28"
@@ -409,10 +389,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -421,8 +400,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -433,17 +411,16 @@ The method returns ``fee`` as an integer with ``1e10`` precision.
 :::
 
 
-:::
+::::
 
 ### `admin_fee`
 
-:::description[`StableSwap.admin_fee() → uint256: view`]
+::::description[`StableSwap.admin_fee() → uint256: view`]
 
 
 The percentage of the swap fee that is taken as an admin fee.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 12 21 29"
@@ -482,10 +459,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -494,8 +470,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -507,11 +482,13 @@ def __init__(
 :::
 
 
-:::
+::::
 
-## **Exchange Methods**### `get_dy`
+## **Exchange Methods**
 
-:::description[`StableSwap.get_dy(i: int128, j: int128, _dx: uint256) → uint256: view`]
+### `get_dy`
+
+::::description[`StableSwap.get_dy(i: int128, j: int128, _dx: uint256) → uint256: view`]
 
 
 Get the amount of coin ``j`` one would receive for swapping ``dx`` of coin ``i``.
@@ -522,8 +499,7 @@ Get the amount of coin ``j`` one would receive for swapping ``dx`` of coin ``i``
 | `j`       |  `uint128` | Index of coin to swap to |
 | `dx`       |  `uint256` | Amount of coin `i` to swap |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -541,10 +517,9 @@ def get_dy(i: int128, j: int128, dx: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -553,8 +528,7 @@ def get_dy(i: int128, j: int128, dx: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -566,11 +540,11 @@ Note: In this example,  the ``EURS Pool`` coins decimals for ``coins(0)`` and ``
 :::
 
 
-:::
+::::
 
 ### `exchange`
 
-:::description[`StableSwap.exchange(i: int128, j: int128, dx: uint256, min_dy: uint256) → uint256`]
+::::description[`StableSwap.exchange(i: int128, j: int128, dx: uint256, min_dy: uint256) → uint256`]
 
 
 Perform an exchange between two coins.
@@ -587,8 +561,7 @@ Returns the actual amount of coin ``j`` received. Index values can be found via 
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>TokenExchange</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -660,10 +633,9 @@ def exchange(i: int128, j: int128, dx: uint256, min_dy: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -672,15 +644,16 @@ def exchange(i: int128, j: int128, dx: uint256, min_dy: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Add/Remove Liquidity Methods**### `calc_token_amount`
+## **Add/Remove Liquidity Methods**
 
-:::description[`StableSwap.calc_token_amount(_amounts: uint256[N_COINS], _: bool) → uint256: view`]
+### `calc_token_amount`
+
+::::description[`StableSwap.calc_token_amount(_amounts: uint256[N_COINS], _: bool) → uint256: view`]
 
 
 Calculate addition or reduction in token supply from a deposit or withdrawal. Returns the expected amount of LP 
@@ -693,8 +666,7 @@ tokens received. This calculation accounts for slippage, but not fees.
 | `amounts`       |  `uint256[N_COINS]` | Amount of each coin being deposited |
 | `is_deposit`       |  `bool` | Set True for deposits, False for withdrawals |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -728,10 +700,9 @@ def calc_token_amount(amounts: uint256[N_COINS], is_deposit: bool) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -740,15 +711,14 @@ def calc_token_amount(amounts: uint256[N_COINS], is_deposit: bool) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `add_liquidity`
 
-:::description[`StableSwap.add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256) → uint256`]
+::::description[`StableSwap.add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256) → uint256`]
 
 
 Deposit coins into the pool. Returns the amount of LP tokens received in exchange for the deposited tokens.
@@ -760,8 +730,7 @@ Deposit coins into the pool. Returns the amount of LP tokens received in exchang
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>AddLiquidity</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -855,10 +824,9 @@ def add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256) -> uint25
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -866,15 +834,14 @@ def add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256) -> uint25
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity`
 
-:::description[`StableSwap.remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS]) → uint256[N_COINS]`]
+::::description[`StableSwap.remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS]) → uint256[N_COINS]`]
 
 
 Withdraw coins from the pool. Returns a list of the amounts for each coin that was withdrawn.
@@ -886,8 +853,7 @@ Withdraw coins from the pool. Returns a list of the amounts for each coin that w
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>RemoveLiquidity</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -931,10 +897,9 @@ def remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS]) -> uint256
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -942,15 +907,14 @@ def remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS]) -> uint256
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity_imbalance`
 
-:::description[`StableSwap.remove_liquidity_imbalance(amounts: uint256[N_COINS], max_burn_amount: uint256) → uint256`]
+::::description[`StableSwap.remove_liquidity_imbalance(amounts: uint256[N_COINS], max_burn_amount: uint256) → uint256`]
 
 
 Withdraw coins from the pool in an imbalanced amount. Returns a list of the amounts for each coin that was withdrawn.
@@ -962,8 +926,7 @@ Withdraw coins from the pool in an imbalanced amount. Returns a list of the amou
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>RemoveLiquidityImbalance</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1033,10 +996,9 @@ def remove_liquidity_imbalance(amounts: uint256[N_COINS], max_burn_amount: uint2
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1044,15 +1006,14 @@ def remove_liquidity_imbalance(amounts: uint256[N_COINS], max_burn_amount: uint2
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_withdraw_one_coin`
 
-:::description[`StableSwap.calc_withdraw_one_coin(_token_amount: uint256, i: int128) → uint256`]
+::::description[`StableSwap.calc_withdraw_one_coin(_token_amount: uint256, i: int128) → uint256`]
 
 
 Calculate the amount received when withdrawing a single coin.
@@ -1062,8 +1023,7 @@ Calculate the amount received when withdrawing a single coin.
 | `_token_amount` | `uint256` | Amount of LP tokens to burn in the withdrawal |
 | `i` | `int128` | Index value of the coin to withdraw |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1112,10 +1072,9 @@ def calc_withdraw_one_coin(_token_amount: uint256, i: int128) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1123,15 +1082,14 @@ def calc_withdraw_one_coin(_token_amount: uint256, i: int128) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity_one_coin`
 
-:::description[`StableSwap.remove_liquidity_one_coin(_token_amount: uint256, i: int128, _min_amount: uint256) → uint256`]
+::::description[`StableSwap.remove_liquidity_one_coin(_token_amount: uint256, i: int128, _min_amount: uint256) → uint256`]
 
 
 Withdraw a single coin from the pool. Returns the amount of coin ``i`` received.
@@ -1144,8 +1102,7 @@ Withdraw a single coin from the pool. Returns the amount of coin ``i`` received.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>RemoveLiquidityOne</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1189,18 +1146,16 @@ def remove_liquidity_one_coin(_token_amount: uint256, i: int128, _min_amount: ui
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> todo: remove_liquidity_one_coin console output example
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

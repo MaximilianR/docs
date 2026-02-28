@@ -1,11 +1,12 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Admin Controls
 
 The following are methods that **may only be called by the owner of the contract,**which is the **CurveOwnershipAgent**.
 
 
-## **Adjusting Debt Ceilings**### `set_debt_ceiling`
-:::description[`ControllerFactory.set_debt_ceiling(_to: address, debt_ceiling: uint256):`]
+## **Adjusting Debt Ceilings**
+
+### `set_debt_ceiling`
+::::description[`ControllerFactory.set_debt_ceiling(_to: address, debt_ceiling: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -26,12 +27,7 @@ Emits: `MintForMarket` or `RemoveFromMarket` or `SetDebtCeiling`
 | `_to` |  `address` | Address to set debt ceiling for |
 | `debt_ceiling` |  `uint256` | Maximum to be allowed to mint |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="controllerfactory-vy" label="ControllerFactory.vy">
+<SourceCode>
 
 
 ```vyper
@@ -86,13 +82,6 @@ def set_debt_ceiling(_to: address, debt_ceiling: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="stablecoin-vy" label="Stablecoin.vy">
-
-
 ```vyper
 @external
 def mint(_to: address, _value: uint256) -> bool:
@@ -122,28 +111,24 @@ def burn(_value: uint256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.set_debt_ceiling(20000000000000000000000000)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Fee Receiver**### `set_fee_receiver`
-:::description[`ControllerFactory.set_fee_receiver(fee_receiver: address):`]
+## **Fee Receiver**
+
+### `set_fee_receiver`
+::::description[`ControllerFactory.set_fee_receiver(fee_receiver: address):`]
 
 
 :::guard[Guarded Method]
@@ -161,8 +146,7 @@ Emits: `SetFeeReceiver`
 | ----------- | -------| ----|
 | `fee_receiver` |  `address` | Address of the receiver |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -185,24 +169,22 @@ def set_fee_receiver(fee_receiver: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.set_fee_receiver("0xeCb456EA5365865EbAb8a2661B0c503410e9B347")
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `collect_fees_above_ceiling`
-:::description[`ControllerFactory.collect_fees_above_ceiling(_to: address):`]
+::::description[`ControllerFactory.collect_fees_above_ceiling(_to: address):`]
 
 
 :::guard[Guarded Method]
@@ -218,8 +200,7 @@ Function to claim fees above the debt ceiling. This function will automatically 
 | ----------- | -------| ----|
 | `_to` |  `address` | Address of the controller |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -245,24 +226,24 @@ def collect_fees_above_ceiling(_to: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.collect_fees_above_ceiling("0x100dAa78fC509Db39Ef7D04DE0c1ABD299f4C6CE")
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Implementations (Blueprint Contracts)**### `set_implementations`
-:::description[`ControllerFactory.set_implementations(controller: address, amm: address):`]
+## **Implementations (Blueprint Contracts)**
+
+### `set_implementations`
+::::description[`ControllerFactory.set_implementations(controller: address, amm: address):`]
 
 
 :::guard[Guarded Method]
@@ -281,8 +262,7 @@ Emits: `SetImplementations`
 | `controller` |  `Address` | Address of the controller blueprint |
 | `amm` |  `Address` | Address of the amm blueprint |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -310,32 +290,31 @@ def set_implementations(controller: address, amm: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.set_implementation("new controller implementation, new amm implementation")
 ``` 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Admin Ownership**### `admin`
-:::description[`ControllerFactory.admin() -> address: view`]
+## **Admin Ownership**
+
+### `admin`
+::::description[`ControllerFactory.admin() -> address: view`]
 
 
 Getter for the admin of the contract.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -360,10 +339,9 @@ def __init__(stablecoin: ERC20,
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.admin()
@@ -371,14 +349,13 @@ def __init__(stablecoin: ERC20,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_admin`
-:::description[`ControllerFactory.set_admin(admin: address):`]
+::::description[`ControllerFactory.set_admin(admin: address):`]
 
 
 :::guard[Guarded Method]
@@ -396,8 +373,7 @@ Emits: `SetAdmin`
 | ----------- | -------| ----|
 | `admin` |  `address` | New admin |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -419,18 +395,16 @@ def set_admin(admin: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.set_admin("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

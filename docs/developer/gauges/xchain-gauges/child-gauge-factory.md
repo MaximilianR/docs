@@ -1,27 +1,24 @@
 # ChildGaugeFactory
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 The `ChildGaugeFactory` contract is used to deploy liquidity gauges on the child chains. It serves as some sort of registry for the child gauges by storing information such as the gauge data, minted amounts, and more. It is also the contract where CRV emissions are claimed from.
 
 
-<details open>
-<summary>`ChildGaugeFactory.vy`</summary>
+:::vyper[`ChildGaugeFactory.vy`]
 
-The source code for the `ChildGaugeFactory.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/ChildGaugeFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10` 
+The source code for the `ChildGaugeFactory.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/ChildGaugeFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`
 
-A full list of all deployed `ChildGaugeFactory` contracts can be found [here](../../deployments/crosschain.md#childgauge-factory).
+A full list of all deployed `ChildGaugeFactory` contracts can be found [here](../../deployments.md).
 
-
-</details>
+:::
 
 ---
 
-## **Deploy Child Gauge**Child gauges can either be deployed from the `RootChainFactory` or directly from the according `ChildGaugeFactory`.
+## **Deploy Child Gauge**
+
+Child gauges can either be deployed from the `RootChainFactory` or directly from the according `ChildGaugeFactory`.
 
 ### `deploy_gauge`
-:::description[`ChildGaugeFactory.deploy_gauge(_lp_token: address, _salt: bytes32, _manager: address = msg.sender) -> address`]
+::::description[`ChildGaugeFactory.deploy_gauge(_lp_token: address, _salt: bytes32, _manager: address = msg.sender) -> address`]
 
 
 Function to deploy a new gauge.
@@ -36,15 +33,10 @@ Emits: `DeployedGauge` event.
 | `_salt` | `bytes32` | Salt to deterministically deploy gauge |
 | `_manager` | `address` | Address to set as manager of the gauge; defaults to `msg.sender` |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 interface ChildGauge:
     def initialize(_lp_token: address, _root: address, _manager: address): nonpayable
 
@@ -127,36 +119,30 @@ def deploy_gauge(_lp_token: address, _salt: bytes32, _manager: address = msg.sen
     return gauge
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Minting Emissions**CRV emissions are minted directly from the child gauge and can be claimed by the user. They can not be claimed from the `ChildGauge` contract itself.
+## **Minting Emissions**
+
+CRV emissions are minted directly from the child gauge and can be claimed by the user. They can not be claimed from the `ChildGauge` contract itself.
 
 When claiming emissions via `claim` or `claim_many`, and `is_mirrored` is set to `True` and `last_request` is not the current week, a call to the root chain is made to transmit the emissions to the child gauge.
 
 ### `mint`
-:::description[`ChildGaugeFactory.mint(_gauge: address)`]
+::::description[`ChildGaugeFactory.mint(_gauge: address)`]
 
 
 Function to mint all CRV emissions belonging to `msg.sender` from a given gauge.
@@ -167,15 +153,10 @@ Emits: `Minted`
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to mint CRV emissions from |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event Minted:
     _user: indexed(address)
     _gauge: indexed(address)
@@ -233,30 +214,22 @@ def _psuedo_mint(_gauge: address, _user: address):
         log Minted(_user, _gauge, total_mint)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `mint_many`
-:::description[`ChildGaugeFactory.mint_many(_gauges: address[32]) -> bool`]
+::::description[`ChildGaugeFactory.mint_many(_gauges: address[32]) -> bool`]
 
 
 Function to mint all CRV emissions belonging to `msg.sender` from multiple gauges.
@@ -267,15 +240,10 @@ Emits: `Minted`
 | -------- | --------- | ----------- |
 | `_gauges` | `address[32]` | Array of gauges to mint CRV emissions from |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event Minted:
     _user: indexed(address)
     _gauge: indexed(address)
@@ -336,30 +304,22 @@ def _psuedo_mint(_gauge: address, _user: address):
         log Minted(_user, _gauge, total_mint)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `minted`
-:::description[`ChildGaugeFactory.minted(_user: address, _gauge: address) -> uint256`]
+::::description[`ChildGaugeFactory.minted(_user: address, _gauge: address) -> uint256`]
 
 
 Getter to check the amount of CRV emissions minted for a user from a given gauge.
@@ -371,46 +331,35 @@ Returns: Amount of CRV emissions minted (`uint256`).
 | `_user` | `address` | User to check minted amount for |
 | `_gauge` | `address` | Gauge to check minted amount for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 minted: public(HashMap[address, HashMap[address, uint256]])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Gauge Data**The `ChildGaugeFactory` contract stores different gauge data for all the child gauges deployed via the factory.
+## **Gauge Data**
+
+The `ChildGaugeFactory` contract stores different gauge data for all the child gauges deployed via the factory.
 
 ### `gauge_data`
-:::description[`ChildGaugeFactory.gauge_data(_gauge: address) -> uint256`]
+::::description[`ChildGaugeFactory.gauge_data(_gauge: address) -> uint256`]
 
 
 Getter to check gauge data. The variable stores a `uint256` value where the bits are stored as follows:
@@ -425,43 +374,30 @@ Returns: gauge data (`uint256`).
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to check data for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 # [last_request][has_counterpart][is_valid_gauge]
 gauge_data: public(HashMap[address, uint256])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `is_valid_gauge`
-:::description[`ChildGaugeFactory.is_valid_gauge(_gauge: address) -> bool`]
+::::description[`ChildGaugeFactory.is_valid_gauge(_gauge: address) -> bool`]
 
 
 Getter to check if a gauge is valid.
@@ -472,15 +408,10 @@ Returns: `True` if the gauge is valid, `False` otherwise (`bool`).
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to check validity for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 gauge_data: public(HashMap[address, uint256])
 
 @view
@@ -493,30 +424,22 @@ def is_valid_gauge(_gauge: address) -> bool:
     return self.gauge_data[_gauge] != 0
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `get_gauge_from_lp_token`
-:::description[`ChildGaugeFactory.get_gauge_from_lp_token(_lp_token: address) -> address`]
+::::description[`ChildGaugeFactory.get_gauge_from_lp_token(_lp_token: address) -> address`]
 
 
 Getter for gauge associated with a given LP token.
@@ -527,85 +450,59 @@ Returns: gauge (`address`).
 | -------- | --------- | ----------- |
 | `_lp_token` | `address` | LP token to check gauge for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 get_gauge_from_lp_token: public(HashMap[address, address])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `get_gauge_count`
-:::description[`ChildGaugeFactory.get_gauge_count() -> uint256`]
+::::description[`ChildGaugeFactory.get_gauge_count() -> uint256`]
 
 
 Getter for the number of gauges deployed.
 
 Returns: number of gauges deployed (`uint256`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 get_gauge_count: public(uint256)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.get_gauge_count()
 3
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `get_gauge`
-:::description[`ChildGaugeFactory.get_gauge(_idx: uint256) -> address`]
+::::description[`ChildGaugeFactory.get_gauge(_idx: uint256) -> address`]
 
 
 Getter for the gauge address at a given index. First gauge has index `0`, second has index `1`, etc.
@@ -616,28 +513,16 @@ Returns: gauge (`address`).
 | -------- | --------- | ----------- |
 | `_idx` | `uint256` | Index to check gauge for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 get_gauge: public(address[max_value(int128)])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the first two child gauges deployed via the `ChildGaugeFactory` on Fraxtal.
 
@@ -649,15 +534,14 @@ This example returns the first two child gauges deployed via the `ChildGaugeFact
 '0xcde3Cdf332E35653A7595bA555c9fDBA3c78Ec04'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `last_request`
-:::description[`ChildGaugeFactory.last_request(_gauge: address) -> uint256`]
+::::description[`ChildGaugeFactory.last_request(_gauge: address) -> uint256`]
 
 
 Getter for the last request timestamp for a gauge. This variable updates whenever CRV emissions were minted from the according gauge.
@@ -668,15 +552,10 @@ Returns: last request timestamp (`uint256`).
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to check last request timestamp for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 # [last_request][has_counterpart][is_valid_gauge]
 gauge_data: public(HashMap[address, uint256])
 
@@ -690,30 +569,22 @@ def last_request(_gauge: address) -> uint256:
     return self.gauge_data[_gauge] >> 2
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `is_mirrored`
-:::description[`ChildGaugeFactory.is_mirrored(_gauge: address) -> bool`]
+::::description[`ChildGaugeFactory.is_mirrored(_gauge: address) -> bool`]
 
 
 Getter to check if a gauge is mirrored.
@@ -724,15 +595,10 @@ Returns: `True` if the gauge is mirrored, `False` otherwise (`bool`).
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to check mirrored status for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 # [last_request][has_counterpart][is_valid_gauge]
 gauge_data: public(HashMap[address, uint256])
 
@@ -746,31 +612,23 @@ def is_mirrored(_gauge: address) -> bool:
     return (self.gauge_data[_gauge] & 2) != 0
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.is_mirrored('0xcde3Cdf332E35653A7595bA555c9fDBA3c78Ec04')
 False
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_mirrored`
-:::description[`ChildGaugeFactory.set_mirrored(_gauge: address, _is_mirrored: bool)`]
+::::description[`ChildGaugeFactory.set_mirrored(_gauge: address, _is_mirrored: bool)`]
 
 
 :::guard[Guarded Method]
@@ -791,15 +649,10 @@ Emits: `UpdateMirrored` event.
 | `_gauge` | `address` | Gauge to set mirrored status for |
 | `_is_mirrored` | `bool` | New mirrored status |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateMirrored:
     _gauge: indexed(address)
     _mirrored: bool
@@ -826,60 +679,42 @@ def set_mirrored(_gauge: address, _mirrored: bool):
     log UpdateMirrored(_gauge, _mirrored)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Child Gauge Implementation**### `get_implementation`
-:::description[`ChildGaugeFactory.get_implementation() -> address: view`]
+## **Child Gauge Implementation**
+
+### `get_implementation`
+::::description[`ChildGaugeFactory.get_implementation() -> address: view`]
 
 
 Getter for the child gauge implementation address.
 
 Returns: `ChildGauge` implementation contract (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 get_implementation: public(address)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the `ChildGauge` implementation contract for the `ChildGaugeFactory` on Fraxtal.
 
@@ -888,15 +723,14 @@ This example returns the `ChildGauge` implementation contract for the `ChildGaug
 '0x6A611215540555A7feBCB64CB0Ed11Ac90F165Af'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_implementation`
-:::description[`ChildGaugeFactory.set_implementation(_implementation: address)`]
+::::description[`ChildGaugeFactory.set_implementation(_implementation: address)`]
 
 
 :::guard[Guarded Method]
@@ -914,15 +748,10 @@ Emits: `UpdateImplementation` event.
 | ------------- | ----------- | ----------- |
 | `_implementation` | `address` | New implementation address |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateImplementation:
     _old_implementation: address
     _new_implementation: address
@@ -941,16 +770,9 @@ def set_implementation(_implementation: address):
     self.get_implementation = _implementation
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.get_implementation()
@@ -962,34 +784,30 @@ def set_implementation(_implementation: address):
 '0x1234567890123456789012345678901234567892'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Root Factory and Implementation**The `root_factory` and `root_implementation` variables store the addresses of the root factory and implementation, respectively. They are only used as helper variables within this contract. Both variables can be updated by the `owner` or `manager` of the contract via the `set_root` function.
+## **Root Factory and Implementation**
+
+The `root_factory` and `root_implementation` variables store the addresses of the root factory and implementation, respectively. They are only used as helper variables within this contract. Both variables can be updated by the `owner` or `manager` of the contract via the `set_root` function.
 
 ### `root_factory`
-:::description[`ChildGaugeFactory.root_factory() -> address: view`]
+::::description[`ChildGaugeFactory.root_factory() -> address: view`]
 
 
 Getter for the root factory address.
 
 Returns: `RootGaugeFactory` contract on Ethereum (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateRoot:
     _factory: address
     _implementation: address
@@ -1014,16 +832,9 @@ def __init__(_call_proxy: address, _root_factory: address, _root_impl: address, 
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the `RootGaugeFactory` contract on Ethereum.
 
@@ -1032,30 +843,24 @@ This example returns the `RootGaugeFactory` contract on Ethereum.
 '0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `root_implementation`
-:::description[`ChildGaugeFactory.root_implementation() -> address: view`]
+::::description[`ChildGaugeFactory.root_implementation() -> address: view`]
 
 
 Getter for the root implementation address.
 
 Returns: `RootGauge` implementation contract on Ethereum (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 root_implementation: public(address)
 
 @external
@@ -1076,16 +881,9 @@ def __init__(_call_proxy: address, _root_factory: address, _root_impl: address, 
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the `RootGauge` implementation contract on Ethereum.
 
@@ -1094,15 +892,14 @@ This example returns the `RootGauge` implementation contract on Ethereum.
 '0x96720942F9fF22eFd8611F696E5333Fe3671717a'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_root`
-:::description[`ChildGaugeFactory.set_root(_factory: address, _implementation: address)`]
+::::description[`ChildGaugeFactory.set_root(_factory: address, _implementation: address)`]
 
 
 :::guard[Guarded Method]
@@ -1121,15 +918,10 @@ Emits: `UpdateRoot` event.
 | `_factory` | `address` | New `RootGaugeFactory` address |
 | `_implementation` | `address` | New `RootGauge` implementation address |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 root_factory: public(address)
 root_implementation: public(address)
 
@@ -1148,49 +940,38 @@ def set_root(_factory: address, _implementation: address):
     log UpdateRoot(_factory, _implementation)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.set_root('0x1234567890123456789012345678901234567890', '0x1234567890123456789012345678901234567891')
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **CRV Token and Voting Escrow**The `crv` and `voting_escrow` variables store the addresses of the CRV token and `VotingEscrow` contract, respectively. `crv` represents a bridged version of the CRV token, whereas `voting_escrow` represents a `L2 VotingEscrow Oracle` contract. This oracle is responsible for providing data from the `VotingEscrow` contract on Ethereum to the child chain in order to make boosts on sidechains work. If there is no `L2 VotingEscrow Oracle` set, the boosts on the child chain will not work.
+## **CRV Token and Voting Escrow**
+
+The `crv` and `voting_escrow` variables store the addresses of the CRV token and `VotingEscrow` contract, respectively. `crv` represents a bridged version of the CRV token, whereas `voting_escrow` represents a `L2 VotingEscrow Oracle` contract. This oracle is responsible for providing data from the `VotingEscrow` contract on Ethereum to the child chain in order to make boosts on sidechains work. If there is no `L2 VotingEscrow Oracle` set, the boosts on the child chain will not work.
 
 ### `crv`
-:::description[`ChildGaugeFactory.crv() -> address: view`]
+::::description[`ChildGaugeFactory.crv() -> address: view`]
 
 
 Getter for the CRV token address of the child chain.
 
 Returns: CRV token on the child chain (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 crv: public(ERC20)
 
 @external
@@ -1206,16 +987,9 @@ def __init__(_call_proxy: address, _root_factory: address, _root_impl: address, 
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the token address of bridged CRV on Fraxtal.
 
@@ -1224,15 +998,14 @@ This example returns the token address of bridged CRV on Fraxtal.
 '0x331B9182088e2A7d6D3Fe4742AbA1fB231aEcc56'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_crv`
-:::description[`ChildGaugeFactory.set_crv(_crv: address)`]
+::::description[`ChildGaugeFactory.set_crv(_crv: address)`]
 
 
 :::guard[Guarded Method]
@@ -1250,15 +1023,10 @@ Emits: `UpdateCRV` event.
 | ------ | --------- | ----------- |
 | `_crv` | `address` | New CRV token address |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 crv: public(ERC20)
 
 @external
@@ -1275,16 +1043,9 @@ def set_crv(_crv: ERC20):
     self.crv = _crv
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.crv()
@@ -1296,58 +1057,44 @@ def set_crv(_crv: ERC20):
 '0x1234567890123456789012345678901234567892'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `voting_escrow`
-:::description[`ChildGaugeFactory.voting_escrow() -> address: view`]
+::::description[`ChildGaugeFactory.voting_escrow() -> address: view`]
 
 
 Getter for the `VotingEscrow` contract.
 
 Returns: `VotingEscrow` contract (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 voting_escrow: public(address)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.voting_escrow()
 '0xc73e8d8f7A68Fc9d67e989250484E57Ae03a5Da3'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_voting_escrow`
-:::description[`ChildGaugeFactory.set_voting_escrow(_voting_escrow: address)`]
+::::description[`ChildGaugeFactory.set_voting_escrow(_voting_escrow: address)`]
 
 
 :::guard[Guarded Method]
@@ -1365,15 +1112,10 @@ Emits: `UpdateVotingEscrow` event.
 | ---------- | --------- | ----------- |
 | `_voting_escrow` | `address` | New voting escrow address |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateVotingEscrow:
     _old_voting_escrow: address
     _new_voting_escrow: address
@@ -1392,16 +1134,9 @@ def set_voting_escrow(_voting_escrow: address):
     self.voting_escrow = _voting_escrow
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.voting_escrow()
@@ -1413,32 +1148,28 @@ def set_voting_escrow(_voting_escrow: address):
 '0x1234567890123456789012345678901234567893'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Manager**### `manager`
-:::description[`ChildGaugeFactory.manager() -> address: view`]
+## **Manager**
+
+### `manager`
+::::description[`ChildGaugeFactory.manager() -> address: view`]
 
 
 Getter for the manager address. This variable is set at initialization and can be changed via the `set_manager` function.
 
 Returns: manager (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateManager:
     _manager: address
 
@@ -1458,31 +1189,23 @@ def __init__(_call_proxy: address, _root_factory: address, _root_impl: address, 
     log UpdateManager(msg.sender)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.manager()
 '0xaE50429025B59C9D62Ae9c3A52a657BC7AB64036'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_manager`
-:::description[`ChildGaugeFactory.set_manager(_new_manager: address)`]
+::::description[`ChildGaugeFactory.set_manager(_new_manager: address)`]
 
 
 :::guard[Guarded Method]
@@ -1500,15 +1223,10 @@ Emits: `UpdateManager` event.
 | ---------- | --------- | ----------- |
 | `_new_manager` | `address` | New manager address |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateManager:
     _manager: address
 
@@ -1522,16 +1240,9 @@ def set_manager(_new_manager: address):
     log UpdateManager(_new_manager)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.manager()
@@ -1543,32 +1254,28 @@ def set_manager(_new_manager: address):
 '0x1234567890123456789012345678901234567895'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Call Proxy**### `call_proxy`
-:::description[`ChildGaugeFactory.call_proxy() -> address: view`]
+## **Call Proxy**
+
+### `call_proxy`
+::::description[`ChildGaugeFactory.call_proxy() -> address: view`]
 
 
 Getter for the call proxy contract. This contract acts as an intermediary to facilitate cross-chain calls.
 
 Returns: call proxy address (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateCallProxy:
     _old_call_proxy: address
     _new_call_proxy: address
@@ -1590,31 +1297,23 @@ def __init__(_call_proxy: address, _root_factory: address, _root_impl: address, 
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.call_proxy()
 '0x0000000000000000000000000000000000000000'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_call_proxy`
-:::description[`ChildGaugeFactory.set_call_proxy(_new_call_proxy: address)`]
+::::description[`ChildGaugeFactory.set_call_proxy(_new_call_proxy: address)`]
 
 
 :::guard[Guarded Method]
@@ -1632,15 +1331,10 @@ Emits: `UpdateCallProxy` event.
 | ---------- | --------- | ----------- |
 | `_new_call_proxy` | `address` | New call proxy address |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgaugefactory-vy" label="ChildGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateCallProxy:
     _old_call_proxy: address
     _new_call_proxy: address
@@ -1660,34 +1354,28 @@ def set_call_proxy(_new_call_proxy: address):
     self.call_proxy = _new_call_proxy
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> ChildGaugeFactory.call_proxy()
 '0x0000000000000000000000000000000000000000'
 
->>> ChildGaugeFactory.set_call_proxy('0x1234567890123456789012345678901234567894')  
+>>> ChildGaugeFactory.set_call_proxy('0x1234567890123456789012345678901234567894')
 
 >>> ChildGaugeFactory.call_proxy()
 '0x1234567890123456789012345678901234567894'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Ownership**For contract ownership details, see [here](../../references/curve-practices.md#commit--accept).
+## **Ownership**
+
+For contract ownership details, see [here](../../references/curve-practices.md#commit--accept).

@@ -1,9 +1,9 @@
 # Liquidity Gauge V6
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-## **Depositing and Withdrawing**Liquidity pool (LP) tokens can be deposited into or withdrawn from a gauge at any time.
+## **Depositing and Withdrawing**
+
+Liquidity pool (LP) tokens can be deposited into or withdrawn from a gauge at any time.
 
 In user interfaces and documentation, the terms "staking" and "unstaking" are often used when referring to gauges. However, the terminology used in the actual source code is `deposit` and `withdraw`.
 
@@ -11,13 +11,13 @@ When LP tokens are deposited into a gauge, the smart contract mints an equivalen
 
 :::example[Example of Depositing and Earning Rewards]
 
-Alice deposits 100 crvUSD into the crvUSD/USDC liquidity pool and receives 99 LP tokens in return. Observing significant gauge weight and subsequent CRV emissions to this pool, she decides to deposit (stake) her LP tokens into the gauge. Consequently, she begins to earn CRV rewards based on her liquidity share and her boost factor within the pool. Alice can claim rewards or withdraw her LP tokens at any point in time.
+Alice deposits 100 crvUSD into the crvusd/USDC liquidity pool and receives 99 LP tokens in return. Observing significant gauge weight and subsequent CRV emissions to this pool, she decides to deposit (stake) her LP tokens into the gauge. Consequently, she begins to earn CRV rewards based on her liquidity share and her boost factor within the pool. Alice can claim rewards or withdraw her LP tokens at any point in time.
 
 
 :::
 
 ### `deposit`
-:::description[`LiquidityGaugeV6.deposit(_value: uint256, _addr: address = msg.sender, _claim_rewards: bool = False)`]
+::::description[`LiquidityGaugeV6.deposit(_value: uint256, _addr: address = msg.sender, _claim_rewards: bool = False)`]
 
 
 Function to deposit `_value` of LP tokens into the gauge. When depositing LP tokens into the gauge, the contract mints the equivalent amount of "gauge token" to the user.
@@ -30,15 +30,10 @@ Emits: `Deposit` and `Transfer`
 | `_addr`          | `address` | Address to deposit the LP tokens for. Defaults to `msg.sender`. |
 | `_claim_rewards` | `bool`    | Whether to additionally claim rewards or not. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 event Deposit:
     provider: indexed(address)
     value: uint256
@@ -79,29 +74,21 @@ def deposit(_value: uint256, _addr: address = msg.sender, _claim_rewards: bool =
         log Transfer(empty(address), _addr, _value)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `withdraw`
-:::description[`LiquidityGaugeV6.withdraw(_value: uint256, _claim_rewards: bool = False)`]
+::::description[`LiquidityGaugeV6.withdraw(_value: uint256, _claim_rewards: bool = False)`]
 
 
 Function to withdraw `_value` of LP tokens from the gauge.
@@ -113,15 +100,10 @@ Emits: `Withdraw` and `Transfer`
 | `_value`         | `uint256` | Number of LP tokens to withdraw. |
 | `_claim_rewards` | `bool`    | Whether to additionally claim rewards or not. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 event Withdraw:
     provider: indexed(address)
     value: uint256
@@ -160,37 +142,31 @@ def withdraw(_value: uint256, _claim_rewards: bool = False):
     log Transfer(msg.sender, empty(address), _value)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Claiming Rewards**Reward tokens can be claimed using the `claim_rewards` function. This function claims all externally added rewards from the gauge in a single transaction.
+## **Claiming Rewards**
+
+Reward tokens can be claimed using the `claim_rewards` function. This function claims all externally added rewards from the gauge in a single transaction.
 
 :::warning[Which rewards does `claim_rewards` claim?]
 
 The `claim_rewards` function only claims ["permissionless rewards"](#permissionless-rewards), not CRV emissions directed to the gauge. If there are multiple reward tokens, calling the function will result in a claim of all reward tokens at once.
 
-CRV emissions directed to the gauge are claimable from the [`Minter.vy`](../minter/Minter.md) contract using the [`mint`](../minter/Minter.md#mint) function.
+CRV emissions directed to the gauge are claimable from the [`Minter.vy`](../minter.md) contract using the [`mint`](../minter.md#mint) function.
 
 
 :::
@@ -266,7 +242,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 
 
 ### `claim_rewards`
-:::description[`LiquidityGaugeV6.claim_rewards(_addr: address = msg.sender, _receiver: address = empty(address))`]
+::::description[`LiquidityGaugeV6.claim_rewards(_addr: address = msg.sender, _receiver: address = empty(address))`]
 
 
 :::warning[Claiming for another user]
@@ -283,15 +259,10 @@ Function to claim rewards from the gauge.
 | `_addr`     | `address` | Address to claim the rewards for. Defaults to `msg.sender`. |
 | `_receiver` | `address` | Receiver of the rewards. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 @external
 @nonreentrant('lock')
 def claim_rewards(_addr: address = msg.sender, _receiver: address = empty(address)):
@@ -357,29 +328,21 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
                     self.claim_data[_user][token] = total_claimed + (total_claimable << 128)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `claimed_reward`
-:::description[`LiquidityGaugeV6.claimed_reward(_addr: address, _token: address) -> uint256:`]
+::::description[`LiquidityGaugeV6.claimed_reward(_addr: address, _token: address) -> uint256:`]
 
 
 Getter for the total amount of `_token` claimed by `_addr`.
@@ -391,15 +354,10 @@ Returns: claimed tokens (`uint256`).
 | `_addr`  | `address` | User address to check for. |
 | `_token` | `address` | Reward token to check for. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 # user -> [uint128 claimable amount][uint128 claimed amount]
 claim_data: HashMap[address, HashMap[address, uint256]]
 
@@ -415,33 +373,25 @@ def claimed_reward(_addr: address, _token: address) -> uint256:
     return self.claim_data[_addr][_token] % 2**128
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.claimed_reward('0x989AEb4d175e16225E39E87d0D97A3360524AD80', '0xfe18aE03741a5b84e39C295Ac9C856eD7991C38e')
 30563368675260319
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `claimable_reward`
-:::description[`LiquidityGaugeV6.claimable_reward(_user: address, _reward_token: address) -> uint256`]
+::::description[`LiquidityGaugeV6.claimable_reward(_user: address, _reward_token: address) -> uint256`]
 
 
-Function to check the claimable amount of `_reward_token` for `_user`. 
+Function to check the claimable amount of `_reward_token` for `_user`.
 
 Returns: claimable tokens (`uint256`).
 
@@ -450,15 +400,10 @@ Returns: claimable tokens (`uint256`).
 | `_user`         | `address` | User address to check for. |
 | `_reward_token` | `address` | Reward token to check for. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 reward_integral_for: public(HashMap[address, HashMap[address, uint256]])
 
 @view
@@ -483,30 +428,22 @@ def claimable_reward(_user: address, _reward_token: address) -> uint256:
     return (self.claim_data[_user][_reward_token] >> 128) + new_claimable
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.claimable_reward('0x989AEb4d175e16225E39E87d0D97A3360524AD80', '0xfe18aE03741a5b84e39C295Ac9C856eD7991C38e')
 121423107585280954
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `rewards_receiver`
-:::description[`LiquidityGaugeV6.rewards_receiver(arg0: address) -> address: view`]
+::::description[`LiquidityGaugeV6.rewards_receiver(arg0: address) -> address: view`]
 
 
 Getter for the reward receiver of the caller. By default, this value is set to `empty(address)`, which means the rewards will be claimed to the user. But e.g. for integrations like Convex, the `rewards_receiver` is set to another contract address, from which the rewards are further distributed.
@@ -517,27 +454,16 @@ Returns: reward receiver (`address`).
 | ------ | --------- | ---------------------------------- |
 | `arg0` | `address` | Receiver of the rewards.           |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 rewards_receiver: public(HashMap[address, address])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.rewards_receiver('0x2618F4c64805526a3092d41f25597CcfE4Dd8216')     # random user
@@ -547,15 +473,13 @@ rewards_receiver: public(HashMap[address, address])
 '0xF681fd1C9118085c3aCB0Eec9d57e25A6e99208f'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_rewards_receiver`
-:::description[`LiquidityGaugeV6.set_rewards_receiver(_receiver: address)`]
+::::description[`LiquidityGaugeV6.set_rewards_receiver(_receiver: address)`]
 
 
 Function to set the default reward receiver for the caller. When set to `empty(address)`, rewards are sent to the caller.
@@ -564,15 +488,10 @@ Function to set the default reward receiver for the caller. When set to `empty(a
 | ----------- | --------- | ---------------------------------- |
 | `_receiver` | `address` | Receiver address for any rewards claimed. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 rewards_receiver: public(HashMap[address, address])
 
 @external
@@ -585,31 +504,25 @@ def set_rewards_receiver(_receiver: address):
     self.rewards_receiver[msg.sender] = _receiver
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Permissionless Rewards**Newer liquidity gauges (from `LiquidityGaugeV3.vy` and upwards) introduce the possibility to add what are termed "permissionless rewards." However, the term "permissionless" might be misleading as only a `distributor` address, set by the gauge's `manager`, can add these rewards. The `manager` address is set to [`tx.origin`](https://docs.vyperlang.org/en/stable/constants-and-vars.html?highlight=tx.origin#block-and-transaction-properties) at the time of contract deployment.
+## **Permissionless Rewards**
+
+Newer liquidity gauges (from `LiquidityGaugeV3.vy` and upwards) introduce the possibility to add what are termed "permissionless rewards." However, the term "permissionless" might be misleading as only a `distributor` address, set by the gauge's `manager`, can add these rewards. The `manager` address is set to [`tx.origin`](https://docs.vyperlang.org/en/stable/constants-and-vars.html?highlight=tx.origin#block-and-transaction-properties) at the time of contract deployment.
 
 To add rewards to a gauge, a reward token and a distributor must be set by calling the `set_reward_distributor` function. This action can only be performed by the `manager` or the `admin` of the Factory contract, wich deployed the pool. Each reward token can have only one distributor. The "right to add a reward token" can be transfered. Tokens are added as rewards to the gauge via the `add_reward` method.
 
@@ -623,7 +536,7 @@ For example, if Alice holds 10% of the LP tokens staked in the gauge, she will r
 :::
 
 ### `reward_data`
-:::description[`LiquidityGaugeV6.reward_data(arg0: address) -> tuple: view`]
+::::description[`LiquidityGaugeV6.reward_data(arg0: address) -> tuple: view`]
 
 
 Getter for the data of a specific reward token.
@@ -634,15 +547,10 @@ Returns: token (`address`), distributor (`address`), finish_period (`uint256`), 
 | ------ | --------- | ---------------------------------- |
 | `arg0` | `address` | Address of the reward token.       |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 struct Reward:
     token: address
     distributor: address
@@ -654,30 +562,22 @@ struct Reward:
 reward_data: public(HashMap[address, Reward])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.reward_data('0xfe18aE03741a5b84e39C295Ac9C856eD7991C38e')
 '0x0000000000000000000000000000000000000000', '0xC56706334afE5a1638845ED9168E2ca3b3dbCCe7', 1715673839, 1186851500823, 1713351359, 16346318221475032
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `reward_tokens`
-:::description[`LiquidityGaugeV6.reward_tokens(arg0: uint256) -> address: view`]
+::::description[`LiquidityGaugeV6.reward_tokens(arg0: uint256) -> address: view`]
 
 
 Getter for the added reward token at index `arg0`. New tokens are populated to this variable when calling the `add_reward` function.
@@ -688,15 +588,10 @@ Returns: reward token (`address`).
 | ------ | --------- | ---------------------------------- |
 | `arg0` | `uint256` | Index. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 MAX_REWARDS: constant(uint256) = 8
 
 # array of reward tokens
@@ -704,15 +599,9 @@ reward_tokens: public(address[MAX_REWARDS])
 
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.reward_tokens(0)
@@ -722,72 +611,52 @@ reward_tokens: public(address[MAX_REWARDS])
 '0x0000000000000000000000000000000000000000'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `reward_count`
-:::description[`LiquidityGaugeV6.reward_count() -> uint256: view`]
+::::description[`LiquidityGaugeV6.reward_count() -> uint256: view`]
 
 
 Getter for the count of added reward tokens. This variable is incremented by one each time `add_rewards` is called.
 
 Returns: number of reward tokens added (`uint256`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 reward_count: public(uint256)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.reward_count()
 1
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `manager`
-:::description[`LiquidityGaugeV6.manager() -> address: view`]
+::::description[`LiquidityGaugeV6.manager() -> address: view`]
 
 
 Getter for the gauge manager. This address can add new reward tokens or set distributors for those tokens. The variable is populated when initializing the contract and is set to `tx.origin`, meaning the signer of the transaction which deploys the gauge is assigned as the gauge manager. The gauge manager is upgradable. It can be changed via the `set_gauge_manager` function.
 
 Returns: gauge manager (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 manager: public(address)
 
 @external
@@ -803,30 +672,22 @@ def __init__(_lp_token: address):
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.manager()
 '0xC56706334afE5a1638845ED9168E2ca3b3dbCCe7'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `add_reward`
-:::description[`LiquidityGaugeV6.add_reward(_reward_token: address, _distributor: address):`]
+::::description[`LiquidityGaugeV6.add_reward(_reward_token: address, _distributor: address):`]
 
 
 :::guard[Guarded Methods]
@@ -843,15 +704,10 @@ Function to add specify a reward token and distributor for the gauge. Once a rew
 | `_reward_token` | `address` | Reward token address to add.       |
 | `_distributor`  | `address` | Address which can deposit the reward token. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 @external
 def add_reward(_reward_token: address, _distributor: address):
     """
@@ -871,29 +727,21 @@ def add_reward(_reward_token: address, _distributor: address):
     self.reward_count = reward_count + 1
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_gauge_manager`
-:::description[`LiquidityGaugeV6.set_gauge_manager(_gauge_manager: address)`]
+::::description[`LiquidityGaugeV6.set_gauge_manager(_gauge_manager: address)`]
 
 
 :::guard[Guarded Methods]
@@ -911,17 +759,12 @@ Emits: `SetGaugeManager`
 | ------------------- | --------- | ---------------------------------- |
 | `set_gauge_manager` | `address` | New gauge manager address.         |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 event SetGaugeManager:
-    _gauge_manager: address 
+    _gauge_manager: address
 
 manager: public(address)
 
@@ -940,29 +783,21 @@ def set_gauge_manager(_gauge_manager: address):
     log SetGaugeManager(_gauge_manager)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_reward_distributor`
-:::description[`LiquidityGaugeV6.set_reward_distributor(_reward_token: address, _distributor: address)`]
+::::description[`LiquidityGaugeV6.set_reward_distributor(_reward_token: address, _distributor: address)`]
 
 
 :::guard[Guarded Methods]
@@ -979,15 +814,10 @@ Function to reassign the reward distributor for a reward token.
 | `_reward_token` | `address` | Reward token to reassign the distribution rights for. |
 | `_distributor`  | `address` | New reward distributor. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 reward_data: public(HashMap[address, Reward])
 
 @external
@@ -1006,29 +836,21 @@ def set_reward_distributor(_reward_token: address, _distributor: address):
     self.reward_data[_reward_token].distributor = _distributor
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `deposit_reward_token`
-:::description[`LiquidityGaugeV6.deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint256 = WEEK)`]
+::::description[`LiquidityGaugeV6.deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint256 = WEEK)`]
 
 
 :::guard[Guarded Methods]
@@ -1060,15 +882,9 @@ $\frac{10 + 70}{604800} = 0.00013227513$ tokens per second, which equals to arou
 | `_epoch`        | `uint256` | Duration the rewards are distributed across, denominated in seconds. Defaults to a week (604800s). |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 WEEK: constant(uint256) = 604800
 
 @external
@@ -1108,31 +924,25 @@ def deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint2
     self.reward_data[_reward_token].period_finish = block.timestamp + _epoch
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Boosting Your LP Tokens**Provided liquidity is boosted by the veCRV balance of the user, allowing for boosts up to 2.5 times. Gauges measure liquidity with respect to the user's boost in the `working_balances` variable. The total liquidity deposited in the gauge is represented by the `working_supply` method.
+## **Boosting Your LP Tokens**
+
+Provided liquidity is boosted by the veCRV balance of the user, allowing for boosts up to 2.5 times. Gauges measure liquidity with respect to the user's boost in the `working_balances` variable. The total liquidity deposited in the gauge is represented by the `working_supply` method.
 
 The [`working_balances`](#working_balances) of a user and the total [`working_supply`](#working_supply) are adjusted via the internal `_update_liquidity_limit` function when the following actions occur:
 
@@ -1252,7 +1062,7 @@ $\text{boost factor} = \frac{1000}{400} = 2.5$
 
 
 ### `working_balances`
-:::description[`LiquidityGaugeV6.working_balances(arg0: address) -> uint256: view`]
+::::description[`LiquidityGaugeV6.working_balances(arg0: address) -> uint256: view`]
 
 
 Getter for the working balances of a user. This represents the effective liquidity of a user, which is used to calculate the CRV rewards they are entitled to. Essentially, it's the boosted balance of a user if they have some veCRV. If a user has no boost at all, their `working_balance` will be 40% of their LP tokens. If the position is fully boosted (2.5x), their `working_balance` will be equal to their LP tokens.
@@ -1269,15 +1079,10 @@ Returns: working balance (`uint256`).
 | ------ | --------- | ----------------------------------------- |
 | `arg0` | `address` | Address to check the working balance for. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 TOKENLESS_PRODUCTION: constant(uint256) = 40
 
 working_balances: public(HashMap[address, uint256])
@@ -1309,46 +1114,33 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
     log UpdateLiquidityLimit(addr, l, L, lim, _working_supply)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.working_balances('0x989AEb4d175e16225E39E87d0D97A3360524AD80')
 11470659994458155726
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `working_supply`
-:::description[`LiquidityGaugeV6.working_supply() -> uint256: view`]
+::::description[`LiquidityGaugeV6.working_supply() -> uint256: view`]
 
 
 Getter for the working supply. This variale represents the sum of all `working_balances` of users who provided liquidity in the gauge.
 
 Returns: working supply (`uint256`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
-working_supply: public(uint256) 
+```vyper
+working_supply: public(uint256)
 
 @internal
 def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
@@ -1377,33 +1169,27 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
     log UpdateLiquidityLimit(addr, l, L, lim, _working_supply)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.working_supply()
 12665099687428791483
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Checkpoints**### `user_checkpoint`
-:::description[`LiquidityGaugeV6.user_checkpoint(addr: address) -> bool`]
+## **Checkpoints**
+
+### `user_checkpoint`
+::::description[`LiquidityGaugeV6.user_checkpoint(addr: address) -> bool`]
 
 
 :::guard[Guarded Methods]
@@ -1421,15 +1207,10 @@ Returns: True (`bool`).
 | ------ | --------- | -------------------------------------- |
 | `addr` | `address` | Address who's checkpoint is recoreded. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 @external
 def user_checkpoint(addr: address) -> bool:
     """
@@ -1542,29 +1323,21 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
     log UpdateLiquidityLimit(addr, l, L, lim, _working_supply)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `kick`
-:::description[`LiquidityGaugeV6.kick(addr: address)`]
+::::description[`LiquidityGaugeV6.kick(addr: address)`]
 
 
 Function to trigger a checkpoint for `addr` and therefore updating their boost. A user can only be kicked if they either had another voting event or their voting escrow lock expired. This function ensures no abusive usage of a boost.
@@ -1575,15 +1348,10 @@ Emits: `UpdateLiquidityLimit`
 | ------ | --------- | ---------------------------------- |
 | `addr` | `address` | Address to kick.                   |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 event UpdateLiquidityLimit:
     user: indexed(address)
     original_balance: uint256
@@ -1710,30 +1478,24 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
     log UpdateLiquidityLimit(addr, l, L, lim, _working_supply)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
-## **Killing Gauges**Liquidity gauges have a "killed status" stored in the `is_killed` variable. This status can be set by the `admin` of the Factory, which was used to initially deploy the gauge, using the `set_killed` function. If the status is set to `True`, the gauges' `rate` and `future_rate` will be set to zero, and it will not be eligible to receive any more CRV emissions.
+## **Killing Gauges**
+
+Liquidity gauges have a "killed status" stored in the `is_killed` variable. This status can be set by the `admin` of the Factory, which was used to initially deploy the gauge, using the `set_killed` function. If the status is set to `True`, the gauges' `rate` and `future_rate` will be set to zero, and it will not be eligible to receive any more CRV emissions.
 
 "Killing a gauge" can be undone by simply setting the `is_killed` status back to `false` using the `set_killed` function again.
 
@@ -1745,22 +1507,17 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
 :::
 
 ### `is_killed`
-:::description[`LiquidityGaugeV6.is_killed() -> bool: view`]
+::::description[`LiquidityGaugeV6.is_killed() -> bool: view`]
 
 
 Getter function to check if the gauge is killed. If `ture`, the inflation rate for the gauge will be set to zero.
 
 Returns: killed status (`bool`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 is_killed: public(bool)
 
 @internal
@@ -1786,30 +1543,22 @@ def _checkpoint(addr: address):
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.is_killed()
 'False'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_killed`
-:::description[`LiquidityGaugeV6.set_killed(_is_killed: bool)`]
+::::description[`LiquidityGaugeV6.set_killed(_is_killed: bool)`]
 
 
 :::guard[Guarded Methods]
@@ -1825,15 +1574,10 @@ Function to kill a gauge.
 | ------------ | ------ | ---------------------------------- |
 | `_is_killed` | `bool` | Status to set the killed status to.  |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 is_killed: public(bool)
 
 @external
@@ -1848,26 +1592,18 @@ def set_killed(_is_killed: bool):
     self.is_killed = _is_killed
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -1875,7 +1611,7 @@ def set_killed(_is_killed: bool):
 ## **Contract Info Methods***Basic contract informations:*
 
 ### `integrate_fraction`
-:::description[`LiquidityGaugeV6.integrate_fraction(arg0: address) -> uint256: view`]
+::::description[`LiquidityGaugeV6.integrate_fraction(arg0: address) -> uint256: view`]
 
 
 Getter for the total amount of CRV, both mintable and already minted, that has been allocated to `arg0` from this gauge.
@@ -1886,84 +1622,58 @@ Returns: integral of accrued rewards (`uint256`).
 | ------ | --------- | ---------------------------------- |
 | `arg0` | `address` | Address to check for.              |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 integrate_fraction: public(HashMap[address, uint256])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.integrate_fraction('0x989AEb4d175e16225E39E87d0D97A3360524AD80')
 1662908936954145
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `period`
-:::description[`LiquidityGaugeV6.period() -> int128: view`]
+::::description[`LiquidityGaugeV6.period() -> int128: view`]
 
 
 Getter for the period of the gauge. This variable is incremented by one each time a checkpoint was made.
 
 Returns: current period (`int128`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 period: public(int128)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.period()
 6
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `period_timestamp`
-:::description[`LiquidityGaugeV6.period_timestamp(arg0: uint256) -> uint256: view`]
+::::description[`LiquidityGaugeV6.period_timestamp(arg0: uint256) -> uint256: view`]
 
 
 Getter for the timestamp of a period.
@@ -1974,57 +1684,39 @@ Returns: timestamp
 | ------ | --------- | ---------------------------------- |
 | `arg0`    | `uint256` | Period to get the timestamp for.   |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 period_timestamp: public(uint256[100000000000000000000000000000])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.period_timestamp(7)
 1713351359
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `inflation_rate`
-:::description[`LiquidityGaugeV6.inflation_rate() -> uint256: view`]
+::::description[`LiquidityGaugeV6.inflation_rate() -> uint256: view`]
 
 
 Getter for the current inflation rate per second of CRV. This getter retrieves the lower 216 bits of `inflation_params`, which stores the inflation rate and the future epoch time.
 
 Returns: CRV inflation rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 inflation_params: uint256
 
 @view
@@ -2036,45 +1728,32 @@ def inflation_rate() -> uint256:
     return self.inflation_params % 2 **216
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.inflation_rate()
-5181574864521283150             # 5.18157486452 CRV per second    
+5181574864521283150             # 5.18157486452 CRV per second
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_epoch_time`
-:::description[`LiquidityGaugeV6.future_epoch_time() -> uint256: view`]
+::::description[`LiquidityGaugeV6.future_epoch_time() -> uint256: view`]
 
 
 Getter for the future epoch time. This getter retrieves the upper 216 bits of `inflation_params`, which stores the inflation rate and the future epoch time.
 
 Returns: future epoch time (`uint256`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 inflation_params: uint256
 
 @view
@@ -2086,45 +1765,32 @@ def future_epoch_time() -> uint256:
     return self.inflation_params >> 216
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.future_epoch_time()
 1723501048
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `factory`
-:::description[`LiquidityGaugeV6.factory() -> address: view`]
+::::description[`LiquidityGaugeV6.factory() -> address: view`]
 
 
 Getter for the factory which deployed the gauge.
 
 Returns: factory (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 factory: public(address)
 
 @external
@@ -2139,45 +1805,32 @@ def __init__(_lp_token: address):
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.factory()
 '0x98EE851a00abeE0d95D08cF4CA2BdCE32aeaAF7F'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `lp_token`
-:::description[`LiquidityGaugeV6.lp_token() -> address: view`]
+::::description[`LiquidityGaugeV6.lp_token() -> address: view`]
 
 
 Getter for the LP token which is deposited into of withdrawn from the gauge.
 
 Returns: LP token (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="liquiditygaugev6-vy" label="LiquidityGaugeV6.vy">
-
-
-```python
+```vyper
 lp_token: public(address)
 
 @external
@@ -2192,24 +1845,16 @@ def __init__(_lp_token: address):
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> LiquidityGaugeV6.lp_token()
 '0x86EA1191a219989d2dA3a85c949a12A92f8ED3Db'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

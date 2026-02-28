@@ -1,14 +1,12 @@
 # Pool Factory: Overview
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-The TriCrypto-NG Factory allows the permissionless deployment of two-coin volatile asset pools, as well as gauges. **The liquidity pool and LP token share the same contract.**Additionally, the Factory contract is the direct admin and fee receiver of all pools. In turn, the Factory is controlled by the CurveDAO. 
+The Tricrypto-NG Factory allows the permissionless deployment of two-coin volatile asset pools, as well as gauges. **The liquidity pool and LP token share the same contract.**Additionally, the Factory contract is the direct admin and fee receiver of all pools. In turn, the Factory is controlled by the CurveDAO. 
 
 :::deploy[Contract Source & Deployment]
 
 Source code for this contract is available on [Github](https://github.com/curvefi/tricrypto-ng/blob/main/contracts/main/CurveTricryptoFactory.vy).  
-A list of all deployed contracts can be found [here](../../references/deployed-contracts.md#pool-factory).
+A list of all deployed contracts can be found [here](../../deployments.md).
 
 
 :::
@@ -30,11 +28,13 @@ It utilizes four different implementations:
 - `views_implementation`, containing a view methods contract relevant for integrators and users looking to interact with the AMMs.
 - `math_implementation`, containing math functions used in the AMM.
 
-*More on the [**Math Implementation**](../../cryptoswap-exchange/tricrypto-ng/utility-contracts/math.md) and [**Views Implementation**](../../cryptoswap-exchange/tricrypto-ng/utility-contracts/views.md).* 
+*More on the [**Math Implementation**](../../tricrypto-ng/utility-contracts/math.md) and [**Views Implementation**](../../tricrypto-ng/utility-contracts/views.md).* 
 
 
-## **Query Implementations**### `pool_implementation`
-:::description[`Factory.pool_implementations(arg0: uint256) -> address: view`]
+## **Query Implementations**
+
+### `pool_implementation`
+::::description[`Factory.pool_implementations(arg0: uint256) -> address: view`]
 
 
 Getter for the current pool implementation contract. This accounts for variations such as two-coin and three-pool pools.
@@ -46,8 +46,7 @@ Returns: Pool blueprint contract (`address`).
 | `arg0`  | `uint256` | Index         |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -55,10 +54,9 @@ pool_implementations: public(HashMap[uint256, address])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -67,22 +65,20 @@ pool_implementations: public(HashMap[uint256, address])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `gauge_implementation`
-:::description[`Factory.gauge_implementation() -> address: view`]
+::::description[`Factory.gauge_implementation() -> address: view`]
 
 
 Getter for the current gauge implementation contract.
 
 Returns: Gauge blueprint contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -90,10 +86,9 @@ gauge_implementation: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -102,22 +97,20 @@ gauge_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `views_implementation`
-:::description[`Factory.views_implementation() -> address: view`]
+::::description[`Factory.views_implementation() -> address: view`]
 
 
 Getter for the current views implementation contract.
 
 Returns: Views blueprint contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -125,10 +118,9 @@ views_implementation: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -137,22 +129,20 @@ views_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `math_implementation`
-:::description[`Factory.math_implementation() -> address: view`]
+::::description[`Factory.math_implementation() -> address: view`]
 
 
 Getter for the current pool implementation contract.
 
 Returns: Math blueprint contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -160,10 +150,9 @@ math_implementation: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -172,16 +161,15 @@ math_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## **Set New Implementations***New implementations can be set via these admin-only functions:*
 
 ### `set_pool_implementation`
-:::description[`Factory.set_pool_implementation(_pool_implementation: address, _implementation_index: uint256):`]
+::::description[`Factory.set_pool_implementation(_pool_implementation: address, _implementation_index: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -201,8 +189,7 @@ Emits event: `UpdatePoolImplementation`
 | `_implementation_index` | `uint256` | Index                     |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -235,10 +222,9 @@ def set_pool_implementation(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_pool_implementation("todo")
@@ -246,14 +232,13 @@ def set_pool_implementation(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_gauge_implementation`
-:::description[`Factory.set_gauge_implementation(_gauge_implementation: address):`]
+::::description[`Factory.set_gauge_implementation(_gauge_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -271,8 +256,7 @@ Emits event: `UpdateGaugeImplementation`
 | ------------------------ | --------- | ------------------------- |
 | `_gauge_implementation`  | `address` | Gauge blueprint contract  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -296,10 +280,9 @@ def set_gauge_implementation(_gauge_implementation: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_gauge_implementation("todo")
@@ -307,14 +290,13 @@ def set_gauge_implementation(_gauge_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_views_implementation`
-:::description[`Factory.set_views_implementation(_views_implementation: address):`]
+::::description[`Factory.set_views_implementation(_views_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -332,8 +314,7 @@ Emits event: `UpdateViewsImplementation`
 | ------------------------- | --------- | ------------------------ |
 | `_views_implementation`   | `address` | Views blueprint contract |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -356,10 +337,9 @@ def set_views_implementation(_views_implementation: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_views_implementation("todo")
@@ -367,14 +347,13 @@ def set_views_implementation(_views_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_math_implementation`
-:::description[`Factory.set_math_implementation(_math_implementation: address):`]
+::::description[`Factory.set_math_implementation(_math_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -392,8 +371,7 @@ Emits event: `UpdateMathImplementation`
 | ------------------------ | --------- | ------------------------ |
 | `_math_implementation`   | `address` | Math blueprint contract  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -416,10 +394,9 @@ def set_math_implementation(_math_implementation: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_math_implementation("todo")
@@ -427,44 +404,31 @@ def set_math_implementation(_math_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Fee Receiver**### `fee_receiver`
-:::description[`Factory.fee_receiver() -> address: view`]
+## **Fee Receiver**
+
+### `fee_receiver`
+::::description[`Factory.fee_receiver() -> address: view`]
 
 
 Getter for the fee receiver.
 
 Returns: fee receiver (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 fee_receiver: public(address)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -473,14 +437,13 @@ fee_receiver: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_fee_receiver`
-:::description[`Factory.set_fee_receiver(_fee_receiver: address):`]
+::::description[`Factory.set_fee_receiver(_fee_receiver: address):`]
 
 
 :::guard[Guarded Method]
@@ -498,8 +461,7 @@ Emits event: `UpdateFeeReceiver`
 | ----------- | -------| ----|
 | `_fee_receiver` |  `address` | new fee receiver address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -523,18 +485,16 @@ def set_fee_receiver(_fee_receiver: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_fee_receiver("todo")
 'todo'
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

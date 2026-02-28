@@ -24,6 +24,7 @@
   --ifm-color-primary-lighter: var(--Color-Primary-300);
   --ifm-color-primary-lightest: var(--Color-Primary-100);
   --ifm-code-font-size: 95%;
+  --ifm-code-border-radius: 0;
   --docusaurus-highlighted-code-line-bg: rgba(49, 98, 244, 0.1);
   --ifm-card-border-radius: var(--Radius-md);
   --ifm-color-curve-blue: var(--Color-Primary-500);
@@ -329,6 +330,10 @@ code, pre {
   font-size: var(--Typography-FontSize-sm);
 }
 
+code {
+  padding: 2px 6px;
+}
+
 /* Main content area */
 .theme-doc-markdown {
   background: transparent;
@@ -516,6 +521,14 @@ code, pre {
 .breadcrumbs__link:hover {
   color: var(--Color-Primary-600);
   text-decoration: underline;
+}
+
+/* Inline logo rendered by remark-logos plugin for :logos-*: shortcodes */
+.inline-logo {
+  height: 1.2em;
+  width: 1.2em;
+  vertical-align: middle;
+  display: inline-block;
 }
 
 .heading-inline-logo {

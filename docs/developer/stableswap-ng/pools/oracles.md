@@ -1,7 +1,5 @@
-# StableSwap-NG Oracles
+# Stableswap-NG Oracles
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 :::danger[WARNING: Oracle Vulnerability]
 
@@ -50,7 +48,7 @@ To **manually verify if a pool is using a correct (bug-free) implementation**, o
 ---
 
 
-## **Price and D Oracles***StableSwap-NG pools have the following oracles:*
+## **Price and D Oracles***Stableswap-NG pools have the following oracles:*
 
 
 -   **`price_oracle`**---
@@ -63,10 +61,10 @@ To **manually verify if a pool is using a correct (bug-free) implementation**, o
     An exponential moving-average oracle of the D invariant.
 
 
-:::example[Example: Price Oracle for crvUSD/USDC]
+:::example[Example: Price Oracle for crvusd/USDC]
 
 
-The [`crvUSD/USDC`](https://etherscan.io/address/0x4dece678ceceb27446b35c672dc7d61f30bad69e) pool consists of `crvUSD &lt;&gt; USDC`.
+The [`crvusd/USDC`](https://etherscan.io/address/0x4dece678ceceb27446b35c672dc7d61f30bad69e) pool consists of `crvUSD &lt;&gt; USDC`.
 
 Because `USDC` is the coin at index 0, `price_oracle()` returns the price of `crvUSD` with regard to `USDC`. 
 
@@ -170,7 +168,7 @@ It can be accessed here: https://try.vyperlang.org/hub/user-redirect/lab/tree/sh
 
 
 ### `price_oracle`
-:::description[`StableSwap.price_oracle(i: uint256) -> uint256:`]
+::::description[`StableSwap.price_oracle(i: uint256) -> uint256:`]
 
 
 Function to calculate the exponential moving average (EMA) price for the coin at index `i` with regard to the coin at index 0. The calculation is based on the last spot value (`last_price`), the last ma value (`ema_price`), the moving average time window (`ma_exp_time`), and on the difference between the current timestamp (`block.timestamp`) and the timestamp when the ma oracle was last updated (unpacks from the first value of `ma_last_time`).
@@ -183,8 +181,7 @@ Returns: EMA price of coin `i` (`uint256`).
 | ------ | --------- | ---------------------------------- |
 | `i`    | `uint256` | Index value of the coin to calculate the EMA price for. i = 0 returns the price oracle for coin(1). |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -225,10 +222,9 @@ def _calc_moving_average(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -237,22 +233,20 @@ def _calc_moving_average(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `D_oracle`
-:::description[`StableSwap.D_oracle() -> uint256:`]
+::::description[`StableSwap.D_oracle() -> uint256:`]
 
 
 Function to calculate the exponential moving average (EMA) value for the `D` invariant, distinct from calculations for individual coins. This is based on the most recent "spot" value and EMA value of D, extracted from the private `last_D_packed` variable. It considers the moving average time window for D (`D_ma_time`), and calculates the difference between the current timestamp (`block.timestamp`) and the timestamp of the last update to the ma oracle of D, derived from the second value in `ma_last_time`.
 
 Returns: EMA of D (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -293,10 +287,9 @@ def _calc_moving_average(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -305,17 +298,18 @@ def _calc_moving_average(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Other Methods**### `last_price`
-:::description[`StableSwap.last_price(i: uint256) -> uint256:`]
+## **Other Methods**
+
+### `last_price`
+::::description[`StableSwap.last_price(i: uint256) -> uint256:`]
 
 
 :::warning[Revert]
@@ -335,8 +329,7 @@ Returns: last stored spot price of coin `i` (`uint256`).
 |-------|-----------|----------------------------------------------|
 | `i`   | `uint256` | Index value of the coin to get the last price for. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -349,10 +342,9 @@ def last_price(i: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -361,14 +353,13 @@ def last_price(i: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ema_price`
-:::description[`StableSwap.ema_price(i: uint256) -> uint256:`]
+::::description[`StableSwap.ema_price(i: uint256) -> uint256:`]
 
 
 :::Warning[Revert]
@@ -388,8 +379,7 @@ Returns: the last stored EMA price of coin `i` (`uint256`).
 |-------|-----------|--------------------------------------------------|
 | `i`   | `uint256` | Index of the coin for which to retrieve the last EMA price. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -402,10 +392,9 @@ def ema_price(i: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -414,14 +403,13 @@ def ema_price(i: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_p`
-:::description[`StableSwap.get_p(i: uint256) -> uint256:`]
+::::description[`StableSwap.get_p(i: uint256) -> uint256:`]
 
 
 Function to calculate the current AMM spot price of coin `i` based on the coin balances in the pool, the amplification coefficient `A`, and the `D` invariant. 
@@ -434,8 +422,7 @@ Returns: current spot price (`uint256`).
 |-------|-----------|---------------------------------------------------|
 | `i`   | `uint256` | Index of the coin for which to calculate the current spot price. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -488,10 +475,9 @@ def _get_p(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -500,14 +486,13 @@ def _get_p(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_virtual_price`
-:::description[`StableSwap.get_virtual_price() -> uint256:`]
+::::description[`StableSwap.get_virtual_price() -> uint256:`]
 
 
 :::danger[Attack Vector]
@@ -521,8 +506,7 @@ Getter for the current virtual price of the LP token, which represents a price r
 
 Returns: virtual price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -548,10 +532,9 @@ def get_virtual_price() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -560,22 +543,20 @@ def get_virtual_price() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ma_exp_time`
-:::description[`StableSwap.ma_exp_time() -> uint256: view`]
+::::description[`StableSwap.ma_exp_time() -> uint256: view`]
 
 
-Getter for the exponential moving-average time for the price oracle (`price_oracle`). This value can be adjusted via `set_ma_exp_time()`, as detailed in the [admin controls](../pools/admin_controls.md#set_ma_exp_time) section.
+Getter for the exponential moving-average time for the price oracle (`price_oracle`). This value can be adjusted via `set_ma_exp_time()`, as detailed in the [admin controls](../pools/admin-controls.md#set_ma_exp_time) section.
 
 Returns: EMA time for the price oracle (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -583,10 +564,9 @@ ma_exp_time: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -595,22 +575,20 @@ ma_exp_time: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `D_ma_time`
-:::description[`StableSwap.D_ma_time() -> uint256: view`]
+::::description[`StableSwap.D_ma_time() -> uint256: view`]
 
 
-Getter for the exponential moving-average time for the D oracle. This value can be adjusted via `set_ma_exp_time()`, as detailed in [admin controls](../pools/admin_controls.md#set_ma_exp_time).
+Getter for the exponential moving-average time for the D oracle. This value can be adjusted via `set_ma_exp_time()`, as detailed in [admin controls](../pools/admin-controls.md#set_ma_exp_time).
 
 Returns: EMA time for the D oracle (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -618,10 +596,9 @@ D_ma_time: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -630,14 +607,13 @@ D_ma_time: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ma_last_time`
-:::description[`StableSwap.ma_last_time() -> uint256: view`]
+::::description[`StableSwap.ma_last_time() -> uint256: view`]
 
 
 :::warning[Destinction between price and D]
@@ -648,8 +624,7 @@ Getter for the last time the exponential moving-average oracle of coin prices or
 
 Returns: packed value (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -657,10 +632,9 @@ ma_last_time: public(uint256)                     # packing: ma_last_time_p, ma_
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -669,8 +643,7 @@ ma_last_time: public(uint256)                     # packing: ma_last_time_p, ma_
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note[Unpacking values]
 
@@ -688,7 +661,9 @@ It returns: [1702584895, 1702584895], meaning both moving-average oracles were u
 ---
 
 
-## **Updating Oracles**The internal `upkeep_oracles` method is responsible for updating the price and D oracle.
+## **Updating Oracles**
+
+The internal `upkeep_oracles` method is responsible for updating the price and D oracle.
 
 :::info
 

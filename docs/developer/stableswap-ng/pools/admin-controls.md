@@ -1,11 +1,9 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The following methods are guarded and may only be called by the **`admin`**of the Stableswap-NG Factory.
 
 
 ### `ramp_A`
-:::description[`StableSwap.ramp_A(_future_A: uint256, _future_time: uint256):`]
+::::description[`StableSwap.ramp_A(_future_A: uint256, _future_time: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -31,8 +29,7 @@ Emits: `RampA`
 | `_future_A` |  `uint256` | future A value |
 | `_future_time` |  `uint256` | timestamp until ramping should occur; needs to be at least 24h (`MIN_RAMP_TIME`) |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -72,10 +69,9 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -84,14 +80,13 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `stop_ramp_A`
-:::description[`StableSwap.stop_ramp_A():`]
+::::description[`StableSwap.stop_ramp_A():`]
 
 
 :::guard[Guarded Method]
@@ -105,8 +100,7 @@ Function to immediately stop the ramping A. The current value during the ramping
 
 Emits: `StopRampA`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -129,10 +123,9 @@ def stop_ramp_A():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -140,14 +133,13 @@ def stop_ramp_A():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_new_fee`
-:::description[`StableSwap.set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):`]
+::::description[`StableSwap.set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -171,8 +163,7 @@ Emits: `ApplyNewFee`
 | `_new_fee` |  `uint256` | new fee |
 | `_new_offpeg_fee_multiplier` |  `uint256` | new off-peg fee multiplier |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -200,10 +191,9 @@ def set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -212,14 +202,13 @@ def set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_ma_exp_time`
-:::description[`StableSwap.set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):`]
+::::description[`StableSwap.set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -240,8 +229,7 @@ Function to set the moving average window for `ma_exp_time` and `D_ma_time`.
 | `_ma_exp_time` |  `uint256` | new ma exp time |
 | `_D_ma_time` |  `uint256` | new D ma time |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -259,10 +247,9 @@ def set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -270,8 +257,7 @@ def set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):
 'todo'
 ``` 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

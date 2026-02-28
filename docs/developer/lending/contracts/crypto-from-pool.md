@@ -3,7 +3,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Oracle contract for a collateral token that **fetches its price from a single Curve pool**. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvUSD/priceaggregator.md), but experience showed that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
+Oracle contract for a collateral token that **fetches its price from a single Curve pool**. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvusd/price-aggregator.md), but experience showed that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
 
 :::github[GitHub]
 
@@ -15,7 +15,7 @@ The source code of the following price oracle contracts can be found on  GitHub:
 
 :::
 
-The [`OneWayLendingFactory.vy`](./oneway-factory.md) has a [`create_from_pool`](./oneway-factory.md#create_from_pool) method which deploys the full lending market infrastucture along with a price oracle using a [`stableswap-ng`](../../stableswap-exchange/stableswap-ng/pools/oracles.md), [`twocrypto-ng`](../../cryptoswap-exchange/twocrypto-ng/overview.md) or [`tricrypto-ng`](../../cryptoswap-exchange/tricrypto-ng/pools/oracles.md) pool. These pools all have a suitable exponential moving-average (EMA) oracle, which can be used in lending markets.
+The [`OneWayLendingFactory.vy`](./oneway-factory.md) has a [`create_from_pool`](./oneway-factory.md#create_from_pool) method which deploys the full lending market infrastucture along with a price oracle using a [`stableswap-ng`](../../stableswap-ng/pools/oracles.md), [`twocrypto-ng`](../../twocrypto-ng/overview.md) or [`tricrypto-ng`](../../tricrypto-ng/pools/oracles.md) pool. These pools all have a suitable exponential moving-average (EMA) oracle, which can be used in lending markets.
 
 :::danger[Oracle Immutability]
 
@@ -130,7 +130,9 @@ collateral_ix = 2           # CRV
 ---
 
 
-## **Oracle Price**### `price`
+## **Oracle Price**
+
+### `price`
 :::description[`CryptoFromPool.price() -> uint256`]
 
 
@@ -142,7 +144,7 @@ Returns: price (`uint256`).
 <summary>Source code</summary>
 
 
-The `CryptoFromPool.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvUSD/priceaggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolWAgg.vy` oracle contract.
+The `CryptoFromPool.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolWAgg.vy` oracle contract.
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
@@ -255,7 +257,7 @@ Returns: price (`uint256`).
 <summary>Source code</summary>
 
 
-The `CryptoFromPool.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvUSD/priceaggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolWAgg.vy` oracle contract.
+The `CryptoFromPool.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolWAgg.vy` oracle contract.
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
@@ -393,7 +395,9 @@ def _exchange(i: uint256, j: uint256, amount: uint256, minmax_amount: uint256, _
 ---
 
 
-## **Contract Info Methods**### `POOL`
+## **Contract Info Methods**
+
+### `POOL`
 :::description[`CryptoFromPool.POOL() -> address: view`]
 
 
@@ -808,7 +812,9 @@ AGG: public(immutable(StableAggregator))
 ---
 
 
-## **Arbitrum**In addition to the aforementioned functions, oracle contracts on Arbitrum use a [Chainlink Uptime Feed Oracle](https://arbiscan.io/address/0xFdB631F5EE196F0ed6FAa767959853A9F217697D) to monitor and validate any potential downtime of the [sequencer](https://docs.arbitrum.io/sequencer).
+## **Arbitrum**
+
+In addition to the aforementioned functions, oracle contracts on Arbitrum use a [Chainlink Uptime Feed Oracle](https://arbiscan.io/address/0xFdB631F5EE196F0ed6FAa767959853A9F217697D) to monitor and validate any potential downtime of the [sequencer](https://docs.arbitrum.io/sequencer).
 
 Should the internal `_raw_price` function, responsible for fetching the price, encounter an indication from the uptime oracle that the Arbitrum sequencer is presently offline, or if it has experienced recent downtime and the `DOWNTIME_WAIT` period of 3988 seconds has not yet elapsed, it will revert.
 

@@ -1,5 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 ## Overview
 
@@ -48,9 +46,11 @@ Lending pools also implement the ABI from plain pools. Refer to the plan pools d
 
 :::
 
-## **Pool Info Methods**### `underlying_coins`
+## **Pool Info Methods**
 
-:::description[`StableSwap.underlying_coins(i: uint256) → address: view`]
+### `underlying_coins`
+
+::::description[`StableSwap.underlying_coins(i: uint256) → address: view`]
 
 
 Getter for the array of underlying coins within the pool.
@@ -59,8 +59,7 @@ Getter for the array of underlying coins within the pool.
 | ----------- | -------| ----|
 | `i`       |  `uint128` | Index of coin to swap from |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 9 19 25 26 27 29 30 31 32 33 34 35 36 37 38 39 40 43"
@@ -117,10 +116,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -131,20 +129,21 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Exchange Methods**Like plain pools, lending pools have the ``exchange`` method. However, in the case of lending pools, calling ``exchange`` 
+## **Exchange Methods**
+
+Like plain pools, lending pools have the ``exchange`` method. However, in the case of lending pools, calling ``exchange`` 
 performs a swap between two wrapped tokens in the pool.
 
 For example, calling ``exchange`` on the Compound Pool, would result in a swap between the wrapped tokens ``cDAI`` and ``cUSDC``.
 
 ### `exchange_underlying`
 
-:::description[`StableSwap.exchange_underlying(i: int128, j: int128, dx: uint256, min_dy: uint256) → uint256`]
+::::description[`StableSwap.exchange_underlying(i: int128, j: int128, dx: uint256, min_dy: uint256) → uint256`]
 
 
 Perform an exchange between two underlying tokens. Index values can be found via the ``underlying_coins`` public 
@@ -159,8 +158,7 @@ getter method. Returns the actual amount of coin ``j`` received.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>TokenExchangeUnderlying</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -216,10 +214,9 @@ def exchange_underlying(i: int128, j: int128, dx: uint256, min_dy: uint256) -> u
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -228,8 +225,7 @@ todo: console output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -241,9 +237,11 @@ pool does not return anything for ``exchange_underlying`` and therefore costs mo
 :::
 
 
-:::
+::::
 
-## **Add/Remove Liquidity Methods**The function signatures for adding and removing liquidity to a lending pool are mostly the same as for a plain pool. 
+## **Add/Remove Liquidity Methods**
+
+The function signatures for adding and removing liquidity to a lending pool are mostly the same as for a plain pool. 
 However, for lending pools, liquidity is added and removed in the wrapped token, not the underlying.
 
 In order to be able to add and remove liquidity in the underlying token (e.g., remove DAI from Compound Pool instead of 
@@ -264,7 +262,7 @@ the wrapped or underlying token.
 
 ### `add_liquidity`
 
-:::description[`StableSwap.add_liquidity(_amounts: uint256[N_COINS], _min_mint_amount: uint256, _use_underlying: bool = False) → uint256`]
+::::description[`StableSwap.add_liquidity(_amounts: uint256[N_COINS], _min_mint_amount: uint256, _use_underlying: bool = False) → uint256`]
 
 
 Perform an exchange between two underlying tokens. Index values can be found via the ``underlying_coins`` public 
@@ -278,8 +276,7 @@ getter method. Returns amount of LP tokens received in exchange for the deposite
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>AddLiquidity</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -395,10 +392,9 @@ def add_liquidity(_amounts: uint256[N_COINS], _min_mint_amount: uint256, _use_un
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -406,8 +402,7 @@ def add_liquidity(_amounts: uint256[N_COINS], _min_mint_amount: uint256, _use_un
 todo: console output
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

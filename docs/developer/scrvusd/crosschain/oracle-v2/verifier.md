@@ -1,13 +1,11 @@
 # scrvUSD Verifier
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-The two verifier contracts work together to securely update and maintain the scrvUSD oracle using **on-chain state proofs**. 
+The two verifier contracts work together to securely update and maintain the scrvUSD oracle using **on-chain state proofs**.
 
-`ScrvusdVerifierV1` extracts scrvUSD vault parameters (such as total debt, idle funds, supply, and profit unlocking metrics) from state proofs. It validates these parameters by verifying the block header or state root against the `BlockHashOracle` and then updates the scrvUSD oracle’s price via its `update_price` (see oracle documentation) function.
+`ScrvusdVerifierV1` extracts scrvUSD vault parameters (such as total debt, idle funds, supply, and profit unlocking metrics) from state proofs. It validates these parameters by verifying the block header or state root against the `BlockHashOracle` and then updates the scrvUSD oracle's price via its `update_price` (see oracle documentation) function.
 
-`ScrvusdVerifierV2` focuses specifically on updating the profit unlocking duration (`profit_max_unlock_time`). It uses similar state proof techniques—verifying either an RLP-encoded block header or a state root—to extract the period value. This period is then sent to the scrvUSD oracle via the `update_profit_max_unlock_time` function. 
+`ScrvusdVerifierV2` focuses specifically on updating the profit unlocking duration (`profit_max_unlock_time`). It uses similar state proof techniques—verifying either an RLP-encoded block header or a state root—to extract the period value. This period is then sent to the scrvUSD oracle via the `update_profit_max_unlock_time` function.
 
 *Together, these contracts ensure that the scrvUSD oracle remains accurate by securely integrating verified on-chain data.*
 
@@ -23,7 +21,7 @@ The source code for the `ScrvusdVerifierV1` contract is available on [ GitHub](h
 :::
 
 ### `verifyScrvusdByBlockHash`
-:::description[`ScrvusdVerifierV1.verifyScrvusdByBlockHash(_block_header_rlp: bytes, _proof_rlp: bytes) -> uint256`]
+::::description[`ScrvusdVerifierV1.verifyScrvusdByBlockHash(_block_header_rlp: bytes, _proof_rlp: bytes) -> uint256`]
 
 
 This function verifies scrvUSD parameters using an RLP-encoded block header and a corresponding state proof. It parses the block header to ensure the `BlockHash` is valid and matches the expected value from the `BlockHashOracle`, then extracts the scrvUSD vault parameters from the state proof. It then updates the scrvUSD oracle with these parameters, returning the absolute relative price change scaled to $10^18$ precision.
@@ -35,13 +33,7 @@ Returns: absolute relative price change of the scrvUSD price.
 | `_block_header_rlp` | bytes | RLP-encoded block header containing block details                 |
 | `_proof_rlp`        | bytes | RLP-encoded state proof for the scrvUSD parameters                |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="scrvusdverifierv1-sol" label="ScrvusdVerifierV1.sol">
-
+<SourceCode>
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -155,18 +147,12 @@ contract ScrvusdVerifierV1 {
 }
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `verifyScrvusdByStateRoot`
-:::description[`ScrvusdVerifierV1.verifyScrvusdByStateRoot(_block_number: uint256, _proof_rlp: bytes) -> uint256`]
+::::description[`ScrvusdVerifierV1.verifyScrvusdByStateRoot(_block_number: uint256, _proof_rlp: bytes) -> uint256`]
 
 
 This function verifies scrvUSD parameters by retrieving the state root for a given block number from the block hash oracle and then extracting the scrvUSD vault parameters using a state proof. The extracted parameters are used to update the scrvUSD oracle, returning the absolute relative price change scaled to 10^18 precision.
@@ -178,13 +164,7 @@ Returns: The absolute relative price change of the scrvUSD price.
 | `_block_number` | uint256   | Block number for which to retrieve the state root                 |
 | `_proof_rlp`    | bytes     | RLP-encoded state proof for the scrvUSD parameters                  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="scrvusdverifierv1-sol" label="ScrvusdVerifierV1.sol">
-
+<SourceCode>
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -294,15 +274,9 @@ contract ScrvusdVerifierV1 {
 }
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ---
 
@@ -315,7 +289,7 @@ The source code for the `ScrvusdVerifierV2` contract is available on [ GitHub](h
 :::
 
 ### `verifyPeriodByBlockHash`
-:::description[`ScrvusdVerifierV2.verifyPeriodByBlockHash(_block_header_rlp: bytes, _proof_rlp: bytes) -> bool`]
+::::description[`ScrvusdVerifierV2.verifyPeriodByBlockHash(_block_header_rlp: bytes, _proof_rlp: bytes) -> bool`]
 
 
 This function verifies the period using an RLP-encoded block header and a corresponding state proof. It parses the block header to ensure the block hash is valid and matches the expected value from the block hash oracle, then extracts the period from the state proof. Finally, it uses the extracted period to update the scrvUSD oracle's `profit_max_unlock_time`.
@@ -327,13 +301,7 @@ Returns: a boolean indicating whether the update was successful.
 | `_block_header_rlp` | bytes | RLP-encoded block header containing block information             |
 | `_proof_rlp`        | bytes | RLP-encoded state proof for the period                            |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="scrvusdverifierv2-sol" label="ScrvusdVerifierV2.sol">
-
+<SourceCode>
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -404,18 +372,12 @@ contract ScrvusdVerifierV2 is ScrvusdVerifierV1 {
 }
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `verifyPeriodByStateRoot`
-:::description[`ScrvusdVerifierV2.verifyPeriodByStateRoot(_block_number: uint256, _proof_rlp: bytes) -> bool`]
+::::description[`ScrvusdVerifierV2.verifyPeriodByStateRoot(_block_number: uint256, _proof_rlp: bytes) -> bool`]
 
 
 This function verifies the period by retrieving the state root for a given block number from the block hash oracle and then using a state proof to extract the period. The extracted period is used to update the scrvUSD oracle's `profit_max_unlock_time`.
@@ -427,13 +389,7 @@ Returns: a boolean indicating whether the update was successful.
 | `_block_number` | uint256   | Block number for which to retrieve the state root        |
 | `_proof_rlp`    | bytes     | RLP-encoded state proof for the period                   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="scrvusdverifierv2-sol" label="ScrvusdVerifierV2.sol">
-
+<SourceCode>
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -499,12 +455,6 @@ contract ScrvusdVerifierV2 is ScrvusdVerifierV1 {
 }
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::

@@ -1,3 +1,5 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
+
 # Curve DAO: Liquidity Gauges and Minting CRV
 Curve is built in a way to incentivise liquidity providers with CRV, the protocols governance token. The protocol works in a way that it directs the inflation of the CRV token to the liquidity providers based on the votes of the veCRV holders. This is done through a system of gauges, the `GaugeController` contract, and the `Minter` contract.
 
@@ -5,37 +7,39 @@ Users who have veCRV, Curve's voting-escrowed token, can vote on DAO-approved ga
 
 ---
 
-# **Smart Contracts**Allocation, distribution and minting of CRV are managed via several related DAO contracts:
+## **Smart Contracts**
 
+Allocation, distribution and minting of CRV are managed via several related DAO contracts:
 
--   :logos-vyper: **GaugeController**---
+<DocCardGrid>
+  <DocCard title="GaugeController.vy" icon="vyper" link="./gauge-controller" linkText="GaugeController.vy">
 
-    Central controller that maintains a list of gauges, weights and type weights, and coordinates the rate of CRV production for each liquidity gauge
+Central controller that maintains a list of gauges, weights and type weights, and coordinates the rate of CRV production for each liquidity gauge.
 
-    [→ `GaugeController.vy`](./gauge-controller/GaugeController.md)
+  </DocCard>
+  <DocCard title="Minter.vy" icon="vyper" link="./minter" linkText="Minter.vy">
 
--   :logos-vyper: **Minter**---
+CRV minting contract, generates new CRV according to liquidity gauges.
 
-    CRV minting contract, generates new CRV according to liquidity gauges
+  </DocCard>
+  <DocCard title="LiquidityGauge.vy" icon="vyper" link="./gauges/liquidity-gauge-v6" linkText="LiquidityGauge.vy">
 
-    [→ `Minter.vy`](./minter/Minter.md)
+Measures liquidity provided by users over time, in order to distribute CRV and other rewards.
 
--   :logos-vyper: **Liquidity Gauges**---
+  </DocCard>
+  <DocCard title="Crosschain Gauges" link="./xchain-gauges/overview" linkText="Getting started">
 
-    Measures liquidity provided by users over time, in order to distribute CRV and other rewards
+Liquidity gauges on EVM sidechains use a system of Root and Child Liquidity Gauges which allows gauges on sidechains to receive CRV emissions.
 
-    [→ `LiquidityGauge.vy`](./gauges/LiquidityGaugeV6.md)
-
--   **Liquidity Gauges on EVM Sidechains**---
-
-    Liquidity gauges on EVM sidechains use a system of Root and Child Liquidity Gauges which allows gauges on sidechains to receive CRV emissions.
-
-    [→ `Getting started`](./xchain-gauges/overview.md)
+  </DocCard>
+</DocCardGrid>
 
 
 ---
 
-# **Implementation Details**## CRV Inflation
+## **Implementation Details**
+
+## CRV Inflation
 CRV follows a piecewise linear inflation schedule. The inflation is reduced by around 15.9% each year. Each time the inflation reduces, a new mining epoch starts.
 
 <figure>

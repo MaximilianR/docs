@@ -1,20 +1,20 @@
 # Views Contract
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 This contract contains **view-only external methods**which can be gas-inefficient when called from smart contracts.
 
 :::deploy[Contract Source & Deployment]
 
 Source code available on [GitHub](https://github.com/curvefi/stableswap-ng/blob/bff1522b30819b7b240af17ccfb72b0effbf6c47/contracts/main/CurveStableSwapNGViews.vy).  
-All Views contract deployments can be found in the [Deployment Addresses](../../../references/deployed-contracts.md#stableswap-ng) section.  
+All Views contract deployments can be found in the [Deployment Addresses](../../deployments.md) section.  
 
 
 :::
 
-## **Token Exchange Methods**### `get_dx`
-:::description[`StableSwap.get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256:`]
+## **Token Exchange Methods**
+
+### `get_dx`
+::::description[`StableSwap.get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256:`]
 
 
 Function to calculate the predicted input amount `i` to receive `dy` of coin `j`.
@@ -28,8 +28,7 @@ Returns: predicted amount of `i` (`uint256`).
 | `dy` |  `uint256` | amount of output coin received |
 | `pool` |  `address` | pool address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -80,10 +79,9 @@ def _get_dx(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -92,14 +90,13 @@ def _get_dx(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dy`
-:::description[`StableSwap.get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256:`]
+::::description[`StableSwap.get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256:`]
 
 
 Function to calucalte the predicted input amount `j` to receive `dy` of coin `i`.
@@ -113,8 +110,7 @@ Returns: predicted amount of `j` (`uint256`).
 | `dy` |  `uint256` | amount of input coin being exchanged |
 | `pool` |  `address` | pool address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -272,10 +268,9 @@ def newton_y(b: uint256, c: uint256, D: uint256, _y: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -284,14 +279,13 @@ def newton_y(b: uint256, c: uint256, D: uint256, _y: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dx_underlying`
-:::description[`StableSwap.get_dx_underlying(i: int128, j: int128, dy: uint256, pool: address) -> uint256:`]
+::::description[`StableSwap.get_dx_underlying(i: int128, j: int128, dy: uint256, pool: address) -> uint256:`]
 
 
 Function to calucalte the predicted input amount `i` to receive `dy` of coin `j` on the underlying.
@@ -305,8 +299,7 @@ Returns: predicted amount of `i` (`uint256`).
 | `dy` |  `uint256` | amount of output coin received |
 | `pool` |  `address` | pool address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -383,10 +376,9 @@ def _base_calc_token_amount(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -395,14 +387,13 @@ def _base_calc_token_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dy_underlying`
-:::description[`StableSwap.get_dy_underlying(i: int128, j: int128, dx: uint256, pool: address) -> uint256:`]
+::::description[`StableSwap.get_dy_underlying(i: int128, j: int128, dx: uint256, pool: address) -> uint256:`]
 
 
 Function to calucalte the predicted input amount `j` to receive `dy` of coin `i` on the underlying.
@@ -417,8 +408,7 @@ Returns: predicted amount of `j` (`uint256`).
 | `pool` |  `address` | pool address |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -507,10 +497,9 @@ def get_dy_underlying(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -519,14 +508,15 @@ def get_dy_underlying(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Deposit / Withdrawl Methods**### `calc_token_amount`
-:::description[`StableSwap.calc_token_amount(_amounts: DynArray[uint256, MAX_COINS], _is_deposit: bool, pool: address) -> uint256:`]
+## **Deposit / Withdrawl Methods**
+
+### `calc_token_amount`
+::::description[`StableSwap.calc_token_amount(_amounts: DynArray[uint256, MAX_COINS], _is_deposit: bool, pool: address) -> uint256:`]
 
 
 Function to calculate the addition or reduction of token supply from a deposit (add liquidity) or withdrawl (remove liquidity) including fees.
@@ -538,8 +528,7 @@ Returns: expected amount of LP tokens received (`uint256`)
 | `_amounts` |  `DynArray[uint256, MAX_COINS]` | amount of coins being deposited/withdrawn |
 | `_is_deposit` |  `bool` | `true` = deposit, `false` = withdraw |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -632,10 +621,9 @@ def calc_token_amount(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -644,14 +632,13 @@ def calc_token_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_withdraw_one_coin`
-:::description[`StableSwap.calc_withdraw_one_coin(_burn_amount: uint256, i: int128, pool: address) -> uint256:`]
+::::description[`StableSwap.calc_withdraw_one_coin(_burn_amount: uint256, i: int128, pool: address) -> uint256:`]
 
 
 Function to calculate the amount of tokens withdrawn when burning `_burn_amount` amount of LP tokens.
@@ -664,8 +651,7 @@ Returns: expected amount of `i` withdrawn (`uint256`).
 | `i` |  `int128` | index value of the coin to withdraw |
 | `pool` |  `address` | pool address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -722,10 +708,9 @@ def calc_withdraw_one_coin(_burn_amount: uint256, i: int128, pool: address) -> u
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -734,14 +719,15 @@ def calc_withdraw_one_coin(_burn_amount: uint256, i: int128, pool: address) -> u
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Dynamic Fee Method**### `dynamic_fee`
-:::description[`StableSwap.dynamic_fee(i: int128, j: int128, pool:address) -> uint256:`]
+## **Dynamic Fee Method**
+
+### `dynamic_fee`
+::::description[`StableSwap.dynamic_fee(i: int128, j: int128, pool:address) -> uint256:`]
 
 
 Function to calculate the swap fee when exchanging between `i` and `j`. The swap fee is expressed as a integer with a 1e10 precision.
@@ -754,8 +740,7 @@ Returns: swap fee (`uint256`).
 | `j` |  `int128` | index value of output coin |
 | `pool` |  `address` | pool address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -812,10 +797,9 @@ def _get_rates_balances_xp(pool: address, N_COINS: uint256) -> (
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -823,8 +807,7 @@ def _get_rates_balances_xp(pool: address, N_COINS: uint256) -> (
 'todo'
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

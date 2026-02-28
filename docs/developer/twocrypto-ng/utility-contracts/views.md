@@ -1,14 +1,12 @@
 # Views Contract
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The Views Contract contains **view-only external methods**, which **may be gas-inefficient when called from within smart contracts**. However, it can be highly useful for searches, aggregators, or other entities looking to integrate with twocrypto-ng pools.
 
 :::deploy[Contract Source & Deployment]
 
 Source code for this contract is available on [Github](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/CurveCryptoViews2Optimized.vy). 
-Full list of all deployments can be found [here](../../../references/deployed-contracts.md#twocrypto-ng).
+Full list of all deployments can be found [here](../../deployments.md).
 
 
 :::
@@ -16,8 +14,10 @@ Full list of all deployments can be found [here](../../../references/deployed-co
 ---
 
 
-## **Exchange Methods**### `get_dy`
-:::description[`Views.get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256: view`]
+## **Exchange Methods**
+
+### `get_dy`
+::::description[`Views.get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256: view`]
 
 
 Function to calculate the amount of coin `j` tokens received for swapping in `dx` amount of coin `i` tokens. This function includes fees.
@@ -31,14 +31,7 @@ Returns: `dy` (`uint256`).
 | `dx`  | `uint256` | Amount of input coin[i] tokens to be swapped.                             |
 | `swap`| `address` | Address of the pool contract where the swap will occur.                   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptoviewsoptimized2-vy" label="CurveCryptoViewsOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -93,15 +86,6 @@ def _get_dy_nofee(
 
     return dy, xp
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
 ```vyper
 @external
 @view
@@ -129,15 +113,6 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
         10**18
     )
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -281,16 +256,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -299,14 +267,13 @@ returns dy                          # tokens received
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dx`
-:::description[`Views.get_dx(i: uint256, j: uint256, dy: uint256, swap: address) -> uint256: view`]
+::::description[`Views.get_dx(i: uint256, j: uint256, dy: uint256, swap: address) -> uint256: view`]
 
 
 Getter method for the amount of coin `i` tokens required to input for swapping out `dy` amount of coin `j`.
@@ -320,14 +287,7 @@ Returns: `dx` (`uint256`).
 | `dy`  | `uint256` | Desired amount of output coin[j] tokens to receive.                        |
 | `swap`| `address` | Address of the pool contract where the swap will occur.                    |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptoviewsoptimized2-vy" label="CurveCryptoViewsOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @view
 @external
@@ -386,15 +346,6 @@ def _get_dx_fee(
 
     return dx, xp
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
 ```vyper
 @external
 @view
@@ -422,15 +373,6 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
         10**18
     )
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -574,16 +516,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -592,14 +527,13 @@ returns dx
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_fee_get_dy`
-:::description[`Views.calc_fee_get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256: view`]
+::::description[`Views.calc_fee_get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256: view`]
 
 
 Function to calculate the fees for `get_dy`.
@@ -614,14 +548,7 @@ Returns: Approximate fee (`uint256`).
 | `swap`| `address` | Address of the pool contract.                                             |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptoviewsoptimized2-vy" label="CurveCryptoViewsOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -672,15 +599,6 @@ def _get_dy_nofee(
 
     return dy, xp
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
 ```vyper
 @external
 @view
@@ -708,15 +626,6 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
         10**18
     )
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -860,16 +769,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -878,14 +780,15 @@ returns approx_fee
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Methods for Adding/Removing Liquidity**### `calc_withdraw_one_coin`
-:::description[`Views.calc_withdraw_one_coin(token_amount: uint256, i: uint256, swap: address) -> uint256: view`]
+## **Methods for Adding/Removing Liquidity**
+
+### `calc_withdraw_one_coin`
+::::description[`Views.calc_withdraw_one_coin(token_amount: uint256, i: uint256, swap: address) -> uint256: view`]
 
 
 Function to calculate the output tokens (including fees) received when withdrawing LP tokens as a single coin.
@@ -898,14 +801,7 @@ Returns: `dy` (`uint256`).
 | `i`           | `uint256` | Index of the coin to withdraw in (use `Pool.coins(i)` to get the coin address at the i-th index). |
 | `swap`        | `address` | Address of the pool from which to withdraw.                      |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptoviewsoptimized2-vy" label="CurveCryptoViewsOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @view
 @external
@@ -968,15 +864,6 @@ def _calc_withdraw_one_coin(
 
     return dy, approx_fee
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -1120,16 +1007,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1138,14 +1018,13 @@ returns dy                                          # amount of tokens received
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_token_amount`
-:::description[`Views.calc_token_amount(amounts: uint256[N_COINS], deposit: bool, swap: address) -> uint256: view`]
+::::description[`Views.calc_token_amount(amounts: uint256[N_COINS], deposit: bool, swap: address) -> uint256: view`]
 
 
 Function to calculate LP tokens to be minted or burned when depositing or removing `amounts` of coins to or from the pool.
@@ -1158,14 +1037,7 @@ Returns: `d_token` (`uint256`).
 | `deposit`| `bool`              | Indicates the action: `True` for deposit, `False` for withdrawal.   |
 | `swap`   | `address`           | Address of the pool contract involved in the transaction.            |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptoviewsoptimized2-vy" label="CurveCryptoViewsOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @view
 @external
@@ -1278,15 +1150,6 @@ def _calc_D_ramp(
 
     return D
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
 ```vyper
 @external
 @view
@@ -1325,15 +1188,6 @@ def _calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:
 
     return fee * Sdiff / S + NOISE_FEE
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @view
@@ -1423,16 +1277,9 @@ def newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev
 
     raise "Did not converge"
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1443,14 +1290,13 @@ returns d_token                                         # LP tokens to be burned
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_fee_withdraw_one_coin`
-:::description[`Views.calc_fee_withdraw_one_coin(token_amount: uint256, i: uint256, swap: address) -> uint256: view`]
+::::description[`Views.calc_fee_withdraw_one_coin(token_amount: uint256, i: uint256, swap: address) -> uint256: view`]
 
 
 Function to calculate the fee for `withdraw_one_coin`.
@@ -1463,14 +1309,7 @@ Returns: Approximate fee (`uint256`).
 | `i`           | `uint256` | Index of the token to be withdrawn (use `pool.coins(i)` to get the coin address at the i-th index). |
 | `swap`        | `address` | Address of the pool contract from which the withdrawal is being made.     |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptoviewsoptimized2-vy" label="CurveCryptoViewsOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -1533,15 +1372,6 @@ def _calc_withdraw_one_coin(
 
     return dy, approx_fee
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -1773,16 +1603,9 @@ def newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev
 
     raise "Did not converge"
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1791,14 +1614,13 @@ returns apporx_fee                                      # approx fee
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_fee_token_amount`
-:::description[`Views.calc_fee_token_amount(amounts: uint256[N_COINS], deposit: bool, swap: address) -> uint256: view`]
+::::description[`Views.calc_fee_token_amount(amounts: uint256[N_COINS], deposit: bool, swap: address) -> uint256: view`]
 
 
 Function to calculate the fee for `calc_token_amount`.
@@ -1811,14 +1633,7 @@ Returns: Approximate fee (`uint256`).
 | `deposit` | `bool`              | Indicates the action: `True` for deposit, `False` for withdrawal.   |
 | `swap`    | `address`           | Address of the pool contract involved in the transaction.            |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptoviewsoptimized2-vy" label="CurveCryptoViewsOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @view
 @external
@@ -1878,15 +1693,6 @@ def _calc_dtoken_nofee(
 
     return d_token, amountsp, xp
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
 ```vyper
 @external
 @view
@@ -1925,15 +1731,6 @@ def _calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:
 
     return fee * Sdiff / S + NOISE_FEE
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @view
@@ -2023,16 +1820,9 @@ def newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev
 
     raise "Did not converge"
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2043,8 +1833,7 @@ returns fee
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,8 +1,5 @@
 # Broadcaster
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 Once a governance vote on Ethereum is successfully passed and executed, a corresponding sequence of messages needs to be communicated to other chains. The `Broadcaster` contract is responsible for broadcasting messages from Ethereum to the `Relayer` contract on other chains.
 
 :::vyper[`Broadcaster.vy`]
@@ -17,7 +14,7 @@ Because L2's provide different infrastructures to broadcast messages, the indivi
 - [ `GnosisBroadcaster.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/gnosis/GnosisBroadcaster.vy) for Gnosis
 - [ `XYZBroadcaster.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/xyz/XYZBroadcaster.vy) for all other chains
 
-A comprehensive list of all deployed contracts is available [here ↗](../../deployments/crosschain.md#curve-x-gov).
+A comprehensive list of all deployed contracts is available [here ↗](../../deployments.md).
 
 
 :::
@@ -37,8 +34,10 @@ The admins of the `Broadcaster` contracts are upgradable via a [commit-apply](..
 
 ---
 
-## **Optimism and Optimistic Rollups**### `broadcast`
-:::description[`OptimismBroadcaster.broadcast(_messages: DynArray[Message, MAX_MESSAGES], _gas_limit: uint32 = 0)`]
+## Optimism and Optimistic Rollups
+
+### `broadcast`
+::::description[`OptimismBroadcaster.broadcast(_messages: DynArray[Message, MAX_MESSAGES], _gas_limit: uint32 = 0)`]
 
 
 :::guard[Guarded Method]
@@ -53,15 +52,9 @@ Function to broadcast a sequence of messages to the `Relayer` contract on a L2.
 | Input        | Type                              | Description                       |
 | ------------ | --------------------------------- | --------------------------------- |
 | `_messages`  | `DynArray[Message, MAX_MESSAGES]` | Sequence of messages to broadcast |
-| `_gas_limit` | `uint256`                         | Gas limit for execution on L2; Defaults to `0`     |
+| `_gas_limit` | `uint32`                          | Gas limit for execution on L2; defaults to `0`     |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="optimismbroadcaster-vy" label="OptimismBroadcaster.vy">
-
+<SourceCode>
 
 ```python
 enum Agent:
@@ -111,41 +104,18 @@ def broadcast(_messages: DynArray[Message, MAX_MESSAGES], _gas_limit: uint32 = 0
     )
 ```
 
-
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `ovm_chain`
-:::description[`OptimismBroadcaster.ovm_chain() -> address: view`]
+::::description[`OptimismBroadcaster.ovm_chain() -> address: view`]
 
 
 Getter for the OVM Canonical Transaction Chain contract. This contract can be changed using the [`set_ovm_chain`](#set_ovm_chain) function.
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="optimismbroadcaster-vy" label="OptimismBroadcaster.vy">
-
+<SourceCode>
 
 ```vyper
 interface OVMChain:
@@ -154,72 +124,48 @@ interface OVMChain:
 ovm_chain: public(address)  # CanonicalTransactionChain
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> OptimismBroadcaster.ovm_chain()
 '0x5E4e65926BA27467555EB562121fac00D24E9dD2'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ovm_messenger`
-:::description[`OptimismBroadcaster.ovm_messenger(): view`]
+::::description[`OptimismBroadcaster.ovm_messenger() -> address: view`]
 
 
 Getter for the OVM Cross Domain Messenger contract. This contract can be changed using the [`set_ovm_messenger`](#set_ovm_messenger) function.
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="optimismbroadcaster-vy" label="OptimismBroadcaster.vy">
-
+<SourceCode>
 
 ```vyper
 ovm_messenger: public(address)  # CrossDomainMessenger
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```shell
 >>> OptimismBroadcaster.ovm_messenger()
 '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_ovm_chain`
-:::description[`OptimismBroadcaster.set_ovm_chain(_ovm_chain: address):`]
+::::description[`OptimismBroadcaster.set_ovm_chain(_ovm_chain: address)`]
 
 
 :::guard[Guarded Method]
@@ -237,13 +183,7 @@ Emits: `SetOVMChain` event.
 | ------------ | --------- | ---------------------------- |
 | `_ovm_chain` | `address` | New ovm chain address        |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="optimismbroadcaster-vy" label="OptimismBroadcaster.vy">
-
+<SourceCode>
 
 ```py
 event SetOVMChain:
@@ -267,16 +207,9 @@ def set_ovm_chain(_ovm_chain: address):
     log SetOVMChain(_ovm_chain)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example sets the `ovm_chain` from `ZERO_ADDRESS` to `0x5E4e65926BA27467555EB562121fac00D24E9dD2`.
 
@@ -290,15 +223,13 @@ This example sets the `ovm_chain` from `ZERO_ADDRESS` to `0x5E4e65926BA27467555E
 '0x5E4e65926BA27467555EB562121fac00D24E9dD2'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_ovm_messenger`
-:::description[`OptimismBroadcaster.set_ovm_messenger):`]
+::::description[`OptimismBroadcaster.set_ovm_messenger(_ovm_messenger: address)`]
 
 
 :::guard[Guarded Method]
@@ -316,13 +247,7 @@ Emits: `SetOVMMessenger` event.
 | ---------------- | --------- | ---------------------------- |
 | `_ovm_messenger` | `address` | New ovm messenger address    |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="optimismbroadcaster-vy" label="OptimismBroadcaster.vy">
-
+<SourceCode>
 
 ```py
 event SetOVMMessenger:
@@ -346,16 +271,9 @@ def set_ovm_messenger(_ovm_messenger: address):
     log SetOVMMessenger(_ovm_messenger)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example sets the `ovm_messenger` from `ZERO_ADDRESS` to `0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1`.
 
@@ -369,19 +287,19 @@ This example sets the `ovm_messenger` from `ZERO_ADDRESS` to `0x25ace71c97B33Cc4
 '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
-## **Arbitrum**More on how L1 to L2 messaging on Arbitrum works can be found on the [official Arbitrum documentation](https://docs.arbitrum.io/arbos/l1-to-l2-messaging).
+## Arbitrum
+
+More on how L1 to L2 messaging on Arbitrum works can be found on the [official Arbitrum documentation](https://docs.arbitrum.io/arbos/l1-to-l2-messaging).
 
 ### `broadcast`
-:::description[`ArbitrumBroadcaster.broadcast(_messages: DynArray[Message, MAX_MESSAGES], _gas_limit: uint256, _max_fee_per_gas: uint256)`]
+::::description[`ArbitrumBroadcaster.broadcast(_messages: DynArray[Message, MAX_MESSAGES], _gas_limit: uint256, _max_fee_per_gas: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -397,15 +315,9 @@ Function to broadcast a sequence of messages to the `Relayer` contract on a L2.
 | ------------------ | --------------------------------- | --------------------------------------------- |
 | `_messages`        | `DynArray[Message, MAX_MESSAGES]` | Sequence of messages to broadcast             |
 | `_gas_limit`       | `uint256`                         | Gas limit for execution on L2                 |
-| `_max_fee_per_gas` | `uint256`                         | maximum gas price bid for the execution on L2 |
+| `_max_fee_per_gas` | `uint256`                         | Maximum gas price bid for the execution on L2 |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="arbitrumbroadcaster-vy" label="ArbitrumBroadcaster.vy">
-
+<SourceCode>
 
 ```py
 agent: HashMap[address, Agent]
@@ -454,109 +366,65 @@ def broadcast(_messages: DynArray[Message, MAX_MESSAGES], _gas_limit: uint256, _
     )
 ```
 
-
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `arb_inbox`
-:::description[`Broadcaster.arb_inbox() -> address: view`]
+::::description[`Broadcaster.arb_inbox() -> address: view`]
 
 
 Getter for the Arbitrum Delayed Inbox contract.
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="arbitrumbroadcaster-vy" label="ArbitrumBroadcaster.vy">
-
+<SourceCode>
 
 ```vyper
 arb_inbox: public(address)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Broadcaster.arb_inbox()
 '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `arb_refund`
-:::description[`Broadcaster.arb_refund() -> address: view`]
+::::description[`Broadcaster.arb_refund() -> address: view`]
 
 
 Getter for the refund address, which is the L2 Vault.
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="arbitrumbroadcaster-vy" label="ArbitrumBroadcaster.vy">
-
+<SourceCode>
 
 ```vyper
 arb_refund: public(address)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Broadcaster.arb_refund()
 '0x25877b9413Cc7832A6d142891b50bd53935feF82'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_arb_inbox`
-:::description[`Broadcaster.set_arb_inbox(_arb_inbox: address):`]
+::::description[`Broadcaster.set_arb_inbox(_arb_inbox: address)`]
 
 
 :::guard[Guarded Method]
@@ -574,13 +442,7 @@ Emits: `SetArbInbox`
 | ------------ | --------- | ---------------------------- |
 | `_arb_inbox` | `address` | New Arbitrum inbox address   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="arbitrumbroadcaster-vy" label="ArbitrumBroadcaster.vy">
-
+<SourceCode>
 
 ```vyper
 event SetArbInbox:
@@ -594,29 +456,13 @@ def set_arb_inbox(_arb_inbox: address):
     log SetArbInbox(_arb_inbox)
 ```
 
-
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ### `set_arb_refund`
-:::description[`Broadcaster.set_arb_refund(_arb_refund: address):`]
+::::description[`Broadcaster.set_arb_refund(_arb_refund: address)`]
 
 
 :::guard[Guarded Method]
@@ -630,17 +476,11 @@ Function to set a new refund address.
 
 Emits: `SetArbRefund`
 
-| Input            | Type      | Description                  |
-| ---------------- | --------  | ---------------------------- |
-| `set_arb_refund` | `address` | New refund address           |
+| Input          | Type      | Description                  |
+| -------------- | --------- | ---------------------------- |
+| `_arb_refund`  | `address` | New refund address           |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="arbitrumbroadcaster-vy" label="ArbitrumBroadcaster.vy">
-
+<SourceCode>
 
 ```vyper
 event SetArbRefund:
@@ -654,36 +494,22 @@ def set_arb_refund(_arb_refund: address):
     log SetArbRefund(_arb_refund)
 ```
 
-
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> soon
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::
 
 ---
 
-## **Other Chains**Outside of Arbitrum, Optimism, and Optimistic Rollups, Curves cross-chain infrastructure uses a single [`XYZBroadcaster.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/xyz/XYZBroadcaster.vy) contract deployed at [`0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89`](https://etherscan.io/address/0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89).
+## Other Chains
+
+Outside of Arbitrum, Optimism, and Optimistic Rollups, Curves cross-chain infrastructure uses a single [`XYZBroadcaster.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/xyz/XYZBroadcaster.vy) contract deployed at [`0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89`](https://etherscan.io/address/0x5786696bB5bE7fCDb9997E7f89355d9e97FF8d89).
 
 This contract is responsible for broadcasting messages across several blockchains including [`Avalanche`](https://www.avax.network/), [`Fantom`](https://fantom.foundation/), [`BinanceSmartChain`](https://www.bnbchain.org/en/bnb-smart-chain), [`Kava`](https://www.kava.io/), and [`Polygon`](https://polygon.technology/).
 
 
 ### `broadcast`
-:::description[`XYZBroadcaster.broadcast(_chain_id: uint256, _messages: DynArray[Message, MAX_MESSAGES])`]
+::::description[`XYZBroadcaster.broadcast(_chain_id: uint256, _messages: DynArray[Message, MAX_MESSAGES])`]
 
 
 :::guard[Guarded Method]
@@ -700,13 +526,7 @@ Function to broadcast a sequence of messages to the `Relayer` contract on a L2.
 | `_chain_id`  | `uint256`                         | Chain ID to broadcast to     |
 | `_messages`  | `DynArray[Message, MAX_MESSAGES]` | Sequence of messages to broadcast |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="xyzbroadcaster-vy" label="XYZBroadcaster.vy">
-
+<SourceCode>
 
 ```vyper
 event Broadcast:
@@ -747,24 +567,7 @@ def broadcast(_chain_id: uint256, _messages: DynArray[Message, MAX_MESSAGES]):
     log Broadcast(agent, _chain_id, nonce, digest)
 ```
 
-
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-```shell
->>> XYZBroadcaster.broadcast
-'todo'
-```
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::

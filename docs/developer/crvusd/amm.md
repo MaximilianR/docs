@@ -1,4 +1,4 @@
-
+# LLAMMA
 
 LLAMMA (Lending Liquidating Automated Market Maker Algorithm) is the **market-making contract that rebalances the collateral of a loan**. It is an algorithm implemented into a smart contract which is **responsible for liquidating and de-liquidating collateral based on market conditions**through arbitrage traders. Each individual market has its own AMM **containing the collateral and borrowable asset**. E.g. the AMM of the [ETH&lt;&gt;crvUSD](https://etherscan.io/address/0x1681195c176239ac5e72d9aebacf5b2492e0c4ee) contains of `ETH` and `crvUSD`.
 
@@ -29,9 +29,7 @@ Before interacting with the `LLAMMA` contract, it is highly advised to read the 
 ---
 
 
-# **Depositing and Withdrawing Collateral**import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
+# **Depositing and Withdrawing Collateral**
 
 Whenever a user performs a collateral-specific action such as creating a new loan or adding more collateral, the collateral asset is deposited or withdrawn from the AMM. These functions are only callable by the admin of the AMM, which is the Controller.
 
@@ -42,7 +40,7 @@ Whenever a user performs a collateral-specific action such as creating a new loa
 
 
 ### `deposit_range`
-:::description[`AMM.deposit_range(user: address, amount: uint256, n1: int256, n2: int256)`]
+::::description[`AMM.deposit_range(user: address, amount: uint256, n1: int256, n2: int256)`]
 
 
 :::guard[Guarded Method]
@@ -63,12 +61,7 @@ Emits: `Deposit`
 | `n1`     | `int256`  | Lower band in the deposit range.  |
 | `n2`     | `int256`  | Upper band in the deposit range.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -162,13 +155,6 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
-
 The following source code includes all changes up to commit hash [58289a4](https://github.com/curvefi/curve-stablecoin/tree/58289a4283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
 ```vyper
@@ -222,17 +208,13 @@ def _calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256) -> int256
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ### `withdraw`
-:::description[`AMM.withdraw(user: address, frac: uint256) -> uint256[2]:`]
+::::description[`AMM.withdraw(user: address, frac: uint256) -> uint256[2]:`]
 
 
 :::guard[Guarded Method]
@@ -253,12 +235,7 @@ Emits: `Withdraw`
 | `user`     |  `address` | User address. |
 | `frac`     |  `uint256` | Fraction to withdraw (1e18 = 100%). |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -358,19 +335,17 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ---
 
 
-# **Exchanging Tokens**The LLAMMA can be used to exchange tokens, just like any other AMM. This is crucial as arbitrage opportunities are created by the LLAMMA, which can be exploited by buying and selling tokens in the AMM. More information: TODO.
+# **Exchanging Tokens**
+
+The LLAMMA can be used to exchange tokens, just like any other AMM. This is crucial as arbitrage opportunities are created by the LLAMMA, which can be exploited by buying and selling tokens in the AMM.
 
 *There are two functions to exchange tokens:*
 
@@ -387,7 +362,7 @@ A Google Colab notebook that showcases the use of `exchange` and `exchange_dy` c
 :::
 
 ### `exchange`
-:::description[`AMM.exchange(i: uint256, j: uint256, in_amount: uint256, min_amount: uint256, _for: address = msg.sender) -> uint256[2]:`]
+::::description[`AMM.exchange(i: uint256, j: uint256, in_amount: uint256, min_amount: uint256, _for: address = msg.sender) -> uint256[2]:`]
 
 
 Function to exchange `in_amount` of token `i` for a minimum amount of `min_amount` of token `j`. If the exchange results in less than `min_amount` of tokens, the function call reverts.
@@ -404,12 +379,7 @@ Emits: `TokenExchange`
 | `min_amount` | `uint256` | Minimum amount of output coin to get.               |
 | `_for`       | `address` | Address to send coins to. Defaults to `msg.sender`. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -831,17 +801,13 @@ def calc_swap_in(pump: bool, out_amount: uint256, p_o: uint256[2], in_precision:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ### `exchange_dy`
-:::description[`AMM.exchange_dy(i: uint256, j: uint256, out_amount: uint256, max_amount: uint256, _for: address = msg.sender) -> uint256[2]:`]
+::::description[`AMM.exchange_dy(i: uint256, j: uint256, out_amount: uint256, max_amount: uint256, _for: address = msg.sender) -> uint256[2]:`]
 
 
 Function to exchange a maximum amount of `max_amount` of input token `i` for a total of `out_amount` of output token `j`. If `max_amount` is not enough to cover the purchase of `out_amount` of tokens, the function will revert.
@@ -858,12 +824,7 @@ Emits: `TokenExchange`
 | `max_amount` | `uint256` | Maximum amount of input token to use.                |
 | `_for`       | `address` | Address to send coins to (defaults to `msg.sender`). |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -1285,17 +1246,13 @@ def calc_swap_in(pump: bool, out_amount: uint256, p_o: uint256[2], in_precision:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ### `get_dy`
-:::description[`AMM.get_dy(i: uint256, j: uint256, in_amount: uint256) -> uint256:`]
+::::description[`AMM.get_dy(i: uint256, j: uint256, in_amount: uint256) -> uint256:`]
 
 
 Function to calculate the amount of output tokens `j` to receive when exchanging for `in_amount` of input token `i`. 
@@ -1308,12 +1265,7 @@ Returns: out amount (`uint256`).
 | `j`         | `uint256` | Output coin index.             |
 | `in_amount` | `uint256` | Amount of input coin to swap.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -1374,14 +1326,9 @@ def _get_dxdy(i: uint256, j: uint256, amount: uint256, is_in: bool) -> DetailedT
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1393,14 +1340,13 @@ def _get_dxdy(i: uint256, j: uint256, amount: uint256, is_in: bool) -> DetailedT
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dx`
-:::description[`AMM.get_dx(i: uint256, j: uint256, out_amount: uint256) -> uint256:`]
+::::description[`AMM.get_dx(i: uint256, j: uint256, out_amount: uint256) -> uint256:`]
 
 
 Function to calculate the `in_amount` of token `i` required to receive `out_amount` of token `j`.
@@ -1413,12 +1359,7 @@ Returns: in amount (`uint256`).
 | `j`         | `uint256` | Output coin index.                        |
 | `out_amount`| `uint256` | Desired amount of output coin to receive. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -1483,14 +1424,9 @@ def _get_dxdy(i: uint256, j: uint256, amount: uint256, is_in: bool) -> DetailedT
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 The function essentially returns how much input tokens (`crvUSD`) are needed to receive `10**18` output tokens (`tBTC`).
@@ -1504,14 +1440,13 @@ The function essentially returns how much input tokens (`crvUSD`) are needed to 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dydx`
-:::description[`AMM.get_dydx(i: uint256, j: uint256, out_amount: uint256) -> (uint256, uint256):`]
+::::description[`AMM.get_dydx(i: uint256, j: uint256, out_amount: uint256) -> (uint256, uint256):`]
 
 
 Function to calculate both the input amount required and the output amount received when swapping tokens `i` for a specified `out_amount` of token `j`. This function performs similar calculations to `get_dx` but additionally returns the amount of output tokens received.
@@ -1526,12 +1461,7 @@ Returns: out and in amount (`uint256`).|
 | `j`         | `uint256` | Output coin index.                        |
 | `out_amount`| `uint256` | Desired amount of output coin to receive. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -1595,14 +1525,9 @@ def _get_dxdy(i: uint256, j: uint256, amount: uint256, is_in: bool) -> DetailedT
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1614,14 +1539,13 @@ def _get_dxdy(i: uint256, j: uint256, amount: uint256, is_in: bool) -> DetailedT
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dxdy`
-:::description[`AMM.get_dxdy(i: uint256, j: uint256, in_amount: uint256) -> (uint256, uint256):`]
+::::description[`AMM.get_dxdy(i: uint256, j: uint256, in_amount: uint256) -> (uint256, uint256):`]
 
 
 Function to calculate both the input and output amounts when swapping `in_amount` of token `i` for token `j`. This function performs similar calculations to `get_dy` but additionally returns the amount of input tokens used in the swap.
@@ -1634,12 +1558,7 @@ Returns: in and out amount (`uint256`).
 | `j`         | `uint256` | Output coin index.            |
 | `in_amount` | `uint256` | Amount of input coin to swap. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -1701,14 +1620,9 @@ def _get_dxdy(i: uint256, j: uint256, amount: uint256, is_in: bool) -> DetailedT
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1720,14 +1634,13 @@ def _get_dxdy(i: uint256, j: uint256, amount: uint256, is_in: bool) -> DetailedT
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_amount_for_price`
-:::description[`AMM.get_amount_for_price(p: uint256) -> (uint256, bool)`]
+::::description[`AMM.get_amount_for_price(p: uint256) -> (uint256, bool)`]
 
 
 Function to calculate the necessary amount of tokens to be exchanged to achieve the final price `p` in the AMM.
@@ -1738,12 +1651,7 @@ Returns: The amount to exchange (`uint256`) and a boolean (`bool`). `True` means
 | ----- | --------- | ----------------------- |
 | `p`   | `uint256` | Final price of the AMM. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -1849,14 +1757,9 @@ def get_amount_for_price(p: uint256) -> (uint256, bool):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 - `bool = true`: One needs to exchange borrowed for collateral tokens (to get the price of the collateral **UP**).
@@ -1877,11 +1780,10 @@ def get_amount_for_price(p: uint256) -> (uint256, bool):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -1945,19 +1847,14 @@ The following sections assume that arbitrage traders are performing their role a
 
 
 ### `A`
-:::description[`AMM.A() -> uint256: view`]
+::::description[`AMM.A() -> uint256: view`]
 
 
 Getter for A (band width factor). This parameter defines the density of the liquidty and band size. The higher `A`, the smaller are the upper and lower prices of the bands an therefor the more leveraged the AMM within each band. The relative band size is $\frac{1}{A}$.
 
 Returns: band width factor (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -1999,14 +1896,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2015,14 +1907,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `active_band`
-:::description[`AMM.active_band() -> int256: view`]
+::::description[`AMM.active_band() -> int256: view`]
 
 
 Getter for the currently active band, which is the band where `get_p` (collateral price in the AMM) currently is in. Other bands are either fully in the collateral or borrowable token, but not in both.
@@ -2032,12 +1923,7 @@ Getter for the currently active band, which is the band where `get_p` (collatera
 
 Returns: active band (`int256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2047,14 +1933,9 @@ active_band: public(int256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2063,26 +1944,20 @@ active_band: public(int256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `min_band`
-:::description[`AMM.min_band() -> int256: view`]
+::::description[`AMM.min_band() -> int256: view`]
 
 
 Getter for the minimum band. This is essentially the lowest band where liquidity was deposited into. All bands below are definitely empty.
 
 Returns: minimum band (`int256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2092,14 +1967,9 @@ min_band: public(int256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2108,26 +1978,20 @@ min_band: public(int256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `max_band`
-:::description[`AMM.max_band() -> int256: view`]
+::::description[`AMM.max_band() -> int256: view`]
 
 
 Getter for the maximum band. thi is the highest band where liquidity was deposited into. All bands above are definitely empty. 
 
 Returns: maximum band (`int256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2137,14 +2001,9 @@ max_band: public(int256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2153,14 +2012,13 @@ max_band: public(int256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `has_liquidity`
-:::description[`AMM.has_liquidity(user_: address) -> bool`]
+::::description[`AMM.has_liquidity(user_: address) -> bool`]
 
 
 Function to check if `user` has any liquidity in the AMM.
@@ -2171,12 +2029,7 @@ Returns: true or false (`bool`).
 | ------ | --------- | ------------- |
 | `user` | `address` | User Address. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2199,14 +2052,9 @@ def has_liquidity(user: address) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2215,14 +2063,13 @@ def has_liquidity(user: address) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `bands_x`
-:::description[`AMM.bands_x(arg0: int256) -> uint256: view`]
+::::description[`AMM.bands_x(arg0: int256) -> uint256: view`]
 
 
 Getter for the amount of the borrowable token deposited in a specific band.
@@ -2233,12 +2080,7 @@ Returns: amount of borrowable token in the band (`uint256`).
 | ------ | --------- | ------------------- |
 | `arg0` | `int256`  | Number of the band. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2248,14 +2090,9 @@ bands_x: public(HashMap[int256, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 In this example, the `active_band` is `-40`, which consists both of the colltaral and borrowable token. All bands above do not hold any balances of the borrowable token as those bands fully consist of the collateral token. But all bands below are fully in the borrowable token.
@@ -2272,14 +2109,13 @@ In this example, the `active_band` is `-40`, which consists both of the colltara
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `bands_y`
-:::description[`AMM.bands_y(arg0: int256) -> uint256: view`]
+::::description[`AMM.bands_y(arg0: int256) -> uint256: view`]
 
 
 Getter for the amount of collateral token deposited in band number `arg0`.
@@ -2290,12 +2126,7 @@ Returns: amount of collateral token in the band (`uint256`).
 | ------ | --------- | ------------------- |
 | `arg0` | `int256`  | Number of the band. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2305,14 +2136,9 @@ bands_y: public(HashMap[int256, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 In this example, the `active_band` is `-40`, which consists both of the colltaral and borrowable token. All bands above do not hold any balances of the borrowable token as those bands fully consist of the collateral token. But all bands below are fully in the borrowable token.
@@ -2329,14 +2155,13 @@ In this example, the `active_band` is `-40`, which consists both of the colltara
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_xy`
-:::description[`AMM.get_xy(user: address) -> DynArray[uint256, MAX_TICKS_UINT][2]`]
+::::description[`AMM.get_xy(user: address) -> DynArray[uint256, MAX_TICKS_UINT][2]`]
 
 
 Function to get the collateral and borrowable token balance of a user across all bands.
@@ -2347,12 +2172,7 @@ Returns: balance of borrowed and collateral token (`uint256`).
 | ------ | --------- | ------------- |
 | `user` | `address` | User address. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2409,14 +2229,9 @@ def _get_xy(user: address, is_sum: bool) -> DynArray[uint256, MAX_TICKS_UINT][2]
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This user uses 4 bands for their loan. The function returns the collateral composition of all bands. In this case, the 4 bands do not hold any borrow token (the first four returned values), but they hold the collateral token (the last four return values). This signals, that user is not is soft-liquidation, as all his bands are still fully allocated in the collateral tokens. 
@@ -2432,14 +2247,13 @@ This user uses 4 bands for their loan. The function returns the collateral compo
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_sum_xy`
-:::description[`AMM.get_sum_xy(user: address) -> uint256[2]:`]
+::::description[`AMM.get_sum_xy(user: address) -> uint256[2]:`]
 
 
 Function to measure the amount of borrow and collateral token a user currently owns inside the AMM. This function does not include the borrowed tokens from the market in any way but rather reflects the current collateral composition summed up across the entire AMM.
@@ -2450,12 +2264,7 @@ Returns: total borrow token and collateral token (`uint256[2]`).
 | ------- | -------- | ------------ |
 | `user`  | `address`| User address. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2513,14 +2322,9 @@ def _get_xy(user: address, is_sum: bool) -> DynArray[uint256, MAX_TICKS_UINT][2]
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This function returns the total balance of the borrow and collateral token across all bands. This essentially equals to the summed up returned values of the `get_xy` method (see above).
@@ -2531,14 +2335,13 @@ This function returns the total balance of the borrow and collateral token acros
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `read_user_tick_numbers`
-:::description[`AMM.read_user_tick_numbers(user: address) -> int256[2]:`]
+::::description[`AMM.read_user_tick_numbers(user: address) -> int256[2]:`]
 
 
 Getter for the band (tick) numbers of a user's loan. 
@@ -2549,12 +2352,7 @@ Returns: highest and lowest band (`int256`).
 | ------ | --------- | ------------- |
 | `user` | `address` | User address. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2591,14 +2389,9 @@ def _read_user_tick_numbers(user: address) -> int256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2607,14 +2400,13 @@ def _read_user_tick_numbers(user: address) -> int256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_y_up`
-:::description[`AMM.get_y_up(user: address) -> uint256`]
+::::description[`AMM.get_y_up(user: address) -> uint256`]
 
 
 Function to measure the amount of `y` (collateral token) in band n for `user` if its adiabatically traded near `p_oracle` on the way up.
@@ -2625,12 +2417,7 @@ Returns: amount of collateral (`uint256`).
 | ------ | --------- | ------------- |
 | `user` | `address` | User address. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2783,14 +2570,9 @@ def get_xy_up(user: address, use_y: bool) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2799,14 +2581,13 @@ def get_xy_up(user: address, use_y: bool) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_x_down`
-:::description[`AMM.get_x_down(user: address) -> uint256:`]
+::::description[`AMM.get_x_down(user: address) -> uint256:`]
 
 
 Function to measure the amount of x (borrowable token) in band n for `user` if its adiabatically traded down.
@@ -2817,12 +2598,7 @@ Returns: amount of collateral (`uint256`).
 | ------ | --------- | ------------- |
 | `user` | `address` | User address. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -2975,14 +2751,9 @@ def get_xy_up(user: address, use_y: bool) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2991,14 +2762,13 @@ def get_xy_up(user: address, use_y: bool) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `can_skip_bands`
-:::description[`AMM.can_skip_bands(n_end: int256) -> bool`]
+::::description[`AMM.can_skip_bands(n_end: int256) -> bool`]
 
 
 Function to check if there is no liquidity between `active_band` and `n_end`.
@@ -3009,12 +2779,7 @@ Returns: true or false (`bool`).
 | ------- | -------- | ---------------------------------- |
 | `n_end` | `int256` | Band number to check until.        |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3048,14 +2813,9 @@ def can_skip_bands(n_end: int256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3064,11 +2824,10 @@ def can_skip_bands(n_end: int256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -3096,19 +2855,14 @@ When `price_oracle` equals `get_p`, the external oracle price and the AMM price 
 
 
 ### `get_p` 
-:::description[`AMM.get_p() -> uint256`]
+::::description[`AMM.get_p() -> uint256`]
 
 
 Function to get the current collateral price within the AMM. `get_p` in always in the active band (`acitve_band`).
 
 Returns: collateral price within the AMM (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3160,14 +2914,9 @@ def _get_p(n: int256, x: uint256, y: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3176,26 +2925,20 @@ def _get_p(n: int256, x: uint256, y: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_oracle` 
-:::description[`AMM.price_oracle() -> uint256: view`]
+::::description[`AMM.price_oracle() -> uint256: view`]
 
 
 Getter for the collateral price according to an external price oracle contract. The address of the price oracle contract is stored in the `price_oracle_contract` variable.
 
 Returns: collateral price according to external price oracle (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3266,14 +3009,9 @@ def limit_p_o(p: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3282,26 +3020,20 @@ def limit_p_o(p: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_base_price`
-:::description[`AMM.get_base_price() -> uint256`]
+::::description[`AMM.get_base_price() -> uint256`]
 
 
 Function to get the base price of the AMM which corresponds to band 0. The base price grows over time to account for the interest rate: `BASE_PRICE` (= the 'real' base price when the contract was deployed) is multiplied by `_rate_mul` to do so.
 
 Returns: base price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3341,14 +3073,9 @@ def _rate_mul() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3357,14 +3084,13 @@ def _rate_mul() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `p_current_up`
-:::description[`AMM.p_current_up(n: int256) -> uint256`]
+::::description[`AMM.p_current_up(n: int256) -> uint256`]
 
 
 Getter for the highest possible price of the band at the current oracle price.
@@ -3375,12 +3101,7 @@ Returns: highest possible price (`uint256`).
 | ----- | ------- | ------------- |
 | `n`   | `int256`| Band Number.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3461,30 +3182,19 @@ def _p_oracle_up(n: int256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-
 ```shell
 >>> AMM.p_current_up(-40)
 3260783573764672399539
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ### `p_current_down`
-:::description[`AMM.p_current_down(n: int256) -> uint256`]
+::::description[`AMM.p_current_down(n: int256) -> uint256`]
 
 
 Getter for the lowest possible price of the band at the current oracle price.
@@ -3495,12 +3205,7 @@ Returns: lowest price (`uint256`) of band `n`.
 | ----- | ------- | ------------- |
 | `n`   | `int256`| Band Number.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3534,30 +3239,19 @@ def _p_current_band(n: int256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-
 ```shell
 >>> AMM.p_current_down(-40)
 3260768088630089780416
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ### `p_oracle_up`
-:::description[`AMM.p_oracle_up(n: int256) -> uint256`]
+::::description[`AMM.p_oracle_up(n: int256) -> uint256`]
 
 
 Getter for the upper price bound of an individual band when `get_p` = `price_oracle`.
@@ -3568,12 +3262,7 @@ Returns: upper band price (`uint256`).
 | ----- | ------- | ------------ |
 | `n`   | `int256`| Band Number. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3639,14 +3328,9 @@ def _p_oracle_up(n: int256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3655,14 +3339,13 @@ def _p_oracle_up(n: int256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `p_oracle_down`
-:::description[`AMM.p_oracle_down(n: int256) -> uint256`]
+::::description[`AMM.p_oracle_down(n: int256) -> uint256`]
 
 
 Getter for the lower price bound of an individual band when `get_p` = `price_oracle`. This lower bound is calculated in the same way as `p_oracle_up` but for the next band, essentially taking the upper price of band `n + 1`. It calculates \( n + 1 \) because the lower bound of the current band is defined by the upper bound of the next band.
@@ -3673,12 +3356,7 @@ Returns: lower price bound (`uint256`).
 | ----- | ------- | ------------ |
 | `n`   | `int256`| Band Number. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3743,14 +3421,9 @@ def _p_oracle_up(n: int256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3759,26 +3432,20 @@ def _p_oracle_up(n: int256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_oracle_contract`
-:::description[`AMM.price_oracle_contract() -> uint256: view`]
+::::description[`AMM.price_oracle_contract() -> uint256: view`]
 
 
 Getter for the price oracle contract which provides the external `price_oracle`.
 
 Returns: oracle contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3820,14 +3487,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3836,11 +3498,10 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -3859,19 +3520,14 @@ The interest rate (`rate`) is updated whenever the `_save_rate()` method within 
 
 
 ### `fee`
-:::description[`AMM.fee() -> uint256: view`]
+::::description[`AMM.fee() -> uint256: view`]
 
 
 Getter for the fee for exchanging tokens in the AMM. This fee is static and can only be changed by the DAO using the [`set_fee`](#set_fee) function. The fee is denominated to a base of $10^{18}$.
 
 Returns: fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3913,14 +3569,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 The fee value is denominated to a base of $10^{18}$. Therefore, `19000000000000000` corresponds to a fee of `1.9%`.
@@ -3931,14 +3582,13 @@ The fee value is denominated to a base of $10^{18}$. Therefore, `190000000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_fee`
-:::description[`AMM.set_fee(fee: uint256):`]
+::::description[`AMM.set_fee(fee: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -3956,12 +3606,7 @@ Emits: `SetFee`
 | ----- | --------- | ------------------ |
 | `fee` | `uint256` | Fee (1e18 == 100%). |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -3985,14 +3630,9 @@ def set_fee(fee: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4000,26 +3640,20 @@ def set_fee(fee: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `admin_fee`
-:::description[`AMM.admin_fee() -> uint256: view`]
+::::description[`AMM.admin_fee() -> uint256: view`]
 
 
 Getter for the admin fee of the AMM. This value represents the portion of the `fee` that is awarded to veCRV holders. Currently, the admin fees of the AMMs are set to 1 (1 / 1e18), making them virtually nonexistent. The reason for setting such a small value is to increase resistance to oracle manipulation. Essentially, taking no admin fee ensures that the accumulated fees are distributed among liquidity providers in the AMM (those who provide collateral), which helps offset the losses incurred through soft or de-liquidation and interest rates. Admin fees can be changed by the DAO via the `set_admin_fee` function.
 
 Returns: admin fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4061,14 +3695,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4077,26 +3706,20 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `admin_fees_x`
-:::description[`AMM.admin_fees_x() -> uint256: view`]
+::::description[`AMM.admin_fees_x() -> uint256: view`]
 
 
 Getter for the accured admin fees in form of the borrowed token since the last fee collection.
 
 Returns: accured fees (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4106,14 +3729,9 @@ admin_fees_x: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4122,26 +3740,20 @@ admin_fees_x: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `admin_fees_y`
-:::description[`AMM.admin_fees_y() -> uint256: view`]
+::::description[`AMM.admin_fees_y() -> uint256: view`]
 
 
 Getter for the accured admin fees in form of the collateral token since the last fee collection.
 
 Returns: accured fees (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4151,14 +3763,9 @@ admin_fees_y: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4167,14 +3774,13 @@ admin_fees_y: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_admin_fee`
-:::description[`AMM.set_admin_fee(fee: uint256):`]
+::::description[`AMM.set_admin_fee(fee: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -4192,12 +3798,7 @@ Emits: `SetAdminFee`
 | ----- | --------- | --------------------- |
 | `fee` | `uint256` | Admin Fee (1e18 == 100%). |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4221,14 +3822,9 @@ def set_admin_fee(fee: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4236,14 +3832,13 @@ def set_admin_fee(fee: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `reset_admin_fee`
-:::description[`AMM.reset_admin_fees()`]
+::::description[`AMM.reset_admin_fees()`]
 
 
 :::guard[Guarded Method]
@@ -4255,12 +3850,7 @@ This function is only callable by the `admin` of the contract, which is the Cont
 
 Function to reset the accumulated admin fees (`admin_fees_x` and `admin_fees_y`) to zero. This function is automatically called when `collect_fees()` via the `Controller` contract is called.
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4276,13 +3866,6 @@ def reset_admin_fees():
     self.admin_fees_x = 0
     self.admin_fees_y = 0
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 The following source code includes all changes up to commit hash [58289a4](https://github.com/curvefi/curve-stablecoin/tree/58289a4283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
@@ -4328,14 +3911,9 @@ def collect_fees() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4355,26 +3933,20 @@ def collect_fees() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `rate`
-:::description[`AMM.rate() -> uint256: view`]
+::::description[`AMM.rate() -> uint256: view`]
 
 
 Getter for the current interest rate per second. This rate is determined by the monetary policy contract and can depend on various factors within the contract.
 
 Returns: interest rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4384,14 +3956,9 @@ rate: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This is the interest rate per second. The formula for calculating the annualized rate is the following:
@@ -4406,26 +3973,20 @@ rate_{\text{annualized}} = \left(1 + \frac{\text{rate}}{10^{18}}\right)^{86400 \
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_rate_mul`
-:::description[`AMM.get_rate_mul() -> uint256: view`]
+::::description[`AMM.get_rate_mul() -> uint256: view`]
 
 
 Getter for the interest rate multiplier, which is $1.0 + \int \text{rate}(t) \, dt$.
 
 Returns: interest rate multiplier (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4455,14 +4016,9 @@ def _rate_mul() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4471,14 +4027,13 @@ def _rate_mul() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_rate`
-:::description[`AMM.set_rate(rate: uint256) -> uint256:`]
+::::description[`AMM.set_rate(rate: uint256) -> uint256:`]
 
 
 :::guard[Guarded Method]
@@ -4498,12 +4053,7 @@ Emits: `SetRate`
 | ------ | --------- | ------------ |
 | `rate` | `uint256` | New rate.    |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4541,14 +4091,9 @@ def _rate_mul() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4556,34 +4101,30 @@ def _rate_mul() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Admin Ownership**The `admin` of each AMM is usually set to the corresponding `Controller` contract of the according market. This variable can only be set once and not updated agian as the `set_admin` function checks the follwoing: `assert self.admin == empty(address)`.
+## **Admin Ownership**
+
+The `admin` of each AMM is usually set to the corresponding `Controller` contract of the according market. This variable can only be set once and not updated agian as the `set_admin` function checks the follwoing: `assert self.admin == empty(address)`.
 
 The admin can only be set once, which is done when deploying the AMM. Therefore, the `admin` cannot be changed.
 
 
 ### `admin`
-:::description[`AMM.admin() -> address: view`]
+::::description[`AMM.admin() -> address: view`]
 
 
 Getter for the admin of the contract, which is the corresponding Controller.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4593,14 +4134,9 @@ admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4609,14 +4145,13 @@ admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_admin`
-:::description[`AMM.set_admin(_admin: address):`]
+::::description[`AMM.set_admin(_admin: address):`]
 
 
 :::guard[Guarded Method]
@@ -4632,12 +4167,7 @@ Function to set the admin of the AMM. Maximum approval is given to the Controlle
 | -------- | --------- | ---------------- |
 | `_admin` | `address` | Admin address.   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4664,14 +4194,9 @@ def approve_max(token: ERC20, _admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4679,17 +4204,18 @@ def approve_max(token: ERC20, _admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Contract Info Methods**### `coins`
-:::description[`AMM.coins(i: uint256) -> address`]
+# **Contract Info Methods**
+
+### `coins`
+::::description[`AMM.coins(i: uint256) -> address`]
 
 
 Getter for the coins in the AMM, with `i = 0` as the borrowed token and `i = 1` as the collateral token.
@@ -4700,12 +4226,7 @@ Returns: coin (`address`).
 | ----- | --------- | ------------- |
 | `i`   | `uint256` | Coin Index.   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4721,14 +4242,9 @@ def coins(i: uint256) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4740,26 +4256,20 @@ def coins(i: uint256) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `liquidity_mining_callback`
-:::description[`AMM.liquidity_mining_callback() -> address: view`]
+::::description[`AMM.liquidity_mining_callback() -> address: view`]
 
 
 Getter for the liquidity mining callback address.
 
 Returns: liquidity mining callback contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4769,14 +4279,9 @@ liquidity_mining_callback: public(LMGauge)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4785,14 +4290,13 @@ liquidity_mining_callback: public(LMGauge)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_callback`
-:::description[`AMM.set_callback(liquidity_mining_callback: LMGauge):`]
+::::description[`AMM.set_callback(liquidity_mining_callback: LMGauge):`]
 
 
 :::guard[Guarded Method]
@@ -4808,12 +4312,7 @@ Function to set the liquidity mining callback.
 | ----------- | -------| ----|
 | `liquidity_mining_callback` |  `LMGauge` | Liquidity Mining Gauge Address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [afc2608](https://github.com/curvefi/curve-stablecoin/tree/afc26087ab558d33a94d037c88579d9dfc52396f); any changes made after this commit are not included.
@@ -4837,22 +4336,16 @@ def set_callback(liquidity_mining_callback: LMGauge):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> soon
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

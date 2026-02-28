@@ -21,13 +21,14 @@ Requires Node >= 18.
 
 This is a **Docusaurus 3** documentation site for Curve Finance (`docs.curve.finance`). It uses TypeScript, React, MDX, KaTeX (math rendering), and Mermaid (diagrams).
 
-### Two Doc Sections (Separate Plugins)
+### Three Doc Sections (Separate Plugins)
 
-The site serves two distinct documentation trees:
+The site serves three distinct documentation trees:
 
 | Section | Source Dir | Route Base | Sidebar |
 |---|---|---|---|
 | **Users** (preset) | `docs/user/` | `/user/` | `sidebars/sidebarUser.js` |
+| **Developer** (plugin) | `docs/developer/` | `/developer/` | `sidebars/sidebarDeveloper.js` |
 | **Protocol/Build On Curve** (plugin) | `docs/protocol/` | `/protocol/` | `sidebars/sidebarProtocol.js` |
 
 Sidebars are manually defined in the `sidebars/` directory — not auto-generated. When adding a new doc, you must also add it to the relevant sidebar file.
@@ -38,6 +39,7 @@ Doc files are `.md` (not `.mdx`), but MDX features (JSX, imports) are still supp
 
 - `docusaurus.config.ts` — main site config, plugins, navbar, Algolia search
 - `sidebars/sidebarUser.js` — sidebar for the user-facing docs
+- `sidebars/sidebarDeveloper.js` — sidebar for the developer/technical docs
 - `sidebars/sidebarProtocol.js` — sidebar for the protocol/builder docs
 - `src/config/ghost.ts` — Ghost CMS integration config (blog posts shown on homepage)
 
@@ -51,6 +53,14 @@ Doc files are `.md` (not `.mdx`), but MDX features (JSX, imports) are still supp
 - **Diagrams**: Use Mermaid code blocks (``` ```mermaid ```) — rendered by `@docusaurus/theme-mermaid`
 - **Logo shortcodes**: Write `:logos-<name>:` in markdown to render an inline SVG from `static/img/logos/<name>.svg` (handled by the `remark-logos.js` plugin)
 - **Custom admonitions**: Beyond standard Docusaurus admonitions (`note`, `tip`, `info`, `caution`, `danger`), these extra keywords are configured: `tip-green`, `example`
+
+### Syntax Highlighting
+
+Custom Prism languages are registered in `src/theme/prism-include-languages.js`. Beyond the built-in languages, **Vyper** and **Solidity** are available for code blocks. Vyper extends Python's grammar with Vyper-specific keywords.
+
+### URL Redirects
+
+`docusaurus.config.ts` contains an extensive redirect map in the `@docusaurus/plugin-client-redirects` config. When renaming or moving developer docs, add redirects from old paths to new ones to avoid breaking external links.
 
 ### Custom React Components
 

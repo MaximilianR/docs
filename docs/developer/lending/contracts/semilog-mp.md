@@ -329,7 +329,9 @@ Out [1]:  6113754953
 ---
 
 
-## **Changing Rates**Rates within the MonetaryPolicy contract can only be **changed by the `admin` of the lending factory**, which is the Curve DAO.
+## **Changing Rates**
+
+Rates within the MonetaryPolicy contract can only be **changed by the `admin` of the lending factory**, which is the Curve DAO.
 
 *A short overview of the different parameters:*
 
@@ -800,7 +802,9 @@ Out [1]:  317097919837
 ---
 
 
-## **Contract Info Methods**### `BORROWED_TOKEN`
+## **Contract Info Methods**
+
+### `BORROWED_TOKEN`
 :::description[`SemiLogMonetaryPolicy.BORROWED_TOKEN() -> address: view`]
 
 

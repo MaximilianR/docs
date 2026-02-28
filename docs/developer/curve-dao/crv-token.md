@@ -3,7 +3,13 @@
 
 The Curve DAO Token (CRV) is the protocol's governance token. It is based on the ERC-20 token standard as defined at [EIP-20](https://eips.ethereum.org/EIPS/eip-20).
 
-<ContractInfo name="CRV.vy" github="https://github.com/curvefi/curve-dao-contracts/blob/567927551903f71ce5a73049e077be87111963cc/contracts/ERC20CRV.vy" vyper="0.2.4" deployments={{"Ethereum": "0xD533a949740bb3306d119CC777fa900bA034cd52"}} />
+:::vyper[`CRV.vy`]
+
+The source code for the `CRV.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-dao-contracts/blob/567927551903f71ce5a73049e077be87111963cc/contracts/ERC20CRV.vy). The contract is written using [Vyper](https://vyper.readthedocs.io) version `0.2.4`.
+
+The token is deployed on Ethereum at [`0xD533a949740bb3306d119CC777fa900bA034cd52`](https://etherscan.io/address/0xD533a949740bb3306d119CC777fa900bA034cd52).
+
+:::
 
 For a broader understanding of the use case of the CRV token, check out [Understanding CRV](https://resources.curve.fi/crv-token/overview/).
 
@@ -107,6 +113,17 @@ def allowance(_owner : address, _spender : address) -> uint256:
 ```
 
 </SourceCode>
+
+<Example>
+
+This example queries the amount of CRV tokens that `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` is allowed to spend on behalf of `0x7a16fF8270133F063aAb6C9977183D9e72835428`.
+
+```shell
+>>> CRV.allowance('0x7a16fF8270133F063aAb6C9977183D9e72835428', '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
+0
+```
+
+</Example>
 
 
 ::::
@@ -248,7 +265,7 @@ This example transfers 1 CRV token from the `0x7a16fF8270133F063aAb6C9977183D9e7
 
 ## Emissions, Minting and Burning
 
-Curve has a strict minting mechanism of new CRV tokens. New tokens are minted based on the gauge weights of an epoch. For more information, see [Gauge Weight Voting](../liquidity-gauges-and-minting-crv/overview.md#gauge-weight-voting)
+Curve has a strict minting mechanism of new CRV tokens. New tokens are minted based on the gauge weights of an epoch. For more information, see [Gauge Weight Voting](../gauges/overview.md#gauge-weight-voting)
 
 :::info[Minting New CRV]
 
@@ -284,6 +301,17 @@ minter: public(address)
 ```
 
 </SourceCode>
+
+<Example>
+
+This example queries the minter contract address.
+
+```shell
+>>> CRV.minter()
+'0xd061D61a4d941c39E5453435B6345Dc261C2fcE0'
+```
+
+</Example>
 
 
 ::::
@@ -422,6 +450,17 @@ def mintable_in_timeframe(start: uint256, end: uint256) -> uint256:
 
 </SourceCode>
 
+<Example>
+
+This example queries the mintable CRV supply between two timestamps.
+
+```shell
+>>> CRV.mintable_in_timeframe(1704067200, 1704153600)
+573744014880952380952380
+```
+
+</Example>
+
 
 ::::
 
@@ -529,6 +568,17 @@ def _update_mining_parameters():
 
 </SourceCode>
 
+<Example>
+
+This example queries the current mining epoch.
+
+```shell
+>>> CRV.mining_epoch()
+5
+```
+
+</Example>
+
 
 ::::
 
@@ -562,6 +612,17 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 </SourceCode>
 
+<Example>
+
+This example queries the start timestamp of the current mining epoch.
+
+```shell
+>>> CRV.start_epoch_time()
+1691625600
+```
+
+</Example>
+
 
 ::::
 
@@ -588,6 +649,17 @@ rate: public(uint256)
 ```
 
 </SourceCode>
+
+<Example>
+
+This example queries the current CRV emission rate per second.
+
+```shell
+>>> CRV.rate()
+6634505564648117039
+```
+
+</Example>
 
 
 ::::
@@ -704,6 +776,17 @@ def start_epoch_time_write() -> uint256:
 
 </SourceCode>
 
+<Example>
+
+This example calls `start_epoch_time_write` to get the current epoch start timestamp while updating mining parameters if applicable.
+
+```shell
+>>> CRV.start_epoch_time_write()
+1691625600
+```
+
+</Example>
+
 
 ::::
 
@@ -735,6 +818,17 @@ def future_epoch_time_write() -> uint256:
 
 </SourceCode>
 
+<Example>
+
+This example calls `future_epoch_time_write` to get the next epoch start timestamp while updating mining parameters if applicable.
+
+```shell
+>>> CRV.future_epoch_time_write()
+1723161600
+```
+
+</Example>
+
 
 ::::
 
@@ -746,7 +840,7 @@ The controls over the Curve DAO Token are strictly limited. The `admin` of the c
 
 Since the [`CurveOwnershipAgent`](https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968) is the current admin of the contract, any changes to these parameters would require a successfully passed DAO vote.
 
-[^1]: Although `set_minter` is technically an admin-guarded function, there is **no actual way to change the minter address**because the code checks if the current minter is set to `ZERO_ADDRESS`, which was only true when the contract was initially deployed.
+[^1]: Although `set_minter` is technically an admin-guarded function, there is **no actual way to change the minter address** because the code checks if the current minter is set to `ZERO_ADDRESS`, which was only true when the contract was initially deployed.
 
 ### `admin`
 ::::description[`CRV.admin() -> address: view`]
@@ -775,6 +869,17 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 ```
 
 </SourceCode>
+
+<Example>
+
+This example queries the current admin of the CRV token contract.
+
+```shell
+>>> CRV.admin()
+'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
+```
+
+</Example>
 
 
 ::::
@@ -860,6 +965,17 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 </SourceCode>
 
+<Example>
+
+This example queries the name of the CRV token.
+
+```shell
+>>> CRV.name()
+'Curve DAO Token'
+```
+
+</Example>
+
 
 ::::
 
@@ -892,6 +1008,17 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 ```
 
 </SourceCode>
+
+<Example>
+
+This example queries the symbol of the CRV token.
+
+```shell
+>>> CRV.symbol()
+'CRV'
+```
+
+</Example>
 
 
 ::::
@@ -1010,8 +1137,8 @@ This example tries to change the `minter` contract address of the token. Because
 
 ::::
 
-### `avaliable_supply`
-::::description[`CRV.avaliably_supply() -> uint256`]
+### `available_supply`
+::::description[`CRV.available_supply() -> uint256`]
 
 
 Getter for the current number of CRV tokens - claimed of unclaimed - in existence.
@@ -1037,6 +1164,17 @@ def available_supply() -> uint256:
 
 </SourceCode>
 
+<Example>
+
+This example queries the current available supply of CRV tokens.
+
+```shell
+>>> CRV.available_supply()
+2170703954890498893498803759
+```
+
+</Example>
+
 
 ::::
 
@@ -1061,6 +1199,17 @@ def totalSupply() -> uint256:
 ```
 
 </SourceCode>
+
+<Example>
+
+This example queries the total supply of CRV tokens.
+
+```shell
+>>> CRV.totalSupply()
+1963546752829609097498917498
+```
+
+</Example>
 
 
 ::::
@@ -1093,11 +1242,22 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 </SourceCode>
 
+<Example>
+
+This example queries the number of decimals of the CRV token.
+
+```shell
+>>> CRV.decimals()
+18
+```
+
+</Example>
+
 
 ::::
 
 ### `balanceOf`
-::::description[`CRV.balanceOf(arg0: address) -> address: view`]
+::::description[`CRV.balanceOf(arg0: address) -> uint256: view`]
 
 
 Getter for the crv token balance of a specific address.
@@ -1115,6 +1275,17 @@ balanceOf: public(HashMap[address, uint256])
 ```
 
 </SourceCode>
+
+<Example>
+
+This example queries the CRV token balance of the `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` address.
+
+```shell
+>>> CRV.balanceOf('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
+187920823398044802467986
+```
+
+</Example>
 
 
 ::::

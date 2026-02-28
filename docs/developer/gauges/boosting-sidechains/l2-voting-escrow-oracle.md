@@ -1,22 +1,18 @@
 # L2VotingEscrowOracle
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The `L2VotingEscrowOracle` contract is used to fetch information from the `VotingEscrow` from Ethereum. This data can then be used to calculate boost rates for providing liquidity.
 
-<details open>
-<summary>`L2VotingEscrowOracle.vy`</summary>
+:::vyper[`L2VotingEscrowOracle.vy`]
 
-The source code for the `L2VotingEscrowOracle.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/L2VotingEscrowOracle.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10` 
+The source code for the `L2VotingEscrowOracle.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/L2VotingEscrowOracle.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`
 
-
-</details>
+:::
 
 ---
 
 ### `update`
-:::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 :::guard[Guarded Method]
@@ -33,15 +29,10 @@ Function to update
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 interface IMessenger:
     def xDomainMessageSender() -> address: view
 
@@ -84,37 +75,28 @@ def update(
     if self.user_point_epoch[_user] < _user_point_epoch:
         self.locked[_user] = _locked
         self.user_point_epoch[_user] = _user_point_epoch
-    
+
     self.user_point_history[_user][_user_point_epoch] = _user_point_history
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> L2VotingEscrowOracle.update()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
 ### `balanceOf`
-:::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 todo
@@ -124,41 +106,27 @@ todo
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> L2VotingEscrowOracle.update()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `totalSupply`
-:::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 todo
@@ -168,41 +136,27 @@ todo
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> L2VotingEscrowOracle.update()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `epoch`
-:::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 todo
@@ -212,41 +166,27 @@ todo
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> L2VotingEscrowOracle.update()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `point_history`
-:::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 Getter for the point history.
@@ -255,41 +195,27 @@ Getter for the point history.
 | --------- | ---- | ------------ |
 | `_idx` | `uint256` | The index of the point history to retrieve. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> L2VotingEscrowOracle.update()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `user_point_epoch`
-:::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 todo
@@ -299,41 +225,27 @@ todo
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> L2VotingEscrowOracle.update()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `user_point_history`
-:::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 todo
@@ -343,41 +255,27 @@ todo
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> L2VotingEscrowOracle.update()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `locked`
-:::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 todo
@@ -387,41 +285,27 @@ todo
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> L2VotingEscrowOracle.update()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `slope_changes`
-:::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`L2VotingEscrowOracle.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 todo
@@ -431,59 +315,40 @@ todo
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> L2VotingEscrowOracle.update()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
 ### `MESSENGER`
-:::description[`L2VotingEscrowOracle.MESSENGER() -> address: view`]
+::::description[`L2VotingEscrowOracle.MESSENGER() -> address: view`]
 
 
 Getter for the messenger contract address.
 
 Returns: messenger contract (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="l2votingescroworacle-vy" label="L2VotingEscrowOracle.vy">
-
-
-```python
+```vyper
 interface IMessenger:
     def xDomainMessageSender() -> address: view
 
@@ -494,15 +359,9 @@ def __init__(_messenger: IMessenger):
     MESSENGER = _messenger
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the messenger contract address for the L2 voting escrow oracle on Fraxtal.
@@ -512,8 +371,7 @@ This example returns the messenger contract address for the L2 voting escrow ora
 '0x4200000000000000000000000000000000000007'
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

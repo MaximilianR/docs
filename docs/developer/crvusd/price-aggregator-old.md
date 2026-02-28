@@ -1,23 +1,25 @@
-# PriceAggregator
+# PriceAggregator (Old)
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-The AggregatorStablePrice contract is designed to **aggregate the prices of crvUSD based on multiple Curve Stableswap pools**. This price is primarily used as an oracle for calculating the interest rate but also for [PegKeepers](../crvUSD/pegkeepers/overview.md) to determine whether to mint and deposit or withdraw and burn.
+The AggregatorStablePrice contract is designed to **aggregate the prices of crvUSD based on multiple Curve Stableswap pools**. This price is primarily used as an oracle for calculating the interest rate but also for [PegKeepers](../crvusd/pegkeepers/overview.md) to determine whether to mint and deposit or withdraw and burn.
 
 :::deploy[Contract Source & Deployment]
 
 Source code is available on [ Github](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/AggregateStablePrice2.vy). 
-Relevant contract deployments can be found [here](../references/deployed-contracts.md#curve-stablecoin).
+Relevant contract deployments can be found [here](../deployments.md).
 
 
 :::
 
 ---
 
-# **Calculations**The `PriceAggregator` contract calculates the weighted average price of crvUSD across multiple liquidity pools, considering only those pools with sufficient liquidity (`MIN_LIQUIDITY` = 100,000 * 10**18). This calculation is based on the exponential moving-average (EMA) of the Total Value Locked (TVL) for each pool, determining the liquidity considered in the price aggregation.
+# **Calculations**
 
-## **EMA TVL Calculation**The price calculation begins with determining the EMA of the TVL from different Curve Stableswap liquidity pools using the `_ema_tvl` function. This internal function computes the EMA TVLs based on the following formula, which adjusts for the time since the last update to smooth out short-term volatility in the TVL data, providing a more stable and representative average value over the specified time window (`TVL_MA_TIME` set to 50,000 seconds):
+The `PriceAggregator` contract calculates the weighted average price of crvUSD across multiple liquidity pools, considering only those pools with sufficient liquidity (`MIN_LIQUIDITY` = 100,000 * 10**18). This calculation is based on the exponential moving-average (EMA) of the Total Value Locked (TVL) for each pool, determining the liquidity considered in the price aggregation.
+
+## **EMA TVL Calculation**
+
+The price calculation begins with determining the EMA of the TVL from different Curve Stableswap liquidity pools using the `_ema_tvl` function. This internal function computes the EMA TVLs based on the following formula, which adjusts for the time since the last update to smooth out short-term volatility in the TVL data, providing a more stable and representative average value over the specified time window (`TVL_MA_TIME` set to 50,000 seconds):
 
 $$\alpha = 
     \begin\{cases\} 
@@ -64,7 +66,9 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 
 </details>
 
-## **Aggregated Price Calculation**The `_price` function then uses these EMA TVLs to calculate the aggregated prices by considering the liquidity of each pool. A pool's liquidity must meet or exceed `100,000 * 10**18` to be included in the calculation. The function adjusts the price from the pool's `price_oracle` based on the position of crvUSD in the liquidity pair, ensuring consistent price representation across pools.
+## **Aggregated Price Calculation**
+
+The `_price` function then uses these EMA TVLs to calculate the aggregated prices by considering the liquidity of each pool. A pool's liquidity must meet or exceed `100,000 * 10**18` to be included in the calculation. The function adjusts the price from the pool's `price_oracle` based on the position of crvUSD in the liquidity pair, ensuring consistent price representation across pools.
 
 <details>
 <summary>**`_price`**</summary>
@@ -146,8 +150,10 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 
 ---
 
-# **Prices**### `price`
-:::description[`PriceAggregator.price() -> uint256:`]
+# **Prices**
+
+### `price`
+::::description[`PriceAggregator.price() -> uint256:`]
 
 
 Function to calculate the weighted price of crvUSD.
@@ -155,12 +161,7 @@ Function to calculate the weighted price of crvUSD.
 Returns: price (`uint256`). 
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -221,14 +222,9 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -237,26 +233,20 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_price`
-:::description[`PriceAggregator.last_price() -> uint256: view`]
+::::description[`PriceAggregator.last_price() -> uint256: view`]
 
 
 Getter for the last price. This variable was set to $10^{18}$ (1.00) when initializing the contract and is now updated every time [`price_w`](#price_w) is called.
 
 Returns: last price of crvUSD (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -287,14 +277,9 @@ def price_w() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -303,26 +288,20 @@ def price_w() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ema_tvl`
-:::description[`PriceAggregator.ema_tvl() -> DynArray[uint256, MAX_PAIRS]`]
+::::description[`PriceAggregator.ema_tvl() -> DynArray[uint256, MAX_PAIRS]`]
 
 
 Getter for the exponential moving-average of the TVL in `price_pairs`.
 
 Returns: array of ema tvls (`DynArray[uint256, MAX_PAIRS]`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -360,14 +339,9 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -376,14 +350,13 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_tvl`
-:::description[`PriceAggregator.last_tvl(arg0: uint256) -> uint256:`]
+::::description[`PriceAggregator.last_tvl(arg0: uint256) -> uint256:`]
 
 
 Getter for the total value locked of price pair (pool).
@@ -394,12 +367,7 @@ Returns: total value locked (`uint256`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index of the price pair |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -407,14 +375,9 @@ last_tvl: public(uint256[MAX_PAIRS])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -423,26 +386,20 @@ last_tvl: public(uint256[MAX_PAIRS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_w`
-:::description[`PriceAggregator.price_w() -> uint256:`]
+::::description[`PriceAggregator.price_w() -> uint256:`]
 
 
 Function to calculate and write the price. If called successfully, updates `last_tvl`, `last_price` and `last_timestamp`.
 
 Returns: price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -505,14 +462,9 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -521,20 +473,21 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Adding and Removing Price Pairs**All price pairs added to the contract are considered when calculating the `price` of crvUSD. Adding or removing price pairs can only be done by the `admin` of the contract, which is the Curve DAO.
+# **Adding and Removing Price Pairs**
+
+All price pairs added to the contract are considered when calculating the `price` of crvUSD. Adding or removing price pairs can only be done by the `admin` of the contract, which is the Curve DAO.
 
 
 ### `price_pairs`
-:::description[`PriceAggregator.price_pairs(arg0: uint256) -> tuple: view`]
+::::description[`PriceAggregator.price_pairs(arg0: uint256) -> tuple: view`]
 
 
 Getter for the price pair at index `arg0` and whether the price pair is inverse.
@@ -545,12 +498,7 @@ Returns: price pair (`address`) and true or false (`bool`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index of the price pair |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -558,14 +506,9 @@ price_pairs: public(PricePair[MAX_PAIRS])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -574,14 +517,13 @@ price_pairs: public(PricePair[MAX_PAIRS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `add_price_pair`
-:::description[`PriceAggregator.add_price_pair(_pool: Stableswap):`]
+::::description[`PriceAggregator.add_price_pair(_pool: Stableswap):`]
 
 
 :::guard[Guarded Method]
@@ -599,12 +541,7 @@ Emits: `AddPricePair`
 | ----------- | -------| ----|
 | `_pool` |  `address` | Price pair to add |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -631,14 +568,9 @@ def add_price_pair(_pool: Stableswap):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -646,14 +578,13 @@ def add_price_pair(_pool: Stableswap):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_price_pair`
-:::description[`PriceAggregator.remove_price_pair(n: uint256):`]
+::::description[`PriceAggregator.remove_price_pair(n: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -671,12 +602,7 @@ Emits: `RemovePricePair` and possibly `MovePricePair`
 | ----------- | -------| ----|
 | `n` |  `uint256` | Index of the price pair to remove |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -701,14 +627,9 @@ def remove_price_pair(n: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -716,29 +637,25 @@ def remove_price_pair(n: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Admin Ownership**### `admin`
-:::description[`PriceAggregator.admin() -> address: view`]
+# **Admin Ownership**
+
+### `admin`
+::::description[`PriceAggregator.admin() -> address: view`]
 
 
 Getter for the admin of the contract, which is the Curve DAO OwnershipAgent.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -752,14 +669,9 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -768,14 +680,13 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_admin`
-:::description[`PriceAggregator.set_admin(_admin: address):`]
+::::description[`PriceAggregator.set_admin(_admin: address):`]
 
 
 :::guard[Guarded Method]
@@ -793,12 +704,7 @@ Emits: `SetAdmin`
 | ----------- | -------| ----|
 | `_admin` |  `address` | new admin address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -817,14 +723,9 @@ def set_admin(_admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -832,29 +733,25 @@ def set_admin(_admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Contract Info Methods**### `SIGMA`
-:::description[`PriceAggregator.SIGMA() -> uint256: view`]
+# **Contract Info Methods**
+
+### `SIGMA`
+::::description[`PriceAggregator.SIGMA() -> uint256: view`]
 
 
 Getter for the sigma value. SIGMA is a predefined constant that influences the adjustment of price deviations, affecting how variations in individual stablecoin prices contribute to the overall average stablecoin price.
 
 Returns: sigma (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -867,14 +764,9 @@ def sigma() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -883,26 +775,20 @@ def sigma() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `STABLECOIN`
-:::description[`PriceAggregator.STABLECOIN() -> address: view`]
+::::description[`PriceAggregator.STABLECOIN() -> address: view`]
 
 
 Getter for the stablecoin contract address.
 
 Returns: crvUSD contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -915,14 +801,9 @@ def stablecoin() -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -931,26 +812,20 @@ def stablecoin() -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_timestamp`
-:::description[`PriceAggregator.last_timestamp() -> uint256:`]
+::::description[`PriceAggregator.last_timestamp() -> uint256:`]
 
 
 Getter for the latest timestamp. Variable is updated when [`price_w`](#price_w) is called.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -958,14 +833,9 @@ last_timestamp: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -974,26 +844,20 @@ last_timestamp: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `TVL_MA_TIME`
-:::description[`PriceAggregator.TVL_MA_TIME() -> uint256: view`]
+::::description[`PriceAggregator.TVL_MA_TIME() -> uint256: view`]
 
 
 Getter for the time period for the calculation of the EMA prices.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="priceaggregator-vy" label="PriceAggregator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1001,14 +865,9 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1016,8 +875,7 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 50000
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

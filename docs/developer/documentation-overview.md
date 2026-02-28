@@ -1,83 +1,59 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 
 # Documentation Overview
 Curve is a **decentralized exchange (DEX) and automated market maker (AMM) on Ethereum and EVM-compatible sidechains/L2s**, designed for the **efficient trading of stablecoins and volatile assets**.
 
-Additionally, Curve has launched its own stablecoin, **crvUSD**, and **Curve Lending**, both featuring a **unique liquidation mechanism**known as **LLAMMA**.
+Additionally, Curve has launched its own stablecoin, **crvUSD**, and **Curve Lending**, both featuring a **unique liquidation mechanism** known as **LLAMMA**.
 
 This documentation outlines the technical implementation of the core Curve protocol and related smart contracts. It may be useful for contributors to the Curve codebase, third-party integrators, or technically proficient users of the protocol.
 
 :::tip[Resources for Non-Technical Users]
 
-Non-technical users might prefer the **[Resources](https://resources.curve.fi/)**site as it offers more general insights and information.
-
+Non-technical users might prefer the **[Resources](https://resources.curve.fi/)** site as it offers more general insights and information.
 
 :::
 
 ---------
 
+<DocCardGrid>
+  <DocCard title="CRV & Governance" icon="crv" link="./curve-dao/crv-token" linkText="Getting started">
 
--   **:logos-crv: Curve DAO**---
+Core smart contracts include the Curve DAO Token, governance infrastructure governed by vote-escrowed CRV, mechanisms for fee collection and distribution, gauges, and many other components.
 
-    Core smart contracts include the Curve DAO Token, governance infrastructure governed by vote-escrowed CRV, mechanisms for fee collection and distribution, gauges, and many other components.
+  </DocCard>
+  <DocCard title="Gauges & Emissions" link="./gauges/overview" linkText="Getting started">
 
-    [**→ Getting started**](./curve_dao/crv-token.md)
+System of liquidity gauges and the `GaugeController` that directs CRV inflation to liquidity providers based on veCRV votes.
 
--   **:logos-crvusd: Curve Stablecoin (crvUSD)**---
+  </DocCard>
+  <DocCard title="Curve AMM" link="./curve-amm-overview" linkText="Getting started">
 
-    Over-collateralized USD stablecoin powered by a unique liquidating algorithm ([LLAMMA](./crvUSD/amm.md)), which progressively converts the put-up collateral token into crvUSD when the loan health decreases to certain thresholds.
+Implementation of StableSwap and CryptoSwap algorithms into on-chain exchange contracts, including Stableswap-NG, Twocrypto-NG, Tricrypto-NG, pool factories and routers.
 
-    [**→ Getting started**](./crvUSD/overview.md)
+  </DocCard>
+  <DocCard title="crvUSD" icon="crvusd" link="./crvusd/overview" linkText="Getting started">
 
--   <img src="./assets/images/scrvusd/scrvusd_round.png" alt="" width="21" height="21" /> **Savings crvUSD (scrvUSD)**---
+Over-collateralized USD stablecoin powered by a unique liquidating algorithm ([LLAMMA](./crvusd/amm.md)), which progressively converts the put-up collateral token into crvUSD when the loan health decreases to certain thresholds.
 
-    Savings crvUSD, in short scrvUSD, is a savings version of crvUSD.
+  </DocCard>
+  <DocCard title="Savings crvUSD (scrvUSD)" icon="/img/logos/scrvUSD_round_50.png" link="./scrvusd/overview" linkText="Getting started">
 
-    [**→ Getting started**](./scrvusd/overview.md)
+Savings version of crvUSD. An ERC-4626 compliant Vault that earns yield from crvUSD interest fees, with cross-chain oracle support.
 
--   **Curve Lending**---
+  </DocCard>
+  <DocCard title="Llamalend" link="./lending/overview" linkText="Getting started">
 
-    Permissionless lending markets to borrow or lend crvUSD against any asset with a proper oracle. Additionally, the markets are powered by Curve's unique liquidation algorithm, [LLAMMA](./crvUSD/amm.md).
+Permissionless lending markets to borrow or lend crvUSD against any asset with a proper oracle. Powered by Curve's unique liquidation algorithm, [LLAMMA](./crvusd/amm.md).
 
-    [**→ Getting started**](./lending/overview.md)
+  </DocCard>
+  <DocCard title="Fees" link="./fees/overview" linkText="Getting started">
 
--    **StableSwap Exchange**---
+Fee collection, distribution, and burning architecture including the `FeeCollector`, `FeeSplitter`, `FeeDistributor`, and `CowSwapBurner`.
 
-    Implementation of the Stableswap algorithm, as detailed in the [whitepaper](./assets/pdf/whitepaper_stableswap.pdf), into on-chain exchange contracts to facilitate trades between multiple relatively stable assets in comparison to each other (e.g., USDC&lt;&gt;USDT).
+  </DocCard>
+  <DocCard title="Integration" link="./integration/overview" linkText="Getting started">
 
-    [**→ Getting started**](./stableswap-exchange/overview.md)
+Section targeted at integrators covering contracts like `AddressProvider`, `MetaRegistry`, and the public Curve API.
 
--    **CryptoSwap Exchange**---
-
-    Implementation of the Cryptoswap algorithm, as detailed in the [whitepaper](./assets/pdf/whitepaper_cryptoswap.pdf), into on-chain exchange contracts to facilitate trades between multiple volatile assets (e.g. CRV&lt;&gt;ETH).
-
-    [**→ Getting started**](./cryptoswap-exchange/overview.md)
-
--    **Registry**---
-
-    A standardized API and on-chain Pool Registry Aggregator offering an on-chain API for various properties of Curve pools, by consolidating multiple pool registries into a single contract.
-
-    [**→ Getting started**](./registry/overview.md)
-
--    **Pool Factory**---
-
-    Permissionless deployment of liquidity pools, including stableswap and cryptoswap pools, along with liquidity gauges.
-
-    [**→ Getting started**](./factory/overview.md)
-
--    **Curve API**---
-
-    Public Curve API for pools, volumes, gauges, and much more, intended for all those seeking to integrate Curve data into their own projects.
-
-    [**→ Getting started**](./curve-api/curve-api.md)
-
--    **Integration Section**---
-
-    Section targeted at integrators covering contracts like `AddressProvider` or `MetaRegistry`.
-
-    [**→ Getting started**](./integration/overview.md)
-
--   :logos-googlecolab: **Notebooks**---
-
-    Interactive python notebooks hosted on Google Colab, which showcase the functionality and logic of Smart Contracts.
-
-    [**→ Getting started**](./references/notebooks.md)
+  </DocCard>
+</DocCardGrid>

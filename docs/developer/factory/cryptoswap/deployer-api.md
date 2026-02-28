@@ -39,7 +39,7 @@ The pool **deployment is permissionless**, but it must adhere to certain paramet
 | fee_min           | 5 * 10^5 = 500000                       |
 | fee_max           | 10 * 10^9 = 10000000000                 |
 
-:::description[`Factory.deploy_pool(_name: String[32], _symbol: String[10], _coins: address[2], A: uint256, gamma: uint256, mid_fee: uint256, out_fee: uint256, allowed_extra_profit: uint256, fee_gamma: uint256, adjustment_step: uint256, admin_fee: uint256, ma_half_time: uint256, initial_price: uint256) -> address:`]
+::::description[`Factory.deploy_pool(_name: String[32], _symbol: String[10], _coins: address[2], A: uint256, gamma: uint256, mid_fee: uint256, out_fee: uint256, allowed_extra_profit: uint256, fee_gamma: uint256, adjustment_step: uint256, admin_fee: uint256, ma_half_time: uint256, initial_price: uint256) -> address:`]
 
 
 Function to deploy a cryptoswap pool form the `pool_implementations`. This function will also deploy the according LP token from the `token_implementation`.
@@ -64,8 +64,7 @@ Emits: `CryptoPoolDeployed`
 | `ma_half_time`         | `uint256`     | Moving-Average half time |
 | `initial_price`        | `uint256`     | Initial price |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -89,8 +88,6 @@ A_MULTIPLIER: constant(uint256) = 10000
 
 # Limits
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 MAX_ADMIN_FEE: constant(uint256) = 10 * 10 **9
 MIN_FEE: constant(uint256) = 5 * 10 **5  # 0.5 bps
@@ -187,10 +184,9 @@ def deploy_pool(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -214,11 +210,10 @@ def deploy_pool(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## **Liquidity Gauge**:::info
 
@@ -229,7 +224,7 @@ Liquidity gauges can only be successfully deployed from the same contract from w
 
 ### `deploy_gauge`
 
-:::description[`deploy_gauge(_pool: address) -> address`]
+::::description[`deploy_gauge(_pool: address) -> address`]
 
 
 Function to deploy a liquidity gauge for a factory pool. The deployed gauge is created from the `gauge_implementation`.
@@ -240,8 +235,7 @@ Emits: `LiquidityGaugeDeployed`
 | -----------| --------- | --------------------------------------------- |
 | `_pool`    | `address` | Factory pool address to deploy a gauge for    |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -270,10 +264,9 @@ def deploy_gauge(_pool: address) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -282,8 +275,7 @@ Factory.deploy_gauge('0x...')
 'returns address of the deployed gauge' 
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

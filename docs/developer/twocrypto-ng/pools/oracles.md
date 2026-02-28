@@ -1,7 +1,5 @@
 # Twocrypto-NG Oracles
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 ## **Price Oracle***Twocrypto-NG pools contains the following built-in oracle:*
 
@@ -105,7 +103,7 @@ def _unpack_2(packed: uint256) -> uint256[2]:
 
 
 ### `price_oracle`
-:::description[`CurveTwocryptoOptimized.price_oracle() -> uint256:`]
+::::description[`CurveTwocryptoOptimized.price_oracle() -> uint256:`]
 
 
 :::danger[Oracle Manipulation Prevention]
@@ -125,14 +123,7 @@ $$\text\{EMA\} = \frac\{\min(\text\{last_prices\}, 2 \times \text\{price_scale\}
 
 Returns: ema oracle price of coin at index 1 w.r.t coin at index 0 (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -184,15 +175,6 @@ def internal_price_oracle() -> uint256:
 
     return price_oracle
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -261,16 +243,9 @@ def wad_exp(x: int256) -> int256:
     return convert(unsafe_mul(convert(convert(r, bytes32), uint256), 3_822_833_074_963_236_453_042_738_258_902_158_003_155_416_615_667) >>\
         convert(unsafe_sub(195, k), uint256), int256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -279,14 +254,13 @@ def wad_exp(x: int256) -> int256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_oracle`
-:::description[`CurveTwocryptoOptimized.xcp_oracle() -> uint256`]
+::::description[`CurveTwocryptoOptimized.xcp_oracle() -> uint256`]
 
 
 Getter for the oracle value for xcp. The oracle is an exponential moving-average, with a periodicity determined by `xcp_ma_time`.
@@ -299,14 +273,7 @@ $$\text\{xcp_oracle\} = \frac\{\text\{last_xcp\} \times (10^\{18\} - \alpha) + \
 
 Returns: xcp ema oracle value (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 cached_xcp_oracle: uint256  # <----------- EMA of totalSupply * virtual_price.
 
@@ -344,16 +311,9 @@ def xcp_oracle() -> uint256:
 
     return cached_xcp_oracle
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -362,16 +322,17 @@ Out [1]:  3501656271269889041418
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Updating Oracles**The AMM has an internal `tweak_price` function that updates `price_oracle`, `xcp_oracle`, and `last_prices`, and conditionally adjusts `price_scale` based on the new invariant and xcp profit. The function includes logic to adjust the `price_scale` if certain conditions are met, such as sufficient profits being made within the pool. This mechanism ensures the pool remains balanced.
+## **Updating Oracles**
+
+The AMM has an internal `tweak_price` function that updates `price_oracle`, `xcp_oracle`, and `last_prices`, and conditionally adjusts `price_scale` based on the new invariant and xcp profit. The function includes logic to adjust the `price_scale` if certain conditions are met, such as sufficient profits being made within the pool. This mechanism ensures the pool remains balanced.
 
 The function is called whenever `add_liquidity`, `remove_liquidity_one_coin`, or `_exchange` is called. It is not called when removing liquidity in a balanced manner via `remove_liquidity`, as this function does not alter prices. However, the xCP oracle is updated nonetheless.
 
@@ -625,22 +586,17 @@ def tweak_price(
 ---
 
 
-## **Other Methods**### `last_prices`
-:::description[`CurveTwocryptoOptimized.last_prices -> uint256: view`]
+## **Other Methods**
+
+### `last_prices`
+::::description[`CurveTwocryptoOptimized.last_prices -> uint256: view`]
 
 
 Getter for the last price of the coin at index 1 with regard to the coin at index 0. This variable is used to calculate the moving average price oracle.
 
 Returns: last price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 last_prices: public(uint256)
 
@@ -674,15 +630,6 @@ def tweak_price(
 
     ...
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```py
 @external
 @view
@@ -735,16 +682,9 @@ def get_p(
         denominator
     )
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -753,41 +693,26 @@ def get_p(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_timestamp`
-:::description[`CurveTwocryptoOptimized.last_timestamp() -> uint256: view`]
+::::description[`CurveTwocryptoOptimized.last_timestamp() -> uint256: view`]
 
 
 Getter for the last timestamps when price and xcp oracles were updated. Both timestamps are packed into a single variable. The lower 128 bits represent the timestamp of the price update, the upper 128 bits the timestamps of the xcp update. The distinction between price and xcp is neccessary because these values are not always updated in parallel. Usually they are, but when liquidity is removed in a balanced matter, the price oracle is not updated but the xcp one is. 
 
 Returns: packed value of the timestamps of the most recent updated of the price and xcp oracle (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 last_timestamp: public(uint256)    # idx 0 is for prices, idx 1 is for xcp.
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -803,28 +728,20 @@ last_timestamp: public(uint256)    # idx 0 is for prices, idx 1 is for xcp.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ma_time`
-:::description[`CurveTwocryptoOptimized.ma_time() -> uint256:`]
+::::description[`CurveTwocryptoOptimized.ma_time() -> uint256:`]
 
 
 Getter for the moving average time for `price_oracle` denominated in seconds. This variable can be changed using the `apply_new_parameters` method.
 
 Returns: moving average time (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 #               parameters allowed_extra_profit, adjustment_step, and ma_time.
@@ -840,16 +757,9 @@ def ma_time() -> uint256:
     """
     return self._unpack_3(self.packed_rebalancing_params)[2] * 694 / 1000
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -858,28 +768,20 @@ def ma_time() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_ma_time`
-:::description[`CurveTwocryptoOptimized.xcp_ma_time() -> uint256: view`]
+::::description[`CurveTwocryptoOptimized.xcp_ma_time() -> uint256: view`]
 
 
 Getter for the moving-average periodicity for `price_oracle` denominated in seconds. This variable can be changed using the `apply_new_parameters` method.
 
 Returns: ma time (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 xcp_ma_time: public(uint256)
 
@@ -900,16 +802,9 @@ def __init__(
     self.xcp_ma_time = 62324  # <--------- 12 hours default on contract start.
     ...
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -918,14 +813,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `lp_price`
-:::description[`CurveTwocryptoOptimized.lp_price() -> uint256:`]
+::::description[`CurveTwocryptoOptimized.lp_price() -> uint256:`]
 
 
 Function to calculate the price of the LP token with regard to the coin at `index 0` in the pool. The value is calculate the following:
@@ -934,14 +828,7 @@ $$\text\{lp_price\} = \frac\{2 \times \text\{virtual_price\} \times \sqrt\{\text
 
 Returns: LP token price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -989,16 +876,9 @@ def internal_price_oracle() -> uint256:
 
     return price_oracle
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1007,14 +887,13 @@ def internal_price_oracle() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `virtual_price`
-:::description[`CurveTwocryptoOptimized.virtual_price() -> uint256: view`]
+::::description[`CurveTwocryptoOptimized.virtual_price() -> uint256: view`]
 
 
 :::warning[`get_virtual_price` ≠ `virtual_price`]
@@ -1028,28 +907,14 @@ Getter for the cached virtual price. This variable provides a fast read by acces
 
 Returns: cached virtual price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 virtual_price: public(uint256)  # <------ Cached (fast to read) virtual price.
 #                          The cached `virtual_price` is also used internally.
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1058,14 +923,13 @@ virtual_price: public(uint256)  # <------ Cached (fast to read) virtual price.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_virtual_price`
-:::description[`CurveTwocryptoOptimized.get_virtual_price() -> uint256: view`]
+::::description[`CurveTwocryptoOptimized.get_virtual_price() -> uint256: view`]
 
 
 :::warning[`get_virtual_price` ≠ `virtual_price`]
@@ -1079,14 +943,7 @@ Function to dynamically calculate the current virtual price of the pool's LP tok
 
 Returns: virtual price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -1111,16 +968,9 @@ def get_xcp(D: uint256, price_scale: uint256) -> uint256:
 
     return isqrt(x[0] * x[1])  # <------------------- Geometric Mean.
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1129,8 +979,7 @@ def get_xcp(D: uint256, price_scale: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

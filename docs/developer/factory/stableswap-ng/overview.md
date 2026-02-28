@@ -1,15 +1,13 @@
-# StableSwap-NG Factory: Overview
+# Stableswap-NG Factory: Overview
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-The `CurveStableswapFactoryNG.vy` allows the permissionless deployment of up to eight-coin plain- and metapools, as well as gauges. **Liquidity pool and LP token share the same contract.**For more details, see here: [StableSwap-NG Documentation](../../stableswap-exchange/stableswap-ng/overview.md). 
+The `CurveStableswapFactoryNG.vy` allows the permissionless deployment of up to eight-coin plain- and metapools, as well as gauges. **Liquidity pool and LP token share the same contract.**For more details, see here: [Stableswap-NG Documentation](../../stableswap-ng/overview.md). 
 
 
 :::github[GitHub]
 
 The source code of the `CurveStableSwapFactoryNG.vy` can be found on [GitHub ](https://github.com/curvefi/stableswap-ng/blob/main/contracts/main/CurveStableSwapFactoryNG.vy).  
-A list of all deployments can be found [here](../../references/deployed-contracts.md#stableswap-ng).
+A list of all deployments can be found [here](../../deployments.md).
 
 
 :::
@@ -17,12 +15,14 @@ A list of all deployments can be found [here](../../references/deployed-contract
 ---
 
 
-# **Asset Types**Stableswap-NG pools supports various tokens with different [asset types](../../stableswap-exchange/stableswap-ng/pools/overview.md#supported-assets). New asset types can be added by the `admin` of the contract via the `add_asset_type` method.
+# **Asset Types**
+
+Stableswap-NG pools supports various tokens with different [asset types](../../stableswap-ng/pools/overview.md#supported-assets). New asset types can be added by the `admin` of the contract via the `add_asset_type` method.
 For a list of all supported assets, please see [Deployer API](deployer-api.md#assets-types).
 
 
 ### `asset_types`
-:::description[`CurveStableswapFactoryNG.asset_types(arg0: uint8) -> String[20]`]
+::::description[`CurveStableswapFactoryNG.asset_types(arg0: uint8) -> String[20]`]
 
 
 Getter for name of the different asset types.
@@ -33,27 +33,13 @@ Returns: asset type (`String[20]`)
 | ------- | -------- | ------------------------------- |
 | `arg0`  | `uint8`  | Index value of the asset type   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 asset_types: public(HashMap[uint8, String[20]])
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -65,14 +51,13 @@ asset_types: public(HashMap[uint8, String[20]])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `add_asset_type`
-:::description[`CurveStableSwapFactoryNG.add_asset_type(_id: uint8, _name: String[10])`]
+::::description[`CurveStableSwapFactoryNG.add_asset_type(_id: uint8, _name: String[10])`]
 
 
 :::guard[Guarded Method]
@@ -89,14 +74,7 @@ Function to add a new asset type.
 | `_id`   | `uint8`      | Asset type ID            |
 | `_name` | `String[10]` | Name of the new asset type |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 asset_types: public(HashMap[uint8, String[20]])
 
@@ -110,21 +88,17 @@ def add_asset_type(_id: uint8, _name: String[10]):
     assert msg.sender == self.admin  # dev: admin only
     self.asset_types[_id] = _name
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ---
 
 
-# **Base Pools**StableSwap pools also allow the deployment of metapools (an asset paired against a base pool). When deploying a new Factory, the existing base pools must be manually added to the contract for them to be used for metapools.
+# **Base Pools**
+
+Stableswap pools also allow the deployment of metapools (an asset paired against a base pool). When deploying a new Factory, the existing base pools must be manually added to the contract for them to be used for metapools.
 
 *Limitations when adding new base pools:*
 
@@ -134,7 +108,7 @@ def add_asset_type(_id: uint8, _name: String[10]):
 
 
 ### `add_base_pool`
-:::description[`CurveStableSwapFactoryNG.add_base_pool(_base_pool: address, _base_lp_token: address, _asset_types: DynArray[uint8, MAX_COINS], _n_coins: uint256):`]
+::::description[`CurveStableSwapFactoryNG.add_base_pool(_base_pool: address, _base_lp_token: address, _asset_types: DynArray[uint8, MAX_COINS], _n_coins: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -156,14 +130,7 @@ Emits: `BasePoolAdded`
 | `_n_coins`       | `uint256`                    | Number of coins in the base pool |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 event BasePoolAdded:
     base_pool: address
@@ -213,19 +180,13 @@ def add_base_pool(
 
     log BasePoolAdded(_base_pool)
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `base_pool_list`
-:::description[`CurveStableSwapFactoryNG.base_pool_list(arg0: uint256) -> address: view`]
+::::description[`CurveStableSwapFactoryNG.base_pool_list(arg0: uint256) -> address: view`]
 
 
 :::guard[Guarded Method]
@@ -241,27 +202,13 @@ Getter for the base pool at index `arg0`.
 | ---------------- | ---------------------------- | -------------------------------- |
 | `arg0`           | `uint256`                    | Index of the base pool           |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 base_pool_list: public(address[4294967296])   # list of base pools
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -270,16 +217,17 @@ base_pool_list: public(address[4294967296])   # list of base pools
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Implementations**The StableSwap-NG Factory makes use of **blueprint contracts**to deploy its contracts from the implementations.
+# **Implementations**
+
+The Stableswap-NG Factory makes use of **blueprint contracts**to deploy its contracts from the implementations.
 
 :::warning
 
@@ -298,11 +246,13 @@ base_pool_list: public(address[4294967296])   # list of base pools
 
 [^1]: The `gauge_implementation` is only relevant on Ethereum mainnet. Liquidity gauges on sidechains need to be deployed through the `RootChainGaugeFactory`.
 
-*More on the [**Math Implementation**](../../stableswap-exchange/stableswap-ng/utility_contracts/math.md) and [**Views Implementation**](../../stableswap-exchange/stableswap-ng/utility_contracts/views.md).* 
+*More on the [**Math Implementation**](../../stableswap-ng/utility-contracts/math.md) and [**Views Implementation**](../../stableswap-ng/utility-contracts/views.md).* 
 
 
-## **Query Implementations**### `pool_implementations`
-:::description[`CurveStableSwapFactoryNG.pool_implementations(arg0: uint256) -> address: view`]
+## **Query Implementations**
+
+### `pool_implementations`
+::::description[`CurveStableSwapFactoryNG.pool_implementations(arg0: uint256) -> address: view`]
 
 
 Getter for the pool implementations. There might be multiple pool implementations base on various circumstances. 
@@ -313,28 +263,14 @@ Returns: implementation (`address`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | index value of the implementation |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 pool_implementations: public(HashMap[uint256, address])
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -343,14 +279,13 @@ pool_implementations: public(HashMap[uint256, address])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `metapool_implementations`
-:::description[`CurveStableSwapFactoryNG.metapool_implementations(arg0: uint256) -> address: view`]
+::::description[`CurveStableSwapFactoryNG.metapool_implementations(arg0: uint256) -> address: view`]
 
 
 Getter for the pool implementations at index `arg0`. This variable can hold multiple implementations which may be tailored for specific setups. 
@@ -361,28 +296,14 @@ Returns: pool implementation (`address`).
 | ------ | --------- | -------------------------------- |
 | `arg0` | `uint256` | Index of the pool implementation |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 metapool_implementations: public(HashMap[uint256, address])
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -391,42 +312,27 @@ metapool_implementations: public(HashMap[uint256, address])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `math_implementations`
-:::description[`CurveStableSwapFactoryNG.math_implementations() -> address: view`]
+::::description[`CurveStableSwapFactoryNG.math_implementations() -> address: view`]
 
 
 Getter for the math implementation.
 
 Returns: math implementation (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 math_implementation: public(address)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -435,42 +341,27 @@ math_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `gauge_implementations`
-:::description[`CurveStableSwapFactoryNG.gauge_implementations() -> address: view`]
+::::description[`CurveStableSwapFactoryNG.gauge_implementations() -> address: view`]
 
 
 Getter for the gauge implementation.
 
 Returns: gauge implementation (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 gauge_implementation: public(address)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -479,42 +370,27 @@ gauge_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `views_implementation`
-:::description[`CurveStableSwapFactoryNG.views_implementations() -> address: view`]
+::::description[`CurveStableSwapFactoryNG.views_implementations() -> address: view`]
 
 
 Getter for the views implementation.
 
 Returns: views implementation (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 views_implementation: public(address)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -523,17 +399,18 @@ views_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Setting New Implementations**New implementation can be by the `admin` of the contract using the following functions:
+## **Setting New Implementations**
+
+New implementation can be by the `admin` of the contract using the following functions:
 
 
 ### `set_pool_implementations`
-:::description[`CurveStableSwapFactoryNG.set_pool_implementations(_implementation_index: uint256, _implementation: address,):`]
+::::description[`CurveStableSwapFactoryNG.set_pool_implementations(_implementation_index: uint256, _implementation: address,):`]
 
 
 :::guard[Guarded Method]
@@ -552,14 +429,7 @@ Function to set/add a new pool implementation. Existing implementations can be o
 | `_implementation_index` | `uint256` | Index value at which the new implementation is set   |
 | `_implementation`       | `address` | Implementation contract address          |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 pool_implementations: public(HashMap[uint256, address])
@@ -578,16 +448,9 @@ def set_pool_implementations(
     assert msg.sender == self.admin  # dev: admin-only function
     self.pool_implementations[_implementation_index] = _implementation
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -595,14 +458,13 @@ def set_pool_implementations(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_metapool_implementations`
-:::description[`CurveStableSwapFactoryNG.set_pool_implementations(_implementation_index: uint256, _implementation: address,):`]
+::::description[`CurveStableSwapFactoryNG.set_pool_implementations(_implementation_index: uint256, _implementation: address,):`]
 
 
 :::guard[Guarded Method]
@@ -621,14 +483,7 @@ Function to set/add a new metapool implementation. Existing implementations can 
 | `_implementation_index` | `uint256` | Index value at which the new implementation is set   |
 | `_implementation`       | `address` | Implementation contract address          |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 pool_implementations: public(HashMap[uint256, address])
@@ -651,16 +506,9 @@ def set_metapool_implementations(
     assert msg.sender == self.admin  # dev: admin-only function
     self.metapool_implementations[_implementation_index] = _implementation
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -668,14 +516,13 @@ def set_metapool_implementations(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_math_implementation`
-:::description[`CurveStableSwapFactoryNG.set_math_implementation(_math_implementation: address):`]
+::::description[`CurveStableSwapFactoryNG.set_math_implementation(_math_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -691,14 +538,7 @@ Function to set a new math implementation. There can only be one math implementa
 | ---------------------- | --------- | ---------------------------------------- | 
 | `_math_implementation` | `address` | New math implementation contract address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 pool_implementations: public(HashMap[uint256, address])
@@ -717,16 +557,9 @@ def set_math_implementation(_math_implementation: address):
     assert msg.sender == self.admin  # dev: admin-only function
     self.math_implementation = _math_implementation
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -734,14 +567,13 @@ def set_math_implementation(_math_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_gauge_implementations`
-:::description[`CurveStableSwapFactoryNG.set_gauge_implementation(_gauge_implementation: address):`]
+::::description[`CurveStableSwapFactoryNG.set_gauge_implementation(_gauge_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -757,14 +589,7 @@ Function to set a new gauge implementation.
 | ----------------------- | --------- | ----------------------------------------- | 
 | `_gauge_implementation` | `address` | New gauge implementation contract address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 pool_implementations: public(HashMap[uint256, address])
@@ -783,16 +608,9 @@ def set_gauge_implementation(_gauge_implementation: address):
     assert msg.sender == self.admin  # dev: admin-only function
     self.gauge_implementation = _gauge_implementation
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -800,14 +618,13 @@ def set_gauge_implementation(_gauge_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_views_implementation`
-:::description[`CurveStableSwapFactoryNG.set_views_implementation(_views_implementation: address):`]
+::::description[`CurveStableSwapFactoryNG.set_views_implementation(_views_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -823,14 +640,7 @@ Function to set a new views implementation.
 | ----------------------- | --------- | ----------------------------------------- | 
 | `_views_implementation` | `address` | New views implementation contract address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapfactoryng-vy" label="CurveStableswapFactoryNG.vy">
-
-
+<SourceCode>
 ```vyper
 # index -> implementation address
 pool_implementations: public(HashMap[uint256, address])
@@ -849,16 +659,9 @@ def set_views_implementation(_views_implementation: address):
     assert msg.sender == self.admin  # dev: admin-only function
     self.views_implementation = _views_implementation
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -866,8 +669,7 @@ def set_views_implementation(_views_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,5 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The LP token and exchange contract for two-coin CryptoSwap pools are two separate contracts from each other. Newer versions, like Tricrypto-NG, combine both the LP token and exchange contract into a single contract.
 
@@ -23,16 +21,17 @@ Newer deployments might make use of blueprint contracts ([EIP-5202](https://eips
 ```
 
 
-## **LP Token Info Methods**### `name`
-:::description[`LPTokenV5.name() -> String[64]: view`]
+## **LP Token Info Methods**
+
+### `name`
+::::description[`LPTokenV5.name() -> String[64]: view`]
 
 
 Getter for the name of the LP token.
 
 Returns: name (`String[64]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -55,10 +54,9 @@ def initialize(_name: String[64], _symbol: String[32], _pool: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -67,22 +65,20 @@ def initialize(_name: String[64], _symbol: String[32], _pool: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `symbol`
-:::description[`LPTokenV5.symbol() -> String[32]: view`]
+::::description[`LPTokenV5.symbol() -> String[32]: view`]
 
 
 Getter for the symbol of the LP token.
 
 Returns: symbol (`String[32]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -105,10 +101,9 @@ def initialize(_name: String[64], _symbol: String[32], _pool: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -117,22 +112,20 @@ def initialize(_name: String[64], _symbol: String[32], _pool: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `decimals`
-:::description[`LPTokenV5.decimals() -> uint8`]
+::::description[`LPTokenV5.decimals() -> uint8`]
 
 
 Getter for the decimals of the LP token.
 
 Returns: decimals (`uint8`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -148,10 +141,9 @@ def decimals() -> uint8:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -160,22 +152,20 @@ def decimals() -> uint8:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `version`
-:::description[`LPTokenV5.version() -> String[8]:`]
+::::description[`LPTokenV5.version() -> String[8]:`]
 
 
 Getter for the version of the LP token.
 
 Returns: version (`String[8]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -191,10 +181,9 @@ def version() -> String[8]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -203,14 +192,13 @@ def version() -> String[8]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `balanceOf`
-:::description[`LPTokenV5.balanceOf(arg0: address) -> uint256: view`]
+::::description[`LPTokenV5.balanceOf(arg0: address) -> uint256: view`]
 
 
 Getter for the LP token balance of an address.
@@ -221,8 +209,7 @@ Returns: token balance (`uint256`).
 | ----------- | -------| ----|
 | `arg0` |  `address` | Address to get the balance for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -230,10 +217,9 @@ balanceOf: public(HashMap[address, uint256])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -242,22 +228,20 @@ balanceOf: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `totalSupply`
-:::description[`LPTokenV5.totalSupply() -> uint256: view`]
+::::description[`LPTokenV5.totalSupply() -> uint256: view`]
 
 
 Getter for the total supply of the LP token.
 
 Returns: total supply (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -265,10 +249,9 @@ totalSupply: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -277,22 +260,20 @@ totalSupply: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `minter`
-:::description[`LPTokenV5.totalSupply() -> uint256: view`]
+::::description[`LPTokenV5.totalSupply() -> uint256: view`]
 
 
 Getter for the minter contract of the LP token. Minter contract address is the liquidity pool itself.
 
 Returns: minter (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -319,10 +300,9 @@ def initialize(_name: String[64], _symbol: String[32], _pool: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -331,14 +311,15 @@ def initialize(_name: String[64], _symbol: String[32], _pool: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Allowance and Transfer Methods**### `transfer`
-:::description[`LPTokenV5.transfer(_to: address, _value: uint256) -> bool`]
+## **Allowance and Transfer Methods**
+
+### `transfer`
+::::description[`LPTokenV5.transfer(_to: address, _value: uint256) -> bool`]
 
 
 Function to transfer `_value` token from `msg.sender` to `_to`.
@@ -352,8 +333,7 @@ Emits: `Transfer`
 | `_to` |  `address` | Address to transfer to |
 | `_value` |  `uint256` | Amount to transfer |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -379,10 +359,9 @@ def transfer(_to: address, _value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -391,14 +370,13 @@ True
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `transferFrom`
-:::description[`LPTokenV5.transfer(_to: address, _value: uin256) -> bool:`]
+::::description[`LPTokenV5.transfer(_to: address, _value: uin256) -> bool:`]
 
 
 Function to transfer `_value` token from `msg.sender` to `_to`. Needs [`allowance`](#allowance) to successfully transfer on behalf of someone else.
@@ -412,8 +390,7 @@ Emits: `Transfer`
 | `_to` |  `address` | Address to transfer to |
 | `_value` |  `uint256` | Amount to transfer |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -442,10 +419,9 @@ def transferFrom(_from: address, _to: address, _value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -454,14 +430,13 @@ True
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `approve`
-:::description[`LPTokenV5.approve(_spender: address, _value: uint256) -> bool:`]
+::::description[`LPTokenV5.approve(_spender: address, _value: uint256) -> bool:`]
 
 
 Function to approve `_spender` to transfer `_value` on behalf of msg.sender.
@@ -475,8 +450,7 @@ Emits: `Approval`
 | `_spender` |  `address` | Address approved to spend funds |
 | `_value` |  `uint256` | Amount of tokens allowed to spend |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -506,10 +480,9 @@ def approve(_spender: address, _value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -518,14 +491,13 @@ def approve(_spender: address, _value: uint256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `permit`
-:::description[`LPTokenV5.permit(_owner: address, _spender: address, _value: uint256, _deadline: uint256, _v: uint8, _r: bytes32, _s: bytes32) -> bool::`]
+::::description[`LPTokenV5.permit(_owner: address, _spender: address, _value: uint256, _deadline: uint256, _v: uint8, _r: bytes32, _s: bytes32) -> bool::`]
 
 
 Function to approve the spender by the owner's signature to expend the owner's tokens.
@@ -539,8 +511,7 @@ Emits: `Approval`
 | `_to` |  `address` | Address to transfer to |
 | `_value` |  `uint256` | Amount to transfer |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -601,10 +572,9 @@ def permit(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -613,14 +583,13 @@ def permit(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `allowance`
-:::description[`LPTokenV5.allowance(arg0: address, arg1: address) -> uint256: view`]
+::::description[`LPTokenV5.allowance(arg0: address, arg1: address) -> uint256: view`]
 
 
 Getter method to check the allowance of `arg0` for funds of `arg1`.
@@ -632,8 +601,7 @@ Returns: allowed amount (`uint256`).
 | `arg0` |  `address` | Address of the spender |
 | `arg0` |  `address` | Address to the token owner |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -641,10 +609,9 @@ allowance: public(HashMap[address, HashMap[address, uint256]])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -653,14 +620,13 @@ allowance: public(HashMap[address, HashMap[address, uint256]])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `increaseAllowance`
-:::description[`LPTokenV5.increaseAllowance(_spender: address, _added_value: uint256) -> bool:`]
+::::description[`LPTokenV5.increaseAllowance(_spender: address, _added_value: uint256) -> bool:`]
 
 
 Function to increase the allowance granted to `_spender`.
@@ -674,8 +640,7 @@ Emits: `Approval`
 | `_spender` |  `address` | Address to increase the allowance of  |
 | `_added_value` |  `uint256` | Amount ot increase the allowance by |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -704,10 +669,9 @@ def increaseAllowance(_spender: address, _added_value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -716,14 +680,13 @@ def increaseAllowance(_spender: address, _added_value: uint256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `decreaseAllowance`
-:::description[`LPTokenV5.decreaseAllowance(_spender: address, _subtracted_value: uint256) -> bool:`]
+::::description[`LPTokenV5.decreaseAllowance(_spender: address, _subtracted_value: uint256) -> bool:`]
 
 
 Function to decrease the allowance granted to `_spender`.
@@ -735,8 +698,7 @@ Returns: True or False (`bool`).
 | `_spender` |  `address` | Address to decrease the allowance of  |
 | `_subtracted_value` |  `uint256` | Amount ot decrease the allowance by |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -765,10 +727,9 @@ def decreaseAllowance(_spender: address, _subtracted_value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -777,20 +738,21 @@ def decreaseAllowance(_spender: address, _subtracted_value: uint256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Minting and Burning**LP Tokens are minted when users deposit funds into the liquidity pool. Upon calling the `add_liquidity` function on the pool, it triggers the `mint` function of the LP Token to mint the corresponding tokens.
+## **Minting and Burning**
+
+LP Tokens are minted when users deposit funds into the liquidity pool. Upon calling the `add_liquidity` function on the pool, it triggers the `mint` function of the LP Token to mint the corresponding tokens.
 When liquidity is withdrawn using `remove_liquidity`, the LP tokens are burned through the `burnFrom` method.
 
 The logic for both minting and burning the tokens resides in the pool contract.
 
 
 ### `mint`
-:::description[`LPTokenV5.mint(_to: address, _value: uint256) -> bool:`]
+::::description[`LPTokenV5.mint(_to: address, _value: uint256) -> bool:`]
 
 
 :::guard[Guarded Method]
@@ -811,8 +773,7 @@ Emits: `Transfer`
 | `_spender` |  `address` | Address to decrease the allowance of  |
 | `_subtracted_value` |  `uint256` | Amount ot decrease the allowance by |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -840,10 +801,9 @@ def mint(_to: address, _value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -852,14 +812,13 @@ def mint(_to: address, _value: uint256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `burnFrom`
-:::description[`LPTokenV5.burnFrom(_to: address, _value: uint256) -> bool:`]
+::::description[`LPTokenV5.burnFrom(_to: address, _value: uint256) -> bool:`]
 
 
 Function to burn `_value` LP Tokens from `_to` and transfer them to `ZERO_ADDRESS`.
@@ -873,8 +832,7 @@ Emits: `Transfer`
 | `_spender` |  `address` | Address to decrease the allowance of  |
 | `_subtracted_value` |  `uint256` | Amount ot decrease the allowance by |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -900,10 +858,9 @@ def burnFrom(_to: address, _value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -912,14 +869,15 @@ def burnFrom(_to: address, _value: uint256) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Initialize Method**### `initialize`
-:::description[`LPTokenV5.initialize(_name: String[64], _symbol: String[32], _pool: address):`]
+## **Initialize Method**
+
+### `initialize`
+::::description[`LPTokenV5.initialize(_name: String[64], _symbol: String[32], _pool: address):`]
 
 
 Function to initialize the LP Token and setting name (`_name`), symbol (`_symbol`) and the corresponding liquidity pool (`_pool`).  
@@ -933,8 +891,7 @@ Emits: `Transfer`
 | `_symbol` |  `String[32]` | symbol of the lp token |
 | `_pool` |  `address` | liquidity pool address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -960,18 +917,16 @@ def initialize(_name: String[64], _symbol: String[32], _pool: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> LPTokenV5.initialize("todo")
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

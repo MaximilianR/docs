@@ -1,5 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The implementation for a Curve Token V2 may be viewed on 
 [GitHub](https://github.com/curvefi/curve-contract/blob/master/contracts/tokens/CurveTokenV2.vy).
@@ -29,13 +27,12 @@ the allowance for the spender must be reset to `0`.
 
 ### `CurveToken.minter`
 
-:::description[`CurveToken.minter() → address: view`]
+::::description[`CurveToken.minter() → address: view`]
 
 
 Getter for the address of the `minter` of the token.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 11"
@@ -54,10 +51,9 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256, _supply
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -66,15 +62,14 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256, _supply
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CurveToken.set_name`
 
-:::description[`CurveToken.set_name(_name: String[64], _symbol: String[32])`]
+::::description[`CurveToken.set_name(_name: String[64], _symbol: String[32])`]
 
 
 Set the name and symbol of the token. This method can only be called by minter.
@@ -84,8 +79,7 @@ Set the name and symbol of the token. This method can only be called by minter.
 | `name` | `String[64]` | New name of token |
 | `symbol` | `String[32]` | New symbol of token |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 11"
@@ -97,10 +91,9 @@ def set_name(_name: String[64], _symbol: String[32]):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -109,15 +102,14 @@ todo: ""
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CurveToken.mint`
 
-:::description[`CurveToken.mint(_to: address, _value: uint256) → bool`]
+::::description[`CurveToken.mint(_to: address, _value: uint256) → bool`]
 
 
 Mint an amount of the token and assign it to an account. This encapsulates the modification of balances such that 
@@ -130,8 +122,7 @@ the proper events are emitted. Returns `True` if not reverted.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -153,10 +144,9 @@ def mint(_to: address, _value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -165,15 +155,14 @@ todo: ""
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CurveToken.burnFrom`
 
-:::description[`CurveToken.burnFrom(_to: address, _value: uint256) → bool`]
+::::description[`CurveToken.burnFrom(_to: address, _value: uint256) → bool`]
 
 
 Burn an amount of the token from a given account. Returns `True` if not reverted.
@@ -185,8 +174,7 @@ Burn an amount of the token from a given account. Returns `True` if not reverted
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -208,10 +196,9 @@ def burnFrom(_to: address, _value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -219,8 +206,7 @@ def burnFrom(_to: address, _value: uint256) -> bool:
 todo: ""
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -18,7 +18,9 @@ The source code of the `OneWayLendingFactory.vy` contract can be found on [ GitH
 ---
 
 
-## **Creating Lending Markets**A lending market **must always include crvUSD, either as collateral or as the borrowable token**.
+## **Creating Lending Markets**
+
+A lending market **must always include crvUSD, either as collateral or as the borrowable token**.
 
 *There are two ways to create lending markets:*
 
@@ -402,7 +404,9 @@ def _create(
 
 :::
 
-## **Deploying Gauges**Just like pools, vaults can have liquidity gauges. Once they are added to the `GaugeController` by the DAO, they are eligible to receive CRV emissions.
+## **Deploying Gauges**
+
+Just like pools, vaults can have liquidity gauges. Once they are added to the `GaugeController` by the DAO, they are eligible to receive CRV emissions.
 
 
 ### `deploy_gauge`
@@ -479,7 +483,9 @@ Out [1]: '0xACEBA186aDF691245dfb20365B48DB87DEA7b98F'                # returns a
 ---
 
 
-## **Rates**The Factory has a `MIN_RATE` and `MAX_RATE`. These variables are constants and can not be changed. The minimum rate is 0.1%, the maximum rate is 1000%.
+## **Rates**
+
+The Factory has a `MIN_RATE` and `MAX_RATE`. These variables are constants and can not be changed. The minimum rate is 0.1%, the maximum rate is 1000%.
 
 Additionally, the Factory has two variables, `min_default_borrow_rate` and `max_default_borrow_rate`, which are used as default values when creating new lending markets.  
 If no value is given when deploying a new market, the default rates are applied. Default rates can be changed by the `admin` via the `set_default_rates` method. 
@@ -795,7 +801,9 @@ Out [5]:  16854895991
 ---
 
 
-## **Implementations**The implementations of the Factory can be upgraded by the `admin`, which is the Curve DAO. 
+## **Implementations**
+
+The implementations of the Factory can be upgraded by the `admin`, which is the Curve DAO. 
 
 :::colab[Google Colab Notebook]
 
@@ -1161,7 +1169,9 @@ def set_implementations(controller: address, amm: address, vault: address,
 ---
 
 
-## **Contract Ownership**The Factory contract is owned by the DAO ([CurveOwnershipAdmin](https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968)). Ownership can be transferred using the `set_admin` function.
+## **Contract Ownership**
+
+The Factory contract is owned by the DAO ([CurveOwnershipAdmin](https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968)). Ownership can be transferred using the `set_admin` function.
 
 
 ### `admin`
@@ -1281,7 +1291,9 @@ Out [3]:  '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
 ---
 
 
-## **Contract Info Methods**Most informations are queried based on vault indices. The first deployed vault is vault index 0, second one index 1, etc.
+## **Contract Info Methods**
+
+Most informations are queried based on vault indices. The first deployed vault is vault index 0, second one index 1, etc.
 
 *To get the index of a certain vault:*
 

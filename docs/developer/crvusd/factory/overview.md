@@ -1,5 +1,4 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Factory
 
 The crvUSD Factory enables the **creation of new markets**and adjustments, including **setting a new fee receiver**, **modifying the debt ceiling**of an existing market, or **updating blueprint implementations**.
 
@@ -13,8 +12,10 @@ Source code available on [Github](https://github.com/curvefi/curve-stablecoin/bl
 
 :::
 
-## **Debt Ceilings**### `debt_ceiling`
-:::description[`ControllerFactory.debt_ceiling(agr0: address) -> uint256: view`]
+## **Debt Ceilings**
+
+### `debt_ceiling`
+::::description[`ControllerFactory.debt_ceiling(agr0: address) -> uint256: view`]
 
 
 Getter for the current debt ceiling of a market.
@@ -25,8 +26,7 @@ Returns: debt ceiling (`uint256`).
 | ----------- | -------| ----|
 | `arg0` |  `address` | Address of the controller |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -34,10 +34,9 @@ debt_ceiling: public(HashMap[address, uint256])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.debt_ceiling("0x8472A9A7632b173c8Cf3a86D3afec50c35548e76")
@@ -45,14 +44,13 @@ debt_ceiling: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `debt_ceiling_residual`
-:::description[`ControllerFactory.debt_ceiling_residual(arg0: address) -> uint256: view`]
+::::description[`ControllerFactory.debt_ceiling_residual(arg0: address) -> uint256: view`]
 
 
 Getter for the residual debt ceiling for a market.
@@ -63,8 +61,7 @@ Returns: debt ceiling residual (`uint256`).
 | ----------- | -------| ----|
 | `arg0` |  `address` | Address of the controller |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -72,10 +69,9 @@ debt_ceiling: public(HashMap[address, uint256])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.debt_ceiling("0x8472A9A7632b173c8Cf3a86D3afec50c35548e76")
@@ -83,14 +79,13 @@ debt_ceiling: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `rug_debt_ceiling`
-:::description[`ControllerFactory.rug_debt_ceiling(_to: address):`]
+::::description[`ControllerFactory.rug_debt_ceiling(_to: address):`]
 
 
 Function to remove stablecoins above the debt seiling from a controller and burn them. This function is used to burn residual crvUSD when the debt ceiling was lowered.
@@ -99,8 +94,7 @@ Function to remove stablecoins above the debt seiling from a controller and burn
 | ----------- | -------| ----|
 | `_to` |  `address` | Address of the controller to remove stablecoins from |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -141,35 +135,34 @@ def _set_debt_ceiling(addr: address, debt_ceiling: uint256, update: bool):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.rug_debt_ceiling("controller address")
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Fee Receiver**The fee receiver is the address that receives the claimed fees when calling `collect_fees()` on the Controller.
+## **Fee Receiver**
+
+The fee receiver is the address that receives the claimed fees when calling `collect_fees()` on the Controller.
 A new receiver can be set by the `admin` of the contract, which is the CurveOwnershipAgent.
 
 ### `fee_receiver`
-:::description[`ControllerFactory.fee_receiver() -> address: view`]
+::::description[`ControllerFactory.fee_receiver() -> address: view`]
 
 
 Getter for the fee receiver address.
 
 Returns: `address` of fee receiver.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -194,10 +187,9 @@ def __init__(stablecoin: ERC20,
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.fee_receiver()
@@ -205,25 +197,25 @@ def __init__(stablecoin: ERC20,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Implementations**Implementations are blueprint contracts used to deploy new markets. When calling `add_market`, Controller and AMM are created from the current implementations.
+## **Implementations**
+
+Implementations are blueprint contracts used to deploy new markets. When calling `add_market`, Controller and AMM are created from the current implementations.
 
 
 ### `controller_implementation`
-:::description[`ControllerFactory.controller_implementation() -> address: view`]
+::::description[`ControllerFactory.controller_implementation() -> address: view`]
 
 
 Getter for controller implementation address.
 
 Returns: implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -231,10 +223,9 @@ collaterals: public(address[MAX_CONTROLLERS])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.controller_implementation()
@@ -242,22 +233,20 @@ collaterals: public(address[MAX_CONTROLLERS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `amm_implementation`
-:::description[`ControllerFactory.amm_implementation() -> address: view`]
+::::description[`ControllerFactory.amm_implementation() -> address: view`]
 
 
 Getter for amm implementation address.
 
 Returns: implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -265,10 +254,9 @@ amm_implementation: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.amm_implementation()
@@ -276,22 +264,22 @@ amm_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Contract Info Methods**### `stablecoin`
-:::description[`ControllerFactory.stablecoin() -> address: view`]
+## **Contract Info Methods**
+
+### `stablecoin`
+::::description[`ControllerFactory.stablecoin() -> address: view`]
 
 
 Getter for the stablecoin address.
 
 Returns: stablecoin (`address`). 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -316,10 +304,9 @@ def __init__(stablecoin: ERC20,
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.stablecoin()
@@ -327,22 +314,20 @@ def __init__(stablecoin: ERC20,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `total_debt`
-:::description[`ControllerFactory.total_debt() -> uint256: view`]
+::::description[`ControllerFactory.total_debt() -> uint256: view`]
 
 
 Getter for the sum of all debts across the controllers.
 
 Returns: total amount of debt (`uint256`). 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -362,10 +347,9 @@ def total_debt() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.total_debt()
@@ -373,14 +357,13 @@ def total_debt() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_controller`
-:::description[`ControllerFactory.get_controller(collateral: address, i: uint256 = 0) -> address:`]
+::::description[`ControllerFactory.get_controller(collateral: address, i: uint256 = 0) -> address:`]
 
 
 Getter for the controller address for `collateral`.
@@ -392,8 +375,7 @@ Returns: controller `address`.
 | `collateral` |  `address` | Address of collateral token |
 | `i` |  `uint256` | Index to iterate over several controller for the same collateral if needed |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -409,10 +391,9 @@ def get_controller(collateral: address, i: uint256 = 0) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.get_controller("0xac3E018457B222d93114458476f3E3416Abbe38F", 0)
@@ -420,14 +401,13 @@ def get_controller(collateral: address, i: uint256 = 0) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_amm`
-:::description[`ControllerFactory.get_amm(collateral: address, i: uint256 = 0) -> address:`]
+::::description[`ControllerFactory.get_amm(collateral: address, i: uint256 = 0) -> address:`]
 
 
 Getter for the amm address for `collateral`.
@@ -439,8 +419,7 @@ Returns: amm `address`.
 | `collateral` |  `address` | Address of collateral token |
 | `i` |  `uint256` | Index to iterate over several amms for the same collateral if needed |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -456,10 +435,9 @@ def get_amm(collateral: address, i: uint256 = 0) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.get_amm("0xac3E018457B222d93114458476f3E3416Abbe38F", 0)
@@ -467,14 +445,13 @@ def get_amm(collateral: address, i: uint256 = 0) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `controllers`
-:::description[`ControllerFactory.controllers(arg0: uint256) -> address:`]
+::::description[`ControllerFactory.controllers(arg0: uint256) -> address:`]
 
 
 Getter for the controller address at index `arg0`.
@@ -485,8 +462,7 @@ Returns: controller `address` at specific index.
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -495,10 +471,9 @@ controllers: public(address[MAX_CONTROLLERS])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.controllers(0)
@@ -506,14 +481,13 @@ controllers: public(address[MAX_CONTROLLERS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `amms`
-:::description[`ControllerFactory.amms(arg0: uint256) -> address:`]
+::::description[`ControllerFactory.amms(arg0: uint256) -> address:`]
 
 
 Getter for the amm address at index `arg0`.
@@ -524,8 +498,7 @@ Returns: AMM `address` at specific index.
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -533,10 +506,9 @@ amms: public(address[MAX_CONTROLLERS])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.amms(0)
@@ -544,22 +516,20 @@ amms: public(address[MAX_CONTROLLERS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `n_collaterals`
-:::description[`ControllerFactory.n_collaterals() -> uint256: view`]
+::::description[`ControllerFactory.n_collaterals() -> uint256: view`]
 
 
 Getter for the number of collaterals.
 
 Returns: number of collaterals (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -567,10 +537,9 @@ n_collaterals: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.n_collaterals()
@@ -578,14 +547,13 @@ n_collaterals: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `collaterals`
-:::description[`ControllerFactory.collaterals(arg0: uint256) -> address: view`]
+::::description[`ControllerFactory.collaterals(arg0: uint256) -> address: view`]
 
 
 Getter for the collateral addresses at index `arg0`.
@@ -596,8 +564,7 @@ Returns: `address` of collateral.
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -605,10 +572,9 @@ collaterals: public(address[MAX_CONTROLLERS])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.collaterals(0)
@@ -616,14 +582,13 @@ collaterals: public(address[MAX_CONTROLLERS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `collaterals_index`
-:::description[`ControllerFactory.collaterals(arg0: address, arg1: uint256) -> uint256: view`]
+::::description[`ControllerFactory.collaterals(arg0: address, arg1: uint256) -> uint256: view`]
 
 
 Getter for the index of a controller for `arg0`.
@@ -642,8 +607,7 @@ The returned value is $2^{128}$ + index.
 | `arg0` |  `address` | Address of collateral |
 | `arg0` |  `uint256` | Index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -651,10 +615,9 @@ collaterals_index: public(HashMap[address, uint256[1000]])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.collaterals(0xac3E018457B222d93114458476f3E3416Abbe38F, 0)
@@ -662,22 +625,20 @@ collaterals_index: public(HashMap[address, uint256[1000]])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `WETH`
-:::description[`ControllerFactory.WETH() -> address: view`]
+::::description[`ControllerFactory.WETH() -> address: view`]
 
 
 Getter for WETH address.
 
 Returns: `address` of WETH.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -702,10 +663,9 @@ def __init__(stablecoin: ERC20,
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.WETH()
@@ -713,8 +673,7 @@ def __init__(stablecoin: ERC20,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,12 +1,10 @@
 # Math Contract
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 **The Math Contract provides AMM Math for 2-coin Curve Twocrypto-NG Pools.**:::deploy[Contract Source & Deployment]
 
 Source code for this contract is available on [Github](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/CurveCryptoMathOptimized2.vy). 
-Full list of all deployments can be found [here](../../../references/deployed-contracts.md#twocrypto-ng).
+Full list of all deployments can be found [here](../../deployments.md).
 
 
 :::
@@ -14,8 +12,10 @@ Full list of all deployments can be found [here](../../../references/deployed-co
 ---
 
 
-## **AMM Math Functions**### `snekmate_log_2`
-:::description[`Math._snekmate_log_2(x: uint256, roundup: bool) -> uint256:`]
+## **AMM Math Functions**
+
+### `snekmate_log_2`
+::::description[`Math._snekmate_log_2(x: uint256, roundup: bool) -> uint256:`]
 
 
 :::info
@@ -36,14 +36,7 @@ Returns: 32-byte calculation result (`uint256`).
 | `roundup` | `bool`  | Whether to round up or not. Default is `False` to round down |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @internal
 @pure
@@ -96,19 +89,13 @@ def _snekmate_log_2(x: uint256, roundup: bool) -> uint256:
 
     return result
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `newton_y`
-:::description[`Math.newton_y(ANN: uint256, gamma: uint256, x: uint256[N_COINS], D: uint256, i: uint256) -> uint256:`]
+::::description[`Math.newton_y(ANN: uint256, gamma: uint256, x: uint256[N_COINS], D: uint256, i: uint256) -> uint256:`]
 
 
 Function to calculate `y` given `ANN`, `gamma`, `x`, `D`, and `i`.
@@ -124,14 +111,7 @@ Returns: `y` (`uint256`).
 | `i`     | `uint256`        | Index of the coin for which to calculate `y`.                       |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @pure
@@ -214,19 +194,13 @@ def _newton_y(ANN: uint256, gamma: uint256, x: uint256[N_COINS], D: uint256, i: 
 
     raise "Did not converge"
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `get_y`
-:::description[`Math.get_y(_ANN: uint256, _gamma: uint256, _x: uint256[N_COINS], _D: uint256, i: uint256) -> uint256[2]:`]
+::::description[`Math.get_y(_ANN: uint256, _gamma: uint256, _x: uint256[N_COINS], _D: uint256, i: uint256) -> uint256[2]:`]
 
 
 Function to calculate `y` given `_ANN`, `_gamma`, `_x`, `_D`, and `_i`.
@@ -241,14 +215,7 @@ Returns: `y` (`uint256`).
 | `_D`     | `uint256`        | D invariant.                                                       |
 | `_i`     | `uint256`        | Index of the coin for which to calculate `y`.                      |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @pure
@@ -392,19 +359,13 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `newton_D`
-:::description[`Math.newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev: uint256 = 0) -> uint256:`]
+::::description[`Math.newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev: uint256 = 0) -> uint256:`]
 
 
 Function to find the D invariant using the Newton method.
@@ -419,14 +380,7 @@ Returns: D invariant (`uint256`).
 | `K0_prev`    | `uint256`           | A priori for Newton's method derived from `get_y_int`. Defaults to zero if no a priori is provided. |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -516,19 +470,13 @@ def newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev
 
     raise "Did not converge"
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `get_p`
-:::description[`Math.get_p(_xp: uint256[N_COINS], _D: uint256, _A_gamma: uint256[N_COINS]) -> uint256:`]
+::::description[`Math.get_p(_xp: uint256[N_COINS], _D: uint256, _A_gamma: uint256[N_COINS]) -> uint256:`]
 
 
 Function to calculate dx/dy. The output needs to be multiplied with `price_scale` to get the actual value. The function is externally called form a twocrypto-ng pools when prices are tweaked via [`tweak_price`](../pools/twocrypto.md#oracle-methods).
@@ -541,14 +489,7 @@ Returns: dx/dy (`uint256`).
 | `_D` |  `uint256` | Current value of D. |
 | `_A_gamma` |  `uint256[N_COINS]` | Amplification coefficient and gamma. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -601,19 +542,13 @@ def get_p(
         denominator
     )
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `wad_exp`
-:::description[`Math.wad_exp(x: int256) -> int256:`]
+::::description[`Math.wad_exp(x: int256) -> int256:`]
 
 
 Function to calculate the natural exponential function of a signed integer with a precision of 1e18.
@@ -624,14 +559,7 @@ Returns: 32-byte calculation result (`int256`).
 | ----- | ---- | ----------- |
 | `x` |  `int256` | 32-byte variable |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @pure
@@ -700,46 +628,26 @@ def wad_exp(x: int256) -> int256:
     return convert(unsafe_mul(convert(convert(r, bytes32), uint256), 3_822_833_074_963_236_453_042_738_258_902_158_003_155_416_615_667) >>\
         convert(unsafe_sub(195, k), uint256), int256)
 ```
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `version`
-:::description[`Math.version() -> String[8]: view `]
+::::description[`Math.version() -> String[8]: view `]
 
 
 Getter for the version of the contract.
 
 Returns: Version of the contract (`String[8]`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
+<SourceCode>
 ```vyper
 version: public(constant(String[8])) = "v2.0.0"
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -748,8 +656,7 @@ version: public(constant(String[8])) = "v2.0.0"
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

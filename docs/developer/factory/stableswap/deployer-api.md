@@ -1,5 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 ## **Liquidity Pools**:::warning
 
@@ -23,7 +21,7 @@ The pool **deployment is permissionless**, but it must adhere to certain paramet
 - Maximum of 18 decimals for the coins.
 - No duplicate coins.
 
-:::description[`Factory.deploy_plain_pool(_name: String[32], _symbol: String[10], _coins: address[4], _A: uint256, _fee: uint256, _asset_type: uint256 = 0, _implementation_idx: uint256 = 0) → address: nonpayable`]
+::::description[`Factory.deploy_plain_pool(_name: String[32], _symbol: String[10], _coins: address[4], _A: uint256, _fee: uint256, _asset_type: uint256 = 0, _implementation_idx: uint256 = 0) → address: nonpayable`]
 
 
 Function to deploy a plain pool.
@@ -43,8 +41,7 @@ Emits: `PlainPoolDeployed`
 | `_implementation_idx`| `uint256`     | Index of the implementation to use. All possible implementations for a pool of N_COINS can be publicly accessed via `plain_implementations(N_COINS)` |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -160,10 +157,9 @@ def deploy_plain_pool(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -181,11 +177,10 @@ def deploy_plain_pool(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `deploy_metapool`
 
@@ -199,7 +194,7 @@ Limitations when deploying meta pools:
 - Maximum of 18 decimals for the coins.
 
 
-:::description[`Factory.deploy_metapool(_base_pool: address, _name: String[32], _symbol: String[10], _coin: address, _A: uint256, _fee: uint256, _implementation_idx: uint256 = 0) -> address:`]
+::::description[`Factory.deploy_metapool(_base_pool: address, _name: String[32], _symbol: String[10], _coin: address, _A: uint256, _fee: uint256, _implementation_idx: uint256 = 0) -> address:`]
 
 
 Function to deploy a metapool.
@@ -219,8 +214,7 @@ Emits: `MetaPoolDeployed`
 | `_implementation_idx`| `uint256`     | Index of the implementation to use. All possible implementations for a pool of N_COINS can be publicly accessed via `plain_implementations(N_COINS)` |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -310,16 +304,15 @@ def deploy_metapool(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> Factory.deploy_metapool(
     _base_pool: '0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7',
-    _name: "crvUSD/3CRV",
+    _name: "crvusd/3CRV",
     _symbol: "crvUSD3CRV",
     _coin: '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E',
     _A: 200,
@@ -331,11 +324,10 @@ def deploy_metapool(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## **Liquidity Gauge**:::info
 
@@ -346,7 +338,7 @@ Liquidity gauges can only be successfully deployed from the same contract from w
 
 ### `deploy_gauge`
 
-:::description[`Factory.deploy_gauge(_pool: address) -> address:`]
+::::description[`Factory.deploy_gauge(_pool: address) -> address:`]
 
 
 Function to deploy a liquidity gauge for a factory pool.
@@ -360,8 +352,7 @@ Emits: `LiquidityGaugeDeployed`
 | `_pool`  | `address` | Factory pool address to deploy a gauge for   |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -390,10 +381,9 @@ def deploy_gauge(_pool: address) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -401,8 +391,7 @@ def deploy_gauge(_pool: address) -> address:
 'deployed gauge address'
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

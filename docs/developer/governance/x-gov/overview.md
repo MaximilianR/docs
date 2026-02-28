@@ -1,3 +1,5 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
+
 # L1/L2 Governance
 For being able to handle and execute governance activities not only on `Ethereum` but also on other networks such as `Arbitrum`, `Optimism`, `Base`, and many more, Curve has developed a cross-chain governance system called labeled as `x-gov`.
 
@@ -5,7 +7,7 @@ For being able to handle and execute governance activities not only on `Ethereum
 
 Source code of the `x-gov` repository can be found on [ GitHub](https://github.com/curvefi/curve-xgov).
 
-A comprehensive list of all deployed components on different chains is available [here](../../deployments/crosschain.md#curve-x-gov).
+A comprehensive list of all deployed components on different chains is available [here](../../deployments.md).
 
 
 :::
@@ -21,30 +23,28 @@ Voting for governance proposals is exclusively conducted on the Ethereum mainnet
   <figcaption></figcaption>
 </figure>
 
+<DocCardGrid>
+  <DocCard title="Broadcaster.vy" icon="vyper" link="./broadcaster" linkText="Broadcaster.vy">
 
--   :logos-vyper: **Broadcaster**---
+The `Broadcaster` contract is responsible for broadcasting governance actions from Ethereum to the sidechain for execution.
 
-    The `Broadcaster` contract is responsible for broadcasting governance actions from Ethereum to the sidechain for execution.
+  </DocCard>
+  <DocCard title="Relayer.vy" icon="vyper" link="./relayer" linkText="Relayer.vy">
 
-    [→ `Broadcaster.vy`](./broadcaster.md)
+The `Relayer` contract facilitates the relaying of governance actions from Ethereum to `Agents` on the sidechain for execution.
 
--   :logos-vyper: **Relayer**---
+  </DocCard>
+  <DocCard title="Agent.vy" icon="vyper" link="./agents" linkText="Agent.vy">
 
-    The `Relayer` contract facilitates the relaying of governance actions from Ethereum to `Agents` on the sidechain for execution.
+On each sidechain and Layer 2 network, the `Agent` contract assumes three distinct roles: `ownership`, `parameter`, and `emergency`, mirroring the structure found on the Ethereum mainnet for controlled actions.
 
-    [→ `Relayer.vy`](./relayer.md)
+  </DocCard>
+  <DocCard title="Vault.vy" icon="vyper" link="./vault" linkText="Vault.vy">
 
--   :logos-vyper: **Agents**---
+The `Vault` serves as a contract to hold various assets, controlled by the `OwnershipAgent`.
 
-    On each sidechain and Layer 2 network, the `Agent` contract assumes three distinct roles: `ownership`, `parameter`, and `emergency`, mirroring the structure found on the Ethereum mainnet for controlled actions.
-
-    [→ `Agent.vy`](./agents.md)
-
--   :logos-vyper: **Vault**---
-
-    The `Vault` serves as a contract to hold various assets, controlled by the `OwnershipAgent`.
-
-    [→ `Vault.vy`](./vault.md)
+  </DocCard>
+</DocCardGrid>
 
 
 ---

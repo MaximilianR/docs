@@ -10,7 +10,7 @@ In general, any asset that is within a Curve pool also containing a Synth may be
 
 ### `SynthSwap.add_synth`
 
-:::description[`def add_synth(_synth: address, _pool: address)`]
+::::description[`def add_synth(_synth: address, _pool: address)`]
 
 
 Add a new swappable synth. This method is callable by anyone, however `_pool` must exist within the Curve
@@ -23,8 +23,7 @@ pool registry and `_synth` must be a valid synth that is swappable within the po
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>NewSynth</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -60,10 +59,9 @@ def add_synth(_synth: address, _pool: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -71,15 +69,14 @@ def add_synth(_synth: address, _pool: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `SynthSwap.synth_pools`
 
-:::description[`SynthSwap.synth_pools(_synth: address) → address: view`]
+::::description[`SynthSwap.synth_pools(_synth: address) → address: view`]
 
 
 Get the address of the Curve pool used to swap a synthetic asset. If this function returns `ZERO_ADDRESS`, 
@@ -89,15 +86,12 @@ the given synth cannot be used within cross-asset swaps.
 | ----------- | -------| ----|
 | `_synth`       |  `address` | Address of the synth |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
 # synth -> curve pool where it can be traded
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 synth_pools: public(HashMap[address, address])
 
@@ -105,10 +99,9 @@ synth_pools: public(HashMap[address, address])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -116,15 +109,14 @@ synth_pools: public(HashMap[address, address])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `SynthSwap.swappable_synth`
 
-:::description[`SynthSwap.swappable_synth(_token: address) → address: view`]
+::::description[`SynthSwap.swappable_synth(_token: address) → address: view`]
 
 
 Get the address of the synthetic asset that `_token` may be directly swapped for. If this function returns 
@@ -134,8 +126,7 @@ Get the address of the synthetic asset that `_token` may be directly swapped for
 | ----------- | -------| ----|
 | `_token`       |  `address` | Address of the synth |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -146,10 +137,9 @@ synth_pools: public(HashMap[address, address])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -157,17 +147,16 @@ synth_pools: public(HashMap[address, address])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## Estimate Swap Amounts
 
 ### `SynthSwap.get_swap_into_synth_amount`
 
-:::description[`SynthSwap.get_swap_into_synth_amount(_from: address, _synth: address, _amount: uint256) → uint256: view`]
+::::description[`SynthSwap.get_swap_into_synth_amount(_from: address, _synth: address, _amount: uint256) → uint256: view`]
 
 
 Returns the expected amount of `_synth` received in the swap.
@@ -178,8 +167,7 @@ Returns the expected amount of `_synth` received in the swap.
 | `_synth`       |  `address` | Address of the synth being swapped into |
 | `_amount`       |  `uint256` | Amount of _from to swap |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -223,10 +211,9 @@ def get_swap_into_synth_amount(_from: address, _synth: address, _amount: uint256
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -239,8 +226,7 @@ def get_swap_into_synth_amount(_from: address, _synth: address, _amount: uint256
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -252,11 +238,11 @@ slightly to account for market movement prior to the transaction confirming.
 :::
 
 
-:::
+::::
 
 ### `SynthSwap.get_swap_from_synth_amount`
 
-:::description[`SynthSwap.get_swap_from_synth_amount(_synth: address, _to: address, _amount: uint256) → uint256: view`]
+::::description[`SynthSwap.get_swap_from_synth_amount(_synth: address, _to: address, _amount: uint256) → uint256: view`]
 
 
 Returns the expected amount of `_to` received in the swap.
@@ -267,8 +253,7 @@ Returns the expected amount of `_to` received in the swap.
 | `_to`       |  `address` | Address of the asset to swap into |
 | `_amount`       |  `uint256` | Amount of `_synth` to swap |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -302,10 +287,9 @@ def get_swap_from_synth_amount(_synth: address, _to: address, _amount: uint256) 
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -318,15 +302,14 @@ def get_swap_from_synth_amount(_synth: address, _to: address, _amount: uint256) 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `SynthSwap.get_estimated_swap_amount`
 
-:::description[`SynthSwap.get_estimated_swap_amount(_from: address, _to: address, _amount: uint256) → uint256: view`]
+::::description[`SynthSwap.get_estimated_swap_amount(_from: address, _to: address, _amount: uint256) → uint256: view`]
 
 
 Estimate the final amount of `_to` received when swapping between `_from` and `_to`.
@@ -337,8 +320,7 @@ Estimate the final amount of `_to` received when swapping between `_from` and `_
 | `_to`       |  `address` | Address of the asset to swap into |
 | `_amount`       |  `uint256` | Amount of `_from` to swap |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -397,10 +379,9 @@ def get_estimated_swap_amount(_from: address, _to: address, _amount: uint256) ->
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -413,8 +394,7 @@ def get_estimated_swap_amount(_from: address, _to: address, _amount: uint256) ->
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -435,13 +415,13 @@ during the settlement period.
 :::
 
 
-:::
+::::
 
 ## Initiate a Swap
 
 ### `SynthSwap.swap_into_synth`
 
-:::description[`SynthSwap.swap_into_synth(_from: address, _synth: address, _amount: uint256, _expected: uint256, _receiver: address = msg.sender, _existing_token_id: uint256 = 0) → uint256: payable`]
+::::description[`SynthSwap.swap_into_synth(_from: address, _synth: address, _amount: uint256, _expected: uint256, _receiver: address = msg.sender, _existing_token_id: uint256 = 0) → uint256: payable`]
 
 
 Perform a cross-asset swap between `_from` and `_synth`. Returns the `uint256` token ID of the NFT representing 
@@ -460,8 +440,7 @@ Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>NewSettler</ma
 <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark> 
 <mark style={{backgroundColor: '#FFD580', color: 'black'}}>TokenUpdate</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -597,10 +576,9 @@ def swap_into_synth(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -621,8 +599,7 @@ Transaction sent: 0x83b311af19be08b8ec6241c3e834ccdf3b22586971de82a76a641e43bdf2
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -634,13 +611,13 @@ transferred onward. Calling this function mints an NFT representing ownership of
 :::
 
 
-:::
+::::
 
 ## Get Info about an Unsettled Swap
 
 ### `SynthSwap.token_info`
 
-:::description[`SynthSwap.token_info(_token_id: uint256) → address, address, uint256, uint256: view`]
+::::description[`SynthSwap.token_info(_token_id: uint256) → address, address, uint256, uint256: view`]
 
 
 Get information about the underlying synth represented by an NFT.
@@ -656,8 +633,7 @@ Returns:
 | ----------- | -------| ----|
 | `_token_id`       |  `uint256` | NFT token ID to query info about. Reverts if the token ID does not exist. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -692,10 +668,9 @@ def token_info(_token_id: uint256) -> TokenInfo:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -710,17 +685,16 @@ def token_info(_token_id: uint256) -> TokenInfo:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## Complete a Swap
 
 ### `SynthSwap.swap_from_synth`
 
-:::description[`SynthSwap.swap_from_synth(_token_id: uint256, _to: address, _amount: uint256, _expected: uint256, _receiver: address = msg.sender) → uint256: nonpayable`]
+::::description[`SynthSwap.swap_from_synth(_token_id: uint256, _to: address, _amount: uint256, _expected: uint256, _receiver: address = msg.sender) → uint256: nonpayable`]
 
 
 Swap the underlying synth represented by an NFT into another asset. Callable by the owner or operator of 
@@ -740,8 +714,7 @@ Returns the remaining balance of the underlying synth within the active NFT.
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark> 
 <mark style={{backgroundColor: '#FFD580', color: 'black'}}>TokenUpdate</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -809,10 +782,9 @@ def swap_from_synth(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -827,15 +799,14 @@ Transaction sent: 0x83b311af19be08b8ec6241c3e834ccdf3b22586971de82a76a641e43bdf2
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `SynthSwap.withdraw`
 
-:::description[`StableSwap.withdraw(_token_id: uint256, _amount: uint256, _receiver: address = msg.sender) → uint256: nonpayable`]
+::::description[`StableSwap.withdraw(_token_id: uint256, _amount: uint256, _receiver: address = msg.sender) → uint256: nonpayable`]
 
 
 Withdraw the underlying synth represented by an NFT. Callable by the owner or operator of `_token_id` 
@@ -853,8 +824,7 @@ Returns the remaining balance of the underlying synth within the active NFT.
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark> 
 <mark style={{backgroundColor: '#FFD580', color: 'black'}}>TokenUpdate</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -913,10 +883,9 @@ def withdraw(_token_id: uint256, _amount: uint256, _receiver: address = msg.send
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -928,15 +897,14 @@ Transaction sent: 0x83b311af19be08b8ec6241c3e834ccdf3b22586971de82a76a641e43bdf2
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `SynthSwap.settle`
 
-:::description[`StableSwap.settle(_token_id: uint256) → bool: nonpayable`]
+::::description[`StableSwap.settle(_token_id: uint256) → bool: nonpayable`]
 
 
 Settle the synth represented in an NFT. Note that settlement is performed when swapping or withdrawing, 
@@ -946,8 +914,7 @@ there is no requirement to call this function separately. Returns `True`.
 | ----------- | -------| ----|
 | `_token_id` |  `uint256` | The identifier for an NFT |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -973,7 +940,7 @@ def settle(_token_id: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::

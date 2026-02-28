@@ -1,19 +1,19 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
+
 # Pool Factory Overview
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 A Pool Factory enables the permissionless deployment of liquidity pools, gauges, and LP tokens.
 
 :::deploy[Contract Source & Deployment]
 
-Factories are deployed on the Ethereum Mainnet, as well as on sidechains and Layer-2 networks. Note that some pool types may not yet be supported on these networks. A comprehensive list of all deployed contracts is available [here](../deployments/amm.md).
+Factories are deployed on the Ethereum Mainnet, as well as on sidechains and Layer-2 networks. Note that some pool types may not yet be supported on these networks. A comprehensive list of all deployed contracts is available [here](../deployments.md).
 The source code for each specific Factory contract can be found on GitHub in the respective section.
 
 
 :::
 
-Each Factory contract includes **built-in functions designed to populate the [MetaRegistry](../registry/MetaRegistryAPI.md)**with details about the created pools. These functions are not documented in this section. For more information, please refer to the [MetaRegistry documentation](../registry/overview.md).
+Each Factory contract includes **built-in functions designed to populate the [MetaRegistry](../registry/meta-registry-api.md)**with details about the created pools. These functions are not documented in this section. For more information, please refer to the [MetaRegistry documentation](../registry/overview.md).
 
 
 *Note: The methods described below may vary slightly depending on the specific Factory contract. Any anomalies or noteworthy features will be detailed as accurately as possible in the relevant section.*
@@ -22,40 +22,42 @@ Each Factory contract includes **built-in functions designed to populate the [Me
 ---
 
 
-## **Available Factories**Curve Factories facilitate the deployment of pools containing almost any combination of assets, whether they are stable or volatile, rebasing or not. Note that some variations (e.g., cryptoswap pool) might not yet be supported on sidechains or Layer 2 networks.
+## **Available Factories**
+
+Curve Factories facilitate the deployment of pools containing almost any combination of assets, whether they are stable or volatile, rebasing or not. Note that some variations (e.g., cryptoswap pool) might not yet be supported on sidechains or Layer 2 networks.
 
 *For a straightforward, non-technical explanation of pool variations, visit: https://resources.curve.fi/pools/overview/*
 
+<DocCardGrid>
+  <DocCard title="CurveStableswapFactoryNG.vy" icon="vyper" link="./stableswap-ng/overview" linkText="CurveStableswapFactoryNG.vy">
 
--   **StableSwap-NG**---
+Factory for deploying new-generation plain- and metapools for pegged assets (e.g., `crvUSD <> USDC`).
 
-    Factory for deploying new-generation plain- and metapools for pegged assets (e.g., `crvUSD &lt;&gt; USDC`).
+  </DocCard>
+  <DocCard title="CurveTwocryptoFactory.vy" icon="vyper" link="./twocrypto-ng/overview" linkText="CurveTwocryptoFactory.vy">
 
-    [→ `CurveStableswapFactoryNG.vy`](./stableswap-ng/overview.md)
+Factory for deploying two-coin volatile asset pools (e.g., `CRV <> ETH`).
 
--   **TwoCrypto-NG**---
+  </DocCard>
+  <DocCard title="CurveTricryptoFactory.vy" icon="vyper" link="./tricrypto-ng/overview" linkText="CurveTricryptoFactory.vy">
 
-    Factory for deploying two-coin volatile asset pools (e.g., `CRV &lt;&gt; ETH`).
+Factory for deploying three-coin volatile asset pools (e.g., `crvUSD <> ETH <> BTC`).
 
-    [→ `CurveTwocryptoFactory.vy`](./twocrypto-ng/overview.md)
+  </DocCard>
+  <DocCard title="Other Pool Factories" link="#" linkText="Coming soon">
 
--   **TriCrypto-NG**---
+Factories for older stableswap, twocrypto, or tricrypto pools.
 
-    Factory for deploying three-coin volatile asset pools (e.g., `crvUSD &lt;&gt; ETH &lt;&gt; BTC`).
-
-    [→ `CurveTricryptoFactory.vy`](./tricrypto-ng/overview.md)
-
--   **Other Pool Factories**---
-
-    Factories for older stableswap, twocrypto, or tricrypto pools.
-
-    [→ `soon`](#)
+  </DocCard>
+</DocCardGrid>
 
 
 ---
 
 
-## **Implementations**Liquidity pools, gauges, and LP token contracts are created based on their respective implementation contracts within the Factory. Newer implementations (NG pools) integrate both the liquidity pool and LP token, while older implementations require separate contracts.
+## **Implementations**
+
+Liquidity pools, gauges, and LP token contracts are created based on their respective implementation contracts within the Factory. Newer implementations (NG pools) integrate both the liquidity pool and LP token, while older implementations require separate contracts.
 
 :::warning[Upgradable Implementations]
 
@@ -74,19 +76,20 @@ Each Factory contract includes **built-in functions designed to populate the [Me
 ---
 
 
-## **Fee Receiver**Users interacting with liquidity pools, such as for exchanging tokens, are required to pay fees. Each factory contains a universal `fee_receiver` variable, where all fees from pools deployed through that factory are collected. This address can usually be changed by the `owner` of the factory via a `set_fee_receiver` function, which is typically the Curve DAO. Therefore, to change the fee receiver address, an approved on-chain vote must pass.
+## **Fee Receiver**
+
+Users interacting with liquidity pools, such as for exchanging tokens, are required to pay fees. Each factory contains a universal `fee_receiver` variable, where all fees from pools deployed through that factory are collected. This address can usually be changed by the `owner` of the factory via a `set_fee_receiver` function, which is typically the Curve DAO. Therefore, to change the fee receiver address, an approved on-chain vote must pass.
 
 
 ### `fee_receiver`
-:::description[`PoolFactory.fee_receiver() -> address: view`]
+::::description[`PoolFactory.fee_receiver() -> address: view`]
 
 
 Getter for the address where the accrued admin fees are collected.
 
 Returns: fee receiver (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -95,10 +98,9 @@ fee_receiver: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -107,14 +109,13 @@ fee_receiver: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_fee_receiver`
-:::description[`PoolFactory.set_fee_receiver(_fee_receiver: address)`]
+::::description[`PoolFactory.set_fee_receiver(_fee_receiver: address)`]
 
 
 :::guard[Guarded Method]
@@ -130,8 +131,7 @@ Function to set a new fee receiver address.
 | --------------- | --------- | ----------- |
 | `_fee_receiver` | `address` | Address set as the new fee receiver. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -151,15 +151,17 @@ def set_fee_receiver(_fee_receiver: address):
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ---
 
 
-## **Contract Ownership**Each Factory is controlled by an `admin`, which is typically set to the DAO; thus, any changes to the contract require approval by the Curve DAO.
+## **Contract Ownership**
+
+Each Factory is controlled by an `admin`, which is typically set to the DAO; thus, any changes to the contract require approval by the Curve DAO.
 
 The contracts utilize the classic two-step ownership model found within Curve contracts. Ownership can be transferred by first committing to the transfer of ownership via `commit_transfer_ownership`. This transfer must then be accepted by the `future_admin` through the `accept_transfer_ownership` function.
 
@@ -167,15 +169,14 @@ Some Factory contracts are indirectly owned by the DAO through a proxy contract.
 
 
 ### `admin`
-:::description[`PoolFactory.admin() -> address: view`]
+::::description[`PoolFactory.admin() -> address: view`]
 
 
 Getter for the current admin of the Factory.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -183,10 +184,9 @@ admin: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -195,22 +195,20 @@ admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_admin`
-:::description[`PoolFactory.future_admin() -> address: view`]
+::::description[`PoolFactory.future_admin() -> address: view`]
 
 
 Getter for the future admin of the Factory.
 
 Returns: future admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -218,10 +216,9 @@ future_admin: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -230,14 +227,13 @@ future_admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `commit_transfer_ownership`
-:::description[`PoolFactory.commit_transfer_ownership(_addr: address)`]
+::::description[`PoolFactory.commit_transfer_ownership(_addr: address)`]
 
 
 :::guard[Guarded Method]
@@ -253,8 +249,7 @@ This function commits a transfer of ownership by setting `_addr` as the `future_
 | -------- | --------- | ----------------------------------- |
 | `_addr`  | `address` | Address to transfer ownership to.   |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -273,13 +268,13 @@ def commit_transfer_ownership(_addr: address):
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `accept_transfer_ownership`
-:::description[`PoolFactory.accept_transfer_ownership():`]
+::::description[`PoolFactory.accept_transfer_ownership():`]
 
 
 :::guard[Guarded Method]
@@ -293,8 +288,7 @@ Function to accept the ownership transfer.
 
 Emits: `TransferOwnership`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -318,7 +312,7 @@ def accept_transfer_ownership():
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::

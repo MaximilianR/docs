@@ -17,7 +17,7 @@ Additionally, Curve developed crvUSD, a decentralized CDP USD stablecoin, and Ll
       description: "The core liquidity engine of DeFi — delivering deep, decentralized markets for stable and correlated assets with unmatched efficiency.",
     },
     {
-      title: "LlamaLend",
+      title: "Llamalend",
       logo: {
         light: "/img/logos/llamalend-light.svg",
         dark: "/img/logos/llamalend-dark.svg"

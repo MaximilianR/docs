@@ -1,24 +1,21 @@
 # RootGaugeFactory
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 
 The `RootGaugeFactory` contract is used to deploy liquidity gauges on the Ethereum mainnet. These gauges can then be voted on to be added to the `GaugeController`. If successful, the gauges will be able to receive CRV emissions, which then can be bridged via a `Bridger` contract to the child chains `ChildGauge`.
 
-<details open>
-<summary>`RootGaugeFactory.vy`</summary>
+:::vyper[`RootGaugeFactory.vy`]
 
-The source code for the `RootGaugeFactory.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/RootGaugeFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10` 
+The source code for the `RootGaugeFactory.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/RootGaugeFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6`](https://etherscan.io/address/0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6).
 
-
-</details>
+:::
 
 ---
 
-## **Deploying Gauges**The `RootGaugeFactory` allows the deployment of root gauges on Ethereum and child gauges on the child chains. Root gauges can only be deployed if there is a `bridger` contract set for the given chain ID, otherwise the chain is not supported.
+## **Deploying Gauges**
+
+The `RootGaugeFactory` allows the deployment of root gauges on Ethereum and child gauges on the child chains. Root gauges can only be deployed if there is a `bridger` contract set for the given chain ID, otherwise the chain is not supported.
 
 :::info[Supported Chains]
 
@@ -36,7 +33,7 @@ If `get_bridger(chain_id)` returns a non-zero address, the chain is supported an
 :::
 
 ### `deploy_gauge`
-:::description[`RootGaugeFactory.deploy_gauge(_chain_id: uint256, _salt: bytes32) -> RootGauge`]
+::::description[`RootGaugeFactory.deploy_gauge(_chain_id: uint256, _salt: bytes32) -> RootGauge`]
 
 
 Function to deploy and initialize a new root gauge for a given chain ID. This function call reverts if there is no `bridger` contract set for the given `_chain_id`.
@@ -48,15 +45,11 @@ Returns: newly deployed gauge (`RootGauge`).
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
 | `_salt`     | `bytes32` | Salt for the child gauge |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 event DeployedGauge:
     _implementation: indexed(address)
     _chain_id: indexed(uint256)
@@ -127,47 +120,9 @@ def _get_child(_chain_id: uint256, salt: bytes32) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-<Tabs>
-<TabItem value="rootgauge-vy" label="RootGauge.vy">
-
-
-```python
-@external
-def initialize(_bridger: Bridger, _chain_id: uint256, _child: address):
-    """
-    @notice Proxy initialization method
-    """
-    assert self.factory == empty(Factory)  # dev: already initialized
-
-    self.child_gauge = _child
-    self.chain_id = _chain_id
-    self.bridger = _bridger
-    self.factory = Factory(msg.sender)
-
-    inflation_params: InflationParams = InflationParams({
-        rate: CRV.rate(),
-        finish_time: CRV.future_epoch_time_write()
-    })
-    assert inflation_params.rate != 0
-
-    self.inflation_params = inflation_params
-    self.last_period = block.timestamp / WEEK
-
-    CRV.approve(_bridger.address, max_value(uint256))
-```
-
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example deploys a `RootGauge` for Fraxtal.
@@ -177,14 +132,14 @@ This example deploys a `RootGauge` for Fraxtal.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `deploy_child_gauge`
-:::description[`RootGaugeFactory.deploy_child_gauge(_chain_id: uint256, _lp_token: address, _salt: bytes32, _manager: address = msg.sender)`]
+::::description[`RootGaugeFactory.deploy_child_gauge(_chain_id: uint256, _lp_token: address, _salt: bytes32, _manager: address = msg.sender)`]
 
 
 :::warning[Important]
@@ -203,15 +158,11 @@ Function to deploy a new child gauge on the child chain.
 | `_salt`     | `bytes32` | Salt for the child gauge |
 | `_manager`  | `address` | Address of the manager |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 call_proxy: public(CallProxy)
 get_bridger: public(HashMap[uint256, Bridger])
 
@@ -234,14 +185,9 @@ def deploy_child_gauge(_chain_id: uint256, _lp_token: address, _salt: bytes32, _
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example deploys a `ChildGauge` on Optimism for the `0xb757fc30bb2d96782188c45b6ebf20defe165ac7` LP token. `0x1234567890123456789012345678901234567890` is specified as the manager.
@@ -251,20 +197,22 @@ This example deploys a `ChildGauge` on Optimism for the `0xb757fc30bb2d96782188c
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Transmitting Emissions**Once a root gauge has received emissions, they can be transmitted to the child gauge. This is done by calling the `transmit_emissions` function. Emissions can only be transmitted from the `RootGaugeFactory`. 
+## **Transmitting Emissions**
+
+Once a root gauge has received emissions, they can be transmitted to the child gauge. This is done by calling the `transmit_emissions` function. Emissions can only be transmitted from the `RootGaugeFactory`.
 
 Transmitting emissions is permissionless. Anyone can do it.
 
 ### `transmit_emissions`
-:::description[`RootGaugeFactory.transmit_emissions(_gauge: RootGauge)`]
+::::description[`RootGaugeFactory.transmit_emissions(_gauge: RootGauge)`]
 
 
 Function to mint and transmit emissions to the `ChildGauge` on the destination chain. This function is permissionsless and can be called by anyone.
@@ -273,15 +221,11 @@ Function to mint and transmit emissions to the `ChildGauge` on the destination c
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Root gauge to transmit emissions for |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 interface Bridger:
     def check(_addr: address) -> bool: view
 
@@ -304,79 +248,9 @@ def transmit_emissions(_gauge: RootGauge):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-<Tabs>
-<TabItem value="rootgauge-vy" label="RootGauge.vy">
-
-
-```python
-@external
-def transmit_emissions():
-    """
-    @notice Mint any new emissions and transmit across to child gauge
-    """
-    assert msg.sender == self.factory.address  # dev: call via factory
-
-    MINTER.mint(self)
-    minted: uint256 = CRV.balanceOf(self)
-
-    assert minted != 0  # dev: nothing minted
-    bridger: Bridger = self.bridger
-
-    bridger.bridge(CRV, self.child_gauge, minted, value=bridger.cost())
-```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="bridger-vy" label="Bridger.vy">
-
-
-```python
-@pure
-@external
-def check(_account: address) -> bool:
-    """
-    @notice Verify if `_account` is allowed to bridge using `transmit_emissions`
-    @param _account The account calling `transmit_emissions`
-    """
-    return True
-
-@external
-@payable
-def bridge(_token: IERC20, _to: address, _amount: uint256, _min_amount: uint256=0) -> uint256:
-    """
-    @notice Bridge `_token` through XDAO Layer Zero
-    @param _token The ERC20 asset to bridge
-    @param _to The receiver on `_chain_id`
-    @param _amount The amount of `_token` to deposit, 2^256-1 for the whole balance
-    @param _min_amount Minimum amount when to bridge
-    @return Bridged amount
-    """
-    amount: uint256 = _amount
-    if amount == max_value(uint256):
-        amount = min(staticcall _token.balanceOf(msg.sender), staticcall _token.allowance(msg.sender, self))
-    assert amount >= _min_amount, "Amount too small"
-
-    assert extcall _token.transferFrom(msg.sender, self, amount)
-
-    extcall BRIDGE.bridge(_to, amount, msg.sender, value=self.balance)
-    return amount
-```
-
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example transmits CRV emissions for the `RootGauge` at `0x6233394c3C466A45A505EFA4857489743168E9Fa` to the `ChildGauge` on Fraxtal.
@@ -386,14 +260,14 @@ This example transmits CRV emissions for the `RootGauge` at `0x6233394c3C466A45A
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `get_bridger`
-:::description[`RootGaugeFactory.get_bridger(_chain_id: uint256) -> address: view`]
+::::description[`RootGaugeFactory.get_bridger(_chain_id: uint256) -> address: view`]
 
 
 Getter for the bridger for a given chain ID. This contract is used to bridge CRV emissions to the `ChildGauge`.
@@ -404,15 +278,11 @@ Returns: bridger (`address`).
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 interface Bridger:
     def check(_addr: address) -> bool: view
 
@@ -420,31 +290,27 @@ get_bridger: public(HashMap[uint256, Bridger])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Gauge Information**The `RootGaugeFactory` contract also provides a few getters to retrieve information about the deployed `RootGauges`.
+## **Gauge Information**
+
+The `RootGaugeFactory` contract also provides a few getters to retrieve information about the deployed `RootGauges`.
 
 ### `get_gauge`
-:::description[`RootGaugeFactory.get_gauge(_chain_id: uint256, _idx: uint256) -> RootGauge`]
+::::description[`RootGaugeFactory.get_gauge(_chain_id: uint256, _idx: uint256) -> RootGauge`]
 
 
 Getter for gauges on a given chain ID and index.
@@ -456,40 +322,30 @@ Returns: gauge (`address`).
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
 | `_idx`      | `uint256` | Index of the gauge |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 get_gauge: public(HashMap[uint256, RootGauge[max_value(uint256)]])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `get_gauge_count`
-:::description[`RootGaugeFactory.get_gauge_count(_chain_id: uint256) -> uint256`]
+::::description[`RootGaugeFactory.get_gauge_count(_chain_id: uint256) -> uint256`]
 
 
 Getter to get the number of gauges for a given chain ID. This value is incremented by one for each new gauge deployed.
@@ -500,40 +356,30 @@ Returns: number of gauges (`uint256`).
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 get_gauge_count: public(HashMap[uint256, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `is_valid_gauge`
-:::description[`RootGaugeFactory.is_valid_gauge(_gauge: RootGauge) -> bool`]
+::::description[`RootGaugeFactory.is_valid_gauge(_gauge: RootGauge) -> bool`]
 
 
 Getter to check if a gauge is valid.
@@ -544,84 +390,66 @@ Returns: `True` if the gauge is valid, `False` otherwise (`bool`).
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Root gauge to check validity for |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 is_valid_gauge: public(HashMap[RootGauge, bool])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Child and Root Implementations and Factories**The `RootGaugeFactory` contract also provides a few getters to retrieve information about the deployed `ChildGauge` implementations and factories.
+## **Child and Root Implementations and Factories**
+
+The `RootGaugeFactory` contract also provides a few getters to retrieve information about the deployed `ChildGauge` implementations and factories.
 
 ### `get_implementation`
-:::description[`RootGaugeFactory.get_implementation() -> address: view`]
+::::description[`RootGaugeFactory.get_implementation() -> address: view`]
 
 
-Getter for the `RootGauge` implementation contract. This implementation contract is used to deploy new `RootGauge` contracts using 
+Getter for the `RootGauge` implementation contract. This implementation contract is used to deploy new `RootGauge` contracts using
 
 Returns: implementation address (`address`).
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 get_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_implementation`
-:::description[`RootGaugeFactory.set_implementation(_implementation: address)`]
+::::description[`RootGaugeFactory.set_implementation(_implementation: address)`]
 
 
 :::guard[Guarded Method]
@@ -646,15 +474,11 @@ Emits: `UpdateImplementation` event.
 | ----------------- | ----------- | ----------- |
 | `_implementation` | `address`   | Address of the new implementation |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateImplementation:
     _old_implementation: address
     _new_implementation: address
@@ -677,14 +501,9 @@ def set_implementation(_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the `RootGauge` implementation to the address `0x6233394c3C466A45A505EFA4857489743168E9Fa`.
@@ -700,14 +519,14 @@ This example sets the `RootGauge` implementation to the address `0x6233394c3C466
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `get_child_factory`
-:::description[`RootGaugeFactory.get_child_factory(_chain_id: uint256) -> address: view`]
+::::description[`RootGaugeFactory.get_child_factory(_chain_id: uint256) -> address: view`]
 
 
 Getter for the child factory for a given chain ID.
@@ -718,40 +537,30 @@ Returns: child factory address (`address`).
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 get_child_factory: public(HashMap[uint256, address])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `get_child_implementation`
-:::description[`RootGaugeFactory.get_child_implementation(_chain_id: uint256) -> address: view`]
+::::description[`RootGaugeFactory.get_child_implementation(_chain_id: uint256) -> address: view`]
 
 
 Getter for the child implementation for a given chain ID.
@@ -762,40 +571,30 @@ Returns: child implementation address (`address`).
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 get_child_implementation: public(HashMap[uint256, address])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_child`
-:::description[`RootGaugeFactory.set_child(_chain_id: uint256, _bridger: Bridger, _child_factory: address, _child_impl: address)`]
+::::description[`RootGaugeFactory.set_child(_chain_id: uint256, _bridger: Bridger, _child_factory: address, _child_impl: address)`]
 
 
 :::guard[Guarded Method]
@@ -816,15 +615,11 @@ Emits: `ChildUpdated` event.
 | `_child_factory` | `address` | Address of the new `ChildGaugeFactory` |
 | `_child_impl` | `address` | Address of the new `ChildGauge` implementation |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 event ChildUpdated:
     _chain_id: indexed(uint256)
     _new_bridger: Bridger
@@ -855,14 +650,9 @@ def set_child(_chain_id: uint256, _bridger: Bridger, _child_factory: address, _c
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the following properties for chain ID `252`:
@@ -876,31 +666,29 @@ This example sets the following properties for chain ID `252`:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Call Proxy**### `call_proxy`
-:::description[`RootGaugeFactory.call_proxy() -> CallProxy: view`]
+## **Call Proxy**
+
+### `call_proxy`
+::::description[`RootGaugeFactory.call_proxy() -> CallProxy: view`]
 
 
 Getter to get the call proxy which is used for inter-chain communication. This variable is initially set at contract initialization and can be changed via the [`set_call_proxy`](#set_call_proxy) function.
 
 Returns: call proxy (`CallProxy`).
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 interface CallProxy:
     def anyCall(
         _to: address, _data: Bytes[1024], _fallback: address, _to_chain_id: uint256
@@ -918,27 +706,21 @@ def __init__(_call_proxy: CallProxy, _owner: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ### `set_call_proxy`
-:::description[`RootGaugeFactory.set_call_proxy(_call_proxy: CallProxy)`]
+::::description[`RootGaugeFactory.set_call_proxy(_call_proxy: CallProxy)`]
 
 
 :::guard[Guarded Method]
@@ -956,15 +738,11 @@ Emits: `UpdateCallProxy` event.
 | ------------- | ----------- | ----------------- |
 | `_call_proxy` | `CallProxy` | Call proxy to set |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
-<Tabs>
-<TabItem value="rootgaugefactory-vy" label="RootGaugeFactory.vy">
-
-
-```python
+```vyper
 event UpdateCallProxy:
     _old_call_proxy: CallProxy
     _new_call_proxy: CallProxy
@@ -984,14 +762,9 @@ def set_call_proxy(_call_proxy: CallProxy):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the call proxy to `0x1234567890123456789012345678901234567890`.
@@ -1007,12 +780,14 @@ This example sets the call proxy to `0x1234567890123456789012345678901234567890`
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
+
 
 ---
 
-## **Contract Ownership**For contract ownership details, see [here](../../references/curve-practices.md#commit--accept).
+## **Contract Ownership**
+
+For contract ownership details, see [here](../../references/curve-practices.md#commit--accept).

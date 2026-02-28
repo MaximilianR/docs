@@ -1,20 +1,22 @@
 # Pool: Admin Controls
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-# **Pool Ownership**Liquidity pools are deployed via the [Factory](../../../factory/twocrypto-ng/deployer-api.md). All pools deployed **share the same admin**defined within the Factory contract.  
+# **Pool Ownership**
+
+Liquidity pools are deployed via the [Factory](../../factory/twocrypto-ng/deployer-api.md). All pools deployed **share the same admin**defined within the Factory contract.  
 Transfering the ownership of a pool is only possible by changing the ownership of the Factory. Admin is the Curve DAO (OwnershipAdmin).
 
 The same applies to the fee receiver of the pools.
 
-[Factory Ownership](../../../factory/overview.md#factory-contract-ownership)
+[Factory Ownership](../../factory/overview.md#factory-contract-ownership)
 
 
 ---
 
 
-# **Parameter Changes**For more information about parameters: [https://nagaking.substack.com/p/deep-dive-curve-v2-parameters](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters).
+# **Parameter Changes**
+
+For more information about parameters: [https://nagaking.substack.com/p/deep-dive-curve-v2-parameters](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters).
 
 The appropriate value for `A` and `gamma` is dependent upon the type of coin being used within the pool, and is subject to optimization and pool-parameter update based on the market history of the trading pair. 
 
@@ -22,7 +24,7 @@ It is possible to modify the parameters for a pool after it has been deployed. A
 
 
 ### `ramp_A_gamma`
-:::description[`TwoCrypto.ramp_A_gamma(future_A: uint256, future_gamma: uint256, future_time: uint256):`]
+::::description[`TwoCrypto.ramp_A_gamma(future_A: uint256, future_gamma: uint256, future_time: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -42,14 +44,7 @@ Emits: `RampAgamma`
 | `future_gamma` | `uint256` | Future value of `gamma` |
 | `future_time`  | `uint256` | Timestamp at which the ramping will end |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 event RampAgamma:
     initial_A: uint256
@@ -108,16 +103,9 @@ def ramp_A_gamma(
         future_time,
     )
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -125,14 +113,13 @@ def ramp_A_gamma(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `stop_ramp_A_gamma`
-:::description[`TwoCrypto.stop_ramp_A_gamma():`]
+::::description[`TwoCrypto.stop_ramp_A_gamma():`]
 
 
 :::guard[Guarded Method]
@@ -146,14 +133,7 @@ Function to immediately stop the ramping of A and gamma parameters and set them 
 
 Emits: `StopRampA`
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 event StopRampA:
     current_A: uint256
@@ -180,16 +160,9 @@ def stop_ramp_A_gamma():
 
     log StopRampA(A_gamma[0], A_gamma[1], block.timestamp)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -197,14 +170,13 @@ def stop_ramp_A_gamma():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `apply_new_parameters`
-:::description[`TwoCrypto.apply_new_parameters(_new_mid_fee: uint256, _new_out_fee: uint256, _new_fee_gamma: uint256, _new_allowed_extra_profit: uint256, _new_adjustment_step: uint256, _new_ma_time: uint256, _new_xcp_ma_time: uint256):`]
+::::description[`TwoCrypto.apply_new_parameters(_new_mid_fee: uint256, _new_out_fee: uint256, _new_fee_gamma: uint256, _new_allowed_extra_profit: uint256, _new_adjustment_step: uint256, _new_ma_time: uint256, _new_xcp_ma_time: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -228,14 +200,7 @@ Emits: `NewParameters`
 | `_new_ma_time`          | `uint256` | New `ma_time` value, which is time_in_seconds/ln(2).|
 | `_new_xcp_ma_time`      | `uint256` | New ma time for xcp oracles.                       |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 event NewParameters:
     mid_fee: uint256
@@ -337,16 +302,9 @@ def apply_new_parameters(
         _new_xcp_ma_time,
     )
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -354,41 +312,28 @@ def apply_new_parameters(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-# **Contract Info Methods**### `initial_A_gamma`
-:::description[`TwoCrypto.initial_A_gamma -> uint256: view`]
+# **Contract Info Methods**
+
+### `initial_A_gamma`
+::::description[`TwoCrypto.initial_A_gamma -> uint256: view`]
 
 
 Getter for the initial A/gamma.
 
 Returns: A/gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 initial_A_gamma: public(uint256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -396,41 +341,26 @@ initial_A_gamma: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `initial_A_gamma_time`
-:::description[`TwoCrypto.initial_A_gamma_time -> uint256: view`]
+::::description[`TwoCrypto.initial_A_gamma_time -> uint256: view`]
 
 
 Getter for the initial A/gamma time.
 
 Returns: A/gamma time (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 initial_A_gamma_time: public(uint256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -438,41 +368,26 @@ initial_A_gamma_time: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_A_gamma`
-:::description[`TwoCrypto.future_A_gamma -> uint256: view`]
+::::description[`TwoCrypto.future_A_gamma -> uint256: view`]
 
 
 Getter for the future A/gamma.
 
 Returns: future A/gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 future_A_gamma: public(uint256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -480,14 +395,13 @@ future_A_gamma: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_A_gamma_time`
-:::description[`TwoCrypto.future_A_gamma_time -> uint256: view`]
+::::description[`TwoCrypto.future_A_gamma_time -> uint256: view`]
 
 
 :::info
@@ -501,14 +415,7 @@ Getter for the future A/gamma time. This is the timestamp when the ramping proce
 
 Returns: future A/gamma time (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 future_A_gamma_time: public(uint256)  # <------ Time when ramping is finished.
 #         This value is 0 (default) when pool is first deployed, and only gets
@@ -517,24 +424,16 @@ future_A_gamma_time: public(uint256)  # <------ Time when ramping is finished.
 #      (i.e. self.future_A_gamma_time < block.timestamp), the variable is left
 #                                                            and not set to 0.            
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> soon
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

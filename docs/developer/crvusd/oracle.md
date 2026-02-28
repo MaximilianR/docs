@@ -1,5 +1,4 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Oracle
 
 As crvusd markets use interal oracles, they utilizes in-house liquidity pools to aggregate the price of collateral. But there is a possibility to use Chainlink oracle prices as safety limits.
 
@@ -64,15 +63,14 @@ $\text{last_tvl}_i = \text{smoothed TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]`
 
 
 ### `ema_tvl`
-:::description[`Oracle.ema_tvl() -> uint256[N_POOLS]:`]
+::::description[`Oracle.ema_tvl() -> uint256[N_POOLS]:`]
 
 
 Function to calculate the Total-Value-Locked (TVL) Exponential-Moving-Average (EMA) of the `TRICRYPTO` pools. 
 
 Returns: `last_tvl` (`uint256[N_POOLS]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="3 4 8 20"
@@ -99,10 +97,9 @@ def _ema_tvl() -> uint256[N_POOLS]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -111,14 +108,13 @@ def _ema_tvl() -> uint256[N_POOLS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_tvl`
-:::description[`Oracle.last_tvl(arg0: uint256) -> uint256:`]
+::::description[`Oracle.last_tvl(arg0: uint256) -> uint256:`]
 
 
 Getter for the `last_tvl` of the tricrypto pool at index `arg0`.
@@ -129,8 +125,7 @@ Returns: `last_tvl` (`uint256[N_POOLS]`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="3"
@@ -138,10 +133,9 @@ last_tvl: public(uint256[N_POOLS])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -150,13 +144,14 @@ last_tvl: public(uint256[N_POOLS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Calculate Raw Price**The internal `_raw_price()` function calculates the *raw price of the collateral token*.
+## **Calculate Raw Price**
+
+The internal `_raw_price()` function calculates the *raw price of the collateral token*.
 
 <details>
 <summary>`_raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -&gt; uint256:`</summary>
@@ -228,15 +223,14 @@ $rate_{wstETH} =$ amount of stETH for 1 wstETH
 
 
 ### `raw_price`
-:::description[`Oracle.raw_price() -> uint256: view`]
+::::description[`Oracle.raw_price() -> uint256: view`]
 
 
 Function to calculate the raw price.
 
 Returns: raw price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 16 18"
@@ -290,10 +284,9 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -302,13 +295,14 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Chainlink Limits**The oracle contracts have the option to utilize Chainlink prices, which serve as safety limits. When enabled, these limits are triggered if the Chainlink price deviates by more than 1.5% (represented by `BOUND_SIZE`) from the internal price oracles.
+## **Chainlink Limits**
+
+The oracle contracts have the option to utilize Chainlink prices, which serve as safety limits. When enabled, these limits are triggered if the Chainlink price deviates by more than 1.5% (represented by `BOUND_SIZE`) from the internal price oracles.
 
 Chainlink limits can be turned on and off by calling `set_use_chainlink(do_it: bool)`, which can only be done by the admin of the Factory contract.
 
@@ -319,15 +313,14 @@ Chainlink limits can be turned on and off by calling `set_use_chainlink(do_it: b
 
 
 ### `use_chainlink`
-:::description[`Oracle.use_chainlink() -> bool:`]
+::::description[`Oracle.use_chainlink() -> bool:`]
 
 
 Getter method to check if chainlink oracles are turned on or off.
 
 Returns: True or False (`bool`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -335,10 +328,9 @@ use_chainlink: public(bool)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -347,14 +339,13 @@ use_chainlink: public(bool)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_use_chainlink`
-:::description[`Oracle.set_use_chainlink(do_it: bool):`]
+::::description[`Oracle.set_use_chainlink(do_it: bool):`]
 
 
 :::guard[Guarded Method]
@@ -370,8 +361,7 @@ Function to toggle the usage of chainlink limits.
 | ----------- | -------| ----|
 | `do_it` |  `bool` | Bool to toggle the usage of chainlink oracles |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 4 6"
@@ -384,10 +374,9 @@ def set_use_chainlink(do_it: bool):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -395,11 +384,10 @@ def set_use_chainlink(do_it: bool):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## **Terminology used in Code**| terminology used in code | |
 |-----------|----------------|
@@ -414,16 +402,17 @@ def set_use_chainlink(do_it: bool):
 | $totalETH_{price}$ | `crv_p` |
 
 
-## **Contract Info Methods**### `N_POOLS`
-:::description[`Oracle.N_POOLS() -> uint256:`]
+## **Contract Info Methods**
+
+### `N_POOLS`
+::::description[`Oracle.N_POOLS() -> uint256:`]
 
 
 Getter for the number of external pools used by the oracle.
 
 Returns: number of pools (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -431,10 +420,9 @@ N_POOLS: public(constant(uint256)) = 2
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -443,14 +431,13 @@ N_POOLS: public(constant(uint256)) = 2
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `TRICRYPTO`
-:::description[`Oracle.TRICRYPTO(arg0: uint256) -> uint256:`]
+::::description[`Oracle.TRICRYPTO(arg0: uint256) -> uint256:`]
 
 
 Getter for the tricrypto pool at index `arg0`.
@@ -461,8 +448,7 @@ Returns: `last_tvl` (`uint256[N_POOLS]`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -470,10 +456,9 @@ TRICRYPTO: public(immutable(Tricrypto[N_POOLS]))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -482,14 +467,13 @@ TRICRYPTO: public(immutable(Tricrypto[N_POOLS]))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `TRICRYPTO_IX`
-:::description[`Oracle.TRICRYPTO_IX(arg0: uint256) -> uint256:`]
+::::description[`Oracle.TRICRYPTO_IX(arg0: uint256) -> uint256:`]
 
 
 Getter for the index of ETH in the tricrypto pool w.r.t the coin at index 0.
@@ -507,8 +491,7 @@ Returns 1, as ETH price oracle index in the tricrypto pool is 1. If the same ind
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index of `TRICRYPTO` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -516,10 +499,9 @@ TRICRYPTO_IX: public(immutable(uint256[N_POOLS]))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -528,22 +510,20 @@ TRICRYPTO_IX: public(immutable(uint256[N_POOLS]))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `STABLESWAP_AGGREGATOR`
-:::description[`Oracle.STABLESWAP_AGGREGATOR() -> address:`]
+::::description[`Oracle.STABLESWAP_AGGREGATOR() -> address:`]
 
 
 Getter for contract of the crvusd price aggregator.
 
 Returns: contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -551,10 +531,9 @@ STABLESWAP_AGGREGATOR: public(immutable(StableAggregator))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -563,14 +542,13 @@ STABLESWAP_AGGREGATOR: public(immutable(StableAggregator))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `STABLESWAP`
-:::description[`Oracle.STABLESWAP(arg0: uint256) -> address:`]
+::::description[`Oracle.STABLESWAP(arg0: uint256) -> address:`]
 
 
 Getter for the stableswap pool at index `arg0`., 
@@ -581,8 +559,7 @@ Returns: stableswap pool (`address`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index of `STABLESWAP` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -590,10 +567,9 @@ STABLESWAP: public(immutable(Stableswap[N_POOLS]))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -602,22 +578,20 @@ STABLESWAP: public(immutable(Stableswap[N_POOLS]))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `STABLECOIN`
-:::description[`Oracle.STABLECOIN() -> address:`]
+::::description[`Oracle.STABLECOIN() -> address:`]
 
 
 Getter for the contract address of crvUSD.
 
 Returns: crvUSD contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -625,10 +599,9 @@ STABLECOIN: public(immutable(address))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -637,22 +610,20 @@ STABLECOIN: public(immutable(address))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `FACTORY`
-:::description[`Oracle.FACTORY() -> address:`]
+::::description[`Oracle.FACTORY() -> address:`]
 
 
 Getter for the contract address of the Factory.
 
 Returns: factory contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -660,10 +631,9 @@ FACTORY: public(immutable(ControllerFactory))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -672,22 +642,20 @@ FACTORY: public(immutable(ControllerFactory))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `BOUND_SIZE`
-:::description[`Oracle.BOUND_SIZE() -> uint256:`]
+::::description[`Oracle.BOUND_SIZE() -> uint256:`]
 
 
 Getter for the bound size of the chainlink oracle limits. This essentially is the size of the safety limits.
 
 Returns: bound size (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -695,10 +663,9 @@ BOUND_SIZE: public(immutable(uint256))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -707,22 +674,20 @@ BOUND_SIZE: public(immutable(uint256))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `STAKEDSWAP`
-:::description[`Oracle.STAKEDSWAP() -> address:`]
+::::description[`Oracle.STAKEDSWAP() -> address:`]
 
 
 Getter for the stETH/ETH stableswap pool.
 
 Returns: pool contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -730,10 +695,9 @@ STAKEDSWAP: public(immutable(Stableswap))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -742,22 +706,20 @@ STAKEDSWAP: public(immutable(Stableswap))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `WSTETH`
-:::description[`Oracle.WSTETH() -> address:`]
+::::description[`Oracle.WSTETH() -> address:`]
 
 
 Getter for the wstETH contract address.
 
 Returns: wstETH contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -765,10 +727,9 @@ WSTETH: public(immutable(wstETH))
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -777,22 +738,20 @@ WSTETH: public(immutable(wstETH))
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_timestamp`
-:::description[`Oracle.last_timestamp() -> uint256:`]
+::::description[`Oracle.last_timestamp() -> uint256:`]
 
 
 Getter for the last timestamp when `price_w()` was called.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -800,10 +759,9 @@ last_timestamp: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -812,22 +770,20 @@ last_timestamp: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `TVL_MA_TIME`
-:::description[`Oracle.TVL_MA_TIME() -> uint256:`]
+::::description[`Oracle.TVL_MA_TIME() -> uint256:`]
 
 
 Getter for the Exponential-Moving-Average time.
 
 Returns: ema time (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -835,10 +791,9 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -847,22 +802,20 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price`
-:::description[`Oracle.price() -> uint256: view`]
+::::description[`Oracle.price() -> uint256: view`]
 
 
 Function to calculate the raw price of the collateral token.
 
 Returns: raw price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="3 4 8 47"
@@ -916,10 +869,9 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -928,14 +880,13 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_w` 
-:::description[`Oracle.price_w() -> uint256:`]
+::::description[`Oracle.price_w() -> uint256:`]
 
 
 Function to obtain the oracle price of the collateral token and update `last_tvl` and `last_timestamp`. This function is used in the AMM.
@@ -944,8 +895,7 @@ Function to obtain the oracle price of the collateral token and update `last_tvl
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | `last_tvl` of tricrypto pool at index `arg0` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="2 7"
@@ -959,10 +909,9 @@ def price_w() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -970,8 +919,7 @@ def price_w() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,11 +1,11 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 **Pool and LP tokens are the same smart contract. The pool itself acts as a LP Token.**When coins are deposited into a Curve pool, the depositor receives pool LP (liquidity provider) tokens in return. Each Curve pool has its unique ERC20 contract representing these LP tokens, making them transferable. Holding these LP tokens allows for their deposit and staking in the pool's liquidity gauge, earning CRV token rewards.Additionally, if a metapool supports the LP token, it can be deposited there to receive the metapool's distinct LP tokens.
 
 
-## **Transfer Methods**### `transfer`
-:::description[`LPToken.transfer(_to : address, _value : uint256) -> bool:`]
+## **Transfer Methods**
+
+### `transfer`
+::::description[`LPToken.transfer(_to : address, _value : uint256) -> bool:`]
 
 
 Function to transfer `_value` tokens to `_to`.
@@ -19,8 +19,7 @@ Emits: `Transfer`
 | `_to` |  `address` | address to transfer token to |
 | `_value` |  `uint256` | amount of tokens to transfer |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -50,13 +49,13 @@ def _transfer(_from: address, _to: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `transferFrom`
-:::description[`LPToken.transferFrom(_from : address, _to : address, _value : uint256) -> bool:`]
+::::description[`LPToken.transferFrom(_from : address, _to : address, _value : uint256) -> bool:`]
 
 
 Function to transfer `_value` tokens from `_from` to `_to`.
@@ -71,8 +70,7 @@ Emits: `Transfer`
 | `_to` |  `address` | address to transfer token to |
 | `_value` |  `uint256` | amount of tokens to transfer |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -108,13 +106,15 @@ def _transfer(_from: address, _to: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
-## **Allowance Methods**### `allowance`
-:::description[`LPToken.allowance(arg0: address, arg1: address) -> uint256: view`]
+## **Allowance Methods**
+
+### `allowance`
+::::description[`LPToken.allowance(arg0: address, arg1: address) -> uint256: view`]
 
 
 Getter method to check the allowance of `arg0` for funds of `arg1`.
@@ -126,8 +126,7 @@ Returns: allowed amount (`uint256`).
 | `arg0` |  `address` | Address of the spender |
 | `arg1` |  `address` | Address of the token owner |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -135,13 +134,13 @@ allowance: public(HashMap[address, HashMap[address, uint256]])
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `approve`
-:::description[`LPToken.approve(_spender : address, _value : uint256) -> bool:`]
+::::description[`LPToken.approve(_spender : address, _value : uint256) -> bool:`]
 
 
 Function to approve `_spender` to transfer `_value` of tokens on behalf of `msg.sender`
@@ -156,8 +155,7 @@ Emits: `Approval`
 | `_value`    | `uint256` | Amount of tokens to approve     |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -185,13 +183,13 @@ def approve(_spender : address, _value : uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `permit`
-:::description[`LPToken.permit(_owner: address, _spender: address, _value: uint256, _deadline: uint256, _v: uint8, _r: bytes32, _s: bytes32) -> bool:`]
+::::description[`LPToken.permit(_owner: address, _spender: address, _value: uint256, _deadline: uint256, _v: uint8, _r: bytes32, _s: bytes32) -> bool:`]
 
 
 Function to permit `spender` to spend up to `_value` amount of `_owner`'s tokens via a signature.
@@ -210,8 +208,7 @@ Emits: `Approval`
 | `_r` |  `bytes32` | The first 32 bytes of the ECDSA signature |
 | `_s` |  `bytes32` | The second 32 bytes of the ECDSA signature |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -272,21 +269,22 @@ def permit(
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
-## **Contract Info Methods**### `name`
-:::description[`LPToken.name() -> String[64]: view`]
+## **Contract Info Methods**
+
+### `name`
+::::description[`LPToken.name() -> String[64]: view`]
 
 
 Getter for the name of the LP token.
 
 Returns: name (`String[64]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -314,10 +312,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -326,22 +323,20 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `symbol`
-:::description[`LPToken.symbol() -> String[32]: view`]
+::::description[`LPToken.symbol() -> String[32]: view`]
 
 
 Getter for the symbol of the LP token.
 
 Returns: symbol (`String[32]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -369,10 +364,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -381,22 +375,20 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `decimals`
-:::description[`LPToken.decimals() -> uint8: view`]
+::::description[`LPToken.decimals() -> uint8: view`]
 
 
 Getter for the decimals of the LP token.
 
 Returns: decimals (uint8).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -404,10 +396,9 @@ decimals: public(constant(uint8)) = 18
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -416,22 +407,20 @@ decimals: public(constant(uint8)) = 18
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `version`
-:::description[`LPToken.version() -> String[8]: view`]
+::::description[`LPToken.version() -> String[8]: view`]
 
 
 Getter for the version of the LP token.
 
 Returns: version (`String[8]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -439,10 +428,9 @@ version: public(constant(String[8])) = "v7.0.0"
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -451,14 +439,13 @@ version: public(constant(String[8])) = "v7.0.0"
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `balanceOf`
-:::description[`LPToken.balanceOf(arg0: address) -> uint256: view`]
+::::description[`LPToken.balanceOf(arg0: address) -> uint256: view`]
 
 
 Getter for the LP token balance of `arg0`.
@@ -469,8 +456,7 @@ Returns: token balance (`uint256`).
 | ----------- | -------| ----|
 | `arg0` |  `address` | address to check the balance of |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -478,10 +464,9 @@ balanceOf: public(HashMap[address, uint256])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -490,14 +475,13 @@ balanceOf: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `nonces`
-:::description[`LPToken.nonces(arg0: address) -> uint256: view`]
+::::description[`LPToken.nonces(arg0: address) -> uint256: view`]
 
 
 Getter for the nonce.
@@ -508,8 +492,7 @@ Returns: nonces (`uint256`).
 | ----------- | -------| ----|
 | `arg0` |  `address` | address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -517,10 +500,9 @@ nonces: public(HashMap[address, uint256])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -529,22 +511,20 @@ nonces: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `salt`
-:::description[`LPToken.salt() -> bytes32: view`]
+::::description[`LPToken.salt() -> bytes32: view`]
 
 
 Getter for the salt of the LP token.
 
 Returns: salt (`bytes32`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -585,10 +565,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -597,22 +576,20 @@ HexBytes('0x814188b56f08130fe7b283343b64baa08f4d207229dc52776968b62b977c8f46')
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `DOMAIN_SEPARATOR`
-:::description[`LPToken.DOMAIN_SEPERATOR() -> bytes32: view`]
+::::description[`LPToken.DOMAIN_SEPERATOR() -> bytes32: view`]
 
 
 Getter for the domain seperator.
 
 Returns: domain seperator (`bytes32`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -645,10 +622,9 @@ def _domain_separator() -> bytes32:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -657,8 +633,7 @@ HexBytes('0xf60903716a331f2ad023b28477aceee88e5180cab4694c497f4f9cefac657989')
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,5 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 ## **Liquidity Pools**:::warning
 
@@ -39,7 +37,7 @@ The pool **deployment is permissionless**, but it must adhere to certain paramet
 | gamma_max        | 5 * 10^16 = 50000000000000000            |
 | fee_max          | 10 * 10^9 = 10000000000                  |
 
-:::description[`Factory.deploy_pool(_name: String[64], _symbol: String[32], _coins: address[N_COINS], _weth: address, implementation_id: uint256, A: uint256, gamma: uint256, mid_fee: uint256, out_fee: uint256, fee_gamma: uint256, allowed_extra_profit: uint256, adjustment_step: uint256, ma_exp_time: uint256, initial_prices: uint256[N_COINS-1],) -> address:`]
+::::description[`Factory.deploy_pool(_name: String[64], _symbol: String[32], _coins: address[N_COINS], _weth: address, implementation_id: uint256, A: uint256, gamma: uint256, mid_fee: uint256, out_fee: uint256, fee_gamma: uint256, allowed_extra_profit: uint256, adjustment_step: uint256, ma_exp_time: uint256, initial_prices: uint256[N_COINS-1],) -> address:`]
 
 
 Function to deploy a tricrypto pool.
@@ -66,8 +64,7 @@ Emits event: `TricryptoPoolDeployed`
 | `initial_prices`    | `uint256[N_COINS-1]`  | Initial Prices |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1"
@@ -237,10 +234,9 @@ def deploy_pool(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -265,11 +261,10 @@ def deploy_pool(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## **Liquidity Gauge**:::info
 
@@ -280,7 +275,7 @@ Liquidity gauges can only be successfully deployed from the same contract from w
 
 ### `deploy_gauge`
 
-:::description[`deploy_gauge(_pool: address) -> address`]
+::::description[`deploy_gauge(_pool: address) -> address`]
 
 
 Deploy a liquidity gauge for a factory pool. The deployed gauge implementation is based on what the factory admin has set for `gauge_implementation`.
@@ -290,8 +285,7 @@ Deploy a liquidity gauge for a factory pool. The deployed gauge implementation i
 | `_pool`  | `address` | Pool address to deploy a gauge for   |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -316,10 +310,9 @@ def deploy_gauge(_pool: address) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -328,8 +321,7 @@ def deploy_gauge(_pool: address) -> address:
 'returns address of the deployed gauge' 
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,7 +1,5 @@
 # Updater
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The `Updater` contract is deployed on Ethereum mainnet and is used to transmit veCRV information across chains to a `L2 VotingEscrow Oracle`.
 
@@ -9,22 +7,17 @@ The `Updater` contract is deployed on Ethereum mainnet and is used to transmit v
 
 
 ### `VOTING_ESCROW`
-:::description[`Updater.VOTING_ESCROW() -> address: view`]
+::::description[`Updater.VOTING_ESCROW() -> address: view`]
 
 
 Getter for the address of the voting escrow contract. This variable is constant and points to the voting escrow contract on Ethereum mainnet and can not be changed.
 
 Returns: `VotingEscrow` contract (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="updater-vy" label="Updater.vy">
-
-
-```python
+```vyper
 interface VotingEscrow:
     def epoch() -> uint256: view
     def point_history(_idx: uint256) -> Point: view
@@ -36,46 +29,32 @@ interface VotingEscrow:
 VOTING_ESCROW: public(constant(address)) = 0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> Updater.VOTING_ESCROW()
 '0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ovm_chain`
-:::description[`Updater.ovm_chain() -> address: view`]
+::::description[`Updater.ovm_chain() -> address: view`]
 
 
 Getter for the chain id of the alternate chain.
 
 Returns: Chain id of the alternate chain (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="updater-vy" label="Updater.vy">
-
-
-```python
+```vyper
 ovm_chain: public(address)  # CanonicalTransactionChain
 ovm_messenger: public(address)  # CrossDomainMessenger
 
@@ -85,46 +64,32 @@ def __init__(_ovm_chain: address, _ovm_messenger: address):
     self.ovm_messenger = _ovm_messenger
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> Updater.ovm_chain()
 '0x0000000000000000000000000000000000000000'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ovm_messenger`
-:::description[`Updater.ovm_messenger() -> address: view`]
+::::description[`Updater.ovm_messenger() -> address: view`]
 
 
 Getter for the address of the `CrossDomainMessenger` contract on the alternate chain.
 
 Returns: `CrossDomainMessenger` contract (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="updater-vy" label="Updater.vy">
-
-
-```python
+```vyper
 ovm_chain: public(address)  # CanonicalTransactionChain
 ovm_messenger: public(address)  # CrossDomainMessenger
 
@@ -134,31 +99,22 @@ def __init__(_ovm_chain: address, _ovm_messenger: address):
     self.ovm_messenger = _ovm_messenger
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> Updater.ovm_messenger()
 '0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed'  # Fraxtal L1 Cross Domain Messenger Proxy
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `update`
-:::description[`Updater.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
+::::description[`Updater.update(_user: address = msg.sender, _gas_limit: uint32 = 0)`]
 
 
 Function to update the voting escrow information on the alternate chain. This call transmits the following information: current `epoch`, `point_history` of the current epoch, `user_point_epoch` of the user, `user_point_history` of the user at their `user_point_epoch`, `locked` balance, and `slope_changes` for the past 12 weeks.
@@ -168,15 +124,10 @@ Function to update the voting escrow information on the alternate chain. This ca
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="updater-vy" label="Updater.vy">
-
-
-```python
+```vyper
 interface OVMMessenger:
     def sendMessage(_target: address, _data: Bytes[1024], _gas_limit: uint32): nonpayable
 
@@ -248,23 +199,15 @@ def update(_user: address = msg.sender, _gas_limit: uint32 = 0):
     )
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> Updater.update()
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,7 +1,5 @@
-# Price Aggregator
+# PriceAggregator
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The `AggregateStablePrice.vy` contract is designed to **get an aggregated price of crvUSD based on multiple multiple stableswap pools weighted by their TVL**. 
 
@@ -14,16 +12,20 @@ The `AggregateStablePrice.vy` contract has been deployed on [Ethereum](https://e
 
 :::
 
-This aggregated price of crvUSD is used in multiple different components in the system such as in [monetary policy contracts](./monetarypolicy.md), [PegKeepers](../crvUSD/pegkeepers/overview.md) or [oracles for lending markets](../lending/contracts/oracle-overview.md).
+This aggregated price of crvUSD is used in multiple different components in the system such as in [monetary policy contracts](./monetary-policy.md), [PegKeepers](../crvusd/pegkeepers/overview.md) or [oracles for lending markets](../lending/contracts/oracle-overview.md).
 
 
 ---
 
 
-# **Calculations**The `AggregateStablePrice` contract calculates the **weighted average price of crvUSD across multiple liquidity pools**, considering only those pools with sufficient liquidity (`MIN_LIQUIDITY = 100,000 * 10**18`). The calculation is based on the **exponential moving average (EMA) of the Total-Value-Locked (TVL)**for each pool, determining the liquidity considered in the price aggregation.
+# **Calculations**
+
+The `AggregateStablePrice` contract calculates the **weighted average price of crvUSD across multiple liquidity pools**, considering only those pools with sufficient liquidity (`MIN_LIQUIDITY = 100,000 * 10**18`). The calculation is based on the **exponential moving average (EMA) of the Total-Value-Locked (TVL)**for each pool, determining the liquidity considered in the price aggregation.
 
 
-## **EMA TVL Calculation**The price calculation starts with determining the EMA of the TVL from different Curve Stableswap liquidity pools using the `_ema_tvl` function. This internal function computes the EMA TVLs based on the formula below, which adjusts for the time since the last update to smooth out short-term volatility in the TVL data, providing a more stable and representative average value over the specified time window (`TVL_MA_TIME = 50000`):
+## **EMA TVL Calculation**
+
+The price calculation starts with determining the EMA of the TVL from different Curve Stableswap liquidity pools using the `_ema_tvl` function. This internal function computes the EMA TVLs based on the formula below, which adjusts for the time since the last update to smooth out short-term volatility in the TVL data, providing a more stable and representative average value over the specified time window (`TVL_MA_TIME = 50000`):
 
 $$\alpha = 
     \begin\{cases\} 
@@ -38,10 +40,6 @@ $$\text\{ema_tvl\}_\{i\} = \frac\{\text\{new_tvl\}_i * (10^\{18\} - \alpha) + \t
 
 <details>
 <summary>Source code for `_ema_tvl`</summary>
-
-
-<Tabs>
-<TabItem value="aggregatestableprice-vy" label="AggregateStablePrice.vy">
 
 
 ```py
@@ -72,13 +70,11 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</TabItem>
-</Tabs>
-
-
 </details>
 
-## **Aggregated crvUSD Price Calculation**The `_price` function then uses these EMA TVLs to calculate the aggregated price of `crvUSD` by considering the liquidity of each pool. The function adjusts the price from the pool's `price_oracle` based on the coin index of `crvUSD` in the liquidity pool.
+## **Aggregated crvUSD Price Calculation**
+
+The `_price` function then uses these EMA TVLs to calculate the aggregated price of `crvUSD` by considering the liquidity of each pool. The function adjusts the price from the pool's `price_oracle` based on the coin index of `crvUSD` in the liquidity pool.
 
 <details>
 <summary>Source code for `_price`</summary>
@@ -160,22 +156,20 @@ $$\text\{final price\} = \frac\{\text\{wp_sum\}\}\{\text\{w_sum\}\}$$
 ---
 
 
-# **Price and TVL Methods**### `price`
-:::description[`PriceAggregator3.price() -> uint256`]
+# **Price and TVL Methods**
+
+### `price`
+::::description[`PriceAggregator3.price() -> uint256`]
 
 
 Getter for the aggregated price of crvUSD based on the prices of crvUSD within different `price_pairs`.
 
 Returns: aggregated crvUSD price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -268,14 +262,9 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -284,28 +273,23 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_w`
-:::description[`PriceAggregator3.price_w() -> uint256`]
+::::description[`PriceAggregator3.price_w() -> uint256`]
 
 
 Function to calculate the aggregated price of crvUSD based on the prices of crvUSD within different `price_pairs`. This function writes the price on the blockchain and additionally updates `last_timestamp`, `last_tvl` and `last_price`.
 
 Returns: aggregated crvUSD price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -408,14 +392,9 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -424,28 +403,23 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_price`
-:::description[`PriceAggregator3.last_price() -> uint256: view`]
+::::description[`PriceAggregator3.last_price() -> uint256: view`]
 
 
 Getter for the last aggregated price of crvUSD. This variable was set to $10^{18}$ (1.00) when initializing the contract and is updated to the current aggreagated crvUSD price every time [`price_w`](#price_w) is called.
 
 Returns: last aggregated price of crvUSD (`uint256`). 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -461,14 +435,9 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -477,28 +446,23 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_timestamp`
-:::description[`PriceAggregator3.last_timestamp() -> uint256: view`]
+::::description[`PriceAggregator3.last_timestamp() -> uint256: view`]
 
 
 Getter for the last timestamp when the aggregated price of crvUSD was updated. This variable was populated with `block.timestamp` when initializing the contract and is updated to the current timestamp every time [`price_w`](#price_w) is called. When adding a new price pair, its value is set to the `totalSupply` of the pair.
 
 Returns: timestamp of the last price write (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -506,14 +470,9 @@ last_timestamp: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -522,28 +481,23 @@ last_timestamp: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ema_tvl`
-:::description[`PriceAggregator3.ema_tvl() -> DynArray[uint256, MAX_PAIRS]`]
+::::description[`PriceAggregator3.ema_tvl() -> DynArray[uint256, MAX_PAIRS]`]
 
 
 Getter for the exponential moving-average value of TVL across all `price_pairs`.
 
 Returns: array of ema tvls (`DynArray[uint256, MAX_PAIRS]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -587,14 +541,9 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -603,14 +552,13 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_tvl`
-:::description[`PriceAggregator3.last_tvl(arg0: uint256) -> uint256: view`]
+::::description[`PriceAggregator3.last_tvl(arg0: uint256) -> uint256: view`]
 
 
 Getter for the last ema tvl value of a `price_pair`. This variable is updated to the current ema tvl of the pool every time [`price_w`](#price_w) is called. When adding a new price pair, its value is set to the `totalSupply` of the pair.
@@ -621,14 +569,10 @@ Returns: last ema tvl (`uint256`).
 | ------ | --------- | ----------------------- |
 | `arg0` | `uint256` | Index of the price pair |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -636,14 +580,9 @@ last_tvl: public(uint256[MAX_PAIRS])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -655,28 +594,23 @@ last_tvl: public(uint256[MAX_PAIRS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `TVL_MA_TIME`
-:::description[`PriceAggregator3.TVL_MA_TIME() -> uint256: view`]
+::::description[`PriceAggregator3.TVL_MA_TIME() -> uint256: view`]
 
 
 Getter for the time periodicity used to calculate the exponential moving-average of TVL.
 
 Returns: ema periodicity (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -684,14 +618,9 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -700,31 +629,28 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Contract Info Methods**### `sigma`
-:::description[`PriceAggregator3.SIGMA() -> uint256: view`]
+# **Contract Info Methods**
+
+### `sigma`
+::::description[`PriceAggregator3.SIGMA() -> uint256: view`]
 
 
 Getter for the sigma value. SIGMA is a predefined constant that influences the adjustment of price deviations, affecting how variations in individual stablecoin prices contribute to the overall average stablecoin price. The value of `sigma` was set to `1000000000000000` when initializing the contract and the variable is immutale, meaning it can not be adjusted.
 
 Returns: sigma value (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -740,14 +666,9 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -756,28 +677,23 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `stablecoin`
-:::description[`PriceAggregator3.STABLECOIN() -> uint256: view`]
+::::description[`PriceAggregator3.STABLECOIN() -> uint256: view`]
 
 
 Getter for the crvUSD contract address.
 
 Returns: crvUSD contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -793,14 +709,9 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -809,19 +720,20 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Price Pairs**All liquidity pools used to calculate the aggregated price are stored in `price_pairs`. New price pairs can be added or removed by the DAO using `add_price_pair` and `remove_price_pair`.
+# **Price Pairs**
+
+All liquidity pools used to calculate the aggregated price are stored in `price_pairs`. New price pairs can be added or removed by the DAO using `add_price_pair` and `remove_price_pair`.
 
 ### `price_pairs`
-:::description[`PriceAggregator3.price_pairs(arg0: uint256) -> PricePair`]
+::::description[`PriceAggregator3.price_pairs(arg0: uint256) -> PricePair`]
 
 
 Getter for the price pairs added to the `PriceAggregator` contract. New pairs can be added using the [`add_price_pair`](#add_price_pair) function.
@@ -832,8 +744,7 @@ Returns: `PricePair` struct consisting of the pool (`address`) amd of it is inve
 | ------ | --------- | ----------------------- |
 | `arg0` | `uint256` | Index of the price pair |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
@@ -849,9 +760,6 @@ The following source code includes all changes up to commit hash [86cae3a](https
     price_pairs: public(PricePair[MAX_PAIRS])
     ```
 
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
-
 
 ```python
 struct PricePair:
@@ -863,14 +771,9 @@ price_pairs: public(PricePair[MAX_PAIRS])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -882,14 +785,13 @@ price_pairs: public(PricePair[MAX_PAIRS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `add_price_pair`
-:::description[`PriceAggregator3.add_price_pair(_pool: Stableswap)`]
+::::description[`PriceAggregator3.add_price_pair(_pool: Stableswap)`]
 
 
 :::guard[Guarded Method]
@@ -907,14 +809,10 @@ Emits: `AddPricePair`
 | ------- | --------- | ------------------------- |
 | `_pool` | `address` | Pool to add as price pair |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -944,14 +842,9 @@ def add_price_pair(_pool: Stableswap):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -959,14 +852,13 @@ def add_price_pair(_pool: Stableswap):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_price_pair`
-:::description[`PriceAggregator3.remove_price_pair(n: uint256)`]
+::::description[`PriceAggregator3.remove_price_pair(n: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -986,14 +878,10 @@ Emits: `RemovePricePair` and conditionally `MovePricePair`[^1].
 | ----- | --------- | --------------------------------- |
 | `n`   | `uint256` | Index of the price pair to remove |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -1021,14 +909,9 @@ def remove_price_pair(n: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1036,33 +919,30 @@ def remove_price_pair(n: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Contract Ownership**The contract follows the classical two-step ownership model used in various other Curve contracts:
+# **Contract Ownership**
+
+The contract follows the classical two-step ownership model used in various other Curve contracts:
 
 ### `admin`
-:::description[`PriceAggregator3.admin() -> address: view`]
+::::description[`PriceAggregator3.admin() -> address: view`]
 
 
 Getter for the current admin of the contract.
 
 Returns: current admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -1078,14 +958,9 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1093,14 +968,13 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_admin`
-:::description[`PriceAggregator3.set_admin(_admin: address)`]
+::::description[`PriceAggregator3.set_admin(_admin: address)`]
 
 
 :::guard[Guarded Method]
@@ -1118,14 +992,10 @@ Emits: `SetAdmin`
 | -------- | --------- | ------------------------------- |
 | `_admin` | `uint256` | New address to set the admin to |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="priceaggregator3-vy" label="PriceAggregator3.vy">
 
 
 ```python
@@ -1144,14 +1014,9 @@ def set_admin(_admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1159,8 +1024,7 @@ def set_admin(_admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

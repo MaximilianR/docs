@@ -10,9 +10,9 @@ Because Curve Lending operates very similarly to the system for minting crvUSD, 
 
 ---
 
-## **AMM.vy****[→ Full LLAMMA Documentation](../../crvUSD/amm.md)**The core contract `AMM.vy` (LLAMMA) **remains exactly the same**. It is already precisely what we need for lending; no changes are needed.
+## **AMM.vy****[→ Full LLAMMA Documentation](../../crvusd/amm.md)**The core contract `AMM.vy` (LLAMMA) **remains exactly the same**. It is already precisely what we need for lending; no changes are needed.
 
-## **Controller.vy****[→ Full Controller Documentation](../../crvUSD/controller.md)**The changes made to the codebase of the Controller contract are mainly under-the-hood changes, which do not significantly affect how users interact with the contract. External functions like `create_loan`, `repay`, etc., work the same way as before.
+## **Controller.vy****[→ Full Controller Documentation](../../crvusd/controller.md)**The changes made to the codebase of the Controller contract are mainly under-the-hood changes, which do not significantly affect how users interact with the contract. External functions like `create_loan`, `repay`, etc., work the same way as before.
 
 *The following changes have been made:*
 

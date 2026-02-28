@@ -1,12 +1,10 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 This contract contains **view-only external methods**which can be gas-inefficient when called from smart contracts.
 
 :::deploy[Contract Source & Deployment]
 
 Source code for this contract is available on [Github](https://github.com/curvefi/tricrypto-ng/blob/main/contracts/main/CurveCryptoViews3Optimized.vy).
-Full list of all deployments can be found [here](../../../references/deployed-contracts.md#twocrypto-ng).
+Full list of all deployments can be found [here](../../deployments.md).
 
 
 :::
@@ -14,8 +12,10 @@ Full list of all deployments can be found [here](../../../references/deployed-co
 ---
 
 
-## **Exchange Methods**### `get_dy`
-:::description[`ViewMethodContract.get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256:`]
+## **Exchange Methods**
+
+### `get_dy`
+::::description[`ViewMethodContract.get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256:`]
 
 
 Getter method for the amount of coin `j` tokens received for swapping in `dx` amount of coin `i`. This function includes the fee.
@@ -29,8 +29,7 @@ Returns: `dy` (`uint256`).
 | `dx` |  `uint256` | Amount of input coin[i] tokens |
 | `swap` |  `address` | Pool contract address  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -51,10 +50,9 @@ def get_dy(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -63,14 +61,13 @@ def get_dy(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dx`
-:::description[`ViewMethodContract.get_dx(i: uint256, j: uint256, dy: uint256, swap: address) -> uint256:`]
+::::description[`ViewMethodContract.get_dx(i: uint256, j: uint256, dy: uint256, swap: address) -> uint256:`]
 
 
 Getter method for the amount of coin[i] tokens to input for swapping out dy amount of coin[j]
@@ -91,8 +88,7 @@ This is an approximate method, and returns estimates close to the input amount. 
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -117,10 +113,9 @@ def get_dx(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -129,14 +124,13 @@ def get_dx(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_withdraw_one_coin` 
-:::description[`ViewMethodContract.calc_withdraw_one_coin(token_amount: uint256, i: uint256, swap: address) -> uint256:`]
+::::description[`ViewMethodContract.calc_withdraw_one_coin(token_amount: uint256, i: uint256, swap: address) -> uint256:`]
 
 
 Getter method for the output tokens (including fees) when withdrawing one coin.
@@ -149,8 +143,7 @@ Returns: amount of output tokens (`uint256`).
 | `i` |  `uint256` | Index of the token to withdraw |
 | `swap` |  `address` | Pool contract address  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -222,10 +215,9 @@ def _calc_withdraw_one_coin(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -234,14 +226,13 @@ def _calc_withdraw_one_coin(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_token_amount`
-:::description[`ViewMethodContract.calc_token_amount(amounts: uint256[N_COINS], deposit: bool, swap: address) -> uint256:`]
+::::description[`ViewMethodContract.calc_token_amount(amounts: uint256[N_COINS], deposit: bool, swap: address) -> uint256:`]
 
 
 Function to calculate LP tokens minted or to be burned for depositing or removing `amounts` of coins to or from `swap`.
@@ -254,8 +245,7 @@ Returns: LP token amount to be burned/minted (`uint256`).
 | `deposit` |  `bool` | `True` = deposit, `False` = withdraw |
 | `swap` |  `address` | Pool contract address  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -321,10 +311,9 @@ def _calc_dtoken_nofee(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -333,16 +322,17 @@ def _calc_dtoken_nofee(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Calculating Fees Methods**Methods to calculate fees for **`get_dy`**, **`withdraw_one_coin`**and **`calc_token_amount`**.
+## **Calculating Fees Methods**
+
+Methods to calculate fees for **`get_dy`**, **`withdraw_one_coin`**and **`calc_token_amount`**.
 
 ### `calc_fee_get_dy`
-:::description[`ViewMethodContract.calc_fee_get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256:`]
+::::description[`ViewMethodContract.calc_fee_get_dy(i: uint256, j: uint256, dx: uint256, swap: address) -> uint256:`]
 
 
 Function to calculate the fees for `get_dy`.
@@ -356,8 +346,7 @@ Returns: fee (`uint256`).
 | `dx` |  `uint256` | Amount of input coin[i] tokens |
 | `swap` |  `address` | Pool contract address  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -410,10 +399,9 @@ def _get_dy_nofee(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -422,14 +410,13 @@ def _get_dy_nofee(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_fee_withdraw_one_coin`
-:::description[`ViewMethodContract.calc_fee_withdraw_one_coin(token_amount: uint256, i: uint256, swap: address) -> uint256:`]
+::::description[`ViewMethodContract.calc_fee_withdraw_one_coin(token_amount: uint256, i: uint256, swap: address) -> uint256:`]
 
 
 Function to calculate the fees for `withdraw_one_coin`.
@@ -442,8 +429,7 @@ Returns: fee (`uint256`).
 | `i` |  `uint256` | Index of the token to withdraw |
 | `swap` |  `address` | Pool contract address  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -515,10 +501,9 @@ def _calc_withdraw_one_coin(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -527,14 +512,13 @@ def _calc_withdraw_one_coin(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_fee_token_amount`
-:::description[`ViewMethodContract.calc_fee_token_amount(amounts: uint256[N_COINS], deposit: bool, swap: address) -> uint256:`]
+::::description[`ViewMethodContract.calc_fee_token_amount(amounts: uint256[N_COINS], deposit: bool, swap: address) -> uint256:`]
 
 
 Function to calculate the fees for `calc_token_amount`.
@@ -547,8 +531,7 @@ Returns: fee (`uint256`).
 | `deposit` |  `bool` | `True` = deposit, `False` = withdraw |
 | `swap` |  `address` | Pool contract address  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -610,10 +593,9 @@ def _calc_dtoken_nofee(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -621,8 +603,7 @@ def _calc_dtoken_nofee(
 48166379
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

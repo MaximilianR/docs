@@ -1,5 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 While Curve metapools support swaps between base pool coins, the base pool LP token and metapool coins, 
 they do not allow liquidity providers to deposit and/or withdraw base pool coins.
@@ -30,13 +28,12 @@ Metapool deposit zaps contain the following private and hardcoded constants:
 
 ### `DepositZap.pool`
 
-:::description[`DepositZap.pool() → address: view`]
+::::description[`DepositZap.pool() → address: view`]
 
 
 Getter for the metapool associated with this deposit contract.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 12"
@@ -57,10 +54,9 @@ def __init__(_pool: address, _token: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -68,21 +64,19 @@ def __init__(_pool: address, _token: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `DepositZap.base_pool`
 
-:::description[`DepositZap.base_pool() → address: view`]
+::::description[`DepositZap.base_pool() → address: view`]
 
 
 Getter for the base pool of the metapool associated with this deposit contract.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 15"
@@ -106,10 +100,9 @@ def __init__(_pool: address, _token: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -117,15 +110,14 @@ def __init__(_pool: address, _token: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `DepositZap.base_coins`
 
-:::description[`DepositZap.base_coins(i: uint256) → address: view`]
+::::description[`DepositZap.base_coins(i: uint256) → address: view`]
 
 
 Getter for the array of the coins of the metapool’s base pool.
@@ -134,8 +126,7 @@ Getter for the array of the coins of the metapool’s base pool.
 | ----------- | -------| ----|
 | `i`       |  `int128` | Index of the coin for which to get the address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 35"
@@ -190,10 +181,9 @@ def __init__(_pool: address, _token: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -201,21 +191,19 @@ def __init__(_pool: address, _token: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `DepositZap.token`
 
-:::description[`DepositZap.token() → address: view`]
+::::description[`DepositZap.token() → address: view`]
 
 
 Getter for the LP token of the associated metapool.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 13"
@@ -237,10 +225,9 @@ def __init__(_pool: address, _token: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -248,11 +235,10 @@ def __init__(_pool: address, _token: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## Add/Remove Liquidity
 
@@ -267,7 +253,7 @@ This refers to all coins apart from the base pool LP token.
 
 ### `DepositZap.add_liquidity`
 
-:::description[`DepositZap.add_liquidity(_amounts: uint256[N_ALL_COINS], _min_mint_amount: uint256) → uint256`]
+::::description[`DepositZap.add_liquidity(_amounts: uint256[N_ALL_COINS], _min_mint_amount: uint256) → uint256`]
 
 
 Wrap underlying coins and deposit them in the pool. Returns the amount of LP token received in exchange for 
@@ -281,8 +267,7 @@ depositing.
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>AddLiquidity</mark>
 <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -351,10 +336,9 @@ def add_liquidity(_amounts: uint256[N_ALL_COINS], _min_mint_amount: uint256) -> 
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -362,15 +346,14 @@ def add_liquidity(_amounts: uint256[N_ALL_COINS], _min_mint_amount: uint256) -> 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `DepositZap.remove_liquidity`
 
-:::description[`DepositZap.remove_liquidity(_amount: uint256, _min_amounts: uint256[N_ALL_COINS]) → uint256[N_ALL_COINS]`]
+::::description[`DepositZap.remove_liquidity(_amount: uint256, _min_amounts: uint256[N_ALL_COINS]) → uint256[N_ALL_COINS]`]
 
 
 Withdraw and unwrap coins from the pool. Returns a list of amounts (`uint256[N_ALL_COINS]`) of underlying coins
@@ -384,8 +367,7 @@ that were withdrawn.
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>RemoveLiquidity</mark>
 <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -442,10 +424,9 @@ def remove_liquidity(_amount: uint256, _min_amounts: uint256[N_ALL_COINS]) -> ui
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -453,15 +434,14 @@ def remove_liquidity(_amount: uint256, _min_amounts: uint256[N_ALL_COINS]) -> ui
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `DepositZap.remove_liquidity_one_coin`
 
-:::description[`DepositZap.remove_liquidity_one_coin(_token_amount: uint256, i: int128, _min_amount: uint256) → uint256`]
+::::description[`DepositZap.remove_liquidity_one_coin(_token_amount: uint256, i: int128, _min_amount: uint256) → uint256`]
 
 
 Withdraw and unwrap a single coin from the metapool. Returns the amount of the underlying coin received.
@@ -475,8 +455,7 @@ Withdraw and unwrap a single coin from the metapool. Returns the amount of the u
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>RemoveLiquidityOne</mark>
 <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -524,10 +503,9 @@ def remove_liquidity_one_coin(_token_amount: uint256, i: int128, _min_amount: ui
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -535,15 +513,14 @@ def remove_liquidity_one_coin(_token_amount: uint256, i: int128, _min_amount: ui
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `DepositZap.remove_liquidity_imbalance`
 
-:::description[`DepositZap.remove_liquidity_imbalance(_amounts: uint256[N_ALL_COINS], _max_burn_amount: uint256) → uint256`]
+::::description[`DepositZap.remove_liquidity_imbalance(_amounts: uint256[N_ALL_COINS], _max_burn_amount: uint256) → uint256`]
 
 
 Withdraw coins from the pool in an imbalanced amount. Returns the actual amount of the LP token burned in the 
@@ -557,8 +534,7 @@ withdrawal.
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>RemoveLiquidityImbalance</mark>
 <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -643,10 +619,9 @@ def remove_liquidity_imbalance(_amounts: uint256[N_ALL_COINS], _max_burn_amount:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -654,15 +629,14 @@ def remove_liquidity_imbalance(_amounts: uint256[N_ALL_COINS], _max_burn_amount:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `DepositZap.calc_withdraw_one_coin`
 
-:::description[`DepositZap.calc_withdraw_one_coin(_token_amount: uint256, i: int128) → uint256`]
+::::description[`DepositZap.calc_withdraw_one_coin(_token_amount: uint256, i: int128) → uint256`]
 
 
 Calculate the amount received when withdrawing and unwrapping a single coin. Returns the amount of coin `i` received.
@@ -672,8 +646,7 @@ Calculate the amount received when withdrawing and unwrapping a single coin. Ret
 | `_token_amount`       |  `uint256` | Amount of LP tokens to burn in the withdrawal |
 | `i`       |  `int128` | Index value of the coin to withdraw (`i` should be in the range from `0` to `N_ALL_COINS - 1`, where the LP token of the base pool is removed). |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -694,10 +667,9 @@ def calc_withdraw_one_coin(_token_amount: uint256, i: int128) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -705,15 +677,14 @@ def calc_withdraw_one_coin(_token_amount: uint256, i: int128) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `DepositZap.calc_token_amount`
 
-:::description[`DepositZap.calc_token_amount(_amounts: uint256[N_ALL_COINS], _is_deposit: bool) → uint256`]
+::::description[`DepositZap.calc_token_amount(_amounts: uint256[N_ALL_COINS], _is_deposit: bool) → uint256`]
 
 
 Calculate addition or reduction in token supply from a deposit or withdrawal.
@@ -724,8 +695,7 @@ Returns the expected amount of LP tokens received.
 | `_amounts`       |  `uint256[N_ALL_COINS]` | Amount of each underlying coin being deposited |
 | `_is_deposit`       |  `bool` | Set `True` for deposits, `False` for withdrawals |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -756,18 +726,16 @@ def calc_token_amount(_amounts: uint256[N_ALL_COINS], _is_deposit: bool) -> uint
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> todo:
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

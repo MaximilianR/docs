@@ -1,10 +1,8 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 **The Math Contract provides AMM Math for 3-coin Curve Cryptoswap Pools.**:::deploy[Contract Source & Deployment]
 
 Source code for this contract is available on [Github](https://github.com/curvefi/tricrypto-ng/blob/main/contracts/main/CurveCryptoMathOptimized3.vy). 
-Full list of all deployments can be found [here](../../../references/deployed-contracts.md#twocrypto-ng).
+Full list of all deployments can be found [here](../../deployments.md).
 
 
 :::
@@ -12,8 +10,10 @@ Full list of all deployments can be found [here](../../../references/deployed-co
 ---
 
 
-## **AMM Math Functions**### `get_y`
-:::description[`Math.get_y(_ANN: uint256, _gamma: uint256, x: uint256[N_COINS], _D: uint256, i: uint256) -> uint256[2]:`]
+## **AMM Math Functions**
+
+### `get_y`
+::::description[`Math.get_y(_ANN: uint256, _gamma: uint256, x: uint256[N_COINS], _D: uint256, i: uint256) -> uint256[2]:`]
 
 
 Function to calculate x[i] given other balances x[0..N_COINS-1] and invariant D.
@@ -28,8 +28,7 @@ Returns: y (`uint256`).
 | `_D` |  `uint256` | Invariant |
 | `i` |  `uint256` | Index of coin to calculate y |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -244,10 +243,9 @@ def get_y(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -256,14 +254,13 @@ def get_y(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `newton_D`
-:::description[`Math.newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS],K0_prev: uint256 = 0,) -> uint256:`]
+::::description[`Math.newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS],K0_prev: uint256 = 0,) -> uint256:`]
 
 
 Function to calculate the invariant with Newtons method using good initial guesses.
@@ -277,8 +274,7 @@ Returns: D invariant (`uint256`).
 | `x_unsorted` |  `uint256[N_COINS]` | Unsorted array of coin balances |
 | `K0_prev` |  `uint256` | apriori for newton's method derived from get_y_int. Defaults to zero (no apriori) |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -485,10 +481,9 @@ def newton_D(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -497,14 +492,13 @@ def newton_D(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_p`
-:::description[`Math.get_p(_xp: uint256[N_COINS], _D: uint256, _A_gamma: uint256[N_COINS-1]) -> uint256[N_COINS-1]:`]
+::::description[`Math.get_p(_xp: uint256[N_COINS], _D: uint256, _A_gamma: uint256[N_COINS-1]) -> uint256[N_COINS-1]:`]
 
 
 Function to calculate dx/dy.
@@ -517,8 +511,7 @@ Returns: dx/dy (`uint256[N_COINS-1]`).
 | `_D` |  `uint256` | Current value of D |
 | `_A_gamma` |  `uint256[N_COINS-1]` | Amplification coefficient and gamma |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -582,10 +575,9 @@ def get_p(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -594,14 +586,15 @@ def get_p(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Math Utilities**### `cbrt`
-:::description[`Math.cbrt(x: uint256) -> uint256:`]
+## **Math Utilities**
+
+### `cbrt`
+::::description[`Math.cbrt(x: uint256) -> uint256:`]
 
 
 Function to calculate the cubic root of `x` in 1e18 precision.  
@@ -619,8 +612,7 @@ More here: https://github.com/pcaversaccio/snekmate.
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -742,10 +734,9 @@ def _snekmate_log_2(x: uint256, roundup: bool) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -754,14 +745,13 @@ def _snekmate_log_2(x: uint256, roundup: bool) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `geometric_mean`
-:::description[`Math.geometric_mean(_x: uint256[3]) -> uint256:`]
+::::description[`Math.geometric_mean(_x: uint256[3]) -> uint256:`]
 
 
 Function to calculate the geometric mean of a list of numbers in 1e18 precision.
@@ -772,8 +762,7 @@ Returns: gemoetric mean (`uint256`).
 | ----------- | -------| ----|
 | `_x` |  `uint256` | list of three numbers |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -859,10 +848,9 @@ def _cbrt(x: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -871,14 +859,13 @@ def _cbrt(x: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `reduction_coefficient`
-:::description[`Math.reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:`]
+::::description[`Math.reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:`]
 
 
 Function to calculate the reduction coefficient for `x` and `fee_gamma`. This method is used for calculating fees.
@@ -890,8 +877,7 @@ Returns: reduction coefficient (`uint256`).
 | `x` |  `uint256[N_COINS]` | Values of x |
 | `fee_gamma` |  `uint256` | Fee gamma |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -929,10 +915,9 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -941,14 +926,13 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `wad_exp`
-:::description[`Math.wad_exp(_power: int256) -> uint256:`]
+::::description[`Math.wad_exp(_power: int256) -> uint256:`]
 
 
 Function to calculate the natural exponential function of a signed integer with a precision of 1e18.  
@@ -966,8 +950,7 @@ More here: https://github.com/pcaversaccio/snekmate.
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1052,10 +1035,9 @@ def _snekmate_wad_exp(x: int256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1064,22 +1046,20 @@ def _snekmate_wad_exp(x: int256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `version`
-:::description[`Math.version() -> String[8]: view`]
+::::description[`Math.version() -> String[8]: view`]
 
 
 Getter for the current version of the contract.
 
 Returns: current contract version (`String[8]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1087,10 +1067,9 @@ version: public(constant(String[8])) = "v2.0.0"
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1098,8 +1077,7 @@ version: public(constant(String[8])) = "v2.0.0"
 'v2.0.0'
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

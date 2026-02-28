@@ -195,11 +195,11 @@ def _transfer_out(_coin_idx: uint256, _amount: uint256, receiver: address):
 ## **Exchange Methods***The contract offers two different ways to exchange tokens:*
 
 - A regular `exchange` method.
-- A novel `exchange_received` method, which swaps tokens based on the *"internal balances"* of the pool. This method is of great use for aggregators, as it **does not require token approval**of the pool, which eliminates certain smart contract risks and *can* remove one redundant ERC-20 transfer. More [here](../../../stableswap-exchange/stableswap-ng/pools/overview.md#exchange_received).
+- A novel `exchange_received` method, which swaps tokens based on the *"internal balances"* of the pool. This method is of great use for aggregators, as it **does not require token approval**of the pool, which eliminates certain smart contract risks and *can* remove one redundant ERC-20 transfer. More [here](../../stableswap-ng/pools/overview.md#exchange_received).
 
 
 ### `exchange`
-:::description[`TwoCrypto.exchange(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`TwoCrypto.exchange(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to exchange `dx` amount of coin `i` for coin `j` and receive a minimum amount of `min_dy`. Charged fee at current states is `Pool.fee()`.
@@ -217,14 +217,7 @@ Emits: `TokenExchange`
 | `receiver`  | `address` | Address to send output coin to. Defaults to `msg.sender`.  |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 event TokenExchange:
     buyer: indexed(address)
@@ -345,15 +338,6 @@ def _exchange(
 
     return [dy, fee, price_scale]
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @view
@@ -585,16 +569,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -602,14 +579,13 @@ def get_y(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `exchange_received`
-:::description[`TwoCrypto.exchange_received(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`TwoCrypto.exchange_received(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
 :::warning
@@ -634,14 +610,7 @@ Emits: `TokenExchange`
 | `receiver`  | `address` | Address to send output coin to. Defaults to `msg.sender`.  |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 event TokenExchange:
     buyer: indexed(address)
@@ -767,15 +736,6 @@ def _exchange(
 
     return [dy, fee, price_scale]
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @view
@@ -1007,16 +967,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1024,14 +977,13 @@ def get_y(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dy`
-:::description[`TwoCrypto.get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:`]
+::::description[`TwoCrypto.get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:`]
 
 
 Getter for the received amount of coin `j` for swapping in `dx` amount of coin `i`. This method includes fees.
@@ -1044,14 +996,7 @@ Returns: exact amount of output coin `j` (`uint256`).
 | `j`   | `uint256` | Index of output token.    |
 | `dx`  | `uint256` | Amount of input tokens.   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -1067,15 +1012,6 @@ def get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:
     view_contract: address = factory.views_implementation()
     return Views(view_contract).get_dy(i, j, dx, self)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptoviews2optimized-vy" label="CurveCryptoViews2Optimized.vy">
-
-
 ```vyper
 @external
 @view
@@ -1130,15 +1066,6 @@ def _get_dy_nofee(
 
     return dy, xp
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -1282,16 +1209,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1299,14 +1219,13 @@ def get_y(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dx`
-:::description[`TwoCrypto.get_dx(i: uint256, j: uint256, dy: uint256) -> uint256:`]
+::::description[`TwoCrypto.get_dx(i: uint256, j: uint256, dy: uint256) -> uint256:`]
 
 
 Getter for the required amount of coin `i` to input for swapping out `dy` amount of token `j`.
@@ -1319,14 +1238,7 @@ Returns: amount of input coin `i` needed (`uint256`).
 | `j`   | `uint256` | Index of output token.    |
 | `dy`  | `uint256` | Amount of output tokens.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -1345,15 +1257,6 @@ def get_dx(i: uint256, j: uint256, dy: uint256) -> uint256:
     view_contract: address = factory.views_implementation()
     return Views(view_contract).get_dx(i, j, dy, self)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptoviews2optimized-vy" label="CurveCryptoViews2Optimized.vy">
-
-
 ```vyper
 @view
 @external
@@ -1412,15 +1315,6 @@ def _get_dx_fee(
 
     return dx, xp
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -1564,16 +1458,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1581,14 +1468,13 @@ def get_y(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `fee_calc`
-:::description[`TwoCrypto.fee_calc(xp: uint256[N_COINS]) -> uint256:`]
+::::description[`TwoCrypto.fee_calc(xp: uint256[N_COINS]) -> uint256:`]
 
 
 Getter for the charged exchange fee by the pool at the current state.
@@ -1599,8 +1485,7 @@ Returns: fee (`uint256`).
 | ----- | ------------------ | ------------------------------------------------ |
 | `xp`  | `uint256[N_COINS]` | Pool balances multiplied by the coin precisions. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1632,10 +1517,9 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1643,11 +1527,10 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -1660,7 +1543,7 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
 
 
 ### `add_liquidity`
-:::description[`TwoCrypto.add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`TwoCrypto.add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to add liquidity to the pool and mint the corresponding LP tokens.
@@ -1675,14 +1558,7 @@ Emits: `AddLiquidity`
 | `min_mint_amount`| `uint256`           | Minimum amount of LP tokens to mint.                  |
 | `receiver`       | `address`           | Receiver of the LP tokens; defaults to `msg.sender`.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 event AddLiquidity:
     provider: indexed(address)
@@ -1811,15 +1687,6 @@ def add_liquidity(
 
     return d_token
 ``` 
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @view
@@ -1909,16 +1776,9 @@ def newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev
 
     raise "Did not converge"
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1926,14 +1786,13 @@ def newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_token_fee`
-:::description[`TwoCrypto.calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:`]
+::::description[`TwoCrypto.calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:`]
 
 
 Function to calculate the charged fee on `amounts` when adding liquidity.
@@ -1945,14 +1804,7 @@ Returns: fee (`uint256`).
 | `amounts`| `uint256[N_COINS]`  | Amount of coins added to the pool.               |
 | `xp`     | `uint256[N_COINS]`  | Pool balances multiplied by the coin precisions. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -1991,16 +1843,9 @@ def _calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:
 
     return fee * Sdiff / S + NOISE_FEE
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2008,14 +1853,13 @@ def _calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity`
-:::description[`TwoCrypto.remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS], receiver: address = msg.sender) -> uint256[N_COINS]:`]
+::::description[`TwoCrypto.remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS], receiver: address = msg.sender) -> uint256[N_COINS]:`]
 
 
 :::info
@@ -2037,14 +1881,7 @@ Emits: `RemoveLiquidity`
 | `min_amounts` | `uint256[N_COINS]`  | Minimum amounts of tokens to withdraw.           |
 | `receiver`    | `address`           | Receiver of the coins; defaults to `msg.sender`. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 event RemoveLiquidity:
     provider: indexed(address)
@@ -2148,15 +1985,6 @@ def remove_liquidity(
 
     return withdraw_amounts
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -2225,16 +2053,9 @@ def wad_exp(x: int256) -> int256:
     return convert(unsafe_mul(convert(convert(r, bytes32), uint256), 3_822_833_074_963_236_453_042_738_258_902_158_003_155_416_615_667) >>\
         convert(unsafe_sub(195, k), uint256), int256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2242,14 +2063,13 @@ def wad_exp(x: int256) -> int256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity_one_coin`
-:::description[`TwoCrypto.remove_liquidity_one_coin(token_amount: uint256, i: uint256, min_amount: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`TwoCrypto.remove_liquidity_one_coin(token_amount: uint256, i: uint256, min_amount: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to burn `token_amount` LP tokens and withdraw liquidity in a single token `i`.
@@ -2265,14 +2085,7 @@ Emits: `RemoveLiquidityOne`
 | `min_amount`   | `uint256` | Minimum amount of token to withdraw.             |
 | `receiver`     | `address` | Receiver of the coins; defaults to `msg.sender`. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 event RemoveLiquidityOne:
     provider: indexed(address)
@@ -2436,15 +2249,6 @@ def _A_gamma() -> uint256[2]:
 
     return [A1, gamma1]
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @view
@@ -2676,16 +2480,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2693,14 +2490,13 @@ def get_y(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_token_amount`
-:::description[`TwoCrypto.calc_token_amount(amounts: uint256[N_COINS], deposit: bool) -> uint256:`]
+::::description[`TwoCrypto.calc_token_amount(amounts: uint256[N_COINS], deposit: bool) -> uint256:`]
 
 
 Function to calculate the LP tokens to be minted or burned for depositing or removing `amounts` of coins. This method takes fees into consideration.
@@ -2712,14 +2508,7 @@ Returns: amount of LP tokens deposited or withdrawn (`uint256`).
 | `amounts`  | `uint256[N_COINS]` | Amounts of tokens being deposited or withdrawn. |
 | `deposit`  | `bool`             | `true` for deposit, `false` for withdrawal.     |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 interface Factory:
     def views_implementation() -> address: view
@@ -2776,15 +2565,6 @@ def _calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:
 
     return fee * Sdiff / S + NOISE_FEE                
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptoviews2optimized-vy" label="CurveCryptoViews2Optimized.vy">
-
-
 ```vyper
 @view
 @external
@@ -2848,16 +2628,9 @@ def _calc_dtoken_nofee(
 
     return d_token, amountsp, xp
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2872,14 +2645,13 @@ Out [1]:  37707043389433059543
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_withdraw_one_coin`
-:::description[`TwoCrypto.calc_withdraw_one_coin(token_amount: uint256, i: uint256) -> uint256:`]
+::::description[`TwoCrypto.calc_withdraw_one_coin(token_amount: uint256, i: uint256) -> uint256:`]
 
 
 Function to calculate the amount of output token `i` when burning `token_amount` of LP tokens. This method takes fees into consideration.
@@ -2891,14 +2663,7 @@ Returns: amount of tokens to receive (`uint256`).
 | `token_amount`| `uint256` | Amount of LP tokens burned.              |
 | `i`           | `uint256` | Index of the coin to withdraw.           |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @view
 @external
@@ -2986,15 +2751,6 @@ def _calc_withdraw_one_coin(
 
     return dy, D, xp, approx_fee
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @view
@@ -3226,16 +2982,9 @@ def get_y(
 
     return y_out
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3247,16 +2996,17 @@ Out [2]:  150537307454780254829
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Fees and Pool Profits**The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
+## **Fees and Pool Profits**
+
+The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
 
 Additionally, just as for other curve pools, there is an `ADMIN_FEE`, which is hardcoded to 50%. All twocrypto-ng pools share a universal `fee_receiver`, which is determined within the Factory contract. Unlike for most other Curve pools, there is no external method to claim the admin fees. They are claimed when removing liquidity single sided.
 
@@ -3264,21 +3014,14 @@ Additionally, just as for other curve pools, there is an `ADMIN_FEE`, which is h
 
 
 ### `fee`
-:::description[`TwoCrypto.fee() -> uint256:`]
+::::description[`TwoCrypto.fee() -> uint256:`]
 
 
 Getter for the fee charged by the pool at the current state.
 
 Returns: fee in bps (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -3308,16 +3051,9 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
         10**18
     )
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3326,28 +3062,20 @@ Out [1]:  30622026
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `mid_fee`
-:::description[`TwoCrypto.mid_fee() -> uint256:`]
+::::description[`TwoCrypto.mid_fee() -> uint256:`]
 
 
 Getter for the `mid_fee`. This fee is the minimum fee and is charged when the pool is completely balanced.
 
 Returns: mid fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 packed_fee_params: public(uint256)  # <---- Packs mid_fee, out_fee, fee_gamma.
 
@@ -3360,16 +3088,9 @@ def mid_fee() -> uint256:
     """
     return self._unpack_3(self.packed_fee_params)[0]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3378,28 +3099,20 @@ Out [1]:  26000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `out_fee`
-:::description[`TwoCrypto.out_fee() -> uint256:`]
+::::description[`TwoCrypto.out_fee() -> uint256:`]
 
 
 Getter for the `out_fee`. This fee is the maximum fee and is charged when the pool is completely imbalanced.
 
 Returns: out fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 packed_fee_params: public(uint256)  # <---- Packs mid_fee, out_fee, fee_gamma.
 
@@ -3412,16 +3125,9 @@ def out_fee() -> uint256:
     """
     return self._unpack_3(self.packed_fee_params)[1]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3430,28 +3136,20 @@ Out [1]:  45000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `fee_gamma`
-:::description[`TwoCrypto.fee_gamma() -> uint256:`]
+::::description[`TwoCrypto.fee_gamma() -> uint256:`]
 
 
 Getter for the current `fee_gamma`. This parameter modifies the rate at which fees rise as imbalance intensifies. Smaller values result in rapid fee hikes with growing imbalances, while larger values lead to more gradual increments in fees as imbalance expands.
 
 Returns: fee gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 packed_fee_params: public(uint256)  # <---- Packs mid_fee, out_fee, fee_gamma.
 
@@ -3464,16 +3162,9 @@ def fee_gamma() -> uint256:
     """
     return self._unpack_3(self.packed_fee_params)[2]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3482,33 +3173,23 @@ Out [1]:  230000000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `packed_fee_params`
-:::description[`TwoCrypto.packed_fee_params() -> uint256: view`]
+::::description[`TwoCrypto.packed_fee_params() -> uint256: view`]
 
 
 Getter for the packed fee parameters.
 
 Returns: packed fee params (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 # Fee params that determine dynamic fees:
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 packed_fee_params: public(uint256)  # <---- Packs mid_fee, out_fee, fee_gamma.
 
@@ -3530,16 +3211,9 @@ def __init__(
     #                                  params: mid_fee, out_fee and fee_gamma.
     ...
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3548,41 +3222,26 @@ Out [1]:  8847341539944400050877843276543133320576000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ADMIN_FEE`
-:::description[`TwoCrypto.packed_fee_params() -> uint256: view`]
+::::description[`TwoCrypto.packed_fee_params() -> uint256: view`]
 
 
 Getter for the admin fee of the pool. This value is hardcoded to 50% (5000000000) of the earned fees and can not be changed.
 
 Returns: admin fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 ADMIN_FEE: public(constant(uint256)) = 5 * 10**9  # <----- 50% of earned fees.
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3591,28 +3250,20 @@ Out [1]:  5000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `fee_receiver`
-:::description[`TwoCrypto.fee_receiver() -> address:`]
+::::description[`TwoCrypto.fee_receiver() -> address:`]
 
 
-Getter for the fee receiver of the admin fees. This address is set within the [TwoCrypto-NG Factory](../../../factory/twocrypto-ng/overview.md). Every pool created through the Factory has the same fee receiver.
+Getter for the fee receiver of the admin fees. This address is set within the [Twocrypto-NG Factory](../../factory/twocrypto-ng/overview.md). Every pool created through the Factory has the same fee receiver.
 
 Returns: fee receiver (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 interface Factory:
     def fee_receiver() -> address: view
@@ -3626,16 +3277,9 @@ def fee_receiver() -> address:
     """
     return factory.fee_receiver()
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3644,41 +3288,26 @@ Out [1]:  '0xeCb456EA5365865EbAb8a2661B0c503410e9B347'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_profit`
-:::description[`TwoCrypto.xcp_profit() -> uint256: view`]
+::::description[`TwoCrypto.xcp_profit() -> uint256: view`]
 
 
 Getter for the current pool profits.
 
 Returns: current profits (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 xcp_profit: public(uint256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3687,28 +3316,20 @@ Out [1]:  1000280532115852216
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_profit_a`
-:::description[`TwoCrypto.xcp_profit_a() -> uint256: view`]
+::::description[`TwoCrypto.xcp_profit_a() -> uint256: view`]
 
 
 Getter for the full profit at the last claim of admin fees.
 
 Returns: profit at last claim (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 xcp_profit_a: public(uint256)  # <--- Full profit at last claim of admin fees.
 
@@ -3729,16 +3350,9 @@ def __init__(
     self.xcp_profit_a = 10**18
     ...
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3747,41 +3361,26 @@ Out [1]:  1000000000000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_xcp`
-:::description[`TwoCrypto.last_xcp() -> uint256: view`]
+::::description[`TwoCrypto.last_xcp() -> uint256: view`]
 
 
 Getter for the last xcp action. This variable is updated by calling `tweak_price` or `remove_liquidity`.
 
 Returns: timestamp of last xcp action (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 last_xcp: public(uint256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3790,34 +3389,28 @@ Out [1]:  4177413767556756716238
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Price Scaling**Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
+## **Price Scaling**
+
+Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
 
 
 ### `price_scale`
-:::description[`TwoCrypto.price_scale() -> uint256:`]
+::::description[`TwoCrypto.price_scale() -> uint256:`]
 
 
 Getter for the price scale of the coin at index 1 with regard to the coin at index 0. The price scale determines the price band around which liquidity is concentrated.
 
 Returns: price scale (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 cached_price_scale: uint256  # <------------------------ Internal price scale.
 
@@ -3834,16 +3427,9 @@ def price_scale() -> uint256:
     """
     return self.cached_price_scale
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3852,28 +3438,20 @@ Out [1]:  176501696719232
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `allowed_extra_profit`
-:::description[`TwoCrypto.allowed_extra_profit() -> uint256:`]
+::::description[`TwoCrypto.allowed_extra_profit() -> uint256:`]
 
 
 Getter for the allowed extra profit value.
 
 Returns: allowed extra profit (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 #               parameters allowed_extra_profit, adjustment_step, and ma_time.
@@ -3887,16 +3465,9 @@ def allowed_extra_profit() -> uint256:
     """
     return self._unpack_3(self.packed_rebalancing_params)[0]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3905,28 +3476,20 @@ Out [1]:  2000000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `adjustment_step`
-:::description[`TwoCrypto.allowed_extra_profit() -> uint256:`]
+::::description[`TwoCrypto.allowed_extra_profit() -> uint256:`]
 
 
 Getter for the adjustment step value.
 
 Returns: adjustment step (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 #               parameters allowed_extra_profit, adjustment_step, and ma_time.
@@ -3940,16 +3503,9 @@ def adjustment_step() -> uint256:
     """
     return self._unpack_3(self.packed_rebalancing_params)[1]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3958,42 +3514,27 @@ Out [1]:  146000000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `packed_rebalancing_params`
-:::description[`TwoCrypto.packed_rebalancing_params() -> uint256: view`]
+::::description[`TwoCrypto.packed_rebalancing_params() -> uint256: view`]
 
 
 Getter for the packed rebalancing parameters, consisting of `allowed_extra_profit`, `adjustment_step`, and `ma_time`.
 
 Returns: packed rebalancing parameters (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 #               parameters allowed_extra_profit, adjustment_step, and ma_time.
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4002,35 +3543,29 @@ Out [1]:  680564733841876929619973849625130958848000000000600
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Bonding Curve Parameters**A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../overview.md#bonding-curve-parameters).
+## **Bonding Curve Parameters**
+
+A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../overview.md#bonding-curve-parameters).
 
 Bonding curve parameters `A` and `gamma` values are [upgradable](./admin-controls.md#parameter-changes) by the the pools admin.
 
 ### `A`
-:::description[`TwoCrypto.A() -> uint256:`]
+::::description[`TwoCrypto.A() -> uint256:`]
 
 
 Getter for the current pool amplification parameter.
 
 Returns: A (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @view
 @external
@@ -4066,16 +3601,9 @@ def _A_gamma() -> uint256[2]:
 
     return [A1, gamma1]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4084,28 +3612,20 @@ Out [1]:  400000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `gamma`
-:::description[`TwoCrypto.gamma() -> uint256:`]
+::::description[`TwoCrypto.gamma() -> uint256:`]
 
 
 Getter for the current pool gamma parameter.
 
 Returns: gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @view
 @external
@@ -4141,16 +3661,9 @@ def _A_gamma() -> uint256[2]:
 
     return [A1, gamma1]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4159,11 +3672,10 @@ Out [1]:  145000000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -4402,7 +3914,7 @@ def tweak_price(
 </details>
 
 ### `price_oracle`
-:::description[`TwoCrypto.price_oracle() -> uint256:`]
+::::description[`TwoCrypto.price_oracle() -> uint256:`]
 
 
 :::info
@@ -4416,14 +3928,7 @@ Getter for the oracle price of the coin at index 1 with regard to the coin at in
 
 Returns: oracle price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -4475,15 +3980,6 @@ def internal_price_oracle() -> uint256:
 
     return price_oracle
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvecryptomathoptimized2-vy" label="CurveCryptoMathOptimized2.vy">
-
-
 ```vyper
 @external
 @pure
@@ -4552,16 +4048,9 @@ def wad_exp(x: int256) -> int256:
     return convert(unsafe_mul(convert(convert(r, bytes32), uint256), 3_822_833_074_963_236_453_042_738_258_902_158_003_155_416_615_667) >>\
         convert(unsafe_sub(195, k), uint256), int256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4570,28 +4059,20 @@ Out [1]:  176068711374120           # CVG/ETH price
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ma_time`
-:::description[`TwoCrypto.ma_time() -> uint256:`]
+::::description[`TwoCrypto.ma_time() -> uint256:`]
 
 
 Getter for the moving average time in seconds.
 
 Returns: moving average time (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 #               parameters allowed_extra_profit, adjustment_step, and ma_time.
@@ -4607,16 +4088,9 @@ def ma_time() -> uint256:
     """
     return self._unpack_3(self.packed_rebalancing_params)[2] * 694 / 1000
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4625,28 +4099,20 @@ Out [1]:  416
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `lp_price`
-:::description[`TwoCrypto.lp_price() -> uint256:`]
+::::description[`TwoCrypto.lp_price() -> uint256:`]
 
 
 Function to calculate the current price of the LP token with regard to the coin at index 0.
 
 Returns: LP token price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -4694,16 +4160,9 @@ def internal_price_oracle() -> uint256:
 
     return price_oracle
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4712,14 +4171,13 @@ Out [1]:  26545349102641443     # lp token price in wETH
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `virtual_price`
-:::description[`TwoCrypto.virtual_price -> uint256: view`]
+::::description[`TwoCrypto.virtual_price -> uint256: view`]
 
 
 :::warning[`get_virtual_price` ≠ `virtual_price`]
@@ -4733,28 +4191,14 @@ Getter for the cached virtual price. This variable provides a fast read by acces
 
 Returns: cached virtual price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 virtual_price: public(uint256)  # <------ Cached (fast to read) virtual price.
 #                          The cached `virtual_price` is also used internally.
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4763,14 +4207,13 @@ Out [1]:  1000270251060292804
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_virtual_price`
-:::description[`TwoCrypto.virtual_price -> uint256: view`]
+::::description[`TwoCrypto.virtual_price -> uint256: view`]
 
 
 :::warning[`get_virtual_price` ≠ `virtual_price`]
@@ -4784,14 +4227,7 @@ Function to calculate the current virtual price of the pool's LP token.
 
 Returns: virtual price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 @external
 @view
@@ -4805,16 +4241,9 @@ def get_virtual_price() -> uint256:
     """
     return 10**18 * self.get_xcp(self.D, self.cached_price_scale) / self.totalSupply
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4823,28 +4252,20 @@ Out [1]:  1000270251060292804
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_prices`
-:::description[`TwoCrypto.last_prices -> uint256: view`]
+::::description[`TwoCrypto.last_prices -> uint256: view`]
 
 
 Getter for the last price. This variable is used to calculate the moving average price oracle.
 
 Returns: last price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 last_prices: public(uint256)
 
@@ -4878,16 +4299,9 @@ def tweak_price(
 
     ...
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4896,28 +4310,20 @@ Out [1]:  176068709329068
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_oracle`
-:::description[`TwoCrypto.xcp_oracle() -> uint256`]
+::::description[`TwoCrypto.xcp_oracle() -> uint256`]
 
 
 Getter for the oracle value for xcp. The oracle is an exponential moving average, with a periodicity determined by `xcp_ma_time`.
 
 Returns: xcp oracle value (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 cached_xcp_oracle: uint256  # <----------- EMA of totalSupply * virtual_price.
 
@@ -4955,16 +4361,9 @@ def xcp_oracle() -> uint256:
 
     return cached_xcp_oracle
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4973,28 +4372,20 @@ Out [1]:  3501656271269889041418
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_ma_time`
-:::description[`TwoCrypto.xcp_ma_time() -> uint256: view`]
+::::description[`TwoCrypto.xcp_ma_time() -> uint256: view`]
 
 
 Getter for the moving average time window for `xcp_oracle`.
 
 Returns: ma time (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 xcp_ma_time: public(uint256)
 
@@ -5015,16 +4406,9 @@ def __init__(
     self.xcp_ma_time = 62324  # <--------- 12 hours default on contract start.
     ...
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -5033,41 +4417,26 @@ Out [1]:  62324
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `D`
-:::description[`TwoCrypto.D() -> uint256: view`]
+::::description[`TwoCrypto.D() -> uint256: view`]
 
 
 Getter for the D invariant.
 
 Returns: D (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 D: public(uint256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -5076,41 +4445,26 @@ Out [1]:  110997117004824612212
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_timestamp`
-:::description[`TwoCrypto.last_timestamp() -> uint256: view`]
+::::description[`TwoCrypto.last_timestamp() -> uint256: view`]
 
 
 Getter for the last timestamp of prices and xcp. The two values are packed into a `uint256`. Need to unpack them: Index 0 is for prices, index 1 is for xcp.
 
 Returns: last timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 last_timestamp: public(uint256)    # idx 0 is for prices, idx 1 is for xcp.
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -5119,31 +4473,25 @@ Out [1]:  581843605731969082977825518885220002649556567303
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Contract Info Methods**### `admin`
-:::description[`TwoCrypto.admin() -> address:`]
+## **Contract Info Methods**
+
+### `admin`
+::::description[`TwoCrypto.admin() -> address:`]
 
 
 Getter for the admin of the pool. All deployed pools share the same admin, which is specified within the Factory contract.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 interface Factory:
     def admin() -> address: view
@@ -5157,16 +4505,9 @@ def admin() -> address:
     """
     return factory.admin()
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -5175,28 +4516,20 @@ Out [1]:  todo
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `precisions`
-:::description[`TwoCrypto.precisions() -> uint256[N_COINS]:`]
+::::description[`TwoCrypto.precisions() -> uint256[N_COINS]:`]
 
 
 Getter for the precisions of each coin in the pool. Precisions are used to make sure the pool is compatible with any coins with decimals up to 18.
 
 Returns: precision of coins (`uint256[N_COINS]`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 PRECISION: constant(uint256) = 10**18  # <------- The precision to convert to.
 PRECISIONS: immutable(uint256[N_COINS])
@@ -5210,16 +4543,9 @@ def precisions() -> uint256[N_COINS]:  # <-------------- For by view contract.
     """
     return PRECISIONS
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -5228,28 +4554,20 @@ Out [1]:  [1, 1]
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `MATH`
-:::description[`TwoCrypto.MATH() -> address: view`]
+::::description[`TwoCrypto.MATH() -> address: view`]
 
 
 Getter for the [math utility contract](../utility-contracts/math.md).
 
 Returns: math contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 MATH: public(immutable(Math))
 
@@ -5270,16 +4588,9 @@ def __init__(
     MATH = Math(_math)
     ...
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -5288,14 +4599,13 @@ Out [1]:  '0x2005995a71243be9FB995DaB4742327dc76564Df'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `coins`
-:::description[`TwoCrypto.coins(arg0: uint256) -> address: view`]
+::::description[`TwoCrypto.coins(arg0: uint256) -> address: view`]
 
 
 Getter for the coin at index `arg0` in the pool.
@@ -5306,14 +4616,7 @@ Returns: precision of coins (`uint256[N_COINS]`).
 | ----- | --------- | ------------ |
 | `arg0`| `uint256` | Coin index.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 coins: public(immutable(address[N_COINS]))
 
@@ -5339,16 +4642,9 @@ def __init__(
     coins = _coins
     ...
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -5360,28 +4656,20 @@ Out [2]:  '0x97efFB790f2fbB701D88f89DB4521348A2B77be8'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `factory`
-:::description[`TwoCrypto.factory() -> address: view`]
+::::description[`TwoCrypto.factory() -> address: view`]
 
 
-Getter for the [Factory contract](../../../factory/twocrypto-ng/overview.md), which allows the permissionless deployment of liquidity pools and gauges.
+Getter for the [Factory contract](../../factory/twocrypto-ng/overview.md), which allows the permissionless deployment of liquidity pools and gauges.
 
 Returns: factory (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 factory: public(immutable(Factory))
 
@@ -5402,16 +4690,9 @@ def __init__(
     factory = Factory(msg.sender)
     ...
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -5420,14 +4701,13 @@ Out [1]:  '0x98EE851a00abeE0d95D08cF4CA2BdCE32aeaAF7F'
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `balances`
-:::description[`TwoCrypto.balances(arg0: uint256) -> uint256: view`]
+::::description[`TwoCrypto.balances(arg0: uint256) -> uint256: view`]
 
 
 Getter for the current coin balances in the pool.
@@ -5438,27 +4718,13 @@ Returns: coin balances (`uint256`).
 | ----- | --------- | ------------ |
 | `arg0`| `uint256` | Coin index.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
+<SourceCode>
 ```vyper
 balances: public(uint256[N_COINS])
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -5469,8 +4735,7 @@ In  [2]:  Pool.balances(1)
 Out [2]:  317141267512073253038923
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

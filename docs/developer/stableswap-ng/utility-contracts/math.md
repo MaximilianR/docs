@@ -1,20 +1,18 @@
 # Math Contract
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-The Math Contract provides **AMM Math**for StableSwap-NG Pools.
+The Math Contract provides **AMM Math**for Stableswap-NG Pools.
 
 :::deploy[Contract Source & Deployment]
 
 Source code available on [GitHub](https://github.com/curvefi/stableswap-ng/blob/bff1522b30819b7b240af17ccfb72b0effbf6c47/contracts/main/CurveStableSwapNGMath.vy).  
-All Math contract deployments can be found in the [Deployment Addresses](../../../references/deployed-contracts.md#stableswap-ng) section.
+All Math contract deployments can be found in the [Deployment Addresses](../../deployments.md) section.
 
 
 :::
 
 ### `get_y`
-:::description[`Math.get_y(i: int128, j: int128, x: uint256, xp: DynArray[uint256, MAX_COINS], _amp: uint256, _D: uint256, _n_coins: uint256) -> uint256:`]
+::::description[`Math.get_y(i: int128, j: int128, x: uint256, xp: DynArray[uint256, MAX_COINS], _amp: uint256, _D: uint256, _n_coins: uint256) -> uint256:`]
 
 
 Function to calculate how much coins `j` a user receives when providing `x` amount of coin `i`. This is done by solving quadratic equations iteratively.
@@ -31,8 +29,7 @@ Returns: amount of output coins to receive (`uint256`).
 | `_D` |  `uint256` | D invariant |
 | `_n_coins` |  `uint256` | number of coins |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -113,10 +110,9 @@ def get_y(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -125,14 +121,13 @@ def get_y(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_D`
-:::description[`Math.get_D(_xp: DynArray[uint256, MAX_COINS], _amp: uint256, _n_coins: uint256) -> uint256:`]
+::::description[`Math.get_D(_xp: DynArray[uint256, MAX_COINS], _amp: uint256, _n_coins: uint256) -> uint256:`]
 
 
 Function to iteratively calculate the  D invariant in non-overflowing integer operations.
@@ -145,8 +140,7 @@ Returns: D invariant (`uint256`).
 | `_amp` |  `uint256` | amplification coefficient |
 | `_n_coins` |  `uint256` | number of coins |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -205,10 +199,9 @@ def get_D(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -217,14 +210,13 @@ def get_D(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_y_D`
-:::description[`Math.get_y_D(A: uint256, i: int128, xp: DynArray[uint256, MAX_COINS], D: uint256, _n_coins: uint256) -> uint256:`]
+::::description[`Math.get_y_D(A: uint256, i: int128, xp: DynArray[uint256, MAX_COINS], D: uint256, _n_coins: uint256) -> uint256:`]
 
 
 Function to calculate how much of coin `i` will be in the pool when invariant `D` decreases.
@@ -239,8 +231,7 @@ Returns: balance of coin `i` (`uint256`).
 | `_D` |  `uint256` | D invariant |
 | `_n_coins` |  `uint256` | number of coins |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -305,10 +296,9 @@ def get_y_D(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -317,14 +307,13 @@ def get_y_D(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `exp`
-:::description[`Math.exp(x: int256) -> uint256:`]
+::::description[`Math.exp(x: int256) -> uint256:`]
 
 
 Function to calculate the natural exponential function of a signed integer with a precision of 1e18.
@@ -335,8 +324,7 @@ Returns: calculation result (`uint256`).
 | ----------- | -------| ----|
 | `x` |  `int256` | 32-byte variable |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -412,10 +400,9 @@ def exp(x: int256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -424,8 +411,7 @@ def exp(x: int256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

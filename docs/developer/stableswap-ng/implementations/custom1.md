@@ -1,8 +1,6 @@
 
 # Plain and Meta-Pool Implementation with Custom Admin Controls
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 This implementation enables **arbitrary assignment of an `admin` and `admin_fee`**for a specific pool. The `Factory.admin()` is, and will always remain, one of the pool’s owners—ensuring full control via the DAO.
 
@@ -33,21 +31,14 @@ At contract initialization, the admin is set to `ZERO_ADDRESS`. This means assig
 ---
 
 ### `admin`
-:::description[`CurveStableSwap.admin() -> address: view`]
+::::description[`CurveStableSwap.admin() -> address: view`]
 
 
 Getter for the admin of the contract. At contract initialization, the address of the admin is always set to `ZERO_ADDRESS`.
 
 Returns: admin of the contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswap-vy" label="CurveStableSwap.vy">
-
-
+<SourceCode>
 ```python
 @external
 def __init__(
@@ -60,16 +51,9 @@ def __init__(
 
 admin: public(address)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the current admin of the contract.
@@ -80,14 +64,13 @@ This example returns the current admin of the contract.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_admin`
-:::description[`CurveStableSwap.set_admin(_new_admin: address)`]
+::::description[`CurveStableSwap.set_admin(_new_admin: address)`]
 
 
 :::guard[Guarded Method]
@@ -105,14 +88,7 @@ Emits: `SetAdmin` event.
 | ------------ | --------- | ------------------ |
 | `_new_admin` | `address` | New admin address. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswap-vy" label="CurveStableSwap.vy">
-
-
+<SourceCode>
 ```python
 interface Factory:
     def fee_receiver() -> address: view
@@ -134,16 +110,9 @@ def set_admin(_new_admin: address):
 def _check_admins():
     assert msg.sender == factory.admin() or msg.sender == self.admin  # dev: only admin
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the admin of the contract.
@@ -159,30 +128,22 @@ This example sets the admin of the contract.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 ### `admin_fee`
-:::description[`CurveStableSwap.admin_fee() -> uint256: view`]
+::::description[`CurveStableSwap.admin_fee() -> uint256: view`]
 
 
 Getter for the admin fee of the pool. At contract initialization, the admin fee is set to 50%.
 
 Returns: admin fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswap-vy" label="CurveStableSwap.vy">
-
-
+<SourceCode>
 ```python
 @external
 def __init__(
@@ -195,16 +156,9 @@ def __init__(
 
 admin_fee: public(uint256)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the current admin fee of the contract.
@@ -215,14 +169,13 @@ This example returns the current admin fee of the contract.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_new_admin_fee`
-:::description[`CurveStableSwap.set_new_admin_fee(_new_admin_fee: uint256):`]
+::::description[`CurveStableSwap.set_new_admin_fee(_new_admin_fee: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -240,14 +193,7 @@ Emits: `SetAdmin` event.
 | ------------ | --------- | ------------------ |
 | `_new_admin_fee` | `uint256` | New admin fee value. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswap-vy" label="CurveStableSwap.vy">
-
-
+<SourceCode>
 ```python
 interface Factory:
     def fee_receiver() -> address: view
@@ -273,16 +219,9 @@ def set_new_admin_fee(_new_admin_fee: uint256):
 def _check_admins():
     assert msg.sender == factory.admin() or msg.sender == self.admin  # dev: only admin
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example sets the admin of the contract.
@@ -298,8 +237,7 @@ This example sets the admin of the contract.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

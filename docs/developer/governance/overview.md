@@ -3,9 +3,9 @@ Curve governance and voting is a integral part of the protocol as all relevant c
 
 Curve's governance system is fully controlled by the DAO and extends to all deployed chains. Not only the Ethereum mainnet, but also all EVM sidechains. Due to the limitation of veCRV being on Ethereum only, all votes (also crosschain ones) are voted on Ethereum.
 
-:::info[CurveDAO Package]
+:::info[Curve Voting Library]
 
-Curve developed a Python package to help make the process of creating and decoding proposals easier. For more information, see the [here](curve-dao.md).
+Curve developed a Python toolkit to help create and simulate governance votes. For more information, see the [Voting Library](voting-library.md).
 
 
 :::

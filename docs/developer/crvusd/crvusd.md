@@ -1,7 +1,5 @@
 # crvUSD
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 :::github[GitHub]
 
@@ -41,15 +39,14 @@ Since the initial deployment of crvUSD, the token was bridged to several chains,
 
 
 ### `minter`
-:::description[`crvUSD.minter() -> address: view`]
+::::description[`crvUSD.minter() -> address: view`]
 
 
 Getter for the minter contract.
 
 Returns: minter (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -57,10 +54,9 @@ minter: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.minter()
@@ -68,14 +64,13 @@ minter: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `mint`
-:::description[`crvUSD.mint(_to: address, _value: uint256) -> bool:`]
+::::description[`crvUSD.mint(_to: address, _value: uint256) -> bool:`]
 
 
 :::guard[Guarded Method]
@@ -96,8 +91,7 @@ Emits: `Transfer`
 | `_to` |  `address` | Address newly minted tokens are credited to |
 | `_value` |  `uint256` | Amount of tokens to mint |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -125,18 +119,16 @@ def mint(_to: address, _value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.mint("0xec0820efafc41d8943ee8de495fc9ba8495b15cf", 10**22)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -146,10 +138,10 @@ The `mint` function is only used when adding a new market or raising a market's 
 :::
 
 
-:::
+::::
 
 ### `set_minter`
-:::description[`crvUSD.set_minter(_minter: address):`]
+::::description[`crvUSD.set_minter(_minter: address):`]
 
 
 :::guard[Guarded Method]
@@ -167,8 +159,7 @@ Emits: `SetMinter`
 | ----------- | -------| ----|
 | `_minter` |  `address` | New minter address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -186,18 +177,16 @@ def set_minter(_minter: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.set_minter("")
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -207,10 +196,10 @@ The function will revert if any EOA (Externally Owned Account) or contract other
 :::
 
 
-:::
+::::
 
 ### `burn` 
-:::description[`crvUSD.burn(_value: uint256) -> bool:`]
+::::description[`crvUSD.burn(_value: uint256) -> bool:`]
 
 
 Function to burn `_value` amount of tokens from `msg.sender`.
@@ -223,8 +212,7 @@ Emits: `Transfer`
 | ----------- | -------| ----|
 | `_value` |  `uint256` | Amount of tokens to burn |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -251,10 +239,9 @@ def _burn(_from: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.burn(10**18)
@@ -262,14 +249,13 @@ def _burn(_from: address, _value: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `burnFrom`
-:::description[`crvUSD.burnFrom(_from: address, _value: uint256) -> bool:`]
+::::description[`crvUSD.burnFrom(_from: address, _value: uint256) -> bool:`]
 
 
 Function to burn `_value` amount of tokens from `_from`.
@@ -283,8 +269,7 @@ Emits: `Transfer`
 | `_from` |  `address` | Address to burn tokens for |
 | `_value` |  `uint256` | Amount of tokens to burn |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -317,10 +302,9 @@ def _burn(_from: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.burn("0xec0820efafc41d8943ee8de495fc9ba8495b15cf", "25000000000000000000000000")
@@ -328,8 +312,7 @@ def _burn(_from: address, _value: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -339,18 +322,19 @@ The `burnFrom` function is called when the debt ceiling is reduced via `set_debt
 :::
 
 
-:::
+::::
 
-## **Contract Info Methods**### `decimals`
-:::description[`crvUSD.decimals() -> uint8: view`]
+## **Contract Info Methods**
+
+### `decimals`
+::::description[`crvUSD.decimals() -> uint8: view`]
 
 
 Getter for the decimals of the token.
 
 Returns: decimals (`uint8`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -358,10 +342,9 @@ decimals: public(constant(uint8)) = 18
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.decimals()
@@ -369,22 +352,20 @@ decimals: public(constant(uint8)) = 18
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `version`
-:::description[`crvUSD.version() -> String[8]: view`]
+::::description[`crvUSD.version() -> String[8]: view`]
 
 
 Getter for the version of the contract.
 
 Returns: version (`String[8]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -392,10 +373,9 @@ version: public(constant(String[8])) = "v1.0.0"
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.version()
@@ -403,22 +383,20 @@ version: public(constant(String[8])) = "v1.0.0"
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `name`
-:::description[`crvUSD.name() -> String[64]: view`]
+::::description[`crvUSD.name() -> String[64]: view`]
 
 
 Getter for the name of the token.
 
 Returns: name (`String[64]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -448,10 +426,9 @@ def __init__(_name: String[64], _symbol: String[32]):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.name()
@@ -459,22 +436,20 @@ def __init__(_name: String[64], _symbol: String[32]):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `symbol`
-:::description[`crvUSD.symbol() -> String[32]: view`]
+::::description[`crvUSD.symbol() -> String[32]: view`]
 
 
 Getter for the symbol of the token.
 
 Returns: symbol (`String[32]`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -504,10 +479,9 @@ def __init__(_name: String[64], _symbol: String[32]):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.symbol()
@@ -515,14 +489,13 @@ def __init__(_name: String[64], _symbol: String[32]):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `balanceOf`
-:::description[`crvUSD.balanceOf(arg0: address) -> uint256: view`]
+::::description[`crvUSD.balanceOf(arg0: address) -> uint256: view`]
 
 
 Getter for the crvUSD balance of address `arg0`.
@@ -533,8 +506,7 @@ Returns: balance (`uint256`).
 | ----------- | -------| ----|
 | `arg0` |  `address` | Address to check balance for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -542,10 +514,9 @@ balanceOf: public(HashMap[address, uint256])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.balanceOf("0x844Dc85EdD8492A56228D293cfEbb823EF3E10EC")
@@ -553,22 +524,20 @@ balanceOf: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `totalSupply`
-:::description[`crvUSD.totalSupply() -> uint256: view`]
+::::description[`crvUSD.totalSupply() -> uint256: view`]
 
 
 Getter for the total supply of crvUSD.
 
 Returns: total supply (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -576,10 +545,9 @@ totalSupply: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.totalSupply()
@@ -587,14 +555,15 @@ totalSupply: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Allowances and Approvals**### `allowance`
-:::description[`crvUSD.allowance(arg0: address, arg1: address) -> uint256`]
+## **Allowances and Approvals**
+
+### `allowance`
+::::description[`crvUSD.allowance(arg0: address, arg1: address) -> uint256`]
 
 
 Getter method to check the allowance.
@@ -606,8 +575,7 @@ Returns: allowed tokens (`uint256`).
 | `arg0` |  `address` | Address of the spender |
 | `arg1` |  `address` | Address of the token owner |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -615,10 +583,9 @@ allowance: public(HashMap[address, HashMap[address, uint256]])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.allowance("0x7a16fF8270133F063aAb6C9977183D9e72835428", "0x4dece678ceceb27446b35c672dc7d61f30bad69e")
@@ -626,14 +593,13 @@ allowance: public(HashMap[address, HashMap[address, uint256]])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `approve`
-:::description[`crvUSD.approve(_spender: address, _value: uint256) -> bool:`]
+::::description[`crvUSD.approve(_spender: address, _value: uint256) -> bool:`]
 
 
 Fucntion to allow `_spender` to transfer up to `_value` amount of tokens from the caller's amount.
@@ -647,8 +613,7 @@ Emits: `Approval`
 | `_spender` |  `address` | Address permitted to spend up to `_value` amount of caller's funds |
 | `_value` |  `address` | Amount of tokens `_spender` is allowed to spend |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -680,10 +645,9 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.approve("0x4dece678ceceb27446b35c672dc7d61f30bad69e", 10**22)
@@ -691,14 +655,13 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `increaseAllowance`
-:::description[`crvUSD.increaseAllowance(_spender: address, _add_value: uint256) -> bool:`]
+::::description[`crvUSD.increaseAllowance(_spender: address, _add_value: uint256) -> bool:`]
 
 
 Function to increase the allowance granted to `_spender`.
@@ -719,8 +682,7 @@ This function will never overflow, and instead will bind allowance to `MAX_UINT2
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -756,10 +718,9 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.increaseAllowance("0x4dece678ceceb27446b35c672dc7d61f30bad69e", 2**256-1)
@@ -767,14 +728,13 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `decreaseAllowance`
-:::description[`crvUSD.decreaseAllowance(_spender: address, _sub_value: uint256) -> bool:`]
+::::description[`crvUSD.decreaseAllowance(_spender: address, _sub_value: uint256) -> bool:`]
 
 
 Function to decrease the allowance granted to `_spender`.
@@ -795,8 +755,7 @@ This function will never underflow, and instead will bound allowance to 0.
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -831,10 +790,9 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.decreaseAllowance("0x4dece678ceceb27446b35c672dc7d61f30bad69e", 2**256-1)
@@ -842,14 +800,13 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `permit`
-:::description[`crvUSD.permit(_owner: address, _spender: address, _value: uint256, _deadline: uint256, _v: uint8,, _r: bytes32, _s: bytes32) -> bool:`]
+::::description[`crvUSD.permit(_owner: address, _spender: address, _value: uint256, _deadline: uint256, _v: uint8,, _r: bytes32, _s: bytes32) -> bool:`]
 
 
 Function to permit `_spender` to spend up to `_value` amount of `_owner`'s tokens via a signature.
@@ -876,8 +833,7 @@ However, this is only if the resulting chains update their chainId.
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -939,17 +895,15 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> crvUSD.permit(todo)
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

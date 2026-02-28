@@ -1,22 +1,20 @@
 # scrvUSD Crosschain Oracle
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-<details open>
-<summary>`ScrvusdOracleV2.vy`</summary>
+:::vyper[`ScrvusdOracleV2.vy`]
 
 The source code for the `ScrvusdOracleV2` contract is available on [ GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/scrvusd/oracles/ScrvusdOracleV2.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.4.0`.
 
 The oracle contracts are deployed on various chains at: *soon*
 
-
-</details>
+:::
 
 ---
 
 
-## **Price Methods**The contract has three different functions for the scrvUSD share price (or its inverse when setting `_i = 1`) using different approximations:
+## **Price Methods**
+
+The contract has three different functions for the scrvUSD share price (or its inverse when setting `_i = 1`) using different approximations:
 
 - [`price_v0`](#price_v0) provides a lower-bound estimate of the scrvUSD share price (or its inverse when _i is 1) by combining a historically smoothed price with a raw price derived from previous vault parameters.
 - [`price_v1`](#price_v1) returns an approximate share price (or its inverse when _i is 1) by calculating a raw price based on current timestamp data and stored parameters, assuming no external interactions have altered it.
@@ -24,7 +22,7 @@ The oracle contracts are deployed on various chains at: *soon*
 
 
 ### `update_price`
-:::description[`ScrvusdOracleV2.update_price(_parameters: uint256[ALL_PARAM_CNT], _ts: uint256, _block_number: uint256) -> uint256`]
+::::description[`ScrvusdOracleV2.update_price(_parameters: uint256[ALL_PARAM_CNT], _ts: uint256, _block_number: uint256) -> uint256`]
 
 
 :::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
@@ -46,15 +44,9 @@ Emits: `PriceUpdate` event.
 | `_ts`           | `uint256` | Timestamp at which the parameters are true |
 | `_block_number` | `uint256` | Block number of parameters to linearize updates |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 event PriceUpdate:
     new_price: uint256  # price to achieve
     price_params_ts: uint256  # timestamp at which price is recorded
@@ -151,16 +143,9 @@ def _raw_price(ts: uint256, parameters_ts: uint256) -> uint256:
     return self._total_assets(parameters) * 10**18 // self._total_supply(parameters, ts)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example updates the price of scrvUSD.
 
@@ -168,15 +153,13 @@ This example updates the price of scrvUSD.
 >>> ScrvusdOracleV2.update_price()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `raw_price`
-:::description[`ScrvusdOracleV2.raw_price(_i: uint256 = 0, _ts: uint256 = block.timestamp, _parameters_ts: uint256 = block.timestamp) -> uint256`]
+::::description[`ScrvusdOracleV2.raw_price(_i: uint256 = 0, _ts: uint256 = block.timestamp, _parameters_ts: uint256 = block.timestamp) -> uint256`]
 
 
 Function to compute the raw approximated share or asset price without smoothening out.
@@ -189,15 +172,9 @@ Returns: raw `pricePerShare()` or `pricePerAsset()`.
 | `_ts` | `uint256` | Timestamp at which to see the price (only near period is supported) |
 | `_parameters_ts` | `uint256` | Timestamp for the price parameters |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 @view
 @external
 def raw_price(
@@ -286,16 +263,9 @@ def _total_supply(p: PriceParams, ts: uint256) -> uint256:
     )
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the raw share or asset price of scrvUSD.
 
@@ -307,15 +277,13 @@ ScrvusdOracleV2.raw_price(1)
 # returns pricePerAsset()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_v0`
-:::description[`ScrvusdOracleV2.price_v0(_i: uint256 = 0) -> uint256`]
+::::description[`ScrvusdOracleV2.price_v0(_i: uint256 = 0) -> uint256`]
 
 
 Getter for the lower bound of the share or asset price.
@@ -326,15 +294,9 @@ Returns: lower bound of `pricePerShare()`.
 | ------------- | --------- | ---------------------------- |
 | `_i` | `uint256` | 0 for `pricePerShare()` and 1 for `pricePerAsset()` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 struct PriceParams:
     # assets
     total_debt: uint256
@@ -401,16 +363,9 @@ def raw_price(
     return p if _i == 0 else 10**36 // p
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the lower bound of `pricePerShare()` or `pricePerAsset()`.
 
@@ -422,15 +377,13 @@ ScrvusdOracleV2.price_v0(1)
 # returns pricePerAsset()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_v1`
-:::description[`ScrvusdOracleV2.price_v1(_i: uint256 = 0) -> uint256`]
+::::description[`ScrvusdOracleV2.price_v1(_i: uint256 = 0) -> uint256`]
 
 
 Getter for the approximate share or asset price assuming no new interactions.
@@ -441,15 +394,9 @@ Returns: approximate `pricePerShare()`.
 | ------------- | --------- | ---------------------------- |
 | `_i` | `uint256` | 0 for `pricePerShare()` and 1 for `pricePerAsset()` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 struct PriceParams:
     # assets
     total_debt: uint256
@@ -516,16 +463,9 @@ def raw_price(
     return p if _i == 0 else 10**36 // p
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the approximate `pricePerShare()` or `pricePerAsset()`.
 
@@ -537,15 +477,13 @@ ScrvusdOracleV2.price_v1(1)
 # returns pricePerAsset()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_v2`
-:::description[`ScrvusdOracleV2.price_v2(_i: uint256 = 0) -> uint256`]
+::::description[`ScrvusdOracleV2.price_v2(_i: uint256 = 0) -> uint256`]
 
 
 Getter for the approximate share or asset price assuming constant rewards over time.
@@ -556,15 +494,9 @@ Returns: approximate `pricePerShare()`.
 | ------------- | --------- | ---------------------------- |
 | `_i` | `uint256` | 0 for `pricePerShare()` and 1 for `pricePerAsset()` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 struct PriceParams:
     # assets
     total_debt: uint256
@@ -630,16 +562,9 @@ def raw_price(
     return p if _i == 0 else 10**36 // p
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the approximate `pricePerShare()` or `pricePerAsset()` using the assumption that crvUSD gains same rewards.
 
@@ -651,43 +576,28 @@ ScrvusdOracleV2.price_v2(1)
 # returns pricePerAsset()
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_block_number`
-:::description[`ScrvusdOracleV2.last_block_number() -> uint256`]
+::::description[`ScrvusdOracleV2.last_block_number() -> uint256`]
 
 
 Getter for the block number corresponding to the most recent update applied to the oracle (either for the price or `profit_max_unlock_time`). This value is updated during calls to the `update_price()` function to ensure that only updates from the same or a later block are accepted to prevent outdated information from being used.
 
 Returns: the last block number the oracle was updated?.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 last_block_number: public(uint256)  # Warning: used both for price parameters and unlock_time
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the block number of the most recent update.
 
@@ -696,17 +606,17 @@ This example returns the block number of the most recent update.
 17153668
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Adjustable Parameters**The oracle has the following adjustable parameters:
+## **Adjustable Parameters**
+
+The oracle has the following adjustable parameters:
 
 - [`profit_max_unlock_time`](#profit_max_unlock_time): period over which accrued profits are gradually unlocked to smooth the share price transition.
 - [`max_price_increment`](#max_price_increment): caps the maximum rate at which the share price can change per second to prevent abrupt price fluctuations.
@@ -715,22 +625,16 @@ This example returns the block number of the most recent update.
 To guard the respective functions which can change the parameters, the contract uses a snekmate module with different roles.
 
 ### `profit_max_unlock_time`
-:::description[`ScrvusdOracleV2.profit_max_unlock_time() -> uint256: view`]
+::::description[`ScrvusdOracleV2.profit_max_unlock_time() -> uint256: view`]
 
 
 Getter for the duration in seconds over which rewards are gradually unlocked, thereby smoothing out share price adjustments. It is initially set to one week (7 * 86400 seconds) to align with the current Yearn Vault setting and can only be updated by the `VERIFIER` role using the [`update_profit_max_unlock_time`](#update_profit_max_unlock_time) function.
 
 Returns: `profit_max_unlock_time`.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 profit_max_unlock_time: public(uint256)
 
 @deploy
@@ -743,16 +647,9 @@ def __init__(_initial_price: uint256):
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the current `profit_max_unlock_time`.
 
@@ -761,15 +658,13 @@ This example returns the current `profit_max_unlock_time`.
 604800
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `update_profit_max_unlock_time`
-:::description[`ScrvusdOracleV2.update_profit_max_unlock_time(_profit_max_unlock_time: uint256, _block_number: uint256) -> bool`]
+::::description[`ScrvusdOracleV2.update_profit_max_unlock_time(_profit_max_unlock_time: uint256, _block_number: uint256) -> bool`]
 
 
 :::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
@@ -779,7 +674,7 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 :::
 
-Function to set a new value for `profit_max_unlock_time`. This happens within the [`ScrvUSDVeriferV2`](../crosschain/verifier.md#scrvusd-verifier-v2) contract when a period is verified using a block hash ([`verifyPeriodByBlockHash()`](../crosschain/verifier.md#verifyperiodbyblockhash)).
+Function to set a new value for `profit_max_unlock_time`. This happens within the [`ScrvUSDVeriferV2`](./verifier.md#scrvusd-verifier-v2) contract when a period is verified using a block hash ([`verifyPeriodByBlockHash()`](./verifier.md#verifyperiodbyblockhash)).
 
 Returns: boolean wether the value changed.
 
@@ -788,15 +683,9 @@ Returns: boolean wether the value changed.
 | `_profit_max_unlock_time` | `uin256` | New `profit_max_unlock_time` value |
 | `_block_number` | `uin256` | Block number of parameters to linearize updates |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 from snekmate.auth import access_control
 
 initializes: access_control
@@ -831,16 +720,9 @@ def update_profit_max_unlock_time(_profit_max_unlock_time: uint256, _block_numbe
     return prev_value != _profit_max_unlock_time
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example updates the `profit_max_unlock_time` value.
 
@@ -854,30 +736,22 @@ This example updates the `profit_max_unlock_time` value.
 302400
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `max_price_increment`
-:::description[`ScrvusdOracleV2.max_price_increment() -> uint256: view`]
+::::description[`ScrvusdOracleV2.max_price_increment() -> uint256: view`]
 
 
 Getter for the maximum allowed price increment per second for scrvusd, measured with a precision of $10^{18}$. It is initially set to `2 * 1012` — corresponding to 0.02 bps per second (or approximately 0.24 bps per block on Ethereum) and linearly approximated to a maximum of 63% APY — and can be updated via the [`set_max_price_increment`](#set_max_price_increment) function.
 
 Returns: `max_price_increment`.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 max_price_increment: public(uint256)  # precision 10**18
 
 @deploy
@@ -893,16 +767,9 @@ def __init__(_initial_price: uint256):
     ....
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the maximum price increment per second of scrvusd.
 
@@ -911,15 +778,13 @@ This example returns the maximum price increment per second of scrvusd.
 2000000000000
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_max_price_increment`
-:::description[`ScrvusdOracleV2.set_max_price_increment(_max_price_increment: uint256)`]
+::::description[`ScrvusdOracleV2.set_max_price_increment(_max_price_increment: uint256)`]
 
 
 :::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
@@ -929,7 +794,7 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 :::
 
-Function to set a new value for `max_price_increment`. The new value must be less than the stableswaps minimum fee.  
+Function to set a new value for `max_price_increment`. The new value must be less than the stableswaps minimum fee.
 $\frac{fee}{2 * \text{block_time}}$ is considered to be safe.
 
 Emits: `SetMaxPriceIncrement` event.
@@ -938,15 +803,9 @@ Emits: `SetMaxPriceIncrement` event.
 | ------------- | --------- | ---------------------------- |
 | `_max_price_increment` | `uint256` | New `max_price_increment` value |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 from snekmate.auth import access_control
 
 initializes: access_control
@@ -979,16 +838,9 @@ def set_max_price_increment(_max_price_increment: uint256):
     log SetMaxPriceIncrement(_max_price_increment)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example updates the `max_price_increment` value.
 
@@ -1002,30 +854,22 @@ This example updates the `max_price_increment` value.
 3000000000000
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `max_v2_duration`
-:::description[`ScrvusdOracleV2.max_v2_duration() -> uint256: view`]
+::::description[`ScrvusdOracleV2.max_v2_duration() -> uint256: view`]
 
 
 Getter for the maximum duration for which the price_v2 approximation can be applied before capping further growth. It is initially set to 24 weeks and can be updated via the [`set_max_v2_duration`](#set_max_v2_duration) function.
 
 Returns: `max_v2_duration`.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 max_v2_duration: public(uint256)  # number of periods(weeks)
 
 @deploy
@@ -1038,16 +882,9 @@ def __init__(_initial_price: uint256):
     ...
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the `max_v2_duration` value.
 
@@ -1056,15 +893,13 @@ This example returns the `max_v2_duration` value.
 24
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_max_v2_duration`
-:::description[`ScrvusdOracleV2.set_max_v2_duration(_max_v2_duration: uint256)`]
+::::description[`ScrvusdOracleV2.set_max_v2_duration(_max_v2_duration: uint256)`]
 
 
 :::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
@@ -1082,15 +917,9 @@ Emits: `SetMaxV2Duration` event.
 | ------------- | --------- | ---------------------------- |
 | `_max_v2_duration` | `uint256` | Maximum v2 approximation duration (in weeks) |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="scrvusdoraclev2-vy" label="ScrvusdOracleV2.vy">
-
-
-```python
+```vyper
 from snekmate.auth import access_control
 
 initializes: access_control
@@ -1123,16 +952,9 @@ def set_max_v2_duration(_max_v2_duration: uint256):
     log SetMaxV2Duration(_max_v2_duration)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example updates the `max_v2_duration` value.
 
@@ -1146,14 +968,14 @@ This example updates the `max_v2_duration` value.
 26
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Snekmate Access Control**The contract makes use of the `access_control.vy` module for access control. More [here](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/access_control.vy).
+## **Snekmate Access Control**
+
+The contract makes use of the `access_control.vy` module for access control. More [here](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/access_control.vy).

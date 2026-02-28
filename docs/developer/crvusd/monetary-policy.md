@@ -1,19 +1,20 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Monetary Policy
 
 MonetaryPolicy contracts are integrated into the crvUSD ecosystem, where they play a pivotal role in determining the interest rates for crvUSD markets.
 
 :::deploy[Contract Source & Deployment]
 
 Source code is available on [Github](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/mpolicies).
-Relevant contract deployments can be found [here](../references/deployed-contracts.md#curve-stablecoin).
+Relevant contract deployments can be found [here](../deployments.md).
 
 
 :::
 
-## **Interest Rate Mechanics**The interest rates in crvUSD markets are not static but fluctuate based on a set of factors, including:
+## **Interest Rate Mechanics**
 
-- The price of crvUSD, which is determined through an aggregated oracle price from multiple Curve Stableswap pools ([details here](../crvUSD/priceaggregator.md)).
+The interest rates in crvUSD markets are not static but fluctuate based on a set of factors, including:
+
+- The price of crvUSD, which is determined through an aggregated oracle price from multiple Curve Stableswap pools ([details here](../crvusd/price-aggregator.md)).
 - The variables `sigma`, `rate0`, `TargetFraction`, and the `DebtFraction` specific to PegKeepers.
 
 :::tip
@@ -56,19 +57,14 @@ $$\text\{annualRate\} = (1 + \frac\{rate\}\{10^\{18\}\})^\{365 \times 24 \times 
 ---
 
 ### `rate`
-:::description[`MonetaryPolicy.rate() -> uint256: view`]
+::::description[`MonetaryPolicy.rate() -> uint256: view`]
 
 
 Getter for the rate of the monetary policy contract. This is the current interest rate paid per second.
 
 Returns: rate (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper 
@@ -102,14 +98,9 @@ def calculate_rate() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -118,26 +109,20 @@ def calculate_rate() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `rate0`
-:::description[`MonetaryPolicy.rate0() -> uint256: view`]
+::::description[`MonetaryPolicy.rate0() -> uint256: view`]
 
 
 Getter for the `rate0` of the monetary policy contract. `rate0` has to be less than or equal to `MAX_RATE` (400% APY).
 
 Returns: rate0 (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -161,14 +146,9 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -177,14 +157,13 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_rate`
-:::description[`MonetaryPolicy.set_rate(rate: uint256):`]
+::::description[`MonetaryPolicy.set_rate(rate: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -202,12 +181,7 @@ Emits: `SetRate`
 | ----------- | -------| ----|
 | `rate` |  `uint256` | New rate0 value |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -226,14 +200,9 @@ def set_rate(rate: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -241,26 +210,20 @@ def set_rate(rate: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `sigma`
-:::description[`MonetaryPolicy.sigma() -> uint256: view`]
+::::description[`MonetaryPolicy.sigma() -> uint256: view`]
 
 
 Getter for the sigma value. The following needs to hold: $10^{14} <= sigma <= 10^{18}$.
 
 Returns: sigma (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -286,14 +249,9 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -302,14 +260,13 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_sigma`
-:::description[`MonetaryPolicy.set_sigma(sigma: uint256):`]
+::::description[`MonetaryPolicy.set_sigma(sigma: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -327,12 +284,7 @@ Emits: `SetSigma`
 | ----------- | -------| ----|
 | `sigma` |  `uint256` | New sigma value |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -355,14 +307,9 @@ def set_sigma(sigma: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -370,26 +317,20 @@ def set_sigma(sigma: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `target_debt_fraction`
-:::description[`MonetaryPolicy.target_debt_fraction() -> uint256: view`]
+::::description[`MonetaryPolicy.target_debt_fraction() -> uint256: view`]
 
 
 Getter for the debt fraction target.
 
 Returns: target debt fraction (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -411,14 +352,9 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -427,14 +363,13 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_target_debt_fraction`
-:::description[`MonetaryPolicy.set_target_debt_fraction(target_debt_fraction: uint256):`]
+::::description[`MonetaryPolicy.set_target_debt_fraction(target_debt_fraction: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -452,12 +387,7 @@ Emits: `SetTargetDebtFraction`
 | ----------- | -------| ----|
 | `target_debt_fraction` |  `uint256` | New debt fraction target value |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -478,14 +408,9 @@ def set_target_debt_fraction(target_debt_fraction: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -493,17 +418,18 @@ def set_target_debt_fraction(target_debt_fraction: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **PegKeepers**PegKeepers must be added to the MonetaryPolicy contract to calculate the rate as it depends on the *DebtFraction*. They can be added by calling `add_peg_keeper` and removed via `remove_peg_keeper`.
+## **PegKeepers**
+
+PegKeepers must be added to the MonetaryPolicy contract to calculate the rate as it depends on the *DebtFraction*. They can be added by calling `add_peg_keeper` and removed via `remove_peg_keeper`.
 
 
 ### `peg_keepers`
-:::description[`MonetaryPolicy.peg_keepers(arg0: uint256) -> address: view`]
+::::description[`MonetaryPolicy.peg_keepers(arg0: uint256) -> address: view`]
 
 
 Getter for the PegKeeper contract at index `arg0`.
@@ -514,12 +440,7 @@ Returns: PegKeeper contracts (`address`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index of the PegKeeper |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -547,14 +468,9 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -563,14 +479,13 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `add_peg_keeper`
-:::description[`MonetaryPolicy.add_peg_keeper(pk: PegKeeper):`]
+::::description[`MonetaryPolicy.add_peg_keeper(pk: PegKeeper):`]
 
 
 :::guard[Guarded Method]
@@ -588,12 +503,7 @@ Emits: `AddPegKeeper`
 | ----------- | -------| ----|
 | `pk` |  `PegKeeper` | PegKeeper address to add |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -616,14 +526,9 @@ def add_peg_keeper(pk: PegKeeper):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -631,14 +536,13 @@ def add_peg_keeper(pk: PegKeeper):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_peg_keeper`
-:::description[`MonetaryPolicy.remove_peg_keeper(pk: PegKeeper):`]
+::::description[`MonetaryPolicy.remove_peg_keeper(pk: PegKeeper):`]
 
 
 :::guard[Guarded Method]
@@ -656,12 +560,7 @@ Emits: `RemovePegKeeper`
 | ----------- | -------| ----|
 | `pk` |  `PegKeeper` | PegKeeper address to remove |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -688,14 +587,9 @@ def remove_peg_keeper(pk: PegKeeper):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -703,26 +597,22 @@ def remove_peg_keeper(pk: PegKeeper):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Admin Ownership**### `admin`
-:::description[`MonetaryPolicy.admin() -> address: view`]
+## **Admin Ownership**
+
+### `admin`
+::::description[`MonetaryPolicy.admin() -> address: view`]
 
 
 Getter for the admin of the contract, which is the CurveOwnershipAgent.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -742,14 +632,9 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -758,14 +643,13 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_admin`
-:::description[`MonetaryPolicy.set_admin(admin: address):`]
+::::description[`MonetaryPolicy.set_admin(admin: address):`]
 
 
 :::guard[Guarded Method]
@@ -783,12 +667,7 @@ Emits: `SetAdmin`
 | ----------- | -------| ----|
 | `admin` |  `address` | New admin address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -805,14 +684,9 @@ def set_admin(admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -820,26 +694,22 @@ def set_admin(admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Contract Info Methods**### `PRICE_ORACLE`
-:::description[`MonetaryPolicy.PRICE_ORACLE() -> address: view`]
+## **Contract Info Methods**
+
+### `PRICE_ORACLE`
+::::description[`MonetaryPolicy.PRICE_ORACLE() -> address: view`]
 
 
 Getter for the price oracle contract.
 
 Returns: price oracle contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -861,14 +731,9 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -877,26 +742,20 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CONTROLLER_FACOTRY`
-:::description[`MonetaryPolicy.CONTROLLER_FACOTRY() -> address: view`]
+::::description[`MonetaryPolicy.CONTROLLER_FACOTRY() -> address: view`]
 
 
 Getter for the controller factory contract. immutable variable!
 
 Returns: controller factory contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -918,14 +777,9 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -934,24 +788,18 @@ def __init__(admin: address,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `rate_write`
-:::description[`MonetaryPolicy.rate_write() -> uint256:`]
+::::description[`MonetaryPolicy.rate_write() -> uint256:`]
 
 
 When adding a new market via the factory contract, `rate_write` is called to check if the MonetaryPolicy contract has the correct ABI.
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
+<SourceCode>
 
 
 ```vyper
@@ -986,22 +834,16 @@ def calculate_rate() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> MonetaryPolicy.rate_write()
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

@@ -1,7 +1,5 @@
 # PegKeeperRegulator
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The regulator contract supervises prices and other parameters telling whether the PegKeeper are allowed to provide or withdraw crvUSD.
 
@@ -68,7 +66,7 @@ $\text{allowedToProvide} = \frac{0.25 \times 25000000}{1} - 0 = 6250000$
 :::
 
 ### `provide_allowed`
-:::description[`PegKeeperRegulator.provide_allowed(_pk: address=msg.sender) -> uint256`]
+::::description[`PegKeeperRegulator.provide_allowed(_pk: address=msg.sender) -> uint256`]
 
 
 :::warning
@@ -86,12 +84,7 @@ Returns: amount of crvUSD allowed to provide (`uint256`).
 | ----- | --------- | --------------------------------------------------- |
 | `_pk` | `address` | PegKeeper address; Defaults to `msg.sender` as the function is usually called by the PegKeeper itself |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```py
@@ -205,25 +198,19 @@ def _get_max_ratio(_debt_ratios: DynArray[uint256, MAX_LEN]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -236,7 +223,7 @@ def _get_max_ratio(_debt_ratios: DynArray[uint256, MAX_LEN]) -> uint256:
 
 
 ### `withdraw_allowed`
-:::description[`PegKeeperRegulator.withdraw_allowed(_pk: address=msg.sender) -> uint256`]
+::::description[`PegKeeperRegulator.withdraw_allowed(_pk: address=msg.sender) -> uint256`]
 
 
 :::warning
@@ -255,12 +242,7 @@ Returns: amount of crvUSD allowed to withdraw (`uint256`).
 | `_pk` | `address` | PegKeeper address; defaults to `msg.sender` as it's usually called by the PegKeeper itself |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -342,25 +324,19 @@ def _get_price(_info: PegKeeperInfo) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -375,7 +351,7 @@ For more details on the calculations and research behind these parameters, see [
 
 
 ### `worst_price_threshold`
-:::description[`PegKeeperRegulator.worst_price_threshold() -> uint256: view`]
+::::description[`PegKeeperRegulator.worst_price_threshold() -> uint256: view`]
 
 
 Getter for the current worst price threshold. The value can only be changed by the `admin` calling the [`set_worst_price_threshold`](#set_worst_price_threshold) function.
@@ -384,12 +360,7 @@ Returns: worst price threshold (`uint256`).
 
 Emits: `WorstPriceThreshold` at contract initialization
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -408,14 +379,9 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.worst_price_threshold()
@@ -423,25 +389,22 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_deviation`
-:::description[`PegKeeperRegulator.price_deviation() -> uint256: view`]
+::::description[`PegKeeperRegulator.price_deviation() -> uint256: view`]
 
 
 Getter for the current price deviation value. The value can only be changed by the `admin` calling the [`set_price_deviation`](#set_price_deviation) function.
@@ -450,12 +413,7 @@ Returns: price deviation (`uint256`).
 
 Emits: `PriceDeviation` at contract initialization
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -474,14 +432,9 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.price_deviation()
@@ -489,14 +442,13 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `alpha`
-:::description[`PegKeeperRegulator.alpha() -> uint256: view`]
+::::description[`PegKeeperRegulator.alpha() -> uint256: view`]
 
 
 Getter for the alpha value, which represents the initial boundary. This value can be changed by the `admin` by calling the [`set_debt_parameters`](#set_debt_parameters) function.
@@ -505,12 +457,7 @@ Returns: alpha (`uint256`).
 
 Emits: `DebtParameters` at contract initialization
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -529,14 +476,9 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.alpha()
@@ -544,14 +486,13 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `beta`
-:::description[`PegKeeperRegulator.beta() -> uint256: view`]
+::::description[`PegKeeperRegulator.beta() -> uint256: view`]
 
 
 Getter for the beta value, which represents each PegKeeper's impact. This value can be changed by the `admin` by calling the [`set_debt_parameters`](#set_debt_parameters) function.
@@ -560,12 +501,7 @@ Returns: beta (`uint256`).
 
 Emits: `DebtParameters` at contract initialization
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -584,14 +520,9 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.beta()
@@ -599,14 +530,13 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_worst_price_threshold`
-:::description[`PegKeeperRegulator.set_worst_price_threshold(_threshold: uint256)`]
+::::description[`PegKeeperRegulator.set_worst_price_threshold(_threshold: uint256)`]
 
 
 :::guard[Guarded Methods]
@@ -624,12 +554,7 @@ Emits: `WorstPriceThreshold`
 | ------------ | --------- | ------------ |
 | `_threshold` | `uint256` | New value for `worst_price_threshold` |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -651,28 +576,22 @@ def set_worst_price_threshold(_threshold: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_price_deviation`
-:::description[`PegKeeperRegulator.set_price_deviation(_deviation: uint256)`]
+::::description[`PegKeeperRegulator.set_price_deviation(_deviation: uint256)`]
 
 
 :::guard[Guarded Methods]
@@ -690,12 +609,7 @@ Emits: `PriceDeviation`
 | ------------ | --------- | ------------ |
 | `_deviation` | `uint256` | New value for `price_deviation` |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -717,28 +631,22 @@ def set_price_deviation(_deviation: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_debt_parameters`
-:::description[`PegKeeperRegulator.set_debt_parameters(_alpha: uint256, _beta: uint256)`]
+::::description[`PegKeeperRegulator.set_debt_parameters(_alpha: uint256, _beta: uint256)`]
 
 
 :::guard[Guarded Methods]
@@ -757,12 +665,7 @@ Emits: `DebtParameters`
 | `_alpha` | `uint256` | New value for `alpha` |
 | `_beta`  | `uint256` | New value for `beta`  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -791,36 +694,32 @@ def set_debt_parameters(_alpha: uint256, _beta: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Adding and Removing PegKeepers**PegKeepers rely on the Regulator, as it provides the contract with information on whether they are allowed to provide or withdraw crvUSD from the pool. These PegKeepers need to be added by `admin` using the [`add_peg_keepers`](#add_peg_keepers) function and are then stored within the [`peg_keepers`](#peg_keepers) variable.
+## **Adding and Removing PegKeepers**
+
+PegKeepers rely on the Regulator, as it provides the contract with information on whether they are allowed to provide or withdraw crvUSD from the pool. These PegKeepers need to be added by `admin` using the [`add_peg_keepers`](#add_peg_keepers) function and are then stored within the [`peg_keepers`](#peg_keepers) variable.
 
 PegKeepers can be removed from the Regulator contract by the `admin` using the [`remove_peg_keepers`](#remove_peg_keepers) function.
 
 
 ### `peg_keepers`
-:::description[`PegKeeperRegulator.peg_keepers(arg0: uint256) -> PegKeeperInfo: view`]
+::::description[`PegKeeperRegulator.peg_keepers(arg0: uint256) -> PegKeeperInfo: view`]
 
 
 Getter for the PegKeeper contract at index `arg0`.
@@ -831,12 +730,7 @@ Returns: `PegKeeperInfo` (`struct`) consisting of the PegKeeper (`address`), its
 | ------ | --------- | ----------- |
 | `arg0` | `address` | Index of the PegKeeper; starts at 0 |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -850,14 +744,9 @@ peg_keepers: public(DynArray[PegKeeperInfo, MAX_LEN])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.peg_keepers(0)
@@ -868,14 +757,13 @@ peg_keepers: public(DynArray[PegKeeperInfo, MAX_LEN])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `add_peg_keepers`
-:::description[`PegKeeperRegulator.add_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN])`]
+::::description[`PegKeeperRegulator.add_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN])`]
 
 
 :::guard[Guarded Methods]
@@ -893,12 +781,7 @@ Emits: `AddPegKeeper`
 | -------------- | --------- | ------------ |
 | `_peg_keepers` | `DynArray[PegKeeper, MAX_LEN]` | PegKeeper contracts to add |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -939,28 +822,22 @@ def add_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN]):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_peg_keepers`
-:::description[`PegKeeperRegulator.remove_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN])`]
+::::description[`PegKeeperRegulator.remove_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN])`]
 
 
 :::guard[Guarded Methods]
@@ -978,12 +855,7 @@ Emits: `RemovePegKeeper`
 | -------------- | --------- | ------------ |
 | `_peg_keepers` | `DynArray[PegKeeper, MAX_LEN]` | PegKeeper contracts to remove |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1022,48 +894,39 @@ def remove_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN]):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Pausing and Unpausing PegKeepers**In this context, **"killing"**refers to either **pausing or unpausing PegKeepers**. When the Regulator is "killed," it means the contract **restricts the PegKeeper from performing one or both of the following actions: providing or withdrawing crvUSD.**Both actions, providing and withdrawing, can be killed separately. For example, the Regulator can kill the permission to provide any additional crvUSD to pools but keep the withdrawing action "unkilled" so that it is still possible to unload debt.
+## **Pausing and Unpausing PegKeepers**
+
+In this context, **"killing"**refers to either **pausing or unpausing PegKeepers**. When the Regulator is "killed," it means the contract **restricts the PegKeeper from performing one or both of the following actions: providing or withdrawing crvUSD.**Both actions, providing and withdrawing, can be killed separately. For example, the Regulator can kill the permission to provide any additional crvUSD to pools but keep the withdrawing action "unkilled" so that it is still possible to unload debt.
 
 Only the `admin` and `emergency_admin` are able to kill. The former is the Curve DAO, and the latter is the EmergencyDAO.
 
 
 ### `is_killed`
-:::description[`PegKeeperRegulator.is_killed() -> uint256: view`]
+::::description[`PegKeeperRegulator.is_killed() -> uint256: view`]
 
 
 Getter to check if the Regulator allows providing or withdrawing.
 
 Returns: index value of the `Killed` enum (`bool`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1075,14 +938,9 @@ is_killed: public(Killed)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.is_killed()
@@ -1099,14 +957,13 @@ is_killed: public(Killed)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_killed`
-:::description[`PegKeeperRegulator.set_killed(_is_killed: Killed)`]
+::::description[`PegKeeperRegulator.set_killed(_is_killed: Killed)`]
 
 
 :::guard[Guarded Methods]
@@ -1131,12 +988,7 @@ Emits: `SetKilled`
 | ------------ | --------- | ----------- |
 | `_is_killed` | `uint256` | Value depending on the action wanted |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1156,30 +1008,26 @@ def set_killed(_is_killed: Killed):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Contract Ownership**The Regulator contract has two types of ownerships, the `admin` and the `emergency_admin`.
+## **Contract Ownership**
+
+The Regulator contract has two types of ownerships, the `admin` and the `emergency_admin`.
 
 While the `admin` is able to call any guarded function from the contract, like setting new parameters and pausing/unpausing PegKeepers, etc., the `emergency_admin` is only allowed to pause and unpause pools. More on pausing pools [here](#pausing-and-unpausing-pegkeepers).
 
@@ -1187,7 +1035,7 @@ Both their ownerships can be transferred using the corresponding [`set_admin`](#
 
 
 ### `admin`
-:::description[`PegKeeperRegulator.admin() -> address: view`]
+::::description[`PegKeeperRegulator.admin() -> address: view`]
 
 
 Getter for the current admin of the Regulator contract. This address can only be changed by the `admin` by calling the [`set_admin`](#set_admin) function.
@@ -1196,12 +1044,7 @@ Returns: current admin (`address`).
 
 Emits: `SetAdmin` at contract initialization
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1219,14 +1062,9 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.admin()
@@ -1234,14 +1072,13 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_admin`
-:::description[`PegKeeperRegulator.set_admin(_admin: address)`]
+::::description[`PegKeeperRegulator.set_admin(_admin: address)`]
 
 
 :::guard[Guarded Methods]
@@ -1259,12 +1096,7 @@ Emits: `SetAdmin`
 | -------- | --------- | ------------ |
 | `_admin` | `address` | New admin address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1283,28 +1115,22 @@ def set_admin(_admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `emergency_admin`
-:::description[`PegKeeperRegulator.emergency_admin() -> address: view`]
+::::description[`PegKeeperRegulator.emergency_admin() -> address: view`]
 
 
 Getter for the current emergency admin of the Regulator contract. This address can only be changed by the `admin` by calling the [`set_emergency_admin`](#set_emergency_admin) function.
@@ -1313,12 +1139,7 @@ Returns: emergency admin (`address`).
 
 Emits: `SetEmergencyAdmin` at contract initialization
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1336,14 +1157,9 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.emergency_admin()
@@ -1351,14 +1167,13 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_emergency_admin`
-:::description[`PegKeeperRegulator.set_emergency_admin(_admin: address)`]
+::::description[`PegKeeperRegulator.set_emergency_admin(_admin: address)`]
 
 
 Function to set a new emergency admin for the contract.
@@ -1369,12 +1184,7 @@ Emits: `SetEmergencyAdmin`
 | -------- | --------- | ------------ |
 | `_admin` | `address` | New emergency admin address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1391,43 +1201,34 @@ def set_emergency_admin(_admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Fee Receiver and Aggregator Contract**### `fee_receiver`
-:::description[`PegKeeperRegulator.fee_receiver() -> address: view`]
+## **Fee Receiver and Aggregator Contract**
+
+### `fee_receiver`
+::::description[`PegKeeperRegulator.fee_receiver() -> address: view`]
 
 
 Getter for the fee receiver. The fee receiver can be changed via the [`set_fee_receiver`](#set_fee_receiver) function.
 
 Returns: fee receiver (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1441,14 +1242,9 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.fee_receiver()
@@ -1456,26 +1252,20 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `aggregator`
-:::description[`PegKeeperRegulator.aggregator() -> address: view`]
+::::description[`PegKeeperRegulator.aggregator() -> address: view`]
 
 
 Getter for the crvusd price aggregator contract. This address is set when intializing the contract and can be changed using [`set_aggregator`](#set_aggregator).
 
 Returns: price aggregator contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1493,14 +1283,9 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _admin: address, _emergency_a
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.aggregator()
@@ -1508,14 +1293,13 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _admin: address, _emergency_a
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_fee_receiver`
-:::description[`PegKeeperRegulator.set_fee_receiver(_fee_receiver: address)`]
+::::description[`PegKeeperRegulator.set_fee_receiver(_fee_receiver: address)`]
 
 
 :::guard[Guarded Methods]
@@ -1533,12 +1317,7 @@ Emits: `SetFeeReceiver`
 | --------------- | --------- | ------------------------ |
 | `_fee_receiver` | `address` | New fee receiver address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1558,28 +1337,22 @@ def set_fee_receiver(_fee_receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_aggregator`
-:::description[`PegKeeperRegulator.set_aggregator(_agg: Aggregator)`]
+::::description[`PegKeeperRegulator.set_aggregator(_agg: Aggregator)`]
 
 
 :::guard[Guarded Methods]
@@ -1597,12 +1370,7 @@ Emits: `SetAggregator`
 | --------------- | --------- | ----------------------- |
 | `_fee_receiver` | `address` | New aggregator contract |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1622,43 +1390,34 @@ def set_aggregator(_agg: Aggregator):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Other Methods**### `stablecoin`
-:::description[`PegKeeperRegulator.stablecoin() -> address: view`]
+## **Other Methods**
+
+### `stablecoin`
+::::description[`PegKeeperRegulator.stablecoin() -> address: view`]
 
 
 Getter for the stablecoin the PegKeeper stabilizes, which is crvUSD. This address is set when intializing the contract and can not be changed.
 
 Returns: stablecoin (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="pegkeeperregulator-vy" label="PegKeeperRegulator.vy">
+<SourceCode>
 
 
 ```vyper
@@ -1679,14 +1438,9 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _admin: address, _emergency_a
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> PegKeeperRegulator.stablecoin()
@@ -1694,8 +1448,7 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _admin: address, _emergency_a
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

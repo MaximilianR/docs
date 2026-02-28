@@ -1,7 +1,7 @@
-# StableSwap-NG Pools: Overview
-A Curve pool is essentially a smart contract that implements the StableSwap invariant, housing the logic for exchanging stable tokens. While all Curve pools share this core implementation, they come in various pool flavors.
+# Stableswap-NG Pools: Overview
+A Curve pool is essentially a smart contract that implements the Stableswap invariant, housing the logic for exchanging stable tokens. While all Curve pools share this core implementation, they come in various pool flavors.
 
-In its simplest form, a Curve pool is an implementation of the StableSwap invariant involving two or more tokens, often referred to as a 'plain pool.' Alternatively, Curve offers more complex pool variants, including pools with rebasing tokens and metapools. Metapools facilitate the exchange of one or more tokens with those from one or more underlying tokens.
+In its simplest form, a Curve pool is an implementation of the Stableswap invariant involving two or more tokens, often referred to as a 'plain pool.' Alternatively, Curve offers more complex pool variants, including pools with rebasing tokens and metapools. Metapools facilitate the exchange of one or more tokens with those from one or more underlying tokens.
 
 
 **New features:**- price and D oracles
@@ -13,7 +13,9 @@ In its simplest form, a Curve pool is an implementation of the StableSwap invari
 ---
 
 
-## **Supported Assets**Stableswap-NG pools supports the following asset types:
+## **Supported Assets**
+
+Stableswap-NG pools supports the following asset types:
 
 | Asset Type  | Description            |
 | :---------: | ---------------------- |
@@ -80,7 +82,9 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
 ---
 
 
-## **Dynamic Fees**Stableswap-NG introduces dynamic fees. The use of the **`offpeg_fee_multiplier`**allows the system to dynamically adjust fees based on the pool's state. 
+## **Dynamic Fees**
+
+Stableswap-NG introduces dynamic fees. The use of the **`offpeg_fee_multiplier`**allows the system to dynamically adjust fees based on the pool's state. 
 
 The internal **`_dynamic_fee()`**function calculates the fee **based on the balances and rates**of the tokens being exchanged. If the balances of the tokens being exchanged are highly imbalanced or significantly differ from its peg, the fee is adjusted using the **`offpeg_fee_multiplier`**.
 
@@ -179,12 +183,16 @@ def _get_rates_balances_xp(pool: address, N_COINS: uint256) -> (
 
 </details>
 
-### **Interactive Graph**The embedded graph has limited features, such as the inability to modify the axis. However, by clicking the *"edit graph on desmos"* button at the bottom right, one is redirected to the main Desmos site. There, a wider range of functionalities is available, allowing for further adjustments and detailed exploration of the graph.
+### **Interactive Graph**
+
+The embedded graph has limited features, such as the inability to modify the axis. However, by clicking the *"edit graph on desmos"* button at the bottom right, one is redirected to the main Desmos site. There, a wider range of functionalities is available, allowing for further adjustments and detailed exploration of the graph.
 
 ---
 
 
-## **Oracles**The new generation (NG) of stableswap introduces two new pool-built-in oracles:
+## **Oracles**
+
+The new generation (NG) of stableswap introduces two new pool-built-in oracles:
 
 - **price oracle**(spot and moving-average price)
 - moving average **D oracle**More on oracles [here](./oracles.md).
@@ -193,7 +201,9 @@ def _get_rates_balances_xp(pool: address, N_COINS: uint256) -> (
 ---
 
 
-## **`exchange_received`**This new function **allows the exchange of tokens without actually transfering tokens in**, as the exchange is based on the change of the coins balances within the pool.
+## **`exchange_received`**
+
+This new function **allows the exchange of tokens without actually transfering tokens in**, as the exchange is based on the change of the coins balances within the pool.
 
 Users of this method are dex aggregators, arbitrageurs, or other users who **do not wish to grant approvals to the contract**. They can instead send tokens directly to the contract and call **`exchange_received()`**.
 

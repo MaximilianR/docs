@@ -1,24 +1,26 @@
 # 
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 Applying new parameters or transferring the ownership of the factory involves a **two-step model**. In the first step, changes need to be committed. The second step involves applying these changes.
 
 
-## **Pool Ownership**All pools created through the Factory are "owned" by the admin of the Factory, which is the Curve DAO. Ownership can only be changed within the factory contract via `commit_transfer_ownership` and `accept_transfer_ownership`. 
+## **Pool Ownership**
+
+All pools created through the Factory are "owned" by the admin of the Factory, which is the Curve DAO. Ownership can only be changed within the factory contract via `commit_transfer_ownership` and `accept_transfer_ownership`. 
 
 
 ---
 
 
-## **Amplification Coefficient and Gamma**More informations about the parameters [here](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters).
+## **Amplification Coefficient and Gamma**
+
+More informations about the parameters [here](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters).
 
 The appropriate value for `A` and `gamma` is dependent upon the type of coin being used within the pool, and is subject to optimisation and pool-parameter update based on the market history of the trading pair. It is possible to modify the parameters for a pool after it has been deployed. However, it requires a vote within the Curve DAO and must reach a 15% quorum.
 
 
 ### `ramp_A_gamma`
-:::description[`CryptoSwap.ramp_A_gamma(future_A: uint256, future_gamma: uint256, future_time: uint256):`]
+::::description[`CryptoSwap.ramp_A_gamma(future_A: uint256, future_gamma: uint256, future_time: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -38,8 +40,7 @@ Emits: `RampAgamma`
 | `future_gamma` | `uint256` | future gamma value |
 | `future_time` | `uint256` | timestamp at which the ramping will end|
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -102,10 +103,9 @@ def ramp_A_gamma(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -113,14 +113,13 @@ def ramp_A_gamma(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `stop_ramp_A_gamma`
-:::description[`CryptoSwap.stop_ramp_A_gamma():`]
+::::description[`CryptoSwap.stop_ramp_A_gamma():`]
 
 
 :::guard[Guarded Method]
@@ -134,8 +133,7 @@ Function to immediately stop ramping A and gamma parameters and set them to the 
 
 Emits: `StopRampA`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -166,10 +164,9 @@ def stop_ramp_A_gamma():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -177,14 +174,15 @@ def stop_ramp_A_gamma():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Changing Parameters**### `commit_new_parameters`
-:::description[`CryptoSwap.commit_new_parameters(_new_mid_fee: uint256, _new_out_fee: uint256, _new_fee_gamma: uint256, _new_allowed_extra_profit: uint256, _new_adjustment_step: uint256, _new_ma_time: uint256):`]
+## **Changing Parameters**
+
+### `commit_new_parameters`
+::::description[`CryptoSwap.commit_new_parameters(_new_mid_fee: uint256, _new_out_fee: uint256, _new_fee_gamma: uint256, _new_allowed_extra_profit: uint256, _new_adjustment_step: uint256, _new_ma_time: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -207,8 +205,7 @@ Emits: `CommitNewParameters`
 | `_new_adjustment_step` | `uint256` |new `adjustment_step` value |
 | `_new_ma_time` | `uint256` | new `ma_time` value |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -314,10 +311,9 @@ def commit_new_parameters(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -325,22 +321,20 @@ def commit_new_parameters(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `apply_new_parameters` 
-:::description[`CryptoSwap.apply_new_parameters()`]
+::::description[`CryptoSwap.apply_new_parameters()`]
 
 
 Function to apply the parameters from [`commit_new_parameters`](#commit_new_parameters).
 
 Emits: `NewParameters`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -391,10 +385,9 @@ def apply_new_parameters():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -402,14 +395,13 @@ def apply_new_parameters():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `revert_new_parameters`
-:::description[`CryptoSwap.revert_new_parameters() -> address: view`]
+::::description[`CryptoSwap.revert_new_parameters() -> address: view`]
 
 
 :::guard[Guarded Method]
@@ -421,8 +413,7 @@ This function is only callable by the `admin` of the Factory contract.
 
 Function to revert the parameters changes.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -438,10 +429,9 @@ def revert_new_parameters():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -449,22 +439,20 @@ def revert_new_parameters():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `admin_actions_deadline`
-:::description[`CryptoSwap.admin_actions_deadline() -> uint256: view`]
+::::description[`CryptoSwap.admin_actions_deadline() -> uint256: view`]
 
 
 Getter for the admin actions deadline. This is the deadline until which new parameter changes can be applied. When committing new changes, there is a three-day timespan to apply them (`ADMIN_ACTIONS_DELAY`). If called later, the call will revert.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -474,10 +462,9 @@ ADMIN_ACTIONS_DELAY: constant(uint256) = 3 * 86400
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -486,22 +473,20 @@ ADMIN_ACTIONS_DELAY: constant(uint256) = 3 * 86400
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `initial_A_gamma`
-:::description[`CryptoSwap.initial_A_gamma() -> uint256: view`]
+::::description[`CryptoSwap.initial_A_gamma() -> uint256: view`]
 
 
 Getter for the initial A/gamma.
 
 Returns: A/gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -509,10 +494,9 @@ initial_A_gamma: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -521,22 +505,20 @@ initial_A_gamma: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `initial_A_gamma_time`
-:::description[`CryptoSwap.initial_A_gamma_time() -> uint256: view`]
+::::description[`CryptoSwap.initial_A_gamma_time() -> uint256: view`]
 
 
 Getter for the initial A/gamma time.
 
 Returns: A/gamma time (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -544,10 +526,9 @@ initial_A_gamma_time: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -556,22 +537,20 @@ initial_A_gamma_time: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_A_gamma`
-:::description[`CryptoSwap.future_A_gamma() -> uint256: view`]
+::::description[`CryptoSwap.future_A_gamma() -> uint256: view`]
 
 
 Getter for the future A/gamma.
 
 Returns: future A/gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -579,10 +558,9 @@ future_A_gamma: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -591,22 +569,20 @@ future_A_gamma: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_A_gamma_time`
-:::description[`CryptoSwap.future_A_gamma_time() -> uint256: view`]
+::::description[`CryptoSwap.future_A_gamma_time() -> uint256: view`]
 
 
 Getter for the future A/gamma time.
 
 Returns: future A/gamma time (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -614,10 +590,9 @@ future_A_gamma_time: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -626,8 +601,7 @@ future_A_gamma_time: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

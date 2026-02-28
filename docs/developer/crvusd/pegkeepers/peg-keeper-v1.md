@@ -1,4 +1,8 @@
-## **Concept of PegKeepers**PegKeepers are contracts that help stabilize the peg of crvUSD. Each Keeper is allocated a specific amount of crvUSD to secure the peg. 
+# PegKeeperV1
+
+## **Concept of PegKeepers**
+
+PegKeepers are contracts that help stabilize the peg of crvUSD. Each Keeper is allocated a specific amount of crvUSD to secure the peg. 
 The DAO decides this balance and can be **raised or lowered**by calling `set_debt_ceiling()` in the [Factory](../factory/overview.md).
 
 
@@ -22,15 +26,17 @@ Source code for this contract is available on [Github](https://github.com/curvef
 
 | PegKeepers                | Deployment Address  |
 | ------------------------- | ------------------- |
-|`PegKeeper for crvUSD/USDC`|[0xaA346781dDD7009caa644A4980f044C50cD2ae22](https://etherscan.io/address/0xaA346781dDD7009caa644A4980f044C50cD2ae22#code)|
-|`PegKeeper for crvUSD/USDT`|[0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8](https://etherscan.io/address/0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8#code)|
-|`PegKeeper for crvUSD/USDP`|[0x6B765d07cf966c745B340AdCa67749fE75B5c345](https://etherscan.io/address/0x6B765d07cf966c745B340AdCa67749fE75B5c345#code)|
-|`PegKeeper for crvUSD/TUSD`|[0x1ef89Ed0eDd93D1EC09E4c07373f69C49f4dcCae](https://etherscan.io/address/0x1ef89Ed0eDd93D1EC09E4c07373f69C49f4dcCae#code)|
+|`PegKeeper for crvusd/USDC`|[0xaA346781dDD7009caa644A4980f044C50cD2ae22](https://etherscan.io/address/0xaA346781dDD7009caa644A4980f044C50cD2ae22#code)|
+|`PegKeeper for crvusd/USDT`|[0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8](https://etherscan.io/address/0xE7cd2b4EB1d98CD6a4A48B6071D46401Ac7DC5C8#code)|
+|`PegKeeper for crvusd/USDP`|[0x6B765d07cf966c745B340AdCa67749fE75B5c345](https://etherscan.io/address/0x6B765d07cf966c745B340AdCa67749fE75B5c345#code)|
+|`PegKeeper for crvusd/TUSD`|[0x1ef89Ed0eDd93D1EC09E4c07373f69C49f4dcCae](https://etherscan.io/address/0x1ef89Ed0eDd93D1EC09E4c07373f69C49f4dcCae#code)|
 
 
 :::
 
-## **Stabilisation Method**The most important function in the PegKeeper contract is the `update()` function. When invoked, the PegKeeper either mints and single-sidedly deposits crvUSD into the StableSwap pool, or it withdraws crvUSD from the pool by redeeming the LP tokens received from previous deposits.
+## **Stabilisation Method**
+
+The most important function in the PegKeeper contract is the `update()` function. When invoked, the PegKeeper either mints and single-sidedly deposits crvUSD into the StableSwap pool, or it withdraws crvUSD from the pool by redeeming the LP tokens received from previous deposits.
 
 - **Deposit and Mint:**This mechanism is triggered when the *price of crvUSD > 1*. Minting and depositing into the pool will increase the crvUSD supply and decrease its price. The LP tokens that the PegKeeper receives when depositing crvUSD into the pool are not staked in the gauge (if the pool has one), which means the PegKeeper does not receive CRV inflation rewards.
 
@@ -40,7 +46,7 @@ PegKeepers have unlimited approval for the liquidity pool, allowing them to depo
 
 
 ### `update`
-:::description[`PegKeeper.update(_beneficiary: address = msg.sender) -> uint256:`]
+::::description[`PegKeeper.update(_beneficiary: address = msg.sender) -> uint256:`]
 
 
 Function to either **mint and deposit**or **withdraw and burn**based on the balances within the pools.  
@@ -191,8 +197,7 @@ def _withdraw(_amount: uint256):
 
 </details>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -200,22 +205,20 @@ def _withdraw(_amount: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_change`
-:::description[`PegKeeper.last_change() -> uint256: view`]
+::::description[`PegKeeper.last_change() -> uint256: view`]
 
 
 Function which retrieves the timestamp of when the balances of the PegKeeper were last altered. This variable is updated each time `update()` (`_provide` or `_withdraw`) is called. This variable is of importance for `update()`, as there is a mandatory delay of 15 * 60 seconds before the function can be called again.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -223,10 +226,9 @@ last_change: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -235,30 +237,28 @@ last_change: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Calculating and Withdrawing Profits**### `calc_profit` 
-:::description[`PegKeeper.calc_profit() -> uint256:`]
+## **Calculating and Withdrawing Profits**
+
+### `calc_profit` 
+::::description[`PegKeeper.calc_profit() -> uint256:`]
 
 
 Function to calculate the generated profit in LP tokens.
 
 Returns: generated profit (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
 PRECISION: constant(uint256) = 10 **18
 # Calculation error for profit
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 PROFIT_THRESHOLD: constant(uint256) = 10 **18
 
@@ -286,10 +286,9 @@ def calc_profit() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -298,14 +297,13 @@ def calc_profit() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `estimate_caller_profit`
-:::description[`PegKeeper.estimate_caller_profit() -> uint256:`]
+::::description[`PegKeeper.estimate_caller_profit() -> uint256:`]
 
 
 Function to estimate the profit from calling `update()`. The caller of the function will receive 20% of the total profits. 
@@ -319,8 +317,7 @@ Please note that this method provides an estimate and may not reflect the precis
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -366,10 +363,9 @@ def estimate_caller_profit() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -378,22 +374,20 @@ def estimate_caller_profit() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `caller_share`
-:::description[`PegKeeper.caller_share() -> uint256: view`]
+::::description[`PegKeeper.caller_share() -> uint256: view`]
 
 
 Getter for the caller share which is the share of the profit generated when calling the `update()` function. The share is intended to incentivize the call of the function. The precision of the variable is set to $10^5$.
 
 Returns: caller share (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -438,10 +432,9 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -450,14 +443,13 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_new_caller_share`
-:::description[`PegKeeper.set_new_caller_share(_new_caller_share: uint256):`]
+::::description[`PegKeeper.set_new_caller_share(_new_caller_share: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -475,8 +467,7 @@ Emits: `SetNewCallerShare`
 | ----------- | -------| ----|
 | `_new_caller_share` |  `uint256` | New caller share |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -503,10 +494,9 @@ def set_new_caller_share(_new_caller_share: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -514,14 +504,13 @@ def set_new_caller_share(_new_caller_share: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `withdraw_profit`
-:::description[`PegKeeper.withdraw_profit() -> uint256:`]
+::::description[`PegKeeper.withdraw_profit() -> uint256:`]
 
 
 Function to withdraw the profit generated by the PegKeeper.
@@ -530,8 +519,7 @@ Returns: amount of LP tokens (`uint256`).
 
 Emits: `Profit`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -554,10 +542,9 @@ def withdraw_profit() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -566,26 +553,26 @@ def withdraw_profit() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Admin and Receiver**PegKeepers have an `admin` and a `receiver`. Both of these variables can be changed by calling the respective admin-guarded functions, but such changes must first be approved by a DAO vote.  
+## **Admin and Receiver**
+
+PegKeepers have an `admin` and a `receiver`. Both of these variables can be changed by calling the respective admin-guarded functions, but such changes must first be approved by a DAO vote.  
 After approval, the newly designated admin or receiver is required to apply these changes within a timeframe of `3 * 86400` seconds, which equates to a timespan of *three days*. Should there be an attempt to implement these changes after this period, the function will revert.
 
 
 ### `admin`
-:::description[`PegKeeper.admin() -> address: view`]
+::::description[`PegKeeper.admin() -> address: view`]
 
 
 Getter for the admin of the PegKeeper.
 
 Returns: admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -611,10 +598,9 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -623,22 +609,20 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_admin`
-:::description[`PegKeeper.future_admin() -> address: view`]
+::::description[`PegKeeper.future_admin() -> address: view`]
 
 
 Getter for the future admin of the PegKeeper.
 
 Returns: future admin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -646,10 +630,9 @@ future_admin: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -658,14 +641,13 @@ future_admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `commit_new_admin`
-:::description[`PegKeeper.commit_new_admin(_new_admin: address):`]
+::::description[`PegKeeper.commit_new_admin(_new_admin: address):`]
 
 
 :::guard[Guarded Method]
@@ -683,8 +665,7 @@ Emits: `CommitNewAdmin`
 | ----------- | -------| ----|
 | `_new_admin` |  `address` | new admin address |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -709,10 +690,9 @@ def commit_new_admin(_new_admin: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -720,14 +700,13 @@ def commit_new_admin(_new_admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `apply_new_admin`
-:::description[`PegKeeper.apply_new_admin():`]
+::::description[`PegKeeper.apply_new_admin():`]
 
 
 :::guard[Guarded Method]
@@ -741,8 +720,7 @@ Function to apply the new admin of the PegKeeper.
 
 Emits: `ApplyNewAdmin`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -768,10 +746,9 @@ def apply_new_admin():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -779,22 +756,20 @@ def apply_new_admin():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `new_admin_deadline`
-:::description[`PegKeeper.new_admin_deadline() -> uint256: view`]
+::::description[`PegKeeper.new_admin_deadline() -> uint256: view`]
 
 
 Getter for the timestamp indicating the deadline by which the `future_admin` can apply the admin change. Once the deadline is over, the address will no longer be able to apply the changes. The deadline is set for a **timeperiod of three days**.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -802,10 +777,9 @@ new_admin_deadline: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -814,22 +788,20 @@ new_admin_deadline: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `receiver`
-:::description[`PegKeeper.receiver() -> address: view`]
+::::description[`PegKeeper.receiver() -> address: view`]
 
 
 Getter for the receiver of the PegKeeper's profits.
 
 Returns: receiver (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -856,10 +828,9 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -868,22 +839,20 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_receiver`
-:::description[`PegKeeper.future_receiver() -> address: view`]
+::::description[`PegKeeper.future_receiver() -> address: view`]
 
 
 Getter for the future receiver of the PegKeeper's profit.
 
 Returns: future receiver (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -891,10 +860,9 @@ future_admin: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -903,14 +871,13 @@ future_admin: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `commit_new_receiver`
-:::description[`PegKeeper.commit_new_receiver(_new_receiver: address):`]
+::::description[`PegKeeper.commit_new_receiver(_new_receiver: address):`]
 
 
 :::guard[Guarded Method]
@@ -928,8 +895,7 @@ Emits: `CommitNewReceiver`
 | ----------- | -------| ----|
 | `_new_receiver` |  `address` | new receiver address | 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -954,10 +920,9 @@ def commit_new_receiver(_new_receiver: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -965,22 +930,20 @@ def commit_new_receiver(_new_receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `apply_new_receiver`
-:::description[`PegKeeper.apply_new_receiver():`]
+::::description[`PegKeeper.apply_new_receiver():`]
 
 
 Function to apply the new receiver address of the PegKeeper's profit.
 
 Emits: `ApplyNewReceiver`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1004,10 +967,9 @@ def apply_new_receiver():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1015,22 +977,20 @@ def apply_new_receiver():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `new_receiver_deadline`
-:::description[`PegKeeper.new_receiver_deadline() -> uint256: view`]
+::::description[`PegKeeper.new_receiver_deadline() -> uint256: view`]
 
 
 Getter for the timestamp indicating the deadline by which the `future_receiver` can apply the receiver change. Once the deadline is over, the address will no longer be able to apply the changes. The deadline is set for a **timeperiod of three days**.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1038,10 +998,9 @@ new_receiver_deadline: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1050,14 +1009,13 @@ new_receiver_deadline: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `revert_new_option`
-:::description[`PegKeeper.revert_new_options():`]
+::::description[`PegKeeper.revert_new_options():`]
 
 
 :::guard[Guarded Method]
@@ -1071,8 +1029,7 @@ Function to revert admin or receiver changes. Calling this function sets the adm
 
 Emits: `ApplyNewAdmin` and `ApplyNewReceiver`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1099,10 +1056,9 @@ def revert_new_options():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1110,22 +1066,22 @@ def revert_new_options():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Contract Info Methods**### `debt`
-:::description[`PegKeeper.debt() -> uint256: view`]
+## **Contract Info Methods**
+
+### `debt`
+::::description[`PegKeeper.debt() -> uint256: view`]
 
 
 Getter for the crvUSD debt of the PegKeeper. When the PegKeeper deposits crvUSD into the pool, the debt is incremented by the deposited amount. Conversely, if the PegKeeper withdraws, the debt is reduced by the withdrawn amount. `debt` is used to calculate the DebtFraction of the PegKeepers.
 
 Returns: debt (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1133,10 +1089,9 @@ debt: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1145,22 +1100,20 @@ debt: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `FACTORY`
-:::description[`PegKeeper.FACTORY() -> address: view`]
+::::description[`PegKeeper.FACTORY() -> address: view`]
 
 
 Getter for the address of the factory contract.
 
 Returns: factory contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1186,10 +1139,9 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1198,22 +1150,20 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `PEGGED`
-:::description[`PegKeeper.PEGGED() -> address: view`]
+::::description[`PegKeeper.PEGGED() -> address: view`]
 
 
 Getter for the address of the pegged token (crvUSD). Pegged asset is determined by the index of the token in the corresponding `pool`. Index value is stored in `I`.
 
 Returns: pegged token contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper 
@@ -1239,10 +1189,9 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1251,22 +1200,20 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `POOL`
-:::description[`PegKeeper.POOL() -> address: view`]
+::::description[`PegKeeper.POOL() -> address: view`]
 
 
 Getter for the pool contract address in which the PegKeeper deposits and withdraws.
 
 Returns: pool contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1292,10 +1239,9 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1304,22 +1250,20 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `AGGREGATOR`
-:::description[`PegKeeper.AGGREGATOR() -> address: view`]
+::::description[`PegKeeper.AGGREGATOR() -> address: view`]
 
 
 Getter for the price aggregator contract for crvUSD. This contract is used to determine the value of crvUSD.
 
 Returns: price aggregator contract (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1345,10 +1289,9 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1357,8 +1300,7 @@ def __init__(_pool: CurvePool, _index: uint256, _receiver: address, _caller_shar
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

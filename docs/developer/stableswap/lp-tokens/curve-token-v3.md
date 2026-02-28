@@ -1,5 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The Curve Token V3 is more gas efficient than versions 1 and 2. The implementation for a Curve Token V3 may be viewed on 
 [GitHub](https://github.com/curvefi/curve-contract/blob/master/contracts/tokens/CurveTokenV3.vy).
@@ -16,7 +14,7 @@ Compared to the Curve Token V2 API, there have been the following changes:
 
 ### `CurveToken.increaseAllowance`
 
-:::description[`CurveToken.increaseAllowance(_spender: address, _added_value: uint256) → bool`]
+::::description[`CurveToken.increaseAllowance(_spender: address, _added_value: uint256) → bool`]
 
 
 Increase the allowance granted to `_spender` by the `msg.sender`.
@@ -31,8 +29,7 @@ if success.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Approval</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -74,10 +71,9 @@ def increaseAllowance(_spender: address, _added_value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -86,15 +82,14 @@ todo: ""
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CurveToken.decreaseAllowance`
 
-:::description[`CurveToken.decreaseAllowance(_spender: address, _subtracted_value: uint256) → bool`]
+::::description[`CurveToken.decreaseAllowance(_spender: address, _subtracted_value: uint256) → bool`]
 
 
 Decrease the allowance granted to `_spender` by the `msg.sender`.
@@ -109,8 +104,7 @@ if success.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Approval</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -152,10 +146,9 @@ def decreaseAllowance(_spender: address, _subtracted_value: uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -163,8 +156,7 @@ def decreaseAllowance(_spender: address, _subtracted_value: uint256) -> bool:
 todo: ""
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

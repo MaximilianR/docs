@@ -1,3 +1,5 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
+
 # Curve Crosschain Gauges
 Due to the x-chain gauge system, Curve allows to deploy liquidity gauges on alternate chains which are eligible for receiving CRV emissions and boosts.
 
@@ -10,55 +12,55 @@ In order for a sidechain gauge to receive CRV emissions, the system uses a two-g
 ---
 
 
-# **Smart Contracts**The cross-chain gauge factory requires components to be deployed both on Ethereum and on an alternate EVM compatible network.
+## **Smart Contracts**
+
+The cross-chain gauge factory requires components to be deployed both on Ethereum and on an alternate EVM compatible network.
 
 
--   :logos-vyper: **RootGaugeFactory**---
+<DocCardGrid>
+  <DocCard title="RootGaugeFactory.vy" icon="vyper" link="./root-gauge-factory" linkText="RootGaugeFactory.vy">
 
-    This is the main contract for deploying root gauges on Ethereum. It also serves as a registry for finding deployed gauges and the bridge wrapper contracts used to bridge CRV emissions to alternate chains.
+Main contract for deploying root gauges on Ethereum. Also serves as a registry for finding deployed gauges and the bridge wrapper contracts used to bridge CRV emissions to alternate chains.
 
-    [→ `RootGaugeFactory.vy`](./RootGaugeFactory.md)
+  </DocCard>
+  <DocCard title="ChildGaugeFactory.vy" icon="vyper" link="./child-gauge-factory" linkText="ChildGaugeFactory.vy">
 
--   :logos-vyper: **ChildGaugeFactory**---
+Main contract for deploying child gauges on alternate chains. Also serves as a registry for finding deployed gauges and as a pseudo CRV minter where users can claim CRV emissions.
 
-    This is the main contract for deploying child gauges on alternate chains. This contract also serves as a registry for finding deployed gauges and as a psuedo CRV minter where users can claim CRV emissions they are entitled to from LPing.
+  </DocCard>
+  <DocCard title="RootGauge.vy" icon="vyper" link="./root-gauge" linkText="RootGauge.vy">
 
-    [→ `ChildGaugeFactory.vy`](./ChildGaugeFactory.md)
+The implementation used for root gauges deployed on Ethereum.
 
--   :logos-vyper: **RootGauge**---
+  </DocCard>
+  <DocCard title="ChildGauge.vy" icon="vyper" link="./child-gauge" linkText="ChildGauge.vy">
 
-    This is the implementation used for root gauges deployed on Ethereum.
+The implementation used for child gauges deployed on alternate chains.
 
-    [→ `RootGauge.vy`](./RootGauge.md)
+  </DocCard>
+  <DocCard title="Bridgers.vy" icon="vyper" link="./bridgers" linkText="Bridgers.vy">
 
--   :logos-vyper: **ChildGauge**---
+Contracts used to bridge CRV emissions across chains. Bridge wrappers adhere to a specific interface and allow for a modular bridging system.
 
-    This is the implementation used for child gauges deployed on alternate chains.
+  </DocCard>
+  <DocCard title="Updater.vy" icon="vyper" link="../boosting-sidechains/updater" linkText="Updater.vy">
 
-    [→ `ChildGauge.vy`](./ChildGauge.md)
+Contract used to transmit veCRV information across chains to a `L2 VotingEscrow Oracle`.
 
--   :logos-vyper: **Bridgers**---
+  </DocCard>
+  <DocCard title="L2 VotingEscrow Oracle" icon="vyper" link="../boosting-sidechains/l2-voting-escrow-oracle" linkText="L2 VotingEscrow Oracle">
 
-    These contracts are used to bridge CRV emissions across chains. Due to the increasing number of networks Curve deploys to, bridge wrappers adhere to a specific interface and allow for a modular bridging system.
+Contract used to store veCRV information on child chains.
 
-    [→ `Bridgers.vy`](./Bridgers.md)
-
--   :logos-vyper: **Updater**---
-
-    This contract is used to transmit veCRV information across chains to a `L2 VotingEscrow Oracle`.
-
-    [→ `Updater.vy`](../boosting-sidechains/Updater.md)
-
--   :logos-vyper: **L2 VotingEscrow Oracle**---
-
-    This contract is used to store veCRV information on child chains.
-
-    [→ `L2 VotingEscrow Oracle.vy`](../boosting-sidechains/L2VotingEscrowOracle.md)
+  </DocCard>
+</DocCardGrid>
 
 
 ---
 
-# **Boosting on Sidechains**Before reading this section, it is recommended to understand how boosting works in general.
+## **Boosting on Sidechains**
+
+Before reading this section, it is recommended to understand how boosting works in general.
 
 :::warning[Crosschain Boosts]
 
@@ -169,7 +171,9 @@ def update(_user: address = msg.sender, _gas_limit: uint32 = 0):
 
 ---
 
-# **Deploying a Sidechain Gauge**A sidechain gauge can be deployed by calling the `deploy_gauge` function of the `ChildGaugeFactory` on the respective chain. This creates a minimal proxy using Vyper’s built-in [`create_from_minimal_proxy`](https://docs.vyperlang.org/en/stable/built-in-functions.html#create_minimal_proxy_to) function, which points to the `ChildGauge` implementation and initializes the `ChildGauge` with the provided parameters, such as LP token, salt, and manager.
+## **Deploying a Sidechain Gauge**
+
+A sidechain gauge can be deployed by calling the `deploy_gauge` function of the `ChildGaugeFactory` on the respective chain. This creates a minimal proxy using Vyper’s built-in [`create_from_minimal_proxy`](https://docs.vyperlang.org/en/stable/built-in-functions.html#create_minimal_proxy_to) function, which points to the `ChildGauge` implementation and initializes the `ChildGauge` with the provided parameters, such as LP token, salt, and manager.
 
 :::info[Deploying a RootGauge AFTER deploying a ChildGauge]
 
@@ -184,7 +188,9 @@ It does not matter if a root gauge is deployed before or after the child gauge. 
 Additionally, a sidechain gauge can also be deployed directly from the `RootGaugeFactory` on Ethereum. This is achieved using a `call_proxy`, which acts as an intermediary contract to facilitate cross-chain calls. **Currently, this feature is not enabled, and the `call_proxy` contract has not been set.**---
 
 
-# **Killing Sidechain Gauges**Killing a gauge essentially means cutting off all CRV emissions to the gauge by setting the inflation rate to 0.
+## **Killing Sidechain Gauges**
+
+Killing a gauge essentially means cutting off all CRV emissions to the gauge by setting the inflation rate to 0.
 
 Although each sidechain gauge has an `is_killed` variable and a `set_killed` function to modify its killed status, these do not affect the gauge directly. To kill sidechain gauges, the root gauge must be killed. This is done by setting the `is_killed` variable to `True` by calling the `set_killed` function. Only the `owner`, which is controlled by the CurveDAO and the EmergencyDAO of the `RootGaugeFactory`, can call this function.[^1]
 

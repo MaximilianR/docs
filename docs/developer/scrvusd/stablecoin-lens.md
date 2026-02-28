@@ -1,13 +1,9 @@
 # StablecoinLens
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 
 The `StablecoinLens` contract calculates the accurate circulating supply of crvUSD by summing the debt of all `PegKeepers` and the total debt of all `Controllers`. This approach is necessary because simply calling `crvUSD.totalSupply()` returns an inflated number, as it includes idle crvUSD in `PegKeepers`, unborrowed crvUSD in `Controllers`, and crvUSD allocated to the `FlashLender` or other venues.
 
-<details open>
-<summary>`StablecoinLens.vy`</summary>
+:::vyper[`StablecoinLens.vy`]
 
 The source code for the `StablecoinLens.vy` contract is available on [ GitHub](https://github.com/curvefi/scrvusd/blob/main/contracts/StablecoinLens.vy). The contract is written using [Vyper](https://vyperlang.org/) version `~=0.4`.
 
@@ -15,8 +11,7 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0xe24e2db9f6bb40bbe7c
 
 The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The audit report is available on [ GitHub](https://github.com/curvefi/scrvusd/blob/main/audits/ChainSecurity_Curve_scrvUSD_audit.pdf).
 
-
-</details>
+:::
 
 :::danger[Warning: Usage of `StablecoinLens.vy` contract]
 
@@ -24,12 +19,14 @@ In theory, the calculation of the true circulating supply of crvUSD could be man
 
 Ultimately, as this calculation is a moving average, successful manipulation would require repeated MEV actions over multiple snapshots to have a substantial impact.
 
-**Nontheless, the contract should not be used by third parties before consulting with the Curve team.**:::
+**Nontheless, the contract should not be used by third parties before consulting with the Curve team.**
+
+:::
 
 ---
 
 ### `circulating_supply`
-:::description[`StablecoinLens.circulating_supply() -> uint256`]
+::::description[`StablecoinLens.circulating_supply() -> uint256`]
 
 
 Function to compute the true circulating supply of crvUSD. Calling `totalSupply` directly returns an inflated figure, as it includes idle crvUSD in `PegKeepers`, unborrowed crvUSD in `Controllers`, and crvUSD allocated to the `FlashLender` contract. The true circulating supply is calculated by summing the debt of all `PegKeepers` and the total debt of each `Controller` in the factory.
@@ -44,15 +41,9 @@ Function to compute the true circulating supply of crvUSD. Calling `totalSupply`
 
 Returns: true circulating supply of crvUSD (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="stablecoinlens-vy" label="StablecoinLens.vy">
-
-
-```python
+```vyper
 # pragma version ~=0.4
 
 from interfaces import IPegKeeper
@@ -131,112 +122,6 @@ def _circulating_supply() -> uint256:
     return circulating_supply
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="ipegkeeper-vy" label="IPegKeeper.vy">
-
-
-```python
-# pragma version ~=0.4.0
-
-
-@view
-@external
-def debt() -> uint256:
-    ...
-```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="icontroller-vy" label="IController.vy">
-
-
-```python
-# pragma version ~=0.4.0
-
-import IMonetaryPolicy
-
-
-@view
-@external
-def total_debt() -> uint256:
-    ...
-
-
-@view
-@external
-def monetary_policy() -> IMonetaryPolicy:
-    ...
-```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="icontrollerfactory-vy" label="IControllerFactory.vy">
-
-
-```python
-# pragma version ~=0.4.0
-
-import IController
-
-
-@external
-@view
-def controllers(i: uint256) -> IController:
-    ...
-
-
-@external
-@view
-def n_collaterals() -> uint256:
-    ...
-```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="imonetarypolicy-vy" label="IMonetaryPolicy.vy">
-
-
-```python
-# pragma version ~=0.4.0
-
-import IPegKeeper
-
-
-@view
-@external
-def peg_keepers(i: uint256) -> IPegKeeper:
-    ...
-```
-
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
-
-
-
-
-</TabItem>
-</Tabs>
-
-
-:::
+::::

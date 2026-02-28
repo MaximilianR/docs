@@ -11,7 +11,7 @@ Curve Factory contracts, which allow the permissionless deployment of pools and 
 
 :::deploy[Contract Source & Deployment]
 
-The MetaRegistry is deployed across multiple networks. A full list of deployments can be found [here](../references/deployed-contracts.md#metaregistry).
+The MetaRegistry is deployed across multiple networks. A full list of deployments can be found [here](../deployments.md).
 
 The source code is available on [ GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/mainnet/MetaRegistry.vy).
 
@@ -45,12 +45,16 @@ If a ChildRegistry already meets these standards, it does not require a handler.
 
 ---
 
-## **Who should use the MetaRegistry?**Integrators often find it challenging to incorporate a protocol into their dapp when multiple on-chain registries are stored in separate contracts. They lack intrinsic, protocol-level knowledge to handle edge cases and onboard various registries. A single source that aggregates all registries can simplify integrations significantly.  
+## **Who should use the MetaRegistry?**
+
+Integrators often find it challenging to incorporate a protocol into their dapp when multiple on-chain registries are stored in separate contracts. They lack intrinsic, protocol-level knowledge to handle edge cases and onboard various registries. A single source that aggregates all registries can simplify integrations significantly.  
 
 *If you're an integrator looking to integrate Curve, the MetaRegistry is an invaluable resource.*
 
 
-## **Setup**Set up the python environment using the following steps: Please visit [Github](https://github.com/curvefi/metaregistry) for more details.
+## **Setup**
+
+Set up the python environment using the following steps: Please visit [Github](https://github.com/curvefi/metaregistry) for more details.
 
 ```
 > python -m venv venv
@@ -80,13 +84,17 @@ hardhat:
 
 :::
 
-## **Testing**To run tests in interactive mode, please do the following:  
+## **Testing**
+
+To run tests in interactive mode, please do the following:  
 
 ```shell
 > ape test -I -s
 ```
 
-## **Deployment**First, set up your account in Ape. If you're using an EOA that is a cold wallet, do:
+## **Deployment**
+
+First, set up your account in Ape. If you're using an EOA that is a cold wallet, do:
 
 ```shell
 > ape accounts import <alias>

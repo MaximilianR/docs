@@ -1,14 +1,12 @@
 # Pool Factory: Overview
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-The TwoCrypto-NG Factory allows the permissionless deployment of two-coin volatile asset pools, as well as gauges. **The liquidity pool and LP token share the same contract.**Additionally, the Factory contract is the direct admin and fee receiver of all pools. In turn, the Factory is controlled by the CurveDAO.
+The Twocrypto-NG Factory allows the permissionless deployment of two-coin volatile asset pools, as well as gauges. **The liquidity pool and LP token share the same contract.**Additionally, the Factory contract is the direct admin and fee receiver of all pools. In turn, the Factory is controlled by the CurveDAO.
 
 :::deploy[Contract Source & Deployment]
 
 Source code for the Factory is available on [Github](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/CurveTwocryptoFactory.vy).   
-A full list of all deployments can be found [here](../../references/deployed-contracts.md#twocrypto-ng).
+A full list of all deployments can be found [here](../../deployments.md).
 
 
 :::
@@ -16,7 +14,9 @@ A full list of all deployments can be found [here](../../references/deployed-con
 ---
 
 
-## **Implementations**The TwoCrypto-NG Factory makes use of **blueprint contracts**([EIP-5202](https://eips.ethereum.org/EIPS/eip-5202)) to deploy liquidity pools and gauges.
+## **Implementations**
+
+The Twocrypto-NG Factory makes use of **blueprint contracts**([EIP-5202](https://eips.ethereum.org/EIPS/eip-5202)) to deploy liquidity pools and gauges.
 
 :::warning
 
@@ -32,11 +32,13 @@ It utilizes four different implementations:
 - **`views_implementation`**, containing a view methods contract relevant for integrators and users looking to interact with the AMMs.
 - **`math_implementation`**, containing math functions used in the AMM.
 
-*More on the [**Math Implementation**](../../cryptoswap-exchange/twocrypto-ng/utility-contracts/math.md) and [**Views Implementation**](../../cryptoswap-exchange/twocrypto-ng/utility-contracts/views.md).*
+*More on the [**Math Implementation**](../../twocrypto-ng/utility-contracts/math.md) and [**Views Implementation**](../../twocrypto-ng/utility-contracts/views.md).*
 
 
-## **Query Implementations**### `pool_implementations`
-:::description[`Factory.pool_implementations(arg0: uint256) -> address: view`]
+## **Query Implementations**
+
+### `pool_implementations`
+::::description[`Factory.pool_implementations(arg0: uint256) -> address: view`]
 
 
 Getter for the pool implementation at index `arg0`.
@@ -47,27 +49,13 @@ Returns: Pool implementation (`address`).
 | ------ | --------- | -------------------------- |
 | `arg0` | `uint256` | Index of pool implementation |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 pool_implementations: public(HashMap[uint256, address])
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -76,41 +64,26 @@ pool_implementations: public(HashMap[uint256, address])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `gauge_implementation`
-:::description[`Factory.gauge_implementation() -> address: view`]
+::::description[`Factory.gauge_implementation() -> address: view`]
 
 
 Getter for the current gauge implementation. Only Ethereum mainnet has a valid gauge implementation; on other chains, the implementation is set to `ZERO_ADDRESS`, as sidechain gauges need to be deployed via the `RootChainGaugeFactory`.
 
 Returns: Gauge implementation (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 gauge_implementation: public(address)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -119,41 +92,26 @@ gauge_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `views_implementation`
-:::description[`Factory.views_implementation() -> address: view`]
+::::description[`Factory.views_implementation() -> address: view`]
 
 
 Getter for the current views contract implementation.
 
 Returns: Views contract implementation (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 views_implementation: public(address)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -162,41 +120,26 @@ views_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `math_implementation`
-:::description[`Factory.math_implementation() -> address: view`]
+::::description[`Factory.math_implementation() -> address: view`]
 
 
 Getter for the current math contract implementation.
 
 Returns: Math contract implementation (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 math_implementation: public(address)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -205,17 +148,16 @@ math_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## **Set New Implementations***New implementations can be set via the following admin-only functions:*
 
 
 ### `set_pool_implementation`
-:::description[`Factory.set_pool_implementation(_pool_implementation: address, _implementation_index: uint256):`]
+::::description[`Factory.set_pool_implementation(_pool_implementation: address, _implementation_index: uint256):`]
 
 
 :::guard[Guarded Method]
@@ -234,14 +176,7 @@ Emits: `UpdatePoolImplementation`
 | `_pool_implementation`   | `address` | New pool implementation       |
 | `_implementation_index`  | `uint256` | Index for the implementation  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 event UpdatePoolImplementation:
     _implemention_id: uint256
@@ -270,16 +205,9 @@ def set_pool_implementation(
 
     self.pool_implementations[_implementation_index] = _pool_implementation
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -287,14 +215,13 @@ def set_pool_implementation(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_gauge_implementation`
-:::description[`Factory.set_gauge_implementation(_gauge_implementation: address):`]
+::::description[`Factory.set_gauge_implementation(_gauge_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -312,14 +239,7 @@ Emits: `UpdateGaugeImplementation`
 | -------------------------- | --------- | -------------------------- |
 | `_gauge_implementation`    | `address` | New gauge implementation   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 event UpdateGaugeImplementation:
     _old_gauge_implementation: address
@@ -339,16 +259,9 @@ def set_gauge_implementation(_gauge_implementation: address):
     log UpdateGaugeImplementation(self.gauge_implementation, _gauge_implementation)
     self.gauge_implementation = _gauge_implementation
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -356,14 +269,13 @@ def set_gauge_implementation(_gauge_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_views_implementation`
-:::description[`Factory.set_views_implementation(_views_implementation: address):`]
+::::description[`Factory.set_views_implementation(_views_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -382,14 +294,7 @@ Emits: `UpdateViewsImplementation`
 | `_views_implementation` | `address` | New views contract implementation      |
 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 event UpdateViewsImplementation:
     _old_views_implementation: address
@@ -408,16 +313,9 @@ def set_views_implementation(_views_implementation: address):
     log UpdateViewsImplementation(self.views_implementation, _views_implementation)
     self.views_implementation = _views_implementation
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -425,14 +323,13 @@ def set_views_implementation(_views_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_math_implementation`
-:::description[`Factory.set_math_implementation(_math_implementation: address):`]
+::::description[`Factory.set_math_implementation(_math_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -450,14 +347,7 @@ Emits: `UpdateMathImplementation`
 | ----------------------- | --------- | ------------------------------------ |
 | `_math_implementation`  | `address` | New math contract implementation     |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 event UpdateMathImplementation:
     _old_math_implementation: address
@@ -476,16 +366,9 @@ def set_math_implementation(_math_implementation: address):
     log UpdateMathImplementation(self.math_implementation, _math_implementation)
     self.math_implementation = _math_implementation
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -493,28 +376,22 @@ def set_math_implementation(_math_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Fee Receiver**### `fee_receiver`
-:::description[`Factory.fee_receiver() -> address: view`]
+## **Fee Receiver**
+
+### `fee_receiver`
+::::description[`Factory.fee_receiver() -> address: view`]
 
 
 Getter for the fee receiver address of the admin fee. The fee receiver is initially set by calling the `initialize_ownership` function. It can later be changed via the `set_fee_receiver` method.
 
 Returns: fee receiver (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 fee_receiver: public(address)
 
@@ -530,16 +407,9 @@ def initialise_ownership(_fee_receiver: address, _admin: address):
     log UpdateFeeReceiver(empty(address), _fee_receiver)
     log TransferOwnership(empty(address), _admin)
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -548,14 +418,13 @@ def initialise_ownership(_fee_receiver: address, _admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_fee_receiver`
-:::description[`Factory.set_fee_receiver(_fee_receiver: address):`]
+::::description[`Factory.set_fee_receiver(_fee_receiver: address):`]
 
 
 :::guard[Guarded Method]
@@ -573,14 +442,7 @@ Emits: `UpdateFeeReceiver`
 | ------------------ | --------- | ---------------------------- |
 | `_fee_receiver`    | `uint256` | New fee receiver address     |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 event UpdateFeeReceiver:
     _old_fee_receiver: address
@@ -599,16 +461,9 @@ def set_fee_receiver(_fee_receiver: address):
     log UpdateFeeReceiver(self.fee_receiver, _fee_receiver)
     self.fee_receiver = _fee_receiver
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -616,8 +471,7 @@ def set_fee_receiver(_fee_receiver: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

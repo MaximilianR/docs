@@ -1,7 +1,5 @@
-# Controller.vy
+# Controller
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The Controller contract acts as a on-chain interface for **creating loans and further managing existing positions**. It holds all user debt information. External liquidations are also done through it.
 
@@ -43,11 +41,13 @@ The Controller contract acts as a on-chain interface for **creating loans and fu
 ---
 
 
-## **Creating and Repaying Loans**New loans are created via the **`ceate_loan`**function. When creating a loan the user needs to specify the **amount of collateral**, **debt**and the **number of bands**to deposit the collateral into. 
+## **Creating and Repaying Loans**
+
+New loans are created via the **`ceate_loan`**function. When creating a loan the user needs to specify the **amount of collateral**, **debt**and the **number of bands**to deposit the collateral into. 
 
 The maximum amount of borrowable debt is determined by the number of bands, the amount of collateral, and the oracle price.
 
-The loan-to-value (LTV) ratio depends on the number of bands `N` and the parameter `A`. The higher the number of bands, the lower the LTV. More on bands [here](../crvUSD/amm.md#bands).
+The loan-to-value (LTV) ratio depends on the number of bands `N` and the parameter `A`. The higher the number of bands, the lower the LTV. More on bands [here](../crvusd/amm.md#bands).
 
 $$LTV = \text\{100%\} - \text\{loan_discount\} - 100 * \frac\{N\}\{2*A\}$$
 
@@ -67,7 +67,7 @@ A simple notebook showcasing how to create a loan using `create_loan` and then h
 :::
 
 ### `create_loan`
-:::description[`Controller.create_loan(collateral: uint256, debt: uint256, N: uint256, _for: address = msg.sender)`]
+::::description[`Controller.create_loan(collateral: uint256, debt: uint256, N: uint256, _for: address = msg.sender)`]
 
 
 Function to create a new loan, requiring specification of the amount of `collateral` to be deposited into `N` bands and the amount of `debt` to be borrowed. The lower bands choosen, the higher the loss when the position is in soft-liquiation. Should there already be an existing loan, the function will revert. Before creating a loan, there is the option to set [`extra_health`](#extra_health) using [`set_extra_health`](#set_extra_health) which leads to a higher health when entering soft liquidation.
@@ -81,18 +81,10 @@ Emits: `UserState`, `Borrow`, `Deposit` and `Transfer`
 | `N`          | `uint256` | Number of bands to deposit into; must range between `MIN_TICKS` and `MAX_TICKS` |
 | `_for`       | `address` | Address to create the loan for (requires [`approval`](#approve)); only available in new implementation |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -158,13 +150,6 @@ self._save_rate()
 log UserState(msg.sender, collateral, debt, n1, n2, liquidation_discount)
 log Borrow(msg.sender, collateral, debt)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -256,23 +241,9 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```py
@@ -352,13 +323,6 @@ def _create_loan(collateral: uint256, debt: uint256, N: uint256, transfer_coins:
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Deposit:
     provider: indexed(address)
@@ -448,18 +412,9 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -474,17 +429,16 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `create_loan_extended`
-:::description[`Controller.create_loan_extended(collateral: uint256, debt: uint256, N: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
+::::description[`Controller.create_loan_extended(collateral: uint256, debt: uint256, N: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
 
 
-Function to create a new loan using callbacks. This function passes the stablecoin to a callback first, enabling the construction of leverage. Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/LeverageZap1inch.md#building-leverage). Before creating a loan, there is the option to set [`extra_health`](#extra_health) using [`set_extra_health`](#set_extra_health) which leads to a higher health when entering soft liquidation.
+Function to create a new loan using callbacks. This function passes the stablecoin to a callback first, enabling the construction of leverage. Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/leverage-zap-1inch.md#building-leverage). Before creating a loan, there is the option to set [`extra_health`](#extra_health) using [`set_extra_health`](#set_extra_health) which leads to a higher health when entering soft liquidation.
 
 Emits: `UserState`, `Borrow`, `Deposit`, and `Transfer`
 
@@ -494,22 +448,14 @@ Emits: `UserState`, `Borrow`, `Deposit`, and `Transfer`
 | `debt`          | `uint256`             | Amount of debt to take                               |
 | `N`             | `uint256`             | Number of bands to deposit into                      |
 | `callbacker`    | `address`             | Address of the callback contract                     |
-| `callback_args` | `DynArray[uint256,5]` | Extra arguments for the callback (up to 5), such as `min_amount`, etc. See [`LeverageZap1inch.vy`](./leverage/LeverageZap1inch.md) for more information |
+| `callback_args` | `DynArray[uint256,5]` | Extra arguments for the callback (up to 5), such as `min_amount`, etc. See [`LeverageZap1inch.vy`](./leverage/leverage-zap-1inch.md) for more information |
 | `callback_bytes` | `Bytes[10**4]`       | Callback bytes passed to the LeverageZap. Defaults to `b""` |
 | `_for`       | `address` | Address to create the loan for (requires [`approval`](#approve)); only available in new implementation |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/58289a4283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -596,13 +542,6 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Deposit:
     provider: indexed(address)
@@ -692,23 +631,9 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -839,13 +764,6 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Deposit:
     provider: indexed(address)
@@ -935,18 +853,9 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -954,14 +863,13 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `extra_health`
-:::description[`Controller.extra_health(arg0: address) -> uint256: view`]
+::::description[`Controller.extra_health(arg0: address) -> uint256: view`]
 
 
 :::warning
@@ -973,20 +881,12 @@ The mechanisms of `extra_health` were introduced in an improved version of LLAMM
 
 Getter for the extra health value for `arg0`. When setting extra health before creating a loan, a "health buffer" is added, which results in entering soft liquidation with more health. The `health` value when entering SL can be checked by using the [`health`](#health) function with using `bool = False`. 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -994,18 +894,9 @@ extra_health: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1022,14 +913,13 @@ extra_health: public(HashMap[address, uint256])
 ``` 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_extra_health`
-:::description[`Controller.set_extra_health(_value: uint256)`]
+::::description[`Controller.set_extra_health(_value: uint256)`]
 
 
 :::warning
@@ -1043,20 +933,12 @@ Function to set `_value` as extra health for a user. Doing so will add a buffer 
 
 Emits: `SetExtraHealth`
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -1077,18 +959,9 @@ def set_extra_health(_value: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1096,14 +969,13 @@ def set_extra_health(_value: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `approval`
-:::description[`Controller.approval(arg0: address, arg1: address) -> bool: view`]
+::::description[`Controller.approval(arg0: address, arg1: address) -> bool: view`]
 
 
 :::warning
@@ -1122,20 +994,12 @@ Returns: `True` or `False`.
 | `arg0` | `address` | Address for which a certain action is made |
 | `arg1` | `address` | Address which does certain actions         |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -1143,18 +1007,9 @@ approval: public(HashMap[address, HashMap[address, bool]])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1163,14 +1018,13 @@ False
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `approve`
-:::description[`Controller.approve(_spender: address, _allow: bool)`]
+::::description[`Controller.approve(_spender: address, _allow: bool)`]
 
 
 :::warning
@@ -1187,20 +1041,12 @@ Emits: `Approval`
 | `_spender` | `address` | Address to whitelist for the action |
 | `_allow`   | `bool`    | Allowance status: `True` or `False` |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -1228,18 +1074,9 @@ def _check_approval(_for: address) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 Example to approve `user1` to do certain actions for `user2`.
@@ -1249,14 +1086,13 @@ Example to approve `user1` to do certain actions for `user2`.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `max_borrowable`
-:::description[`Controller.max_borrowable(collateral: uint256, N: uint256, current_debt: uint256 = 0, user: address = empty(address)) -> uint256`]
+::::description[`Controller.max_borrowable(collateral: uint256, N: uint256, current_debt: uint256 = 0, user: address = empty(address)) -> uint256`]
 
 
 Function to calculate the maximum amount of crvUSD that can be borrowed against `collateral` using `N` bands. If the max borrowable amount exceeds the crvUSD balance of the controller, which essentially is what's left to be borrowed, it returns the amount that remains available for borrowing.
@@ -1270,18 +1106,10 @@ Returns: maximum borrowable amount (`uint256`).
 | `current_debt` | `uint256` | Current debt (if any) |
 | `user`   | `empty(address)` | User to calculate the value for; this input is only necessary for nonzero `extra_health` |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -1347,23 +1175,9 @@ def get_y_effective(collateral: uint256, N: uint256, discount: uint256) -> uint2
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -1443,18 +1257,9 @@ def get_y_effective(collateral: uint256, N: uint256, discount: uint256) -> uint2
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the maximum borrowable debt when using a defined amount of collateral and a specified number of bands. For instance, in the first case, using 1 BTC as collateral with 5 bands, a user can borrow up to approximately 37,965 crvUSD.
@@ -1468,14 +1273,13 @@ This example shows the maximum borrowable debt when using a defined amount of co
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `min_collateral`
-:::description[`Controller.min_collateral(debt: uint256, N: uint256, user: address = empty(address)) -> uint256`]
+::::description[`Controller.min_collateral(debt: uint256, N: uint256, user: address = empty(address)) -> uint256`]
 
 
 Function to calculate the minimum amount of collateral that is necessary to support `debt` using `N` bands.
@@ -1488,18 +1292,10 @@ Returns: minimal collateral required to support the give amount of debt (`uint25
 | `N`    | `uint256` | Number of bands used |
 | `user` | `empty(address)` | User to calculate the value for; this input is only necessary for nonzero `extra_health` |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -1552,23 +1348,9 @@ def get_y_effective(collateral: uint256, N: uint256, discount: uint256) -> uint2
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -1625,18 +1407,9 @@ def get_y_effective(collateral: uint256, N: uint256, discount: uint256) -> uint2
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the amount of collateral needed to support debt using different numbers of bands. The collateral in this example is BTC. For instance, in the first case, to support 10,000 crvUSD as debt using 5 bands, approximately 0.26 BTC is needed as collateral.
@@ -1650,14 +1423,13 @@ This example shows the amount of collateral needed to support debt using differe
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calculate_debt_n1`
-:::description[`Controller.calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256, user: address = empty(address)) -> int256`]
+::::description[`Controller.calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256, user: address = empty(address)) -> int256`]
 
 
 Getter method to calculate the upper band number for the deposited collateral to sit in to support the given debt. This call reverts if the requested debt is too high.
@@ -1671,18 +1443,10 @@ Returns: upper band n1 (`int256`) to deposit the collateral into.
 | `N`          | `uint256` | Number of bands to deposit into                |
 | `user`   | `empty(address)` | User to calculate the value for; this input is only necessary for nonzero `extra_health` |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -1750,23 +1514,9 @@ def _calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256) -> int256
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -1835,18 +1585,9 @@ def _calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256, user: add
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the upper band into which the collateral is deposited.
@@ -1860,14 +1601,13 @@ This example shows the upper band into which the collateral is deposited.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `repay`
-:::description[`Controller.repay(_d_debt: uint256, _for: address = msg.sender, max_active_band: int256 = 2**255-1)`]
+::::description[`Controller.repay(_d_debt: uint256, _for: address = msg.sender, max_active_band: int256 = 2**255-1)`]
 
 
 Function to partially or fully repay `_d_debt` amount of debt. If `_d_debt` exceeds the total debt amount of the user, a full repayment will be done.
@@ -1881,18 +1621,10 @@ Emits: `UserState` and `Repay`
 | `max_active_band`  | `int256`  | Highest active band. Used to prevent front-running the repay; defaults to `2**255-1` |
 | `use_eth`          | `bool`    | Use wrapping/unwrapping if collateral is ETH                    |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -1984,13 +1716,6 @@ def repay(_d_debt: uint256, _for: address = msg.sender, max_active_band: int256 
 
     self._save_rate()
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -2088,23 +1813,9 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -2199,13 +1910,6 @@ def repay(_d_debt: uint256, _for: address = msg.sender, max_active_band: int256 
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Withdraw:
     provider: indexed(address)
@@ -2301,18 +2005,9 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2320,17 +2015,16 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `repay_extended`
-:::description[`Controller.repay_extended(callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
+::::description[`Controller.repay_extended(callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
 
 
-Extended function to repay a loan but obtain a stablecoin for that from a callback (to deleverage). Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/LeverageZap1inch.md#unwinding-leverage).
+Extended function to repay a loan but obtain a stablecoin for that from a callback (to deleverage). Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/leverage-zap-1inch.md#unwinding-leverage).
 
 Emits: `UserState` and `Repay`
 
@@ -2341,18 +2035,10 @@ Emits: `UserState` and `Repay`
 | `callback_bytes` | `Bytes[10**4]`        | Callback bytes passed to the LeverageZap. Defaults to `b""` |
 | `_for`       | `address` | Address to repay debt for (requires approval); only avaliable in new implementation |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -2460,13 +2146,6 @@ def repay_extended(callbacker: address, callback_args: DynArray[uint256,5], call
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Withdraw:
     provider: indexed(address)
@@ -2562,23 +2241,9 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -2689,13 +2354,6 @@ def repay_extended(callbacker: address, callback_args: DynArray[uint256,5], call
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Withdraw:
     provider: indexed(address)
@@ -2791,18 +2449,9 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2810,16 +2459,17 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 --- 
 
 
-## **Adjusting Existing Loans**An already existing loan can be managed in different ways:
+## **Adjusting Existing Loans**
+
+An already existing loan can be managed in different ways:
 
 - `add_collateral`: Adding more collateral.
 - `remove_collateral`: Removing collateral.
@@ -2828,7 +2478,7 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 
 
 ### `add_collateral` 
-:::description[`Controller.add_collateral(collateral: uint256, _for: address = msg.sender)`]
+::::description[`Controller.add_collateral(collateral: uint256, _for: address = msg.sender)`]
 
 
 Function to add extra collateral to an existing loan. Reverts when trying to add `0` collateral tokens.
@@ -2840,18 +2490,10 @@ Emits: `UserState` and `Borrow`
 | `collateral` | `uint256` | Amount of collateral to add    |
 | `_for`       | `address` | Address to add collateral for; defaults to `msg.sender` |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -2929,13 +2571,6 @@ def _add_collateral_borrow(d_collateral: uint256, d_debt: uint256, _for: address
 
     log UserState(_for, xy[1], debt, n1, n2, liquidation_discount)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -3027,23 +2662,9 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -3123,13 +2744,6 @@ def _add_collateral_borrow(d_collateral: uint256, d_debt: uint256, _for: address
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Deposit:
     provider: indexed(address)
@@ -3219,18 +2833,9 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3242,14 +2847,13 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_collateral`
-:::description[`Controller.remove_collateral(collateral: uint256, _for: address = msg.sender)`]
+::::description[`Controller.remove_collateral(collateral: uint256, _for: address = msg.sender)`]
 
 
 Function to remove collateral from an existing loan.
@@ -3261,18 +2865,10 @@ Emits: `UserState` and `RemoveCollateral`
 | `collateral` | `uint256` | Amount of collateral to remove                             |
 | `_for`    | `address`    | Address to remove collateral for |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -3349,13 +2945,6 @@ def _add_collateral_borrow(d_collateral: uint256, d_debt: uint256, _for: address
 
     log UserState(_for, xy[1], debt, n1, n2, liquidation_discount)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -3453,23 +3042,9 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -3556,13 +3131,6 @@ def _add_collateral_borrow(d_collateral: uint256, d_debt: uint256, _for: address
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Withdraw:
     provider: indexed(address)
@@ -3658,18 +3226,9 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3681,14 +3240,13 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `borrow_more`
-:::description[`Controller.borrow_more(collateral: uint256, debt: uint256, _for: address = msg.sender)`]
+::::description[`Controller.borrow_more(collateral: uint256, debt: uint256, _for: address = msg.sender)`]
 
 
 Function to borrow more assets while adding more collateral (not necessary).
@@ -3701,18 +3259,10 @@ Emits: `UserState` and `Borrow`
 | `debt`       | `uint256` | Amount of debt to take           |
 | `_for`       | `address` | Address to borrow for (requires approval); only avaliable in new implementation |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -3792,13 +3342,6 @@ def _add_collateral_borrow(d_collateral: uint256, d_debt: uint256, _for: address
 
     log UserState(_for, xy[1], debt, n1, n2, liquidation_discount)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -3890,23 +3433,9 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -3997,13 +3526,6 @@ def _add_collateral_borrow(d_collateral: uint256, d_debt: uint256, _for: address
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Deposit:
     provider: indexed(address)
@@ -4093,18 +3615,9 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -4116,17 +3629,16 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `borrow_more_extended`
-:::description[`Controller.borrow_more_extended(collateral: uint256, debt: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
+::::description[`Controller.borrow_more_extended(collateral: uint256, debt: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
 
 
-Function to borrow more assets while adding more collateral. This method uses callacks to build up leverage. Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/LeverageZap1inch.md#building-leverage).
+Function to borrow more assets while adding more collateral. This method uses callacks to build up leverage. Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/leverage-zap-1inch.md#building-leverage).
 
 Emits: `UserState` and `Borrow`
 
@@ -4136,22 +3648,14 @@ Emits: `UserState` and `Borrow`
 | `debt`           | `uint256`             | Amount of debt to take           |
 | `callabacker`    | `address`             | Address of the callaback contract  |
 | `debt`           | `DynArray[uint256,5]` | Amount of debt to take on  |
-| `callback_args` | `DynArray[uint256,5]` | Extra arguments for the callback (up to 5), such as `min_amount`, etc; see [`LeverageZap1inch.vy`](./leverage/LeverageZap1inch.md) for more informations |
+| `callback_args` | `DynArray[uint256,5]` | Extra arguments for the callback (up to 5), such as `min_amount`, etc; see [`LeverageZap1inch.vy`](./leverage/leverage-zap-1inch.md) for more informations |
 | `callback_bytes` | `Bytes[10**4]`        | Callback bytes passed to the LeverageZap. Defaults to `b""` |
 | `_for`       | `address` | Address to borrow for (requires approval); only avaliable in new implementation |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -4276,13 +3780,6 @@ def _add_collateral_borrow(d_collateral: uint256, d_debt: uint256, _for: address
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Deposit:
     provider: indexed(address)
@@ -4372,23 +3869,9 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -4523,13 +4006,6 @@ def _add_collateral_borrow(d_collateral: uint256, d_debt: uint256, _for: address
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Deposit:
     provider: indexed(address)
@@ -4619,21 +4095,13 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-
-:::
+::::
 
 ### `health_calculator`
-:::description[`Controller.health_calculator(user: address, d_collateral: int256, d_debt: int256, full: bool, N: uint256 = 0) -> int256`]
+::::description[`Controller.health_calculator(user: address, d_collateral: int256, d_debt: int256, full: bool, N: uint256 = 0) -> int256`]
 
 
 Function to predict the health of `user` after changing collateral by `d_collateral` and/or debt by `d_debt`.
@@ -4648,18 +4116,10 @@ Returns: health (`int256`).
 | `full`         | `bool`    | Weather to take into account the price difference above the highest user's band |
 | `N`            | `uint256` | Number of bands in case loan does not exist yet  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -4722,23 +4182,9 @@ def health_calculator(user: address, d_collateral: int256, d_debt: int256, full:
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -4801,18 +4247,9 @@ def health_calculator(user: address, d_collateral: int256, d_debt: int256, full:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the calculated health based on changes in collateral and borrowed assets. For instance, in the first example, the predicted health is calculated by adding 1 WBTC as collateral and taking on an additional 10,000 crvUSD in debt.
@@ -4826,14 +4263,13 @@ This example shows the calculated health based on changes in collateral and borr
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `liquidate`
-:::description[`Controller.liquidate(user: address, min_x: uint256, use_eth: bool = True)`]
+::::description[`Controller.liquidate(user: address, min_x: uint256, use_eth: bool = True)`]
 
 
 Function to perform a bad liquidation (or self-liquidation) of `user` if `health` is not good.
@@ -4846,19 +4282,11 @@ Emits: `UserState`, `Repay`, and `Liquidate`
 | `min_x`  | `uint256` | Minimal amount of asset to receive (to avoid liquidators being sandwiched) |
 | `use_eth`| `bool`    | Use wrapping/unwrapping if collateral is ETH                        |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 event UserState:
@@ -4980,13 +4408,6 @@ def _liquidate(user: address, min_x: uint256, health_limit: uint256, frac: uint2
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Withdraw:
     provider: indexed(address)
@@ -5080,25 +4501,11 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 
     return [total_x, total_y]
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -5221,13 +4628,6 @@ def _liquidate(user: address, min_x: uint256, health_limit: uint256, frac: uint2
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Withdraw:
     provider: indexed(address)
@@ -5323,35 +4723,25 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `liquidate_extended`
-:::description[`Controller.liquidate_extended(user: address, min_x: uint256, frac: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
+::::description[`Controller.liquidate_extended(user: address, min_x: uint256, frac: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
 
 
-Extended function to perform a bad liquidation (or self-liquidation) of `user` if `health` is not good using callbacks. Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/LeverageZap1inch.md).
+Extended function to perform a bad liquidation (or self-liquidation) of `user` if `health` is not good using callbacks. Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/leverage-zap-1inch.md).
 
 Emits: `Repay` and `Liquidate`
 
@@ -5365,19 +4755,11 @@ Emits: `Repay` and `Liquidate`
 | `callback_args`  | `DynArray[uint256,5]` | Extra arguments for the callback (up to 5), such as `min_amount`          |
 | `callback_bytes` | `Bytes[10**4]`        | Callback bytes passed to the LeverageZap. Defaults to `b""` |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 event UserState:
@@ -5502,13 +4884,6 @@ def _liquidate(user: address, min_x: uint256, health_limit: uint256, frac: uint2
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Withdraw:
     provider: indexed(address)
@@ -5602,25 +4977,11 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 
     return [total_x, total_y]
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -5746,13 +5107,6 @@ def _liquidate(user: address, min_x: uint256, health_limit: uint256, frac: uint2
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 event Withdraw:
     provider: indexed(address)
@@ -5848,32 +5202,22 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> soon
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `tokens_to_liquidate`
-:::description[`Controller.tokens_to_liquidate(user: address, frac: uint256 = 10 **18) -> uint256`]
+::::description[`Controller.tokens_to_liquidate(user: address, frac: uint256 = 10 **18) -> uint256`]
 
 
 Function to calculate the amount of assets to have in a liquidator's wallet in order to liquidate a user.
@@ -5885,19 +5229,11 @@ Returns: amount of tokens needed (`uint256`).
 | `user`   | `address` | Address of the user to liquidate            |
 | `frac`   | `uint256` | Fraction to liquidate; 100% = 10**18        |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="collateral-vy" label="Collateral.vy">
-
 
 ```vyper
 @view
@@ -5918,25 +5254,11 @@ def tokens_to_liquidate(user: address, frac: uint256 = 10 **18) -> uint256:
 
     return unsafe_sub(max(debt, stablecoins), stablecoins)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="collateral-vy" label="Collateral.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -5960,18 +5282,9 @@ def tokens_to_liquidate(user: address, frac: uint256 = 10 **18) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the amount of the borrowed asset required to liquidate the user.
@@ -5982,14 +5295,13 @@ This example shows the amount of the borrowed asset required to liquidate the us
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `users_to_liquidate`
-:::description[`Controller.users_to_liquidate(_from: uint256=0, _limit: uint256=0) -> DynArray[Position, 1000]`]
+::::description[`Controller.users_to_liquidate(_from: uint256=0, _limit: uint256=0) -> DynArray[Position, 1000]`]
 
 
 Getter for a dynamic array of users who can be hard-liquidated.
@@ -6001,19 +5313,11 @@ Returns: detailed info about positions of users that can be hard-liquidated (`Dy
 | `_from`   | `uint256` | Loan index to start iteration from; defaults to 0 |
 | `_limit`  | `uint256` | Number of loans to look over; defaults to 0       |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="collateral-vy" label="Collateral.vy">
-
 
 ```vyper
 @view
@@ -6051,25 +5355,11 @@ def users_to_liquidate(_from: uint256=0, _limit: uint256=0) -> DynArray[Position
         ix += 1
     return out
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="collateral-vy" label="Collateral.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -6110,18 +5400,9 @@ def users_to_liquidate(_from: uint256=0, _limit: uint256=0) -> DynArray[Position
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns a list of all users with negative health and therefore eligible for hard liquidation. In this case, no positions are eligible.
@@ -6132,11 +5413,10 @@ This example returns a list of all users with negative health and therefore elig
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -6144,7 +5424,7 @@ This example returns a list of all users with negative health and therefore elig
 ## **Loan Info Methods***All user information, such as `debt`, `health`, etc., is stored within the Controller contract.*
 
 ### `debt`
-:::description[`Controller.debt(user: address) -> uint256`]
+::::description[`Controller.debt(user: address) -> uint256`]
 
 
 Getter for the amount of debt for `user`. Constantly increases due to the charged interest rate.
@@ -6155,18 +5435,10 @@ Returns: debt (`uint256`).
 | ------ | --------- | --------------- |
 | `user` | `address` | User Address    |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -6209,23 +5481,9 @@ def _debt(user: address) -> (uint256, uint256):
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -6268,18 +5526,9 @@ def _debt(user: address) -> (uint256, uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the debt of a specific user.
@@ -6290,33 +5539,24 @@ This example shows the debt of a specific user.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `total_debt`
-:::description[`Controller.total_debt() -> uint256`]
+::::description[`Controller.total_debt() -> uint256`]
 
 
 Getter for the total debt of the Controller.
 
 Returns: total debt (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 struct Loan:
@@ -6336,25 +5576,11 @@ def total_debt() -> uint256:
     loan: Loan = self._total_debt
     return loan.initial_debt * rate_mul / loan.rate_mul
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -6377,18 +5603,9 @@ def total_debt() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the total debt of the market.
@@ -6399,14 +5616,13 @@ This example shows the total debt of the market.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `loan_exists`
-:::description[`Controller.loan_exists(user: address) -> bool`]
+::::description[`Controller.loan_exists(user: address) -> bool`]
 
 
 Function to check if a loan for `user` exists.
@@ -6417,19 +5633,11 @@ Returns: true or false (`bool`).
 | ------ | --------- | ------------ |
 | `user` | `address` | User address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 struct Loan:
@@ -6445,25 +5653,11 @@ def loan_exists(user: address) -> bool:
     """
     return self.loan[user].initial_debt > 0
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -6482,18 +5676,9 @@ def loan_exists(user: address) -> bool:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows if a loan exists for a specific user.
@@ -6507,14 +5692,13 @@ This example shows if a loan exists for a specific user.
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `user_prices`
-:::description[`Controller.user_prices(user: address) -> uint256[2]`]
+::::description[`Controller.user_prices(user: address) -> uint256[2]`]
 
 
 Getter for the highest price of the upper band and the lowest price of the lower band the user has deposited in the AMM. This is essentially the liquidation price range of the loan.
@@ -6525,19 +5709,11 @@ Returns: upper and lower band price (`uint256`).
 | ------ | --------- | ------------ |
 | `user` | `address` | User address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 @view
@@ -6553,13 +5729,6 @@ def user_prices(user: address) -> uint256[2]:  # Upper, lower
     ns: int256[2] = AMM.read_user_tick_numbers(user) # ns[1] > ns[0]
     return [AMM.p_oracle_up(ns[0]), AMM.p_oracle_down(ns[1])]
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -6666,25 +5835,11 @@ def _p_oracle_up(n: int256) -> uint256:
     ## End exp
     return unsafe_div(self._base_price() * exp_result, 10**18)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -6701,13 +5856,6 @@ def user_prices(user: address) -> uint256[2]:  # Upper, lower
     ns: int256[2] = AMM.read_user_tick_numbers(user) # ns[1] > ns[0]
     return [AMM.p_oracle_up(ns[0]), AMM.p_oracle_down(ns[1])]
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -6816,18 +5964,9 @@ def _p_oracle_up(n: int256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the liquidation range of a user's loan. In this case, the liquidation range would be between 64,018 and 57,897.
@@ -6838,14 +5977,13 @@ This example shows the liquidation range of a user's loan. In this case, the liq
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `health`
-:::description[`Controller.health(user: address, full: bool = False) -> int256`]
+::::description[`Controller.health(user: address, full: bool = False) -> int256`]
 
 
 Getter for the health of `user`'s loan normalized to 1e18. If health is lower than 0, the loan can be hard-liquidated.
@@ -6857,19 +5995,11 @@ Returns: health (`int256`).
 | `user` | `address` | User address                                                        |
 | `full` | `bool`    | Whether to take into account the price difference above the highest user's band |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 @view
@@ -6908,25 +6038,11 @@ def _health(user: address, debt: uint256, full: bool, liquidation_discount: uint
 
     return health
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -6968,18 +6084,9 @@ def _health(user: address, debt: uint256, full: bool, liquidation_discount: uint
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 These examples show the health of a loan, once by taking the price differences above the user's highest band into account, and once without.
@@ -6993,14 +6100,13 @@ These examples show the health of a loan, once by taking the price differences a
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `user_state`
-:::description[`Controller.user_state(user: address) -> uint256[4]`]
+::::description[`Controller.user_state(user: address) -> uint256[4]`]
 
 
 Getter for `user`'s state.
@@ -7011,19 +6117,11 @@ Returns: collateral, stablecoin, debt, and number of bands (`uint256`).
 | ------ | --------- | ---------------------------------- |
 | `user` | `address` | User address to return state for   |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 @view
@@ -7039,13 +6137,6 @@ def user_state(user: address) -> uint256[4]:
     ns: int256[2] = AMM.read_user_tick_numbers(user) # ns[1] > ns[0]
     return [xy[1], xy[0], self._debt_ro(user), convert(unsafe_add(unsafe_sub(ns[1], ns[0]), 1), uint256)]
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -7088,25 +6179,11 @@ def _read_user_tick_numbers(user: address) -> int256[2]:
         n2 = unsafe_add(n2, 1)
     return [n1, n2]
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -7123,13 +6200,6 @@ def user_state(user: address) -> uint256[4]:
     ns: int256[2] = AMM.read_user_tick_numbers(user) # ns[1] > ns[0]
     return [xy[1], xy[0], self._debt_ro(user), convert(unsafe_add(unsafe_sub(ns[1], ns[0]), 1), uint256)]
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -7174,18 +6244,9 @@ def _read_user_tick_numbers(user: address) -> int256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the state of a user's loan, including the collateral composition consisting of collateral and borrowable tokens, the debt, and the number of bands used.
@@ -7196,14 +6257,13 @@ This example returns the state of a user's loan, including the collateral compos
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `loans`
-:::description[`Controller.liquidation_discounts(arg0: uint256) -> uint256: view`]
+::::description[`Controller.liquidation_discounts(arg0: uint256) -> uint256: view`]
 
 
 Getter for the user address that created a loan at index `arg0`. Only loans with debt greater than 0 are included. Liquidated ones get removed.
@@ -7214,19 +6274,11 @@ Returns: user (`address`).
 | ------ | --------- | ----------- |
 | `arg0` | `uint256` | Loan index  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 loans: public(address[2**64 - 1])  # Enumerate existing loans
@@ -7243,26 +6295,11 @@ def _remove_from_list(_for: address):
         self.loan_ix[last_loan] = loan_ix
     self.n_loans = last_loan_ix
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -7282,18 +6319,9 @@ def _remove_from_list(_for: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -7305,14 +6333,13 @@ def _remove_from_list(_for: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `loan_ix`
-:::description[`Controller.loan_ix(arg0: address) -> address: view`]
+::::description[`Controller.loan_ix(arg0: address) -> address: view`]
 
 
 Getter for the user's loan in the list. Only loans with debt greater than 0 are included. Liquidated ones get removed.
@@ -7323,42 +6350,20 @@ Returns: index (`uint256`).
 | ------ | --------- | -------------- |
 | `arg0` | `address` | User address.  |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 loan_ix: public(HashMap[address, uint256])  # Position of the loan in the list
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -7366,18 +6371,9 @@ loan_ix: public(HashMap[address, uint256])  # Position of the loan in the list
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -7386,33 +6382,24 @@ loan_ix: public(HashMap[address, uint256])  # Position of the loan in the list
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `n_loans`
-:::description[`Controller.n_loans() -> uint256: view`]
+::::description[`Controller.n_loans() -> uint256: view`]
 
 
 Getter for the total number of existing loans. This variable is increased by one when a loan is created and decreased by one when a loan is fully repaid.
 
 Returns: number of active loans (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 n_loans: public(uint256)  # Number of nonzero loans
@@ -7429,25 +6416,11 @@ def _remove_from_list(_for: address):
         self.loan_ix[last_loan] = loan_ix
     self.n_loans = last_loan_ix
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -7467,18 +6440,9 @@ def _remove_from_list(_for: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -7487,11 +6451,10 @@ def _remove_from_list(_for: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -7508,26 +6471,18 @@ Changing the AMM fee can be done through [`set_amm_fee`](#set_amm_fee), and admi
 
 
 ### `admin_fees`
-:::description[`Controller.admin_fees() -> uint256`]
+::::description[`Controller.admin_fees() -> uint256`]
 
 
 Getter for the claimable admin fees. Claimable by calling [`colletct_fees`](#collect_fees). 
 
 Returns: admin fees (`uint256`). 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 struct Loan:
@@ -7546,13 +6501,6 @@ def admin_fees() -> uint256:
     minted: uint256 = self.minted
     return unsafe_sub(max(loan.initial_debt, minted), minted)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -7574,25 +6522,11 @@ def _rate_mul() -> uint256:
     """
     return unsafe_div(self.rate_mul * (10**18 + self.rate * (block.timestamp - self.rate_time)), 10**18)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -7612,13 +6546,6 @@ def admin_fees() -> uint256:
     minted: uint256 = self.minted
     return unsafe_sub(max(loan.initial_debt, minted), minted)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -7642,18 +6569,9 @@ def _rate_mul() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -7662,14 +6580,13 @@ def _rate_mul() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_amm_fee`
-:::description[`Controller.set_amm_fee(fee: uint256)`]
+::::description[`Controller.set_amm_fee(fee: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -7687,19 +6604,11 @@ Emits: `SetFee`
 | ----- | --------- | ------------- |
 | `fee` | `uint256` | New fee value |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 MIN_FEE: constant(uint256) = 10**6  # 1e-12, still needs to be above 0
@@ -7716,13 +6625,6 @@ def set_amm_fee(fee: uint256):
     assert fee <= MAX_FEE and fee >= MIN_FEE, "Fee"
     AMM.set_fee(fee)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -7742,25 +6644,11 @@ def set_fee(fee: uint256):
     self.fee = fee
     log SetFee(fee)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -7778,13 +6666,6 @@ def set_amm_fee(fee: uint256):
     assert fee <= MAX_FEE and fee >= MIN_FEE, "Fee"
     AMM.set_fee(fee)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -7806,18 +6687,9 @@ def set_fee(fee: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -7825,14 +6697,13 @@ def set_fee(fee: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_amm_admin_fee`
-:::description[`Controller.set_amm_admin_fee(fee: uint256)`]
+::::description[`Controller.set_amm_admin_fee(fee: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -7857,18 +6728,10 @@ Emits: `SetAdminFee`
 | ----- | --------- | ------------- |
 | `fee` | `uint256` | New admin fee |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -7885,13 +6748,6 @@ def set_amm_admin_fee(fee: uint256):
     assert fee <= MAX_ADMIN_FEE, "High fee"
     AMM.set_admin_fee(fee)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -7913,18 +6769,9 @@ def set_admin_fee(fee: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -7932,32 +6779,23 @@ def set_admin_fee(fee: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `collect_fees`
-:::description[`Controller.collect_fees()`]
+::::description[`Controller.collect_fees()`]
 
 
 Function to collects all fees, including borrwing-based fees and AMM-based fees (if there are any). Collected fees are sent to the `fee_receiver` specified in the [Factory](./factory/overview.md#fee-receiver).
 
 Emits: `CollectFees`
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
 
 
 ```vyper
@@ -8008,13 +6846,6 @@ def collect_fees() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 admin_fees_x: public(uint256)
 admin_fees_y: public(uint256)
@@ -8031,23 +6862,9 @@ def reset_admin_fees():
 ```
 
 
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
-
-
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -8092,13 +6909,6 @@ def collect_fees() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 admin_fees_x: public(uint256)
 admin_fees_y: public(uint256)
@@ -8115,18 +6925,9 @@ def reset_admin_fees():
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example shows the effect of claiming fees. Before calling `collect_fees`, the total admin fees amounted to approximately 1,431 crvUSD. After claiming, the admin fees are reset to 0.
@@ -8142,11 +6943,10 @@ This example shows the effect of claiming fees. Before calling `collect_fees`, t
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
@@ -8158,26 +6958,18 @@ The **loan discount**is the percentage used to discount the collateral for calcu
 The **liquidation discount**is used to discount the collateral for calculating the recoverable value upon liquidation at the current market price.
 
 ### `loan_discount`
-:::description[`Controller.loan_discount() -> uint256: view`]
+::::description[`Controller.loan_discount() -> uint256: view`]
 
 
 Getter for the discount of the maximum loan size compared to `get_x_down()` value. This value defines the LTV.
 
 Returns: loan discount (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 loan_discount: public(uint256)
@@ -8202,25 +6994,11 @@ def __init__(
     self.loan_discount = loan_discount
     ...
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -8248,18 +7026,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -8268,33 +7037,24 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `liquidation_discount`
-:::description[`Controller.liquidation_discount() -> uint256: view`]
+::::description[`Controller.liquidation_discount() -> uint256: view`]
 
 
 Getter for the liquidation discount. This value is used to discount the collateral value when calculating the health for liquidation puroses in order to incentivize liquidators.
 
 Returns: liquidation discount (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 liquidation_discount: public(uint256)
@@ -8319,25 +7079,11 @@ def __init__(
     self.liquidation_discount = liquidation_discount
     ...
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -8365,18 +7111,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -8385,14 +7122,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `liquidation_discounts`
-:::description[`Controller.liquidation_discounts(arg0: address) -> uint256: view`]
+::::description[`Controller.liquidation_discounts(arg0: address) -> uint256: view`]
 
 
 Getter method for the liquidation discount of a user. This value is used to discount the collateral for calculating the recoverable value upon liquidation at the current market price. The discount is factored into the health calculation.
@@ -8403,42 +7139,20 @@ Returns: liquidation discount (`uint256`).
 | ------ | --------- | ------------ |
 | `arg0` | `address` | User Address |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 liquidation_discounts: public(HashMap[address, uint256])
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -8446,18 +7160,9 @@ liquidation_discounts: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -8466,14 +7171,13 @@ liquidation_discounts: public(HashMap[address, uint256])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_borrowing_discounts`
-:::description[`Controller.set_borrowing_discounts(loan_discount: uint256, liquidation_discount: uint256)`]
+::::description[`Controller.set_borrowing_discounts(loan_discount: uint256, liquidation_discount: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -8492,19 +7196,11 @@ Emits: `SetBorrowingDiscount`
 | `loan_discount`        | `uint256` | New value for the loan discount        |
 | `liquidation_discount` | `uint256` | New value for the liquidation discount |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 event SetBorrowingDiscounts:
@@ -8527,25 +7223,11 @@ self.liquidation_discount = liquidation_discount
 self.loan_discount = loan_discount
 log SetBorrowingDiscounts(loan_discount, liquidation_discount)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -8571,18 +7253,9 @@ log SetBorrowingDiscounts(loan_discount, liquidation_discount)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -8590,41 +7263,34 @@ log SetBorrowingDiscounts(loan_discount, liquidation_discount)
 ``` 
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Monetary Policy**Each controller has a monetary policy contract. This contract is responsible for the interest rates within the markets. 
+# **Monetary Policy**
 
-While [monetary policies for minting markets](../crvUSD/monetarypolicy.md) depend on several factors such as the price of crvUSD, pegkeeper debt, etc., the monetary policy for lending markets is solely based on a [semi-log monetary policy](../lending/contracts/semilog-mp.md) which determines the rate based on the utilization of the assets.
+Each controller has a monetary policy contract. This contract is responsible for the interest rates within the markets. 
+
+While [monetary policies for minting markets](../crvusd/monetary-policy.md) depend on several factors such as the price of crvUSD, pegkeeper debt, etc., the monetary policy for lending markets is solely based on a [semi-log monetary policy](../lending/contracts/semilog-mp.md) which determines the rate based on the utilization of the assets.
 
 
 ### `monetary_policy`
-:::description[`Controller.monetary_policy() -> address: view`]
+::::description[`Controller.monetary_policy() -> address: view`]
 
 
 Getter for the monetary policy contract.
 
 Returns: monetary policy contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 interface MonetaryPolicy:
@@ -8632,25 +7298,11 @@ interface MonetaryPolicy:
 
 monetary_policy: public(MonetaryPolicy)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -8661,18 +7313,9 @@ monetary_policy: public(MonetaryPolicy)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -8681,14 +7324,13 @@ monetary_policy: public(MonetaryPolicy)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_monetary_policy`
-:::description[`Controller.set_monetary_policy(monetary_policy: address)`]
+::::description[`Controller.set_monetary_policy(monetary_policy: address)`]
 
 
 :::guard[Guarded Method]
@@ -8706,19 +7348,11 @@ Emits: `SetMonetaryPolicy`
 | ----------------- | --------- | ------------------------ |
 | `monetary_policy` | `address` | Monetary policy contract |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 event SetMonetaryPolicy:
@@ -8740,13 +7374,6 @@ def set_monetary_policy(monetary_policy: address):
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
-
-
 ```vyper
 @external
 def rate_write(_for: address = msg.sender) -> uint256:
@@ -8754,25 +7381,11 @@ def rate_write(_for: address = msg.sender) -> uint256:
     # which change rate0 - for example rate0 targeting some fraction pl_debt/total_debt
     return self.calculate_rate(_for, PRICE_ORACLE.price_w())
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -8795,13 +7408,6 @@ def set_monetary_policy(monetary_policy: address):
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
-
-
 ```vyper
 @external
 def rate_write(_for: address = msg.sender) -> uint256:
@@ -8811,18 +7417,9 @@ def rate_write(_for: address = msg.sender) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -8830,36 +7427,29 @@ def rate_write(_for: address = msg.sender) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Contract Info Methods**### `FACTORY`
-:::description[`Controller.factory() -> address: view`]
+# **Contract Info Methods**
+
+### `FACTORY`
+::::description[`Controller.factory() -> address: view`]
 
 
 Getter of the Factory contract of the Controller. This variable is immutable and can not be changed.
 
 Returns: Factory (`address`). 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 interface Factory:
@@ -8889,25 +7479,11 @@ def __init__(
     FACTORY = Factory(msg.sender)
     ...
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -8940,18 +7516,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -8960,33 +7527,24 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `amm`
-:::description[`Controller.amm() -> address: view`]
+::::description[`Controller.amm() -> address: view`]
 
 
 Getter of the `AMM` contract of the `Controller`. This variable is immutable and can not be changed.
 
 Returns: `AMM` contract (`address`). 
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 AMM: immutable(LLAMMA)
@@ -9011,25 +7569,11 @@ def __init__(
     AMM = LLAMMA(amm)
     ...
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -9057,18 +7601,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -9077,33 +7612,24 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `collateral_token`
-:::description[`Controller.collateral_token() -> address: view`]
+::::description[`Controller.collateral_token() -> address: view`]
 
 
 Getter of the collateral token for the market. This variable is immutable and can not be changed.
 
 Returns: collateral token (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 COLLATERAL_TOKEN: immutable(ERC20)
@@ -9128,25 +7654,11 @@ def __init__(
     COLLATERAL_TOKEN = _collateral_token
     ...
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -9174,18 +7686,9 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -9194,33 +7697,24 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `amm_price`
-:::description[`Controller.amm_price() -> uint256:`]
+::::description[`Controller.amm_price() -> uint256:`]
 
 
 Getter for the current price from the AMM.
 
 Returns: price (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 # AMM has a nonreentrant decorator
@@ -9232,13 +7726,6 @@ def amm_price() -> uint256:
     """
     return AMM.get_p()
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -9286,25 +7773,11 @@ def _get_p(n: int256, x: uint256, y: uint256) -> uint256:
     g: uint256 = unsafe_div(Aminus1 * y0 * p_o_up, p_o)
     return (f + x * 10**18) / (g + y)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -9317,13 +7790,6 @@ def amm_price() -> uint256:
     """
     return AMM.get_p()
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
 
 
 ```vyper
@@ -9373,18 +7839,9 @@ def _get_p(n: int256, x: uint256, y: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -9393,56 +7850,33 @@ def _get_p(n: int256, x: uint256, y: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `minted`
-:::description[`Controller.minted() -> uint256: view`]
+::::description[`Controller.minted() -> uint256: view`]
 
 
 Getter for the total amount of crvUSD minted from this controller. Increments by the amount of debt when calling `create_loan` or `borrow_more`.
 
 Returns: total minted (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 minted: public(uint256)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -9450,18 +7884,9 @@ minted: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -9470,56 +7895,33 @@ minted: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `redeemed`
-:::description[`Controller.redeemed() -> uint256: view`]
+::::description[`Controller.redeemed() -> uint256: view`]
 
 
 Getter for the total amount of crvUSD redeemed from this controller. Increments by the amount of debt that is repayed when calling `repay` or `repay_extended`.
 
 Returns: total redeemed (`uint256`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 redeemed: public(uint256)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -9527,18 +7929,9 @@ redeemed: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -9547,17 +7940,18 @@ redeemed: public(uint256)
 ```        
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Callbacks**### `set_callback`
-:::description[`Controller.set_callback(cb: address) -> uint256: view`]
+# **Callbacks**
+
+### `set_callback`
+::::description[`Controller.set_callback(cb: address) -> uint256: view`]
 
 
 :::guard[Guarded Method]
@@ -9573,19 +7967,11 @@ Function to set a callback for liquidity mining.
 | ----- | --------- | ----------- |
 | `cb`  | `address` | Callback    |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="commit-58289a4-may-10-2024" label="Commit `58289a4` — May 10, 2024">
+<SourceCode>
 
 
 The following source code includes all changes up to commit hash [`58289a4`](https://github.com/curvefi/curve-stablecoin/tree/`58289a4`283d7cc3c53aba2d3801dcac5ef124957); any changes made after this commit are not included.
 
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
-
 
 ```vyper
 @external
@@ -9597,25 +7983,11 @@ def set_callback(cb: address):
     assert msg.sender == FACTORY.admin()
     AMM.set_callback(cb)
 ```
-
-
-</TabItem>
-</Tabs>
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="commit-b0240d8-sep-8-2024" label="Commit `b0240d8` — Sep 8, 2024">
 
 
 The following source code includes all changes up to commit hash [`b0240d8`](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721); any changes made after this commit are not included.
 
-This implementation was used for [Optimism](../deployments/lending.md#logos-optimism-optimism) and [Fraxtal](../deployments/lending.md#logos-fraxtal-fraxtal) lending deployments.
-
-<Tabs>
-<TabItem value="controller-vy" label="Controller.vy">
+This implementation was used for [Optimism](../deployments.md) and [Fraxtal](../deployments.md) lending deployments.
 
 
 ```vyper
@@ -9630,26 +8002,16 @@ def set_callback(cb: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 >>> soon
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

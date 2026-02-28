@@ -1850,7 +1850,9 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 ---
 
 
-## **Interest Rates**Interest rates within lending markets are intricately linked to the market's utilization rate. Essentially, as market utilization increases, so too do the interest rates. This dynamic relationship underscores the market's demand-supply equilibrium, directly influencing the cost of borrowing and the returns on lending.
+## **Interest Rates**
+
+Interest rates within lending markets are intricately linked to the market's utilization rate. Essentially, as market utilization increases, so too do the interest rates. This dynamic relationship underscores the market's demand-supply equilibrium, directly influencing the cost of borrowing and the returns on lending.
 
 The vault contract has two public methods, named `borrow_apr` and `lend_apr`. These methods are designed to compute and return the **annualized rates for borrowing and lending**, respectively, standardized to a base of 1e18.
 
@@ -2038,7 +2040,9 @@ rate: public(uint256)
 ---
 
 
-## **Contract Info Methods**### `asset`
+## **Contract Info Methods**
+
+### `asset`
 :::description[`Vault.asset() -> ERC20:`]
 
 

@@ -1,8 +1,5 @@
 # L2 Relayer
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 The `Relayer` contract acts as a middleman, receiving messages from the `Broadcaster` and relaying them to the according `Agent` (`ownership`, `parameter`, or `emergency`).
 
 :::vyper[`Relayer.vy`]
@@ -13,7 +10,7 @@ The source code for the `Relayer.vy` contract slightly differ depending on the c
 - [ `OptimismRelayer.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/optimism/OptimismRelayer.vy) for Optimism and Optimistic Rollups
 - [ `XYZRelayer.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/xyz/XYZRelayer.vy) for all other chains
 
-A comprehensive list of all deployed contracts is available [here ↗](../../deployments/crosschain.md#curve-x-gov).
+A comprehensive list of all deployed contracts is available [here ↗](../../deployments.md).
 
 
 :::
@@ -36,25 +33,19 @@ The actual structure of the `relay` function may vary slightly depending on the 
 A message is broadcast through the `Broadcaster` contract from Ethereum to the L2, where the `Relayer` relays the message and executes it via the corresponding `Agent`.
 
 ### `relay`
-:::description[`Relayer.relay(_agent: Agent, _messages: DynArray[Message, MAX_MESSAGES]):`]
+::::description[`Relayer.relay(_agent: Agent, _messages: DynArray[Message, MAX_MESSAGES])`]
 
 
 Function to receive a message from the `Broadcaster` and relay the message to the according agent. This function is automatically called by the `MESSENGER` contract of the according chain. There is no need to manually call this function, which would actually revert as it is a guarded function.
 
-| Input       | Type       | Description                  |
-| ----------- | ---------- | ---------------------------- |
-| `_agent`    | `address` | Token to transfer            |
-| `_messages` | `address` | Destination of the asset     |
+| Input       | Type                              | Description                       |
+| ----------- | --------------------------------- | --------------------------------- |
+| `_agent`    | `Agent`                           | Agent to relay the message to     |
+| `_messages` | `DynArray[Message, MAX_MESSAGES]` | Sequence of messages to relay     |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
-
-<Tabs>
-<TabItem value="arbitrumrelayer-vy" label="ArbitrumRelayer.vy">
-
-
-```vyper
+```vyper title="ArbitrumRelayer.vy"
 @external
 def relay(_agent: Agent, _messages: DynArray[Message, MAX_MESSAGES]):
     """
@@ -68,15 +59,7 @@ def relay(_agent: Agent, _messages: DynArray[Message, MAX_MESSAGES]):
     IAgent(self.agent[_agent]).execute(_messages)
 ```
 
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="optimismrelayer-vy" label="OptimismRelayer.vy">
-
-
-```vyper
+```vyper title="OptimismRelayer.vy"
 @external
 def relay(_agent: Agent, _messages: DynArray[Message, MAX_MESSAGES]):
     """
@@ -90,15 +73,7 @@ def relay(_agent: Agent, _messages: DynArray[Message, MAX_MESSAGES]):
     IAgent(self.agent[_agent]).execute(_messages)
 ```
 
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="xyzrelayer-vy" label="XYZRelayer.vy">
-
-
-```vyper
+```vyper title="XYZRelayer.vy"
 @external
 def relay(_agent: Agent, _messages: DynArray[Message, MAX_MESSAGES]):
     """
@@ -111,15 +86,10 @@ def relay(_agent: Agent, _messages: DynArray[Message, MAX_MESSAGES]):
     IAgent(self.agent[_agent]).execute(_messages)
 ```
 
-
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ---
 
@@ -128,35 +98,22 @@ def relay(_agent: Agent, _messages: DynArray[Message, MAX_MESSAGES]):
 The contract contains the addresses of the `Agents` that are responsible for executing the messages.
 
 ### `OWNERSHIP_AGENT`
-:::description[`Relayer.OWNERSHIP_AGENT() -> address: view`]
+::::description[`Relayer.OWNERSHIP_AGENT() -> address: view`]
 
 
 Getter for the ownership agent.
 
 Returns: ownership agent (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="relayer-vy" label="Relayer.vy">
-
+<SourceCode>
 
 ```vyper
 OWNERSHIP_AGENT: public(immutable(address))
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This examples returns the ownership agents for the Arbitrum and Optimism chains.
 
@@ -168,43 +125,28 @@ This examples returns the ownership agents for the Arbitrum and Optimism chains.
 '0x28c4A1Fa47EEE9226F8dE7D6AF0a41C62Ca98267'    # optimism
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `PARAMETER_AGENT`
-:::description[`Relayer.PARAMETER_AGENT() -> address: view`]
+::::description[`Relayer.PARAMETER_AGENT() -> address: view`]
 
 
 Getter for the parameter agent.
 
 Returns: parameter agent (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="relayer-vy" label="Relayer.vy">
-
+<SourceCode>
 
 ```vyper
 PARAMETER_AGENT: public(immutable(address))
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This examples returns the parameter agents for the Arbitrum and Optimism chains.
 
@@ -216,43 +158,28 @@ This examples returns the parameter agents for the Arbitrum and Optimism chains.
 '0xE7F2B72E94d1c2497150c24EA8D65aFFf1027b9b'    # optimism
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `EMERGENCY_AGENT`
-:::description[`Relayer.EMERGENCY_AGENT() -> address: view`]
+::::description[`Relayer.EMERGENCY_AGENT() -> address: view`]
 
 
 Getter for the emergency agent.
 
 Returns: emergency agent (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="relayer-vy" label="Relayer.vy">
-
+<SourceCode>
 
 ```vyper
 EMERGENCY_AGENT: public(immutable(address))
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This examples returns the emergency agents for the Arbitrum and Optimism chains.
 
@@ -264,9 +191,7 @@ This examples returns the emergency agents for the Arbitrum and Optimism chains.
 '0x9fF1ddE4BE9BbD891836863d227248047B3D881b'    # optimism
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

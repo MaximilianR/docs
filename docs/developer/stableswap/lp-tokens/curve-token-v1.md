@@ -2,13 +2,12 @@
 
 ### `CurveToken.name`
 
-:::description[CurveToken.name() → string[64]: view]
+::::description[CurveToken.name() → string[64]: view]
 
 
 Get token name.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 8"
@@ -29,10 +28,9 @@ def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -41,21 +39,19 @@ def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CurveToken.symbol`
 
-:::description[CurveToken.symbol() → string[32]: view]
+::::description[CurveToken.symbol() → string[32]: view]
 
 
 Get token symbol.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 9"
@@ -76,10 +72,9 @@ def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -88,21 +83,19 @@ def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CurveToken.decimals`
 
-:::description[CurveToken.decimals() → uint256: view]
+::::description[CurveToken.decimals() → uint256: view]
 
 
 Get token precision (decimals).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 10"
@@ -123,10 +116,9 @@ def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -135,15 +127,14 @@ def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CurveToken.balanceOf`
 
-:::description[CurveToken.balanceOf(account: address) → uint256: view]
+::::description[CurveToken.balanceOf(account: address) → uint256: view]
 
 
 Get token balance for an account.
@@ -152,15 +143,12 @@ Get token balance for an account.
 | ----------- | -------| ----|
 | `address` | `address` | Address to get the token balance for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="5 11 15"
 # NOTE: By declaring `balanceOf` as public, vyper automatically generates a 'balanceOf()' getter
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 #       method to allow access to account balances.
 #       The _KeyType will become a required parameter for the getter and it will return _ValueType.
@@ -182,10 +170,9 @@ def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -194,21 +181,19 @@ def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CurveToken.totalSupply`
 
-:::description[CurveToken.totalSupply() → uint256: view]
+::::description[CurveToken.totalSupply() → uint256: view]
 
 
 Get total token supply.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -222,10 +207,9 @@ def totalSupply() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -234,15 +218,14 @@ def totalSupply() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `CurveToken.allowance`
 
-:::description[CurveToken.allowance(_owner: address, _spender: address) → uint256: view]
+::::description[CurveToken.allowance(_owner: address, _spender: address) → uint256: view]
 
 
 This view method gets the allowance of an address (`_spender`) to spend on behalf of some other account `_owner`.
@@ -252,8 +235,7 @@ This view method gets the allowance of an address (`_spender`) to spend on behal
 | `_spender` | `address` | Account that can spend up to the allowance |
 | `_owner`    | `address` | Account that is paying when ``_spender`` spends the allowance|
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -270,14 +252,14 @@ def allowance(_owner : address, _spender : address) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `CurveToken.transfer`
 
-:::description[CurveToken.transfer(_to: address, _value: uint256) → bool]
+::::description[CurveToken.transfer(_to: address, _value: uint256) → bool]
 
 
 Transfer tokens to a specified address. `_from` address is implicitly `msg.sender`. Returns ``True`` if the
@@ -290,8 +272,7 @@ transfer succeeds.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -311,14 +292,14 @@ def transfer(_to : address, _value : uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `CurveToken.transferFrom`
 
-:::description[CurveToken.transferFrom(_from: address, _to: address, _value: uint256) → bool]
+::::description[CurveToken.transferFrom(_from: address, _to: address, _value: uint256) → bool]
 
 
 Transfer tokens from one address to another. `msg.sender` does the transfer on behalf of the `_from` address, and
@@ -332,8 +313,7 @@ requires sufficient spending allowance. Returns ``True`` if transfer succeeds.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -360,7 +340,7 @@ def transferFrom(_from : address, _to : address, _value : uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
 :::note
 
@@ -371,11 +351,11 @@ While this function emits a Transfer event, this is not required as per the spec
 implementations may not emit the event.
 
 
-:::
+::::
 
 ### `CurveToken.approve`
 
-:::description[CurveToken.approve(_spender: address, _value: uint256) → bool]
+::::description[CurveToken.approve(_spender: address, _value: uint256) → bool]
 
 
 Approve the passed address to spend the specified amount of tokens on behalf of ``msg.sender``. Returns ``True`` on
@@ -388,8 +368,7 @@ successful approvals.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Approval</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -411,7 +390,7 @@ def approve(_spender : address, _value : uint256) -> bool:
 ```
 
 
-</details>
+</SourceCode>
 
 :::warning
 
@@ -432,7 +411,7 @@ For Curve LP Tokens V1 and V2, **non-zero to non-zero approvals are prohibited**
 approval, the allowance for the spender must be reset to 0.
 
 
-:::
+::::
 
 ## Minter Methods
 
@@ -448,7 +427,7 @@ For Curve Token V1, the ``minter`` attribute is not ``public``.
 
 ### `CurveToken.mint`
 
-:::description[CurveToken.mint(_to: address, _value: uint256)]
+::::description[CurveToken.mint(_to: address, _value: uint256)]
 
 
 This encapsulates the modification of balances such that the proper events are emitted.
@@ -460,8 +439,7 @@ This encapsulates the modification of balances such that the proper events are e
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -482,14 +460,14 @@ def mint(_to: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `CurveToken.burn`
 
-:::description[CurveToken.burn(_value: uint256)]
+::::description[CurveToken.burn(_value: uint256)]
 
 
 Burn an amount of the token of ``msg.sender``.
@@ -500,8 +478,7 @@ Burn an amount of the token of ``msg.sender``.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -529,14 +506,14 @@ def burn(_value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `CurveToken.burnFrom`
 
-:::description[CurveToken.burnFrom(_to: address, _value: uint256)]
+::::description[CurveToken.burnFrom(_to: address, _value: uint256)]
 
 
 Burn an amount of the token from a given account.
@@ -548,8 +525,7 @@ Burn an amount of the token from a given account.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>Transfer</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -578,14 +554,14 @@ def burnFrom(_to: address, _value: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `CurveToken.set_minter`
 
-:::description[CurveToken.set_minter(_minter: address)]
+::::description[CurveToken.set_minter(_minter: address)]
 
 
 Set a new minter for the token.
@@ -594,8 +570,7 @@ Set a new minter for the token.
 | ----------- | -------| ----|
 | `_minter`       |  `address` | Address of the new minter |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -605,7 +580,7 @@ def set_minter(_minter: address):
     self.minter = _minter
 ```
 
-</details>
+</SourceCode>
 
 
-:::
+::::

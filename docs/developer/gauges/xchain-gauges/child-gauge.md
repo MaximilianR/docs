@@ -1,25 +1,22 @@
 # Child Gauge Implementation
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 The `ChildGauge` is the liquidity gauge contract on the sidechain. It is used to track the balance of liquidity providers and distribute CRV emissions to them. It is pretty much the same as the `Gauge` contract on Ethereum mainnet.
 
-<details open>
-<summary>`ChildGauge.vy`</summary>
+:::vyper[`ChildGauge.vy`]
 
-The source code for the `ChildGauge.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/implementations/ChildGauge.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10` 
+The source code for the `ChildGauge.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/implementations/ChildGauge.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`
 
-
-</details>
+:::
 
 ---
 
-# **Initialization**### `initialize`
-:::description[`ChildGauge.initialize(_lp_token: address, _root: address, _manager: address)`]
+## **Initialization**
+
+### `initialize`
+::::description[`ChildGauge.initialize(_lp_token: address, _root: address, _manager: address)`]
 
 
-Function to initialize the gauge. A child gauge is initialized directly when deploying it from the `ChildGaugeFactory` via the [`deploy_gauge`](./ChildGaugeFactory.md#deploy_gauge) function.
+Function to initialize the gauge. A child gauge is initialized directly when deploying it from the `ChildGaugeFactory` via the [`deploy_gauge`](./child-gauge-factory.md#deploy_gauge) function.
 
 | Parameter | Type | Description |
 | --------- | ---- | ------------ |
@@ -27,15 +24,10 @@ Function to initialize the gauge. A child gauge is initialized directly when dep
 | `_root` | `address` | The root gauge address |
 | `_manager` | `address` | The manager address |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 @external
 def initialize(_lp_token: address, _root: address, _manager: address):
     assert self.lp_token == empty(address)  # dev: already initialized
@@ -64,33 +56,26 @@ def initialize(_lp_token: address, _root: address, _manager: address):
     )
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> ChildGauge.initialize(lp_token, root, manager)
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **Depositing & Withdrawing**### `deposit`
-:::description[`ChildGauge.deposit(_value: uint256, _addr: address = msg.sender, _claim_rewards: bool = False)`]
+## **Depositing & Withdrawing**
+
+### `deposit`
+::::description[`ChildGauge.deposit(_value: uint256, _addr: address = msg.sender, _claim_rewards: bool = False)`]
 
 
 Function to deposit `_value` of LP tokens into the gauge. When depositing LP tokens into the gauge, the contract mints the equivalent amount of "gauge tokens" to the user which represent the user's share of liquidity in the gauge. Additionally, the function also allows for claiming any pending external rewards (not CRV emissions).
@@ -103,15 +88,10 @@ Emits: `Deposit`, `Transfer`, `UpdateLiquidityLimit` events.
 | `_addr` | `address` | The address to deposit for |
 | `_claim_rewards` | `bool` | Whether to claim rewards. Defaults to `False` |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 event Deposit:
     provider: indexed(address)
     value: uint256
@@ -234,28 +214,20 @@ def _update_liquidity_limit(_user: address, _user_balance: uint256, _total_suppl
     log UpdateLiquidityLimit(_user, _user_balance, _total_supply, working_balance, working_supply)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `withdraw`
-:::description[`ChildGauge.withdraw(_value: uint256, _claim_rewards: bool = False, _receiver: address = msg.sender)`]
+::::description[`ChildGauge.withdraw(_value: uint256, _claim_rewards: bool = False, _receiver: address = msg.sender)`]
 
 
 Function to withdraw `_value` of LP tokens from the gauge. When withdrawing LP tokens from the gauge, the contract burns the equivalent amount of "gauge tokens" from the user. Additionally, the function also allows for claiming any pending external rewards (not CRV emissions).
@@ -268,15 +240,10 @@ Emits: `Withdraw`, `Transfer` events.
 | `_claim_rewards` | `bool` | Whether to claim rewards. Defaults to `False` |
 | `_receiver` | `address` | The address to transfer the withdrawn LP tokens to. Defaults to `msg.sender` |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 event Withdraw:
     provider: indexed(address)
     value: uint256
@@ -373,35 +340,31 @@ def _checkpoint(_user: address):
     self.integrate_checkpoint_of[_user] = block.timestamp
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **External Rewards**External rewards are externally added rewards (not coming from the CRV emissions) and are not boostable. They are distributed linearly over the chosen period to users based on their liquidity share of the gauge. Between 3 days and a year, week by default.
+## **External Rewards**
+
+External rewards are externally added rewards (not coming from the CRV emissions) and are not boostable. They are distributed linearly over the chosen period to users based on their liquidity share of the gauge. Between 3 days and a year, week by default.
 
 The following functions allow for claiming external rewards (not CRV emissions). CRV emissions can only be claimed directly from the `ChildGaugeFactory`.
 
-## **Claiming Rewards**### `claim_rewards`
-:::description[`ChildGauge.claim_rewards(_addr: address = msg.sender, _receiver: address = empty(address))`]
+## **Claiming Rewards**
+
+### `claim_rewards`
+::::description[`ChildGauge.claim_rewards(_addr: address = msg.sender, _receiver: address = empty(address))`]
 
 
 Function to claim available reward tokens for a given address. Claimed rewards cannot be redirected to a different address when claiming for another user.
@@ -411,15 +374,10 @@ Function to claim available reward tokens for a given address. Claimed rewards c
 | `_addr` | `address` | The address to claim rewards for. Defaults to `msg.sender` |
 | `_receiver` | `address` | The address to transfer rewards to. Defaults to `empty(address)` |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 @external
 @nonreentrant('lock')
 def claim_rewards(_addr: address = msg.sender, _receiver: address = empty(address)):
@@ -493,30 +451,21 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
                     self.claim_data[_user][token] = total_claimed + (total_claimable << 128)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `claimed_reward`
-:::description[`ChildGauge.claimed_reward(_addr: address, _token: address) -> uint256`]
+::::description[`ChildGauge.claimed_reward(_addr: address, _token: address) -> uint256`]
 
 
 Function to get the number of claimed reward tokens for a user.
@@ -528,15 +477,10 @@ Returns: number of claimed reward tokens for a user (`uint256`).
 | `_addr` | `address` | The address to get the number of claimed rewards for |
 | `_token` | `address` | The token to get the number of claimed rewards for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 reward_data: public(HashMap[address, Reward])
 
 @view
@@ -551,30 +495,21 @@ def claimed_reward(_addr: address, _token: address) -> uint256:
     return self.claim_data[_addr][_token] % 2**128
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> ChildGauge.claimed_reward(todo)
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `claimable_reward`
-:::description[`ChildGauge.claimable_reward(_user: address, _reward_token: address) -> uint256`]
+::::description[`ChildGauge.claimable_reward(_user: address, _reward_token: address) -> uint256`]
 
 
 Function to get the number of claimable reward tokens for a user.
@@ -586,15 +521,10 @@ Returns: number of claimable reward tokens for a user (`uint256`).
 | `_user` | `address` | The address to get the number of claimable rewards for |
 | `_reward_token` | `address` | The token to get the number of claimable rewards for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 totalSupply: public(uint256)
 
 # For tracking external rewards
@@ -624,30 +554,21 @@ def claimable_reward(_user: address, _reward_token: address) -> uint256:
     return (self.claim_data[_user][_reward_token] >> 128) + new_claimable
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `rewards_receiver`
-:::description[`ChildGauge.rewards_receiver(_user: address) -> address: view`]
+::::description[`ChildGauge.rewards_receiver(_user: address) -> address: view`]
 
 
 Getter for the reward receiver of the caller. By default, this value is set to `empty(address)`, which means the rewards will be claimed to the user. But e.g. for integrations like Convex, the `rewards_receiver` is set to another contract address, from which the rewards are further distributed.
@@ -658,44 +579,30 @@ Returns: reward receiver for a user (`address`).
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user to get the reward receiver for. |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # claimant -> default reward receiver
 rewards_receiver: public(HashMap[address, address])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> ChildGauge.rewards_receiver('0x1234567890123456789012345678901234567890')
 '0x0000000000000000000000000000000000000000'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_rewards_receiver`
-:::description[`ChildGauge.set_rewards_receiver(_receiver: address)`]
+::::description[`ChildGauge.set_rewards_receiver(_receiver: address)`]
 
 
 Function to set the default reward receiver for the caller. When set to empty(address), rewards are sent to the caller.
@@ -704,15 +611,10 @@ Function to set the default reward receiver for the caller. When set to empty(ad
 | --------- | ---- | ------------ |
 | `_receiver` | `address` | The address to set as the default reward receiver for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # claimant -> default reward receiver
 rewards_receiver: public(HashMap[address, address])
 
@@ -726,16 +628,9 @@ def set_rewards_receiver(_receiver: address):
     self.rewards_receiver[msg.sender] = _receiver
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> ChildGauge.rewards_receiver('0x1234567890123456789012345678901234567890')
@@ -747,20 +642,20 @@ def set_rewards_receiver(_receiver: address):
 '0x1234567890123456789012345678901234567890'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Reward Data**The following functions allow for retrieving reward data for a specific reward token.
+## **Reward Data**
+
+The following functions allow for retrieving reward data for a specific reward token.
 
 ### `reward_data`
-:::description[`ChildGauge.reward_data(_reward_token: address) -> Reward: view`]
+::::description[`ChildGauge.reward_data(_reward_token: address) -> Reward: view`]
 
 
 Getter for the reward data for a specific reward token.
@@ -771,15 +666,10 @@ Returns: Reward struct containing the distributor (`address`), period finish (`u
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | The reward token to get the reward data for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 struct Reward:
     distributor: address
     period_finish: uint256
@@ -790,30 +680,21 @@ struct Reward:
 reward_data: public(HashMap[address, Reward])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `reward_tokens`
-:::description[`ChildGauge.reward_tokens(arg0: uint256) -> address: view`]
+::::description[`ChildGauge.reward_tokens(arg0: uint256) -> address: view`]
 
 
 Getter for the added reward token at index `arg0`. New tokens are populated to this variable when calling the `add_reward` function.
@@ -824,85 +705,57 @@ Returns: reward token at index `arg0` (`address`).
 | --------- | ---- | ------------ |
 | `arg0` | `uint256` | The index of the reward token to get |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # array of reward tokens
 reward_tokens: public(address[MAX_REWARDS])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `reward_count`
-:::description[`ChildGauge.reward_count() -> uint256: view`]
+::::description[`ChildGauge.reward_count() -> uint256: view`]
 
 
 Getter for the number of reward tokens. This value is incremented by one for each new reward token added via `add_reward`.
 
 Returns: number of reward tokens (`uint256`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 reward_count: public(uint256)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `reward_integral_for`
-:::description[`ChildGauge.reward_integral_for(_reward_token: address, _claiming_address: address) -> uint256: view`]
+::::description[`ChildGauge.reward_integral_for(_reward_token: address, _claiming_address: address) -> uint256: view`]
 
 
 Getter for the reward integral for a specific reward token and claiming address.
@@ -914,43 +767,29 @@ Returns: reward integral (`uint256`).
 | `_reward_token` | `address` | The reward token to get the reward integral for |
 | `_claiming_address` | `address` | The address to get the reward integral for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # reward token -> claiming address -> integral
 reward_integral_for: public(HashMap[address, HashMap[address, uint256]])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `reward_remaining`
-:::description[`ChildGauge.reward_remaining(_reward_token: address) -> uint256: view`]
+::::description[`ChildGauge.reward_remaining(_reward_token: address) -> uint256: view`]
 
 
 Getter for the remaining reward for a specific reward token.
@@ -961,42 +800,28 @@ Returns: the remaining reward for a specific reward token (`uint256`).
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | The reward token to get the remaining reward for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 reward_remaining: public(HashMap[address, uint256])  # fixes bad precision
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```python
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `recover_remaining`
-:::description[`ChildGauge.integrate_checkpoint_of(_user: address) -> uint256: view`]
+::::description[`ChildGauge.integrate_checkpoint_of(_user: address) -> uint256: view`]
 
 
 Getter for the timestamp of the last checkpoint for a user.
@@ -1005,15 +830,10 @@ Getter for the timestamp of the last checkpoint for a user.
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to get the integrate checkpoint for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # For tracking external rewards
 reward_count: public(uint256)
 reward_data: public(HashMap[address, Reward])
@@ -1095,31 +915,24 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
                     self.claim_data[_user][token] = total_claimed + (total_claimable << 128)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> soon
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
-## **Depositing Rewards**The process for adding external reward tokens follows two steps:
+## **Depositing Rewards**
+
+The process for adding external reward tokens follows two steps:
 
 1. **Add Reward Token**(`add_reward`)
     - Registers a new reward token in the gauge
@@ -1127,7 +940,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
     - Only callable by gauge manager or factory admin
     - Stores token data in `reward_data` mapping
 
-2. **Deposit Rewards**(`deposit_reward_token`) 
+2. **Deposit Rewards**(`deposit_reward_token`)
     - Deposits reward tokens for distribution
     - Only callable by the authorized distributor
     - Distributes rewards linearly over specified period
@@ -1141,7 +954,7 @@ External rewards are separate from CRV emissions and are not subject to boost mu
 :::
 
 ### `add_reward`
-:::description[`ChildGauge.add_reward(_reward_token: address, _distributor: address)`]
+::::description[`ChildGauge.add_reward(_reward_token: address, _distributor: address)`]
 
 
 Function to add a reward token for distribution. When calling this function, a distributor address must be set for the reward token. Only this distributor can deposit the reward token via the `deposit_reward_token` function.
@@ -1151,15 +964,10 @@ Function to add a reward token for distribution. When calling this function, a d
 | `_reward_token` | `address` | The reward token to add |
 | `_distributor` | `address` | The distributor of the reward token |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 interface Factory:
     def owner() -> address: view
     def crv() -> ERC20: view
@@ -1191,16 +999,9 @@ def add_reward(_reward_token: address, _distributor: address):
     self.reward_count = reward_count + 1
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example sets the distributor for the `crvUSD` reward token to `0x1234567890123456789012345678901234567890`. Only this address can deposit `crvUSD` to the gauge using the `deposit_reward_token` function.
 
@@ -1208,15 +1009,13 @@ This example sets the distributor for the `crvUSD` reward token to `0x1234567890
 >>> ChildGauge.add_reward('0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5', '0x1234567890123456789012345678901234567890')
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_reward_distributor`
-:::description[`ChildGauge.set_reward_distributor(_reward_token: address, _distributor: address)`]
+::::description[`ChildGauge.set_reward_distributor(_reward_token: address, _distributor: address)`]
 
 
 :::guard[Guarded Method]
@@ -1233,15 +1032,10 @@ Function to reassign the reward distributor for a reward token.
 | `_reward_token` | `address` | The reward token to reassign the distributor for |
 | `_distributor` | `address` | The address of the new distributor |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # For tracking external rewards
 reward_count: public(uint256)
 reward_data: public(HashMap[address, Reward])
@@ -1263,16 +1057,9 @@ def set_reward_distributor(_reward_token: address, _distributor: address):
     self.reward_data[_reward_token].distributor = _distributor
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example changes the distributor for the `crvUSD` reward token from `0x1234567890123456789012345678901234567890` to `0x9876543210987654321098765432109876543210`.
 
@@ -1298,15 +1085,13 @@ This example changes the distributor for the `crvUSD` reward token from `0x12345
 }
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `deposit_reward_token`
-:::description[`ChildGauge.deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint256 = WEEK)`]
+::::description[`ChildGauge.deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint256 = WEEK)`]
 
 
 Function to deposit a reward token for distribution.
@@ -1317,15 +1102,10 @@ Function to deposit a reward token for distribution.
 | `_amount` | `uint256` | The amount of the reward token to deposit |
 | `_epoch` | `uint256` | The duration the rewards are distributed across. Between 3 days and a year, week by default |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # For tracking external rewards
 reward_count: public(uint256)
 reward_data: public(HashMap[address, Reward])
@@ -1363,16 +1143,9 @@ def deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint2
     self.reward_data[_reward_token].period_finish = block.timestamp + _epoch
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example deposits `10,000` `crvUSD` tokens as rewards over `7` days.
 
@@ -1380,43 +1153,29 @@ This example deposits `10,000` `crvUSD` tokens as rewards over `7` days.
 >>> ChildGauge.deposit_reward_token('0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5', 10000000000000000000000, 604800)
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `manager`
-:::description[`ChildGauge.manager() -> address: view`]
+::::description[`ChildGauge.manager() -> address: view`]
 
 
 Getter for the gauge manager address. The manager address is set during initialization and can be changed by the `owner` of the factory.
 
 Returns: the gauge manager address (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 manager: public(address)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the manager of the gauge, which is `0x1234567890123456789012345678901234567890`.
 
@@ -1425,15 +1184,13 @@ This example returns the manager of the gauge, which is `0x123456789012345678901
 '0x1234567890123456789012345678901234567890'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_gauge_manager`
-:::description[`ChildGauge.set_gauge_manager(_gauge_manager: address)`]
+::::description[`ChildGauge.set_gauge_manager(_gauge_manager: address)`]
 
 
 :::guard[Guarded Method]
@@ -1451,15 +1208,10 @@ Emits: `SetGaugeManager` event.
 | --------- | ---- | ------------ |
 | `_gauge_manager` | `address` | The address to set as the new manager of the gauge |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 interface Factory:
     def owner() -> address: view
 
@@ -1483,16 +1235,9 @@ def set_gauge_manager(_gauge_manager: address):
     log SetGaugeManager(_gauge_manager)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example changes the manager of the gauge from `0x1234567890123456789012345678901234567890` to `0x9876543210987654321098765432109876543210`.
 
@@ -1506,15 +1251,13 @@ This example changes the manager of the gauge from `0x12345678901234567890123456
 '0x9876543210987654321098765432109876543210'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_manager`
-:::description[`ChildGauge.set_manager(_gauge_manager: address)`]
+::::description[`ChildGauge.set_manager(_gauge_manager: address)`]
 
 
 :::guard[Guarded Method]
@@ -1532,15 +1275,10 @@ Emits: `SetGaugeManager` event.
 | --------- | ---- | ------------ |
 | `_gauge_manager` | `address` | The address to set as the new manager of the gauge |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 event SetGaugeManager:
     _gauge_manager: address
 
@@ -1562,16 +1300,9 @@ def set_manager(_gauge_manager: address):
     log SetGaugeManager(_gauge_manager)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example changes the manager of the gauge from `0x1234567890123456789012345678901234567890` to `0x9876543210987654321098765432109876543210`. It has the same effect as the `set_gauge_manager` function.
 
@@ -1585,19 +1316,19 @@ This example changes the manager of the gauge from `0x12345678901234567890123456
 '0x9876543210987654321098765432109876543210'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
-# **Checkpoints and Boosting**For more information on how boosting works, please refer to the [Boosting Explainer](./overview.md#boosting) page.
+## **Checkpoints and Boosting**
+
+For more information on how boosting works, please refer to the [Boosting Explainer](./overview.md#boosting) page.
 
 ### `user_checkpoint`
-:::description[`ChildGauge.user_checkpoint(_user: address) -> bool`]
+::::description[`ChildGauge.user_checkpoint(_user: address) -> bool`]
 
 
 Function to record a checkpoint for a user.
@@ -1608,15 +1339,10 @@ Returns: `True` if the checkpoint was recorded successfully (`bool`).
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to record a checkpoint for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 @external
 def user_checkpoint(addr: address) -> bool:
     """
@@ -1705,46 +1431,32 @@ def _update_liquidity_limit(_user: address, _user_balance: uint256, _total_suppl
     log UpdateLiquidityLimit(_user, _user_balance, _total_supply, working_balance, working_supply)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.user_checkpoint('0x20a440aECf78c73d484B652C46d582B4D70906A8')
 True
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `integrate_checkpoint`
-:::description[`ChildGauge.integrate_checkpoint() -> uint256: view`]
+::::description[`ChildGauge.integrate_checkpoint() -> uint256: view`]
 
 
 Getter for the timestamp of the last checkpoint.
 
 Returns: timestamp of the last checkpoint (`uint256`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # The goal is to be able to calculate ∫(rate * balance / totalSupply dt) from 0 till checkpoint
 # All values are kept in units of being multiplied by 1e18
 period: public(int128)
@@ -1760,31 +1472,22 @@ def integrate_checkpoint() -> uint256:
     return self.period_timestamp[self.period]
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.integrate_checkpoint()
 1729778435
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `integrate_checkpoint_of`
-:::description[`ChildGauge.integrate_checkpoint_of(_user: address) -> uint256: view`]
+::::description[`ChildGauge.integrate_checkpoint_of(_user: address) -> uint256: view`]
 
 
 Getter for the timestamp of the last checkpoint for a user.
@@ -1795,45 +1498,31 @@ Returns: timestamp of the last checkpoint (`uint256`).
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to get the integrate checkpoint for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # 1e18 * ∫(rate(t) / totalSupply(t) dt) from (last_action) till checkpoint
 integrate_inv_supply_of: public(HashMap[address, uint256])
 integrate_checkpoint_of: public(HashMap[address, uint256])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.integrate_checkpoint_of(todo)
 todo
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `working_balances`
-:::description[`ChildGauge.working_balances(_user: address) -> uint256: view`]
+::::description[`ChildGauge.working_balances(_user: address) -> uint256: view`]
 
 
 Getter for the working balances of a user. This represents the effective liquidity of a user, which is used to calculate the CRV rewards they are entitled to. Essentially, it's the boosted balance of a user if they have some veCRV. If a user has no boost at all, their working_balance will be 40% of their LP tokens. If the position is fully boosted (2.5x), their working_balance will be equal to their LP tokens.
@@ -1850,71 +1539,45 @@ Returns: working balance of a user (`uint256`).
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to get the working balance for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 working_balances: public(HashMap[address, uint256])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.working_balances(0x20a440aECf78c73d484B652C46d582B4D70906A8)
 106163327646490
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `working_supply`
-:::description[`ChildGauge.working_supply() -> uint256: view`]
+::::description[`ChildGauge.working_supply() -> uint256: view`]
 
 
 Getter for the working supply. This variable represents the sum of all `working_balances` of users who provided liquidity in the gauge.
 
 Returns: working supply (`uint256`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 working_supply: public(uint256)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 The working supply in our example is equal to the working_balance of `0x20a440aECf78c73d484B652C46d582B4D70906A8` because its the only user that has provided liquidity so far.
 
@@ -1923,15 +1586,13 @@ The working supply in our example is equal to the working_balance of `0x20a440aE
 106163327646490
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `period`
-:::description[`ChildGauge.period() -> int128: view`]
+::::description[`ChildGauge.period() -> int128: view`]
 
 
 :::info
@@ -1945,30 +1606,18 @@ Getter for the current period.
 
 Returns: the current period (`int128`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # The goal is to be able to calculate ∫(rate * balance / totalSupply dt) from 0 till checkpoint
 # All values are kept in units of being multiplied by 1e18
 period: public(int128)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 Period is one, because only one checkpoint has been recorded so far (when depositing liquidity).
 
@@ -1977,15 +1626,13 @@ Period is one, because only one checkpoint has been recorded so far (when deposi
 1
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `period_timestamp`
-:::description[`ChildGauge.period_timestamp(_period: int128) -> uint256: view`]
+::::description[`ChildGauge.period_timestamp(_period: int128) -> uint256: view`]
 
 
 Getter for the period timestamp for a specific period.
@@ -1996,28 +1643,16 @@ Returns: the period timestamp for a specific period (`uint256`).
 | --------- | ---- | ------------ |
 | `_period` | `int128` | The period to get the timestamp for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 period_timestamp: public(HashMap[int128, uint256])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the timestamp of the first period, which is the timestamp of the first checkpoint (when depositing liquidity).
 
@@ -2026,15 +1661,13 @@ This example returns the timestamp of the first period, which is the timestamp o
 1729778435      # exactly the timestamp of the first checkpoint which was the deposit of liquidity
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `integrate_fraction`
-:::description[`ChildGauge.integrate_fraction(_user: address) -> uint256: view`]
+::::description[`ChildGauge.integrate_fraction(_user: address) -> uint256: view`]
 
 
 Getter for the total amount of CRV, both mintable and already minted, that has been allocated to `_user` from this gauge.
@@ -2045,45 +1678,31 @@ Returns: integral of accrued rewards (`uint256`).
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to get the integrate fraction for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # ∫(balance * rate(t) / totalSupply(t) dt) from 0 till checkpoint
 # Units: rate * t = already number of coins per address to issue
 integrate_fraction: public(HashMap[address, uint256])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.integrate_fraction(0x20a440aECf78c73d484B652C46d582B4D70906A8)
 0
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `claimable_tokens`
-:::description[`ChildGauge.claimable_tokens(addr: address) -> uint256`]
+::::description[`ChildGauge.claimable_tokens(addr: address) -> uint256`]
 
 
 Function to get the number of claimable CRV emissions for a user.
@@ -2094,15 +1713,10 @@ Returns: the number of claimable CRV emissions for a user (`uint256`).
 | --------- | ---- | ------------ |
 | `addr` | `address` | The address to get the number of claimable CRV emissions for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # ∫(balance * rate(t) / totalSupply(t) dt) from 0 till checkpoint
 # Units: rate * t = already number of coins per address to issue
 integrate_fraction: public(HashMap[address, uint256])
@@ -2167,16 +1781,9 @@ def _checkpoint(_user: address):
     self.integrate_checkpoint_of[_user] = block.timestamp
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the number of claimable CRV emissions for `0x20a440aECf78c73d484B652C46d582B4D70906A8`, which currently is `0`.
 
@@ -2185,15 +1792,13 @@ This example returns the number of claimable CRV emissions for `0x20a440aECf78c7
 0
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `inflation_rate`
-:::description[`ChildGauge.inflation_rate(_period: uint256) -> uint256: view`]
+::::description[`ChildGauge.inflation_rate(_period: uint256) -> uint256: view`]
 
 
 Getter for the CRV emission inflation rate for a specific week.
@@ -2202,28 +1807,16 @@ Getter for the CRV emission inflation rate for a specific week.
 | --------- | ---- | ------------ |
 | `_period` | `uint256` | The week to get the inflation rate for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 inflation_rate: public(HashMap[uint256, uint256])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the CRV emission inflation rate for the first week, which is `0`.
 
@@ -2232,15 +1825,13 @@ This example returns the CRV emission inflation rate for the first week, which i
 0
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `integrate_inv_supply`
-:::description[`ChildGauge.integrate_inv_supply(_period: int128) -> uint256: view`]
+::::description[`ChildGauge.integrate_inv_supply(_period: int128) -> uint256: view`]
 
 
 Getter for the inverse supply of CRV at a given period that tracks a cumulative measure of inverse supply over time in relation to the CRV emissions.
@@ -2251,29 +1842,17 @@ Returns: inverse supply of CRV at a given period (`uint256`).
 | --------- | ---- | ------------ |
 | `_period` | `int128` | The period to get the inverse supply for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # 1e18 * ∫(rate(t) / totalSupply(t) dt) from 0 till checkpoint
 integrate_inv_supply: public(HashMap[int128, uint256])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the inverse supply of CRV at the first period, which is `0`.
 
@@ -2282,15 +1861,13 @@ This example returns the inverse supply of CRV at the first period, which is `0`
 0
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `integrate_inv_supply_of`
-:::description[`ChildGauge.integrate_inv_supply_of(_user: address) -> uint256: view`]
+::::description[`ChildGauge.integrate_inv_supply_of(_user: address) -> uint256: view`]
 
 
 The integrate_inv_supply_of variable is a mapping (HashMap[address, uint256]) that stores a user-specific cumulative measure of inverse supply up to the last checkpoint for each user. It is used to calculate the individual CRV emissions that a user is entitled to based on their participation in the gauge.
@@ -2301,30 +1878,18 @@ Returns: inverse supply of CRV at a given period for a user (`uint256`).
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to get the inverse supply for |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 # 1e18 * ∫(rate(t) / totalSupply(t) dt) from (last_action) till checkpoint
 integrate_inv_supply_of: public(HashMap[address, uint256])
 integrate_checkpoint_of: public(HashMap[address, uint256])
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the inverse supply of CRV at the first period for `0x20a440aECf78c73d484B652C46d582B4D70906A8`, which is `0`.
 
@@ -2333,60 +1898,46 @@ This example returns the inverse supply of CRV at the first period for `0x20a440
 0
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
-# **RootGauge and VotingEscrow**### `root_gauge`
-:::description[`ChildGauge.root_gauge() -> address: view`]
+## **RootGauge and VotingEscrow**
+
+### `root_gauge`
+::::description[`ChildGauge.root_gauge() -> address: view`]
 
 
 Getter for the root gauge address on Ethereum.
 
 Returns: root gauge address (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 root_gauge: public(address)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.root_gauge()
 '0x12C3F630ec8f8A07C539b5F933e8E62F9b627396'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_root_gauge`
-:::description[`ChildGauge.set_root_gauge(_root: address)`]
+::::description[`ChildGauge.set_root_gauge(_root: address)`]
 
 
 Function to set the root gauge address in case something went wrong (e.g. between implementation updates).
@@ -2395,15 +1946,10 @@ Function to set the root gauge address in case something went wrong (e.g. betwee
 | --------- | ---- | ------------ |
 | `_root` | `address` | The root gauge address to set |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 root_gauge: public(address)
 
 @external
@@ -2418,16 +1964,9 @@ def set_root_gauge(_root: address):
     self.root_gauge = _root
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.root_gauge()
@@ -2439,71 +1978,50 @@ def set_root_gauge(_root: address):
 '0x12C3F630ec8f8A07C539b5F933e8E62F9b627396'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `voting_escrow`
-:::description[`ChildGauge.voting_escrow() -> address: view`]
+::::description[`ChildGauge.voting_escrow() -> address: view`]
 
 
 Getter for the voting escrow contract on the specific chain. If this variable is not set, boosting LP positions will not work. If boosting works, the `voting_escrow` variable will be set to a L2 Voting Escrow Oracle contract, which validates the user's veCRV balance from Ethereum mainnet. This value mirrors the voting escrow contract set on the `ChildGaugeFactory`. If the `ChildGaugeFactory` voting escrow contract is updated, the `ChildGauge` voting escrow contract can be updated by calling the `update_voting_escrow()` function.
 
 Returns: voting escrow contract (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 voting_escrow: public(address)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.voting_escrow()
 '0x0000000000000000000000000000000000000000'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `update_voting_escrow`
-:::description[`ChildGauge.update_voting_escrow()`]
+::::description[`ChildGauge.update_voting_escrow()`]
 
 
 Function to update the voting escrow contract to the voting escrow contract set in the factory. This function is callable by anyone.
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 interface Factory:
     def voting_escrow() -> address: view
 
@@ -2515,16 +2033,9 @@ def update_voting_escrow():
     self.voting_escrow = FACTORY.voting_escrow()
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example shows the following: The gauge has been deployed without a voting escrow contract to be set in the `ChildGaugeFactory`. Therefore, the voting escrow address is `0x0000000000000000000000000000000000000000`. After the voting escrow contract has been set in the `ChildGaugeFactory`, the `update_voting_escrow()` function is called, and the voting escrow address is set to mirror the voting escrow contract set in the `ChildGaugeFactory`.
 
@@ -2538,60 +2049,46 @@ This example shows the following: The gauge has been deployed without a voting e
 '0xc73e8d8f7A68Fc9d67e989250484E57Ae03a5Da3'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
-# **Killing Gauges**### `is_killed`
-:::description[`ChildGauge.is_killed() -> bool: view`]
+## **Killing Gauges**
+
+### `is_killed`
+::::description[`ChildGauge.is_killed() -> bool: view`]
 
 
 Getter to check if the gauge is killed.
 
 Returns: killed status (`bool`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 is_killed: public(bool)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.is_killed()
 False
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_killed`
-:::description[`ChildGauge.set_killed(_is_killed: bool)`]
+::::description[`ChildGauge.set_killed(_is_killed: bool)`]
 
 
 :::guard[Guarded Method]
@@ -2607,15 +2104,10 @@ Function to set the killed status for the gauge.
 | ------------ | ------ | ----------- |
 | `_is_killed` | `bool` | The killed status to set |
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 is_killed: public(bool)
 
 @external
@@ -2630,16 +2122,9 @@ def set_killed(_is_killed: bool):
     self.is_killed = _is_killed
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.is_killed()
@@ -2651,79 +2136,60 @@ False
 True
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-# **ERC20 and Other Methods**The contract inherits the ERC20 interface and follows the standard ERC20 methods. These methods are not further documented here. Some notable methods are documented below.
+## **ERC20 and Other Methods**
+
+The contract inherits the ERC20 interface and follows the standard ERC20 methods. These methods are not further documented here. Some notable methods are documented below.
 
 
 ### `totalSupply`
-:::description[`ChildGauge.totalSupply() -> uint256: view`]
+::::description[`ChildGauge.totalSupply() -> uint256: view`]
 
 
 Getter for the total supply of the gauge.
 
 Returns: total supply (`uint256`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 totalSupply: public(uint256)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.totalSupply()
 1000000000000000000000000
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `factory`
-:::description[`ChildGauge.factory() -> address: view`]
+::::description[`ChildGauge.factory() -> address: view`]
 
 
 Getter for the `ChildGaugeFactory` contract.
 
 Returns: `ChildGaugeFactory` contract (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 interface Factory:
     def owner() -> address: view
     def manager() -> address: view
@@ -2734,46 +2200,32 @@ interface Factory:
 FACTORY: immutable(Factory)
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.factory()
 '0x0B8D6B6CeFC7Aa1C2852442e518443B1b22e1C52'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `lp_token`
-:::description[`ChildGauge.lp_token() -> address: view`]
+::::description[`ChildGauge.lp_token() -> address: view`]
 
 
 Getter for the LP token address.
 
 Returns: LP token contract (`address`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 interface ERC20Extended:
     def symbol() -> String[32]: view
 
@@ -2807,46 +2259,32 @@ def initialize(_lp_token: address, _root: address, _manager: address):
     )
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.lp_token()
 '0xF25E1dB1f0c7BD1a29761a1FcDaE187B8718CF18'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `version`
-:::description[`ChildGauge.version() -> String[8]`]
+::::description[`ChildGauge.version() -> String[8]`]
 
 
 Getter for the version of the gauge contract.
 
 Returns: version (`String[8]`).
 
-<details>
-<summary>Source code</summary>
 
+<SourceCode>
 
-<Tabs>
-<TabItem value="childgauge-vy" label="ChildGauge.vy">
-
-
-```python
+```vyper
 VERSION: constant(String[8]) = "1.0.0"
 
 @view
@@ -2858,25 +2296,16 @@ def version() -> String[8]:
     return VERSION
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> ChildGauge.version()
 "1.0.0"
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

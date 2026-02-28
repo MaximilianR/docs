@@ -1,29 +1,68 @@
-const visit = require('unist-util-visit');
+/**
+ * Remark plugin that converts :logos-<name>: shortcodes into inline
+ * <img> elements pointing to /img/logos/<name>.svg.
+ *
+ * Works with Docusaurus 3 / MDX v3 by emitting mdxJsxTextElement AST
+ * nodes that the MDX compiler handles natively.
+ */
 
-module.exports = function remarkLogos() {
-  return function transformer(tree) {
-    visit(tree, 'text', function (node) {
-      // Match :logos-*: pattern
-      const logoRegex = /:logos-([^:]+):/g;
-      let match;
-      let newValue = node.value;
-      
-      while ((match = logoRegex.exec(node.value)) !== null) {
-        const logoName = match[1];
-        const fullMatch = match[0];
-        
-        // Create the image tag
-        const imageTag = `<img src="/img/logos/${logoName}.svg" alt="${logoName.toUpperCase()}" style={{height: '1.2em', verticalAlign: 'middle'}} />`;
-        
-        // Replace the :logos-*: with the image tag
-        newValue = newValue.replace(fullMatch, imageTag);
+function remarkLogos() {
+  const logoPattern = /:logos-([^:]+):/;
+
+  function transformChildren(node) {
+    if (!node.children) return;
+
+    for (let i = 0; i < node.children.length; i++) {
+      const child = node.children[i];
+
+      if (child.type === 'text' && logoPattern.test(child.value)) {
+        const newNodes = splitTextNode(child);
+        node.children.splice(i, 1, ...newNodes);
+        i += newNodes.length - 1;
+      } else {
+        transformChildren(child);
       }
-      
-      if (newValue !== node.value) {
-        // Convert the text node to an HTML node if it contains logos
-        node.type = 'html';
-        node.value = newValue;
+    }
+  }
+
+  function splitTextNode(node) {
+    const regex = /:logos-([^:]+):/g;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(node.value)) !== null) {
+      // Text before the match
+      if (match.index > lastIndex) {
+        parts.push({ type: 'text', value: node.value.slice(lastIndex, match.index) });
       }
-    });
+
+      // Inline <img> as an MDX JSX element
+      parts.push({
+        type: 'mdxJsxTextElement',
+        name: 'img',
+        attributes: [
+          { type: 'mdxJsxAttribute', name: 'src', value: `/img/logos/${match[1]}.svg` },
+          { type: 'mdxJsxAttribute', name: 'alt', value: match[1] },
+          { type: 'mdxJsxAttribute', name: 'className', value: 'inline-logo' },
+        ],
+        children: [],
+      });
+
+      lastIndex = regex.lastIndex;
+    }
+
+    // Remaining text after the last match
+    if (lastIndex < node.value.length) {
+      parts.push({ type: 'text', value: node.value.slice(lastIndex) });
+    }
+
+    return parts;
+  }
+
+  return (tree) => {
+    transformChildren(tree);
   };
-};
+}
+
+module.exports = remarkLogos;

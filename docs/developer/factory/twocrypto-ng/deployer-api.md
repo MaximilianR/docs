@@ -1,13 +1,11 @@
 # Pool Factory: Deployer API
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 ### `deploy_pool`
-:::description[`Factory.deploy_pool(_name: String[64], _symbol: String[32], _coins: address[N_COINS], implementation_id: uint256, A: uint256, gamma: uint256, mid_fee: uint256, out_fee: uint256, fee_gamma: uint256, allowed_extra_profit: uint256, adjustment_step: uint256, ma_exp_time: uint256, initial_price: uint256) -> address:`]
+::::description[`Factory.deploy_pool(_name: String[64], _symbol: String[32], _coins: address[N_COINS], implementation_id: uint256, A: uint256, gamma: uint256, mid_fee: uint256, out_fee: uint256, fee_gamma: uint256, allowed_extra_profit: uint256, adjustment_step: uint256, ma_exp_time: uint256, initial_price: uint256) -> address:`]
 
 
-Function to deploy a TwoCrypto-NG liquidity pool.
+Function to deploy a Twocrypto-NG liquidity pool.
 
 Returns: deployed pool (`address`).
 
@@ -46,14 +44,7 @@ Emits: `TwocryptoPoolDeployed`
 | `ma_exp_time`        | 86 < ma_exp_time < 872542                            |
 | `initial_prices`     | 10^6 < initial_prices[0] and initial_prices[1] < 10^30 |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 event TwocryptoPoolDeployed:
     pool: address
@@ -183,16 +174,9 @@ def deploy_pool(
 
     return pool
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -216,19 +200,18 @@ def deploy_pool(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `deploy_gauge`
-:::description[`Factory.deploy_gauge(_pool: address) -> address:`]
+::::description[`Factory.deploy_gauge(_pool: address) -> address:`]
 
 
 :::warning
 
-Deploying a liquidity gauge through the Factory is only possible on Ethereum Mainnet. Gauge deployments on sidechains must be done via the [`RootChainGaugeFactory`](../../liquidity-gauges-and-minting-crv/xchain-gauges/RootGaugeFactory.md).
+Deploying a liquidity gauge through the Factory is only possible on Ethereum Mainnet. Gauge deployments on sidechains must be done via the [`RootChainGaugeFactory`](../../gauges/xchain-gauges/root-gauge-factory.md).
 
 
 :::
@@ -243,14 +226,7 @@ Emits: `LiquidityGaugeDeployed`
 | ---------- | --------- | ----------- |
 | `_pool`    | `address` | Pool to deploy a gauge for |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvetwocryptofactory-vy" label="CurveTwocryptoFactory.vy">
-
-
+<SourceCode>
 ```vyper
 event LiquidityGaugeDeployed:
     pool: address
@@ -273,16 +249,9 @@ def deploy_gauge(_pool: address) -> address:
     log LiquidityGaugeDeployed(_pool, gauge)
     return gauge
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -291,8 +260,7 @@ def deploy_gauge(_pool: address) -> address:
 'returns address of the deployed gauge' 
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

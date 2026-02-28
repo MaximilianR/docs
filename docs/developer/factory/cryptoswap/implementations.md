@@ -1,5 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 **The CryptoSwap Factory makes use of the `create_forwarder_to` function to deploy its contracts from the implementations.**:::warning
 
@@ -15,16 +13,17 @@ It utilizes three different implementations:
 - **`gauge_implementation`**, containing a blueprint contract that is used when deploying gauges for pools.
 
 
-## **Query Implementations**### `pool_implementations`
-:::description[`Factory.pool_implementations() -> address: view`]
+## **Query Implementations**
+
+### `pool_implementations`
+::::description[`Factory.pool_implementations() -> address: view`]
 
 
 Getter for the pool implementation contract.
 
 Returns: pool implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -32,10 +31,9 @@ pool_implementation: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.pool_implementations()
@@ -43,22 +41,20 @@ pool_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `token_implementation`
-:::description[`Factory.token_implementation() -> address: view`]
+::::description[`Factory.token_implementation() -> address: view`]
 
 
 Getter for the token implementation contract.
 
 Returns: token implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -66,10 +62,9 @@ token_implementation: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.token_implementation()
@@ -77,22 +72,20 @@ token_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `gauge_implementation`
-:::description[`Factory.gauge_implementation() -> address: view`]
+::::description[`Factory.gauge_implementation() -> address: view`]
 
 
 Getter for the gauge implementation contract.
 
 Returns: gauge implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -100,10 +93,9 @@ gauge_implementation: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.gauge_implementation()
@@ -111,16 +103,15 @@ gauge_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## **Set New Implementation***New implementations can be set via these admin-only functions:*
 
 ### `set_pool_implementation`
-:::description[`Factory.set_pool_implementation(_pool_implementation: address):`]
+::::description[`Factory.set_pool_implementation(_pool_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -139,8 +130,7 @@ Emits event: `UpdatePoolImplementation`
 | `_pool_implementation`| `address` | New pool implementation   |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -164,10 +154,9 @@ def set_pool_implementation(_pool_implementation: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_pool_implementation("todo")
@@ -175,14 +164,13 @@ def set_pool_implementation(_pool_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_token_implementation`
-:::description[`Factory.set_token_implementation(_token_implementation: address):`]
+::::description[`Factory.set_token_implementation(_token_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -201,8 +189,7 @@ Emits event: `UpdateTokenImplementation`
 | `_token_implementation`| `address` | New token implementation  |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -226,10 +213,9 @@ def set_token_implementation(_token_implementation: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_token_implementation("todo")
@@ -237,14 +223,13 @@ def set_token_implementation(_token_implementation: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_gauge_implementation`
-:::description[`Factory.set_fee_receiver(_fee_receiver: address):`]
+::::description[`Factory.set_fee_receiver(_fee_receiver: address):`]
 
 
 :::guard[Guarded Method]
@@ -263,8 +248,7 @@ Emits event: `UpdateGaugeImplementation`
 | `_gauge_implementation` | `address` | New gauge implementation |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -288,18 +272,16 @@ def set_gauge_implementation(_gauge_implementation: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_gauge_implementation("todo")
 'todo'
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

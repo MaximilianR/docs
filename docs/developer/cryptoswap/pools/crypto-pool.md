@@ -1,7 +1,5 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-**Crypto-Pools are exchange contracts containing two volatile (non-pegged) assets.**These exchange contracts are deployed via the [CryptoSwap Factory](../../../factory/cryptoswap/overview.md). Unlike newer Factory contracts, which utilize blueprint contracts, the earlier versions did not have this feature at the time of their deployments. Instead, in these earlier versions, the exchange contract is created using the Vyper built-in **`create_forwarder_to()`**function. 
+**Crypto-Pools are exchange contracts containing two volatile (non-pegged) assets.**These exchange contracts are deployed via the [CryptoSwap Factory](../../factory/cryptoswap/overview.md). Unlike newer Factory contracts, which utilize blueprint contracts, the earlier versions did not have this feature at the time of their deployments. Instead, in these earlier versions, the exchange contract is created using the Vyper built-in **`create_forwarder_to()`**function. 
 
 The pool is then initialized via the **`initialize()`**function of the pool implementation contract, which sets all the relevant variables, such as paired tokens, prices, and parameters.
 
@@ -61,8 +59,10 @@ def initialize(
 
 </details>
 
-## **Exchange Methods**### `exchange`
-:::description[`CryptoSwap.exchange(i: uint256, j: uint256, dx: uint256, min_dy: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
+## **Exchange Methods**
+
+### `exchange`
+::::description[`CryptoSwap.exchange(i: uint256, j: uint256, dx: uint256, min_dy: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to exchange `dx` amount of coin `i` for coin `j` and receive a minimum amount of `min_dy`.
@@ -80,8 +80,7 @@ Emits: `TokenExchange`
 | `use_eth` | `bool` | whether to use plain ETH; defaults to `False` (uses wETH instead) |
 | `receiver` | `address` | Address to send output coin to. Deafaults to `msg.sender` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -223,10 +222,9 @@ def _exchange(sender: address, mvalue: uint256, i: uint256, j: uint256, dx: uint
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -235,14 +233,13 @@ def _exchange(sender: address, mvalue: uint256, i: uint256, j: uint256, dx: uint
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `exchange_underlying`
-:::description[`CryptoSwap.exchange_underlying(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`CryptoSwap.exchange_underlying(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
 :::note
@@ -267,8 +264,7 @@ Emits: `TokenExchange`
 | `use_eth` | `bool` | whether to use plain ETH; defaults to `False` (uses wETH instead) |
 | `receiver` | `address` | address to send output coin to; deafaults to `msg.sender` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -410,10 +406,9 @@ def _exchange(sender: address, mvalue: uint256, i: uint256, j: uint256, dx: uint
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -421,14 +416,13 @@ def _exchange(sender: address, mvalue: uint256, i: uint256, j: uint256, dx: uint
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `exchange_extended`
-:::description[`CryptoSwap.exchange_extended(i: uint256, j: uint256, dx: uint256, min_dy: uint256, use_eth: bool, sender: address, receiver: address, cb: bytes32) -> uint256:`]
+::::description[`CryptoSwap.exchange_extended(i: uint256, j: uint256, dx: uint256, min_dy: uint256, use_eth: bool, sender: address, receiver: address, cb: bytes32) -> uint256:`]
 
 
 :::note
@@ -454,8 +448,7 @@ Emits: `TokenExchange`
 | `receiver` | `address` | address to send output coin to; deafaults to `msg.sender` |
 | `cb` | `bytes32` | callback signature |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -595,10 +588,9 @@ def _exchange(sender: address, mvalue: uint256, i: uint256, j: uint256, dx: uint
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -606,14 +598,13 @@ def _exchange(sender: address, mvalue: uint256, i: uint256, j: uint256, dx: uint
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dy`
-:::description[`CryptoSwap.get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:`]
+::::description[`CryptoSwap.get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:`]
 
 
 Getter for the received amount of coin `j` for swapping in `dx` amount of coin `i`. 
@@ -633,8 +624,7 @@ This method takes fees into consideration.
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -671,10 +661,9 @@ def get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -683,14 +672,15 @@ def get_dy(i: uint256, j: uint256, dx: uint256) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Adding/Removing Liquidity**### `add_liquidity`
-:::description[`CryptoSwap.add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
+## **Adding/Removing Liquidity**
+
+### `add_liquidity`
+::::description[`CryptoSwap.add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
 
 
 Function to add liquidity to the pool and mint the corresponding lp tokens.
@@ -706,8 +696,7 @@ Emits: `AddLiquidity`
 | `use_eth` |  `bool` | `True` if native token is being added to the pool; default to `False` |
 | `receiver` |  `address` | receiver of the lp tokens; deaults to `msg.sender` |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -835,10 +824,9 @@ def add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256,
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -846,14 +834,13 @@ def add_liquidity(amounts: uint256[N_COINS], min_mint_amount: uint256,
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_token_amount`
-:::description[`CryptoSwap.calc_token_amount(amounts: uint256[N_COINS]) -> uint256:`]
+::::description[`CryptoSwap.calc_token_amount(amounts: uint256[N_COINS]) -> uint256:`]
 
 
 Function to calculate the amount of tokens to deposit/withdraw to get `amounts`.
@@ -864,8 +851,7 @@ Returns amount of LP tokens (`uint256`).
 | ----------- | -------| ----|
 | `_amount` |  `uint256[N_COINS]` | amount of coins to withdraw/deposit |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -892,10 +878,9 @@ def calc_token_amount(amounts: uint256[N_COINS]) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -903,14 +888,13 @@ def calc_token_amount(amounts: uint256[N_COINS]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity`
-:::description[`CryptoSwap.remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS], use_eth: bool = False, receiver: address = msg.sender):`]
+::::description[`CryptoSwap.remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS], use_eth: bool = False, receiver: address = msg.sender):`]
 
 
 Function to remove liquidity from the pool and burn the lp tokens. When removing liquidity via this function, no fees are charged as the coins are withdrawin in balanced proportions.
@@ -924,8 +908,7 @@ Emits: `RemoveLiquidity`
 | `use_eth` |  `bool` | True = withdraw ETH, False = withdraw wETH |
 | `receiver` |  `address` | receiver of the coins; defaults to msg.sender |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -975,10 +958,9 @@ def remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS],
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -986,14 +968,13 @@ def remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS],
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity_one_coin`
-:::description[`CryptoSwap.remove_liquidity_one_coin(token_amount: uint256, i: uint256, min_amount: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
+::::description[`CryptoSwap.remove_liquidity_one_coin(token_amount: uint256, i: uint256, min_amount: uint256, use_eth: bool = False, receiver: address = msg.sender) -> uint256:`]
 
 
 Funtion to withdraw liquidity in a single token.
@@ -1010,8 +991,7 @@ Emits: `RemoveLiquidityOne`
 | `use_eth` |  `bool` | True = withdraw ETH, False = withdraw wETH |
 | `receiver` |  `address` | receiver of the coins; defaults to msg.sender |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1063,10 +1043,9 @@ def remove_liquidity_one_coin(token_amount: uint256, i: uint256, min_amount: uin
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1074,14 +1053,13 @@ def remove_liquidity_one_coin(token_amount: uint256, i: uint256, min_amount: uin
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_withdraw_one_coin`
-:::description[`CryptoSwap.calc_withdraw_one_coin(token_amount: uint256, i: uint256) -> uint256:`]
+::::description[`CryptoSwap.calc_withdraw_one_coin(token_amount: uint256, i: uint256) -> uint256:`]
 
 
 Method to calculate the amount of output token `i` when burning `token_amount` of lp tokens, taking fees into condsideration.
@@ -1100,8 +1078,7 @@ This method takes fees into consideration.
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1164,10 +1141,9 @@ def _calc_withdraw_one_coin(A_gamma: uint256[2], token_amount: uint256, i: uint2
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1176,17 +1152,17 @@ def _calc_withdraw_one_coin(A_gamma: uint256[2], token_amount: uint256, i: uint2
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Oracles Methods**Oracle prices are updated whenever the `tweak_price` function is called. This occurs when any of the `_exchange()`, `add_liquidity()`, or `remove_liquidity_one_coin()` functions are called.
+## **Oracles Methods**
+
+Oracle prices are updated whenever the `tweak_price` function is called. This occurs when any of the `_exchange()`, `add_liquidity()`, or `remove_liquidity_one_coin()` functions are called.
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper "Update Price Oracles"
@@ -1304,18 +1280,17 @@ def tweak_price(A_gamma: uint256[2],_xp: uint256[N_COINS], p_i: uint256, new_D: 
 ```
 
 
-</details>
+</SourceCode>
 
 ### `lp_price`
-:::description[`CryptoSwap.lp_price() -> uint256:`]
+::::description[`CryptoSwap.lp_price() -> uint256:`]
 
 
 Getter for the approximate LP token price with regard to the token at index 0.
 
 Returns: LP token price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1344,10 +1319,9 @@ def internal_price_oracle() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1356,22 +1330,20 @@ def internal_price_oracle() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_oracle`
-:::description[`CryptoSwap.price_oracle() -> uint256:`]
+::::description[`CryptoSwap.price_oracle() -> uint256:`]
 
 
 Getter for the oracle price of the coin at index `k` with regard to coin at index 0. 
 
 Returns: oracle price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1397,10 +1369,9 @@ def internal_price_oracle() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1409,22 +1380,20 @@ def internal_price_oracle() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_prices`
-:::description[`CryptoSwap.last_prices() -> uint256: view`]
+::::description[`CryptoSwap.last_prices() -> uint256: view`]
 
 
 Getter for the last price of the coin at index `k` with regard to the coin at index 0. `last_price` stores the last price when calling the functions `_exchange()`, `add_liquidity()` or `remove_liquitiy_one_coin()`.
 
 Returns: last price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1432,10 +1401,9 @@ last_prices: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1444,22 +1412,20 @@ last_prices: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `last_prices_timestamp`
-:::description[`CryptoSwap.last_prices_timestamp() -> uint256: view`]
+::::description[`CryptoSwap.last_prices_timestamp() -> uint256: view`]
 
 
 Getter for the timestamp of the most recent update for `last_prices`.
 
 Returns: timestamp (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1467,10 +1433,9 @@ last_prices_timestamp: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1479,14 +1444,13 @@ last_prices_timestamp: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `price_scale`
-:::description[`CryptoSwap.price_scale -> uint256: view`]
+::::description[`CryptoSwap.price_scale -> uint256: view`]
 
 
 Getter for the price scale of the coin at index `k` with regard to the coin at index 0. Price scale determines the price band around which liquidity is
@@ -1494,8 +1458,7 @@ concentrated and is conditionally updated when calling the functions `_exchange(
 
 Returns: last price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1503,10 +1466,9 @@ price_scale: public(uint256)   # Internal price scale
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1515,22 +1477,20 @@ price_scale: public(uint256)   # Internal price scale
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `ma_half_time`
-:::description[`CryptoSwap.ma_half_time() -> uint256: view`]
+::::description[`CryptoSwap.ma_half_time() -> uint256: view`]
 
 
 Getter for the moving-average (ma) half time in seconds.
 
 Returns: ma half time (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1538,10 +1498,9 @@ ma_half_time: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1550,22 +1509,20 @@ ma_half_time: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `virtual_price`
-:::description[`CryptoSwap.geometric_mean(unsorted_x: uint256[N_COINS], sort: bool) -> uint256:`]
+::::description[`CryptoSwap.geometric_mean(unsorted_x: uint256[N_COINS], sort: bool) -> uint256:`]
 
 
 Getter for the virtual price. This variable is cached, fast to read and mostly used internally.
 
 Returns: virtual price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1573,10 +1530,9 @@ virtual_price: public(uint256)  # Cached (fast to read) virtual price also used 
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1585,22 +1541,20 @@ virtual_price: public(uint256)  # Cached (fast to read) virtual price also used 
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_virtual_price`
-:::description[`CryptoSwap.geometric_mean(unsorted_x: uint256[N_COINS], sort: bool) -> uint256:`]
+::::description[`CryptoSwap.geometric_mean(unsorted_x: uint256[N_COINS], sort: bool) -> uint256:`]
 
 
 Getter for the virtual price.
 
 Returns: virtual price (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1611,10 +1565,9 @@ def get_virtual_price() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1623,24 +1576,24 @@ def get_virtual_price() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Fee Methods**Fees are charged based on the balance/imbalance of the pool. Fee is low when the pool is balanced and increases the more it is imbalanced.
+## **Fee Methods**
+
+Fees are charged based on the balance/imbalance of the pool. Fee is low when the pool is balanced and increases the more it is imbalanced.
 
 ### `fee`
-:::description[`CryptoSwap.fee() -> uint256:`]
+::::description[`CryptoSwap.fee() -> uint256:`]
 
 
 Getter for the fee charged by the pool at the current state.
 
 Returns: fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1667,10 +1620,9 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1679,22 +1631,20 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `mid_fee`
-:::description[`CryptoSwap.mid_fee() -> uint256: view`]
+::::description[`CryptoSwap.mid_fee() -> uint256: view`]
 
 
 Getter for the current 'mid-fee'. This is the minimum fee and is charged when the pool is completely balanced.
 
 Returns: mid fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1702,10 +1652,9 @@ mid_fee: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1714,22 +1663,20 @@ mid_fee: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `out_fee`
-:::description[`CryptoSwap.out_fee() -> uint256: view`]
+::::description[`CryptoSwap.out_fee() -> uint256: view`]
 
 
 Getter for the 'out-fee'. This is the maximum fee and is charged when the pool is completely imbalanced.
 
 Returns: out fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1737,10 +1684,9 @@ out_fee: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1749,22 +1695,20 @@ out_fee: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `fee_gamma`
-:::description[`CryptoSwap.fee_gamma() -> uint256: view`]
+::::description[`CryptoSwap.fee_gamma() -> uint256: view`]
 
 
 Getter for the 'fee-gamma'. This parameter modifies the rate at which fees rise as imbalance intensifies. Smaller values result in rapid fee hikes with growing imbalances, while larger values lead to more gradual increments in fees as imbalance expands.
 
 Returns: fee gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1772,10 +1716,9 @@ fee_gamma: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1784,22 +1727,20 @@ fee_gamma: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_profit`
-:::description[`CryptoSwap.xcp_profit() -> uint256: view`]
+::::description[`CryptoSwap.xcp_profit() -> uint256: view`]
 
 
 Getter for the current pool profits.
 
 Returns: current profits (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1807,10 +1748,9 @@ xcp_profit: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1819,22 +1759,20 @@ xcp_profit: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `xcp_profit_a`
-:::description[`CryptoSwap.xcp_profit_a() -> uint256:`]
+::::description[`CryptoSwap.xcp_profit_a() -> uint256:`]
 
 
 Getter for the full profit at the last claim of admin fees.
 
 Returns: profit at last claim (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1842,10 +1780,9 @@ xcp_profit_a: public(uint256)  # Full profit at last claim of admin fees
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1854,22 +1791,20 @@ xcp_profit_a: public(uint256)  # Full profit at last claim of admin fees
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `admin_fee`
-:::description[`CryptoSwap.admin_fee() -> uint256:`]
+::::description[`CryptoSwap.admin_fee() -> uint256:`]
 
 
 Getter for the admin fee of the pool. This value is hardcoded to 50% (5000000000).
 
 Returns: admin fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1877,10 +1812,9 @@ admin_fee: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1889,22 +1823,20 @@ admin_fee: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `claim_admin_fees`
-:::description[`CryptoSwap.admin_fee() -> uint256:`]
+::::description[`CryptoSwap.admin_fee() -> uint256:`]
 
 
 Function to claim admin fees from the pool and send them to the fee receiver. `fee_receiver` is set within the [Factory](https://etherscan.io/address/0xF18056Bbd320E96A48e3Fbf8bC061322531aac99). 
 
 Emits: `ClaimAdminFee`
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1958,10 +1890,9 @@ def _claim_admin_fees():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1969,13 +1900,14 @@ def _claim_admin_fees():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Price Scaling**Curve v2 pools adaptively adjust liquidity to optimize depth near prevailing market prices, thereby reducing slippage. This is achieved by maintaining a continuous EMA (exponential moving average) of the pool's recent exchange rates (termed "internal oracle"), and relocating liquidity around this EMA when it's economically sensible for LPs.
+## **Price Scaling**
+
+Curve v2 pools adaptively adjust liquidity to optimize depth near prevailing market prices, thereby reducing slippage. This is achieved by maintaining a continuous EMA (exponential moving average) of the pool's recent exchange rates (termed "internal oracle"), and relocating liquidity around this EMA when it's economically sensible for LPs.
 
 You can envision this mechanism as "resetting" the bonding curve to align the peak liquidity concentration (the curve's center) with the EMA. The price with the highest liquidity focus is termed the "price scale", while the ongoing EMA is labeled as the "price oracle."
 
@@ -1983,15 +1915,14 @@ The price scaling parameters can be adjusted by the admin of the pool, see [here
 
 
 ### `allowed_extra_profit`
-:::description[`CryptoSwap.allowed_extra_profit() -> uint256: view`]
+::::description[`CryptoSwap.allowed_extra_profit() -> uint256: view`]
 
 
 Getter for the allowed extra profit.
 
 Returns: extra profit allowed (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1999,10 +1930,9 @@ allowed_extra_profit: public(uint256)  # 2 * 10**12 - recommended value
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2011,22 +1941,20 @@ allowed_extra_profit: public(uint256)  # 2 * 10**12 - recommended value
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `adjustment_step`
-:::description[`CryptoSwap.adjustment_step() -> uint256: view`]
+::::description[`CryptoSwap.adjustment_step() -> uint256: view`]
 
 
 Getter for the minimum size of price scale adjustments.
 
 Returns: adjustment step (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2034,10 +1962,9 @@ adjustment_step: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2046,27 +1973,27 @@ adjustment_step: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Bonding Curve Parameters**Similar to many AMMs, Curve v2 employs a bonding curve to determine asset prices based on the pool's availability of each asset. To centralize liquidity near the bonding curve's midpoint, Curve v2 utilizes an invariant that sits between the StableSwap (Curve v1) and the constant-product models (like Uniswap, Balancer, and others).
+## **Bonding Curve Parameters**
+
+Similar to many AMMs, Curve v2 employs a bonding curve to determine asset prices based on the pool's availability of each asset. To centralize liquidity near the bonding curve's midpoint, Curve v2 utilizes an invariant that sits between the Stableswap (Curve v1) and the constant-product models (like Uniswap, Balancer, and others).
 
 The bonding curve parameters can be adjusted by the admin of the pool, see [here](../pools/admin-controls.md).
 
 
 ### `A`
-:::description[`CryptoSwap.A() -> uint256:`]
+::::description[`CryptoSwap.A() -> uint256:`]
 
 
 Getter for the current pool amplification value.
 
 Returns: A (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2106,10 +2033,9 @@ def _A_gamma() -> uint256[2]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2118,22 +2044,20 @@ def _A_gamma() -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `gamma`
-:::description[`CryptoSwap.gamma() -> uint256:`]
+::::description[`CryptoSwap.gamma() -> uint256:`]
 
 
 Getter for the current gamma value.
 
 Returns: gamma (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2173,10 +2097,9 @@ def _A_gamma() -> uint256[2]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2185,14 +2108,15 @@ def _A_gamma() -> uint256[2]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Contract Info Methods**### `coins`
-:::description[`CryptoSwap.coins(arg0: uint256) -> address: view`]
+## **Contract Info Methods**
+
+### `coins`
+::::description[`CryptoSwap.coins(arg0: uint256) -> address: view`]
 
 
 Getter for the coin at index `arg0`.
@@ -2203,8 +2127,7 @@ Returns: coin (`address`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | index of coin |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2212,10 +2135,9 @@ coins: public(address[N_COINS])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2224,14 +2146,13 @@ coins: public(address[N_COINS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `balances`
-:::description[`CryptoSwap.balances(arg0: uint256) -> uint256: view`]
+::::description[`CryptoSwap.balances(arg0: uint256) -> uint256: view`]
 
 
 Getter for the pool balance of coin at index `arg0`.
@@ -2242,8 +2163,7 @@ Returns: coin balance (`uint256`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | index of coin |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2251,10 +2171,9 @@ coins: public(address[N_COINS])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2263,22 +2182,20 @@ coins: public(address[N_COINS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `D`
-:::description[`CryptoSwap.D() -> uint256: view`]
+::::description[`CryptoSwap.D() -> uint256: view`]
 
 
 Getter for the D invariant.
 
 Returns: D (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2286,10 +2203,9 @@ D: public(uint256)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2298,22 +2214,20 @@ D: public(uint256)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `token`
-:::description[`CryptoSwap.token() -> uint256: view`]
+::::description[`CryptoSwap.token() -> uint256: view`]
 
 
 Getter for the LP token contract.
 
 Returns: lp token (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2321,10 +2235,9 @@ token: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2333,22 +2246,20 @@ token: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `factory`
-:::description[`CryptoSwap.factory()`]
+::::description[`CryptoSwap.factory()`]
 
 
 Getter for the factory contract. 
 
 Returns: factory (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2356,10 +2267,9 @@ factory: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2368,16 +2278,17 @@ factory: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
-## **Internal Math Functions**All these math functions are interally embedded into the contract. They can not be called externally.
+## **Internal Math Functions**
+
+All these math functions are interally embedded into the contract. They can not be called externally.
 
 ### `geometric_mean`
-:::description[`CryptoSwap.geometric_mean(unsorted_x: uint256[N_COINS], sort: bool) -> uint256:`]
+::::description[`CryptoSwap.geometric_mean(unsorted_x: uint256[N_COINS], sort: bool) -> uint256:`]
 
 
 Function to calculate the geometric mean of a list of numbers in 1e18 precision.
@@ -2389,8 +2300,7 @@ Returns: gemoetric mean (`uint256`).
 | `unsorted_x` |  `uint256[N_COINS]` | array containing two values |
 | `sort` |  `bool` | whether to sort or not  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2425,13 +2335,13 @@ def geometric_mean(unsorted_x: uint256[N_COINS], sort: bool) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `newton_D`
-:::description[`CryptoSwap.newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS]) -> uint256:`]
+::::description[`CryptoSwap.newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS]) -> uint256:`]
 
 
 Function to find the D invariant using Newton method.
@@ -2444,8 +2354,7 @@ Returns: D invariant (`uint256`).
 | `gamma` |  `uint256` | `AMM.gamma()` value |
 | `x_unsorted` |  `uint256[N_COINS]` | unsorted array of coin balances |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2528,13 +2437,13 @@ def newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS]) -> uint
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `newton_y`
-:::description[`CryptoSwap.newton_y(ANN: uint256, gamma: uint256, x: uint256[N_COINS], D: uint256, i: uint256) -> uint256:`]
+::::description[`CryptoSwap.newton_y(ANN: uint256, gamma: uint256, x: uint256[N_COINS], D: uint256, i: uint256) -> uint256:`]
 
 
 Function to calculate x[i] given balances `x` and invariant D.
@@ -2549,8 +2458,7 @@ Returns: y (`uint256`).
 | `D` |  `uint256` | D invariant |
 | `i` |  `uint256` | coin index to calculate x[i] for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2635,13 +2543,13 @@ def newton_y(ANN: uint256, gamma: uint256, x: uint256[N_COINS], D: uint256, i: u
 ```
 
 
-</details>
+</SourceCode>
 
 
-:::
+::::
 
 ### `halfpow`
-:::description[`CryptoSwap.halfpow(power: uint256) -> uint256:`]
+::::description[`CryptoSwap.halfpow(power: uint256) -> uint256:`]
 
 
 Function to calculate the halfpow.
@@ -2652,8 +2560,7 @@ Returns: halfpow (`uint256`).
 | ----------- | -------| ----|
 | `power` |  `uint256` | value |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2697,7 +2604,7 @@ def halfpow(power: uint256) -> uint256:
     raise "Did not converge"
 ```
 
-</details>
+</SourceCode>
 
 
-:::
+::::

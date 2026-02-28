@@ -7,7 +7,7 @@ Source code available on [Github](https://github.com/curvefi/stableswap-ng/blob/
 
 :::
 
-The deployment of metapools is permissionless and can be done via the [**`deploy_metapool`**](../../../factory/stableswap-ng/deployer-api.md#deploy_metapool) function within the StableSwap-NG Factory.
+The deployment of metapools is permissionless and can be done via the [**`deploy_metapool`**](../../factory/stableswap-ng/deployer-api.md#deploy_metapool) function within the Stableswap-NG Factory.
 
 :::warning[Examples]
 
@@ -201,7 +201,7 @@ E.g., in the USDV&lt;&gt;3CRV pool: `coin[0]` = USDV, `coin[1]` = DAI, `coin[2]`
 
 
 ### `exchange`
-:::description[`StableSwap.exchange(i: int128, j: int128, _dx: uint256, _min_dy: uint256, _receiver: address = msg.sender) -> uint256:`]
+::::description[`StableSwap.exchange(i: int128, j: int128, _dx: uint256, _min_dy: uint256, _receiver: address = msg.sender) -> uint256:`]
 
 
 :::warning
@@ -226,8 +226,7 @@ Emits: `TokenExchange`
 | `_receiver` | `address` | Receiver of the output tokens; defaults to msg.sender. |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -346,10 +345,9 @@ def __exchange(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -362,14 +360,13 @@ def __exchange(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `exchange_received`
-:::description[`StableSwap.exchange_received(i: int128, j: int128, _dx: uint256, _min_dy: uint256, _receiver: address) -> uint256:`]
+::::description[`StableSwap.exchange_received(i: int128, j: int128, _dx: uint256, _min_dy: uint256, _receiver: address) -> uint256:`]
 
 
 :::danger
@@ -393,8 +390,7 @@ Emits: `TokenExchange`
 | `_min_dy`    | `uint256`  | Minimum amount of coin `j` to receive.            |
 | `_receiver`  | `address`  | Receiver of the output tokens; defaults to `msg.sender`. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -519,10 +515,9 @@ def __exchange(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -532,8 +527,7 @@ def __exchange(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -543,10 +537,10 @@ More informations on this method [here](./overview.md#exchange_received).
 :::
 
 
-:::
+::::
 
 ### `exchange_underlying`
-:::description[`StableSwap.exchange_underlying(i: int128, j: int128, _dx: uint256, _min_dy: uint256, _receiver: address = msg.sender) -> uint256:`]
+::::description[`StableSwap.exchange_underlying(i: int128, j: int128, _dx: uint256, _min_dy: uint256, _receiver: address = msg.sender) -> uint256:`]
 
 
 Function to exchange `_dx` amount of the underlying coin `i` for the underlying coin `j` and receive a minimum amount of `_min_dy`. Index values are the `coins` followed by the `base_coins`, where the base pool LP token is not included as a value.
@@ -563,8 +557,7 @@ Emits: `TokenExchangeUnderlying`
 | `_min_dy` |  `uint256` | Minimum amount of coin `j` to receive. |
 | `receiver` |  `address` | Receiver of the output tokens; defaults to msg.sender. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -735,10 +728,9 @@ def __exchange(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -749,17 +741,16 @@ def __exchange(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dy`
-:::description[`StableSwap.get_dy(i: int128, j: int128, dx: uint256) -> uint256`]
+::::description[`StableSwap.get_dy(i: int128, j: int128, dx: uint256) -> uint256`]
 
 
-Function to calculate the predicted output amount `j` to receive at the pool's current state given an input of `dx` amount of coin `i`. This is just a simple getter method; the calculation logic is within the CurveStableSwapNGViews contract. See [here](../utility_contracts/views.md#get_dy).
+Function to calculate the predicted output amount `j` to receive at the pool's current state given an input of `dx` amount of coin `i`. This is just a simple getter method; the calculation logic is within the CurveStableSwapNGViews contract. See [here](../utility-contracts/views.md#get_dy).
 
 Returns: predicted output amount of `j` (`uint256`).
 
@@ -769,14 +760,7 @@ Returns: predicted output amount of `j` (`uint256`).
 | `j`    | `int128` | Index value of output coin.                |
 | `dx`   | `uint256`| Amount of input coin being exchanged.      |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapmetang-vy" label="CurveStableSwapMetaNG.vy">
-
-
+<SourceCode>
 ```vyper
 interface StableSwapViews:
     def get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256: view
@@ -803,15 +787,6 @@ def get_dy(i: int128, j: int128, dx: uint256) -> uint256:
     """
     return StableSwapViews(factory.views_implementation()).get_dy(i, j, dx, self)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvestableswapngviews-vy" label="CurveStableSwapNGViews.vy">
-
-
 ```vyper
 @view
 @external
@@ -844,16 +819,9 @@ def get_dy(i: int128, j: int128, dx: uint256, pool: address) -> uint256:
 
     return (dy - fee) * PRECISION / rates[j]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -862,14 +830,13 @@ def get_dy(i: int128, j: int128, dx: uint256, pool: address) -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dy_underlying`
-:::description[`StableSwap.get_dy_underlying(i: int128, j: int128, dx: uint256) -> uint256:`]
+::::description[`StableSwap.get_dy_underlying(i: int128, j: int128, dx: uint256) -> uint256:`]
 
 
 Function to calculate the predicted output amount `j` to receive given an input of `dx` amount of coin `i`, including underlying coins. Index values are the `coins` followed by the `base_coins`, where the base pool LP token is not included as a value.
@@ -882,14 +849,7 @@ Returns: predicted amount of `j` (`uint256`).
 | `j` |  `int128` | Index value of output coin. |
 | `dx` |  `uint256` | Amount of input coin being exchanged. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapmetang-vy" label="CurveStableSwapMetaNG.vy">
-
-
+<SourceCode>
 ```vyper
 interface StableSwapViews:
     def get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256: view
@@ -909,15 +869,6 @@ def get_dy_underlying(i: int128, j: int128, dx: uint256) -> uint256:
     return StableSwapViews(factory.views_implementation()).get_dy_underlying(i, j, dx, self)
 
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvestableswapngviews-vy" label="CurveStableSwapNGViews.vy">
-
-
 ```vyper
 @view
 @external
@@ -1002,16 +953,9 @@ def get_dy_underlying(
 
     return dy
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1026,17 +970,16 @@ def get_dy_underlying(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dx`
-:::description[`StableSwap.get_dx(i: int128, j: int128, dy: uint256) -> uint256:`]
+::::description[`StableSwap.get_dx(i: int128, j: int128, dy: uint256) -> uint256:`]
 
 
-Function to calculate the predicted input amount `i` to receive `dy` of coin `j` at the pool's current state. This is just a simple getter method; the calculation logic is within the CurveStableSwapNGViews contract. See [here](../utility_contracts/views.md#get_dx).
+Function to calculate the predicted input amount `i` to receive `dy` of coin `j` at the pool's current state. This is just a simple getter method; the calculation logic is within the CurveStableSwapNGViews contract. See [here](../utility-contracts/views.md#get_dx).
 
 Returns: predicted input amount of `i` (`uint256`).
 
@@ -1046,14 +989,7 @@ Returns: predicted input amount of `i` (`uint256`).
 | `j`    | `int128` | Index value of output coin.                |
 | `dy`   | `uint256`| Amount of output coin received.            |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapmetang-vy" label="CurveStableSwapMetaNG.vy">
-
-
+<SourceCode>
 ```vyper
 interface StableSwapViews:
     def get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256: view
@@ -1078,15 +1014,6 @@ def get_dx(i: int128, j: int128, dy: uint256) -> uint256:
     """
     return StableSwapViews(factory.views_implementation()).get_dx(i, j, dy, self)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvestableswapngviews-vy" label="CurveStableSwapNGViews.vy">
-
-
 ```vyper
 @view
 @external
@@ -1133,16 +1060,9 @@ def _get_dx(
     x: uint256 = self.get_y(j, i, y, xp, amp, D, N_COINS)
     return (x - xp[i]) * PRECISION / rates[i]
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1151,14 +1071,13 @@ def _get_dx(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dx_underlying`
-:::description[`StableSwap.get_dx_underlying(i: int128, j: int128, dy: uint256) -> uint256:`]
+::::description[`StableSwap.get_dx_underlying(i: int128, j: int128, dy: uint256) -> uint256:`]
 
 
 Function to calculate the predicted input amount `i` to receive `dy` of coin `j`, including underlying coins. Index values are the `coins` followed by the `base_coins`, where the base pool LP token is not included as a value.
@@ -1171,14 +1090,7 @@ Returns: predicted amount of `i` (`uint256`).
 | `j` |  `int128` | Index value of output coin. |
 | `dy` |  `uint256` | Amount of output coin received. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapmetang-vy" label="CurveStableSwapMetaNG.vy">
-
-
+<SourceCode>
 ```vyper
 interface StableSwapViews:
 def get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256: view
@@ -1197,15 +1109,6 @@ def calc_token_amount(
 def get_dx_underlying(i: int128, j: int128, dy: uint256) -> uint256:
     return StableSwapViews(factory.views_implementation()).get_dx_underlying(i, j, dy, self)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvestableswapngviews-vy" label="CurveStableSwapNGViews.vy">
-
-
 ```vyper
 @view
 @external
@@ -1334,16 +1237,9 @@ def calc_withdraw_one_coin(_burn_amount: uint256, i: int128, pool: address) -> u
 
     return dy
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1354,20 +1250,21 @@ def calc_withdraw_one_coin(_burn_amount: uint256, i: int128, pool: address) -> u
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Adding and Removing Liquidity**There are no restrictions on how liquidity can be added or removed. Liquidity can be provided or removed in any proportion. However, there are fees associated with adding and removing liquidity that depend on the balances within the pool.
+## **Adding and Removing Liquidity**
+
+There are no restrictions on how liquidity can be added or removed. Liquidity can be provided or removed in any proportion. However, there are fees associated with adding and removing liquidity that depend on the balances within the pool.
 
 
 ### `add_liquidity`
-:::description[`StableSwap.add_liquidity(_amounts: DynArray[uint256, MAX_COINS], _min_mint_amount: uint256, _receiver: address = msg.sender) -> uint256:`]
+::::description[`StableSwap.add_liquidity(_amounts: DynArray[uint256, MAX_COINS], _min_mint_amount: uint256, _receiver: address = msg.sender) -> uint256:`]
 
 
 Function to add liquidity into the pool and mint a minimum of `_min_mint_amount` of the corresponding LP tokens to `_receiver`. A value for the minimum amount is used to prevent being front-run by MEV bots.
@@ -1382,8 +1279,7 @@ Emits: `Transfer` and `AddLiquidity`
 | `_min_amount`| `uint256`                      | Minimum amount of LP tokens to mint.               |
 | `_receiver`  | `address`                      | Receiver of the LP tokens; defaults to `msg.sender`.|
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1518,10 +1414,9 @@ def add_liquidity(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1534,14 +1429,13 @@ def add_liquidity(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity`
-:::description[`StableSwap.remove_liquidity(_burn_amount: uint256, _min_amounts: DynArray[uint256, MAX_COINS], _receiver: address = msg.sender, _claim_admin_fees: bool = True) -> DynArray[uint256, MAX_COINS]:`]
+::::description[`StableSwap.remove_liquidity(_burn_amount: uint256, _min_amounts: DynArray[uint256, MAX_COINS], _receiver: address = msg.sender, _claim_admin_fees: bool = True) -> DynArray[uint256, MAX_COINS]:`]
 
 
 :::info
@@ -1565,8 +1459,7 @@ Emits: `RemoveLiquidity`
 | `_receiver`        | `address`                      | Receiver of the coins; defaults to `msg.sender`.  |
 | `_claim_admin_fees`| `bool`                         | If admin fees should be claimed; defaults to `true`.|
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1646,10 +1539,9 @@ def remove_liquidity(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1662,14 +1554,13 @@ def remove_liquidity(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity_one_coin`
-:::description[`StableSwap.remove_liquidity_one_coin(_burn_amount: uint256, i: int128, _min_received: uint256, _receiver: address = msg.sender) -> uint256:`]
+::::description[`StableSwap.remove_liquidity_one_coin(_burn_amount: uint256, i: int128, _min_received: uint256, _receiver: address = msg.sender) -> uint256:`]
 
 
 Function to remove a minimum of `_min_received` of coin `i` by burning `_burn_amount` of LP tokens.
@@ -1685,8 +1576,7 @@ Emits: `RemoveLiquidityOne`
 | `_min_received`| `uint256`  | Minimum amount of coin to receive.                |
 | `_receiver`    | `address`  | Receiver of the coins; defaults to `msg.sender`.  |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1800,10 +1690,9 @@ def _calc_withdraw_one_coin(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1814,14 +1703,13 @@ def _calc_withdraw_one_coin(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `remove_liquidity_imbalance`
-:::description[`StableSwap.remove_liquidity_imbalance(_amounts: DynArray[uint256, MAX_COINS], _max_burn_amount: uint256, _receiver: address = msg.sender) -> uint256:`]
+::::description[`StableSwap.remove_liquidity_imbalance(_amounts: DynArray[uint256, MAX_COINS], _max_burn_amount: uint256, _receiver: address = msg.sender) -> uint256:`]
 
 
 Function to burn a maximum of `_max_burn_amount` of LP tokens in order to receive `_amounts` of underlying tokens.
@@ -1836,8 +1724,7 @@ Emits: `RemoveLiquidityImbalance`
 | `_max_burn_amount` | `uint256`                      | Maximum amount of LP tokens to burn.               |
 | `_receiver`        | `address`                      | Receiver of the coins; defaults to `msg.sender`.   |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -1922,10 +1809,9 @@ def remove_liquidity_imbalance(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -1934,8 +1820,7 @@ def remove_liquidity_imbalance(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -1945,10 +1830,10 @@ This method removes liquidity in an imbalanced portion (2 USDV and one 3CRV) by 
 :::
 
 
-:::
+::::
 
 ### `calc_token_amount`
-:::description[`StableSwap.calc_token_amount(_amounts: DynArray[uint256, MAX_COINS], _is_deposit: bool) -> uint256:`]
+::::description[`StableSwap.calc_token_amount(_amounts: DynArray[uint256, MAX_COINS], _is_deposit: bool) -> uint256:`]
 
 
 Function to calculate the addition or reduction of token supply from a deposit (add liquidity) or withdrawal (remove liquidity). This function does take fees into consideration.
@@ -1960,14 +1845,7 @@ Returns: amount of LP tokens (`uint256`).
 | `_amounts`     | `DynArray[uint256, MAX_COINS]` | Amount of coins being deposited/withdrawn.        |
 | `_is_deposit`  | `bool`                         | `true` = deposit, `false` = withdraw.             |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapmetang-vy" label="CurveStableSwapMetaNG.vy">
-
-
+<SourceCode>
 ```vyper
 interface StableSwapViews:
     def get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256: view
@@ -1995,15 +1873,6 @@ def calc_token_amount(
     """
     return StableSwapViews(factory.views_implementation()).calc_token_amount(_amounts, _is_deposit, self)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvestableswapngviews-vy" label="CurveStableSwapNGViews.vy">
-
-
 ```vyper
 @view
 @external
@@ -2092,16 +1961,9 @@ def calc_token_amount(
         diff = D0 - D2
     return diff * total_supply / D0
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2110,14 +1972,13 @@ def calc_token_amount(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `calc_withdraw_one_coin`
-:::description[`StableSwap.calc_withdraw_one_coin(_burn_amount: uint256, i: int128) -> uint256:`]
+::::description[`StableSwap.calc_withdraw_one_coin(_burn_amount: uint256, i: int128) -> uint256:`]
 
 
 Function to calculate the amount of single token `i` withdrawn when burning `_burn_amount` LP tokens.
@@ -2129,8 +1990,7 @@ Returns: amount of tokens withdrawn (`uint256`).
 | `_burn_amount` | `uint256` | Amount of LP tokens to burn.                       |
 | `i`             | `int128`  | Index value of the coin to withdraw.              |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2207,10 +2067,9 @@ def _calc_withdraw_one_coin(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2223,16 +2082,17 @@ def _calc_withdraw_one_coin(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Fee Methods**Stableswap-ng introduces a dynamic fee based on the imbalance of the coins within the pool and their pegs:
+## **Fee Methods**
+
+Stableswap-ng introduces a dynamic fee based on the imbalance of the coins within the pool and their pegs:
 
 <details>
 <summary>`_dynamic_fee`</summary>
@@ -2262,15 +2122,14 @@ def _dynamic_fee(xpi: uint256, xpj: uint256, _fee: uint256) -> uint256:
 More on dynamic fees [here](../pools/overview.md#dynamic-fees).
 
 ### `fee`
-:::description[`StableSwap.fee() -> uint256: view`]
+::::description[`StableSwap.fee() -> uint256: view`]
 
 
-Getter method for the fee of the pool. The fee is expressed as an integer with a 1e10 precision. This is the value set when initializing the contract and can be changed via [`set_new_fee`](../pools/admin_controls.md#set_new_fee).
+Getter method for the fee of the pool. The fee is expressed as an integer with a 1e10 precision. This is the value set when initializing the contract and can be changed via [`set_new_fee`](../pools/admin-controls.md#set_new_fee).
 
 Returns: fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2301,10 +2160,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2313,8 +2171,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -2324,10 +2181,10 @@ The method returns an integer with with 1e10 precision.
 :::
 
 
-:::
+::::
 
 ### `dynamic_fee`
-:::description[`StableSwap.dynamic_fee(i: int128, j: int128) -> uint256:`]
+::::description[`StableSwap.dynamic_fee(i: int128, j: int128) -> uint256:`]
 
 
 Getter for the swap fee when exchanging between `i` and `j`. The swap fee is expressed as an integer with a 1e10 precision.
@@ -2339,14 +2196,7 @@ Returns: dynamic fee (`uint256`).
 | `i`    | `int128` | Index value of input coin.                 |
 | `j`    | `int128` | Index value of output coin.                |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curvestableswapng-vy" label="CurveStableSwapNG.vy">
-
-
+<SourceCode>
 ```vyper
 @view
 @external
@@ -2359,15 +2209,6 @@ def dynamic_fee(i: int128, j: int128) -> uint256:
     """
     return StableSwapViews(factory.views_implementation()).dynamic_fee(i, j, self)
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="curvestableswapngviews-vy" label="CurveStableSwapNGViews.vy">
-
-
 ```vyper
 @view
 @external
@@ -2420,16 +2261,9 @@ def _get_rates_balances_xp(pool: address, N_COINS: uint256) -> (
 
     return rates, balances, xp
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2438,8 +2272,7 @@ def _get_rates_balances_xp(pool: address, N_COINS: uint256) -> (
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -2449,18 +2282,17 @@ The method returns an integer with with 1e10 precision.
 :::
 
 
-:::
+::::
 
 ### `admin_fee`
-:::description[`StableSwap.admin_fee() -> uint256: view`]
+::::description[`StableSwap.admin_fee() -> uint256: view`]
 
 
 Getter for the admin fee. It is a constant and is set to 50% (5000000000).
 
 Returns: admin fee (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2468,10 +2300,9 @@ admin_fee: public(constant(uint256)) = 5000000000
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2480,8 +2311,7 @@ admin_fee: public(constant(uint256)) = 5000000000
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -2491,18 +2321,17 @@ The method returns an integer with with 1e10 precision.
 :::
 
 
-:::
+::::
 
 ### `offpeg_fee_multiplier`
-:::description[`StableSwap.offpeg_fee_multiplier() -> uint256: view`]
+::::description[`StableSwap.offpeg_fee_multiplier() -> uint256: view`]
 
 
-Getter method for the off-peg fee multiplier. This value determines how much the fee increases when assets within the AMM depeg. This value can be changed via [`set_new_fee`](../pools/admin_controls.md#set_new_fee).
+Getter method for the off-peg fee multiplier. This value determines how much the fee increases when assets within the AMM depeg. This value can be changed via [`set_new_fee`](../pools/admin-controls.md#set_new_fee).
 
 Returns: offpeg fee multiplier (`uint256`)
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2533,10 +2362,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2545,8 +2373,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -2556,10 +2383,10 @@ The method returns an integer with with 1e10 precision.
 :::
 
 
-:::
+::::
 
 ### `stored_rates`
-:::description[`StableSwap.stored_rates() -> DynArray[uint256, MAX_COINS]:`view]
+::::description[`StableSwap.stored_rates() -> DynArray[uint256, MAX_COINS]:`view]
 
 
 Getter for the rate multiplier of each coin.
@@ -2573,16 +2400,13 @@ If the coin has a rate oracle that has been properly initialized, this method qu
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
 rate_multipliers: immutable(DynArray[uint256, MAX_COINS])
 # [bytes4 method_id][bytes8 <empty>][bytes20 oracle]
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 oracles: DynArray[uint256, MAX_COINS]
 
@@ -2634,10 +2458,9 @@ def _stored_rates() -> DynArray[uint256, MAX_COINS]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2646,14 +2469,13 @@ def _stored_rates() -> DynArray[uint256, MAX_COINS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `admin_balances`
-:::description[`StableSwap.admin_balances(arg0: uint256) -> uint256: view`]
+::::description[`StableSwap.admin_balances(arg0: uint256) -> uint256: view`]
 
 
 Getter for the accumulated admin balance of the pool for a coin. These values essentially represent the claimable admin fee.
@@ -2664,8 +2486,7 @@ Returns: admin balances (`uint256`).
 | ------ | --------- | ------------------------------------------ |
 | `arg0` | `uint256` | Index value of the coin.                   |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2673,10 +2494,9 @@ admin_balances: public(DynArray[uint256, MAX_COINS])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2687,20 +2507,18 @@ admin_balances: public(DynArray[uint256, MAX_COINS])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `withdraw_admin_fees`
-:::description[`StableSwap.withdraw_admin_fees():`]
+::::description[`StableSwap.withdraw_admin_fees():`]
 
 
 Function to withdraw accumulated admin fees from the pool and send them to the `fee_receiver` set within the Factory.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2736,10 +2554,9 @@ def _withdraw_admin_fees():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2747,31 +2564,31 @@ def _withdraw_admin_fees():
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Amplification Coefficient**The amplification coefficient **`A`**determines a pool’s tolerance for imbalance between the assets within it. A higher value means that trades will incur slippage sooner as the assets within the pool become imbalanced.
+## **Amplification Coefficient**
 
-The appropriate value for A is dependent upon the type of coin being used within the pool, and is subject to optimisation. It is possible to modify the amplification coefficient for a pool via the **`ramp_A`**function. See [admin controls](../pools/admin_controls.md#ramp_a).
+The amplification coefficient **`A`**determines a pool’s tolerance for imbalance between the assets within it. A higher value means that trades will incur slippage sooner as the assets within the pool become imbalanced.
 
-When a ramping of A has been initialized, the process can be stopped by calling the function [**`stop_ramp_A()`**](../pools/admin_controls.md#stop_ramp_a).
+The appropriate value for A is dependent upon the type of coin being used within the pool, and is subject to optimisation. It is possible to modify the amplification coefficient for a pool via the **`ramp_A`**function. See [admin controls](../pools/admin-controls.md#ramp_a).
+
+When a ramping of A has been initialized, the process can be stopped by calling the function [**`stop_ramp_A()`**](../pools/admin-controls.md#stop_ramp_a).
 
 ### `A`
-:::description[`StableSwap.A() -> uint256: view`]
+::::description[`StableSwap.A() -> uint256: view`]
 
 
 Getter for the amplification coefficient A.
 
 Returns: A (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2812,10 +2629,9 @@ def _A() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2824,8 +2640,7 @@ def _A() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -2835,18 +2650,17 @@ The amplification coefficient is scaled by `A_precise`.
 :::
 
 
-:::
+::::
 
 ### `A_precise`
-:::description[`StableSwap.A_precise() -> uint256: view`]
+::::description[`StableSwap.A_precise() -> uint256: view`]
 
 
 Getter for the precise A value, which is not divided by `A_precise` unlike `A`.
 
 Returns: precise A (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2866,10 +2680,9 @@ def A_precise() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2878,22 +2691,20 @@ def A_precise() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `initial_A`
-:::description[`StableSwap.initial_A() -> uint256: view`]
+::::description[`StableSwap.initial_A() -> uint256: view`]
 
 
 Getter for the initial A value. This is the A value when the ramping was initialized.
 
 Returns: initial A (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2930,10 +2741,9 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -2942,22 +2752,20 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_A`
-:::description[`StableSwap.future_A() -> uint256: view`]
+::::description[`StableSwap.future_A() -> uint256: view`]
 
 
 Getter for the future A value. This value is adjusted when ramping A.
 
 Returns: future A (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -2994,10 +2802,9 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3006,22 +2813,20 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `initial_A_time`
-:::description[`StableSwap.initial_A_time() -> uint256: view`]
+::::description[`StableSwap.initial_A_time() -> uint256: view`]
 
 
 Getter for the initial A time. This is the timestamp when ramping A was initialized.
 
 Returns: initial A time (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3058,10 +2863,9 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3070,22 +2874,20 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `future_A_time`
-:::description[`StableSwap.future_A_time() -> uint256: view`]
+::::description[`StableSwap.future_A_time() -> uint256: view`]
 
 
 Getter for the future A time. This is the timestamp when ramping A should be finished.
 
 Returns: future A time (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3122,10 +2924,9 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3134,25 +2935,25 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Contract Info Methods**### `BASE_POOL`
-:::description[`StableSwap.BASE_POOL() -> address: view`]
+## **Contract Info Methods**
+
+### `BASE_POOL`
+::::description[`StableSwap.BASE_POOL() -> address: view`]
 
 
 Getter for the base pool.
 
 Returns: base pool (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3183,10 +2984,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3195,22 +2995,20 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `BASE_N_COINS`
-:::description[`StableSwap.BASE_N_COINS() -> uint256: view`]
+::::description[`StableSwap.BASE_N_COINS() -> uint256: view`]
 
 
 Getter for the number of coins within the base pool.
 
 Returns: number of coins (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3243,10 +3041,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3255,14 +3052,13 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `BASE_COINS`
-:::description[`StableSwap.BASE_COINS(arg0: uint256) -> address: view`]
+::::description[`StableSwap.BASE_COINS(arg0: uint256) -> address: view`]
 
 
 Getter for the coin at index value `arg0` within the base pool.
@@ -3273,8 +3069,7 @@ Returns: coin (`address`).
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index value of the coin. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3305,10 +3100,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3321,22 +3115,20 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `coins`
-:::description[`StableSwap.coins(arg0: uint256) -> addresss: view`]
+::::description[`StableSwap.coins(arg0: uint256) -> addresss: view`]
 
 
 Getter for the coin at index `arg0` within the metapool. coins[0] always return the coin paired against the basepool.
 
 Returns: coin (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3367,10 +3159,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3381,8 +3172,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -3392,10 +3182,10 @@ The `coin[0]` is always the metapool token, and `coin[1]` is always the basepool
 :::
 
 
-:::
+::::
 
 ### `balances`
-:::description[`StableSwap.balances(i: uint256) -> uint256: view`]
+::::description[`StableSwap.balances(i: uint256) -> uint256: view`]
 
 
 Getter for the current balance of coin `i` within the pool. 
@@ -3406,8 +3196,7 @@ Returns: coin balance (`uint256`).
 | ------ | --------- | --------------------------- |
 | `i`    | `uint256` | Index value of the coin.    |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3449,10 +3238,9 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3463,14 +3251,13 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_balances`
-:::description[`StableSwap.get_balances() -> DynArray[uint256, MAX_COINS]: view`]
+::::description[`StableSwap.get_balances() -> DynArray[uint256, MAX_COINS]: view`]
 
 
 Getter for an array with all coin balances in the pool.
@@ -3484,8 +3271,7 @@ This getter method does not account for admin fees.
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3521,10 +3307,9 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3533,8 +3318,7 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -3544,10 +3328,10 @@ The returned values do not take admin fees into account.
 :::
 
 
-:::
+::::
 
 ### `N_COINS`
-:::description[`StableSwap.N_COINS() -> uint256: view`]
+::::description[`StableSwap.N_COINS() -> uint256: view`]
 
 
 Getter for the total number of coins in the pool.
@@ -3561,8 +3345,7 @@ A metapool always consists of two tokens - basepool token and the token paired a
 
 :::
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3570,10 +3353,9 @@ N_COINS: public(constant(uint256)) = 2
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3582,22 +3364,20 @@ N_COINS: public(constant(uint256)) = 2
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `totalSupply`
-:::description[`StableSwap.totalSupply() -> uint256: view`]
+::::description[`StableSwap.totalSupply() -> uint256: view`]
 
 
 Getter for the total supply of the LP token.
 
 Returns: total supply (`uint256`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -3615,10 +3395,9 @@ def totalSupply() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -3626,8 +3405,7 @@ def totalSupply() -> uint256:
 6811356567627648910003460
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

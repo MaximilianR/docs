@@ -21,9 +21,11 @@ Metapools also implement the ABI from plain pools. The template source code for 
 
 :::
 
-## **Pool Info Methods**### `base_coins`
+## **Pool Info Methods**
 
-:::description[`StableSwap.base_coins(i: uint256) → address: view`]
+### `base_coins`
+
+::::description[`StableSwap.base_coins(i: uint256) → address: view`]
 
 
 Get the coins of the base pool. Returns `address` of the coin at index `i`.
@@ -32,15 +34,12 @@ Get the coins of the base pool. Returns `address` of the coin at index `i`.
 | ----------- | -------| ----|
 | `i`       |  `uint256` | Coin index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="2 6 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59"
 # Token corresponding to the pool is always the last one
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 BASE_POOL_COINS: constant(int128) = 3
 
@@ -103,10 +102,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -119,15 +117,14 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `StableSwap.coins`
 
-:::description[`StableSwap.coins(i: uint256) → address: view`]
+::::description[`StableSwap.coins(i: uint256) → address: view`]
 
 
 Get the coins of the metapool. Returns `address` of coin at index `i`.
@@ -136,8 +133,7 @@ Get the coins of the metapool. Returns `address` of coin at index `i`.
 | ----------- | -------| ----|
 | `i`       |  `uint256` | Coin index |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 5 12 22 29 30 31"
@@ -202,10 +198,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -219,21 +214,19 @@ In this console example, ``coins(0)`` is the metapool’s coin (``GUSD``) and ``
 the base pool (``3CRV``).
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `StableSwap.base_pool`
 
-:::description[`StableSwap.base_pool() → address: view`]
+::::description[`StableSwap.base_pool() → address: view`]
 
 
 Get the address of the base pool. Returns `address` of the base pool implementation.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 10 20 36 40"
@@ -294,10 +287,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -306,21 +298,19 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `StableSwap.base_virtual_price`
 
-:::description[`StableSwap.base_virtual_price() → uint256: view`]
+::::description[`StableSwap.base_virtual_price() → uint256: view`]
 
 
 Get the current price of the base pool LP token relative to the underlying base pool assets.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 37"
@@ -381,10 +371,9 @@ def __init__(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -393,8 +382,7 @@ def __init__(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -406,17 +394,16 @@ fetched based pool virtual price is cached for 10 minutes (``BASE_CACHE_EXPIRES:
 :::
 
 
-:::
+::::
 
 ### `StableSwap.base_cache_update()`
 
-:::description[`StableSwap.base_cache_update() → uint256: view`]
+::::description[`StableSwap.base_cache_update() → uint256: view`]
 
 
 Get the timestamp at which the base pool virtual price was last cached.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="1 5 42 64 67 75"
@@ -501,10 +488,9 @@ def _vp_rate_ro() -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -513,11 +499,10 @@ def _vp_rate_ro() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## Exchange Methods
 
@@ -542,7 +527,7 @@ of all underlying coins.
 
 ### `StableSwap.exchange`
 
-:::description[`StableSwap.exchange(i: int128, j: int128, _dx: uint256, _min_dy: uint256) → uint256`]
+::::description[`StableSwap.exchange(i: int128, j: int128, _dx: uint256, _min_dy: uint256) → uint256`]
 
 
 Perform an exchange between two (non-underlying) coins in the metapool. Index values can be found via the ``coins`` 
@@ -561,8 +546,7 @@ Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>TokenExchange<
 
 todo: explain how fee is calculated
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -612,10 +596,9 @@ def exchange(i: int128, j: int128, dx: uint256, min_dy: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -624,15 +607,14 @@ todo: console output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `StableSwap.exchange_underlying`
 
-:::description[StableSwap.exchange_underlying(i: int128, j: int128, _dx: uint256, _min_dy: uint256) → uint256]
+::::description[Stableswap.exchange_underlying(i: int128, j: int128, _dx: uint256, _min_dy: uint256) → uint256]
 
 
 Perform an exchange between two underlying tokens. Index values are the ``coins`` followed by the ``base_coins``, 
@@ -649,8 +631,7 @@ Returns: the actual amount of coin ``j`` received.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>TokenExchangeUnderlying</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -791,10 +772,9 @@ def exchange_underlying(i: int128, j: int128, dx: uint256, min_dy: uint256) -> u
 ```  
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -803,8 +783,7 @@ todo: console output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

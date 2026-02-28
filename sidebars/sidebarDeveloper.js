@@ -16,9 +16,16 @@ export default {
                     type: 'category',
                     label: 'Voting Escrow (veCRV)',
                     items: [
-                        { type: 'doc', id: 'curve-dao/voting-escrow/voting-escrow', label: 'VotingEscrow' },
-                        { type: 'doc', id: 'curve-dao/voting-escrow/admin-controls', label: 'Admin Controls' },
-                        { type: 'doc', id: 'curve-dao/voting-escrow/smart-wallet-checker', label: 'SmartWalletChecker' },
+                        { type: 'doc', id: 'curve-dao/voting-escrow/voting-escrow', label: 'Overview' },
+                        {
+                            type: 'category',
+                            label: 'Cross-chain veCRV',
+                            items: [
+                                { type: 'doc', id: 'curve-dao/voting-escrow/crosschain/vecrv-delegation', label: 'Delegation' },
+                                { type: 'doc', id: 'curve-dao/voting-escrow/crosschain/vecrv-oracle', label: 'Oracle' },
+                                { type: 'doc', id: 'curve-dao/voting-escrow/crosschain/vecrv-verifiers', label: 'Verifiers' },
+                            ],
+                        },
                     ],
                 },
                 {
@@ -26,7 +33,7 @@ export default {
                     label: 'Governance & Voting',
                     items: [
                         { type: 'doc', id: 'governance/overview', label: 'Overview' },
-                        { type: 'doc', id: 'governance/curve-dao', label: 'Curve DAO' },
+                        { type: 'doc', id: 'governance/voting-library', label: 'Voting Library' },
                         {
                             type: 'category',
                             label: 'Cross-chain Governance',
@@ -57,20 +64,8 @@ export default {
                         { type: 'doc', id: 'gauges/gauges/liquidity-gauge-v6', label: 'LiquidityGaugeV6' },
                     ],
                 },
-                {
-                    type: 'category',
-                    label: 'Gauge Controller',
-                    items: [
-                        { type: 'doc', id: 'gauges/gauge-controller/gauge-controller', label: 'GaugeController' },
-                    ],
-                },
-                {
-                    type: 'category',
-                    label: 'Minter',
-                    items: [
-                        { type: 'doc', id: 'gauges/minter/minter', label: 'Minter' },
-                    ],
-                },
+                { type: 'doc', id: 'gauges/gauge-controller', label: 'GaugeController' },
+                { type: 'doc', id: 'gauges/minter', label: 'Minter' },
                 {
                     type: 'category',
                     label: 'Cross-chain Gauges',
@@ -99,9 +94,11 @@ export default {
             type: 'category',
             label: 'Curve AMM',
             items: [
+                { type: 'doc', id: 'curve-amm-overview', label: 'Overview' },
+                { type: 'doc', id: 'cryptoswap-in-depth', label: 'CryptoSwap: In Depth' },
                 {
                     type: 'category',
-                    label: 'StableSwap-NG',
+                    label: 'Stableswap-NG',
                     items: [
                         { type: 'doc', id: 'stableswap-ng/overview', label: 'Overview' },
                         {
@@ -135,7 +132,7 @@ export default {
                 },
                 {
                     type: 'category',
-                    label: 'TwoCrypto-NG',
+                    label: 'Twocrypto-NG',
                     items: [
                         { type: 'doc', id: 'twocrypto-ng/overview', label: 'Overview' },
                         {
@@ -143,7 +140,7 @@ export default {
                             label: 'Pools',
                             items: [
                                 { type: 'doc', id: 'twocrypto-ng/pools/overview', label: 'Overview' },
-                                { type: 'doc', id: 'twocrypto-ng/pools/twocrypto', label: 'TwoCrypto' },
+                                { type: 'doc', id: 'twocrypto-ng/pools/twocrypto', label: 'Twocrypto' },
                                 { type: 'doc', id: 'twocrypto-ng/pools/oracles', label: 'Oracles' },
                                 { type: 'doc', id: 'twocrypto-ng/pools/admin-controls', label: 'Admin Controls' },
                             ],
@@ -156,18 +153,25 @@ export default {
                                 { type: 'doc', id: 'twocrypto-ng/utility-contracts/math', label: 'Math' },
                             ],
                         },
+                        {
+                            type: 'category',
+                            label: 'Implementations',
+                            items: [
+                                { type: 'doc', id: 'twocrypto-ng/implementations/refuel', label: 'Refuel' },
+                            ],
+                        },
                     ],
                 },
                 {
                     type: 'category',
-                    label: 'TriCrypto-NG',
+                    label: 'Tricrypto-NG',
                     items: [
                         { type: 'doc', id: 'tricrypto-ng/overview', label: 'Overview' },
                         {
                             type: 'category',
                             label: 'Pools',
                             items: [
-                                { type: 'doc', id: 'tricrypto-ng/pools/tricrypto', label: 'TriCrypto' },
+                                { type: 'doc', id: 'tricrypto-ng/pools/tricrypto', label: 'Tricrypto' },
                                 { type: 'doc', id: 'tricrypto-ng/pools/oracles', label: 'Oracles' },
                                 { type: 'doc', id: 'tricrypto-ng/pools/admin-controls', label: 'Admin Controls' },
                             ],
@@ -189,7 +193,7 @@ export default {
                         { type: 'doc', id: 'factory/overview', label: 'Overview' },
                         {
                             type: 'category',
-                            label: 'StableSwap-NG',
+                            label: 'Stableswap-NG',
                             items: [
                                 { type: 'doc', id: 'factory/stableswap-ng/overview', label: 'Overview' },
                                 { type: 'doc', id: 'factory/stableswap-ng/deployer-api', label: 'Deployer API' },
@@ -197,7 +201,7 @@ export default {
                         },
                         {
                             type: 'category',
-                            label: 'TwoCrypto-NG',
+                            label: 'Twocrypto-NG',
                             items: [
                                 { type: 'doc', id: 'factory/twocrypto-ng/overview', label: 'Overview' },
                                 { type: 'doc', id: 'factory/twocrypto-ng/deployer-api', label: 'Deployer API' },
@@ -205,7 +209,7 @@ export default {
                         },
                         {
                             type: 'category',
-                            label: 'TriCrypto-NG',
+                            label: 'Tricrypto-NG',
                             items: [
                                 { type: 'doc', id: 'factory/tricrypto-ng/overview', label: 'Overview' },
                                 { type: 'doc', id: 'factory/tricrypto-ng/deployer-api', label: 'Deployer API' },
@@ -227,9 +231,9 @@ export default {
                     items: [
                         {
                             type: 'category',
-                            label: 'StableSwap',
+                            label: 'Stableswap',
                             items: [
-                                { type: 'doc', id: 'stableswap-overview', label: 'StableSwap Exchange Overview' },
+                                { type: 'doc', id: 'stableswap-overview', label: 'Stableswap Exchange Overview' },
                                 { type: 'doc', id: 'stableswap/overview', label: 'Overview' },
                                 {
                                     type: 'category',
@@ -300,7 +304,7 @@ export default {
                             items: [
                                 {
                                     type: 'category',
-                                    label: 'StableSwap',
+                                    label: 'Stableswap',
                                     items: [
                                         { type: 'doc', id: 'factory/stableswap/overview', label: 'Overview' },
                                         { type: 'doc', id: 'factory/stableswap/deployer-api', label: 'Deployer API' },
@@ -343,10 +347,8 @@ export default {
                     label: 'Factory',
                     items: [
                         { type: 'doc', id: 'crvusd/factory/overview', label: 'Overview' },
-                        { type: 'doc', id: 'crvusd/factory/contract-methods', label: 'Contract Methods' },
                         { type: 'doc', id: 'crvusd/factory/deployer-api', label: 'Deployer API' },
                         { type: 'doc', id: 'crvusd/factory/admin-controls', label: 'Admin Controls' },
-                        { type: 'doc', id: 'crvusd/factory/factory-full', label: 'Factory (Full)' },
                     ],
                 },
                 {
@@ -357,7 +359,6 @@ export default {
                         { type: 'doc', id: 'crvusd/pegkeepers/peg-keeper-v1', label: 'PegKeeperV1' },
                         { type: 'doc', id: 'crvusd/pegkeepers/peg-keeper-v2', label: 'PegKeeperV2' },
                         { type: 'doc', id: 'crvusd/pegkeepers/peg-keeper-regulator', label: 'PegKeeperRegulator' },
-                        { type: 'doc', id: 'crvusd/pegkeepers/notes', label: 'Notes' },
                     ],
                 },
                 {
@@ -367,7 +368,7 @@ export default {
                         { type: 'doc', id: 'crvusd/leverage/overview', label: 'Overview' },
                         { type: 'doc', id: 'crvusd/leverage/leverage-zap', label: 'LeverageZap' },
                         { type: 'doc', id: 'crvusd/leverage/leverage-zap-1inch', label: 'LeverageZap (1inch)' },
-                        { type: 'doc', id: 'crvusd/leverage/llamalend-odos-leverage-zap', label: 'LlamaLend Odos Zap' },
+                        { type: 'doc', id: 'crvusd/leverage/llamalend-odos-leverage-zap', label: 'Llamalend Odos Zap' },
                     ],
                 },
             ],
@@ -385,13 +386,7 @@ export default {
                     type: 'category',
                     label: 'Cross-chain',
                     items: [
-                        {
-                            type: 'category',
-                            label: 'Oracle V0',
-                            items: [
-                                { type: 'doc', id: 'scrvusd/crosschain/oracle-v0/oracle', label: 'Oracle' },
-                            ],
-                        },
+                        { type: 'doc', id: 'scrvusd/crosschain/oracle-v0', label: 'Oracle V0' },
                         {
                             type: 'category',
                             label: 'Oracle V2',
@@ -407,10 +402,36 @@ export default {
             ],
         },
 
-        // --- LlamaLend ---
+        // --- Block Oracle ---
         {
             type: 'category',
-            label: 'LlamaLend',
+            label: 'Block Oracle',
+            items: [
+                { type: 'doc', id: 'block-oracle/overview', label: 'Overview' },
+                { type: 'doc', id: 'block-oracle/block-oracle', label: 'BlockOracle' },
+                { type: 'doc', id: 'block-oracle/header-verifier', label: 'HeaderVerifier' },
+                { type: 'doc', id: 'block-oracle/lz-block-relay', label: 'LZBlockRelay' },
+                { type: 'doc', id: 'block-oracle/mainnet-block-view', label: 'MainnetBlockView' },
+            ],
+        },
+
+        // --- Fast Bridge ---
+        {
+            type: 'category',
+            label: 'Fast Bridge',
+            items: [
+                { type: 'doc', id: 'fast-bridge/overview', label: 'Overview' },
+                { type: 'doc', id: 'fast-bridge/fast-bridge-l2', label: 'FastBridgeL2' },
+                { type: 'doc', id: 'fast-bridge/fast-bridge-vault', label: 'FastBridgeVault' },
+                { type: 'doc', id: 'fast-bridge/l2-messenger-lz', label: 'L2MessengerLZ' },
+                { type: 'doc', id: 'fast-bridge/vault-messenger-lz', label: 'VaultMessengerLZ' },
+            ],
+        },
+
+        // --- Llamalend ---
+        {
+            type: 'category',
+            label: 'Llamalend',
             items: [
                 { type: 'doc', id: 'lending/overview', label: 'Overview' },
                 {
@@ -499,30 +520,16 @@ export default {
         },
 
         // --- Deployments ---
-        {
-            type: 'category',
-            label: 'Deployments',
-            items: [
-                { type: 'doc', id: 'deployments/contract-deployments', label: 'Contract Deployments' },
-                { type: 'doc', id: 'deployments/amm', label: 'AMM' },
-                { type: 'doc', id: 'deployments/crvusd', label: 'crvUSD' },
-                { type: 'doc', id: 'deployments/lending', label: 'Lending' },
-                { type: 'doc', id: 'deployments/dao', label: 'DAO' },
-                { type: 'doc', id: 'deployments/integration', label: 'Integration' },
-                { type: 'doc', id: 'deployments/crosschain', label: 'Cross-chain' },
-                { type: 'doc', id: 'deployments/router-zaps', label: 'Router & Zaps' },
-            ],
-        },
+        { type: 'doc', id: 'deployments', label: 'Deployments' },
 
         // --- Resources ---
         {
             type: 'category',
             label: 'Resources',
             items: [
-                { type: 'doc', id: 'security/security', label: 'Security' },
-                { type: 'doc', id: 'references/deployed-contracts', label: 'Deployed Contracts' },
-                { type: 'doc', id: 'references/audits', label: 'Audits' },
+                { type: 'doc', id: 'security/security', label: 'Security & Audits' },
                 { type: 'doc', id: 'references/whitepaper', label: 'Whitepapers' },
+                { type: 'doc', id: 'references/derivations', label: 'Derivations' },
                 { type: 'doc', id: 'references/notebooks', label: 'Notebooks' },
                 { type: 'doc', id: 'references/curve-practices', label: 'Curve Practices' },
                 { type: 'doc', id: 'references/useful', label: 'Useful Resources' },

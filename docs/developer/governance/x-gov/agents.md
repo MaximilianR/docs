@@ -1,16 +1,13 @@
 
 # L2 Agents
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 The `Agent` contracts acts as a proxy for the agents on Ethereum. Relayed votes are directly executed from the `Relayer` contract itself. Execution of messages is done automatically by the `Agent` contract.
 
 :::vyper[`Agent.vy`]
 
 The source code of the `Agent.vy` contract can be found on [GitHub ](https://github.com/curvefi/curve-xgov/blob/master/contracts/Agent.vy).
 
-A comprehensive list of all deployed contracts is available [here ↗](../../deployments/crosschain.md#curve-x-gov).
+A comprehensive list of all deployed contracts is available [here ↗](../../deployments.md).
 
 
 :::
@@ -20,10 +17,10 @@ Just like on Ethereum, there are three different agent contracts: The `Ownership
 ---
 
 ### `execute`
-:::description[`Agent.execute(_messages: DynArray[Message, MAX_MESSAGES])`]
+::::description[`Agent.execute(_messages: DynArray[Message, MAX_MESSAGES])`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `RELAYER` of the contract.
 
@@ -36,13 +33,7 @@ Function to execute a sequence of relayed messages. Calling this function direct
 | ----------- | ---------------------------------- | ------------ |
 | `_messages` |  `DynArray[Message, MAX_MESSAGES]` | Message to execute. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="agent-vy" label="Agent.vy">
-
+<SourceCode>
 
 ```vyper
 struct Message:
@@ -66,31 +57,20 @@ def execute(_messages: DynArray[Message, MAX_MESSAGES]):
         raw_call(message.target, message.data)
 ```
 
-
-</TabItem>
-</Tabs>
+</SourceCode>
 
 
-</details>
-
-
-:::
+::::
 
 ### `RELAYER`
-:::description[`Agent.RELAYER() -> address: view`]
+::::description[`Agent.RELAYER() -> address: view`]
 
 
 Getter for the relayer contract, which relays the messages to the according agent.
 
 Returns: relayer contract (`address`).
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="agent-vy" label="Agent.vy">
-
+<SourceCode>
 
 ```vyper
 RELAYER: public(immutable(address))
@@ -100,30 +80,21 @@ def __init__():
     RELAYER = msg.sender
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 This example returns the `Relayer` contracts for the Arbitrum and Optimism chains.
 
 ```shell
 >>> Agent.RELAYER()     # arbitrum
->>> '0xb7b0FF38E0A01D798B5cd395BbA6Ddb56A323830'
+'0xb7b0FF38E0A01D798B5cd395BbA6Ddb56A323830'
 
 >>> Agent.RELAYER()     # optimism
->>> '0x8e1e5001C7B8920196c7E3EdF2BCf47B2B6153ff'
+'0x8e1e5001C7B8920196c7E3EdF2BCf47B2B6153ff'
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

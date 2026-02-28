@@ -1,21 +1,13 @@
 # Bridger Wrappers
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 
 Bridger wrappers are contracts used to transmit `ERC-20` tokens and especially `CRV` emissions across chains. Due to the increasing number of networks to which Curve deploys, bridge wrappers adhere to a specific interface documented below and allow for a modular bridging system.
 
-<details open>
-<summary>Bridgers.vy</summary>
+:::vyper[Bridgers.vy]
 
 The source code for the various `Bridger Wrappers` contracts can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/tree/master/contracts/bridgers). The code varies slightly to adapt to different chain-specific implementations.
 
-
-
-
-
-</details>
+:::
 
 ---
 
@@ -37,24 +29,20 @@ The following three functions are required for bridge wrappers contracts to be i
 ## **Must-Implement Methods***The following three functions are required to be implemented to ensure compatibility with the `RootGaugeFactory` and `RootGauge` contracts:*
 
 ### `cost`
-:::description[`Bridger.cost() -> uint256: view`]
+::::description[`Bridger.cost() -> uint256: view`]
 
 
 Function to estimate the cost of bridging.
 
 Returns: the cost of bridging in ETH (`uint256`).
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
 This source code might vary slightly between different bridger implementations. This example is specific to the `Bridger` contract for Arbitrum.
 
-<Tabs>
-<TabItem value="arbitrumbridger-vy" label="ArbitrumBridger.vy">
-
-
-```python
+```vyper
 # [gas_limit uint64][gas_price uint64][max_submission_cost uint64]
 submission_data: uint256
 is_approved: public(HashMap[address, bool])
@@ -70,15 +58,9 @@ def cost() -> uint256:
     return shift(data, -128) * (shift(data, -64) % 2 **64) + data % 2 **64
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example returns the cost of bridging denominated in `ETH` with a precision of 18 decimals.
@@ -88,15 +70,13 @@ This example returns the cost of bridging denominated in `ETH` with a precision 
 2000000000000000    # 0.002 ETH
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `bridge`
-:::description[`Bridger.bridge(_token: address, _to: address, _amount: uint256)`]
+::::description[`Bridger.bridge(_token: address, _to: address, _amount: uint256)`]
 
 
 Function to bridge any ERC20 token to the child chain.
@@ -107,17 +87,13 @@ Function to bridge any ERC20 token to the child chain.
 | `_to` | `address` | The address to bridge the token to |
 | `_amount` | `uint256` | The amount of `_token` to deposit |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
 This source code might vary slightly between different bridger implementations. This example is specific to the `Bridger` contract for Arbitrum.
 
-<Tabs>
-<TabItem value="arbitrumbridger-vy" label="ArbitrumBridger.vy">
-
-
-```python
+```vyper
 interface GatewayRouter:
     def getGateway(_token: address) -> address: view
     def outboundTransfer(  # emits DepositInitiated event with Inbox sequence #
@@ -178,15 +154,9 @@ def bridge(_token: address, _to: address, _amount: uint256):
     )
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 This example bridges 10,000 `CRV` to the address `0x1234567890123456789012345678901234567890` on Arbitrum.
@@ -195,15 +165,13 @@ This example bridges 10,000 `CRV` to the address `0x1234567890123456789012345678
 >>> Bridger.bridge('0xD533a949740bb3306d119CC777fa900bA034cd52', '0x1234567890123456789012345678901234567890', 10000000000000000000000)
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `check`
-:::description[`Bridger.check(_account: address) -> bool: view`]
+::::description[`Bridger.check(_account: address) -> bool: view`]
 
 
 Function to check if the bridger contract has been approved by the `RootGauge`.
@@ -214,17 +182,13 @@ Returns: `True` if the bridger has been approved by the `RootGauge`, `False` oth
 | --------- | ---- | ------------ |
 | `_account` | `address` | The address of the bridger contract to check |
 
-<details>
-<summary>Source code</summary>
+
+<SourceCode>
 
 
 This source code might vary slightly between different bridger implementations. This example is specific to the `Bridger` contract for Arbitrum.
 
-<Tabs>
-<TabItem value="arbitrumbridger-vy" label="ArbitrumBridger.vy">
-
-
-```python
+```vyper
 @pure
 @external
 def check(_account: address) -> bool:
@@ -235,25 +199,16 @@ def check(_account: address) -> bool:
     return True
 ```
 
+</SourceCode>
 
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
-
+<Example>
 
 ```py
 >>> Bridger.check('0x1234567890123456789012345678901234567890')
 True
 ```
 
-
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

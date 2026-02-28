@@ -1,4 +1,4 @@
-**The StableSwap Factory utilizes the `create_forwarder_to` function to deploy its contracts from the implementations.**:::warning
+**The Stableswap Factory utilizes the `create_forwarder_to` function to deploy its contracts from the implementations.**:::warning
 
 **Implementation contracts are upgradable.**They can either be replaced, or additional implementation contracts can be added. Therefore, please always make sure to check the most recent ones.
 
@@ -12,8 +12,10 @@ It utilizes three different implementations:
 - **`gauge_implementation`**, containing a contract which is used when deploying liquidity gauges for pools.
 
 
-## **Query Implementations**### `metapool_implementations`
-:::description[`Factory.metapool_implementations(_base_pool: address) -> address[10]:`]
+## **Query Implementations**
+
+### `metapool_implementations`
+::::description[`Factory.metapool_implementations(_base_pool: address) -> address[10]:`]
 
 
 Getter for a list of implementation contracts for metapools targetting `_base_pool`.
@@ -25,8 +27,7 @@ Returns: metapool implementation contracts (`address[10]`).
 | `_base_pool` | `address` | Base pool   |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -45,10 +46,9 @@ def metapool_implementations(_base_pool: address) -> address[10]:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -66,14 +66,13 @@ def metapool_implementations(_base_pool: address) -> address[10]:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `plain_implementations`
-:::description[`Factory.plain_implementations(arg0: uint256, arg1: uint256) -> address: view`]
+::::description[`Factory.plain_implementations(arg0: uint256, arg1: uint256) -> address: view`]
 
 
 Getter for the plain implementations index `arg1` for a plain pool with a number of `arg0` coins.
@@ -86,15 +85,12 @@ Returns: Plain implementation (`address`).
 | `arg1`   | `uint256` | Index of implementation    |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
 # number of coins -> implementation addresses
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # for "plain pools" (as opposed to metapools), implementation contracts
 # are organized according to the number of coins in the pool
@@ -102,10 +98,9 @@ plain_implementations: public(HashMap[uint256, address[10]])
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -114,22 +109,20 @@ plain_implementations: public(HashMap[uint256, address[10]])
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `gauge_implementation`
-:::description[`Factory.gauge_implementations() -> address: view`]
+::::description[`Factory.gauge_implementations() -> address: view`]
 
 
 Getter for the gauge implementation of the Factory.
 
 Returns: gauge implementation (`address`).
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -137,10 +130,9 @@ gauge_implementation: public(address)
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -149,14 +141,13 @@ gauge_implementation: public(address)
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_implementation_address`
-:::description[`Factory.get_implementation_address(_pool: address) -> address:`]
+::::description[`Factory.get_implementation_address(_pool: address) -> address:`]
 
 
 Getter for the address of the implementation contract used for a factory pool.
@@ -168,8 +159,7 @@ Returns: Implementation (`address`).
 | `_pool`  | `address` | Factory pool address     |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -185,10 +175,9 @@ def get_implementation_address(_pool: address) -> address:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -197,16 +186,15 @@ def get_implementation_address(_pool: address) -> address:
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## **Set New Implementation***New implementations can be set via these admin-only functions:*
 
 ### `set_metapool_implementation`
-:::description[`Factory.set_metapool_implementations(_base_pool: address, _implementations: address[10]):`]
+::::description[`Factory.set_metapool_implementations(_base_pool: address, _implementations: address[10]):`]
 
 
 :::guard[Guarded Method]
@@ -224,8 +212,7 @@ Function to set new metapool implementations.
 | `_implementations`  | `address[10]`   | New metapool implementations         |
 
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -256,10 +243,9 @@ def set_metapool_implementations(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_metapool_implementation("todo")
@@ -267,14 +253,13 @@ def set_metapool_implementations(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_plain_implementation`
-:::description[`Factory.set_plain_implementations(_n_coins: uint256, _implementations: address[10]):`]
+::::description[`Factory.set_plain_implementations(_n_coins: uint256, _implementations: address[10]):`]
 
 
 :::guard[Guarded Method]
@@ -291,8 +276,7 @@ Function to set new plain pool implementations.
 | `_n_coins`             | `uint256`  | Number of coins in pool to set implementations for |
 | `_pool_implementation` | `address`  | New plain pool implementations                |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -319,10 +303,9 @@ def set_plain_implementations(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_plain_implementation("todo")
@@ -330,14 +313,13 @@ def set_plain_implementations(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `set_gauge_implementation`
-:::description[`Factory.set_gauge_implementation(_gauge_implementation: address):`]
+::::description[`Factory.set_gauge_implementation(_gauge_implementation: address):`]
 
 
 :::guard[Guarded Method]
@@ -353,8 +335,7 @@ Function to set a new gauge implementation contract.
 | ----------------------- | --------- | -------------------------- |
 | `_gauge_implementation` | `address` | New gauge implementation   |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -368,18 +349,16 @@ def set_gauge_implementation(_gauge_implementation: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Factory.set_gauge_implementation("todo")
 'todo'
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

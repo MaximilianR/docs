@@ -1,7 +1,5 @@
 # Curve Router NG
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 The `CurveRouterNG` is used to perform token exchanges. It can **swap up to five tokens in a single transaction**.
 
@@ -9,14 +7,14 @@ Additionally, the contract provides **functions to calculate input and output am
 
 :::deploy[Contract Source & Deployment]
 
-The `CurveRouterNG` contract has been deployed on most chains where Curve liquidity pools exist. For a full list of all deployments, see [here](../references/deployed-contracts.md#curve-router).
+The `CurveRouterNG` contract has been deployed on most chains where Curve liquidity pools exist. For a full list of all deployments, see [here](../deployments.md).
 
 Source code for the contract can be found on [ GitHub](https://github.com/curvefi/curve-router-ng/tree/master/contracts).
 
 
 :::
 
-The contract utilizes **interfaces for all relevant Curve pools**, such as StableSwap, CryptoSwap, LLAMMA, and others, to execute swaps.
+The contract utilizes **interfaces for all relevant Curve pools**, such as Stableswap, CryptoSwap, LLAMMA, and others, to execute swaps.
 
 <details>
 <summary>Interfaces</summary>
@@ -149,7 +147,9 @@ struct AtomicAmountAndFee:
 ---
 
 
-## **Route and Swap Parameters**The two most curcial input values when using the `CurveRouter` are `_route`, which determines the route of the exchange and `_swap_params`, which includes swap parameters such as input and output token, swap type, pool type and number of coins in the pool.
+## **Route and Swap Parameters**
+
+The two most curcial input values when using the `CurveRouter` are `_route`, which determines the route of the exchange and `_swap_params`, which includes swap parameters such as input and output token, swap type, pool type and number of coins in the pool.
 
 
 ### `_route`
@@ -157,8 +157,7 @@ struct AtomicAmountAndFee:
 The route input is an array of up to 11 addresses. When calling the function, the array must always include 11 addresses. Unused spots in the array need to be filled with `ZERO_ADDRESS`. The route consists of tokens and pools or zaps. The first address is always the input token, the last one always the output token. The addresses inbetween compose the route the user wants to trade.
 
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```py 
@@ -166,7 +165,7 @@ The route input is an array of up to 11 addresses. When calling the function, th
     '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',   # initial token: wETH
     '0x7f86bf177dd4f3494b841a37e810a34dd56c829b',   # pool1: TricryptoUSDC (USDC, wBTC, wETH)
     '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',   # token in between: USDC
-    '0x4dece678ceceb27446b35c672dc7d61f30bad69e',   # pool2: crvUSD/USDC
+    '0x4dece678ceceb27446b35c672dc7d61f30bad69e',   # pool2: crvusd/USDC
     '0xf939e0a03fb07f59a73314e73794be0e57ac1b4e',   # output token: crvUSD
     '0x0000000000000000000000000000000000000000',
     '0x0000000000000000000000000000000000000000',
@@ -178,10 +177,9 @@ The route input is an array of up to 11 addresses. When calling the function, th
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
-*The example demonstrates a swap of [wETH](https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2) for [crvUSD](https://etherscan.io/token/0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E). The process involves two stages. First, wETH is swapped for [USDC](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48) using the [tricryptoUSDC](https://etherscan.io/address/0x7f86bf177dd4f3494b841a37e810a34dd56c829b) pool. Subsequently, USDC is exchanged for crvUSD using the [crvUSD/USDC](https://etherscan.io/address/0x4dece678ceceb27446b35c672dc7d61f30bad69e) pool.*
+*The example demonstrates a swap of [wETH](https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2) for [crvUSD](https://etherscan.io/token/0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E). The process involves two stages. First, wETH is swapped for [USDC](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48) using the [tricryptoUSDC](https://etherscan.io/address/0x7f86bf177dd4f3494b841a37e810a34dd56c829b) pool. Subsequently, USDC is exchanged for crvUSD using the [crvusd/USDC](https://etherscan.io/address/0x4dece678ceceb27446b35c672dc7d61f30bad69e) pool.*
 
 
 ---
@@ -219,14 +217,13 @@ The array structure includes the following elements: **`[i, j, swap_type, pool_t
 **`n_coins`**: Number of coins contained within the pool.
 
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```py
 [
     [2, 0, 1, 3, 3],    # first swap:  wETH -> USDC using tricryptoUSDC pool
-    [0, 1, 1, 1, 2],    # second swap: USDC -> crvUSD using crvUSD/USDC pool
+    [0, 1, 1, 1, 2],    # second swap: USDC -> crvUSD using crvusd/USDC pool
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
@@ -234,24 +231,25 @@ The array structure includes the following elements: **`[i, j, swap_type, pool_t
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 *Let's take a closer look at the first array, which represents the swap parameters for the first exchange (wETH -> USDC). `i = 2` because the coin index value of wETH in the tricryptoUSDC pool is 2. This can be obtained by calling `tricryptoUSDC.coins(n)`. Similarly, `j = 0` because USDC has the coin index value of 0. The swap type is a regular exchange, represented by `1`. The `pool_type` is 3, as it is a tricrypto pool (a cryptoswap algorithm consisting of three coins: USDC, wBTC, and wETH). The last value in the array represents the number of coins in the pool, which is 3.*
 
-*The values of the second array should be set according to the crvUSD/USDC pool.*
+*The values of the second array should be set according to the crvusd/USDC pool.*
 
 
 ---
 
 
-## **Exchanging Tokens**The router has a single `exchange` function, which allows up to 5 swaps in a single transaction. 
+## **Exchanging Tokens**
+
+The router has a single `exchange` function, which allows up to 5 swaps in a single transaction. 
 
 Routing and swap parameters need to be determined off-chain. The exchange functionality of the router is designed for gas efficiency over ease-of-use. An accompanying JavaScript library can be found on [ GitHub](https://github.com/curvefi/curve-router-js), which is used in the Curve UI to determine route and swap parameters.
 
 
 ### `exchange`
-:::description[`Router.exchange(_route: address[11], _swap_params: uint256[5][5], _amount: uint256, _expected: uint256, _pools: address[5] = empty(address[5]), _receiver: address = msg.sender) -> uint256:`]
+::::description[`Router.exchange(_route: address[11], _swap_params: uint256[5][5], _amount: uint256, _expected: uint256, _pools: address[5] = empty(address[5]), _receiver: address = msg.sender) -> uint256:`]
 
 
 Function to perform a token exchange with up to 5 swaps in a single transaction.
@@ -267,8 +265,7 @@ Returns: received amount of the final output token (`uint256`).
 | `_pools`       | `address[5]`    | Array of pools for swaps via zap contracts. This parameter is only needed for `swap_type = 3`. |
 | `receiver`     | `address`       | Address to transfer the final output token to. Defaults to `msg.sender`. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -467,10 +464,9 @@ def exchange(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Router.get_dy([
@@ -502,23 +498,24 @@ def exchange(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ---
 
 
-## **Helper Functions**There are two function to estimate input and output token amounts:
+## **Helper Functions**
+
+There are two function to estimate input and output token amounts:
 
 - `get_dy` to estimate the amount of output tokens when exchanging a certain amount of input token
 - `get_dx` to estimate the amount of input tokens when exchanging for a certain amount of output tokens
 
 
 ### `get_dy`
-:::description[`Router.get_dy(_route: address[11], _swap_params: uint256[5][5], _amount: uint256, _pools: address[5] = empty(address[5])) -> uint256:`]
+::::description[`Router.get_dy(_route: address[11], _swap_params: uint256[5][5], _amount: uint256, _pools: address[5] = empty(address[5])) -> uint256:`]
 
 
 :::notebook[Jupyter Notebook]
@@ -539,14 +536,7 @@ Returns: expected amount of final output token (`uint256`).
 | `_amount`      | `uint256`        | The amount of input token (`_route[0]`) to be sent. |
 | `_pools`       | `address[5]`     | Array of pools for swaps via zap contracts. This parameter defaults to an empty array and is only needed for `swap_type = 3`. |
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="curverouterng-vy" label="CurveRouterNG.vy">
-
-
+<SourceCode>
 ```vyper
 event Exchange:
     sender: indexed(address)
@@ -713,16 +703,9 @@ def get_dy(
 
     return amount - 1
 ```
+</SourceCode>
 
-
-</TabItem>
-</Tabs>
-
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Router.get_dy(
@@ -752,14 +735,13 @@ def get_dy(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `get_dx`
-:::description[`Router.get_dx(_route: address[11], _swap_params: uint256[5][5], _out_amount: uint256, _pools: address[5], _base_pools: address[5]=empty(address[5]), _base_tokens: address[5] = empty(address[5])) -> uint256:`]
+::::description[`Router.get_dx(_route: address[11], _swap_params: uint256[5][5], _out_amount: uint256, _pools: address[5], _base_pools: address[5]=empty(address[5]), _base_tokens: address[5] = empty(address[5])) -> uint256:`]
 
 
 :::notebook[Jupyter Notebook]
@@ -782,8 +764,7 @@ Returns: required amount of input token (`uint256`).
 | `_base_pools`  | `address[5]`    | Array of base pools (for meta pools). Defaults to an empty array. |
 | `_base_tokens` | `address[5]`    | Array of base LP tokens (for meta pools). Should be a zap address for double meta pools. Defaults to an empty array. |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -962,10 +943,9 @@ def get_dx(
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> Router.get_dx(
@@ -995,8 +975,7 @@ def get_dx(
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

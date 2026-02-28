@@ -23,7 +23,9 @@ An interactive Google Colab notebook that plots the interest rate depending on u
 
 :::
 
-### **Borrow Rate**The formula for calculating the borrow rate is as follows:
+### **Borrow Rate**
+
+The formula for calculating the borrow rate is as follows:
 
 $$\text\{rate\} = \text\{rate\}_\{\text\{AMM\}\} \left( r_\{\text\{minf\}\} + \frac\{A\}\{u_\{\text\{inf\}\} - \text\{utilization\}\} \right) + \text\{shift\}$$
 
@@ -32,7 +34,9 @@ $\text{shift}$ is an additional value which shifts the entire rate curve up or d
 [^1]: This kind of rate shift is rarely used but is applied, for example, in the wstETH lending market. The `SecondaryMonetaryPolicy` of that market does not follow the wstETH mint market but follows the wETH mint market instead, with a +4% shift applied to the rate. This is done because the "more fair" interest rate is the wETH rate plus the staking rate (which is approximately 4%).
 
 
-### **Parameters**Depending on **target utilization ( \(u_0\) )**, **rate ratio at 0% utilization ( \(\alpha\) )**, and **rate ratio at 100% utilization ( \(\beta\) )**, the coefficients for the hyperbolic dependency are calculated as follows:
+### **Parameters**
+
+Depending on **target utilization ( \(u_0\) )**, **rate ratio at 0% utilization ( \(\alpha\) )**, and **rate ratio at 100% utilization ( \(\beta\) )**, the coefficients for the hyperbolic dependency are calculated as follows:
 
 $$u_\{\text\{inf\}\} = \frac\{(\beta - 1) \times u_0\}\{(\beta - 1) \times u_0 - (1 - u_0) \times (1 - \alpha)\}$$
 
@@ -359,7 +363,9 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 ---
 
 
-## **Parameters**The contract includes a `Parameters` struct that holds values essential for the hyperbolic dependency model used in borrow rate calculations. This struct consists of `u_inf`, `A`, `r_minf`, and `shift`, which are derived from the **target utilization ($u_0$)**, the rate ratio at **0% utilization ($\alpha$)**, and the rate ratio at **maximum utilization ($\beta$)**. These parameters are initially computed using the internal `get_params` function during contract initialization and are recalculated whenever new parameter values are set through the [`set_parameters`](#set_parameters) method. This struct and the associated calculations ensure the borrow rates adjust dynamically based on fund utilization.
+## **Parameters**
+
+The contract includes a `Parameters` struct that holds values essential for the hyperbolic dependency model used in borrow rate calculations. This struct consists of `u_inf`, `A`, `r_minf`, and `shift`, which are derived from the **target utilization ($u_0$)**, the rate ratio at **0% utilization ($\alpha$)**, and the rate ratio at **maximum utilization ($\beta$)**. These parameters are initially computed using the internal `get_params` function during contract initialization and are recalculated whenever new parameter values are set through the [`set_parameters`](#set_parameters) method. This struct and the associated calculations ensure the borrow rates adjust dynamically based on fund utilization.
 
 
 ```python
@@ -551,7 +557,9 @@ def get_params(u_0: uint256, alpha: uint256, beta: uint256, rate_shift: uint256)
 ---
 
 
-## **Contract Info Methods**### `AMM`
+## **Contract Info Methods**
+
+### `AMM`
 :::description[`MonetaryPolicy.parameters() -> tuple: view`]
 
 

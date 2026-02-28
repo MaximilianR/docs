@@ -1,8 +1,10 @@
+# Deployer API
+
 A new crvUSD market can be added by the CurveOwnershipAgent. Therefore, adding a new market requires a successfully passed DAO vote.
 
 
 ### `add_market`
-:::description[`ControllerFactory.add_market(token: address, A: uint256, fee: uint256, admin_fee: uint256, _price_oracle_contract: address, monetary_policy: address, loan_discount: uint256, liquidation_discount: uint256, debt_ceiling: uint256) -> address[2]:`]
+::::description[`ControllerFactory.add_market(token: address, A: uint256, fee: uint256, admin_fee: uint256, _price_oracle_contract: address, monetary_policy: address, loan_discount: uint256, liquidation_discount: uint256, debt_ceiling: uint256) -> address[2]:`]
 
 
 :::guard[Guarded Method]
@@ -38,19 +40,12 @@ There are some limitation values for adding new markets regarding `fee`, `A` and
 
 :::
 
-<details>
-<summary>Source code</summary>
-
-
-<Tabs>
-<TabItem value="controllerfactory-vy" label="ControllerFactory.vy">
+<SourceCode>
 
 
 ```vyper
 # Limits
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 MIN_A: constant(uint256) = 2
 MAX_A: constant(uint256) = 10000
@@ -124,13 +119,6 @@ def add_market(token: address, A: uint256, fee: uint256, admin_fee: uint256,
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="monetarypolicy-vy" label="MonetaryPolicy.vy">
-
-
 ```vyper
 @internal
 @view
@@ -161,13 +149,6 @@ def rate_write() -> uint256:
     # which change rate0 - for example rate0 targeting some fraction pl_debt/total_debt
     return self.calculate_rate()
 ```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="priceoracle-vy" label="PriceOracle.vy">
 
 
 ```vyper
@@ -216,13 +197,6 @@ def price() -> uint256:
 ```
 
 
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="amm-vy" label="AMM.vy">
-
-
 ```vyper
 @external
 def set_admin(_admin: address):
@@ -237,14 +211,9 @@ def set_admin(_admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</SourceCode>
 
-
-</details>
-
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 ```shell
 >>> ControllerFactory.add_market("0xae78736cd615f374d3085123a210448e74fc6393",
@@ -261,8 +230,7 @@ def set_admin(_admin: address):
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::

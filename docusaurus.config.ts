@@ -3,6 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+const remarkLogos = require('./remark-logos');
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -10,7 +11,7 @@ const SITE_DOMAIN = 'docs.curve.finance';
 
 // Shared doc plugin options (used by both user and protocol sections)
 const sharedDocOptions = {
-  remarkPlugins: [remarkMath],
+  remarkPlugins: [remarkMath, remarkLogos],
   rehypePlugins: [rehypeKatex],
   admonitions: {
     keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'warning', 'danger', 'example', 'description', 'deploy', 'github', 'vyper', 'colab', 'guard', 'telegram', 'notebook', 'solidity', 'bug', 'pdf', 'abstract'],
@@ -272,15 +273,18 @@ const config: Config = {
           // curve_dao → curve-dao
           { from: '/developer/curve_dao/crv-token', to: '/developer/curve-dao/crv-token' },
           // voting-escrow/voting-escrow redirect removed: Docusaurus resolves same-name-as-parent docs differently
-          { from: '/developer/curve_dao/voting-escrow/admin-controls', to: '/developer/curve-dao/voting-escrow/admin-controls' },
-          { from: '/developer/curve_dao/voting-escrow/smartwalletchecker', to: '/developer/curve-dao/voting-escrow/smart-wallet-checker' },
+          { from: '/developer/curve_dao/voting-escrow/admin-controls', to: '/developer/curve-dao/voting-escrow' },
+          { from: '/developer/curve_dao/voting-escrow/smartwalletchecker', to: '/developer/curve-dao/voting-escrow' },
+          // Merged admin-controls and smart-wallet-checker into voting-escrow
+          { from: '/developer/curve-dao/voting-escrow/admin-controls', to: '/developer/curve-dao/voting-escrow' },
+          { from: '/developer/curve-dao/voting-escrow/smart-wallet-checker', to: '/developer/curve-dao/voting-escrow' },
           // crvUSD → crvusd (file renames only; pure case-change redirects removed — they
           // conflict on case-insensitive filesystems and should be handled via server config)
           { from: '/developer/crvUSD/monetarypolicy', to: '/developer/crvusd/monetary-policy' },
           { from: '/developer/crvUSD/flashlender', to: '/developer/crvusd/flash-lender' },
           { from: '/developer/crvUSD/priceaggregator', to: '/developer/crvusd/price-aggregator' },
           { from: '/developer/crvUSD/priceaggregator_old', to: '/developer/crvusd/price-aggregator-old' },
-          { from: '/developer/crvUSD/factory/factory_full', to: '/developer/crvusd/factory/factory-full' },
+          { from: '/developer/crvUSD/factory/factory_full', to: '/developer/crvusd/factory/overview' },
           { from: '/developer/crvUSD/pegkeepers/PegKeeperV1', to: '/developer/crvusd/pegkeepers/peg-keeper-v1' },
           { from: '/developer/crvUSD/pegkeepers/PegKeeperV2', to: '/developer/crvusd/pegkeepers/peg-keeper-v2' },
           { from: '/developer/crvUSD/pegkeepers/PegKeeperRegulator', to: '/developer/crvusd/pegkeepers/peg-keeper-regulator' },
@@ -290,6 +294,7 @@ const config: Config = {
           // scrvusd file renames
           { from: '/developer/scrvusd/RewardsHandler', to: '/developer/scrvusd/rewards-handler' },
           { from: '/developer/scrvusd/StablecoinLens', to: '/developer/scrvusd/stablecoin-lens' },
+          { from: '/developer/scrvusd/crosschain/oracle-v0/oracle', to: '/developer/scrvusd/crosschain/oracle-v0' },
           // stableswap-exchange flatten
           { from: '/developer/stableswap-exchange/overview', to: '/developer/stableswap-overview' },
           { from: '/developer/stableswap-exchange/stableswap/overview', to: '/developer/stableswap/overview' },
@@ -340,8 +345,8 @@ const config: Config = {
           { from: '/developer/liquidity-gauges-and-minting-crv/overview', to: '/developer/gauges/overview' },
           { from: '/developer/liquidity-gauges-and-minting-crv/gauges/overview', to: '/developer/gauges/gauges/overview' },
           { from: '/developer/liquidity-gauges-and-minting-crv/gauges/LiquidityGaugeV6', to: '/developer/gauges/gauges/liquidity-gauge-v6' },
-          // gauge-controller/gauge-controller redirect removed: Docusaurus resolves same-name-as-parent docs differently
-          // minter/minter redirect removed: Docusaurus resolves same-name-as-parent docs differently
+          { from: '/developer/gauges/gauge-controller/gauge-controller', to: '/developer/gauges/gauge-controller' },
+          { from: '/developer/gauges/minter/minter', to: '/developer/gauges/minter' },
           { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/overview', to: '/developer/gauges/xchain-gauges/overview' },
           { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/RootGauge', to: '/developer/gauges/xchain-gauges/root-gauge' },
           { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/RootGaugeFactory', to: '/developer/gauges/xchain-gauges/root-gauge-factory' },
@@ -366,10 +371,42 @@ const config: Config = {
           { from: '/developer/registry/MetaRegistryAPI', to: '/developer/registry/meta-registry-api' },
           // integration file renames
           { from: '/developer/integration/metaregistry', to: '/developer/integration/meta-registry' },
+          // governance file renames
+          { from: '/developer/governance/curve-dao', to: '/developer/governance/voting-library' },
           // lending file renames
           { from: '/developer/lending/contracts/cryptofrompool', to: '/developer/lending/contracts/crypto-from-pool' },
           { from: '/developer/lending/contracts/cryptofrompoolvault', to: '/developer/lending/contracts/crypto-from-pool-vault' },
           { from: '/developer/lending/contracts/cryptofrompoolsrate', to: '/developer/lending/contracts/crypto-from-pools-rate' },
+          // deployments consolidation — 8 subcategory pages + legacy page → single page
+          { from: '/developer/deployments/contract-deployments', to: '/developer/deployments' },
+          { from: '/developer/deployments/amm', to: '/developer/deployments' },
+          { from: '/developer/deployments/crvusd', to: '/developer/deployments' },
+          { from: '/developer/deployments/lending', to: '/developer/deployments' },
+          { from: '/developer/deployments/dao', to: '/developer/deployments' },
+          { from: '/developer/deployments/integration', to: '/developer/deployments' },
+          { from: '/developer/deployments/crosschain', to: '/developer/deployments' },
+          { from: '/developer/deployments/router-zaps', to: '/developer/deployments' },
+          { from: '/developer/references/deployed-contracts', to: '/developer/deployments' },
+          // audits page merged into security
+          { from: '/developer/references/audits', to: '/developer/security/' },
+          // cryptoswap in-depth redirect
+          { from: '/developer/cryptoswap-exchange/in-depth', to: '/developer/cryptoswap-in-depth' },
+          // block-oracle redirects (new section, old mkdocs paths)
+          { from: '/developer/block-oracle/BlockOracle', to: '/developer/block-oracle/' },
+          { from: '/developer/block-oracle/HeaderVerifier', to: '/developer/block-oracle/header-verifier' },
+          { from: '/developer/block-oracle/LZBlockRelay', to: '/developer/block-oracle/lz-block-relay' },
+          { from: '/developer/block-oracle/MainnetBlockView', to: '/developer/block-oracle/mainnet-block-view' },
+          // fast-bridge redirects (new section, old mkdocs paths)
+          { from: '/developer/fast-bridge/FastBridgeL2', to: '/developer/fast-bridge/fast-bridge-l2' },
+          { from: '/developer/fast-bridge/FastBridgeVault', to: '/developer/fast-bridge/fast-bridge-vault' },
+          { from: '/developer/fast-bridge/L2MessengerLZ', to: '/developer/fast-bridge/l2-messenger-lz' },
+          { from: '/developer/fast-bridge/VaultMessengerLZ', to: '/developer/fast-bridge/vault-messenger-lz' },
+          // veCRV crosschain redirects
+          { from: '/developer/curve_dao/voting-escrow/crosschain/vecrv-delegation', to: '/developer/curve-dao/voting-escrow/crosschain/vecrv-delegation' },
+          { from: '/developer/curve_dao/voting-escrow/crosschain/vecrv-oracle', to: '/developer/curve-dao/voting-escrow/crosschain/vecrv-oracle' },
+          { from: '/developer/curve_dao/voting-escrow/crosschain/vecrv-verifiers', to: '/developer/curve-dao/voting-escrow/crosschain/vecrv-verifiers' },
+          // twocrypto-ng refuel redirect
+          { from: '/developer/cryptoswap-exchange/twocrypto-ng/implementations/refuel', to: '/developer/twocrypto-ng/implementations/refuel' },
         ],
       },
     ],

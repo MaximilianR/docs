@@ -1,5 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 ## Overview
 
@@ -13,7 +11,7 @@ action can be applied is given by the constant pool attribute ``admin_actions_de
 
 ### `StableSwap.commit_transfer_ownership`
 
-:::description[StableSwap.commit_transfer_ownership(_owner: address)]
+::::description[Stableswap.commit_transfer_ownership(_owner: address)]
 
 
 Initiate an ownership transfer of pool to ``_owner``.
@@ -24,8 +22,7 @@ Initiate an ownership transfer of pool to ``_owner``.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>CommitNewAdmin</mark>  
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -46,10 +43,9 @@ def commit_transfer_ownership(_owner: address):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -58,8 +54,7 @@ todo: console output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -70,19 +65,18 @@ current block delayed by ``ADMIN_ACTIONS_DELAY``.
 :::
 
 
-:::
+::::
 
 ### `StableSwap.apply_transfer_ownership`
 
-:::description[StableSwap.apply_transfer_ownership()]
+::::description[Stableswap.apply_transfer_ownership()]
 
 
 Transfers ownership of the pool from current owner to the owner previously set via ``commit_transfer_ownership``.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>NewAdmin</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -100,10 +94,9 @@ def apply_transfer_ownership():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -112,8 +105,7 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::warning
 
@@ -124,18 +116,17 @@ Pool ownership can only be transferred once.
 :::
 
 
-:::
+::::
 
 ### `StableSwap.revert_transfer_ownership()`
 
-:::description[`StableSwap.revert_transfer_ownership()`]
+::::description[`StableSwap.revert_transfer_ownership()`]
 
 
 Reverts any previously committed transfer of ownership. This method resets the 
 ``transfer_ownership_deadline`` to ``0``.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -147,10 +138,9 @@ def revert_transfer_ownership():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -159,11 +149,10 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## Amplification Coefficient Admin Controls
 
@@ -186,7 +175,7 @@ coefficient for a pool after it has been deployed. However, it requires a vote w
 
 ### `StableSwap.ramp_A`
 
-:::description[`StableSwap.ramp_A(_future_A: uint256, _future_time: uint256)`]
+::::description[`StableSwap.ramp_A(_future_A: uint256, _future_time: uint256)`]
 
 
 Ramp ``A`` up or down by setting a new ``A`` to take effect at a future point in time.
@@ -198,8 +187,7 @@ Ramp ``A`` up or down by setting a new ``A`` to take effect at a future point in
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>RampA</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -233,10 +221,9 @@ def ramp_A(_future_A: uint256, _future_time: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -245,23 +232,21 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `StableSwap.stop_ramp_A`
 
-:::description[StableSwap.stop_ramp_A()]
+::::description[Stableswap.stop_ramp_A()]
 
 
 Stop ramping ``A`` up or down and sets ``A`` to current ``A``.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>StopRampA</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -280,10 +265,9 @@ def stop_ramp_A():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -292,11 +276,10 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ## Swap Fees Admin Controls
 
@@ -306,7 +289,7 @@ For an overview of how fees are distributed, please refer to Fee Collection and 
 
 
 ### `StableSwap.commit_new_fee`
-:::description[`StableSwap.commit_new_fee(_new_fee: uint256, _new_admin_fee: uint256)`]
+::::description[`StableSwap.commit_new_fee(_new_fee: uint256, _new_admin_fee: uint256)`]
 
 
 The method commits new fee params: these fees do not take immediate effect.
@@ -318,8 +301,7 @@ The method commits new fee params: these fees do not take immediate effect.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>CommitNewFee</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -343,10 +325,9 @@ def commit_new_fee(new_fee: uint256, new_admin_fee: uint256):
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -355,8 +336,7 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -369,19 +349,18 @@ respectively. By default ``MAX_FEE`` is set at 50% and ``MAX_ADMIN_FEE`` at 100%
 :::
 
 
-:::
+::::
 
 ### `StableSwap.apply_new_fee`
 
-:::description[StableSwap.apply_new_fee()]
+::::description[Stableswap.apply_new_fee()]
 
 
 Apply the previously committed new pool and admin fees for the pool.
 
 Emits: <mark style={{backgroundColor: '#FFD580', color: 'black'}}>NewFee</mark>
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -401,10 +380,9 @@ def apply_new_fee():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -413,8 +391,7 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -425,17 +402,16 @@ Unlike ownership transfers, pool and admin fees may be set more than once.
 :::
 
 
-:::
+::::
 
 ### `StableSwap.revert_new_parameters`
 
-:::description[`StableSwap.revert_new_parameters()`]
+::::description[`StableSwap.revert_new_parameters()`]
 
 
 Resets any previously committed new fees.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -447,10 +423,9 @@ def revert_new_parameters():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -459,15 +434,14 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `StableSwap.admin_balances`
 
-:::description[`StableSwap.admin_balances(i: uint256) → uint256`]
+::::description[`StableSwap.admin_balances(i: uint256) → uint256`]
 
 
 Get the admin balance for a single coin in the pool.
@@ -476,8 +450,7 @@ Get the admin balance for a single coin in the pool.
 | ----------- | -------| ----|
 | `i`       |  `uint256` | Index of the coin to get admin balance for |
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -488,10 +461,9 @@ def admin_balances(i: uint256) -> uint256:
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -500,15 +472,14 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `StableSwap.withdraw_admin_fees`
 
-:::description[`StableSwap.withdraw_admin_fees()`]
+::::description[`StableSwap.withdraw_admin_fees()`]
 
 
 Withdraws and transfers admin fees of the pool to the pool owner.
@@ -525,8 +496,7 @@ def withdraw_admin_fees():
             assert ERC20(c).transfer(msg.sender, value)
 ```
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -535,21 +505,19 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
 
 ### `StableSwap.donate_admin_fees`
 
-:::description[`StableSwap.donate_admin_fees()`]
+::::description[`StableSwap.donate_admin_fees()`]
 
 
 Donate all admin fees to the pool’s liquidity providers.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -561,10 +529,9 @@ def donate_admin_fees():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -573,8 +540,7 @@ todo: log output
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -585,13 +551,13 @@ Older Curve pools do not implement this method.
 :::
 
 
-:::
+::::
 
 ## Kill a Pool
 
 ### `StableSwap.kill_me`
 
-:::description[`StableSwap.kill_me()`]
+::::description[`StableSwap.kill_me()`]
 
 
 Pause a pool by setting the ``is_killed`` boolean flag to ``True``.
@@ -605,8 +571,7 @@ This disables the following pool functionality:
 
 It is only possible for existing LPs to remove liquidity via ``remove_liquidity`` from a paused pool.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper hl_lines="10 26 39 53 61"
@@ -674,10 +639,9 @@ def kill_me():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
@@ -685,8 +649,7 @@ todo: add example
 ```
 
 
-</TabItem>
-</Tabs>
+</Example>
 
 :::note
 
@@ -697,17 +660,16 @@ Pools can only be killed within the first 30 days after deployment.
 :::
 
 
-:::
+::::
 
 ### `StableSwap.unkill_me`
 
-:::description[StableSwap.unkill_me]
+::::description[Stableswap.unkill_me]
 
 
 Unpause a pool that was previously paused, re-enabling exchanges.
 
-<details>
-<summary>Source code</summary>
+<SourceCode>
 
 
 ```vyper
@@ -718,18 +680,16 @@ def unkill_me():
 ```
 
 
-</details>
+</SourceCode>
 
-<Tabs>
-<TabItem value="example" label="Example">
+<Example>
 
 
 ```shell
 todo: add example
 ```
 
-</TabItem>
-</Tabs>
+</Example>
 
 
-:::
+::::
