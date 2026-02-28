@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
-import BrowserOnly from '@docusaurus/BrowserOnly';
 
 const RPC_URL = 'https://eth.llamarpc.com';
 const MULTICALL3 = '0xcA11bde05977b3631167028862bE2a173976CA11';
@@ -224,9 +223,8 @@ function ContractCallInner({ address, abi, method, args = [], labels = [], contr
 }
 
 export default function ContractCall(props) {
-  return (
-    <BrowserOnly fallback={<div />}>
-      {() => <ContractCallInner {...props} />}
-    </BrowserOnly>
-  );
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+  return <ContractCallInner {...props} />;
 }
