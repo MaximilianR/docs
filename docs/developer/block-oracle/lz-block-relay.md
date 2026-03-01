@@ -6,7 +6,7 @@ Operating in two modes — **read-enabled** (which can request and broadcast blo
 
 :::vyper[`LZBlockRelay.vy`]
 
-The source code for the `LZBlockRelay.vy` contract can be found on [ GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/messengers/LZBlockRelay.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
+The source code for the `LZBlockRelay.vy` contract can be found on [GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/messengers/LZBlockRelay.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
 
 The contract is deployed on all supported chains at `0xFacEFeeD696BFC0ebe7EaD3FFBb9a56290d31752`.
 
@@ -28,7 +28,7 @@ The contract is deployed on all supported chains at `0xFacEFeeD696BFC0ebe7EaD3FF
 This section covers owner-only functions for configuring LayerZero channels, peers, delegates, and the block oracle. These functions are critical for secure cross-chain operation and must be managed by the contract owner (DAO).
 
 ### `set_read_config`
-::::description[`LZBlockRelay.set_read_config(_is_enabled, _read_channel, _mainnet_eid, _mainnet_view)`]
+::::description[`LZBlockRelay.set_read_config(_is_enabled: bool, _read_channel: uint32, _mainnet_eid: uint32, _mainnet_view: address)`]
 
 :::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the current `owner` of the contract.
@@ -106,6 +106,14 @@ def _setPeer(_eid: uint32, _peer: bytes32):
 ```
 
 </SourceCode>
+
+<Example>
+
+```shell
+>>> LZBlockRelay.set_read_config(True, 30101, 30101, '0xb10CfacE69cc0B7F1AE0Dc8E6aD186914f6e7EEA')
+```
+
+</Example>
 
 ::::
 
@@ -313,6 +321,8 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Sets the peer address (OApp instance) for a corresponding endpoint. This establishes a trusted cross-chain communication channel.
 
+Emits: `PeerSet`
+
 | Input | Type   | Description                      |
 |-------|--------|----------------------------------|
 | `_eid`  | `uint32` | The endpoint ID.                 |
@@ -372,10 +382,22 @@ def _setPeer(_eid: uint32, _peer: bytes32):
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> LZBlockRelay.setPeer(30110, 0x000000000000000000000000FacEFeeD696BFC0ebe7EaD3FFBb9a56290d31752)
+```
+
+</Example>
+
 ::::
 
 ### `set_peers`
 ::::description[`LZBlockRelay.set_peers(_eids: DynArray[uint32, MAX_N_BROADCAST], _peers: DynArray[address, MAX_N_BROADCAST])`]
+
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
+This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the current `owner` of the contract.
+:::
 
 Function to set peers for a corresponding endpoints. This is a batched version of the `OApp.setPeer` that accepts EVM addresses only.
 
@@ -436,6 +458,14 @@ def _setPeer(_eid: uint32, _peer: bytes32):
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> LZBlockRelay.set_peers([30110, 30111], ['0xFacEFeeD696BFC0ebe7EaD3FFBb9a56290d31752', '0xFacEFeeD696BFC0ebe7EaD3FFBb9a56290d31752'])
+```
+
+</Example>
+
 ::::
 
 ### `setDelegate`
@@ -493,10 +523,18 @@ def setDelegate(_delegate: address):
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> LZBlockRelay.setDelegate('0x1234567890123456789012345678901234567890')
+```
+
+</Example>
+
 ::::
 
 ### `isComposeMsgSender`
-::::description[`LZBlockRelay.isComposeMsgSender(_origin: Origin, _message: Bytes[MAX_MESSAGE_SIZE], _sender: address) -> bool`]
+::::description[`LZBlockRelay.isComposeMsgSender(_origin: Origin, _message: Bytes[MAX_MESSAGE_SIZE], _sender: address) -> bool: view`]
 
 Function to check whether an address is an approved composeMsg sender to the Endpoint.
 
@@ -505,7 +543,7 @@ Returns: true or false (`bool`)
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_origin` | `Origin` | Struct containing of srcEid, sender and nonce  |
-| `_message` | `Bytes[MAX_MESSAGE_SIZE]` | The sender address  |
+| `_message` | `Bytes[MAX_MESSAGE_SIZE]` | The lzReceive payload  |
 | `_sender` | `address` |  The sender address |
 
 <SourceCode>
@@ -548,10 +586,19 @@ def isComposeMsgSender(
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> LZBlockRelay.isComposeMsgSender(origin, message, '0xFacEFeeD696BFC0ebe7EaD3FFBb9a56290d31752')
+True
+```
+
+</Example>
+
 ::::
 
 ### `allowInitializePath`
-::::description[`LZBlockRelay.allowInitializePath(_origin: Origin) -> bool`]
+::::description[`LZBlockRelay.allowInitializePath(_origin: Origin) -> bool: view`]
 
 Function to check if the path initialization is allowed based on the provided origin.
 
@@ -599,10 +646,19 @@ def allowInitializePath(_origin: Origin) -> bool:
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> LZBlockRelay.allowInitializePath(origin)
+True
+```
+
+</Example>
+
 ::::
 
 ### `nextNonce`
-::::description[`LZBlockRelay.nextNonce(_srcEid: uint32, _sender: bytes32) -> uint64`]
+::::description[`LZBlockRelay.nextNonce(_srcEid: uint32, _sender: bytes32) -> uint64: pure`]
 
 :::warning
 Vyper-specific: If your app relies on ordered execution, you must change this function. By default this is NOT enabled. ie. nextNonce is hardcoded to return 0.
@@ -654,6 +710,15 @@ def nextNonce(_srcEid: uint32, _sender: bytes32) -> uint64:
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> LZBlockRelay.nextNonce(30110, 0x000000000000000000000000FacEFeeD696BFC0ebe7EaD3FFBb9a56290d31752)
+0
+```
+
+</Example>
+
 ::::
 
 
@@ -670,7 +735,7 @@ Currently, only block hashes received via trusted LayerZero channels are committ
 
 
 ### `request_block_hash`
-::::description[`LZBlockRelay.request_block_hash(_target_eids: DynArray[uint32, MAX_N_BROADCAST], _target_fees: DynArray[uint256, MAX_N_BROADCAST], _lz_receive_gas_limit: uint128, _read_gas_limit: uint128, _block_number: uint256 = 0):`]
+::::description[`LZBlockRelay.request_block_hash(_target_eids: DynArray[uint32, MAX_N_BROADCAST], _target_fees: DynArray[uint256, MAX_N_BROADCAST], _lz_receive_gas_limit: uint128, _read_gas_limit: uint128, _block_number: uint256 = 0)`]
 
 Function to request a block hash from mainnet and broadcast it to specified targets. User must ensure `msg.value` is sufficient. The caller covers read fee (`quote_read_fee`) and broadcast fee (`quote_broadcast_fees`).
 
@@ -771,7 +836,7 @@ def _request_block_hash(
 <Example>
 
 ```shell
->>> soon
+>>> LZBlockRelay.request_block_hash([30110], [1000000000000000], 200000, 200000, 0)
 ```
 
 </Example>
@@ -779,13 +844,15 @@ def _request_block_hash(
 ::::
 
 ### `broadcast_latest_block`
-::::description[`LZBlockRelay.broadcast_latest_block(_target_eids: DynArray[uint32, MAX_N_BROADCAST], _target_fees: DynArray[uint256, MAX_N_BROADCAST], _lz_receive_gas_limit: uint128):`]
+::::description[`LZBlockRelay.broadcast_latest_block(_target_eids: DynArray[uint32, MAX_N_BROADCAST], _target_fees: DynArray[uint256, MAX_N_BROADCAST], _lz_receive_gas_limit: uint128)`]
 
 :::info
 Only broadcast what was received via lzRead to prevent potentially malicious hashes from other sources
 :::
 
 Function to broadcast the latest confirmed block hash to specified chains.
+
+Emits: `BlockHashBroadcast`
 
 
 | Input  | Type      | Description           |
@@ -842,7 +909,7 @@ def broadcast_latest_block(
 <Example>
 
 ```shell
->>> soon
+>>> LZBlockRelay.broadcast_latest_block([30110], [1000000000000000], 200000)
 ```
 
 </Example>
@@ -943,7 +1010,8 @@ struct Origin:
 <Example>
 
 ```shell
->>> soon
+# Called by the LayerZero endpoint, not directly by users
+>>> LZBlockRelay.lzReceive(origin, guid, message, executor, extra_data)
 ```
 
 </Example>
@@ -1102,7 +1170,8 @@ def _getPeerOrRevert(_eid: uint32) -> bytes32:
 <Example>
 
 ```shell
->>> soon
+>>> LZBlockRelay.quote_read_fee(200000, 0)
+1000000000000000
 ```
 
 </Example>
@@ -1265,7 +1334,8 @@ def _getPeerOrRevert(_eid: uint32) -> bytes32:
 <Example>
 
 ```shell
->>> soon
+>>> LZBlockRelay.quote_broadcast_fees([30110, 30111], 200000)
+[1000000000000000, 1000000000000000]
 ```
 
 </Example>
@@ -1297,7 +1367,7 @@ read_enabled: public(bool)
 
 ```shell
 >>> LZBlockRelay.read_enabled()
-'true'
+True
 ```
 
 </Example>

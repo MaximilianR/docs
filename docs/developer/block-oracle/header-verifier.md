@@ -4,7 +4,7 @@ The `HeaderVerifier` contract decodes RLP-encoded Ethereum block headers and for
 
 :::vyper[`HeaderVerifier.vy`]
 
-The source code for the `HeaderVerifier.vy` contract can be found on [ GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/HeaderVerifier.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
+The source code for the `HeaderVerifier.vy` contract can be found on [GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/HeaderVerifier.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
 
 The contract is deployed on all supported chains at `0xB10CDEC0DE69c88a47c280a97A5AEcA8b0b83385`.
 
@@ -21,11 +21,11 @@ The contract is deployed on all supported chains at `0xB10CDEC0DE69c88a47c280a97
 
 
 ### `decode_block_header`
-::::description[`HeaderVerifier.decode_block_header(encoded_header: Bytes[BLOCK_HEADER_SIZE]) -> BlockHeader`]
+::::description[`HeaderVerifier.decode_block_header(encoded_header: Bytes[BLOCK_HEADER_SIZE]) -> BlockHeader: pure`]
 
 Function to decode RLP encoded block header into a BlockHeader struct.
 
-Returns: A `BlockHeader` struct containing decoded block data
+Returns: a `BlockHeader` struct containing decoded block data (`BlockHeader`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -261,7 +261,8 @@ def _read_rlp_number(encoded: Bytes[BLOCK_HEADER_SIZE], pos: uint256) -> (uint25
 <Example>
 
 ```shell
->>> soon
+>>> HeaderVerifier.decode_block_header(rlp_encoded_header)
+(0xc215221221dd6673ae7ed2e50f47f6d020034657bb4a08010b5677a1f9d06d6d, 0x..., 0x..., 0x..., 22788903, 1750944347)
 ```
 
 </Example>
@@ -273,8 +274,6 @@ def _read_rlp_number(encoded: Bytes[BLOCK_HEADER_SIZE], pos: uint256) -> (uint25
 ::::description[`HeaderVerifier.submit_block_header(_oracle_address: address, _encoded_header: Bytes[bh_rlp.BLOCK_HEADER_SIZE])`]
 
 Function to submit a block header. Decodes the RLP-encoded header and forwards it to the specified oracle contract.
-
-Returns: None
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -339,7 +338,7 @@ def submit_block_header(_header_data: bh_rlp.BlockHeader):
 <Example>
 
 ```shell
->>> soon
+>>> HeaderVerifier.submit_block_header('0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8', rlp_encoded_header)
 ```
 
 </Example>
