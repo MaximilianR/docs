@@ -81,7 +81,7 @@ This example returns the cost of bridging denominated in `ETH` with a precision 
 
 Function to bridge any ERC20 token to the child chain.
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ----------- |
 | `_token` | `address` | The address of the token to bridge |
 | `_to` | `address` | The address to bridge the token to |
@@ -178,7 +178,7 @@ Function to check if the bridger contract has been approved by the `RootGauge`.
 
 Returns: `True` if the bridger has been approved by the `RootGauge`, `False` otherwise (`bool`).
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_account` | `address` | The address of the bridger contract to check |
 

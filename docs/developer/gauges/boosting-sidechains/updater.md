@@ -3,6 +3,12 @@
 
 The `Updater` contract is deployed on Ethereum mainnet and is used to transmit veCRV information across chains to a `L2 VotingEscrow Oracle`.
 
+:::vyper[`Updater.vy`]
+
+The source code for the `Updater.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-xchain-factory/tree/master/contracts/updaters). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+
+:::
+
 ---
 
 
@@ -10,7 +16,7 @@ The `Updater` contract is deployed on Ethereum mainnet and is used to transmit v
 ::::description[`Updater.VOTING_ESCROW() -> address: view`]
 
 
-Getter for the address of the voting escrow contract. This variable is constant and points to the voting escrow contract on Ethereum mainnet and can not be changed.
+Getter for the address of the voting escrow contract. This variable is constant and points to the voting escrow contract on Ethereum mainnet and cannot be changed.
 
 Returns: `VotingEscrow` contract (`address`).
 
@@ -47,9 +53,9 @@ VOTING_ESCROW: public(constant(address)) = 0x5f3b5DfEb7B28CDbD7FAba78963EE202a49
 ::::description[`Updater.ovm_chain() -> address: view`]
 
 
-Getter for the chain id of the alternate chain.
+Getter for the `CanonicalTransactionChain` address on the alternate chain.
 
-Returns: Chain id of the alternate chain (`address`).
+Returns: `CanonicalTransactionChain` contract (`address`).
 
 
 <SourceCode>

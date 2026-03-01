@@ -56,6 +56,8 @@ export default {
             label: 'Gauges & Emissions',
             items: [
                 { type: 'doc', id: 'gauges/overview', label: 'Overview' },
+                { type: 'doc', id: 'gauges/gauge-controller', label: 'GaugeController' },
+                { type: 'doc', id: 'gauges/minter', label: 'Minter' },
                 {
                     type: 'category',
                     label: 'Liquidity Gauges',
@@ -64,8 +66,6 @@ export default {
                         { type: 'doc', id: 'gauges/gauges/liquidity-gauge-v6', label: 'LiquidityGaugeV6' },
                     ],
                 },
-                { type: 'doc', id: 'gauges/gauge-controller', label: 'GaugeController' },
-                { type: 'doc', id: 'gauges/minter', label: 'Minter' },
                 {
                     type: 'category',
                     label: 'Cross-chain Gauges',
@@ -82,7 +82,6 @@ export default {
                     type: 'category',
                     label: 'Boosting (Sidechains)',
                     items: [
-                        { type: 'doc', id: 'gauges/boosting-sidechains/l2-voting-escrow-oracle', label: 'L2 VotingEscrow Oracle' },
                         { type: 'doc', id: 'gauges/boosting-sidechains/updater', label: 'Updater' },
                     ],
                 },

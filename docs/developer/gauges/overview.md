@@ -64,7 +64,7 @@ $I_{u} = \int \frac{r'(t)b_{u}(t)}{S(t)}dt,$ where $b_{u}(t)$ is the balance sup
 
 To avoid requiring that all users to checkpoint periodically, we keep recording values of the following integral (named `integrate_inv_supply` in the contract):
 
-$$I_\{is\}(t) = \int_0^t \frac\{r'(t)\}\{S(t)\}dt$$
+$$I_{is}(t) = \int_0^t \frac{r'(t)}{S(t)}dt$$
 
 The value of $I_{is}$ is recorded at any point any user deposits or withdraws, as well as every time the rate $r$ changes (either due to weight change or change of mining epoch).
 

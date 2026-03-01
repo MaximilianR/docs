@@ -353,7 +353,8 @@ const config: Config = {
           { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/ChildGauge', to: '/developer/gauges/xchain-gauges/child-gauge' },
           { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/ChildGaugeFactory', to: '/developer/gauges/xchain-gauges/child-gauge-factory' },
           { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/Bridgers', to: '/developer/gauges/xchain-gauges/bridgers' },
-          { from: '/developer/liquidity-gauges-and-minting-crv/boosting-sidechains/L2VotingEscrowOracle', to: '/developer/gauges/boosting-sidechains/l2-voting-escrow-oracle' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/boosting-sidechains/L2VotingEscrowOracle', to: '/developer/curve-dao/voting-escrow/crosschain/vecrv-oracle' },
+          { from: '/developer/gauges/boosting-sidechains/l2-voting-escrow-oracle', to: '/developer/curve-dao/voting-escrow/crosschain/vecrv-oracle' },
           { from: '/developer/liquidity-gauges-and-minting-crv/boosting-sidechains/Updater', to: '/developer/gauges/boosting-sidechains/updater' },
           // curve-api → api
           { from: '/developer/curve-api/curve-api', to: '/developer/api/curve-api' },

@@ -1,11 +1,11 @@
 # Minter
 
 
-The `Minter` is responsible for the **issuance and distribution of CRV tokens**to liquidity providers. It acts as a mechanism to reward users who provide liquidity to Curve's pools. The contract essentially calculates the amount of CRV tokens to be allocated based on various factors such as the duration and amount of liquidity provided.
+The `Minter` is responsible for the **issuance and distribution of CRV tokens** to liquidity providers. It acts as a mechanism to reward users who provide liquidity to Curve's pools. The contract essentially calculates the amount of CRV tokens to be allocated based on various factors such as the duration and amount of liquidity provided.
 
 :::vyper[`Minter.vy`]
 
-The source code for the `Minter.vy` contract is available on  [ GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.2.4`.
+The source code for the `Minter.vy` contract is available on [GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.2.4`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [0xd061D61a4d941c39E5453435B6345Dc261C2fcE0](https://etherscan.io/address/0xd061D61a4d941c39E5453435B6345Dc261C2fcE0#code).
 
@@ -17,8 +17,8 @@ The contract is deployed on :logos-ethereum: Ethereum at [0xd061D61a4d941c39E545
 
 CRV tokens can be minted in several ways:
 
-- [`mint`](#mint): simple function which mints the elegible CRV tokens to `msg.sender` from a single gauge
-- [`mint_many`](#mint_many): function to mint the elegible CRV for `msg.sender` for multiple gauges at once
+- [`mint`](#mint): simple function which mints the eligible CRV tokens to `msg.sender` from a single gauge
+- [`mint_many`](#mint_many): function to mint the eligible CRV for `msg.sender` for multiple gauges at once
 - [`mint_for`](#mint_for): function to mint CRV for someone else and send it to them. Approval needs to be granted via [`toggle_approve_mint`](#toggle_approve_mint)
 
 ### `mint`
@@ -41,6 +41,9 @@ interface LiquidityGauge:
     # Presumably, other gauges will provide the same interfaces
     def integrate_fraction(addr: address) -> uint256: view
     def user_checkpoint(addr: address) -> bool: nonpayable
+
+interface GaugeController:
+    def gauge_types(addr: address) -> int128: view
 
 interface MERC20:
     def mint(_to: address, _value: uint256) -> bool: nonpayable
@@ -81,7 +84,6 @@ def _mint_for(gauge_addr: address, _for: address):
 
 <Example>
 
-
 This example mints all CRV for the caller from `0xe5d5aa1bbe72f68df42432813485ca1fc998de32` (LDO/ETH gauge).
 
 ```shell
@@ -114,6 +116,9 @@ interface LiquidityGauge:
     # Presumably, other gauges will provide the same interfaces
     def integrate_fraction(addr: address) -> uint256: view
     def user_checkpoint(addr: address) -> bool: nonpayable
+
+interface GaugeController:
+    def gauge_types(addr: address) -> int128: view
 
 interface MERC20:
     def mint(_to: address, _value: uint256) -> bool: nonpayable
@@ -176,7 +181,7 @@ This example mints all CRV for `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` from
 ::::description[`Minter.mint_many(gauge_addrs: address[8])`]
 
 
-Function to mint CRV for the caller from multiple gauges. This function does not allow for minting for or to different addresses. It claims for `msgs.ender` and transfers the minted tokens to them. The maximum number of gauges that can be specified is eight. For example, if only minting from one gauge, leave the remaining array entries as `ZERO_ADDRESS`.
+Function to mint CRV for the caller from multiple gauges. This function does not allow for minting for or to different addresses. It claims for `msg.sender` and transfers the minted tokens to them. The maximum number of gauges that can be specified is eight. For example, if only minting from one gauge, leave the remaining array entries as `ZERO_ADDRESS`.
 
 Emits: `Minted` event.
 
@@ -192,6 +197,9 @@ interface LiquidityGauge:
     # Presumably, other gauges will provide the same interfaces
     def integrate_fraction(addr: address) -> uint256: view
     def user_checkpoint(addr: address) -> bool: nonpayable
+
+interface GaugeController:
+    def gauge_types(addr: address) -> int128: view
 
 interface MERC20:
     def mint(_to: address, _value: uint256) -> bool: nonpayable
@@ -242,7 +250,7 @@ def _mint_for(gauge_addr: address, _for: address):
 This example mints all CRV for the caller from three gauges at once.
 
 ```shell
->>> Minter.mint_many('0xe5d5aa1bbe72f68df42432813485ca1fc998de32', '0xbfcf63294ad7105dea65aa58f8ae5be2d9d0952a' '0xb9bdcdcd7c3c1a3255402d44639cb6c7281833cf', '0x0000000000000000000000000000000000000000')
+>>> Minter.mint_many(['0xe5d5aa1bbe72f68df42432813485ca1fc998de32', '0xbfcf63294ad7105dea65aa58f8ae5be2d9d0952a', '0xb9bdcdcd7c3c1a3255402d44639cb6c7281833cf', '0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000'])
 ```
 
 </Example>
@@ -273,6 +281,15 @@ minted: public(HashMap[address, HashMap[address, uint256]])
 
 </SourceCode>
 
+<Example>
+
+```py
+>>> Minter.minted('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0xe5d5aa1bbe72f68df42432813485ca1fc998de32')
+0
+```
+
+</Example>
+
 
 ::::
 
@@ -298,6 +315,15 @@ allowed_to_mint_for: public(HashMap[address, HashMap[address, bool]])
 ```
 
 </SourceCode>
+
+<Example>
+
+```py
+>>> Minter.allowed_to_mint_for('0x989AEb4d175e16225E39E87d0D97A3360524AD80', '0xF147b8125d2ef93FB6965Db97D6746952a133934')
+False
+```
+
+</Example>
 
 
 ::::
@@ -358,7 +384,7 @@ True
 ::::description[`Minter.token() -> address: view`]
 
 
-Getter for the token address of the Curve DAO Token (CRV). This variable is set at initialization and can not be changed after.
+Getter for the token address of the Curve DAO Token (CRV). This variable is set at initialization and cannot be changed after.
 
 Returns: CRV token contract (`address`).
 
@@ -375,6 +401,15 @@ def __init__(_token: address, _controller: address):
 ```
 
 </SourceCode>
+
+<Example>
+
+```py
+>>> Minter.token()
+'0xD533a949740bb3306d119CC777fa900bA034cd52'
+```
+
+</Example>
 
 
 ::::
@@ -400,6 +435,15 @@ def __init__(_token: address, _controller: address):
 ```
 
 </SourceCode>
+
+<Example>
+
+```py
+>>> Minter.controller()
+'0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB'
+```
+
+</Example>
 
 
 ::::

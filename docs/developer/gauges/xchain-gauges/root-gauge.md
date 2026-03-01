@@ -5,7 +5,7 @@ The `RootGauge` is a simplified liquidity gauge contract on Ethereum used for br
 
 :::vyper[`RootGauge.vy`]
 
-The source code for the `RootGauge.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/implementations/RootGauge.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `RootGauge.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/implementations/RootGauge.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x96720942F9fF22eFd8611F696E5333Fe3671717a`](https://etherscan.io/address/0x96720942F9fF22eFd8611F696E5333Fe3671717a).
 
@@ -83,6 +83,8 @@ This example initializes a root gauge with a bridger contract on Arbitrum.
 
 Function to checkpoint a gauge and update the total emissions.
 
+Returns: true (`bool`).
+
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | `_user` | `address` | The user address. This parameter is vestigial and has no impact on the function |
@@ -128,17 +130,17 @@ def user_checkpoint(_user: address) -> bool:
 
             if period_time <= params.finish_time and params.finish_time < period_time + WEEK:
                 # calculate with old rate
-                emissions += weight * params.rate * (params.finish_time - period_time) / 10 **18
+                emissions += weight * params.rate * (params.finish_time - period_time) / 10 ** 18
                 # update rate
                 params.rate = params.rate * RATE_DENOMINATOR / RATE_REDUCTION_COEFFICIENT
                 # calculate with new rate
-                emissions += weight * params.rate * (period_time + WEEK - params.finish_time) / 10 **18
+                emissions += weight * params.rate * (period_time + WEEK - params.finish_time) / 10 ** 18
                 # update finish time
                 params.finish_time += RATE_REDUCTION_TIME
                 # update storage
                 self.inflation_params = params
             else:
-                emissions += weight * params.rate * WEEK / 10 **18
+                emissions += weight * params.rate * WEEK / 10 ** 18
 
         self.last_period = current_period
         self.total_emissions += emissions
@@ -215,7 +217,7 @@ def transmit_emissions():
 ::::
 
 ### `integrate_fraction`
-::::description[`RootGauge.integrate_fraction(_user: address) -> uint256`]
+::::description[`RootGauge.integrate_fraction(_user: address) -> uint256: view`]
 
 
 Function to query the total emissions a user is entitled to. Any value of `_user` other than the gauge address will return 0  (only the gauge itself if entitled to emissions as it is the one who mints and bridges them).
@@ -414,7 +416,7 @@ bridger: public(Bridger)
 This example returns the bridger contract for transmitting CRV emissions from Ethereum to Arbitrum.
 
 ```py
->>> RootGauge.bridger(42161)
+>>> RootGauge.bridger()
 '0xceda55279fe22d256c4e6a6F2174C1588e94B2BB'
 ```
 
@@ -692,7 +694,7 @@ def set_killed(_is_killed: bool):
 True
 
 >>> RootGauge.inflation_params()
-{'rate': 0, 'finish_time': 0}
+{'rate': 0, 'finish_time': 1735689600}
 ```
 
 </Example>
@@ -725,6 +727,42 @@ factory: public(Factory)
 ```py
 >>> RootGauge.factory()
 '0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6'
+```
+
+</Example>
+
+
+::::
+
+### `version`
+::::description[`RootGauge.version() -> String[8]: view`]
+
+
+Getter for the contract version.
+
+Returns: contract version (`String[8]`).
+
+<SourceCode>
+
+```vyper
+VERSION: constant(String[8]) = "1.0.0"
+
+@pure
+@external
+def version() -> String[8]:
+    """
+    @notice Get the version of this gauge
+    """
+    return VERSION
+```
+
+</SourceCode>
+
+<Example>
+
+```py
+>>> RootGauge.version()
+'1.0.0'
 ```
 
 </Example>
