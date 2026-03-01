@@ -3,7 +3,7 @@ import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 # Curve Stablecoin: Overview
 Curve Stablecoin infrastructure enables users to **mint crvUSD using a selection of crypto collaterals**. Adding new collaterals is subject to DAO approval. 
 
-`crvUSD` is designed to provide a more **capital-efficient**stablecoin mechanism and **smoother liquidations**, while maintaining a decentralized design which the Curve DAO governs.
+`crvUSD` is designed to provide a more **capital-efficient** stablecoin mechanism and **smoother liquidations**, while maintaining a decentralized design which the Curve DAO governs.
 
 :::github[GitHub]
 
@@ -38,7 +38,7 @@ The Controller is the contract the **user interacts with** to **create a loan an
 LLAMMA is the **market-making contract that rebalances the collateral**. As the name suggests, this contract is responsible for liquidating collateral. Every market has its own AMM (created from a blueprint contract) containing the collateral asset and crvUSD.
 
   </DocCard>
-  <DocCard title="Factory" link="./factory/overview" linkText="Learn more">
+  <DocCard title="Factory" link="./factory" linkText="Learn more">
 
 The Factory is used to **add new markets**, **raise or lower debt ceilings** of already existing markets, **set blueprint contracts for AMM and Controller**, and **set fee receiver**.
 
@@ -69,3 +69,57 @@ The `FlashLender.vy` contract allows users to take out a flash loan for `crvUSD`
 
   </DocCard>
 </DocCardGrid>
+
+
+---
+
+
+## Controller & AMM Versions
+
+The crvUSD mint markets use several iterations of the Controller and AMM (LLAMMA) contracts. Each version was deployed as a new **blueprint** — existing markets are not affected when a new implementation is set. Llamalend later adopted the V3 blueprint, so all Llamalend markets share the same Controller/AMM version as the latest crvUSD markets.
+
+### Version Matrix
+
+| Version | Vyper | Controller Blueprint | AMM Blueprint | Source |
+|---------|-------|---------------------|---------------|--------|
+| **V1** | 0.3.7 | `0x...8fA` ([Etherscan](https://etherscan.io/address/0x6340678b2bab22a37d781571BD37894f855Ae84a)) | `0x...3D1` ([Etherscan](https://etherscan.io/address/0x5eA546C26e07Dbc82096D8D2D75c8E53a1bE00f1)) | [58289a4](https://github.com/curvefi/curve-stablecoin/tree/58289a4283d7cc3c53aba2d3801dcac5ef124957) |
+| **V2** | 0.3.9 | `0x...7Dd` ([Etherscan](https://etherscan.io/address/0x07CbC1c6757C97a4db7abF47B2843f8E44a02b7d)) | `0x...3D1` ([Etherscan](https://etherscan.io/address/0x5eA546C26e07Dbc82096D8D2D75c8E53a1bE00f1)) | — |
+| **V3** | 0.3.10 | `0xe3e...415` ([Etherscan](https://etherscan.io/address/0xe3e3Fb7E9f48d26817b7210C9bD6B22744790415)) | `0x2B7...e9` ([Etherscan](https://etherscan.io/address/0x2B7e624bdb839975d56D8428d9f6A4cf1160D3e9)) | [b0240d8](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721) |
+
+:::info
+V3 is the **current blueprint** set on the Controller Factory. It is also the version used by all [Llamalend](../lending/overview.md) markets.
+:::
+
+### Market → Version Mapping
+
+| Market (Collateral) | Controller Version | Status |
+|---------------------|--------------------|--------|
+| sfrxETH (v1) | V1 | Deprecated (0 debt ceiling) |
+| wstETH | V1 | Active |
+| WBTC | V1 | Active |
+| WETH | V1 | Active |
+| sfrxETH (v2) | V2 | Active |
+| tBTC | V2 | Active |
+| weETH | V3 | Active |
+| cbBTC | V3 | Active |
+| LBTC | V3 | Active |
+
+### Changelog
+
+#### V1 → V2
+
+- **Compiler upgrade**: Vyper 0.3.7 → 0.3.9.
+- Minor internal changes; the external API is identical.
+
+#### V2 → V3
+
+V3 is a significant upgrade that was developed alongside Llamalend. The same blueprint is shared by crvUSD mint markets and all Llamalend lending markets.
+
+- **Compiler upgrade**: Vyper 0.3.9 → 0.3.10.
+- **Delegated loan creation**: `create_loan`, `borrow_more`, `repay`, and `liquidate` accept an optional `_for` parameter, allowing approved operators to manage loans on behalf of users. See [`approve`](./controller.md#approve).
+- **Extra health buffer**: Users can set [`extra_health`](./controller.md#extra_health) via [`set_extra_health`](./controller.md#set_extra_health), adding a health buffer when entering soft liquidation.
+- **Extended borrow**: New [`borrow_more_extended`](./controller.md#borrow_more_extended) function supporting callback-based leverage.
+- **Arbitrary-decimal tokens**: The Controller now handles tokens with any number of decimals (not just 18), with rounding adjusted in favor of existing borrowers. This was necessary for Llamalend's flexible token support.
+- **`collect_fees()` disabled for lending**: In Llamalend markets, admin fees are zero and all interest goes to vault depositors.
+- **Native ETH transfers removed**: Automatic ETH wrapping is permanently disabled for safety.
+- **`check_lock` / `save_rate`**: New external helpers used by the Vault contract in Llamalend.

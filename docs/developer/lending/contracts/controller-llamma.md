@@ -8,7 +8,9 @@ The source code for both contracts, `AMM.vy` and `Controller.vy`, can be found o
 
 :::
 
-Because Curve Lending operates very similarly to the system for minting crvUSD, both `Controller.vy` and `AMM.vy` can be used for lending markets. To ensure full compatibility with both systems, **several modifications have been made to the codebase**:
+Llamalend uses **Controller V3** — the same blueprint that powers the latest crvUSD mint markets (weETH, cbBTC, LBTC). The Controller and AMM contracts originated in the crvUSD system and were extended for lending use. For a full version history including the evolution from crvUSD V1 through V3, see the [crvUSD Overview](../../crvusd/overview.md#controller--amm-versions).
+
+Because Curve Lending operates very similarly to the system for minting crvUSD, both `Controller.vy` and `AMM.vy` can be used for lending markets. To ensure full compatibility with both systems, **several modifications were made in V3**:
 
 <DocCardGrid>
   <DocCard title="AMM.vy (LLAMMA)" icon="vyper" link="../../crvusd/amm" linkText="Full LLAMMA Documentation">

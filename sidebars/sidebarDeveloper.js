@@ -332,24 +332,28 @@ export default {
             label: 'crvUSD',
             items: [
                 { type: 'doc', id: 'crvusd/overview', label: 'Overview' },
+                { type: 'doc', id: 'crvusd/llamma-explainer', label: 'LLAMMA Explainer' },
                 { type: 'doc', id: 'crvusd/crvusd', label: 'crvUSD Token' },
                 { type: 'doc', id: 'crvusd/controller', label: 'Controller' },
                 { type: 'doc', id: 'crvusd/amm', label: 'LLAMMA (AMM)' },
-                { type: 'doc', id: 'crvusd/llamma-explainer', label: 'LLAMMA Explainer' },
-                { type: 'doc', id: 'crvusd/oracle', label: 'Oracle' },
-                { type: 'doc', id: 'crvusd/monetary-policy', label: 'Monetary Policy' },
-                { type: 'doc', id: 'crvusd/flash-lender', label: 'FlashLender' },
-                { type: 'doc', id: 'crvusd/price-aggregator', label: 'PriceAggregator' },
-                { type: 'doc', id: 'crvusd/price-aggregator-old', label: 'PriceAggregator (Old)' },
                 {
                     type: 'category',
-                    label: 'Factory',
+                    label: 'Oracles',
                     items: [
-                        { type: 'doc', id: 'crvusd/factory/overview', label: 'Overview' },
-                        { type: 'doc', id: 'crvusd/factory/deployer-api', label: 'Deployer API' },
-                        { type: 'doc', id: 'crvusd/factory/admin-controls', label: 'Admin Controls' },
+                        { type: 'doc', id: 'crvusd/oracle', label: 'Oracle' },
+                        { type: 'doc', id: 'crvusd/price-aggregator', label: 'PriceAggregator' },
+                        { type: 'doc', id: 'crvusd/price-aggregator-old', label: 'PriceAggregator (Old)' },
                     ],
                 },
+                {
+                    type: 'category',
+                    label: 'Monetary Policy',
+                    items: [
+                        { type: 'doc', id: 'crvusd/monetary-policy', label: 'Monetary Policy' },
+                    ],
+                },
+                { type: 'doc', id: 'crvusd/flash-lender', label: 'FlashLender' },
+                { type: 'doc', id: 'crvusd/factory', label: 'Factory' },
                 {
                     type: 'category',
                     label: 'PegKeepers',

@@ -1,6 +1,16 @@
 # LLAMMA
 
-LLAMMA (Lending Liquidating Automated Market Maker Algorithm) is the **market-making contract that rebalances the collateral of a loan**. It is an algorithm implemented into a smart contract which is **responsible for liquidating and de-liquidating collateral based on market conditions**through arbitrage traders. Each individual market has its own AMM **containing the collateral and borrowable asset**. E.g. the AMM of the [ETH&lt;&gt;crvUSD](https://etherscan.io/address/0x1681195c176239ac5e72d9aebacf5b2492e0c4ee) contains of `ETH` and `crvUSD`.
+LLAMMA (Lending Liquidating Automated Market Maker Algorithm) is the **market-making contract that rebalances the collateral of a loan**. It is an algorithm implemented into a smart contract which is **responsible for liquidating and de-liquidating collateral based on market conditions** through arbitrage traders. Each individual market has its own AMM **containing the collateral and borrowable asset**. E.g. the AMM of the [ETH&lt;&gt;crvUSD](https://etherscan.io/address/0x1681195c176239ac5e72d9aebacf5b2492e0c4ee) contains of `ETH` and `crvUSD`.
+
+:::vyper[`AMM.vy`]
+
+Each market deploys its own AMM from a blueprint contract. Source code is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/AMM.vy). Relevant deployments can be found [here](../deployments.md).
+
+:::
+
+:::info[Contract Versions]
+The AMM (LLAMMA) contract is shared across all Controller versions. Unlike the Controller, the AMM API has remained stable — the same contract is used by both crvUSD mint markets and Llamalend markets. For version details, see the [crvUSD Overview](./overview.md#controller--amm-versions).
+:::
 
 :::info Getting familiar with LLAMMA
 Before interacting with the `LLAMMA` contract, it is highly advised to read the following section to gain a broader understanding of the system: [LLAMMA Explainer](llamma-explainer.md).
@@ -2833,7 +2843,9 @@ def can_skip_bands(n_end: int256) -> bool:
 ---
 
 
-## AMM and Oracle Prices:::info[A user's loan is only in soft-liquidation when the price oracle is within the bands of the deposited collateral]
+## AMM and Oracle Prices
+
+:::info[A user's loan is only in soft-liquidation when the price oracle is within the bands of the deposited collateral]
 
 A position enters soft-liquidation mode only when the price oracle falls within a band where the user has deposited collateral. For example, if a user has collateral deposited between bands 10 and 0, they will not enter soft-liquidation as long as the oracle price stays outside these bands. In this scenario, the only "loss" the user faces is the variable interest rate of the market. Additionally, there is a rather rare possibility that a user's loan was fully soft-liquidated, resulting in all their collateral being converted to the borrowable asset. In such a case, the user would be out of soft-liquidation because the price oracle is below the lowest band.
 
@@ -3507,7 +3519,11 @@ def __init__(
 ---
 
 
-## Fees and Interest Rates**There are three different types of "fees" within the AMM:**- **`fee`**: This is charged on token exchanges within the AMM.
+## Fees and Interest Rates
+
+**There are three different types of "fees" within the AMM:**
+
+- **`fee`**: This is charged on token exchanges within the AMM.
 - **`admin_fee`**: This determines the percentage of the total fees that are distributed to veCRV holders.
 - **`rate`**: This represents the borrow rate a user pays on their loan.
 

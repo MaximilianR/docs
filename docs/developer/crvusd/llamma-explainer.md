@@ -14,7 +14,7 @@ Unlike other liquidation mechanisms that have a single liquidation price at whic
 
 Each individual market has its own AMM containing the collateral and borrowable asset, such as the `ETH &lt;&gt; crvUSD` AMM consisting of `ETH` and `crvUSD`.
 
-Before explaining the heart of the system, the liquidation process, in more detail, it is crucial to understand how the general structure of the AMM works. The AMM is similar to a **Uniswap V3-style AMM**using bands/ticks. Liquidity can be deposited into these bands, which have upper and lower price ranges. When opening a loan and adding collateral, this collateral is deposited into these bands. Users can choose the number of bands at loan creation, ranging from a **minimum of `4`**to a **maximum of `50`**. The liquidity sits idle in these bands and is only accessible for trading when the collateral price falls within the price range of a band.
+Before explaining the heart of the system, the liquidation process, in more detail, it is crucial to understand how the general structure of the AMM works. The AMM is similar to a **Uniswap V3-style AMM** using bands/ticks. Liquidity can be deposited into these bands, which have upper and lower price ranges. When opening a loan and adding collateral, this collateral is deposited into these bands. Users can choose the number of bands at loan creation, ranging from a **minimum of `4`** to a **maximum of `50`**. The liquidity sits idle in these bands and is only accessible for trading when the collateral price falls within the price range of a band.
 
 
 ---
@@ -116,23 +116,25 @@ A loan's health can be read directly from the `Controller.vy` contract of the co
 ```
 
 
-## Possible Scenarios of Band Compositions*Now that we know how the liquidation mechanism of LLAMMA works, we can define three possible scenarios for bands regarding their asset composition:*
+## Possible Scenarios of Band Compositions
 
-1. **Band contains both collateral and borrowable token:**Indicates continuous liquidation mode. The band in which the collateral price is currently located is defined as the [`active_band`](amm.md#active_band).
+*Now that we know how the liquidation mechanism of LLAMMA works, we can define three possible scenarios for bands regarding their asset composition:*
+
+1. **Band contains both collateral and borrowable token:** Indicates continuous liquidation mode. The band in which the collateral price is currently located is defined as the [`active_band`](amm.md#active_band).
 
     <figure>
     <img src="../assets/images/llamma/one_band_final.svg" alt="" width="260" />
     <figcaption></figcaption>
     </figure>
 
-2. **Band contains only the collateral token:**This band has not been soft-liquidated. The collateral price is higher than the upper price of the band and is therefore outside the band. These are the bands above the [`active_band`](amm.md#active_band).
+2. **Band contains only the collateral token:** This band has not been soft-liquidated. The collateral price is higher than the upper price of the band and is therefore outside the band. These are the bands above the [`active_band`](amm.md#active_band).
 
     <figure>
     <img src="../assets/images/llamma/two_bands_eth_final.svg" alt="" width="400" />
     <figcaption></figcaption>
     </figure>
 
-3. **Band contains only the borrowable token:**This band has already been soft-liquidated. The collateral price is below the band, and arbitrage trades have exchanged all the ETH for crvUSD in the band. These are the bands below the [`active_band`](amm.md#active_band).
+3. **Band contains only the borrowable token:** This band has already been soft-liquidated. The collateral price is below the band, and arbitrage trades have exchanged all the ETH for crvUSD in the band. These are the bands below the [`active_band`](amm.md#active_band).
 
     <figure>
     <img src="../assets/images/llamma/two_bands_crvusd_final.svg" alt="" width="400" />
@@ -192,9 +194,11 @@ Arbitrage traders should observe `get_p` and `price_oracle` inside the AMM. The 
 
 ## Loan Parameters
 
-## Maximum LTVThe loan-to-value (LTV) ratio depends on the number of bands (`N`) and the band width factor (`A`). The higher the number of bands, the lower the LTV. The maximum LTV can be approximated using the following function:
+### Maximum LTV
 
-$$LTV = \text\{100%\} - \text\{loan_discount\} - 100 * \frac\{N\}\{2*A\}$$
+The loan-to-value (LTV) ratio depends on the number of bands (`N`) and the band width factor (`A`). The higher the number of bands, the lower the LTV. The maximum LTV can be approximated using the following function:
+
+$$LTV = \text{100%} - \text{loan_discount} - 100 * \frac{N}{2*A}$$
 
 The loan discount is the percentage used to discount the collateral for calculating the maximum borrowable amount when creating a loan.
 
@@ -211,11 +215,11 @@ $\text{LTV (50 bands)} = 1 - 0.09 - 1 \times \frac{50}{2 \times 100} = 0.66 ≈ 
 
 </Example>
 
-## Liquidation Range
+### Liquidation Range
 
 The start of the liquidation range is also determined by the LTV:
 
-$$\text\{starting_price\} = \frac\{debt\}\{collateral * LTV\}$$
+$$\text{starting_price} = \frac{debt}{collateral * LTV}$$
 
 To obtain the actual starting price value in dollars, multiply the value by the `price_oracle` at the time of creating the loan.
 

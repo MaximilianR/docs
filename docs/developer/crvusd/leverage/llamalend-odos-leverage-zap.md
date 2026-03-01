@@ -1,7 +1,7 @@
 # LeverageZapOdos
 
 
-This Zap contract is specifically designed to **create or repay leveraged loans**using the [**Odos router**](https://odos.xyz/).
+This Zap contract is specifically designed to **create or repay leveraged loans** using the [**Odos router**](https://odos.xyz/).
 
 :::vyper[`LeverageZapOdos.vy`]
 
@@ -316,7 +316,7 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 
 Function to calculate the maximum borrowable using leverage. The maximum borrowable amount essentially comes down to:
 
-$$\text\{max_borrowable\} = \frac\{\text\{collateral\}\}\{\frac\{1\}\{\text\{k_effective\} \times \text\{max_p_base\}\} - \frac\{1\}\{\text\{p_avg\}\}\}$$
+$$\text{max_borrowable} = \frac{\text{collateral}}{\frac{1}{\text{k_effective} \times \text{max_p_base}} - \frac{1}{\text{p_avg}}}$$
 
 with $\text{k\_effective}$ and $\text{max\_p\_base}$ being calculated with the internal `_get_k_effective` and `_max_p_base` methods. $\text{p\_avg}$ is the average price of the collateral.
 

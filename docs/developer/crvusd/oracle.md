@@ -1,6 +1,12 @@
 # Oracle
 
-As crvusd markets use interal oracles, they utilizes in-house liquidity pools to aggregate the price of collateral. But there is a possibility to use Chainlink oracle prices as safety limits.
+As crvUSD markets use internal oracles, they utilize in-house liquidity pools to aggregate the price of collateral. But there is a possibility to use Chainlink oracle prices as safety limits.
+
+:::vyper[`CryptoWithStablePrice*.vy`]
+
+Each market has its own oracle contract. Source code is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/price_oracles). Relevant deployments can be found [here](../deployments.md).
+
+:::
 
 :::warning
 
@@ -17,7 +23,9 @@ For abbreviations, see [here](./oracle.md#terminology-used-in-code).
 
 :::
 
-## EMA of TVL`_ema_tvl()` calculates the *exponential moving average* (EMA) of the *total value locked* (TVL) for `TRICRYPTO` pools.
+## EMA of TVL
+
+`_ema_tvl()` calculates the *exponential moving average* (EMA) of the *total value locked* (TVL) for `TRICRYPTO` pools.
 
 This value is subsequently used in the internal function `_raw_price()` to compute the *weighted price of ETH*.
 
@@ -50,9 +58,9 @@ def _ema_tvl() -> uint256[N_POOLS]:
 
 </Dropdown>
 
-$$tvl_\{i\} = \frac\{TS_i * VP_i\}\{10^\{18\}\}$$
+$$tvl_{i} = \frac{TS_i * VP_i}{10^{18}}$$
 
-$$\text\{last_tvl\}_i = \frac\{tvl_i * (10^\{18\} - \alpha) + \text\{last_tvl\}_i * \alpha\}\{10^\{18\}\}$$
+$$\text{last_tvl}_i = \frac{tvl_i * (10^{18} - \alpha) + \text{last_tvl}_i * \alpha}{10^{18}}$$
 
 
 $tvl_i = \text{TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]`  
@@ -203,13 +211,13 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 
 </Dropdown>
 
-$$price_\{weighted\} = (\frac\{price_\{eth\} * price_\{crvusd\}\}\{price_\{usd\}\}) * weight$$
+$$price_{weighted} = (\frac{price_{eth} * price_{crvusd}}{price_{usd}}) * weight$$
 
-$$totalPrice_\{weighted\} = \frac\{\sum\{price_\{weighted\}\}\}\{\sum\{weight\}\}$$
+$$totalPrice_{weighted} = \frac{\sum{price_{weighted}}}{\sum{weight}}$$
 
-$$price_\{stETH\} = min(price_\{stETH\}, 10^\{18\}) * \frac\{rate_\{wstETH\}\}\{10^\{18\}\}$$
+$$price_{stETH} = min(price_{stETH}, 10^{18}) * \frac{rate_{wstETH}}{10^{18}}$$
 
-$$price = price_\{stETH\} * totalPrice_\{weighted\}$$
+$$price = price_{stETH} * totalPrice_{weighted}$$
 
 $price_{weighted} =$ weighted price of ETH  
 $totalPrice_{weighted} =$ total weighted price of ETH  
@@ -388,6 +396,7 @@ def set_use_chainlink(do_it: bool):
 ::::
 
 ## Terminology used in Code
+
 | terminology used in code | |
 |-----------|----------------|
 | $\alpha$ | `alpha` |

@@ -26,15 +26,15 @@ A useful tool to explore and understand how the rate is affected by [0xreviews](
 
 The formula for calculating the interest rate (`r`) is as follows:
 
-$$r = rate0 \cdot e^\{\text\{power\}\}$$
+$$r = rate0 \cdot e^{\text{power}}$$
 
 Where:
 
-$$\text\{power\} = \frac\{price_\{peg\} - price_\{crvusd\}\}\{sigma\} - \frac\{DebtFraction\}\{TargetFraction\}$$
+$$\text{power} = \frac{price_{peg} - price_{crvusd}}{sigma} - \frac{DebtFraction}{TargetFraction}$$
 
 And the DebtFraction is defined by:
 
-$$DebtFraction = \frac\{PegKeeperDebt\}\{TotalDebt\}$$
+$$DebtFraction = \frac{PegKeeperDebt}{TotalDebt}$$
 
 Key variables in this calculation include:
 
@@ -51,7 +51,7 @@ For accuracy and consistency, both `rate` and `rate0` are expressed in terms of 
 
 The annualized interest rate can be computed as:
 
-$$\text\{annualRate\} = (1 + \frac\{rate\}\{10^\{18\}\})^\{365 \times 24 \times 60 \times 60\} - 1$$
+$$\text{annualRate} = (1 + \frac{rate}{10^{18}})^{365 \times 24 \times 60 \times 60} - 1$$
 
 
 ---
@@ -219,7 +219,7 @@ def set_rate(rate: uint256):
 ::::description[`MonetaryPolicy.sigma() -> uint256: view`]
 
 
-Getter for the sigma value. The following needs to hold: $10^{14} <= sigma <= 10^{18}$.
+Getter for the sigma value. The following needs to hold: $10^{14} \leq \sigma \leq 10^{18}$.
 
 Returns: sigma (`uint256`).
 

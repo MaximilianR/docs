@@ -262,7 +262,9 @@ def exchange_multiple(
 
 ---
 
-## Helper Functions*The contract indludes various helper functions:*
+## Helper Functions
+
+*The contract includes various helper functions:*
 
 ### `get_collateral`
 ::::description[`LeverageZap.get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256`]
