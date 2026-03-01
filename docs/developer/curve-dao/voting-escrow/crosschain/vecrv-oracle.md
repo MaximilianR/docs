@@ -41,7 +41,7 @@ The "Updating the Oracle" section describes the privileged functions that allow 
 ### `update_balance`
 ::::description[`L2VotingEscrowOracle.update_balance(_user: address, _user_point_epoch: uint256, _user_point_history: Point, _locked: LockedBalance, _block_number: uint256):`]
 
-:::caution[Guarded Method by Snekmate]
+:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
 This contract makes use of a Snekmate module to manage roles and permissions. Calling the `update_balance()` function can only be done by the address holding the `BALANCE_VERIFIER` role.
 :::
 
@@ -59,7 +59,10 @@ Emits: `UpdateBalance`
 
 <SourceCode>
 
-```vyper title="L2VotingEscrowOracle.vy"
+<Tabs>
+<TabItem value="L2VotingEscrowOracle.vy" label="L2VotingEscrowOracle.vy">
+
+```vyper
 event UpdateBalance:
     _user: address
     _user_point_epoch: uint256
@@ -98,6 +101,25 @@ def update_balance(
 
     self.last_block_number = _block_number
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -177,7 +199,7 @@ This example returns the veCRV balance of `0x71F718D3e4d1449D1502A6A7595eb84eBcC
 ### `update_total`
 ::::description[`L2VotingEscrowOracle.update_total(_epoch: uint256, _point_history: Point, _slope_changes: DynArray[int128, SLOPE_CHANGES_CNT], _block_number: uint256):`]
 
-:::caution[Guarded Method by Snekmate]
+:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
 This contract makes use of a Snekmate module to manage roles and permissions. Calling the `update_total()` function can only be done by the address holding the `TOTAL_VERIFIER` role.
 :::
 
@@ -194,7 +216,10 @@ Emits: `UpdateTotal`
 
 <SourceCode>
 
-```vyper title="L2VotingEscrowOracle.vy"
+<Tabs>
+<TabItem value="L2VotingEscrowOracle.vy" label="L2VotingEscrowOracle.vy">
+
+```vyper
 event UpdateTotal:
     _epoch: uint256
 
@@ -231,6 +256,25 @@ def update_total(
 
     self.last_block_number = _block_number
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -412,8 +456,8 @@ This example returns the delegator of `0x71F718D3e4d1449D1502A6A7595eb84eBcCB168
 ### `update_delegation`
 ::::description[`L2VotingEscrowOracle.update_delegation(_from: address, _to: address, _block_number: uint256):`]
 
-:::caution
-DELEGATION_VERIFIER; Only callable by an account with the `DELEGATION_VERIFIER` role.
+:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+This contract makes use of a Snekmate module to manage roles and permissions. Calling the `update_delegation()` function can only be done by the address holding the `DELEGATION_VERIFIER` role.
 :::
 
 Function to update the delegation of veCRV balance from `_from` to `_to`.
@@ -426,7 +470,10 @@ Function to update the delegation of veCRV balance from `_from` to `_to`.
 
 <SourceCode>
 
-```vyper title="L2VotingEscrowOracle.vy"
+<Tabs>
+<TabItem value="L2VotingEscrowOracle.vy" label="L2VotingEscrowOracle.vy">
+
+```vyper
 # [address from][address to]
 delegation_from: HashMap[address, address]
 delegation_to: HashMap[address, address]
@@ -456,6 +503,25 @@ def update_delegation(_from: address, _to: address, _block_number: uint256):
 
     self.last_block_number = _block_number
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -593,7 +659,10 @@ Returns: default admin (`bytes32`).
 
 <SourceCode>
 
-```vyper title="L2VotingEscrowOracle.vy"
+<Tabs>
+<TabItem value="L2VotingEscrowOracle.vy" label="L2VotingEscrowOracle.vy">
+
+```vyper
 from snekmate.auth import access_control
 
 initializes: access_control
@@ -605,6 +674,17 @@ exports: (
     access_control.revokeRole,
 )
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+# @dev The default 32-byte admin role.
+DEFAULT_ADMIN_ROLE: public(constant(bytes32)) = empty(bytes32)
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -625,8 +705,8 @@ This example returns the `DEFAULT_ADMIN_ROLE` role as `bytes32` of the veCRV Ora
 ### `grantRole`
 ::::description[`L2VotingEscrowOracle.grantRole(role: bytes32, account: address):`]
 
-:::caution[Guarded Method by Snekmate]
-This contract makes use of a Snekmate module to manage roles and permissions. Granting a new address to a role is only callable by an account with the admin role for the given role.
+:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+This contract makes use of a Snekmate module to manage roles and permissions. Granting a role is only callable by an account with the admin role for the given role.
 :::
 
 Function to grant a role to an account.
@@ -638,7 +718,10 @@ Function to grant a role to an account.
 
 <SourceCode>
 
-```vyper title="L2VotingEscrowOracle.vy"
+<Tabs>
+<TabItem value="L2VotingEscrowOracle.vy" label="L2VotingEscrowOracle.vy">
+
+```vyper
 from snekmate.auth import access_control
 
 initializes: access_control
@@ -651,6 +734,41 @@ exports: (
 )
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@external
+def grantRole(role: bytes32, account: address):
+    """
+    @dev Grants `role` to `account`.
+    @notice If `account` had not been already
+            granted `role`, emits a `RoleGranted`
+            event. Note that the caller must have
+            `role`'s admin role.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    self._check_role(self.getRoleAdmin[role], msg.sender)
+    self._grant_role(role, account)
+
+@internal
+def _grant_role(role: bytes32, account: address):
+    """
+    @dev Grants `role` to `account`.
+    @notice This is an `internal` function without
+            access restriction.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    if (not(self.hasRole[role][account])):
+        self.hasRole[role][account] = True
+        log IAccessControl.RoleGranted(role, account, msg.sender)
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 ::::
@@ -659,8 +777,8 @@ exports: (
 ### `revokeRole`
 ::::description[`L2VotingEscrowOracle.revokeRole(role: bytes32, account: address):`]
 
-:::caution[Guarded Method by Snekmate]
-This contract makes use of a Snekmate module to manage roles and permissions. Granting a new address to a role is only callable by an account with the admin role for the given role.
+:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+This contract makes use of a Snekmate module to manage roles and permissions. Revoking a role is only callable by an account with the admin role for the given role.
 :::
 
 Function to revoke a role from an account.
@@ -672,7 +790,10 @@ Function to revoke a role from an account.
 
 <SourceCode>
 
-```vyper title="L2VotingEscrowOracle.vy"
+<Tabs>
+<TabItem value="L2VotingEscrowOracle.vy" label="L2VotingEscrowOracle.vy">
+
+```vyper
 from snekmate.auth import access_control
 
 initializes: access_control
@@ -684,6 +805,40 @@ exports: (
     access_control.revokeRole,
 )
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@external
+def revokeRole(role: bytes32, account: address):
+    """
+    @dev Revokes `role` from `account`.
+    @notice If `account` had been granted `role`,
+            emits a `RoleRevoked` event. Note that
+            the caller must have `role`'s admin role.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    self._check_role(self.getRoleAdmin[role], msg.sender)
+    self._revoke_role(role, account)
+
+@internal
+def _revoke_role(role: bytes32, account: address):
+    """
+    @dev Revokes `role` from `account`.
+    @notice This is an `internal` function without
+            access restriction.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    if (self.hasRole[role][account]):
+        self.hasRole[role][account] = False
+        log IAccessControl.RoleRevoked(role, account, msg.sender)
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -703,7 +858,10 @@ Returns: true or false (`bool`).
 
 <SourceCode>
 
-```vyper title="L2VotingEscrowOracle.vy"
+<Tabs>
+<TabItem value="L2VotingEscrowOracle.vy" label="L2VotingEscrowOracle.vy">
+
+```vyper
 from snekmate.auth import access_control
 
 initializes: access_control
@@ -715,6 +873,31 @@ exports: (
     access_control.revokeRole,
 )
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+_SUPPORTED_INTERFACES: constant(bytes4[2]) = [
+    0x01FFC9A7, # The ERC-165 identifier for ERC-165.
+    0x7965DB0B, # The ERC-165 identifier for `IAccessControl`.
+]
+
+@external
+@view
+def supportsInterface(interface_id: bytes4) -> bool:
+    """
+    @dev Returns `True` if this contract implements the
+         interface defined by `interface_id`.
+    @param interface_id The 4-byte interface identifier.
+    @return bool The verification whether the contract
+            implements the interface or not.
+    """
+    return interface_id in _SUPPORTED_INTERFACES
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -744,7 +927,10 @@ Returns: true or false (`bool`).
 
 <SourceCode>
 
-```vyper title="L2VotingEscrowOracle.vy"
+<Tabs>
+<TabItem value="L2VotingEscrowOracle.vy" label="L2VotingEscrowOracle.vy">
+
+```vyper
 from snekmate.auth import access_control
 
 initializes: access_control
@@ -756,6 +942,17 @@ exports: (
     access_control.revokeRole,
 )
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+# @dev Returns `True` if `account` has been granted `role`.
+hasRole: public(HashMap[bytes32, HashMap[address, bool]])
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -1134,6 +1331,117 @@ This example returns the last Ethereum mainnet block at which an update to eithe
 ```shell
 >>> L2VotingEscrowOracle.last_block_number()
 22861295
+```
+
+</Example>
+
+::::
+
+---
+
+## Other Methods
+
+### `version`
+::::description[`L2VotingEscrowOracle.version() -> String[8]: view`]
+
+Getter for the contract version.
+
+Returns: version string (`String[8]`).
+
+<SourceCode>
+
+```vyper title="L2VotingEscrowOracle.vy"
+version: public(constant(String[8])) = "1.0.0"
+```
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> L2VotingEscrowOracle.version()
+'1.0.0'
+```
+
+</Example>
+
+::::
+
+
+### `name`
+::::description[`L2VotingEscrowOracle.name() -> String[64]: view`]
+
+Getter for the token name.
+
+Returns: token name (`String[64]`).
+
+<SourceCode>
+
+```vyper title="L2VotingEscrowOracle.vy"
+name: public(constant(String[64])) = "Vote-escrowed CRV"
+```
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> L2VotingEscrowOracle.name()
+'Vote-escrowed CRV'
+```
+
+</Example>
+
+::::
+
+
+### `symbol`
+::::description[`L2VotingEscrowOracle.symbol() -> String[32]: view`]
+
+Getter for the token symbol.
+
+Returns: token symbol (`String[32]`).
+
+<SourceCode>
+
+```vyper title="L2VotingEscrowOracle.vy"
+symbol: public(constant(String[32])) = "veCRV"
+```
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> L2VotingEscrowOracle.symbol()
+'veCRV'
+```
+
+</Example>
+
+::::
+
+
+### `decimals`
+::::description[`L2VotingEscrowOracle.decimals() -> uint256: view`]
+
+Getter for the token decimals.
+
+Returns: decimals (`uint256`).
+
+<SourceCode>
+
+```vyper title="L2VotingEscrowOracle.vy"
+decimals: public(constant(uint256)) = 18
+```
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> L2VotingEscrowOracle.decimals()
+18
 ```
 
 </Example>
