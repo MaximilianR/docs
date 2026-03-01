@@ -4,19 +4,6 @@ title: Security Audits
 sidebar_label: Security Audits
 ---
 
-import AuditCardGrid from '@site/src/components/AuditCardGrid';
+import AuditGrids from '@site/src/partials/_auditGrids.md';
 
-
-Audits are categorized into **DAO**, **DEX**, and **Stablecoin (crvUSD) and Lending** sections.
-
-## DAO
-
-<AuditCardGrid category="dao" />
-
-## DEX
-
-<AuditCardGrid category="dex" />
-
-## Stablecoin and Lending
-
-<AuditCardGrid category="stablecoin" />
+<AuditGrids />

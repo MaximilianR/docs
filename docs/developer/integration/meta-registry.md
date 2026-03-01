@@ -1,12 +1,12 @@
 # Meta Registry
 
 
-The `MetaRegistry` functions as a Curve Pool Registry Aggregator and offers an **on-chain API**for various properties of Curve pools by **consolidating different registries into a single contract**.
+The `MetaRegistry` functions as a Curve Pool Registry Aggregator and offers an **on-chain API** for various properties of Curve pools by **consolidating different registries into a single contract**.
 
 
 :::github[GitHub]
 
-The source code of the `MetaRegistry.vy` and `MetaRegistryL2.vy` contracts can be found on [ GitHub](https://github.com/curvefi/metaregistry/tree/main/contracts).
+The source code of the `MetaRegistry.vy` and `MetaRegistryL2.vy` contracts can be found on [GitHub](https://github.com/curvefi/metaregistry/tree/main/contracts).
 
 Additionally, each `MetaRegistry` is integrated into the chain-specific [`AddressProvider`](./address-provider.md) at `ID = 7`. To get the **most recent contract, users are advised to fetch it directly from the `AddressProvider`.
 
@@ -121,7 +121,7 @@ A Jupyter notebook showcasing how to fetch pools directly from the blockchain, w
 :::
 
 ### `find_pools_for_coins`
-::::description[`MetaRegistry.find_pools_for_coins(_from: address, _to: address) -> DynArray[address, 1000]`]
+::::description[`MetaRegistry.find_pools_for_coins(_from: address, _to: address) -> DynArray[address, 1000]: view`]
 
 
 Getter method for a list of pools that contain both the `_from` and `_to` tokens. It is designed to identify specific swap routes. The method returns all pools containing the specified assets, disregarding metrics such as total value locked (TVL) or other parameters.
@@ -228,7 +228,7 @@ In this example, we search for pools that include `crvUSD` and `ETH`. The functi
 ::::
 
 ### `find_pool_for_coins`
-::::description[`MetaRegistry.find_pool_for_coins(_from: address, _to: address, i: uint256 = 0) -> address`]
+::::description[`MetaRegistry.find_pool_for_coins(_from: address, _to: address, i: uint256 = 0) -> address: view`]
 
 
 Getter method for a pool that holds two coins (even if the pool is a metapool). The index in the query returns the index of the list of pools containing the two coins. The method returns all pools containing the specified assets, disregarding metrics such as total value locked (TVL) or other parameters.
@@ -290,7 +290,7 @@ def find_pool_for_coins(_from: address, _to: address, i: uint256 = 0) -> address
 In this example, we search for a single pool at index `i` which includes `crvUSD` and `ETH`. This method essentially returns the pools returned by `find_pools_for_coins`.
 
 ```shell
->>> MetaRegistry.find_pool_for_coins('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' 0)
+>>> MetaRegistry.find_pool_for_coins('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 0)
 '0x4eBdF703948ddCEA3B11f675B4D1Fba9d2414A14'            # triCRV: crvUSD &lt;&gt; ETH &lt;&gt; CRV
 
 >>> MetaRegistry.find_pool_for_coins('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 1)
@@ -306,13 +306,13 @@ In this example, we search for a single pool at index `i` which includes `crvUSD
 ---
 
 
-## Pool Specific Informations
+## Pool Specific Information
 
 All relevant pool and coin data for liquidity pools are stored in the `MetaRegistry`. This registry includes various functions that provide a wide range of data, such as pool balances, fees, decimals, and more.
 
 
 ### `pool_count`
-::::description[`MetaRegistry.pool_count() -> uint256`]
+::::description[`MetaRegistry.pool_count() -> uint256: view`]
 
 
 Getter for the total number of pools registered in the `MetaRegistry`.
@@ -365,12 +365,12 @@ def pool_count() -> uint256:
 ::::
 
 ### `pool_list`
-::::description[`MetaRegistry.pool_list(_index: uint256) -> address`]
+::::description[`MetaRegistry.pool_list(_index: uint256) -> address: view`]
 
 
 Getter for the pool at `_index`, with the index starting at `0`.
 
-Returns: pool (`address`)
+Returns: pool (`address`).
 
 | Input    | Type      | Description       |
 | -------  | --------- | ----------------- |
@@ -420,7 +420,7 @@ These examples essentially return the pools at index `0` and `1`, which are the 
 >>> MetaRegistry.pool_list(0)
 '0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7'
 
->>> MetaRegistry.pool_list(0)
+>>> MetaRegistry.pool_list(1)
 '0xDeBF20617708857ebe4F679508E7b7863a8A8EeE'
 ```
 
@@ -431,7 +431,7 @@ These examples essentially return the pools at index `0` and `1`, which are the 
 ::::
 
 ### `get_pool_name`
-::::description[`MetaRegistry.get_pool_name(_pool: address, _handler_id: uint256 = 0) -> String[64]`]
+::::description[`MetaRegistry.get_pool_name(_pool: address, _handler_id: uint256 = 0) -> String[64]: view`]
 
 
 Getter for the name of a pool.
@@ -509,7 +509,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `is_meta`
-::::description[`MetaRegistry.is_meta(_pool: address, _handler_id: uint256 = 0) -> bool`]
+::::description[`MetaRegistry.is_meta(_pool: address, _handler_id: uint256 = 0) -> bool: view`]
 
 
 Getter method to check if a pool is a metapool. Metapools are pools that pair a coin to a base pool.
@@ -596,7 +596,7 @@ An example is the [LUSD-3CRV](https://etherscan.io/address/0xed279fdd11ca84beef1
 ::::
 
 ### `get_base_pool`
-::::description[`MetaRegistry.get_base_pool(_pool: address, _handler_id: uint256 = 0) -> address`]
+::::description[`MetaRegistry.get_base_pool(_pool: address, _handler_id: uint256 = 0) -> address: view`]
 
 
 Getter for the base pool of a metapool. This function can also be called on non-metapool pools; in that case, there is no base pool and the function will return `ZERO_ADDRESS`.
@@ -689,7 +689,7 @@ In the case of the LUSD-3CRV pool example, the function will return the 3pool as
 ::::
 
 ### `get_fees`
-::::description[`MetaRegistry.get_fees(_pool: address, _handler_id: uint256 = 0) -> uint256[10]`]
+::::description[`MetaRegistry.get_fees(_pool: address, _handler_id: uint256 = 0) -> uint256[10]: view`]
 
 
 Getter for the fee parameters that a Curve pool charges per swap. The fee data returned varies depending on the type of pool (see examples below).
@@ -767,9 +767,9 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-**Stableswap**pools return the `fee` per swap and the `admin_fee` percentage. For the `3pool`, it shows that the pool charges 1 basis point per swap, 50% of which goes to the DAO. Stableswap-NG pools additionally return `offpeg_fee_multiplier`.
+**Stableswap** pools return the `fee` per swap and the `admin_fee` percentage. For the `3pool`, it shows that the pool charges 1 basis point per swap, 50% of which goes to the DAO. Stableswap-NG pools additionally return `offpeg_fee_multiplier`.
 
-**Cryptoswap**pools return `fee`, `admin_fee` percentage, `mid_fee` and `out_fee`. The fee is the dynamic fee charged per swap, and ranges between `mid_fee` (balances in the pool are fully balanced) and the `out_fee` (balances in the pool are fully imbalanced).
+**Cryptoswap** pools return `fee`, `admin_fee` percentage, `mid_fee` and `out_fee`. The fee is the dynamic fee charged per swap, and ranges between `mid_fee` (balances in the pool are fully balanced) and the `out_fee` (balances in the pool are fully imbalanced).
 
 ```shell
 >>> MetaRegistry.get_fees('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')     # stableswap
@@ -789,7 +789,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_pool_params`
-::::description[`MetaRegistry.get_pool_params(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_POOL_PARAMS]`]
+::::description[`MetaRegistry.get_pool_params(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_POOL_PARAMS]: view`]
 
 
 Getter for the parameters of a pool. The parameters returned varies depending on the type of pool (see examples below).
@@ -863,15 +863,15 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-**Stableswap**pools return the amplification coefficient (`A`). 
+**Stableswap** pools return the amplification coefficient (`A`). 
 
-**Cryptoswap**pools return the amplification coefficient (`A`), `D` invariant, `gamma`, `allowed_extra_profit`, `fee_gamma`, `adjustment_step` and `ma_half_time`.
+**Cryptoswap** pools return the amplification coefficient (`A`), `D` invariant, `gamma`, `allowed_extra_profit`, `fee_gamma`, `adjustment_step` and `ma_half_time`.
 
 ```shell
->>> MetaRegistry.metaregistry.get_pool_params('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
+>>> MetaRegistry.get_pool_params('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
->>> MetaRegistry.metaregistry.get_pool_params('0xd51a44d3fae010294c616388b506acda1bfaae46')
+>>> MetaRegistry.get_pool_params('0xd51a44d3fae010294c616388b506acda1bfaae46')
 1707629, 24588676849282493872649954, 11809167828997, 2000000000000, 500000000000000, 490000000000000, 600, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ```
 
@@ -882,7 +882,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_lp_token`
-::::description[`MetaRegistry.get_lp_token(_pool: address, _handler_id: uint256 = 0) -> address`]
+::::description[`MetaRegistry.get_lp_token(_pool: address, _handler_id: uint256 = 0) -> address: view`]
 
 
 Getter for the LP token of a pool.
@@ -967,7 +967,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_pool_asset_type`
-::::description[`MetaRegistry.get_pool_asset_type(_pool: address, _handler_id: uint256 = 0) -> uint256`]
+::::description[`MetaRegistry.get_pool_asset_type(_pool: address, _handler_id: uint256 = 0) -> uint256: view`]
 
 
 Getter for the asset type of a pool according to: **`0 = USD`, `1 = ETH`, `2 = BTC`, `3 = Other`, `4 = CryptoPool`**. The asset type is only a property of StableSwap pools and is not enforced in CryptoSwap pools (which always return 4).
@@ -1058,7 +1058,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_pool_from_lp_token`
-::::description[`MetaRegistry.get_pool_from_lp_token(_token: address, _handler_id: uint256 = 0) -> address`]
+::::description[`MetaRegistry.get_pool_from_lp_token(_token: address, _handler_id: uint256 = 0) -> address: view`]
 
 
 Getter for the liquidity pool contract derived from an LP token.
@@ -1067,7 +1067,7 @@ Returns: pool (`address`).
 
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
-| `_pool`       | `address` | Address of the pool                        |
+| `_token`      | `address` | Address of the LP token                    |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
 <SourceCode>
@@ -1119,7 +1119,7 @@ def _get_pool_from_lp_token(_token: address) -> address:
 ::::
 
 ### `get_virtual_price_from_lp_token`
-::::description[`MetaRegistry.get_virtual_price_from_lp_token(_token: address, _handler_id: uint256 = 0) -> uint256`]
+::::description[`MetaRegistry.get_virtual_price_from_lp_token(_token: address, _handler_id: uint256 = 0) -> uint256: view`]
 
 
 Getter for a token's virtual price. The virtual price of any pool starts with a value of `1.0` and increases as the pool accrues fees. This number constantly increases for StableSwap pools unless the pool's amplification coefficient changes. For CryptoSwap pools, there are moments when the virtual price can decrease (e.g., admin fee claims, changes to the pool's parameters, etc.).
@@ -1128,7 +1128,7 @@ Returns: virtual price of the LP token (`uint256`).
 
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
-| `_pool`       | `address` | Address of the pool                        |
+| `_token`      | `address` | Address of the LP token                    |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
 
 <SourceCode>
@@ -1218,7 +1218,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `is_registered`
-::::description[`MetaRegistry.is_registered(_pool: address, _handler_id: uint256 = 0) -> bool`]
+::::description[`MetaRegistry.is_registered(_pool: address, _handler_id: uint256 = 0) -> bool: view`]
 
 
 Function to check if a pool is registered in the `MetaRegistry`.
@@ -1297,7 +1297,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_gauge`
-::::description[`MetaRegistry.get_gauge(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) -> address`]
+::::description[`MetaRegistry.get_gauge(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) -> address: view`]
 
 
 Getter for the liquidity gauge of a pool.
@@ -1386,7 +1386,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_gauge_type`
-::::description[`MetaRegistry.get_gauge_type(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) -> int128`]
+::::description[`MetaRegistry.get_gauge_type(_pool: address, gauge_idx: uint256 = 0, _handler_id: uint256 = 0) -> int128: view`]
 
 
 Getter for the gauge type of the gauge associated with a liquidity pool.
@@ -1478,12 +1478,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_coins`
-::::description[`MetaRegistry.get_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]`]
+::::description[`MetaRegistry.get_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]: view`]
 
 
 Getter method for the coins in a pool. If the pool is a metapool, the method returns the LP token of the base pool, not the underlying coins. To additionally return the underlying coins, see: [`get_underlying_coins`](#get_underlying_coins).
 
-Retuns: coins (`address[MAX_COINS]`).
+Returns: coins (`address[MAX_COINS]`).
 
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
@@ -1571,7 +1571,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_n_coins`
-::::description[`MetaRegistry.get_n_coins(_pool: address, _handler_id: uint256 = 0) -> uint256`]
+::::description[`MetaRegistry.get_n_coins(_pool: address, _handler_id: uint256 = 0) -> uint256: view`]
 
 
 Getter for the number of coins in a pool. If the pool is a metapool, the method returns `2`, the meta- and base pool token. To additionally return the number of coins including the underlying ones from the base pool, see: [`get_n_underlying_coins`](#get_underlying_coins).
@@ -1656,10 +1656,10 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_decimals`
-::::description[`MetaRegistry.get_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]`]
+::::description[`MetaRegistry.get_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]: view`]
 
 
-Getter for the number of coins in a pool. If the pool is a metapool, the method returns the decimals of the meta- and base pool token. To additionally return the decimals of the underlying coin from the base pool, see: [`get_underlying_decimals`](#get_underlying_decimals).
+Getter for the decimals of the coins in a pool. If the pool is a metapool, the method returns the decimals of the meta- and base pool token. To additionally return the decimals of the underlying coin from the base pool, see: [`get_underlying_decimals`](#get_underlying_decimals).
 
 Returns: coin decimals (`uint256[MAX_COINS]`).
 
@@ -1745,7 +1745,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_balances`
-::::description[`MetaRegistry.get_balances(_pool: address, _handler_id: uint256 = 0)  -> uint256[MAX_COINS]`]
+::::description[`MetaRegistry.get_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]: view`]
 
 
 Getter for the coin balances in a pool. If the pool is a metapool, the method returns the balances of the meta- and base pool tokens. To additionally return the balances of the underlying coins from the base pool, see: [`get_underlying_balances`](#get_underlying_balances).
@@ -1834,7 +1834,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_underlying_coins`
-::::description[`MetaRegistry.get_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]`]
+::::description[`MetaRegistry.get_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> address[MAX_COINS]: view`]
 
 
 Getter for all coins in a pool, including the underlying ones. For non-metapools, it returns the same value as [`get_coins`](#get_coins).
@@ -1927,12 +1927,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_n_underlying_coins`
-::::description[`MetaRegistry.get_n_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> uint256`]
+::::description[`MetaRegistry.get_n_underlying_coins(_pool: address, _handler_id: uint256 = 0) -> uint256: view`]
 
 
 Getter for the number of coins in a pool, including the underlying ones. For non-metapools, it returns the same value as [`get_n_coins`](#get_n_coins).
 
-Returns: number of coins (`uin256`).
+Returns: number of coins (`uint256`).
 
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
@@ -2012,7 +2012,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_underlying_decimals`
-::::description[`MetaRegistry.get_underlying_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]`]
+::::description[`MetaRegistry.get_underlying_decimals(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]: view`]
 
 
 Getter for the decimals of the coins in a pool, including those for the underlying ones. For non-metapools, it returns the same value as [`get_decimals`](#get_decimals).
@@ -2098,7 +2098,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_underlying_balances`
-::::description[`MetaRegistry.get_underlying_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]`]
+::::description[`MetaRegistry.get_underlying_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]: view`]
 
 
 Getter method for the coin balances in a pool, including those for the underlying ones. For non-metapools, it returns the same value as [`get_balances`](#get_balances).
@@ -2173,7 +2173,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 
 ```shell
->>> MetaRegistry.get_balances('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
+>>> MetaRegistry.get_underlying_balances('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
 4362795413803847111710482, 7574850164613791626778647, 7282723353910, 4888387736171, 0, 0, 0, 0          # balances of LUSD, DAI, USDC, USDT
 ```
 
@@ -2184,7 +2184,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_admin_balances`
-::::description[`MetaRegistry.get_admin_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]`]
+::::description[`MetaRegistry.get_admin_balances(_pool: address, _handler_id: uint256 = 0) -> uint256[MAX_COINS]: view`]
 
 
 Getter for the pool's admin balances. The admin balances are essentially the fees that can be claimed and paid out to veCRV holders.
@@ -2273,7 +2273,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_coin_indices`
-::::description[`MetaRegistry.get_coin_indices(_pool: address, _from: address, _to: address, _handler_id: uint256 = 0) -> (int128, int128, bool)`]
+::::description[`MetaRegistry.get_coin_indices(_pool: address, _from: address, _to: address, _handler_id: uint256 = 0) -> (int128, int128, bool): view`]
 
 
 Getter method that converts coin addresses to indices.
@@ -2353,10 +2353,10 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 The first example checks the index of `DAI` and `USDC` within the 3pool. The second one checks the index of `LUSD` and `USDC` within the `LUSD&lt;&gt;3CRV` pool.
 
 ```shell
->>> MetaRegistry.metaregistry.get_coin_indices('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7', '0x6B175474E89094C44Da98b954EedeAC495271d0F', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')
+>>> MetaRegistry.get_coin_indices('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7', '0x6B175474E89094C44Da98b954EedeAC495271d0F', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')
 0, 1, false     # DAI is coin index0, USDC is coin index1 and no metapool
 
->>> MetaRegistry.metaregistry.get_coin_indices('0x5f98805A4E8be255a32880FDeC7F6728C6568bA0', '0x6B175474E89094C44Da98b954EedeAC495271d0F', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')
+>>> MetaRegistry.get_coin_indices('0x5f98805A4E8be255a32880FDeC7F6728C6568bA0', '0x6B175474E89094C44Da98b954EedeAC495271d0F', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')
 0, 2, true      # LUSD is coin index0, USDC is coin index1 and its a metapool
 ```
 
@@ -2375,7 +2375,7 @@ The `MetaRegistry` makes use of `Handlers`, which are essentially wrappers aroun
 
 New handlers can be added or existing ones can be updated by the [`owner`](#owner) of the contract.
 
-*To fetch registry information from the contract, fhe following methods can be used:*
+*To fetch registry information from the contract, the following methods can be used:*
 
 - `get_registry_length`: Returns the total number of registries added.
 - `get_registry`: Fetches single registries.
@@ -2391,7 +2391,7 @@ A Google Colab notebook showcasing how to query registries or add/update them ca
 :::
 
 ### `get_registry_handlers_from_pool`
-::::description[`MetaRegistry._get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]`]
+::::description[`MetaRegistry.get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]: view`]
 
 
 Getter for the `RegistryHandler` that a pool has been registered in. Usually, each pool is registered in a single registry.
@@ -2468,7 +2468,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 ::::
 
 ### `get_base_registry`
-::::description[`MetaRegistry.get_base_registry(registry_handler: address) -> address`]
+::::description[`MetaRegistry.get_base_registry(registry_handler: address) -> address: view`]
 
 
 Getter for the `BaseRegistry` associated with a `RegistryHandler`.
@@ -2522,7 +2522,7 @@ def get_base_registry(registry_handler: address) -> address:
 ::::
 
 ### `get_registry`
-::::description[`MetaRegistry.get_registry(arg0: uint256) -> address`]
+::::description[`MetaRegistry.get_registry(arg0: uint256) -> address: view`]
 
 
 Getter for the `RegistryHandler` at index `arg0`. New handlers can be added via the [`add_registry_handler`](#add_registry_handler) function.
@@ -2564,7 +2564,7 @@ registry_length: public(uint256)
 ::::
 
 ### `registry_length`
-::::description[`MetaRegistry.registry_length() -> uint256`]
+::::description[`MetaRegistry.registry_length() -> uint256: view`]
 
 
 Getter for the registry length, essentially how many registries have been added to the `MetaRegistry`. This variable is incremented by one when adding a new registry.
@@ -2591,7 +2591,7 @@ registry_length: public(uint256)
 
 
 ```shell
->>> MetaRegistry.registry_length(0)
+>>> MetaRegistry.registry_length()
 7
 ```
 

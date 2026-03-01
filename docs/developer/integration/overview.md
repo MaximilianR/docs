@@ -27,8 +27,10 @@ The `RateProvider` contract **provides exchange rates for token swaps** using di
 ---
 
 
-## Guides*Below are some basic guides and examples. More will be added soon.*
+## Guides
+
+*Below are some basic guides and examples. More will be added soon.*
 
 ### Fetching Pools
 
-[](./meta-registry.md#finding-pools) Discover how to check on-chain pools containing two specific assets.
+[Discover how to check on-chain pools containing two specific assets.](./meta-registry.md#finding-pools)
