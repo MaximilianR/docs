@@ -55,6 +55,17 @@ export const ALL_AUDITS = [
     info: 'Scope: Curve Cross-chain Governance'
   },
 
+  // Infrastructure Audits
+  {
+    id: 'infra-1',
+    category: 'infrastructure',
+    auditor: 'ChainSecurity',
+    date: '25. October, 2024',
+    reportUrl: '/pdf/audits/ChainSecurity_Curve_Fast_Bridge_audit.pdf',
+    logo: 'chainsecurity.jpg',
+    info: 'Scope: FastBridge (Cross-chain crvUSD)'
+  },
+
   // DEX Audits
   {
     id: 'dex-1',

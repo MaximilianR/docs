@@ -6,9 +6,9 @@ The contract implements a dual-bridge mechanism that simultaneously initiates bo
 
 :::vyper[`FastBridgeL2.vy`]
 
-The source code for the `FastBridgeL2.vy` contract can be found on [ GitHub](https://github.com/curvefi/fast-bridge/blob/main/contracts/FastBridgeL2.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3` and utilizes a [Snekmate module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) to handle contract ownership.
+The source code for the `FastBridgeL2.vy` contract can be found on [GitHub](https://github.com/curvefi/fast-bridge/blob/main/contracts/FastBridgeL2.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3` and utilizes a [Snekmate module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) to handle contract ownership.
 
-The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](../assets/pdf/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
+The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](/pdf/audits/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
 
 :::
 
@@ -31,6 +31,8 @@ Function to initiate a fast bridge transaction for crvUSD tokens from L2 to main
 | `_min_amount` | `uint256` | Minimum amount to bridge; defaults to 0 |
 
 Returns: The actual amount of crvUSD that was bridged (`uint256`).
+
+Emits: `Bridge`
 
 <SourceCode>
 
@@ -96,10 +98,19 @@ def bridge(_token: IERC20, _to: address, _amount: uint256, _min_amount: uint256=
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.bridge(crvusd, '0x1234567890abcdef1234567890abcdef12345678', 10000 * 10**18)
+10000000000000000000000
+```
+
+</Example>
+
 ::::
 
 ### `allowed_to_bridge`
-::::description[`FastBridgeL2.allowed_to_bridge(_ts: uint256=block.timestamp) -> (uint256, uint256)`]
+::::description[`FastBridgeL2.allowed_to_bridge(_ts: uint256=block.timestamp) -> (uint256, uint256): view`]
 
 Checks how much crvUSD can be bridged at a specific timestamp, considering the rate limit and minimum requirements. Returns both the minimum and maximum amounts that can be bridged in the current 42-hour interval.
 
@@ -146,10 +157,19 @@ def _get_available(ts: uint256=block.timestamp) -> uint256:
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.allowed_to_bridge()
+(1000000000000000000, 500000000000000000000000)
+```
+
+</Example>
+
 ::::
 
 ### `cost`
-::::description[`FastBridgeL2.cost() -> uint256`]
+::::description[`FastBridgeL2.cost() -> uint256: view`]
 
 Calculates the total native token cost required for a bridge transaction. This includes both the native bridge fee and the fast messaging fee. Users must send this amount as `msg.value` when calling the `bridge()` function.
 
@@ -199,6 +219,15 @@ def bridger_cost() -> uint256:
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.cost()
+234567890000000
+```
+
+</Example>
+
 ::::
 
 ---
@@ -208,7 +237,7 @@ def bridger_cost() -> uint256:
 The FastBridgeL2 contract maintains several important state variables that control its operation, track bridged amounts, manage limits, and store contract addresses. These variables work together to ensure proper functioning of the bridge system while maintaining security and economic sustainability.
 
 ### `min_amount`
-::::description[`FastBridgeL2.min_amount() -> uint256`]
+::::description[`FastBridgeL2.min_amount() -> uint256: view`]
 
 The minimum amount of crvUSD required to initiate a bridge transaction. This threshold exists because claiming small amounts on Ethereum can be expensive due to gas costs. Can be changed using the [`set_min_amount`](#set_min_amount) function.
 
@@ -222,11 +251,20 @@ min_amount: public(uint256)  # Minimum amount to initiate bridge. Might be costl
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.min_amount()
+1000000000000000000
+```
+
+</Example>
+
 ::::
 
 
 ### `limit`
-::::description[`FastBridgeL2.limit() -> uint256`]
+::::description[`FastBridgeL2.limit() -> uint256: view`]
 
 The maximum amount of crvUSD that can be bridged within a 42-hour interval. This limit prevents overwhelming the Ethereum claim queue and ensures smooth processing of bridge transactions. Can be changed using the [`set_limit`](#set_limit) function.
 
@@ -240,11 +278,20 @@ limit: public(uint256)  # Maximum amount to bridge in an INTERVAL, so there's no
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.limit()
+500000000000000000000000
+```
+
+</Example>
+
 ::::
 
 
 ### `bridged`
-::::description[`FastBridgeL2.bridged(arg0: uint256) -> uint256`]
+::::description[`FastBridgeL2.bridged(arg0: uint256) -> uint256: view`]
 
 Tracks the total amount of crvUSD that has been bridged in each 42-hour interval. The key is the timestamp divided by the interval (151,200 seconds), and the value is the cumulative amount bridged.
 
@@ -262,10 +309,19 @@ bridged: public(HashMap[uint256, uint256])  # Amounts of bridge coins per INTERV
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.bridged(block.timestamp // 151200)
+125000000000000000000000
+```
+
+</Example>
+
 ::::
 
 ### `bridger`
-::::description[`FastBridgeL2.bridger() -> IBridger`]
+::::description[`FastBridgeL2.bridger() -> IBridger: view`]
 
 The contract responsible for handling the native bridge transaction that actually moves crvUSD from L2 to mainnet. This is the slower but reliable bridge mechanism. Can be changed using the [`set_bridger`](#set_bridger) function.
 
@@ -279,10 +335,19 @@ bridger: public(IBridger)
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.bridger()
+'0x8a5a5299f35614ac558aa290c2d5856edec1b5ad'
+```
+
+</Example>
+
 ::::
 
 ### `messenger`
-::::description[`FastBridgeL2.messenger() -> IMessenger`]
+::::description[`FastBridgeL2.messenger() -> IMessenger: view`]
 
 The contract responsible for sending fast messages to the mainnet vault, enabling immediate access to bridged funds while the native bridge transaction is still pending. Can be changed using the [`set_messenger`](#set_messenger) function.
 
@@ -296,10 +361,19 @@ messenger: public(IMessenger)
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.messenger()
+'0x14e11c1b8f04a7de306a7b5bf21bbca0d5cf79ff'
+```
+
+</Example>
+
 ::::
 
 ### `CRVUSD`
-::::description[`FastBridgeL2.CRVUSD() -> IERC20`]
+::::description[`FastBridgeL2.CRVUSD() -> IERC20: view`]
 
 The crvUSD token contract address on the L2 network. This is the token that gets bridged from L2 to mainnet. The address is set during deployment and cannot be changed.
 
@@ -313,10 +387,19 @@ CRVUSD: public(immutable(IERC20))
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.CRVUSD()
+'0xe5AfcF332a5457E8FafCD668BcE3dF953762Dfe7'
+```
+
+</Example>
+
 ::::
 
 ### `VAULT`
-::::description[`FastBridgeL2.VAULT() -> address`]
+::::description[`FastBridgeL2.VAULT() -> address: view`]
 
 The mainnet vault contract address where bridged crvUSD tokens are sent. This is the destination for both the native bridge and the fast bridge mechanisms. The address is set during deployment and cannot be changed.
 
@@ -330,10 +413,19 @@ VAULT: public(immutable(address))
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.VAULT()
+'0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D'
+```
+
+</Example>
+
 ::::
 
 ### `version`
-::::description[`FastBridgeL2.version() -> String[8]`]
+::::description[`FastBridgeL2.version() -> String[8]: view`]
 
 The version identifier for this contract implementation. This helps track which version of the contract is deployed and can be used for upgrade compatibility checks.
 
@@ -347,8 +439,18 @@ version: public(constant(String[8])) = "0.0.1"
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.version()
+'0.0.1'
+```
+
+</Example>
+
 ::::
 
+---
 
 ## Owner Functions
 
@@ -369,7 +471,7 @@ Updates the minimum amount of crvUSD required to initiate a bridge transaction. 
 | ---------- | --------- | ------------ |
 | `_min_amount` | `uint256` | New minimum amount required for bridging |
 
-Returns: None.
+Emits: `SetMinAmount`
 
 <SourceCode>
 
@@ -390,6 +492,14 @@ def set_min_amount(_min_amount: uint256):
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.set_min_amount(5000 * 10**18)
+```
+
+</Example>
+
 ::::
 
 ### `set_limit`
@@ -407,7 +517,7 @@ Updates the rate limit for crvUSD bridging per 42-hour interval. Only the contra
 | ---------- | --------- | ------------ |
 | `_limit` | `uint256` | New limit for crvUSD bridging per interval |
 
-Returns: None.
+Emits: `SetLimit`
 
 <SourceCode>
 
@@ -428,6 +538,14 @@ def set_limit(_limit: uint256):
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.set_limit(1000000 * 10**18)
+```
+
+</Example>
+
 ::::
 
 ### `set_bridger`
@@ -445,7 +563,7 @@ Updates the bridger contract that handles the native bridge transaction. Only th
 | ---------- | --------- | ------------ |
 | `_bridger` | `IBridger` | New bridger contract address |
 
-Returns: None.
+Emits: `SetBridger`
 
 <SourceCode>
 
@@ -469,6 +587,14 @@ def set_bridger(_bridger: IBridger):
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeL2.set_bridger('0x8a5a5299f35614ac558aa290c2d5856edec1b5ad')
+```
+
+</Example>
+
 ::::
 
 ### `set_messenger`
@@ -486,7 +612,7 @@ Updates the messenger contract that handles fast message delivery to the mainnet
 | ---------- | --------- | ------------ |
 | `_messenger` | `IMessenger` | New messenger contract address |
 
-Returns: None.
+Emits: `SetMessenger`
 
 <SourceCode>
 
@@ -507,5 +633,13 @@ def set_messenger(_messenger: IMessenger):
 ```
 
 </SourceCode>
+
+<Example>
+
+```python
+>>> FastBridgeL2.set_messenger('0x14e11c1b8f04a7de306a7b5bf21bbca0d5cf79ff')
+```
+
+</Example>
 
 ::::

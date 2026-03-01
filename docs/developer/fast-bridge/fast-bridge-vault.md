@@ -6,9 +6,9 @@ The vault operates as a secure intermediary that bridges the gap between the slo
 
 :::vyper[`FastBridgeVault.vy`]
 
-The source code for the `FastBridgeVault.vy` contract can be found on [ GitHub](https://github.com/curvefi/fast-bridge/blob/main/contracts/FastBridgeVault.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3` and utilizes a [Snekmate module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/access_control.vy) to handle contract ownership.
+The source code for the `FastBridgeVault.vy` contract can be found on [GitHub](https://github.com/curvefi/fast-bridge/blob/main/contracts/FastBridgeVault.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3` and utilizes a [Snekmate module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/access_control.vy) to handle contract ownership.
 
-The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](../assets/pdf/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
+The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](/pdf/audits/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
 
 :::
 
@@ -31,6 +31,8 @@ If the vault does not have enough crvUSD at the time of the call (e.g. the nativ
 | `_amount` | `uint256` | Amount of crvUSD to mint (0 if not minter); use `0` to claim a pending balance |
 
 Returns: Amount of crvUSD actually transferred to the receiver (`uint256`).
+
+Emits: `Minted`
 
 <SourceCode>
 
@@ -68,6 +70,15 @@ def mint(_receiver: address, _amount: uint256) -> uint256:
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.mint('0x1234...', 10000 * 10**18)
+10000000000000000000000
+```
+
+</Example>
+
 ::::
 
 ### `schedule_rug`
@@ -76,6 +87,8 @@ def mint(_receiver: address, _amount: uint256) -> uint256:
 Checks if the vault needs to rug (reduce) its debt ceiling due to changes in the minter's debt ceiling. This function can be called by anyone and schedules the rugging process if necessary.
 
 Returns: Boolean indicating whether rugging is needed (`bool`).
+
+Emits: `RugScheduled`
 
 <SourceCode>
 
@@ -94,6 +107,15 @@ def schedule_rug() -> bool:
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.schedule_rug()
+False
+```
+
+</Example>
+
 ::::
 
 ## Variables
@@ -101,13 +123,13 @@ def schedule_rug() -> bool:
 The FastBridgeVault contract maintains several important state variables that control its operation, track balances, manage fees, and implement security mechanisms. These variables work together to ensure proper functioning of the fast bridge system while maintaining security and economic sustainability.
 
 ### `balanceOf`
-::::description[`FastBridgeVault.balanceOf(address) -> uint256`]
+::::description[`FastBridgeVault.balanceOf(address) -> uint256: view`]
 
 Tracks the pending crvUSD balance for each address. This represents tokens that have been bridged but not yet claimed by the recipient.
 
 | Input      | Type      | Description |
 | ---------- | --------- | ------------ |
-| `address` | `address` | Address to check pending balance for |
+| `arg0` | `address` | Address to check pending balance for |
 
 Returns: Pending crvUSD balance for the given address (`uint256`).
 
@@ -119,10 +141,19 @@ balanceOf: public(HashMap[address, uint256])
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.balanceOf('0x1234...')
+0
+```
+
+</Example>
+
 ::::
 
 ### `fee`
-::::description[`FastBridgeVault.fee() -> uint256`]
+::::description[`FastBridgeVault.fee() -> uint256: view`]
 
 The fee rate applied to bridge transactions, expressed with 10^18 precision (e.g., 1% = 10^16).
 
@@ -136,10 +167,19 @@ fee: public(uint256)  # 10^18 precision
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.fee()
+0
+```
+
+</Example>
+
 ::::
 
 ### `fee_receiver`
-::::description[`FastBridgeVault.fee_receiver() -> address`]
+::::description[`FastBridgeVault.fee_receiver() -> address: view`]
 
 The address that receives the fees collected from bridge transactions.
 
@@ -153,10 +193,19 @@ fee_receiver: public(address)
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.fee_receiver()
+'0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00'
+```
+
+</Example>
+
 ::::
 
 ### `rug_scheduled`
-::::description[`FastBridgeVault.rug_scheduled() -> bool`]
+::::description[`FastBridgeVault.rug_scheduled() -> bool: view`]
 
 Indicates whether a debt ceiling rugging operation has been scheduled. This happens when the minter's debt ceiling has been reduced.
 
@@ -170,10 +219,19 @@ rug_scheduled: public(bool)
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.rug_scheduled()
+False
+```
+
+</Example>
+
 ::::
 
 ### `is_killed`
-::::description[`FastBridgeVault.is_killed(address) -> bool`]
+::::description[`FastBridgeVault.is_killed(address) -> bool: view`]
 
 Emergency kill switch that can disable specific minters or all minting operations. When killed, the specified address cannot mint tokens.
 
@@ -191,10 +249,19 @@ is_killed: public(HashMap[address, bool])
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.is_killed('0x0000...')
+False
+```
+
+</Example>
+
 ::::
 
 ### `version`
-::::description[`FastBridgeVault.version() -> String[8]`]
+::::description[`FastBridgeVault.version() -> String[8]: view`]
 
 The version identifier for this contract implementation.
 
@@ -208,10 +275,19 @@ version: public(constant(String[8])) = "0.0.1"
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.version()
+'0.0.1'
+```
+
+</Example>
+
 ::::
 
 ### `MINTER_ROLE`
-::::description[`FastBridgeVault.MINTER_ROLE() -> bytes32`]
+::::description[`FastBridgeVault.MINTER_ROLE() -> bytes32: view`]
 
 The role identifier for addresses that can mint crvUSD from the vault.
 
@@ -225,10 +301,19 @@ MINTER_ROLE: public(constant(bytes32)) = keccak256("MINTER")
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.MINTER_ROLE()
+b'\xf0\x88{\xa6^\xe2\x02N\xa8\x81\xd9\x1bt\xc2E\x0e\xf1\x9e\x15W\xf0;\xed>\xa9\xf1k\x03|\xbe-\xc9'
+```
+
+</Example>
+
 ::::
 
 ### `KILLER_ROLE`
-::::description[`FastBridgeVault.KILLER_ROLE() -> bytes32`]
+::::description[`FastBridgeVault.KILLER_ROLE() -> bytes32: view`]
 
 The role identifier for addresses that can kill/unkill minters in emergency situations.
 
@@ -242,10 +327,19 @@ KILLER_ROLE: public(constant(bytes32)) = keccak256("KILLER")
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.KILLER_ROLE()
+b'\x99\xf84\xfa\xe7\x1e\xae\x91\x9b\x81\x02\x81z\x18\xb0-eU\x05ij\x88\xccI\xe3\nImu\xa0-\xec'
+```
+
+</Example>
+
 ::::
 
 ### `CRVUSD`
-::::description[`FastBridgeVault.CRVUSD() -> IERC20`]
+::::description[`FastBridgeVault.CRVUSD() -> IERC20: view`]
 
 The crvUSD token contract address on mainnet. This is the token that gets minted from the vault.
 
@@ -259,10 +353,19 @@ CRVUSD: public(constant(IERC20)) = IERC20(0xf939E0A03FB07F59A73314E73794Be0E57ac
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.CRVUSD()
+'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
+```
+
+</Example>
+
 ::::
 
 ### `MINTER`
-::::description[`FastBridgeVault.MINTER() -> IMinter`]
+::::description[`FastBridgeVault.MINTER() -> IMinter: view`]
 
 The minter contract (ControllerFactory) that manages debt ceilings and can rug debt when necessary.
 
@@ -275,6 +378,15 @@ MINTER: public(constant(IMinter)) = IMinter(0xC9332fdCB1C491Dcc683bAe86Fe3cb7036
 ```
 
 </SourceCode>
+
+<Example>
+
+```python
+>>> FastBridgeVault.MINTER()
+'0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC'
+```
+
+</Example>
 
 ::::
 
@@ -300,7 +412,7 @@ Emergency function to kill or unkill specific minters or all minting operations.
 | `_status` | `bool` | Boolean whether to stop minter from working |
 | `_who` | `address` | Minter to kill/unkill, empty address to kill all receiving (default: empty address) |
 
-Returns: None.
+Emits: `SetKilled`
 
 <SourceCode>
 
@@ -320,6 +432,14 @@ def set_killed(_status: bool, _who: address=empty(address)):
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.set_killed(True, '0x1234...')
+```
+
+</Example>
+
 ::::
 
 ### `set_fee`
@@ -337,7 +457,7 @@ Updates the fee rate applied to bridge transactions. Only the admin can call thi
 | ---------- | --------- | ------------ |
 | `_new_fee` | `uint256` | New fee rate with 10^18 precision (max: 10^18) |
 
-Returns: None.
+Emits: `SetFee`
 
 <SourceCode>
 
@@ -357,6 +477,14 @@ def set_fee(_new_fee: uint256):
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.set_fee(0)
+```
+
+</Example>
+
 ::::
 
 ### `set_fee_receiver`
@@ -374,7 +502,7 @@ Updates the address that receives fees from bridge transactions. Only the admin 
 | ---------- | --------- | ------------ |
 | `_new_fee_receiver` | `address` | New fee receiver address |
 
-Returns: None.
+Emits: `SetFeeReceiver`
 
 <SourceCode>
 
@@ -394,6 +522,14 @@ def set_fee_receiver(_new_fee_receiver: address):
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> FastBridgeVault.set_fee_receiver('0xa2Bcd...')
+```
+
+</Example>
+
 ::::
 
 ### `recover`
@@ -412,7 +548,7 @@ Emergency function to recover ERC20 tokens from the contract. This is needed in 
 | `_recovers` | `DynArray[RecoverInput, 32]` | Array of (token, amount) pairs to recover |
 | `_receiver` | `address` | Address to receive the recovered tokens |
 
-Returns: None.
+Emits: `Recovered`
 
 <SourceCode>
 
@@ -436,5 +572,13 @@ def recover(_recovers: DynArray[RecoverInput, 32], _receiver: address):
 ```
 
 </SourceCode>
+
+<Example>
+
+```python
+>>> FastBridgeVault.recover([('0xf939...', 1000 * 10**18)], '0x1234...')
+```
+
+</Example>
 
 ::::

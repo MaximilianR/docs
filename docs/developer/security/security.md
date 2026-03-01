@@ -43,6 +43,10 @@ Security audits and disclosure reports are available on [GitHub](https://github.
 
 <AuditCardGrid category="dex" />
 
+### Infrastructure
+
+<AuditCardGrid category="infrastructure" />
+
 ### Stablecoin and Lending
 
 <AuditCardGrid category="stablecoin" />

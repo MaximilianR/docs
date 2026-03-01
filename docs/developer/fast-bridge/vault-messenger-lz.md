@@ -6,9 +6,9 @@ The contract implements LayerZero's OApp (Omnichain Application) standard to pro
 
 :::vyper[`VaultMessengerLZ.vy`]
 
-The source code for the `VaultMessengerLZ.vy` contract can be found on [ GitHub](https://github.com/curvefi/fast-bridge/blob/main/contracts/VaultMessengerLZ.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3` and utilizes [LayerZero OApp](https://docs.layerzero.network/v2/concepts/applications/oapp-standard) modules for cross-chain messaging.
+The source code for the `VaultMessengerLZ.vy` contract can be found on [GitHub](https://github.com/curvefi/fast-bridge/blob/main/contracts/messengers/VaultMessengerLZ.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3` and utilizes [LayerZero OApp](https://docs.layerzero.network/v2/concepts/applications/oapp-standard) modules for cross-chain messaging.
 
-The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](../assets/pdf/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
+The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](/pdf/audits/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
 
 :::
 
@@ -31,9 +31,7 @@ Receives LayerZero messages originating from L2 networks and processes fast brid
 | `_executor` | `address` | Address of the executor for the message |
 | `_extraData` | `Bytes[OApp.MAX_EXTRA_DATA_SIZE]` | Additional data passed by the executor |
 
-Returns: None.
-
-Emits: `Receive` event.
+Emits: `Receive`
 
 <SourceCode>
 
@@ -80,6 +78,14 @@ def lzReceive(
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> VaultMessengerLZ.lzReceive(origin, guid, message, executor, extra_data)
+```
+
+</Example>
+
 ::::
 
 ---
@@ -89,7 +95,7 @@ def lzReceive(
 The VaultMessengerLZ contract maintains important state variables that control its operation and store contract addresses. These variables work together to ensure proper functioning of the cross-chain messaging system while maintaining security and efficiency.
 
 ### `vault`
-::::description[`VaultMessengerLZ.vault() -> IVault`]
+::::description[`VaultMessengerLZ.vault() -> IVault: view`]
 
 The address of the FastBridgeVault contract that receives mint commands. This contract holds pre-minted crvUSD tokens and can immediately release them to users upon receiving fast bridge messages.
 
@@ -102,6 +108,15 @@ vault: public(IVault)
 ```
 
 </SourceCode>
+
+<Example>
+
+```python
+>>> VaultMessengerLZ.vault()
+'0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D'
+```
+
+</Example>
 
 ::::
 
@@ -126,7 +141,7 @@ Updates the address of the FastBridgeVault contract that receives mint commands.
 | ---------- | --------- | ------------ |
 | `_vault` | `IVault` | New FastBridgeVault contract address |
 
-Returns: None.
+Emits: `SetVault`
 
 <SourceCode>
 
@@ -145,5 +160,13 @@ def set_vault(_vault: IVault):
 ```
 
 </SourceCode>
+
+<Example>
+
+```python
+>>> VaultMessengerLZ.set_vault('0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D')
+```
+
+</Example>
 
 ::::

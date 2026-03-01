@@ -6,9 +6,9 @@ The contract implements LayerZero's OApp (Omnichain Application) standard to pro
 
 :::vyper[`L2MessengerLZ.vy`]
 
-The source code for the `L2MessengerLZ.vy` contract can be found on [ GitHub](https://github.com/curvefi/fast-bridge/blob/main/contracts/L2MessengerLZ.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3` and utilizes [LayerZero OApp](https://docs.layerzero.network/v2/concepts/applications/oapp-standard) modules for cross-chain messaging.
+The source code for the `L2MessengerLZ.vy` contract can be found on [GitHub](https://github.com/curvefi/fast-bridge/blob/main/contracts/messengers/L2MessengerLZ.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3` and utilizes [LayerZero OApp](https://docs.layerzero.network/v2/concepts/applications/oapp-standard) modules for cross-chain messaging.
 
-The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](../assets/pdf/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
+The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](/pdf/audits/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
 
 :::
 
@@ -35,9 +35,7 @@ Initiates a fast bridge by sending a message to the peer contract on the main ch
 | `_amount` | `uint256` | Amount of crvUSD to mint |
 | `_lz_fee_refund` | `address` | Address to receive excess LayerZero fees |
 
-Returns: None.
-
-Emits: `Initiated` event.
+Emits: `Initiated`
 
 <SourceCode>
 
@@ -74,10 +72,18 @@ def initiate_fast_bridge(_to: address, _amount: uint256, _lz_fee_refund: address
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> L2MessengerLZ.initiate_fast_bridge('0x1234...', 10000 * 10**18, '0x5678...')
+```
+
+</Example>
+
 ::::
 
 ### `quote_message_fee`
-::::description[`L2MessengerLZ.quote_message_fee() -> uint256`]
+::::description[`L2MessengerLZ.quote_message_fee() -> uint256: view`]
 
 Quotes the LayerZero message fee in native tokens required to send a fast bridge message to the mainnet vault. This function helps users and the FastBridgeL2 contract calculate the exact amount of native tokens needed for the messaging operation.
 
@@ -106,6 +112,15 @@ def quote_message_fee() -> uint256:
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> L2MessengerLZ.quote_message_fee()
+45678900000000
+```
+
+</Example>
+
 ::::
 
 ---
@@ -115,7 +130,7 @@ def quote_message_fee() -> uint256:
 The L2MessengerLZ contract maintains several important state variables that control its operation, store contract addresses, and manage LayerZero messaging parameters. These variables work together to ensure proper functioning of the cross-chain messaging system while maintaining security and efficiency.
 
 ### `vault_eid`
-::::description[`L2MessengerLZ.vault_eid() -> uint32`]
+::::description[`L2MessengerLZ.vault_eid() -> uint32: view`]
 
 The LayerZero endpoint ID (EID) of the mainnet vault contract. This identifies the destination chain and contract for fast bridge messages. Can be changed using the [`set_vault_eid`](#set_vault_eid) function.
 
@@ -129,10 +144,19 @@ vault_eid: public(uint32)
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> L2MessengerLZ.vault_eid()
+30101
+```
+
+</Example>
+
 ::::
 
 ### `fast_bridge_l2`
-::::description[`L2MessengerLZ.fast_bridge_l2() -> address`]
+::::description[`L2MessengerLZ.fast_bridge_l2() -> address: view`]
 
 The address of the FastBridgeL2 contract that is authorized to call the `initiate_fast_bridge` function. This ensures only the legitimate bridge contract can send fast bridge messages. Can be changed using the [`set_fast_bridge_l2`](#set_fast_bridge_l2) function.
 
@@ -146,10 +170,19 @@ fast_bridge_l2: public(address)
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> L2MessengerLZ.fast_bridge_l2()
+'0x1f2af270029d028400265ce1dd0919ba8780dae1'
+```
+
+</Example>
+
 ::::
 
 ### `gas_limit`
-::::description[`L2MessengerLZ.gas_limit() -> uint128`]
+::::description[`L2MessengerLZ.gas_limit() -> uint128: view`]
 
 The gas limit for LayerZero message execution on the destination chain. This parameter ensures sufficient gas is provided for the message processing on mainnet. Can be changed using the [`set_gas_limit`](#set_gas_limit) function.
 
@@ -162,6 +195,15 @@ gas_limit: public(uint128)
 ```
 
 </SourceCode>
+
+<Example>
+
+```python
+>>> L2MessengerLZ.gas_limit()
+200000
+```
+
+</Example>
 
 ::::
 
@@ -186,7 +228,7 @@ Updates the address of the FastBridgeL2 contract that is authorized to initiate 
 | ---------- | --------- | ------------ |
 | `_fast_bridge_l2` | `address` | New FastBridgeL2 contract address |
 
-Returns: None.
+Emits: `SetFastBridgeL2`
 
 <SourceCode>
 
@@ -206,6 +248,14 @@ def set_fast_bridge_l2(_fast_bridge_l2: address):
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> L2MessengerLZ.set_fast_bridge_l2('0x1f2af270029d028400265ce1dd0919ba8780dae1')
+```
+
+</Example>
+
 ::::
 
 ### `set_vault_eid`
@@ -223,7 +273,7 @@ Updates the LayerZero endpoint ID of the mainnet vault contract. Only the contra
 | ---------- | --------- | ------------ |
 | `_vault_eid` | `uint32` | New vault endpoint ID |
 
-Returns: None.
+Emits: `SetVaultEid`
 
 <SourceCode>
 
@@ -243,6 +293,14 @@ def set_vault_eid(_vault_eid: uint32):
 
 </SourceCode>
 
+<Example>
+
+```python
+>>> L2MessengerLZ.set_vault_eid(30101)
+```
+
+</Example>
+
 ::::
 
 ### `set_gas_limit`
@@ -260,7 +318,7 @@ Updates the gas limit for LayerZero message execution on the destination chain. 
 | ---------- | --------- | ------------ |
 | `_gas_limit` | `uint128` | New gas limit for destination chain execution |
 
-Returns: None.
+Emits: `SetGasLimit`
 
 <SourceCode>
 
@@ -278,5 +336,13 @@ def set_gas_limit(_gas_limit: uint128):
 ```
 
 </SourceCode>
+
+<Example>
+
+```python
+>>> L2MessengerLZ.set_gas_limit(200000)
+```
+
+</Example>
 
 ::::
