@@ -1,4 +1,6 @@
-Plain pools are liquidity **exchange contracts which contain at least 2 and up to 8 coins.**:::deploy[Contract Source & Deployment]
+Plain pools are liquidity **exchange contracts which contain at least 2 and up to 8 coins.**
+
+:::deploy[Contract Source & Deployment]
 
 Source code available on [Github](https://github.com/curvefi/stableswap-ng/blob/bff1522b30819b7b240af17ccfb72b0effbf6c47/contracts/main/CurveStableSwapNG.vy).  
 
@@ -322,7 +324,7 @@ Emits: `TokenExchange`
 | `j`          | `int128`   | Index value of output coin.                        |
 | `_dx`        | `uint256`  | Amount of coin `i` being exchanged.               |
 | `_min_dy`    | `uint256`  | Minimum amount of coin `j` to receive.            |
-| `_receiver`  | `address`  | Receiver of the output tokens; defaults to `msg.sender`. |
+| `_receiver`  | `address`  | Receiver of the output tokens. |
 
 
 <SourceCode>
@@ -345,7 +347,7 @@ def exchange_received(
     j: int128,
     _dx: uint256,
     _min_dy: uint256,
-    _receiver: address = msg.sender,
+    _receiver: address,
 ) -> uint256:
     """
     @notice Perform an exchange between two coins without transferring token in
@@ -361,7 +363,7 @@ def exchange_received(
     @param _min_dy Minimum amount of `j` to receive
     @return Actual amount of `j` received
     """
-    assert not 2 in asset_types  # dev: exchange_received not supported if pool contains rebasing tokens
+    assert not POOL_IS_REBASING_IMPLEMENTATION  # dev: exchange_received not supported if pool contains rebasing tokens
     return self._exchange(
         msg.sender,
         i,
@@ -1987,7 +1989,7 @@ def _withdraw_admin_fees():
 
 ## Amplification Coefficient
 
-The amplification coefficient **`A`**determines a pool’s tolerance for imbalance between the assets within it. A higher value means that trades will incur slippage sooner as the assets within the pool become imbalanced.
+The amplification coefficient **`A`** determines a pool’s tolerance for imbalance between the assets within it. A higher value means that trades will incur slippage sooner as the assets within the pool become imbalanced.
 
 The appropriate value for A is dependent upon the type of coin being used within the pool, and is subject to optimisation and pool-parameter update based on the market history of the trading pair. It is possible to modify the amplification coefficient for a pool after it has been deployed. This can be done via the `ramp_A` function. See [admin controls](../pools/admin-controls.md#ramp_a).
 
@@ -2472,7 +2474,7 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
         if i == N_COINS_128:
             break
 
-        if 2 in asset_types:
+        if POOL_IS_REBASING_IMPLEMENTATION:
             balances_i = ERC20(coins[i]).balanceOf(self) - self.admin_balances[i]
         else:
             balances_i = self.stored_balances[i] - self.admin_balances[i]

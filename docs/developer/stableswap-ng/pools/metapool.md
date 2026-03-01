@@ -406,7 +406,7 @@ def exchange_received(
     j: int128,
     _dx: uint256,
     _min_dy: uint256,
-    _receiver: address = msg.sender,
+    _receiver: address,
 ) -> uint256:
     """
     @notice Perform an exchange between two coins without transferring token in
@@ -422,7 +422,7 @@ def exchange_received(
     @param _min_dy Minimum amount of `j` to receive
     @return Actual amount of `j` received
     """
-    assert not 2 in asset_types  # dev: exchange_received not supported if pool contains rebasing tokens
+    assert not POOL_IS_REBASING_IMPLEMENTATION  # dev: exchange_received not supported if pool contains rebasing tokens
     return self._exchange(
         msg.sender,
         i,
@@ -2418,38 +2418,26 @@ def _stored_rates() -> DynArray[uint256, MAX_COINS]:
     """
     @notice Gets rate multipliers for each coin.
     @dev If the coin has a rate oracle that has been properly initialised,
-        this method queries that rate by static-calling an external
-        contract.
+         this method queries that rate by static-calling an external
+         contract.
     """
     rates: DynArray[uint256, MAX_COINS] = [
         rate_multipliers[0],
         StableSwap(BASE_POOL).get_virtual_price()
     ]
+
     oracles: DynArray[uint256, MAX_COINS] = self.oracles
+    if not self.oracles[0] == 0:
 
-    if asset_types[0] == 1 and not self.oracles[0] == 0:
-
-        # NOTE: fetched_rate is assumed to be 10**18 precision
-        fetched_rate: uint256 = convert(
-            raw_call(
-                convert(oracles[0] % 2**160, address),
-                _abi_encode(oracles[0] & ORACLE_BIT_MASK),
-                max_outsize=32,
-                is_static_call=True,
-            ),
-            uint256
+        response: Bytes[32] = raw_call(
+            convert(oracles[0] % 2**160, address),
+            _abi_encode(oracles[0] & ORACLE_BIT_MASK),
+            max_outsize=32,
+            is_static_call=True,
         )
 
-        # rates[0] * fetched_rate / PRECISION
-        rates[0] = unsafe_div(rates[0] * fetched_rate, PRECISION)
-
-    elif asset_types[0] == 3:  # ERC4626
-
-        # rates[0] * fetched_rate / PRECISION
-        rates[0] = unsafe_div(
-            rates[0] * ERC4626(coins[0]).convertToAssets(call_amount) * scale_factor,
-            PRECISION
-        )  # 1e18 precision
+        # rates[0] * convert(response, uint256) / PRECISION
+        rates[0] = unsafe_div(rates[0] * convert(response, uint256), PRECISION)
 
     return rates
 ```
@@ -3224,7 +3212,7 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
 
     for i in range(N_COINS_128):
 
-        if 2 in asset_types:
+        if POOL_IS_REBASING_IMPLEMENTATION:
             balances_i = ERC20(coins[i]).balanceOf(self) - self.admin_balances[i]
         else:
             balances_i = self.stored_balances[i] - self.admin_balances[i]
@@ -3293,7 +3281,7 @@ def _balances() -> DynArray[uint256, MAX_COINS]:
 
     for i in range(N_COINS_128):
 
-        if 2 in asset_types:
+        if POOL_IS_REBASING_IMPLEMENTATION:
             balances_i = ERC20(coins[i]).balanceOf(self) - self.admin_balances[i]
         else:
             balances_i = self.stored_balances[i] - self.admin_balances[i]

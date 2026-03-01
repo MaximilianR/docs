@@ -1,7 +1,7 @@
 # Views Contract
 
 
-This contract contains **view-only external methods**which can be gas-inefficient when called from smart contracts.
+This contract contains **view-only external methods** which can be gas-inefficient when called from smart contracts.
 
 :::deploy[Contract Source & Deployment]
 
@@ -96,10 +96,10 @@ def _get_dx(
 ::::
 
 ### `get_dy`
-::::description[`StableSwap.get_dx(i: int128, j: int128, dy: uint256, pool: address) -> uint256:`]
+::::description[`StableSwap.get_dy(i: int128, j: int128, dx: uint256, pool: address) -> uint256:`]
 
 
-Function to calucalte the predicted input amount `j` to receive `dy` of coin `i`.
+Function to calculate the predicted output amount of coin `j` when exchanging `dx` of coin `i`.
 
 Returns: predicted amount of `j` (`uint256`).
 
@@ -107,7 +107,7 @@ Returns: predicted amount of `j` (`uint256`).
 | ----------- | -------| ----|
 | `i` |  `int128` | index value of input coin |
 | `j` |  `int128` | index value of output coin |
-| `dy` |  `uint256` | amount of input coin being exchanged |
+| `dx` |  `uint256` | amount of input coin being exchanged |
 | `pool` |  `address` | pool address |
 
 <SourceCode>
@@ -288,7 +288,7 @@ def newton_y(b: uint256, c: uint256, D: uint256, _y: uint256) -> uint256:
 ::::description[`StableSwap.get_dx_underlying(i: int128, j: int128, dy: uint256, pool: address) -> uint256:`]
 
 
-Function to calucalte the predicted input amount `i` to receive `dy` of coin `j` on the underlying.
+Function to calculate the predicted input amount `i` to receive `dy` of coin `j` on the underlying.
 
 Returns: predicted amount of `i` (`uint256`).
 
@@ -396,7 +396,7 @@ def _base_calc_token_amount(
 ::::description[`StableSwap.get_dy_underlying(i: int128, j: int128, dx: uint256, pool: address) -> uint256:`]
 
 
-Function to calucalte the predicted input amount `j` to receive `dy` of coin `i` on the underlying.
+Function to calculate the predicted output amount of coin `j` when exchanging `dx` of coin `i` on the underlying.
 
 Returns: predicted amount of `j` (`uint256`).
 
@@ -404,7 +404,7 @@ Returns: predicted amount of `j` (`uint256`).
 | ----------- | -------| ----|
 | `i` |  `int128` | index value of input coin |
 | `j` |  `int128` | index value of output coin |
-| `dy` |  `uint256` | amount of input coin being exchanged |
+| `dx` |  `uint256` | amount of input coin being exchanged |
 | `pool` |  `address` | pool address |
 
 
@@ -513,13 +513,13 @@ def get_dy_underlying(
 
 ::::
 
-## Deposit / Withdrawl Methods
+## Deposit / Withdrawal Methods
 
 ### `calc_token_amount`
 ::::description[`StableSwap.calc_token_amount(_amounts: DynArray[uint256, MAX_COINS], _is_deposit: bool, pool: address) -> uint256:`]
 
 
-Function to calculate the addition or reduction of token supply from a deposit (add liquidity) or withdrawl (remove liquidity) including fees.
+Function to calculate the addition or reduction of token supply from a deposit (add liquidity) or withdrawal (remove liquidity) including fees.
 
 Returns: expected amount of LP tokens received (`uint256`)
 
@@ -527,6 +527,7 @@ Returns: expected amount of LP tokens received (`uint256`)
 | ----------- | -------| ----|
 | `_amounts` |  `DynArray[uint256, MAX_COINS]` | amount of coins being deposited/withdrawn |
 | `_is_deposit` |  `bool` | `true` = deposit, `false` = withdraw |
+| `pool` |  `address` | pool address |
 
 <SourceCode>
 
@@ -771,7 +772,7 @@ def _dynamic_fee(xpi: uint256, xpj: uint256, _fee: uint256, _fee_multiplier: uin
     if _fee_multiplier <= FEE_DENOMINATOR:
         return _fee
 
-    xps2: uint256 = (xpi + xpj) **2
+    xps2: uint256 = (xpi + xpj) ** 2
     return (
         (_fee_multiplier * _fee) /
         ((_fee_multiplier - FEE_DENOMINATOR) * 4 * xpi * xpj / xps2 + FEE_DENOMINATOR)
