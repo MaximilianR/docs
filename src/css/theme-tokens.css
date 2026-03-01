@@ -31,7 +31,7 @@
   /* Font Families */
   --Text-FontFamily-Heading: 'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   --Text-FontFamily-Body: 'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  --Text-FontFamily-Mono: 'Mona Sans', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  --Text-FontFamily-Mono: 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   --Text-FontFamily-Button: 'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 
   /* Layer Colors */

@@ -1,21 +1,31 @@
-<h1>LLAMMA and Controller</h1>
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 
-!!!github "GitHub"
-    The source code for both contracts, `AMM.vy` and `Controller.vy`, is available on [:material-github: GitHub](https://github.com/curvefi/curve-stablecoin/tree/lending/contracts).
+# LLAMMA and Controller
+
+:::vyper[`AMM.vy` & `Controller.vy`]
+
+The source code for both contracts, `AMM.vy` and `Controller.vy`, can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/lending/contracts). The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+
+:::
 
 Because Curve Lending operates very similarly to the system for minting crvUSD, both `Controller.vy` and `AMM.vy` can be used for lending markets. To ensure full compatibility with both systems, **several modifications have been made to the codebase**:
 
+<DocCardGrid>
+  <DocCard title="AMM.vy (LLAMMA)" icon="vyper" link="../../crvusd/amm" linkText="Full LLAMMA Documentation">
+
+The core contract `AMM.vy` (LLAMMA) **remains exactly the same** as in the crvUSD system. No changes were needed for lending.
+
+  </DocCard>
+  <DocCard title="Controller.vy" icon="vyper" link="../../crvusd/controller" linkText="Full Controller Documentation">
+
+The Controller has been modified for lending with changes to **token decimal handling**, **fee collection**, and **ETH transfer behavior**.
+
+  </DocCard>
+</DocCardGrid>
+
 ---
 
-## **AMM.vy**
-
-**[:octicons-arrow-right-24: Full LLAMMA Documentation](../../crvUSD/amm.md)**
-
-The core contract `AMM.vy` (LLAMMA) **remains exactly the same**. It is already precisely what we need for lending; no changes are needed.
-
-## **Controller.vy**
-
-**[:octicons-arrow-right-24: Full Controller Documentation](../../crvUSD/controller.md)**
+## Changes to Controller.vy
 
 The changes made to the codebase of the Controller contract are mainly under-the-hood changes, which do not significantly affect how users interact with the contract. External functions like `create_loan`, `repay`, etc., work the same way as before.
 

@@ -3,17 +3,18 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+const remarkLogos = require('./remark-logos');
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-const SITE_DOMAIN = 'dev.curve.finance';
+const SITE_DOMAIN = 'docs.curve.finance';
 
 // Shared doc plugin options (used by both user and protocol sections)
 const sharedDocOptions = {
-  remarkPlugins: [remarkMath],
+  remarkPlugins: [remarkMath, remarkLogos],
   rehypePlugins: [rehypeKatex],
   admonitions: {
-    keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'danger', 'example'],
+    keywords: ['note', 'tip', 'tip-green', 'info', 'caution', 'warning', 'danger', 'example', 'description', 'deploy', 'github', 'vyper', 'colab', 'guard', 'telegram', 'notebook', 'solidity', 'bug', 'pdf', 'abstract'],
   },
 };
 
@@ -102,8 +103,9 @@ const config: Config = {
           activeBasePath: '/user',
         },
         {
-          href: 'https://dev.curve.finance/documentation-overview/',
+          to: 'developer/documentation-overview',
           label: 'Developers',
+          activeBasePath: '/developer',
         },
         {
           to: 'protocol/why-curve',
@@ -167,6 +169,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ['python', 'solidity'],
     },
   } satisfies Preset.ThemeConfig,
 
@@ -250,11 +253,172 @@ const config: Config = {
         ...sharedDocOptions,
       },
     ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'developer',
+        path: 'docs/developer',
+        routeBasePath: 'developer',
+        sidebarPath: './sidebars/sidebarDeveloper.js',
+        sidebarCollapsed: true,
+        breadcrumbs: false,
+        ...sharedDocOptions,
+      },
+    ],
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          // --- Directory renames ---
+          // curve_dao → curve-dao
+          { from: '/developer/curve_dao/crv-token', to: '/developer/curve-dao/crv-token' },
+          // voting-escrow/voting-escrow redirect removed: Docusaurus resolves same-name-as-parent docs differently
+          { from: '/developer/curve_dao/voting-escrow/admin-controls', to: '/developer/curve-dao/voting-escrow' },
+          { from: '/developer/curve_dao/voting-escrow/smartwalletchecker', to: '/developer/curve-dao/voting-escrow' },
+          // Merged admin-controls and smart-wallet-checker into voting-escrow
+          { from: '/developer/curve-dao/voting-escrow/admin-controls', to: '/developer/curve-dao/voting-escrow' },
+          { from: '/developer/curve-dao/voting-escrow/smart-wallet-checker', to: '/developer/curve-dao/voting-escrow' },
+          // crvUSD → crvusd (file renames only; pure case-change redirects removed — they
+          // conflict on case-insensitive filesystems and should be handled via server config)
+          { from: '/developer/crvUSD/monetarypolicy', to: '/developer/crvusd/monetary-policy' },
+          { from: '/developer/crvUSD/flashlender', to: '/developer/crvusd/flash-lender' },
+          { from: '/developer/crvUSD/priceaggregator', to: '/developer/crvusd/price-aggregator' },
+          { from: '/developer/crvUSD/priceaggregator_old', to: '/developer/crvusd/price-aggregator-old' },
+          { from: '/developer/crvUSD/factory/factory_full', to: '/developer/crvusd/factory/overview' },
+          { from: '/developer/crvUSD/pegkeepers/PegKeeperV1', to: '/developer/crvusd/pegkeepers/peg-keeper-v1' },
+          { from: '/developer/crvUSD/pegkeepers/PegKeeperV2', to: '/developer/crvusd/pegkeepers/peg-keeper-v2' },
+          { from: '/developer/crvUSD/pegkeepers/PegKeeperRegulator', to: '/developer/crvusd/pegkeepers/peg-keeper-regulator' },
+          { from: '/developer/crvUSD/leverage/LeverageZap', to: '/developer/crvusd/leverage/leverage-zap' },
+          { from: '/developer/crvUSD/leverage/LeverageZap1inch', to: '/developer/crvusd/leverage/leverage-zap-1inch' },
+          { from: '/developer/crvUSD/leverage/LlamaLendOdosLeverageZap', to: '/developer/crvusd/leverage/llamalend-odos-leverage-zap' },
+          // scrvusd file renames
+          { from: '/developer/scrvusd/RewardsHandler', to: '/developer/scrvusd/rewards-handler' },
+          { from: '/developer/scrvusd/StablecoinLens', to: '/developer/scrvusd/stablecoin-lens' },
+          { from: '/developer/scrvusd/crosschain/oracle-v0/oracle', to: '/developer/scrvusd/crosschain/oracle-v0' },
+          // stableswap-exchange flatten
+          { from: '/developer/stableswap-exchange/overview', to: '/developer/stableswap-overview' },
+          { from: '/developer/stableswap-exchange/stableswap/overview', to: '/developer/stableswap/overview' },
+          { from: '/developer/stableswap-exchange/stableswap/pools/overview', to: '/developer/stableswap/pools/overview' },
+          { from: '/developer/stableswap-exchange/stableswap/pools/plain_pools', to: '/developer/stableswap/pools/plain-pools' },
+          { from: '/developer/stableswap-exchange/stableswap/pools/lending_pools', to: '/developer/stableswap/pools/lending-pools' },
+          { from: '/developer/stableswap-exchange/stableswap/pools/metapools', to: '/developer/stableswap/pools/metapools' },
+          { from: '/developer/stableswap-exchange/stableswap/pools/admin_pool_settings', to: '/developer/stableswap/pools/admin-pool-settings' },
+          { from: '/developer/stableswap-exchange/stableswap/lp_tokens/overview', to: '/developer/stableswap/lp-tokens/overview' },
+          { from: '/developer/stableswap-exchange/stableswap/lp_tokens/curve_token_v1', to: '/developer/stableswap/lp-tokens/curve-token-v1' },
+          { from: '/developer/stableswap-exchange/stableswap/lp_tokens/curve_token_v2', to: '/developer/stableswap/lp-tokens/curve-token-v2' },
+          { from: '/developer/stableswap-exchange/stableswap/lp_tokens/curve_token_v3', to: '/developer/stableswap/lp-tokens/curve-token-v3' },
+          { from: '/developer/stableswap-exchange/stableswap/deposit_contracts/overview', to: '/developer/stableswap/deposit-contracts/overview' },
+          { from: '/developer/stableswap-exchange/stableswap/deposit_contracts/lending_pool_deposits', to: '/developer/stableswap/deposit-contracts/lending-pool-deposits' },
+          { from: '/developer/stableswap-exchange/stableswap/deposit_contracts/metapool_deposits', to: '/developer/stableswap/deposit-contracts/metapool-deposits' },
+          { from: '/developer/stableswap-exchange/stableswap/cross_asset_swaps/overview', to: '/developer/stableswap/cross-asset-swaps/overview' },
+          { from: '/developer/stableswap-exchange/stableswap/cross_asset_swaps/synthswap_exchange', to: '/developer/stableswap/cross-asset-swaps/synthswap-exchange' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/overview', to: '/developer/stableswap-ng/overview' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/pools/overview', to: '/developer/stableswap-ng/pools/overview' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/pools/plainpool', to: '/developer/stableswap-ng/pools/plainpool' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/pools/metapool', to: '/developer/stableswap-ng/pools/metapool' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/pools/oracles', to: '/developer/stableswap-ng/pools/oracles' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/pools/admin_controls', to: '/developer/stableswap-ng/pools/admin-controls' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/pools/lp_token', to: '/developer/stableswap-ng/pools/lp-token' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/utility_contracts/views', to: '/developer/stableswap-ng/utility-contracts/views' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/utility_contracts/math', to: '/developer/stableswap-ng/utility-contracts/math' },
+          { from: '/developer/stableswap-exchange/stableswap-ng/implementations/custom1', to: '/developer/stableswap-ng/implementations/custom1' },
+          // cryptoswap-exchange flatten
+          { from: '/developer/cryptoswap-exchange/overview', to: '/developer/cryptoswap-overview' },
+          { from: '/developer/cryptoswap-exchange/cryptoswap/pools/crypto-pool', to: '/developer/cryptoswap/pools/crypto-pool' },
+          { from: '/developer/cryptoswap-exchange/cryptoswap/pools/admin-controls', to: '/developer/cryptoswap/pools/admin-controls' },
+          { from: '/developer/cryptoswap-exchange/cryptoswap/lp_tokens/overview', to: '/developer/cryptoswap/lp-tokens/overview' },
+          { from: '/developer/cryptoswap-exchange/cryptoswap/lp_tokens/lp-token-V5', to: '/developer/cryptoswap/lp-tokens/lp-token-v5' },
+          { from: '/developer/cryptoswap-exchange/twocrypto-ng/overview', to: '/developer/twocrypto-ng/overview' },
+          { from: '/developer/cryptoswap-exchange/twocrypto-ng/pools/overview', to: '/developer/twocrypto-ng/pools/overview' },
+          { from: '/developer/cryptoswap-exchange/twocrypto-ng/pools/twocrypto', to: '/developer/twocrypto-ng/pools/twocrypto' },
+          { from: '/developer/cryptoswap-exchange/twocrypto-ng/pools/oracles', to: '/developer/twocrypto-ng/pools/oracles' },
+          { from: '/developer/cryptoswap-exchange/twocrypto-ng/pools/admin-controls', to: '/developer/twocrypto-ng/pools/admin-controls' },
+          { from: '/developer/cryptoswap-exchange/twocrypto-ng/utility-contracts/views', to: '/developer/twocrypto-ng/utility-contracts/views' },
+          { from: '/developer/cryptoswap-exchange/twocrypto-ng/utility-contracts/math', to: '/developer/twocrypto-ng/utility-contracts/math' },
+          { from: '/developer/cryptoswap-exchange/tricrypto-ng/overview', to: '/developer/tricrypto-ng/overview' },
+          { from: '/developer/cryptoswap-exchange/tricrypto-ng/pools/tricrypto', to: '/developer/tricrypto-ng/pools/tricrypto' },
+          { from: '/developer/cryptoswap-exchange/tricrypto-ng/pools/oracles', to: '/developer/tricrypto-ng/pools/oracles' },
+          { from: '/developer/cryptoswap-exchange/tricrypto-ng/pools/admin-controls', to: '/developer/tricrypto-ng/pools/admin-controls' },
+          { from: '/developer/cryptoswap-exchange/tricrypto-ng/utility-contracts/views', to: '/developer/tricrypto-ng/utility-contracts/views' },
+          { from: '/developer/cryptoswap-exchange/tricrypto-ng/utility-contracts/math', to: '/developer/tricrypto-ng/utility-contracts/math' },
+          // liquidity-gauges-and-minting-crv → gauges
+          { from: '/developer/liquidity-gauges-and-minting-crv/overview', to: '/developer/gauges/overview' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/gauges/overview', to: '/developer/gauges/gauges/overview' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/gauges/LiquidityGaugeV6', to: '/developer/gauges/gauges/liquidity-gauge-v6' },
+          { from: '/developer/gauges/gauge-controller/gauge-controller', to: '/developer/gauges/gauge-controller' },
+          { from: '/developer/gauges/minter/minter', to: '/developer/gauges/minter' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/overview', to: '/developer/gauges/xchain-gauges/overview' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/RootGauge', to: '/developer/gauges/xchain-gauges/root-gauge' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/RootGaugeFactory', to: '/developer/gauges/xchain-gauges/root-gauge-factory' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/ChildGauge', to: '/developer/gauges/xchain-gauges/child-gauge' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/ChildGaugeFactory', to: '/developer/gauges/xchain-gauges/child-gauge-factory' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/xchain-gauges/Bridgers', to: '/developer/gauges/xchain-gauges/bridgers' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/boosting-sidechains/L2VotingEscrowOracle', to: '/developer/gauges/boosting-sidechains/l2-voting-escrow-oracle' },
+          { from: '/developer/liquidity-gauges-and-minting-crv/boosting-sidechains/Updater', to: '/developer/gauges/boosting-sidechains/updater' },
+          // curve-api → api
+          { from: '/developer/curve-api/curve-api', to: '/developer/api/curve-api' },
+          { from: '/developer/curve-api/curve-prices', to: '/developer/api/curve-prices' },
+          // fees file renames
+          { from: '/developer/fees/FeeCollector', to: '/developer/fees/fee-collector' },
+          { from: '/developer/fees/FeeDistributor', to: '/developer/fees/fee-distributor' },
+          { from: '/developer/fees/FeeSplitter', to: '/developer/fees/fee-splitter' },
+          { from: '/developer/fees/CowSwapBurner', to: '/developer/fees/cow-swap-burner' },
+          // Hooker → hooker removed: case-only change conflicts on case-insensitive filesystems
+          // router file renames
+          { from: '/developer/router/CurveRouterNG', to: '/developer/router/curve-router-ng' },
+          { from: '/developer/router/CurveRegistryExchange', to: '/developer/router/curve-registry-exchange' },
+          // registry file renames
+          { from: '/developer/registry/MetaRegistryAPI', to: '/developer/registry/meta-registry-api' },
+          // integration file renames
+          { from: '/developer/integration/metaregistry', to: '/developer/integration/meta-registry' },
+          // governance file renames
+          { from: '/developer/governance/curve-dao', to: '/developer/governance/voting-library' },
+          // lending file renames
+          { from: '/developer/lending/contracts/cryptofrompool', to: '/developer/lending/contracts/crypto-from-pool' },
+          { from: '/developer/lending/contracts/cryptofrompoolvault', to: '/developer/lending/contracts/crypto-from-pool-vault' },
+          { from: '/developer/lending/contracts/cryptofrompoolsrate', to: '/developer/lending/contracts/crypto-from-pools-rate' },
+          // deployments consolidation — 8 subcategory pages + legacy page → single page
+          { from: '/developer/deployments/contract-deployments', to: '/developer/deployments' },
+          { from: '/developer/deployments/amm', to: '/developer/deployments' },
+          { from: '/developer/deployments/crvusd', to: '/developer/deployments' },
+          { from: '/developer/deployments/lending', to: '/developer/deployments' },
+          { from: '/developer/deployments/dao', to: '/developer/deployments' },
+          { from: '/developer/deployments/integration', to: '/developer/deployments' },
+          { from: '/developer/deployments/crosschain', to: '/developer/deployments' },
+          { from: '/developer/deployments/router-zaps', to: '/developer/deployments' },
+          { from: '/developer/references/deployed-contracts', to: '/developer/deployments' },
+          // audits page merged into security
+          { from: '/developer/references/audits', to: '/developer/security/' },
+          // cryptoswap in-depth redirect
+          { from: '/developer/cryptoswap-exchange/in-depth', to: '/developer/cryptoswap-in-depth' },
+          // block-oracle redirects (new section, old mkdocs paths)
+          { from: '/developer/block-oracle/BlockOracle', to: '/developer/block-oracle/' },
+          { from: '/developer/block-oracle/HeaderVerifier', to: '/developer/block-oracle/header-verifier' },
+          { from: '/developer/block-oracle/LZBlockRelay', to: '/developer/block-oracle/lz-block-relay' },
+          { from: '/developer/block-oracle/MainnetBlockView', to: '/developer/block-oracle/mainnet-block-view' },
+          // fast-bridge redirects (new section, old mkdocs paths)
+          { from: '/developer/fast-bridge/FastBridgeL2', to: '/developer/fast-bridge/fast-bridge-l2' },
+          { from: '/developer/fast-bridge/FastBridgeVault', to: '/developer/fast-bridge/fast-bridge-vault' },
+          { from: '/developer/fast-bridge/L2MessengerLZ', to: '/developer/fast-bridge/l2-messenger-lz' },
+          { from: '/developer/fast-bridge/VaultMessengerLZ', to: '/developer/fast-bridge/vault-messenger-lz' },
+          // veCRV crosschain redirects
+          { from: '/developer/curve_dao/voting-escrow/crosschain/vecrv-delegation', to: '/developer/curve-dao/voting-escrow/crosschain/vecrv-delegation' },
+          { from: '/developer/curve_dao/voting-escrow/crosschain/vecrv-oracle', to: '/developer/curve-dao/voting-escrow/crosschain/vecrv-oracle' },
+          { from: '/developer/curve_dao/voting-escrow/crosschain/vecrv-verifiers', to: '/developer/curve-dao/voting-escrow/crosschain/vecrv-verifiers' },
+          // twocrypto-ng refuel redirect
+          { from: '/developer/cryptoswap-exchange/twocrypto-ng/implementations/refuel', to: '/developer/twocrypto-ng/implementations/refuel' },
+        ],
+      },
+    ],
   ],
 
   stylesheets: [
     {
       href: '/katex/katex.min.css',
+      type: 'text/css',
+    },
+    {
+      href: '/fonts/fonts.css',
       type: 'text/css',
     },
   ],

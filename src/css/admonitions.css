@@ -1,540 +1,167 @@
 /**
  * Admonition Components Styling
- * Custom styling for info, example, warning, danger, success, note, tip-green, and important admonitions.
  *
- * Uses CSS custom properties per type to avoid repeating identical rules.
- * Each type sets: --adm-color, --adm-border-color, --adm-dark-border-color, --adm-icon
- * "Full" types (info, example, warning) also set: --adm-hover-color, --adm-dark-hover-color
+ * Targets Docusaurus 3 rendered classes: .theme-admonition-<type>
+ *
+ * Design: Square boxes with a bold colored left border. A circular icon badge
+ * is centered vertically on the left border. Colors and icons are defined
+ * per type via CSS custom properties (--adm-color, --adm-icon).
+ *
+ * The "description" type has special styling and is handled separately at
+ * the bottom of this file.
  */
 
 /* ==========================================================================
-   Per-type variable declarations
+   Per-type custom properties
    ========================================================================== */
 
-admonition[type="info"],
-.admonition[type="info"],
-.admonition.info {
-  --adm-color: var(--Color-Primary-500);
-  --adm-border-color: var(--Color-Primary-200);
-  --adm-dark-border-color: var(--Color-Primary-300);
-  --adm-icon: 'i';
-  --adm-hover-color: var(--Color-Primary-600);
-  --adm-dark-hover-color: var(--Color-Primary-400);
-}
+/* Standard Docusaurus types */
+.theme-admonition-info      { --adm-color: #3b82f6; --adm-bg: rgba(59,130,246,0.06);  --adm-icon: 'i'; }
+.theme-admonition-note      { --adm-color: #6b7280; --adm-bg: rgba(107,114,128,0.06); --adm-icon: '✎'; }
+.theme-admonition-tip       { --adm-color: #10b981; --adm-bg: rgba(16,185,129,0.06);  --adm-icon: '✓'; }
+.theme-admonition-warning   { --adm-color: #f59e0b; --adm-bg: rgba(245,158,11,0.06);  --adm-icon: '!'; }
+.theme-admonition-danger    { --adm-color: #ef4444; --adm-bg: rgba(239,68,68,0.06);   --adm-icon: '✕'; }
+.theme-admonition-caution   { --adm-color: #f59e0b; --adm-bg: rgba(245,158,11,0.06);  --adm-icon: '!'; }
 
-admonition[type="example"],
-.admonition[type="example"],
-.admonition.example {
-  --adm-color: #8b5cf6;
-  --adm-border-color: #c4b5fd;
-  --adm-dark-border-color: #a78bfa;
-  --adm-icon: '◆';
-  --adm-hover-color: #7c3aed;
-  --adm-dark-hover-color: #a78bfa;
-}
+/* Site-specific types */
+.theme-admonition-tip-green { --adm-color: #10b981; --adm-bg: rgba(16,185,129,0.06);  --adm-icon: '✓'; }
+.theme-admonition-example   { --adm-color: #8b5cf6; --adm-bg: rgba(139,92,246,0.06);  --adm-icon: '◆'; }
+.theme-admonition-important { --adm-color: #f59e0b; --adm-bg: rgba(245,158,11,0.06);  --adm-icon: '●'; }
+.theme-admonition-guard     { --adm-color: #dc2626; --adm-bg: rgba(220,38,38,0.06);   --adm-icon: '⛨'; }
+.theme-admonition-deploy    { --adm-color: #059669; --adm-bg: rgba(5,150,105,0.06);   --adm-icon: '▲'; }
+.theme-admonition-github    { --adm-color: #374151; --adm-bg: rgba(55,65,81,0.06);    --adm-icon: '⌂'; }
+.theme-admonition-vyper     { --adm-color: #9F4CF2; --adm-bg: rgba(159,76,242,0.06);  --adm-icon: 'V'; }
+.theme-admonition-colab     { --adm-color: #f59e0b; --adm-bg: rgba(245,158,11,0.06);  --adm-icon: '▶'; }
+.theme-admonition-telegram  { --adm-color: #0088cc; --adm-bg: rgba(0,136,204,0.06);   --adm-icon: '✈'; }
+.theme-admonition-notebook  { --adm-color: #f59e0b; --adm-bg: rgba(245,158,11,0.06);  --adm-icon: '▶'; }
+.theme-admonition-solidity  { --adm-color: #2b5ea7; --adm-bg: rgba(43,94,167,0.06);   --adm-icon: 'S'; }
+.theme-admonition-bug       { --adm-color: #ef4444; --adm-bg: rgba(239,68,68,0.06);   --adm-icon: '⚠'; }
+.theme-admonition-pdf       { --adm-color: #6366f1; --adm-bg: rgba(99,102,241,0.06);  --adm-icon: '⎙'; }
+.theme-admonition-abstract  { --adm-color: #0ea5e9; --adm-bg: rgba(14,165,233,0.06);  --adm-icon: '◇'; }
 
-admonition[type="warning"],
-.admonition[type="warning"],
-.admonition.warning {
-  --adm-color: #f59e0b;
-  --adm-border-color: #f59e0b;
-  --adm-dark-border-color: #f59e0b;
-  --adm-icon: '!';
-  --adm-hover-color: #f59e0b;
-  --adm-dark-hover-color: #f59e0b;
-}
-
-admonition[type="danger"],
-.admonition[type="danger"],
-.admonition.danger {
-  --adm-color: #ef4444;
-  --adm-border-color: #ef4444;
-  --adm-dark-border-color: #ef4444;
-  --adm-icon: '✕';
-}
-
-admonition[type="success"],
-.admonition[type="success"],
-.admonition.success {
-  --adm-color: #10b981;
-  --adm-border-color: #10b981;
-  --adm-dark-border-color: #10b981;
-  --adm-icon: '✓';
-}
-
-admonition[type="note"],
-.admonition[type="note"],
-.admonition.note {
-  --adm-color: #6b7280;
-  --adm-border-color: #6b7280;
-  --adm-dark-border-color: #6b7280;
-  --adm-icon: '📝';
-}
-
-admonition[type="tip-green"],
-.admonition[type="tip-green"],
-.admonition.tip-green {
-  --adm-color: #10b981;
-  --adm-border-color: #10b981;
-  --adm-dark-border-color: #10b981;
-  --adm-icon: '💡';
-}
-
-admonition[type="important"],
-.admonition[type="important"],
-.admonition.important {
-  --adm-color: #f59e0b;
-  --adm-border-color: #f59e0b;
-  --adm-dark-border-color: #f59e0b;
-  --adm-icon: '●';
-}
+/* Dark mode: adjust tints and lighten dark-colored icons */
+[data-theme='dark'] .theme-admonition-info      { --adm-bg: rgba(59,130,246,0.10); }
+[data-theme='dark'] .theme-admonition-note      { --adm-bg: rgba(156,163,175,0.10); }
+[data-theme='dark'] .theme-admonition-tip       { --adm-bg: rgba(16,185,129,0.10); }
+[data-theme='dark'] .theme-admonition-warning   { --adm-bg: rgba(245,158,11,0.10); }
+[data-theme='dark'] .theme-admonition-danger    { --adm-bg: rgba(239,68,68,0.10); }
+[data-theme='dark'] .theme-admonition-caution   { --adm-bg: rgba(245,158,11,0.10); }
+[data-theme='dark'] .theme-admonition-tip-green { --adm-bg: rgba(16,185,129,0.10); }
+[data-theme='dark'] .theme-admonition-example   { --adm-bg: rgba(139,92,246,0.10); }
+[data-theme='dark'] .theme-admonition-important { --adm-bg: rgba(245,158,11,0.10); }
+[data-theme='dark'] .theme-admonition-guard     { --adm-bg: rgba(220,38,38,0.10); }
+[data-theme='dark'] .theme-admonition-deploy    { --adm-bg: rgba(5,150,105,0.10); }
+[data-theme='dark'] .theme-admonition-github    { --adm-color: #9ca3af; --adm-bg: rgba(156,163,175,0.10); }
+[data-theme='dark'] .theme-admonition-vyper     { --adm-bg: rgba(159,76,242,0.10); }
+[data-theme='dark'] .theme-admonition-colab     { --adm-bg: rgba(245,158,11,0.10); }
+[data-theme='dark'] .theme-admonition-telegram  { --adm-bg: rgba(0,136,204,0.10); }
+[data-theme='dark'] .theme-admonition-notebook  { --adm-bg: rgba(245,158,11,0.10); }
+[data-theme='dark'] .theme-admonition-solidity  { --adm-color: #5b8fd9; --adm-bg: rgba(43,94,167,0.10); }
+[data-theme='dark'] .theme-admonition-bug       { --adm-bg: rgba(239,68,68,0.10); }
+[data-theme='dark'] .theme-admonition-pdf       { --adm-bg: rgba(99,102,241,0.10); }
+[data-theme='dark'] .theme-admonition-abstract  { --adm-bg: rgba(14,165,233,0.10); }
 
 /* ==========================================================================
-   Base admonition styles (all types)
+   Base container (all types except description)
    ========================================================================== */
 
-/* Container */
-admonition[type="info"], .admonition[type="info"], .admonition.info,
-admonition[type="example"], .admonition[type="example"], .admonition.example,
-admonition[type="warning"], .admonition[type="warning"], .admonition.warning,
-admonition[type="danger"], .admonition[type="danger"], .admonition.danger,
-admonition[type="success"], .admonition[type="success"], .admonition.success,
-admonition[type="note"], .admonition[type="note"], .admonition.note,
-admonition[type="tip-green"], .admonition[type="tip-green"], .admonition.tip-green,
-admonition[type="important"], .admonition[type="important"], .admonition.important {
-  background: var(--Layer-2-Fill) !important;
-  border: 1px solid var(--adm-border-color) !important;
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) {
+  background: var(--adm-bg, var(--Layer-2-Fill)) !important;
+  border: 2px solid var(--Layer-2-Outline) !important;
+  border-left: 4px solid var(--adm-color, #6b7280) !important;
   border-radius: 0 !important;
-  padding: 12px var(--Spacing-lg) 12px var(--Spacing-lg) !important;
-  margin: var(--Spacing-lg) 0 !important;
+  padding: var(--Spacing-md) var(--Spacing-lg) !important;
+  margin: var(--Spacing-sm) 0 var(--Spacing-sm) 0 !important;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-  min-height: 48px;
+  overflow: visible;
+  box-shadow: none !important;
+  color: var(--Text-TextColors-Primary) !important;
 }
 
-/* Left accent bar */
-admonition[type="info"]::before, .admonition[type="info"]::before, .admonition.info::before,
-admonition[type="example"]::before, .admonition[type="example"]::before, .admonition.example::before,
-admonition[type="warning"]::before, .admonition[type="warning"]::before, .admonition.warning::before,
-admonition[type="danger"]::before, .admonition[type="danger"]::before, .admonition.danger::before,
-admonition[type="success"]::before, .admonition[type="success"]::before, .admonition.success::before,
-admonition[type="note"]::before, .admonition[type="note"]::before, .admonition.note::before,
-admonition[type="tip-green"]::before, .admonition[type="tip-green"]::before, .admonition.tip-green::before,
-admonition[type="important"]::before, .admonition[type="important"]::before, .admonition.important::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--adm-color);
-  border-radius: 0;
-}
-
-/* Icon circle */
-admonition[type="info"]::after, .admonition[type="info"]::after, .admonition.info::after,
-admonition[type="example"]::after, .admonition[type="example"]::after, .admonition.example::after,
-admonition[type="warning"]::after, .admonition[type="warning"]::after, .admonition.warning::after,
-admonition[type="danger"]::after, .admonition[type="danger"]::after, .admonition.danger::after,
-admonition[type="success"]::after, .admonition[type="success"]::after, .admonition.success::after,
-admonition[type="note"]::after, .admonition[type="note"]::after, .admonition.note::after,
-admonition[type="tip-green"]::after, .admonition[type="tip-green"]::after, .admonition.tip-green::after,
-admonition[type="important"]::after, .admonition[type="important"]::after, .admonition.important::after {
-  content: var(--adm-icon);
+/* Icon badge centered on the left border */
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity)::after {
+  content: var(--adm-icon, '•');
   position: absolute;
   top: 50%;
-  left: -10.5px;
+  left: -14px;
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
-  background: var(--adm-color);
+  background: var(--adm-color, #6b7280);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  line-height: 24px;
+  text-align: center;
   color: white;
-  font-size: 14px;
-  font-weight: var(--Typography-FontWeight-Bold);
+  font-size: 12px;
+  font-weight: 700;
   font-family: var(--Text-FontFamily-Body);
   z-index: 1;
 }
 
-/* Content area (shared base) */
-admonition[type="info"] .admonition-content, .admonition[type="info"] .admonition-content, .admonition.info .admonition-content,
-admonition[type="example"] .admonition-content, .admonition[type="example"] .admonition-content, .admonition.example .admonition-content,
-admonition[type="warning"] .admonition-content, .admonition[type="warning"] .admonition-content, .admonition.warning .admonition-content,
-admonition[type="danger"] .admonition-content, .admonition[type="danger"] .admonition-content, .admonition.danger .admonition-content,
-admonition[type="success"] .admonition-content, .admonition[type="success"] .admonition-content, .admonition.success .admonition-content,
-admonition[type="note"] .admonition-content, .admonition[type="note"] .admonition-content, .admonition.note .admonition-content,
-admonition[type="tip-green"] .admonition-content, .admonition[type="tip-green"] .admonition-content, .admonition.tip-green .admonition-content,
-admonition[type="important"] .admonition-content, .admonition[type="important"] .admonition-content, .admonition.important .admonition-content {
-  flex: 1;
-  color: var(--Text-TextColors-Primary) !important;
-  line-height: var(--Typography-LineHeight-md);
-  font-size: var(--Typography-FontSize-md);
-  padding-left: 40px;
-  margin: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+/* ==========================================================================
+   Heading
+   ========================================================================== */
+
+/* Hide the heading entirely (type is conveyed by the left-border icon) */
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionHeading"] {
+  display: none !important;
 }
 
-/* Paragraph margin resets */
-admonition[type="info"] .admonition-content p, .admonition[type="info"] .admonition-content p, .admonition.info .admonition-content p,
-admonition[type="example"] .admonition-content p, .admonition[type="example"] .admonition-content p, .admonition.example .admonition-content p,
-admonition[type="warning"] .admonition-content p, .admonition[type="warning"] .admonition-content p, .admonition.warning .admonition-content p,
-admonition[type="danger"] .admonition-content p, .admonition[type="danger"] .admonition-content p, .admonition.danger .admonition-content p,
-admonition[type="success"] .admonition-content p, .admonition[type="success"] .admonition-content p, .admonition.success .admonition-content p,
-admonition[type="note"] .admonition-content p, .admonition[type="note"] .admonition-content p, .admonition.note .admonition-content p,
-admonition[type="tip-green"] .admonition-content p, .admonition[type="tip-green"] .admonition-content p, .admonition.tip-green .admonition-content p,
-admonition[type="important"] .admonition-content p, .admonition[type="important"] .admonition-content p, .admonition.important .admonition-content p {
-  margin: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  margin-block-start: 0 !important;
-  margin-block-end: 0 !important;
-  margin-inline-start: 0 !important;
-  margin-inline-end: 0 !important;
+/* ==========================================================================
+   Content
+   ========================================================================== */
+
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] {
   color: var(--Text-TextColors-Secondary) !important;
-  font-size: var(--Typography-FontSize-md) !important;
-  line-height: var(--Typography-LineHeight-md) !important;
-}
-
-/* Override inline margin-bottom styles */
-admonition[type="info"] p[style], .admonition[type="info"] p[style], .admonition.info p[style],
-admonition[type="example"] p[style], .admonition[type="example"] p[style], .admonition.example p[style],
-admonition[type="warning"] p[style], .admonition[type="warning"] p[style], .admonition.warning p[style],
-admonition[type="danger"] p[style], .admonition[type="danger"] p[style], .admonition.danger p[style],
-admonition[type="success"] p[style], .admonition[type="success"] p[style], .admonition.success p[style],
-admonition[type="note"] p[style], .admonition[type="note"] p[style], .admonition.note p[style],
-admonition[type="tip-green"] p[style], .admonition[type="tip-green"] p[style], .admonition.tip-green p[style],
-admonition[type="important"] p[style], .admonition[type="important"] p[style], .admonition.important p[style] {
-  margin-bottom: 0 !important;
-}
-
-/* ==========================================================================
-   Display mode: "block" types (info, example, warning, important)
-   ========================================================================== */
-
-admonition[type="info"], .admonition[type="info"], .admonition.info,
-admonition[type="example"], .admonition[type="example"], .admonition.example,
-admonition[type="warning"], .admonition[type="warning"], .admonition.warning,
-admonition[type="important"], .admonition[type="important"], .admonition.important {
-  display: block !important;
-}
-
-admonition[type="info"] .admonition-content, .admonition[type="info"] .admonition-content, .admonition.info .admonition-content,
-admonition[type="example"] .admonition-content, .admonition[type="example"] .admonition-content, .admonition.example .admonition-content,
-admonition[type="warning"] .admonition-content, .admonition[type="warning"] .admonition-content, .admonition.warning .admonition-content,
-admonition[type="important"] .admonition-content, .admonition[type="important"] .admonition-content, .admonition.important .admonition-content {
-  display: block;
-}
-
-/* Direct child paragraphs for block types */
-admonition[type="info"] > p, .admonition[type="info"] > p, .admonition.info > p,
-admonition[type="example"] > p, .admonition[type="example"] > p, .admonition.example > p,
-admonition[type="warning"] > p, .admonition[type="warning"] > p, .admonition.warning > p {
-  margin: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  margin-inline-start: 0 !important;
-  margin-inline-end: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0.5em !important;
-  margin-block-start: 0 !important;
-  margin-block-end: 0.5em !important;
-}
-
-admonition[type="info"] > p:first-child, .admonition[type="info"] > p:first-child, .admonition.info > p:first-child,
-admonition[type="example"] > p:first-child, .admonition[type="example"] > p:first-child, .admonition.example > p:first-child,
-admonition[type="warning"] > p:first-child, .admonition[type="warning"] > p:first-child, .admonition.warning > p:first-child {
-  margin-top: 0 !important;
-  margin-block-start: 0 !important;
-}
-
-admonition[type="info"] > p:last-child, .admonition[type="info"] > p:last-child, .admonition.info > p:last-child,
-admonition[type="example"] > p:last-child, .admonition[type="example"] > p:last-child, .admonition.example > p:last-child,
-admonition[type="warning"] > p:last-child, .admonition[type="warning"] > p:last-child, .admonition.warning > p:last-child {
-  margin-bottom: 0 !important;
-  margin-block-end: 0 !important;
-}
-
-/* Direct child paragraphs for simple block types (danger, success, note, tip-green, important) */
-admonition[type="danger"] > p, .admonition[type="danger"] > p, .admonition.danger > p,
-admonition[type="success"] > p, .admonition[type="success"] > p, .admonition.success > p,
-admonition[type="note"] > p, .admonition[type="note"] > p, .admonition.note > p,
-admonition[type="tip-green"] > p, .admonition[type="tip-green"] > p, .admonition.tip-green > p,
-admonition[type="important"] > p, .admonition[type="important"] > p, .admonition.important > p {
-  margin: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  margin-block-start: 0 !important;
-  margin-block-end: 0 !important;
-  margin-inline-start: 0 !important;
-  margin-inline-end: 0 !important;
-}
-
-/* ==========================================================================
-   Display mode: "flex" types (danger, success, note, tip-green)
-   ========================================================================== */
-
-admonition[type="danger"], .admonition[type="danger"], .admonition.danger,
-admonition[type="success"], .admonition[type="success"], .admonition.success,
-admonition[type="note"], .admonition[type="note"], .admonition.note,
-admonition[type="tip-green"], .admonition[type="tip-green"], .admonition.tip-green {
-  display: flex !important;
-  align-items: center;
-  gap: 0 !important;
-}
-
-admonition[type="danger"] .admonition-content, .admonition[type="danger"] .admonition-content, .admonition.danger .admonition-content,
-admonition[type="success"] .admonition-content, .admonition[type="success"] .admonition-content, .admonition.success .admonition-content,
-admonition[type="note"] .admonition-content, .admonition[type="note"] .admonition-content, .admonition.note .admonition-content,
-admonition[type="tip-green"] .admonition-content, .admonition[type="tip-green"] .admonition-content, .admonition.tip-green .admonition-content {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-/* ==========================================================================
-   "Full block" extras: icon, title, content links (info, example, warning)
-   ========================================================================== */
-
-/* Admonition icon */
-admonition[type="info"] .admonition-icon, .admonition[type="info"] .admonition-icon, .admonition.info .admonition-icon,
-admonition[type="example"] .admonition-icon, .admonition[type="example"] .admonition-icon, .admonition.example .admonition-icon,
-admonition[type="warning"] .admonition-icon, .admonition[type="warning"] .admonition-icon, .admonition.warning .admonition-icon {
-  position: absolute;
-  top: 50%;
-  left: 8px;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  background: var(--adm-color) !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  color: white !important;
-  font-size: 12px;
-  font-weight: var(--Typography-FontWeight-Bold);
-  border: none !important;
-  z-index: 1;
-}
-
-admonition[type="info"] .admonition-icon::before, .admonition[type="info"] .admonition-icon::before, .admonition.info .admonition-icon::before,
-admonition[type="example"] .admonition-icon::before, .admonition[type="example"] .admonition-icon::before, .admonition.example .admonition-icon::before,
-admonition[type="warning"] .admonition-icon::before, .admonition[type="warning"] .admonition-icon::before, .admonition.warning .admonition-icon::before {
-  content: var(--adm-icon) !important;
-  font-family: var(--Text-FontFamily-Body) !important;
-  font-style: normal !important;
-  font-weight: var(--Typography-FontWeight-Bold) !important;
-  background: none !important;
-  mask: none !important;
-  -webkit-mask: none !important;
-}
-
-/* Admonition title */
-admonition[type="info"] .admonition-title, .admonition[type="info"] .admonition-title, .admonition.info .admonition-title,
-admonition[type="example"] .admonition-title, .admonition[type="example"] .admonition-title, .admonition.example .admonition-title,
-admonition[type="warning"] .admonition-title, .admonition[type="warning"] .admonition-title, .admonition.warning .admonition-title {
-  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
-  color: var(--Text-TextColors-Primary) !important;
-  margin: 0 0 var(--Spacing-xs) 0 !important;
-  font-size: var(--Typography-FontSize-md) !important;
-  line-height: var(--Typography-LineHeight-tight) !important;
-  background: none !important;
-  border: none !important;
+  font-size: var(--Typography-FontSize-md);
+  line-height: var(--Typography-LineHeight-md);
   padding: 0 !important;
 }
 
-/* Override specific inline margin-bottom selectors (higher specificity) */
-admonition[type="info"] .admonition-content p[style*="margin-bottom"], .admonition[type="info"] .admonition-content p[style*="margin-bottom"], .admonition.info .admonition-content p[style*="margin-bottom"],
-admonition[type="example"] .admonition-content p[style*="margin-bottom"], .admonition[type="example"] .admonition-content p[style*="margin-bottom"], .admonition.example .admonition-content p[style*="margin-bottom"],
-admonition[type="warning"] .admonition-content p[style*="margin-bottom"], .admonition[type="warning"] .admonition-content p[style*="margin-bottom"], .admonition.warning .admonition-content p[style*="margin-bottom"] {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] p {
+  margin: 0 0 var(--Spacing-sm) 0 !important;
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] p:last-child {
   margin-bottom: 0 !important;
 }
 
-admonition[type="info"] .admonition-content p[style*="margin-bottom: 24px"], .admonition[type="info"] .admonition-content p[style*="margin-bottom: 24px"], .admonition.info .admonition-content p[style*="margin-bottom: 24px"],
-admonition[type="example"] .admonition-content p[style*="margin-bottom: 24px"], .admonition[type="example"] .admonition-content p[style*="margin-bottom: 24px"], .admonition.example .admonition-content p[style*="margin-bottom: 24px"],
-admonition[type="warning"] .admonition-content p[style*="margin-bottom: 24px"], .admonition[type="warning"] .admonition-content p[style*="margin-bottom: 24px"], .admonition.warning .admonition-content p[style*="margin-bottom: 24px"] {
-  margin-bottom: 0 !important;
-}
-
-/* Paragraph spacing for multi-paragraph admonitions */
-admonition[type="info"] .admonition-content p:not(:last-child), .admonition.info .admonition-content p:not(:last-child),
-admonition[type="example"] .admonition-content p:not(:last-child), .admonition.example .admonition-content p:not(:last-child),
-admonition[type="warning"] .admonition-content p:not(:last-child), .admonition.warning .admonition-content p:not(:last-child),
-admonition[type="important"] .admonition-content p:not(:last-child), .admonition.important .admonition-content p:not(:last-child) {
-  margin-bottom: var(--Spacing-sm) !important;
-}
-
-/* Content bold */
-admonition[type="info"] .admonition-content strong, .admonition.info .admonition-content strong,
-admonition[type="example"] .admonition-content strong, .admonition.example .admonition-content strong,
-admonition[type="warning"] .admonition-content strong, .admonition.warning .admonition-content strong {
-  color: var(--Text-TextColors-Primary) !important;
-  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
-}
-
-/* Content links */
-admonition[type="info"] .admonition-content a, .admonition.info .admonition-content a,
-admonition[type="example"] .admonition-content a, .admonition.example .admonition-content a,
-admonition[type="warning"] .admonition-content a, .admonition.warning .admonition-content a {
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] a {
   color: var(--Text-TextColors-Highlight) !important;
   text-decoration: none !important;
-  font-weight: var(--Typography-FontWeight-Medium) !important;
-  transition: color 0.2s ease;
 }
 
-admonition[type="info"] .admonition-content a:hover, .admonition.info .admonition-content a:hover,
-admonition[type="example"] .admonition-content a:hover, .admonition.example .admonition-content a:hover,
-admonition[type="warning"] .admonition-content a:hover, .admonition.warning .admonition-content a:hover {
-  color: var(--adm-hover-color) !important;
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] a:hover {
   text-decoration: underline !important;
 }
 
-/* ==========================================================================
-   Important: paragraph spacing extras
-   ========================================================================== */
-
-admonition[type="important"] .admonition-content p + p,
-.admonition[type="important"] .admonition-content p + p,
-.admonition.important .admonition-content p + p {
-  margin-top: var(--Spacing-sm) !important;
-}
-
-/* ==========================================================================
-   Warning: hide empty content
-   ========================================================================== */
-
-admonition[type="warning"] br, .admonition[type="warning"] br, .admonition.warning br {
-  display: none;
-}
-
-admonition[type="warning"] .admonition-content p:empty,
-.admonition[type="warning"] .admonition-content p:empty,
-.admonition.warning .admonition-content p:empty {
-  display: none;
-}
-
-admonition[type="warning"] .admonition-content p:blank,
-.admonition[type="warning"] .admonition-content p:blank,
-.admonition.warning .admonition-content p:blank {
-  display: none;
-}
-
-admonition[type="warning"] .admonition-content p {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+.theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) > [class^="admonitionContent"] strong {
+  color: var(--Text-TextColors-Primary) !important;
 }
 
 /* ==========================================================================
    Dark mode
    ========================================================================== */
 
-/* Container dark mode (all types) */
-[data-theme='dark'] admonition[type="info"], [data-theme='dark'] .admonition[type="info"], [data-theme='dark'] .admonition.info,
-[data-theme='dark'] admonition[type="example"], [data-theme='dark'] .admonition[type="example"], [data-theme='dark'] .admonition.example,
-[data-theme='dark'] admonition[type="warning"], [data-theme='dark'] .admonition[type="warning"], [data-theme='dark'] .admonition.warning,
-[data-theme='dark'] admonition[type="tip-green"], [data-theme='dark'] .admonition[type="tip-green"], [data-theme='dark'] .admonition.tip-green,
-[data-theme='dark'] admonition[type="important"], [data-theme='dark'] .admonition[type="important"], [data-theme='dark'] .admonition.important {
-  background: var(--Layer-2-Fill) !important;
-  border: 1px solid var(--adm-dark-border-color) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+[data-theme='dark'] .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) {
+  background: var(--adm-bg, var(--Layer-2-Fill)) !important;
+  background-color: var(--adm-bg, var(--Layer-2-Fill)) !important;
+  border-color: var(--Layer-2-Outline) !important;
+  border-left-color: var(--adm-color, #6b7280) !important;
 }
 
-/* Left bar dark mode */
-[data-theme='dark'] admonition[type="info"]::before, [data-theme='dark'] .admonition[type="info"]::before, [data-theme='dark'] .admonition.info::before,
-[data-theme='dark'] admonition[type="example"]::before, [data-theme='dark'] .admonition[type="example"]::before, [data-theme='dark'] .admonition.example::before,
-[data-theme='dark'] admonition[type="warning"]::before, [data-theme='dark'] .admonition[type="warning"]::before, [data-theme='dark'] .admonition.warning::before,
-[data-theme='dark'] admonition[type="tip-green"]::before, [data-theme='dark'] .admonition[type="tip-green"]::before, [data-theme='dark'] .admonition.tip-green::before,
-[data-theme='dark'] admonition[type="important"]::before, [data-theme='dark'] .admonition[type="important"]::before, [data-theme='dark'] .admonition.important::before {
-  background: var(--adm-color);
+/* Override Infima's dark alert backgrounds — these variables cascade into
+   background-color: var(--ifm-alert-background-color) on .alert */
+[data-theme='dark'] .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity).alert {
+  --ifm-alert-background-color: transparent;
+  --ifm-alert-background-color-highlight: rgba(255,255,255,0.08);
+  --ifm-code-background: rgba(255,255,255,0.08);
 }
 
-/* Icon dark mode */
-[data-theme='dark'] admonition[type="info"]::after, [data-theme='dark'] .admonition[type="info"]::after, [data-theme='dark'] .admonition.info::after,
-[data-theme='dark'] admonition[type="example"]::after, [data-theme='dark'] .admonition[type="example"]::after, [data-theme='dark'] .admonition.example::after,
-[data-theme='dark'] admonition[type="warning"]::after, [data-theme='dark'] .admonition[type="warning"]::after, [data-theme='dark'] .admonition.warning::after,
-[data-theme='dark'] admonition[type="tip-green"]::after, [data-theme='dark'] .admonition[type="tip-green"]::after, [data-theme='dark'] .admonition.tip-green::after,
-[data-theme='dark'] admonition[type="important"]::after, [data-theme='dark'] .admonition[type="important"]::after, [data-theme='dark'] .admonition.important::after {
-  background: var(--adm-color);
-  color: white;
-}
-
-/* Content dark mode (types with dark overrides) */
-[data-theme='dark'] admonition[type="tip-green"] .admonition-content, [data-theme='dark'] .admonition[type="tip-green"] .admonition-content, [data-theme='dark'] .admonition.tip-green .admonition-content,
-[data-theme='dark'] admonition[type="important"] .admonition-content, [data-theme='dark'] .admonition[type="important"] .admonition-content, [data-theme='dark'] .admonition.important .admonition-content {
-  color: var(--Text-TextColors-Primary) !important;
-}
-
-[data-theme='dark'] admonition[type="tip-green"] .admonition-content p, [data-theme='dark'] .admonition[type="tip-green"] .admonition-content p, [data-theme='dark'] .admonition.tip-green .admonition-content p,
-[data-theme='dark'] admonition[type="important"] .admonition-content p, [data-theme='dark'] .admonition[type="important"] .admonition-content p, [data-theme='dark'] .admonition.important .admonition-content p {
-  color: var(--Text-TextColors-Secondary) !important;
-}
-
-/* "Full" type dark mode extras (info, example, warning) */
-[data-theme='dark'] .admonition[type="info"] .admonition-icon, [data-theme='dark'] .admonition.info .admonition-icon,
-[data-theme='dark'] .admonition[type="example"] .admonition-icon, [data-theme='dark'] .admonition.example .admonition-icon,
-[data-theme='dark'] .admonition[type="warning"] .admonition-icon, [data-theme='dark'] .admonition.warning .admonition-icon {
-  background: var(--adm-color) !important;
-  color: white !important;
-}
-
-[data-theme='dark'] .admonition[type="info"] .admonition-title, [data-theme='dark'] .admonition.info .admonition-title,
-[data-theme='dark'] .admonition[type="example"] .admonition-title, [data-theme='dark'] .admonition.example .admonition-title,
-[data-theme='dark'] .admonition[type="warning"] .admonition-title, [data-theme='dark'] .admonition.warning .admonition-title {
-  color: var(--Text-TextColors-Primary) !important;
-}
-
-[data-theme='dark'] .admonition[type="info"] .admonition-content, [data-theme='dark'] .admonition.info .admonition-content,
-[data-theme='dark'] .admonition[type="example"] .admonition-content, [data-theme='dark'] .admonition.example .admonition-content,
-[data-theme='dark'] admonition[type="warning"] .admonition-content, [data-theme='dark'] .admonition[type="warning"] .admonition-content, [data-theme='dark'] .admonition.warning .admonition-content {
-  color: var(--Text-TextColors-Primary) !important;
-}
-
-[data-theme='dark'] .admonition[type="info"] .admonition-content p, [data-theme='dark'] .admonition.info .admonition-content p,
-[data-theme='dark'] .admonition[type="example"] .admonition-content p, [data-theme='dark'] .admonition.example .admonition-content p,
-[data-theme='dark'] admonition[type="warning"] .admonition-content p, [data-theme='dark'] .admonition[type="warning"] .admonition-content p, [data-theme='dark'] .admonition.warning .admonition-content p {
-  color: var(--Text-TextColors-Secondary) !important;
-}
-
-[data-theme='dark'] .admonition[type="info"] .admonition-content strong, [data-theme='dark'] .admonition.info .admonition-content strong,
-[data-theme='dark'] .admonition[type="example"] .admonition-content strong, [data-theme='dark'] .admonition.example .admonition-content strong,
-[data-theme='dark'] .admonition[type="warning"] .admonition-content strong, [data-theme='dark'] .admonition.warning .admonition-content strong {
-  color: var(--Text-TextColors-Primary) !important;
-}
-
-[data-theme='dark'] .admonition[type="info"] .admonition-content a, [data-theme='dark'] .admonition.info .admonition-content a,
-[data-theme='dark'] .admonition[type="example"] .admonition-content a, [data-theme='dark'] .admonition.example .admonition-content a,
-[data-theme='dark'] .admonition[type="warning"] .admonition-content a, [data-theme='dark'] .admonition.warning .admonition-content a {
-  color: var(--Text-TextColors-Highlight) !important;
-}
-
-[data-theme='dark'] .admonition[type="info"] .admonition-content a:hover, [data-theme='dark'] .admonition.info .admonition-content a:hover,
-[data-theme='dark'] .admonition[type="example"] .admonition-content a:hover, [data-theme='dark'] .admonition.example .admonition-content a:hover,
-[data-theme='dark'] .admonition[type="warning"] .admonition-content a:hover, [data-theme='dark'] .admonition.warning .admonition-content a:hover {
-  color: var(--adm-dark-hover-color) !important;
-}
-
-/* Dark mode paragraph spacing for warning + important */
-[data-theme='dark'] admonition[type="warning"] .admonition-content p:not(:last-child),
-[data-theme='dark'] .admonition[type="warning"] .admonition-content p:not(:last-child),
-[data-theme='dark'] .admonition.warning .admonition-content p:not(:last-child),
-[data-theme='dark'] admonition[type="important"] .admonition-content p:not(:last-child),
-[data-theme='dark'] .admonition[type="important"] .admonition-content p:not(:last-child),
-[data-theme='dark'] .admonition.important .admonition-content p:not(:last-child) {
-  margin-bottom: var(--Spacing-sm) !important;
-}
-
-[data-theme='dark'] admonition[type="important"] .admonition-content p + p,
-[data-theme='dark'] .admonition[type="important"] .admonition-content p + p,
-[data-theme='dark'] .admonition.important .admonition-content p + p {
-  margin-top: var(--Spacing-sm) !important;
+/* Remove dark background from inline code inside admonitions in dark mode */
+[data-theme='dark'] .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) code {
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* ==========================================================================
@@ -542,50 +169,240 @@ admonition[type="warning"] .admonition-content p {
    ========================================================================== */
 
 @media (max-width: 768px) {
-  /* All types: mobile padding and margin */
-  admonition[type="info"], .admonition[type="info"], .admonition.info,
-  admonition[type="example"], .admonition[type="example"], .admonition.example,
-  admonition[type="warning"], .admonition[type="warning"], .admonition.warning,
-  admonition[type="danger"], .admonition[type="danger"], .admonition.danger,
-  admonition[type="success"], .admonition[type="success"], .admonition.success,
-  admonition[type="note"], .admonition[type="note"], .admonition.note,
-  admonition[type="tip-green"], .admonition[type="tip-green"], .admonition.tip-green,
-  admonition[type="important"], .admonition[type="important"], .admonition.important {
-    padding: var(--Spacing-md) var(--Spacing-md) var(--Spacing-md) calc(var(--Spacing-md) + 20px) !important;
-    margin: var(--Spacing-md) 0 !important;
-    gap: var(--Spacing-sm) !important;
+  .theme-admonition:not(.theme-admonition-description):not(.theme-admonition-vyper):not(.theme-admonition-solidity) {
+    padding: var(--Spacing-sm) var(--Spacing-md) !important;
+    margin: var(--Spacing-sm) 0 !important;
   }
+}
 
-  /* All types: mobile content padding */
-  admonition[type="info"] .admonition-content, .admonition[type="info"] .admonition-content, .admonition.info .admonition-content,
-  admonition[type="example"] .admonition-content, .admonition[type="example"] .admonition-content, .admonition.example .admonition-content,
-  admonition[type="warning"] .admonition-content, .admonition[type="warning"] .admonition-content, .admonition.warning .admonition-content,
-  admonition[type="danger"] .admonition-content, .admonition[type="danger"] .admonition-content, .admonition.danger .admonition-content,
-  admonition[type="success"] .admonition-content, .admonition[type="success"] .admonition-content, .admonition.success .admonition-content,
-  admonition[type="note"] .admonition-content, .admonition[type="note"] .admonition-content, .admonition.note .admonition-content,
-  admonition[type="tip-green"] .admonition-content, .admonition[type="tip-green"] .admonition-content, .admonition.tip-green .admonition-content,
-  admonition[type="important"] .admonition-content, .admonition[type="important"] .admonition-content, .admonition.important .admonition-content {
-    padding-left: 60px !important;
-  }
+/* ==========================================================================
+   Description admonition (developer docs: function/method signature blocks)
+   Rendered class: .theme-admonition-description
+   This type has special styling — do NOT merge with the base admonition rules.
+   ========================================================================== */
 
-  /* "Full block" types: mobile icon and title sizing */
-  .admonition.info .admonition-icon,
-  .admonition.example .admonition-icon,
-  .admonition.warning .admonition-icon {
-    width: 18px;
-    height: 18px;
-    font-size: 11px;
-  }
+.theme-admonition-description {
+  background: transparent !important;
+  border: 1.5px solid var(--Color-Neutral-400) !important;
+  border-top: 3px solid var(--Color-Neutral-400) !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: var(--Spacing-xl) 0 !important;
+  position: relative;
+  box-shadow: none !important;
+  display: block !important;
+  overflow: hidden;
+}
 
-  .admonition.info .admonition-title,
-  .admonition.example .admonition-title,
-  .admonition.warning .admonition-title {
-    font-size: var(--Typography-FontSize-sm);
-  }
+/* Title bar: subtle tinted background with <> icon */
+.theme-admonition-description > [class^="admonitionHeading"] {
+  display: flex !important;
+  align-items: center !important;
+  background: var(--Color-Neutral-150) !important;
+  border-bottom: 1px solid var(--Color-Neutral-300) !important;
+  padding: var(--Spacing-md) var(--Spacing-lg) !important;
+  margin: 0 !important;
+  font-family: var(--Text-FontFamily-Mono) !important;
+  font-size: var(--Typography-FontSize-sm) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  word-break: break-all;
+}
 
-  .admonition.info .admonition-content p,
-  .admonition.example .admonition-content p,
-  .admonition.warning .admonition-content p {
-    font-size: var(--Typography-FontSize-sm);
-  }
+/* Replace the info SVG icon with a <> code badge */
+.theme-admonition-description > [class^="admonitionHeading"] [class^="admonitionIcon"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  background: var(--Color-Neutral-400) !important;
+  color: white !important;
+  border-radius: 4px !important;
+  margin-right: var(--Spacing-sm) !important;
+  flex-shrink: 0 !important;
+}
+
+.theme-admonition-description > [class^="admonitionHeading"] [class^="admonitionIcon"] svg {
+  display: none !important;
+}
+
+.theme-admonition-description > [class^="admonitionHeading"] [class^="admonitionIcon"]::after {
+  content: '<>' !important;
+  font-family: var(--Text-FontFamily-Mono) !important;
+  font-size: 11px !important;
+  font-weight: var(--Typography-FontWeight-Bold) !important;
+  line-height: 1 !important;
+}
+
+/* Content area below the title bar */
+.theme-admonition-description > [class^="admonitionContent"] {
+  padding: var(--Spacing-sm) var(--Spacing-lg) var(--Spacing-lg) var(--Spacing-lg) !important;
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Dark mode for description */
+[data-theme='dark'] .theme-admonition-description {
+  border: 1.5px solid var(--Color-Neutral-400) !important;
+  border-top: 3px solid var(--Color-Neutral-400) !important;
+}
+
+[data-theme='dark'] .theme-admonition-description > [class^="admonitionHeading"] {
+  background: var(--Color-Neutral-75) !important;
+  border-bottom-color: var(--Color-Neutral-300) !important;
+}
+
+/* ==========================================================================
+   Vyper admonition (developer docs: contract info header blocks)
+   Rendered class: .theme-admonition-vyper
+   Modeled on the description type but with Vyper purple branding.
+   ========================================================================== */
+
+.theme-admonition-vyper {
+  background: transparent !important;
+  border: 1.5px solid rgba(159,76,242,0.30) !important;
+  border-top: 3px solid #9F4CF2 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: var(--Spacing-xl) 0 !important;
+  position: relative;
+  box-shadow: none !important;
+  display: block !important;
+  overflow: hidden;
+}
+
+/* Title bar */
+.theme-admonition-vyper > [class^="admonitionHeading"] {
+  display: flex !important;
+  align-items: center !important;
+  background: rgba(159,76,242,0.08) !important;
+  border-bottom: 1px solid rgba(159,76,242,0.20) !important;
+  padding: var(--Spacing-md) var(--Spacing-lg) !important;
+  margin: 0 !important;
+  font-family: var(--Text-FontFamily-Mono) !important;
+  font-size: var(--Typography-FontSize-sm) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  word-break: break-all;
+}
+
+/* Replace the default SVG icon with the Vyper logo */
+.theme-admonition-vyper > [class^="admonitionHeading"] [class^="admonitionIcon"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  background: transparent !important;
+  border-radius: 4px !important;
+  margin-right: var(--Spacing-sm) !important;
+  flex-shrink: 0 !important;
+}
+
+.theme-admonition-vyper > [class^="admonitionHeading"] [class^="admonitionIcon"] svg {
+  display: none !important;
+}
+
+.theme-admonition-vyper > [class^="admonitionHeading"] [class^="admonitionIcon"]::after {
+  content: '' !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  background: url('/img/logos/vyper.svg') no-repeat center / contain !important;
+}
+
+/* Content area below the title bar */
+.theme-admonition-vyper > [class^="admonitionContent"] {
+  padding: var(--Spacing-sm) var(--Spacing-lg) var(--Spacing-lg) var(--Spacing-lg) !important;
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Dark mode for vyper */
+[data-theme='dark'] .theme-admonition-vyper {
+  border: 1.5px solid rgba(159,76,242,0.30) !important;
+  border-top: 3px solid #9F4CF2 !important;
+}
+
+[data-theme='dark'] .theme-admonition-vyper > [class^="admonitionHeading"] {
+  background: rgba(159,76,242,0.12) !important;
+  border-bottom-color: rgba(159,76,242,0.25) !important;
+}
+
+/* ==========================================================================
+   Solidity admonition (developer docs: Solidity contract info blocks)
+   Rendered class: .theme-admonition-solidity
+   Modeled on the vyper type but with Solidity dark-grey branding.
+   ========================================================================== */
+
+.theme-admonition-solidity {
+  background: transparent !important;
+  border: 1.5px solid rgba(43,94,167,0.30) !important;
+  border-top: 3px solid #2b5ea7 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: var(--Spacing-xl) 0 !important;
+  position: relative;
+  box-shadow: none !important;
+  display: block !important;
+  overflow: hidden;
+}
+
+/* Title bar */
+.theme-admonition-solidity > [class^="admonitionHeading"] {
+  display: flex !important;
+  align-items: center !important;
+  background: rgba(43,94,167,0.08) !important;
+  border-bottom: 1px solid rgba(43,94,167,0.20) !important;
+  padding: var(--Spacing-md) var(--Spacing-lg) !important;
+  margin: 0 !important;
+  font-family: var(--Text-FontFamily-Mono) !important;
+  font-size: var(--Typography-FontSize-sm) !important;
+  font-weight: var(--Typography-FontWeight-Semi-Bold) !important;
+  color: var(--Text-TextColors-Primary) !important;
+  word-break: break-all;
+}
+
+/* Replace the default SVG icon with the Solidity logo */
+.theme-admonition-solidity > [class^="admonitionHeading"] [class^="admonitionIcon"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  background: transparent !important;
+  border-radius: 4px !important;
+  margin-right: var(--Spacing-sm) !important;
+  flex-shrink: 0 !important;
+}
+
+.theme-admonition-solidity > [class^="admonitionHeading"] [class^="admonitionIcon"] svg {
+  display: none !important;
+}
+
+.theme-admonition-solidity > [class^="admonitionHeading"] [class^="admonitionIcon"]::after {
+  content: '' !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  background: url('/img/logos/solidity.svg') no-repeat center / contain !important;
+}
+
+/* Content area below the title bar */
+.theme-admonition-solidity > [class^="admonitionContent"] {
+  padding: var(--Spacing-sm) var(--Spacing-lg) var(--Spacing-lg) var(--Spacing-lg) !important;
+  color: var(--Text-TextColors-Secondary) !important;
+}
+
+/* Dark mode for solidity */
+[data-theme='dark'] .theme-admonition-solidity {
+  border: 1.5px solid rgba(43,94,167,0.30) !important;
+  border-top: 3px solid #5b8fd9 !important;
+}
+
+[data-theme='dark'] .theme-admonition-solidity > [class^="admonitionHeading"] {
+  background: rgba(43,94,167,0.12) !important;
+  border-bottom-color: rgba(43,94,167,0.25) !important;
 }

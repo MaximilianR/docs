@@ -1,0 +1,74 @@
+.container {
+  border: 1px solid var(--Layer-2-Outline);
+  border-radius: 0;
+  margin: var(--Spacing-md) 0;
+  overflow: hidden;
+}
+
+/* Hide native disclosure triangle */
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--Spacing-sm);
+  width: 100%;
+  padding: 10px var(--Spacing-lg);
+  background: var(--Layer-2-Fill);
+  border: none;
+  cursor: pointer;
+  font-family: var(--Text-FontFamily-Body);
+  font-size: var(--Typography-FontSize-sm);
+  font-weight: var(--Typography-FontWeight-Medium);
+  color: var(--Text-TextColors-Secondary);
+  transition: background 0.15s ease, color 0.15s ease;
+  list-style: none;
+}
+
+.toggle::-webkit-details-marker {
+  display: none;
+}
+
+.toggle::marker {
+  content: none;
+}
+
+.toggle:hover {
+  background: var(--Color-Neutral-150);
+  color: var(--Text-TextColors-Primary);
+}
+
+.icon {
+  font-family: var(--Text-FontFamily-Mono);
+  font-size: var(--Typography-FontSize-sm);
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  color: var(--Text-TextColors-Tertiary);
+  flex-shrink: 0;
+}
+
+.label {
+  flex: 1;
+  text-align: left;
+}
+
+.chevron {
+  font-size: 10px;
+  color: var(--Text-TextColors-Tertiary);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+/* Rotate chevron when open */
+.container[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.content {
+  border-top: 1px solid var(--Layer-2-Outline);
+}
+
+/* Remove extra margin from code blocks inside ContractABI */
+.content pre,
+.content > div > pre {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+}

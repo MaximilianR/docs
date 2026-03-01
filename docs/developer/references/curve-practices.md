@@ -1,12 +1,15 @@
-<h1>Ownership in Curve Contracts</h1>
-
+# Ownership in Curve Contracts
 Smart contracts often have owner-guarded functions which only allow specific addresses to call certain functions. These are typically used for administrative operations like modifying liquidity pool parameters, updating fee receivers, or changing critical contract settings.
 
-!!!info "Ownership Agents"
+:::info[Ownership Agents]
 
-    To make ownership work along with the DAO governance, Curve makes use of `OwnershipAgents` on Ethereum, aswell as on other L1 or L2s to handle governance actions.
 
-    The main `OwnershipAgent` is deployed at [`0x40907540d8a6C65c637785e8f8B742ae6b0b9968`](https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968) on Ethereum. Deployments on other chains can be found [here](../deployments/crosschain.md).
+To make ownership work along with the DAO governance, Curve makes use of `OwnershipAgents` on Ethereum, aswell as on other L1 or L2s to handle governance actions.
+
+The main `OwnershipAgent` is deployed at [`0x40907540d8a6C65c637785e8f8B742ae6b0b9968`](https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968) on Ethereum. Deployments on other chains can be found [here](../deployments.md).
+
+
+:::
 
 Curve strives to remain as decentralized as possible, with most administrative operations controlled by the DAO. However, there are some exceptions where DAO control may not be optimal:
 
@@ -20,46 +23,50 @@ In these specific cases, ownership may be delegated to specialized administrativ
 
 ---
 
-# **Ownership Transfer Patterns**
+## Ownership Transfer Patterns
 
 Curve uses different ownership transfer patterns in its contracts. The most common ones are described below.
 
 ## `commit + accept`
 
-??? quote "Source code"
-
-    The implementation of the commit + accept pattern might vary slightly. Nontheless, the general idea is the same.
-
-    ```python
-    owner: public(address)
-    future_owner: public(address)
-
-    event TransferOwnership:
-        _old_owner: address
-        _new_owner: address
-
-    @external
-    def commit_transfer_ownership(_future_owner: address):
-        """
-        @notice Transfer ownership to `_future_owner`
-        @param _future_owner The account to commit as the future owner
-        """
-        assert msg.sender == self.owner  # dev: only owner
-
-        self.future_owner = _future_owner
+<Dropdown title="Source code">
 
 
-    @external
-    def accept_transfer_ownership():
-        """
-        @notice Accept the transfer of ownership
-        @dev Only the committed future owner can call this function
-        """
-        assert msg.sender == self.future_owner  # dev: only future owner
+The implementation of the commit + accept pattern might vary slightly. Nontheless, the general idea is the same.
 
-        log TransferOwnership(self.owner, msg.sender)
-        self.owner = msg.sender
-    ```
+```vyper
+owner: public(address)
+future_owner: public(address)
+
+event TransferOwnership:
+    _old_owner: address
+    _new_owner: address
+
+@external
+def commit_transfer_ownership(_future_owner: address):
+    """
+    @notice Transfer ownership to `_future_owner`
+    @param _future_owner The account to commit as the future owner
+    """
+    assert msg.sender == self.owner  # dev: only owner
+
+    self.future_owner = _future_owner
+
+
+@external
+def accept_transfer_ownership():
+    """
+    @notice Accept the transfer of ownership
+    @dev Only the committed future owner can call this function
+    """
+    assert msg.sender == self.future_owner  # dev: only future owner
+
+    log TransferOwnership(self.owner, msg.sender)
+    self.owner = msg.sender
+```
+
+
+</Dropdown>
 
 The ownership transfer mechanism implements a secure two-step process that prevents accidental or malicious ownership transfers. At its core, the implementation revolves around two state variables: `owner` and `future_owner`, both public addresses that track the current and prospective contract owners respectively.
 
@@ -69,49 +76,57 @@ Once the transfer is committed, the second phase of the transfer can begin. The 
 
 This two-step process provides several security benefits. First, it prevents ownership transfers due to accidental input of wrong addresses, as the intended recipient must actively accept the role. Second, it ensures that the new owner has control of their address and can actually interact with the contract before the transfer is complete. The process also leaves a clear on-chain trail through the emitted event, making ownership transfers transparent and auditable.
 
-!!!colab "Google Colab Notebook"
-    A simple Google Colab notebook that simulates the commit + accept pattern can be found here: [:simple-googlecolab: Google Colab Notebook](https://colab.research.google.com/drive/10cEFQbHxuXFyzi7CnmL3tdsXaQ4GxaeJ?usp=sharing).
+:::colab[Google Colab Notebook]
+
+A simple Google Colab notebook that simulates the commit + accept pattern can be found here: [ Google Colab Notebook](https://colab.research.google.com/drive/10cEFQbHxuXFyzi7CnmL3tdsXaQ4GxaeJ?usp=sharing).
+
+
+:::
 
 ---
 
 ## `commit + apply`
 
-??? quote "Source code"
-
-    The implementation of the commit + apply pattern might vary slightly. Nontheless, the general idea is the same.
-
-    ```python
-    event CommitOwnership:
-        admin: address
-
-    event ApplyOwnership:
-        admin: address
-
-    admin: public(address)
-    future_admin: public(address)
-
-    @external
-    def commit_transfer_ownership(addr: address):
-        """
-        @notice Transfer ownership of GaugeController to `addr`
-        @param addr Address to have ownership transferred to
-        """
-        assert msg.sender == self.admin  # dev: admin only
-        self.future_admin = addr
-        log CommitOwnership(addr)
+<Dropdown title="Source code">
 
 
-    @external
-    def apply_transfer_ownership():
-        """
-        @notice Apply pending ownership transfer
-        """
-        assert msg.sender == self.admin  # dev: admin only
-        _admin: address = self.future_admin
-        assert _admin != ZERO_ADDRESS  # dev: admin not set
-        self.admin = _admin
-        log ApplyOwnership(_admin)
-    ```
+The implementation of the commit + apply pattern might vary slightly. Nontheless, the general idea is the same.
+
+```vyper
+event CommitOwnership:
+    admin: address
+
+event ApplyOwnership:
+    admin: address
+
+admin: public(address)
+future_admin: public(address)
+
+@external
+def commit_transfer_ownership(addr: address):
+    """
+    @notice Transfer ownership of GaugeController to `addr`
+    @param addr Address to have ownership transferred to
+    """
+    assert msg.sender == self.admin  # dev: admin only
+    self.future_admin = addr
+    log CommitOwnership(addr)
+
+
+@external
+def apply_transfer_ownership():
+    """
+    @notice Apply pending ownership transfer
+    """
+    assert msg.sender == self.admin  # dev: admin only
+    _admin: address = self.future_admin
+    assert _admin != ZERO_ADDRESS  # dev: admin not set
+    self.admin = _admin
+    log ApplyOwnership(_admin)
+```
+
+
+</Dropdown>
 
 This implementation presents another variation of the two-step ownership transfer pattern, commonly used in Curve's contracts, particularly in the GaugeController. Instead of requiring the future owner to accept the transfer, this pattern allows the current admin to both initiate and complete the transfer process.
 
@@ -128,11 +143,70 @@ This implementation differs from the accept pattern in a key aspect: the current
 
 The zero-address check in the apply function serves as an additional safety mechanism, preventing transfers to invalid addresses that could permanently lock the contract's administrative functions.
 
-!!!colab "Google Colab Notebook"
-    A simple Google Colab notebook that simulates the commit + apply pattern can be found here: [:simple-googlecolab: Google Colab Notebook](https://colab.research.google.com/drive/1KV25arJ-P4UrscHOx8wjdCaD9H4a9tHx?usp=sharing).
+:::colab[Google Colab Notebook]
+
+A simple Google Colab notebook that simulates the commit + apply pattern can be found here: [ Google Colab Notebook](https://colab.research.google.com/drive/1KV25arJ-P4UrscHOx8wjdCaD9H4a9tHx?usp=sharing).
+
+
+:::
 
 ---
 
 ## `snekmate`
 
-> *sneks coming soon* 🐍🐍🐍
+[Snekmate](https://github.com/pcaversaccio/snekmate) is a collection of production-grade, secure Vyper smart contract building blocks maintained by [pcaversaccio](https://github.com/pcaversaccio). It provides reusable modules for common patterns including ownership management, token standards (ERC-20, ERC-721, ERC-1155, ERC-4626), and various utility functions.
+
+Snekmate's **authentication modules** offer ready-to-use implementations of the ownership patterns described above:
+
+| Module | Description |
+|---|---|
+| `ownable` | Single-step ownership transfer via `transfer_ownership` |
+| `ownable_2step` | Two-step ownership transfer matching Curve's **commit + accept** pattern |
+| `access_control` | Multi-role-based access control with admin-managed role assignments |
+
+### `ownable_2step`
+
+The `ownable_2step` module implements a two-step ownership transfer mechanism functionally equivalent to Curve's commit + accept pattern. The current owner initiates a transfer with `transfer_ownership`, setting a `pending_owner`. The pending owner must then call `accept_ownership` to finalize the transfer.
+
+<Dropdown title="Example usage">
+
+
+```vyper
+from snekmate.auth import ownable_2step as ow
+
+initializes: ow
+
+@deploy
+def __init__():
+    ow.__init__()
+
+@external
+def protected_function():
+    ow._check_owner()
+    # only the owner can execute this
+    ...
+```
+
+
+</Dropdown>
+
+### Installation
+
+Snekmate can be installed via multiple package managers:
+
+```bash
+# PyPI
+pip install snekmate
+
+# Foundry
+forge install pcaversaccio/snekmate
+
+# npm / yarn / pnpm
+npm install --save-dev snekmate
+```
+
+:::info
+
+For full documentation, module references, and examples, see the [**snekmate GitHub repository**](https://github.com/pcaversaccio/snekmate).
+
+:::

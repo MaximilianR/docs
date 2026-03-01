@@ -1,23 +1,25 @@
-<h1>Pool Factory: Overview</h1>
+# Pool Factory: Overview
 
-The TriCrypto-NG Factory allows the permissionless deployment of two-coin volatile asset pools, as well as gauges. **The liquidity pool and LP token share the same contract.**
 
-Additionally, the Factory contract is the direct admin and fee receiver of all pools. In turn, the Factory is controlled by the CurveDAO. 
+The Tricrypto-NG Factory allows the permissionless deployment of two-coin volatile asset pools, as well as gauges. **The liquidity pool and LP token share the same contract.**Additionally, the Factory contract is the direct admin and fee receiver of all pools. In turn, the Factory is controlled by the CurveDAO. 
 
-!!!deploy "Contract Source & Deployment"
-    Source code for this contract is available on [Github](https://github.com/curvefi/tricrypto-ng/blob/main/contracts/main/CurveTricryptoFactory.vy).  
-    A list of all deployed contracts can be found [here](../../references/deployed-contracts.md#pool-factory).
+:::deploy[Contract Source & Deployment]
 
+Source code for this contract is available on [Github](https://github.com/curvefi/tricrypto-ng/blob/main/contracts/main/CurveTricryptoFactory.vy).  
+A list of all deployed contracts can be found [here](../../deployments.md).
+
+
+:::
 
 ---
 
 
-## **Implementations**
- 
-**The Tricrypto-NG Factory makes use of blueprint contracts to deploy its contracts from the implementations.**
+## Implementations**The Tricrypto-NG Factory makes use of blueprint contracts to deploy its contracts from the implementations.**:::warning
 
-!!!warning
-    **Implementation contracts are upgradable.** They can either be replaced, or additional implementation contracts can be added. Therefore, please always make sure to check the most recent ones.
+**Implementation contracts are upgradable.**They can either be replaced, or additional implementation contracts can be added. Therefore, please always make sure to check the most recent ones.
+
+
+:::
 
 It utilizes four different implementations:
 
@@ -26,353 +28,473 @@ It utilizes four different implementations:
 - `views_implementation`, containing a view methods contract relevant for integrators and users looking to interact with the AMMs.
 - `math_implementation`, containing math functions used in the AMM.
 
-*More on the [**Math Implementation**](../../cryptoswap-exchange/tricrypto-ng/utility-contracts/math.md) and [**Views Implementation**](../../cryptoswap-exchange/tricrypto-ng/utility-contracts/views.md).* 
+*More on the [**Math Implementation**](../../tricrypto-ng/utility-contracts/math.md) and [**Views Implementation**](../../tricrypto-ng/utility-contracts/views.md).* 
 
 
-## **Query Implementations**
+## Query Implementations
 
 ### `pool_implementation`
-!!! description "`Factory.pool_implementations(arg0: uint256) -> address: view`"
-
-    Getter for the current pool implementation contract. This accounts for variations such as two-coin and three-pool pools.
-
-    Returns: Pool blueprint contract (`address`).
-
-    | Input   | Type      | Description   |
-    | ------- | --------- | ------------- |
-    | `arg0`  | `uint256` | Index         |
+::::description[`Factory.pool_implementations(arg0: uint256) -> address: view`]
 
 
-    ??? quote "Source code"
+Getter for the current pool implementation contract. This accounts for variations such as two-coin and three-pool pools.
 
-        ```vyper
-        pool_implementations: public(HashMap[uint256, address])
-        ```
+Returns: Pool blueprint contract (`address`).
 
-    === "Example"
+| Input   | Type      | Description   |
+| ------- | --------- | ------------- |
+| `arg0`  | `uint256` | Index         |
 
-        ```shell
-        >>> Factory.pool_implementation(0)
-        '0x66442B0C5260B92cAa9c234ECf2408CBf6b19a6f'
-        ```
 
+<SourceCode>
+
+
+```vyper
+pool_implementations: public(HashMap[uint256, address])
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> Factory.pool_implementation(0)
+'0x66442B0C5260B92cAa9c234ECf2408CBf6b19a6f'
+```
+
+
+</Example>
+
+
+::::
 
 ### `gauge_implementation`
-!!! description "`Factory.gauge_implementation() -> address: view`"
+::::description[`Factory.gauge_implementation() -> address: view`]
 
-    Getter for the current gauge implementation contract.
 
-    Returns: Gauge blueprint contract (`address`).
+Getter for the current gauge implementation contract.
 
-    ??? quote "Source code"
+Returns: Gauge blueprint contract (`address`).
 
-        ```vyper
-        gauge_implementation: public(address)
-        ```
+<SourceCode>
 
-    === "Example"
 
-        ```shell
-        >>> Factory.gauge_implementation()
-        '0x5fC124a161d888893529f67580ef94C2784e9233'
-        ```
+```vyper
+gauge_implementation: public(address)
+```
 
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> Factory.gauge_implementation()
+'0x5fC124a161d888893529f67580ef94C2784e9233'
+```
+
+
+</Example>
+
+
+::::
 
 ### `views_implementation`
-!!! description "`Factory.views_implementation() -> address: view`"
+::::description[`Factory.views_implementation() -> address: view`]
 
-    Getter for the current views implementation contract.
 
-    Returns: Views blueprint contract (`address`).
+Getter for the current views implementation contract.
 
-    ??? quote "Source code"
+Returns: Views blueprint contract (`address`).
 
-        ```vyper
-        views_implementation: public(address)
-        ```
+<SourceCode>
 
-    === "Example"
 
-        ```shell
-        >>> Factory.views_implementation()
-        '0x064253915b8449fdEFac2c4A74aA9fdF56691a31'
-        ```
+```vyper
+views_implementation: public(address)
+```
 
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> Factory.views_implementation()
+'0x064253915b8449fdEFac2c4A74aA9fdF56691a31'
+```
+
+
+</Example>
+
+
+::::
 
 ### `math_implementation`
-!!! description "`Factory.math_implementation() -> address: view`"
-
-    Getter for the current pool implementation contract.
-
-    Returns: Math blueprint contract (`address`).
-
-    ??? quote "Source code"
-
-        ```vyper
-        math_implementation: public(address)
-        ```
-
-    === "Example"
-
-        ```shell
-        >>> Factory.math_implementation()
-        '0xcBFf3004a20dBfE2731543AA38599A526e0fD6eE'
-        ```
+::::description[`Factory.math_implementation() -> address: view`]
 
 
+Getter for the current pool implementation contract.
 
-## **Set New Implementations** 
+Returns: Math blueprint contract (`address`).
 
-*New implementations can be set via these admin-only functions:*
+<SourceCode>
+
+
+```vyper
+math_implementation: public(address)
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> Factory.math_implementation()
+'0xcBFf3004a20dBfE2731543AA38599A526e0fD6eE'
+```
+
+
+</Example>
+
+
+::::
+
+## Set New Implementations*New implementations can be set via these admin-only functions:*
 
 ### `set_pool_implementation`
-!!! description "`Factory.set_pool_implementation(_pool_implementation: address, _implementation_index: uint256):`"
-
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
-
-    Function to set a `_pool_implementation` for `_implementation_index`. 
-
-    Emits event: `UpdatePoolImplementation`
-
-    | Input                   | Type      | Description               |
-    | ----------------------- | --------- | ------------------------- |
-    | `_pool_implementation`  | `address` | New pool implementation   |
-    | `_implementation_index` | `uint256` | Index                     |
+::::description[`Factory.set_pool_implementation(_pool_implementation: address, _implementation_index: uint256):`]
 
 
-    ??? quote "Source code"
+:::guard[Guarded Method]
 
-        ```vyper
-        event UpdatePoolImplementation:
-            _implemention_id: uint256
-            _old_pool_implementation: address
-            _new_pool_implementation: address
+This function is only callable by the `admin` of the contract.
 
-        pool_implementations: public(HashMap[uint256, address])
 
-        @external
-        def set_pool_implementation(
-            _pool_implementation: address, _implementation_index: uint256
-        ):
-            """
-            @notice Set pool implementation
-            @dev Set to empty(address) to prevent deployment of new pools
-            @param _pool_implementation Address of the new pool implementation
-            @param _implementation_index Index of the pool implementation
-            """
-            assert msg.sender == self.admin, "dev: admin only"
+:::
 
-            log UpdatePoolImplementation(
-                _implementation_index,
-                self.pool_implementations[_implementation_index],
-                _pool_implementation
-            )
+Function to set a `_pool_implementation` for `_implementation_index`. 
 
-            self.pool_implementations[_implementation_index] = _pool_implementation
-        ```
+Emits event: `UpdatePoolImplementation`
 
-    === "Example"
-        ```shell
-        >>> Factory.set_pool_implementation("todo")
-        'todo'
-        ```
+| Input                   | Type      | Description               |
+| ----------------------- | --------- | ------------------------- |
+| `_pool_implementation`  | `address` | New pool implementation   |
+| `_implementation_index` | `uint256` | Index                     |
 
+
+<SourceCode>
+
+
+```vyper
+event UpdatePoolImplementation:
+    _implemention_id: uint256
+    _old_pool_implementation: address
+    _new_pool_implementation: address
+
+pool_implementations: public(HashMap[uint256, address])
+
+@external
+def set_pool_implementation(
+    _pool_implementation: address, _implementation_index: uint256
+):
+    """
+    @notice Set pool implementation
+    @dev Set to empty(address) to prevent deployment of new pools
+    @param _pool_implementation Address of the new pool implementation
+    @param _implementation_index Index of the pool implementation
+    """
+    assert msg.sender == self.admin, "dev: admin only"
+
+    log UpdatePoolImplementation(
+        _implementation_index,
+        self.pool_implementations[_implementation_index],
+        _pool_implementation
+    )
+
+    self.pool_implementations[_implementation_index] = _pool_implementation
+```
+
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> Factory.set_pool_implementation("todo")
+'todo'
+```
+
+
+</Example>
+
+
+::::
 
 ### `set_gauge_implementation`
-!!! description "`Factory.set_gauge_implementation(_gauge_implementation: address):`"
+::::description[`Factory.set_gauge_implementation(_gauge_implementation: address):`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
 
-    Function to set a new `_gauge_implementation`.
+:::guard[Guarded Method]
 
-    Emits event: `UpdateGaugeImplementation`
+This function is only callable by the `admin` of the contract.
 
-    | Input                    | Type      | Description               |
-    | ------------------------ | --------- | ------------------------- |
-    | `_gauge_implementation`  | `address` | Gauge blueprint contract  |
 
-    ??? quote "Source code"
+:::
 
-        ```vyper
-        event UpdateGaugeImplementation:
-            _old_gauge_implementation: address
-            _new_gauge_implementation: address
+Function to set a new `_gauge_implementation`.
 
-        gauge_implementation: public(address)
+Emits event: `UpdateGaugeImplementation`
 
-        @external
-        def set_gauge_implementation(_gauge_implementation: address):
-            """
-            @notice Set gauge implementation
-            @dev Set to empty(address) to prevent deployment of new gauges
-            @param _gauge_implementation Address of the new token implementation
-            """
-            assert msg.sender == self.admin, "dev: admin only"
+| Input                    | Type      | Description               |
+| ------------------------ | --------- | ------------------------- |
+| `_gauge_implementation`  | `address` | Gauge blueprint contract  |
 
-            log UpdateGaugeImplementation(self.gauge_implementation, _gauge_implementation)
-            self.gauge_implementation = _gauge_implementation
-        ```
+<SourceCode>
 
-    === "Example"
-        ```shell
-        >>> Factory.set_gauge_implementation("todo")
-        'todo'
-        ```
 
+```vyper
+event UpdateGaugeImplementation:
+    _old_gauge_implementation: address
+    _new_gauge_implementation: address
+
+gauge_implementation: public(address)
+
+@external
+def set_gauge_implementation(_gauge_implementation: address):
+    """
+    @notice Set gauge implementation
+    @dev Set to empty(address) to prevent deployment of new gauges
+    @param _gauge_implementation Address of the new token implementation
+    """
+    assert msg.sender == self.admin, "dev: admin only"
+
+    log UpdateGaugeImplementation(self.gauge_implementation, _gauge_implementation)
+    self.gauge_implementation = _gauge_implementation
+```
+
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> Factory.set_gauge_implementation("todo")
+'todo'
+```
+
+
+</Example>
+
+
+::::
 
 ### `set_views_implementation`
-!!! description "`Factory.set_views_implementation(_views_implementation: address):`"
+::::description[`Factory.set_views_implementation(_views_implementation: address):`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
 
-    Function to set a new `_views_implementation`.
+:::guard[Guarded Method]
 
-    Emits event: `UpdateViewsImplementation`
+This function is only callable by the `admin` of the contract.
 
-    | Input                     | Type      | Description              |
-    | ------------------------- | --------- | ------------------------ |
-    | `_views_implementation`   | `address` | Views blueprint contract |
 
-    ??? quote "Source code"
+:::
 
-        ```vyper
-        event UpdateViewsImplementation:
-            _old_views_implementation: address
-            _new_views_implementation: address
+Function to set a new `_views_implementation`.
 
-        views_implementation: public(address)
+Emits event: `UpdateViewsImplementation`
 
-        @external
-        def set_views_implementation(_views_implementation: address):
-            """
-            @notice Set views contract implementation
-            @param _views_implementation Address of the new views contract
-            """
-            assert msg.sender == self.admin,  "dev: admin only"
+| Input                     | Type      | Description              |
+| ------------------------- | --------- | ------------------------ |
+| `_views_implementation`   | `address` | Views blueprint contract |
 
-            log UpdateViewsImplementation(self.views_implementation, _views_implementation)
-            self.views_implementation = _views_implementation
-        ```
+<SourceCode>
 
-    === "Example"
-        ```shell
-        >>> Factory.set_views_implementation("todo")
-        'todo'
-        ```
 
+```vyper
+event UpdateViewsImplementation:
+    _old_views_implementation: address
+    _new_views_implementation: address
+
+views_implementation: public(address)
+
+@external
+def set_views_implementation(_views_implementation: address):
+    """
+    @notice Set views contract implementation
+    @param _views_implementation Address of the new views contract
+    """
+    assert msg.sender == self.admin,  "dev: admin only"
+
+    log UpdateViewsImplementation(self.views_implementation, _views_implementation)
+    self.views_implementation = _views_implementation
+```
+
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> Factory.set_views_implementation("todo")
+'todo'
+```
+
+
+</Example>
+
+
+::::
 
 ### `set_math_implementation`
-!!! description "`Factory.set_math_implementation(_math_implementation: address):`"
+::::description[`Factory.set_math_implementation(_math_implementation: address):`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
 
-    Function to set a new `_math_implementation`.
+:::guard[Guarded Method]
 
-    Emits event: `UpdateMathImplementation`
+This function is only callable by the `admin` of the contract.
 
-    | Input                    | Type      | Description              |
-    | ------------------------ | --------- | ------------------------ |
-    | `_math_implementation`   | `address` | Math blueprint contract  |
 
-    ??? quote "Source code"
+:::
 
-        ```vyper
-        event UpdateMathImplementation:
-            _old_math_implementation: address
-            _new_math_implementation: address
+Function to set a new `_math_implementation`.
 
-        math_implementation: public(address)
+Emits event: `UpdateMathImplementation`
 
-        @external
-        def set_math_implementation(_math_implementation: address):
-            """
-            @notice Set math implementation
-            @param _math_implementation Address of the new math contract
-            """
-            assert msg.sender == self.admin, "dev: admin only"
+| Input                    | Type      | Description              |
+| ------------------------ | --------- | ------------------------ |
+| `_math_implementation`   | `address` | Math blueprint contract  |
 
-            log UpdateMathImplementation(self.math_implementation, _math_implementation)
-            self.math_implementation = _math_implementation
-        ```
+<SourceCode>
 
-    === "Example"
-        ```shell
-        >>> Factory.set_math_implementation("todo")
-        'todo'
-        ```
-    
+
+```vyper
+event UpdateMathImplementation:
+    _old_math_implementation: address
+    _new_math_implementation: address
+
+math_implementation: public(address)
+
+@external
+def set_math_implementation(_math_implementation: address):
+    """
+    @notice Set math implementation
+    @param _math_implementation Address of the new math contract
+    """
+    assert msg.sender == self.admin, "dev: admin only"
+
+    log UpdateMathImplementation(self.math_implementation, _math_implementation)
+    self.math_implementation = _math_implementation
+```
+
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> Factory.set_math_implementation("todo")
+'todo'
+```
+
+
+</Example>
+
+
+::::
 
 ---
 
 
-## **Fee Receiver**
-
+## Fee Receiver
 
 ### `fee_receiver`
-!!! description "`Factory.fee_receiver() -> address: view`"
+::::description[`Factory.fee_receiver() -> address: view`]
 
-    Getter for the fee receiver.
 
-    Returns: fee receiver (`address`).
+Getter for the fee receiver.
 
-    ??? quote "Source code"
+Returns: fee receiver (`address`).
 
-        === "CurveTwocryptoFactory.vy"
+<SourceCode>
+```vyper
+fee_receiver: public(address)
+```
+</SourceCode>
 
-            ```vyper
-            fee_receiver: public(address)
-            ```
-    
-    === "Example"
+<Example>
 
-        ```shell
-        >>> Factory.fee_receiver()
-        '0xeCb456EA5365865EbAb8a2661B0c503410e9B347'
-        ```
 
+```shell
+>>> Factory.fee_receiver()
+'0xeCb456EA5365865EbAb8a2661B0c503410e9B347'
+```
+
+
+</Example>
+
+
+::::
 
 ### `set_fee_receiver`
-!!! description "`Factory.set_fee_receiver(_fee_receiver: address):`"
+::::description[`Factory.set_fee_receiver(_fee_receiver: address):`]
 
-    !!!guard "Guarded Method"
-        This function is only callable by the `admin` of the contract.
 
-    Function to set a new `fee_receiver` address.
+:::guard[Guarded Method]
 
-    Emits event: `UpdateFeeReceiver`
+This function is only callable by the `admin` of the contract.
 
-    | Input      | Type   | Description |
-    | ----------- | -------| ----|
-    | `_fee_receiver` |  `address` | new fee receiver address |
 
-    ??? quote "Source code"
+:::
 
-        ```vyper
-        event UpdateFeeReceiver:
-            _old_fee_receiver: address
-            _new_fee_receiver: address
+Function to set a new `fee_receiver` address.
 
-        admin: public(address) 
-        fee_receiver: public(address)
+Emits event: `UpdateFeeReceiver`
 
-        @external
-        def set_fee_receiver(_fee_receiver: address):
-            """
-            @notice Set fee receiver
-            @param _fee_receiver Address that fees are sent to
-            """
-            assert msg.sender == self.admin, "dev: admin only"
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_fee_receiver` |  `address` | new fee receiver address |
 
-            log UpdateFeeReceiver(self.fee_receiver, _fee_receiver)
-            self.fee_receiver = _fee_receiver
-        ```
+<SourceCode>
 
-    === "Example"
-        ```shell
-        >>> Factory.set_fee_receiver("todo")
-        'todo'
-        ```
+
+```vyper
+event UpdateFeeReceiver:
+    _old_fee_receiver: address
+    _new_fee_receiver: address
+
+admin: public(address) 
+fee_receiver: public(address)
+
+@external
+def set_fee_receiver(_fee_receiver: address):
+    """
+    @notice Set fee receiver
+    @param _fee_receiver Address that fees are sent to
+    """
+    assert msg.sender == self.admin, "dev: admin only"
+
+    log UpdateFeeReceiver(self.fee_receiver, _fee_receiver)
+    self.fee_receiver = _fee_receiver
+```
+
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> Factory.set_fee_receiver("todo")
+'todo'
+```
+
+</Example>
+
+
+::::

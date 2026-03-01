@@ -1,0 +1,109 @@
+.container {
+  border: 1px solid var(--Layer-2-Outline);
+  border-radius: 0;
+  margin: var(--Spacing-md) 0;
+  overflow: hidden;
+}
+
+/* Hide native disclosure triangle */
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--Spacing-sm);
+  width: 100%;
+  padding: 10px var(--Spacing-lg);
+  background: var(--Layer-2-Fill);
+  border: none;
+  cursor: pointer;
+  font-family: var(--Text-FontFamily-Body);
+  font-size: var(--Typography-FontSize-sm);
+  font-weight: var(--Typography-FontWeight-Medium);
+  color: var(--Text-TextColors-Secondary);
+  transition: background 0.15s ease, color 0.15s ease;
+  list-style: none;
+}
+
+.toggle::-webkit-details-marker {
+  display: none;
+}
+
+.toggle::marker {
+  content: none;
+}
+
+.toggle:hover {
+  background: var(--Color-Neutral-150);
+  color: var(--Text-TextColors-Primary);
+}
+
+.icon {
+  font-family: var(--Text-FontFamily-Mono);
+  font-size: var(--Typography-FontSize-sm);
+  font-weight: var(--Typography-FontWeight-Semi-Bold);
+  color: var(--Text-TextColors-Tertiary);
+  flex-shrink: 0;
+}
+
+.label {
+  flex: 1;
+  text-align: left;
+}
+
+.chevron {
+  font-size: 10px;
+  color: var(--Text-TextColors-Tertiary);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+/* Rotate chevron when open */
+.container[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.content {
+  border-top: 1px solid var(--Layer-2-Outline);
+}
+
+/* Remove extra margin from code blocks inside SourceCode */
+.content pre,
+.content > div > pre {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+/* Line numbers for code blocks inside SourceCode */
+.content :global(code[class*="codeBlockLines"]) {
+  counter-reset: source-line;
+}
+
+.content :global(.token-line) {
+  display: flex;
+}
+
+.content :global(.token-line)::before {
+  content: counter(source-line);
+  counter-increment: source-line;
+  display: inline-block;
+  width: 3.5em;
+  min-width: 3.5em;
+  padding-right: 1em;
+  text-align: right;
+  color: var(--Color-Neutral-400);
+  font-size: inherit;
+  line-height: inherit;
+  user-select: none;
+  flex-shrink: 0;
+  border-right: 1px solid var(--Layer-2-Outline);
+  margin-right: 1em;
+}
+
+/* Remove margin from tabs wrapper inside */
+.content :global(.tabs-container) {
+  margin: 0;
+}
+
+.content :global(.tabs) {
+  border-bottom: 1px solid var(--Layer-2-Outline);
+}
