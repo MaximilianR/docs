@@ -3,7 +3,7 @@
 
 :::vyper[`ScrvusdOracleV2.vy`]
 
-The source code for the `ScrvusdOracleV2` contract is available on [ GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/scrvusd/oracles/ScrvusdOracleV2.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.4.0`.
+The source code for the `ScrvusdOracleV2` contract is available on [GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/scrvusd/oracles/ScrvusdOracleV2.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.4.0`.
 
 The oracle contracts are deployed on various chains at: *soon*
 
@@ -34,7 +34,7 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to update the price using scrvUSD vault parameters.
 
-Returns: absolute relative price change of the final price with 10^18 percision.
+Returns: absolute relative price change of the final price with 10^18 precision (`uint256`).
 
 Emits: `PriceUpdate` event.
 
@@ -159,12 +159,12 @@ This example updates the price of scrvUSD.
 ::::
 
 ### `raw_price`
-::::description[`ScrvusdOracleV2.raw_price(_i: uint256 = 0, _ts: uint256 = block.timestamp, _parameters_ts: uint256 = block.timestamp) -> uint256`]
+::::description[`ScrvusdOracleV2.raw_price(_i: uint256 = 0, _ts: uint256 = block.timestamp, _parameters_ts: uint256 = block.timestamp) -> uint256: view`]
 
 
 Function to compute the raw approximated share or asset price without smoothening out.
 
-Returns: raw `pricePerShare()` or `pricePerAsset()`.
+Returns: raw `pricePerShare()` or `pricePerAsset()` (`uint256`).
 
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
@@ -283,12 +283,12 @@ ScrvusdOracleV2.raw_price(1)
 ::::
 
 ### `price_v0`
-::::description[`ScrvusdOracleV2.price_v0(_i: uint256 = 0) -> uint256`]
+::::description[`ScrvusdOracleV2.price_v0(_i: uint256 = 0) -> uint256: view`]
 
 
 Getter for the lower bound of the share or asset price.
 
-Returns: lower bound of `pricePerShare()`.
+Returns: lower bound of `pricePerShare()` (`uint256`).
 
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
@@ -383,12 +383,12 @@ ScrvusdOracleV2.price_v0(1)
 ::::
 
 ### `price_v1`
-::::description[`ScrvusdOracleV2.price_v1(_i: uint256 = 0) -> uint256`]
+::::description[`ScrvusdOracleV2.price_v1(_i: uint256 = 0) -> uint256: view`]
 
 
 Getter for the approximate share or asset price assuming no new interactions.
 
-Returns: approximate `pricePerShare()`.
+Returns: approximate `pricePerShare()` (`uint256`).
 
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
@@ -483,12 +483,12 @@ ScrvusdOracleV2.price_v1(1)
 ::::
 
 ### `price_v2`
-::::description[`ScrvusdOracleV2.price_v2(_i: uint256 = 0) -> uint256`]
+::::description[`ScrvusdOracleV2.price_v2(_i: uint256 = 0) -> uint256: view`]
 
 
 Getter for the approximate share or asset price assuming constant rewards over time.
 
-Returns: approximate `pricePerShare()`.
+Returns: approximate `pricePerShare()` (`uint256`).
 
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
@@ -582,12 +582,12 @@ ScrvusdOracleV2.price_v2(1)
 ::::
 
 ### `last_block_number`
-::::description[`ScrvusdOracleV2.last_block_number() -> uint256`]
+::::description[`ScrvusdOracleV2.last_block_number() -> uint256: view`]
 
 
 Getter for the block number corresponding to the most recent update applied to the oracle (either for the price or `profit_max_unlock_time`). This value is updated during calls to the `update_price()` function to ensure that only updates from the same or a later block are accepted to prevent outdated information from being used.
 
-Returns: the last block number the oracle was updated?.
+Returns: the last block number the oracle was updated (`uint256`).
 
 <SourceCode>
 
@@ -630,7 +630,7 @@ To guard the respective functions which can change the parameters, the contract 
 
 Getter for the duration in seconds over which rewards are gradually unlocked, thereby smoothing out share price adjustments. It is initially set to one week (7 * 86400 seconds) to align with the current Yearn Vault setting and can only be updated by the `VERIFIER` role using the [`update_profit_max_unlock_time`](#update_profit_max_unlock_time) function.
 
-Returns: `profit_max_unlock_time`.
+Returns: profit max unlock time (`uint256`).
 
 <SourceCode>
 
@@ -676,12 +676,12 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to set a new value for `profit_max_unlock_time`. This happens within the [`ScrvUSDVeriferV2`](./verifier.md#scrvusd-verifier-v2) contract when a period is verified using a block hash ([`verifyPeriodByBlockHash()`](./verifier.md#verifyperiodbyblockhash)).
 
-Returns: boolean wether the value changed.
+Returns: boolean whether the value changed (`bool`).
 
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
-| `_profit_max_unlock_time` | `uin256` | New `profit_max_unlock_time` value |
-| `_block_number` | `uin256` | Block number of parameters to linearize updates |
+| `_profit_max_unlock_time` | `uint256` | New `profit_max_unlock_time` value |
+| `_block_number` | `uint256` | Block number of parameters to linearize updates |
 
 <SourceCode>
 
@@ -747,7 +747,7 @@ This example updates the `profit_max_unlock_time` value.
 
 Getter for the maximum allowed price increment per second for scrvusd, measured with a precision of $10^{18}$. It is initially set to `2 * 1012` — corresponding to 0.02 bps per second (or approximately 0.24 bps per block on Ethereum) and linearly approximated to a maximum of 63% APY — and can be updated via the [`set_max_price_increment`](#set_max_price_increment) function.
 
-Returns: `max_price_increment`.
+Returns: max price increment per second (`uint256`).
 
 <SourceCode>
 
@@ -865,7 +865,7 @@ This example updates the `max_price_increment` value.
 
 Getter for the maximum duration for which the price_v2 approximation can be applied before capping further growth. It is initially set to 24 weeks and can be updated via the [`set_max_v2_duration`](#set_max_v2_duration) function.
 
-Returns: `max_v2_duration`.
+Returns: max v2 duration (`uint256`).
 
 <SourceCode>
 

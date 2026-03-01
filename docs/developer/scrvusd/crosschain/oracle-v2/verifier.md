@@ -13,10 +13,11 @@ The two verifier contracts work together to securely update and maintain the scr
 ---
 
 
-## scrvUSD Verifier V1:::solidity[`ScrvusdVerifierV1.sol`]
+## scrvUSD Verifier V1
 
-The source code for the `ScrvusdVerifierV1` contract is available on [ GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/scrvusd/verifiers/ScrvusdVerifierV1.sol). The contract is written in [Solidity](https://soliditylang.org/) version `0.8.18`.
+:::solidity[`ScrvusdVerifierV1.sol`]
 
+The source code for the `ScrvusdVerifierV1` contract is available on [GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/scrvusd/verifiers/ScrvusdVerifierV1.sol). The contract is written in [Solidity](https://soliditylang.org/) version `0.8.18`.
 
 :::
 
@@ -149,6 +150,14 @@ contract ScrvusdVerifierV1 {
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> ScrvusdVerifierV1.verifyScrvusdByBlockHash(block_header_rlp, proof_rlp)
+```
+
+</Example>
+
 ::::
 
 ### `verifyScrvusdByStateRoot`
@@ -276,6 +285,14 @@ contract ScrvusdVerifierV1 {
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> ScrvusdVerifierV1.verifyScrvusdByStateRoot(21192041, proof_rlp)
+```
+
+</Example>
+
 ::::
 
 ---
@@ -284,7 +301,7 @@ contract ScrvusdVerifierV1 {
 ## scrvUSD Verifier V2
 :::solidity[`ScrvusdVerifierV2.sol`]
 
-The source code for the `ScrvusdVerifierV2` contract is available on [ GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/scrvusd/verifiers/ScrvusdVerifierV2.sol). The contract is written in [Solidity](https://soliditylang.org/) version `0.8.18`.
+The source code for the `ScrvusdVerifierV2` contract is available on [GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/scrvusd/verifiers/ScrvusdVerifierV2.sol). The contract is written in [Solidity](https://soliditylang.org/) version `0.8.18`.
 
 
 :::
@@ -375,6 +392,14 @@ contract ScrvusdVerifierV2 is ScrvusdVerifierV1 {
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> ScrvusdVerifierV2.verifyPeriodByBlockHash(block_header_rlp, proof_rlp)
+```
+
+</Example>
+
 ::::
 
 ### `verifyPeriodByStateRoot`
@@ -457,5 +482,13 @@ contract ScrvusdVerifierV2 is ScrvusdVerifierV1 {
 ```
 
 </SourceCode>
+
+<Example>
+
+```shell
+>>> ScrvusdVerifierV2.verifyPeriodByStateRoot(21192041, proof_rlp)
+```
+
+</Example>
 
 ::::
