@@ -1,11 +1,11 @@
 # GaugeController
 
-The `GaugeController` contract is responsible for managing and coordinating the distribution of rewards to liquidity providers in various liquidity pools. It **determines the allocation of CRV emissions based on the liquidity provided**by users. By analyzing the gauges, which are parameters that define how rewards are distributed across different pools, the GaugeController ensures a fair and balanced distribution of incentives, encouraging liquidity provision and participation in Curve's ecosystem.
+The `GaugeController` contract is responsible for managing and coordinating the distribution of rewards to liquidity providers in various liquidity pools. It **determines the allocation of CRV emissions based on the liquidity provided** by users. By analyzing the gauges, which are parameters that define how rewards are distributed across different pools, the GaugeController ensures a fair and balanced distribution of incentives, encouraging liquidity provision and participation in Curve's ecosystem.
 
 
 :::vyper[`GaugeController.vy`]
 
-The source code for the `GaugeController.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/GaugeController.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.2.4`
+The source code for the `GaugeController.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/GaugeController.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.2.4`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB`](https://etherscan.io/address/0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB).
 
@@ -17,7 +17,7 @@ The contract also **acts as a registry for the gauges**, storing information suc
 
 ## Adding Gauges and Gauge Data
 
-After a liquidity gauge was deployed, it can be added to the `GaugeController` for it to be elegible to recieve CRV emissions. Adding a gauge requires a successfully passed DAO vote.
+After a liquidity gauge was deployed, it can be added to the `GaugeController` for it to be eligible to receive CRV emissions. Adding a gauge requires a successfully passed DAO vote.
 
 :::info[Check if a Gauge has been added to the GaugeController]
 
@@ -149,13 +149,18 @@ gauges: public(address[1000000000])
 
 <Example>
 
+```py
+>>> GaugeController.gauges(0)
+'0x7ca5b0a2910B33e9759DC7dDB0413949071D7575'
+```
+
 </Example>
 
 
 ::::
 
 ### `n_gauges`
-::::description[`GaugeController.n_gauges -> int128: view`]
+::::description[`GaugeController.n_gauges() -> int128: view`]
 
 
 Getter for the total number of gauges added to the `GaugeController`. This variable is incremented by one each time a new gauge is added via the `add_gauge` function.
@@ -171,6 +176,11 @@ n_gauges: public(int128)
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.n_gauges()
+468
+```
 
 </Example>
 
@@ -199,7 +209,7 @@ The gauge will, therefore, receive approximately 313,381.65 CRV tokens as emissi
 :::
 
 ### `vote_for_gauge_weights`
-::::description[`GaugeController.vote_for_gauge_weights(_gauge_addr: address, _user_weight: uint256):`]
+::::description[`GaugeController.vote_for_gauge_weights(_gauge_addr: address, _user_weight: uint256)`]
 
 
 :::warning[`WEIGHT_VOTE_DELAY`]
@@ -401,6 +411,11 @@ vote_user_power: public(HashMap[address, uint256])  # Total vote power used by u
 
 <Example>
 
+```py
+>>> GaugeController.vote_user_power('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
+10000
+```
+
 </Example>
 
 
@@ -429,6 +444,11 @@ last_user_vote: public(HashMap[address, HashMap[address, uint256]])  # Last user
 
 <Example>
 
+```py
+>>> GaugeController.last_user_vote('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
+1700000000
+```
+
 </Example>
 
 
@@ -456,6 +476,11 @@ vote_user_slopes: public(HashMap[address, HashMap[address, VotedSlope]])  # user
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.vote_user_slopes('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
+(1000000000000, 10000, 1735689600)
+```
 
 </Example>
 
@@ -519,6 +544,175 @@ def _gauge_relative_weight(addr: address, time: uint256) -> uint256:
 
 <Example>
 
+```py
+>>> GaugeController.gauge_relative_weight('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
+50000000000000000
+```
+
+</Example>
+
+
+::::
+
+### `gauge_relative_weight_write`
+::::description[`GaugeController.gauge_relative_weight_write(addr: address, time: uint256 = block.timestamp) -> uint256`]
+
+
+Function to get the gauge relative weight and also checkpoint the gauge, filling in any missing gauge data for the past weeks. This is a state-changing version of [`gauge_relative_weight`](#gauge_relative_weight).
+
+Returns: relative gauge weight normalized to 1e18 (`uint256`).
+
+| Input  | Type      | Description |
+| ------ | --------- | ----------- |
+| `addr` | `address` | Gauge address |
+| `time` | `uint256` | Timestamp to check the weight at; defaults to `block.timestamp` |
+
+<SourceCode>
+
+```vyper
+@external
+def gauge_relative_weight_write(addr: address, time: uint256 = block.timestamp) -> uint256:
+    """
+    @notice Get gauge weight normalized to 1e18 and also fill all the unfilled
+            values for type and gauge records
+    @dev Any address can call, however nothing is recorded if the values are filled already
+    @param addr Gauge address
+    @param time Relative weight at the specified timestamp in the past or present
+    @return Value of relative weight normalized to 1e18
+    """
+    self._get_weight(addr)
+    self._get_total()  # Also calculates get_sum
+    return self._gauge_relative_weight(addr, time)
+```
+
+</SourceCode>
+
+<Example>
+
+```py
+>>> GaugeController.gauge_relative_weight_write('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
+50000000000000000
+```
+
+</Example>
+
+
+::::
+
+### `checkpoint`
+::::description[`GaugeController.checkpoint()`]
+
+
+Function to checkpoint to fill data common for all gauges.
+
+<SourceCode>
+
+```vyper
+@external
+def checkpoint():
+    """
+    @notice Checkpoint to fill data common for all gauges
+    """
+    self._get_total()
+```
+
+</SourceCode>
+
+<Example>
+
+```py
+>>> GaugeController.checkpoint()
+```
+
+</Example>
+
+
+::::
+
+### `checkpoint_gauge`
+::::description[`GaugeController.checkpoint_gauge(addr: address)`]
+
+
+Function to checkpoint a specific gauge, filling in any missing weight data.
+
+| Input  | Type      | Description   |
+| ------ | --------- | ------------- |
+| `addr` | `address` | Gauge address |
+
+<SourceCode>
+
+```vyper
+@external
+def checkpoint_gauge(addr: address):
+    """
+    @notice Checkpoint to fill data for both a specific gauge and common for all gauges
+    @param addr Gauge address
+    """
+    self._get_weight(addr)
+    self._get_total()
+```
+
+</SourceCode>
+
+<Example>
+
+```py
+>>> GaugeController.checkpoint_gauge('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
+```
+
+</Example>
+
+
+::::
+
+### `change_gauge_weight`
+::::description[`GaugeController.change_gauge_weight(addr: address, weight: uint256)`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the contract.
+
+
+:::
+
+Function to change the gauge weight for a specific gauge.
+
+Emits: `NewGaugeWeight` event.
+
+| Input    | Type      | Description      |
+| -------- | --------- | ---------------- |
+| `addr`   | `address` | Gauge address    |
+| `weight` | `uint256` | New gauge weight |
+
+<SourceCode>
+
+```vyper
+event NewGaugeWeight:
+    gauge_address: address
+    time: uint256
+    weight: uint256
+    total_weight: uint256
+
+@external
+def change_gauge_weight(addr: address, weight: uint256):
+    """
+    @notice Change weight of gauge `addr` to `weight`
+    @param addr `GaugeController` contract address
+    @param weight New Gauge weight
+    """
+    assert msg.sender == self.admin
+    self._change_gauge_weight(addr, weight)
+```
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> GaugeController.change_gauge_weight('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939', 1000000000000000000)
+```
+
 </Example>
 
 
@@ -556,6 +750,11 @@ def get_gauge_weight(addr: address) -> uint256:
 
 <Example>
 
+```py
+>>> GaugeController.get_gauge_weight('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
+1000000000000000000000
+```
+
 </Example>
 
 
@@ -587,6 +786,11 @@ def get_total_weight() -> uint256:
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.get_total_weight()
+1000000000000000000000000000000000000
+```
 
 </Example>
 
@@ -625,6 +829,11 @@ def get_weights_sum_per_type(type_id: int128) -> uint256:
 
 <Example>
 
+```py
+>>> GaugeController.get_weights_sum_per_type(0)
+1000000000000000000000
+```
+
 </Example>
 
 
@@ -645,7 +854,7 @@ struct Point:
 ```
 
 ### `points_weight`
-::::description[`GaugeController.points_weight(arg0: address, arg1: uint256)`]
+::::description[`GaugeController.points_weight(arg0: address, arg1: uint256) -> bias: uint256, slope: uint256: view`]
 
 
 Getter for the `Point` information of a user `arg0`.
@@ -666,6 +875,11 @@ points_weight: public(HashMap[address, HashMap[uint256, Point]])  # gauge_addr -
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.points_weight('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939', 1700006400)
+(1000000000000000000000, 0)
+```
 
 </Example>
 
@@ -694,6 +908,11 @@ time_weight: public(HashMap[address, uint256])  # gauge_addr -> last scheduled t
 
 <Example>
 
+```py
+>>> GaugeController.time_weight('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
+1700006400
+```
+
 </Example>
 
 
@@ -710,7 +929,7 @@ Returns: bias (`uint256`) and slope (`uint256`).
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
 | `arg0` | `int128`  | Gauge type ID |
-| `arg0` | `address` | Timestamp     |
+| `arg1` | `uint256` | Timestamp     |
 
 <SourceCode>
 
@@ -721,6 +940,11 @@ points_sum: public(HashMap[int128, HashMap[uint256, Point]])  # type_id -> time 
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.points_sum(0, 1700006400)
+(1000000000000000000000, 0)
+```
 
 </Example>
 
@@ -733,7 +957,7 @@ points_sum: public(HashMap[int128, HashMap[uint256, Point]])  # type_id -> time 
 
 Getter for the last scheduled time (next week).
 
-Returns: timestamp (`uin256`).
+Returns: timestamp (`uint256`).
 
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
@@ -749,6 +973,11 @@ time_sum: public(uint256[1000000000])  # type_id -> last scheduled time (next we
 
 <Example>
 
+```py
+>>> GaugeController.time_sum(0)
+1700006400
+```
+
 </Example>
 
 
@@ -758,9 +987,9 @@ time_sum: public(uint256[1000000000])  # type_id -> last scheduled time (next we
 ::::description[`GaugeController.points_total(arg0: uint256) -> uint256: view`]
 
 
-Getter for the currennt future total weight at timestamp `arg0`.
+Getter for the current future total weight at timestamp `arg0`.
 
-Returns: total points (`uin256`).
+Returns: total points (`uint256`).
 
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
@@ -776,6 +1005,11 @@ points_total: public(HashMap[uint256, uint256])  # time -> total weight
 
 <Example>
 
+```py
+>>> GaugeController.points_total(1700006400)
+1000000000000000000000000000000000000
+```
+
 </Example>
 
 
@@ -787,7 +1021,7 @@ points_total: public(HashMap[uint256, uint256])  # time -> total weight
 
 Getter for the last scheduled time when the gauge weights will update.
 
-Returns: timestamp (`uin256`).
+Returns: timestamp (`uint256`).
 
 <SourceCode>
 
@@ -798,6 +1032,11 @@ time_total: public(uint256)  # last scheduled time
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.time_total()
+1700006400
+```
 
 </Example>
 
@@ -810,7 +1049,7 @@ time_total: public(uint256)  # last scheduled time
 
 Getter for the weight for gauge type `arg0` at the next update, which is at timestamp `arg1`.
 
-Returns: type weigt (`uint256`).
+Returns: type weight (`uint256`).
 
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
@@ -826,6 +1065,11 @@ points_type_weight: public(HashMap[int128, HashMap[uint256, uint256]])  # type_i
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.points_type_weight(0, 1700006400)
+1000000000000000000
+```
 
 </Example>
 
@@ -853,6 +1097,11 @@ time_type_weight: public(uint256[1000000000])  # type_id -> last scheduled time 
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.time_type_weight(0)
+1700006400
+```
 
 </Example>
 
@@ -916,6 +1165,11 @@ def gauge_types(_addr: address) -> int128:
 
 <Example>
 
+```py
+>>> GaugeController.gauge_types('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
+5
+```
+
 </Example>
 
 
@@ -938,6 +1192,11 @@ n_gauge_types: public(int128)
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.n_gauge_types()
+13
+```
 
 </Example>
 
@@ -965,6 +1224,11 @@ gauge_type_names: public(HashMap[int128, String[64]])
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.gauge_type_names(0)
+'Liquidity'
+```
 
 </Example>
 
@@ -1023,13 +1287,18 @@ def _get_type_weight(gauge_type: int128) -> uint256:
 
 <Example>
 
+```py
+>>> GaugeController.get_type_weight(0)
+1000000000000000000
+```
+
 </Example>
 
 
 ::::
 
 ### `add_type`
-::::description[`GaugeController.add_type(_name: String[64], weight: uint256 = 0):`]
+::::description[`GaugeController.add_type(_name: String[64], weight: uint256 = 0)`]
 
 
 :::guard[Guarded Method]
@@ -1133,7 +1402,7 @@ This example adds a new gauge type with the name `New Test GaugeType` and a weig
 ::::
 
 ### `change_type_weight`
-::::description[`GaugeController.change_type_weight(type_id: int128, weight: uint256):`]
+::::description[`GaugeController.change_type_weight(type_id: int128, weight: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -1261,6 +1530,11 @@ def __init__(_token: address, _voting_escrow: address):
 
 <Example>
 
+```py
+>>> GaugeController.token()
+'0xD533a949740bb3306d119CC777fa900bA034cd52'
+```
+
 </Example>
 
 
@@ -1295,6 +1569,11 @@ def __init__(_token: address, _voting_escrow: address):
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.voting_escrow()
+'0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2'
+```
 
 </Example>
 
@@ -1338,6 +1617,11 @@ def __init__(_token: address, _voting_escrow: address):
 
 <Example>
 
+```py
+>>> GaugeController.admin()
+'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
+```
+
 </Example>
 
 
@@ -1360,6 +1644,11 @@ future_admin: public(address)  # Can and will be a smart contract
 </SourceCode>
 
 <Example>
+
+```py
+>>> GaugeController.future_admin()
+'0x0000000000000000000000000000000000000000'
+```
 
 </Example>
 
@@ -1426,7 +1715,7 @@ This example commits the ownership of the contract to `0xd8da6bf26964af9d7eed9e0
 ::::
 
 ### `apply_transfer_ownership`
-::::description[`GaugeController.apply_transfer_ownership() -> address: view`]
+::::description[`GaugeController.apply_transfer_ownership()`]
 
 
 :::guard[Guarded Method]
@@ -1444,7 +1733,7 @@ Emits: `ApplyOwnership` event.
 
 ```vyper
 event ApplyOwnership:
-admin: address
+    admin: address
 
 @external
 def apply_transfer_ownership():

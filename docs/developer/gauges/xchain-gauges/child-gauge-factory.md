@@ -5,7 +5,7 @@ The `ChildGaugeFactory` contract is used to deploy liquidity gauges on the child
 
 :::vyper[`ChildGaugeFactory.vy`]
 
-The source code for the `ChildGaugeFactory.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/ChildGaugeFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`
+The source code for the `ChildGaugeFactory.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/ChildGaugeFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`
 
 A full list of all deployed `ChildGaugeFactory` contracts can be found [here](../../deployments.md).
 
@@ -124,7 +124,8 @@ def deploy_gauge(_lp_token: address, _salt: bytes32, _manager: address = msg.sen
 <Example>
 
 ```shell
->>> soon
+>>> ChildGaugeFactory.deploy_gauge('0x...')
+'0x...'
 ```
 
 </Example>
@@ -137,7 +138,7 @@ def deploy_gauge(_lp_token: address, _salt: bytes32, _manager: address = msg.sen
 
 ## Minting Emissions
 
-CRV emissions are minted directly from the child gauge and can be claimed by the user. They can not be claimed from the `ChildGauge` contract itself.
+CRV emissions are minted directly from the child gauge and can be claimed by the user. They cannot be claimed from the `ChildGauge` contract itself.
 
 When claiming emissions via `claim` or `claim_many`, and `is_mirrored` is set to `True` and `last_request` is not the current week, a call to the root chain is made to transmit the emissions to the child gauge.
 
@@ -219,7 +220,7 @@ def _psuedo_mint(_gauge: address, _user: address):
 <Example>
 
 ```shell
->>> soon
+>>> ChildGaugeFactory.mint('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
 ```
 
 </Example>
@@ -229,7 +230,7 @@ def _psuedo_mint(_gauge: address, _user: address):
 
 
 ### `mint_many`
-::::description[`ChildGaugeFactory.mint_many(_gauges: address[32]) -> bool`]
+::::description[`ChildGaugeFactory.mint_many(_gauges: address[32])`]
 
 
 Function to mint all CRV emissions belonging to `msg.sender` from multiple gauges.
@@ -309,7 +310,7 @@ def _psuedo_mint(_gauge: address, _user: address):
 <Example>
 
 ```shell
->>> soon
+>>> ChildGaugeFactory.mint_many(['0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x...'])
 ```
 
 </Example>
@@ -343,7 +344,8 @@ minted: public(HashMap[address, HashMap[address, uint256]])
 <Example>
 
 ```shell
->>> soon
+>>> ChildGaugeFactory.minted('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x...')
+0
 ```
 
 </Example>
@@ -359,7 +361,7 @@ minted: public(HashMap[address, HashMap[address, uint256]])
 The `ChildGaugeFactory` contract stores different gauge data for all the child gauges deployed via the factory.
 
 ### `gauge_data`
-::::description[`ChildGaugeFactory.gauge_data(_gauge: address) -> uint256`]
+::::description[`ChildGaugeFactory.gauge_data(_gauge: address) -> uint256: view`]
 
 
 Getter to check gauge data. The variable stores a `uint256` value where the bits are stored as follows:
@@ -387,7 +389,8 @@ gauge_data: public(HashMap[address, uint256])
 <Example>
 
 ```shell
->>> soon
+>>> ChildGaugeFactory.gauge_data('0x...')
+0
 ```
 
 </Example>
@@ -397,7 +400,7 @@ gauge_data: public(HashMap[address, uint256])
 
 
 ### `is_valid_gauge`
-::::description[`ChildGaugeFactory.is_valid_gauge(_gauge: address) -> bool`]
+::::description[`ChildGaugeFactory.is_valid_gauge(_gauge: address) -> bool: view`]
 
 
 Getter to check if a gauge is valid.
@@ -429,7 +432,8 @@ def is_valid_gauge(_gauge: address) -> bool:
 <Example>
 
 ```shell
->>> soon
+>>> ChildGaugeFactory.is_valid_gauge('0x...')
+True
 ```
 
 </Example>
@@ -439,7 +443,7 @@ def is_valid_gauge(_gauge: address) -> bool:
 
 
 ### `get_gauge_from_lp_token`
-::::description[`ChildGaugeFactory.get_gauge_from_lp_token(_lp_token: address) -> address`]
+::::description[`ChildGaugeFactory.get_gauge_from_lp_token(_lp_token: address) -> address: view`]
 
 
 Getter for gauge associated with a given LP token.
@@ -462,7 +466,8 @@ get_gauge_from_lp_token: public(HashMap[address, address])
 <Example>
 
 ```shell
->>> soon
+>>> ChildGaugeFactory.get_gauge_from_lp_token('0x...')
+'0x...'
 ```
 
 </Example>
@@ -472,7 +477,7 @@ get_gauge_from_lp_token: public(HashMap[address, address])
 
 
 ### `get_gauge_count`
-::::description[`ChildGaugeFactory.get_gauge_count() -> uint256`]
+::::description[`ChildGaugeFactory.get_gauge_count() -> uint256: view`]
 
 
 Getter for the number of gauges deployed.
@@ -502,7 +507,7 @@ get_gauge_count: public(uint256)
 
 
 ### `get_gauge`
-::::description[`ChildGaugeFactory.get_gauge(_idx: uint256) -> address`]
+::::description[`ChildGaugeFactory.get_gauge(_idx: uint256) -> address: view`]
 
 
 Getter for the gauge address at a given index. First gauge has index `0`, second has index `1`, etc.
@@ -574,7 +579,8 @@ def last_request(_gauge: address) -> uint256:
 <Example>
 
 ```shell
->>> soon
+>>> ChildGaugeFactory.last_request('0x...')
+0
 ```
 
 </Example>
@@ -584,7 +590,7 @@ def last_request(_gauge: address) -> uint256:
 
 
 ### `is_mirrored`
-::::description[`ChildGaugeFactory.is_mirrored(_gauge: address) -> bool`]
+::::description[`ChildGaugeFactory.is_mirrored(_gauge: address) -> bool: view`]
 
 
 Getter to check if a gauge is mirrored.
@@ -628,7 +634,7 @@ False
 
 
 ### `set_mirrored`
-::::description[`ChildGaugeFactory.set_mirrored(_gauge: address, _is_mirrored: bool)`]
+::::description[`ChildGaugeFactory.set_mirrored(_gauge: address, _mirrored: bool)`]
 
 
 :::guard[Guarded Method]
@@ -640,14 +646,12 @@ This function is only callable by the `owner` of the contract.
 
 Function to set the mirrored status of a gauge.
 
-Returns: `True` if the gauge is mirrored, `False` otherwise (`bool`).
-
 Emits: `UpdateMirrored` event.
 
 | Input      | Type      | Description |
 | ---------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to set mirrored status for |
-| `_is_mirrored` | `bool` | New mirrored status |
+| `_mirrored` | `bool` | New mirrored status |
 
 
 <SourceCode>
@@ -684,7 +688,7 @@ def set_mirrored(_gauge: address, _mirrored: bool):
 <Example>
 
 ```shell
->>> soon
+>>> ChildGaugeFactory.set_mirrored('0x...', True)
 ```
 
 </Example>
@@ -1016,8 +1020,6 @@ This function is only callable by the `owner` of the contract.
 :::
 
 Function to set the CRV token address.
-
-Emits: `UpdateCRV` event.
 
 | Input  | Type      | Description |
 | ------ | --------- | ----------- |
@@ -1379,3 +1381,45 @@ def set_call_proxy(_new_call_proxy: address):
 ## Ownership
 
 For contract ownership details, see [here](../../references/curve-practices.md#commit--accept).
+
+
+---
+
+## Contract Version
+
+### `version`
+::::description[`ChildGaugeFactory.version() -> String[8]: view`]
+
+
+Getter for the contract version.
+
+Returns: contract version (`String[8]`).
+
+
+<SourceCode>
+
+```vyper
+VERSION: constant(String[8]) = "1.0.0"
+
+@view
+@external
+def version() -> String[8]:
+    """
+    @notice Get the version of this contract
+    """
+    return VERSION
+```
+
+</SourceCode>
+
+<Example>
+
+```shell
+>>> ChildGaugeFactory.version()
+'1.0.0'
+```
+
+</Example>
+
+
+::::

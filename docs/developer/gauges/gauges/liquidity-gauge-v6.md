@@ -1,5 +1,10 @@
 # Liquidity Gauge V6
 
+:::vyper[`LiquidityGaugeV6.vy`]
+
+The contract is deployed on :logos-ethereum: Ethereum at [`0x38A93e59eDFAB1B7cCb08FE8D5A77a94C2cE6580`](https://etherscan.io/address/0x38A93e59eDFAB1B7cCb08FE8D5A77a94C2cE6580).
+
+:::
 
 ## Depositing and Withdrawing
 
@@ -22,7 +27,7 @@ Alice deposits 100 crvUSD into the crvusd/USDC liquidity pool and receives 99 LP
 
 Function to deposit `_value` of LP tokens into the gauge. When depositing LP tokens into the gauge, the contract mints the equivalent amount of "gauge token" to the user.
 
-Emits: `Deposit` and `Transfer`
+Emits: `Deposit`, `Transfer`, `UpdateLiquidityLimit` events.
 
 | Input            | Type      | Description                        |
 | ---------------- | --------- | ---------------------------------- |
@@ -79,7 +84,7 @@ def deposit(_value: uint256, _addr: address = msg.sender, _claim_rewards: bool =
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.deposit(1000000000000000000, '0x989AEb4d175e16225E39E87d0D97A3360524AD80', False)
 ```
 
 </Example>
@@ -93,7 +98,7 @@ def deposit(_value: uint256, _addr: address = msg.sender, _claim_rewards: bool =
 
 Function to withdraw `_value` of LP tokens from the gauge.
 
-Emits: `Withdraw` and `Transfer`
+Emits: `Withdraw`, `Transfer`, `UpdateLiquidityLimit` events.
 
 | Input            | Type      | Description                        |
 | ---------------- | --------- | ---------------------------------- |
@@ -147,7 +152,7 @@ def withdraw(_value: uint256, _claim_rewards: bool = False):
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.withdraw(1000000000000000000, False)
 ```
 
 </Example>
@@ -246,7 +251,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 
 :::warning[Claiming for another user]
 
-When claiming for another user, the rewards can not be redirected to another wallet.
+When claiming for another user, the rewards cannot be redirected to another wallet.
 
 
 :::
@@ -332,7 +337,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.claim_rewards('0x989AEb4d175e16225E39E87d0D97A3360524AD80')
 ```
 
 </Example>
@@ -341,7 +346,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 ::::
 
 ### `claimed_reward`
-::::description[`LiquidityGaugeV6.claimed_reward(_addr: address, _token: address) -> uint256:`]
+::::description[`LiquidityGaugeV6.claimed_reward(_addr: address, _token: address) -> uint256: view`]
 
 
 Getter for the total amount of `_token` claimed by `_addr`.
@@ -387,7 +392,7 @@ def claimed_reward(_addr: address, _token: address) -> uint256:
 ::::
 
 ### `claimable_reward`
-::::description[`LiquidityGaugeV6.claimable_reward(_user: address, _reward_token: address) -> uint256`]
+::::description[`LiquidityGaugeV6.claimable_reward(_user: address, _reward_token: address) -> uint256: view`]
 
 
 Function to check the claimable amount of `_reward_token` for `_user`.
@@ -508,7 +513,7 @@ def set_rewards_receiver(_receiver: address):
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.set_rewards_receiver('0x0000000000000000000000000000000000000000')
 ```
 
 </Example>
@@ -619,7 +624,7 @@ reward_tokens: public(address[MAX_REWARDS])
 ::::description[`LiquidityGaugeV6.reward_count() -> uint256: view`]
 
 
-Getter for the count of added reward tokens. This variable is incremented by one each time `add_rewards` is called.
+Getter for the count of added reward tokens. This variable is incremented by one each time `add_reward` is called.
 
 Returns: number of reward tokens added (`uint256`).
 
@@ -686,17 +691,17 @@ def __init__(_lp_token: address):
 ::::
 
 ### `add_reward`
-::::description[`LiquidityGaugeV6.add_reward(_reward_token: address, _distributor: address):`]
+::::description[`LiquidityGaugeV6.add_reward(_reward_token: address, _distributor: address)`]
 
 
 :::guard[Guarded Methods]
 
-This function can only be called by the `manager` of the gauge or the `admin` of the Factory.
+This function can only be called by the `manager` of the gauge or the `owner` of the Factory.
 
 
 :::
 
-Function to add specify a reward token and distributor for the gauge. Once a reward tokens is added, it can not be removed anymore.
+Function to add specify a reward token and distributor for the gauge. Once a reward token is added, it cannot be removed anymore.
 
 | Input           | Type      | Description                        |
 | --------------- | --------- | ---------------------------------- |
@@ -731,7 +736,7 @@ def add_reward(_reward_token: address, _distributor: address):
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.add_reward('0xfe18aE03741a5b84e39C295Ac9C856eD7991C38e', '0xC56706334afE5a1638845ED9168E2ca3b3dbCCe7')
 ```
 
 </Example>
@@ -787,7 +792,7 @@ def set_gauge_manager(_gauge_manager: address):
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.set_gauge_manager('0xC56706334afE5a1638845ED9168E2ca3b3dbCCe7')
 ```
 
 </Example>
@@ -840,7 +845,7 @@ def set_reward_distributor(_reward_token: address, _distributor: address):
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.set_reward_distributor('0xfe18aE03741a5b84e39C295Ac9C856eD7991C38e', '0xC56706334afE5a1638845ED9168E2ca3b3dbCCe7')
 ```
 
 </Example>
@@ -928,7 +933,7 @@ def deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint2
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.deposit_reward_token('0xfe18aE03741a5b84e39C295Ac9C856eD7991C38e', 1000000000000000000, 604800)
 ```
 
 </Example>
@@ -990,13 +995,13 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
 
 *General formula for calculating the boost:*
 
-$$\text\{lim\}  = l \times 0.4$$
+$$\text{lim}  = l \times 0.4$$
 
-$$\text\{lim\} = \text\{lim\} + L \times \frac\{\text\{voting_balance\}\}\{\text\{voting_total\}\} \times 0.6$$
+$$\text{lim} = \text{lim} + L \times \frac{\text{voting\_balance}}{\text{voting\_total}} \times 0.6$$
 
-$$\text\{lim\} = \min(l, \text\{lim\})$$
+$$\text{lim} = \min(l, \text{lim})$$
 
-$$\text\{boost factor\} = \frac\{lim\}\{l \times 0.4\}$$
+$$\text{boost factor} = \frac{\text{lim}}{l \times 0.4}$$
 
 *with:*
 
@@ -1290,7 +1295,7 @@ def _checkpoint(addr: address):
 
     # Update user-specific integrals
     _working_balance: uint256 = self.working_balances[addr]
-    self.integrate_fraction[addr] += _working_balance * (_integrate_inv_supply - self.integrate_inv_supply_of[addr]) / 10 **18
+    self.integrate_fraction[addr] += _working_balance * (_integrate_inv_supply - self.integrate_inv_supply_of[addr]) / 10 ** 18
     self.integrate_inv_supply_of[addr] = _integrate_inv_supply
     self.integrate_checkpoint_of[addr] = block.timestamp
 
@@ -1326,7 +1331,8 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.user_checkpoint('0x989AEb4d175e16225E39E87d0D97A3360524AD80')
+True
 ```
 
 </Example>
@@ -1445,7 +1451,7 @@ def _checkpoint(addr: address):
 
     # Update user-specific integrals
     _working_balance: uint256 = self.working_balances[addr]
-    self.integrate_fraction[addr] += _working_balance * (_integrate_inv_supply - self.integrate_inv_supply_of[addr]) / 10 **18
+    self.integrate_fraction[addr] += _working_balance * (_integrate_inv_supply - self.integrate_inv_supply_of[addr]) / 10 ** 18
     self.integrate_inv_supply_of[addr] = _integrate_inv_supply
     self.integrate_checkpoint_of[addr] = block.timestamp
 
@@ -1481,7 +1487,7 @@ def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.kick('0x989AEb4d175e16225E39E87d0D97A3360524AD80')
 ```
 
 </Example>
@@ -1508,7 +1514,7 @@ Liquidity gauges have a "killed status" stored in the `is_killed` variable. This
 ::::description[`LiquidityGaugeV6.is_killed() -> bool: view`]
 
 
-Getter function to check if the gauge is killed. If `ture`, the inflation rate for the gauge will be set to zero.
+Getter function to check if the gauge is killed. If `true`, the inflation rate for the gauge will be set to zero.
 
 Returns: killed status (`bool`).
 
@@ -1561,12 +1567,14 @@ def _checkpoint(addr: address):
 
 :::guard[Guarded Methods]
 
-This function can only be called by the `admin` of the Factory.
+This function can only be called by the `owner` of the Factory.
 
 
 :::
 
 Function to kill a gauge.
+
+Emits: `SetKilled` event.
 
 | Input        | Type   | Description                        |
 | ------------ | ------ | ---------------------------------- |
@@ -1595,7 +1603,7 @@ def set_killed(_is_killed: bool):
 <Example>
 
 ```shell
->>> soon
+>>> LiquidityGaugeV6.set_killed(True)
 ```
 
 </Example>

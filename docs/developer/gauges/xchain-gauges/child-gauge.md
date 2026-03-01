@@ -18,6 +18,8 @@ The source code for the `ChildGauge.vy` contract can be found on [ GitHub](https
 
 Function to initialize the gauge. A child gauge is initialized directly when deploying it from the `ChildGaugeFactory` via the [`deploy_gauge`](./child-gauge-factory.md#deploy_gauge) function.
 
+Emits: `SetGaugeManager` event.
+
 | Parameter | Type | Description |
 | --------- | ---- | ------------ |
 | `_lp_token` | `address` | The LP token address |
@@ -161,7 +163,7 @@ def _checkpoint(_user: address):
                 # we don't have to worry about crossing inflation epochs
                 # and if we miss any weeks, those weeks inflation rates will be 0 for sure
                 # but that means no one interacted with the gauge for that long
-                integrate_inv_supply += self.inflation_rate[prev_week_time / WEEK] * 10 **18 * dt / working_supply
+                integrate_inv_supply += self.inflation_rate[prev_week_time / WEEK] * 10 ** 18 * dt / working_supply
 
             if week_time == block.timestamp:
                 break
@@ -183,7 +185,7 @@ def _checkpoint(_user: address):
     self.integrate_inv_supply[period] = integrate_inv_supply
 
     working_balance: uint256 = self.working_balances[_user]
-    self.integrate_fraction[_user] += working_balance * (integrate_inv_supply - self.integrate_inv_supply_of[_user]) / 10 **18
+    self.integrate_fraction[_user] += working_balance * (integrate_inv_supply - self.integrate_inv_supply_of[_user]) / 10 ** 18
     self.integrate_inv_supply_of[_user] = integrate_inv_supply
     self.integrate_checkpoint_of[_user] = block.timestamp
 
@@ -218,8 +220,9 @@ def _update_liquidity_limit(_user: address, _user_balance: uint256, _total_suppl
 
 <Example>
 
-
-
+```python
+>>> ChildGauge.deposit(1000000000000000000, '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', False)
+```
 
 </Example>
 
@@ -232,7 +235,7 @@ def _update_liquidity_limit(_user: address, _user_balance: uint256, _total_suppl
 
 Function to withdraw `_value` of LP tokens from the gauge. When withdrawing LP tokens from the gauge, the contract burns the equivalent amount of "gauge tokens" from the user. Additionally, the function also allows for claiming any pending external rewards (not CRV emissions).
 
-Emits: `Withdraw`, `Transfer` events.
+Emits: `Withdraw`, `Transfer`, `UpdateLiquidityLimit` events.
 
 | Parameter | Type | Description |
 | --------- | ---- | ------------ |
@@ -313,7 +316,7 @@ def _checkpoint(_user: address):
                 # we don't have to worry about crossing inflation epochs
                 # and if we miss any weeks, those weeks inflation rates will be 0 for sure
                 # but that means no one interacted with the gauge for that long
-                integrate_inv_supply += self.inflation_rate[prev_week_time / WEEK] * 10 **18 * dt / working_supply
+                integrate_inv_supply += self.inflation_rate[prev_week_time / WEEK] * 10 ** 18 * dt / working_supply
 
             if week_time == block.timestamp:
                 break
@@ -335,7 +338,7 @@ def _checkpoint(_user: address):
     self.integrate_inv_supply[period] = integrate_inv_supply
 
     working_balance: uint256 = self.working_balances[_user]
-    self.integrate_fraction[_user] += working_balance * (integrate_inv_supply - self.integrate_inv_supply_of[_user]) / 10 **18
+    self.integrate_fraction[_user] += working_balance * (integrate_inv_supply - self.integrate_inv_supply_of[_user]) / 10 ** 18
     self.integrate_inv_supply_of[_user] = integrate_inv_supply
     self.integrate_checkpoint_of[_user] = block.timestamp
 ```
@@ -344,8 +347,9 @@ def _checkpoint(_user: address):
 
 <Example>
 
-
-
+```python
+>>> ChildGauge.withdraw(1000000000000000000, False)
+```
 
 </Example>
 
@@ -456,7 +460,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 <Example>
 
 ```python
->>> soon
+>>> ChildGauge.claim_rewards()
 ```
 
 </Example>
@@ -465,7 +469,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 ::::
 
 ### `claimed_reward`
-::::description[`ChildGauge.claimed_reward(_addr: address, _token: address) -> uint256`]
+::::description[`ChildGauge.claimed_reward(_addr: address, _token: address) -> uint256: view`]
 
 
 Function to get the number of claimed reward tokens for a user.
@@ -500,7 +504,8 @@ def claimed_reward(_addr: address, _token: address) -> uint256:
 <Example>
 
 ```python
->>> ChildGauge.claimed_reward(todo)
+>>> ChildGauge.claimed_reward('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x6B175474E89094C44Da98b954EedeAC495271d0F')
+0
 ```
 
 </Example>
@@ -509,7 +514,7 @@ def claimed_reward(_addr: address, _token: address) -> uint256:
 ::::
 
 ### `claimable_reward`
-::::description[`ChildGauge.claimable_reward(_user: address, _reward_token: address) -> uint256`]
+::::description[`ChildGauge.claimable_reward(_user: address, _reward_token: address) -> uint256: view`]
 
 
 Function to get the number of claimable reward tokens for a user.
@@ -559,7 +564,8 @@ def claimable_reward(_user: address, _reward_token: address) -> uint256:
 <Example>
 
 ```python
->>> soon
+>>> ChildGauge.claimable_reward('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x6B175474E89094C44Da98b954EedeAC495271d0F')
+0
 ```
 
 </Example>
@@ -685,7 +691,8 @@ reward_data: public(HashMap[address, Reward])
 <Example>
 
 ```py
->>> soon
+>>> ChildGauge.reward_data('0x6B175474E89094C44Da98b954EedeAC495271d0F')
+{'distributor': '0x...', 'period_finish': 0, 'rate': 0, 'last_update': 0, 'integral': 0}
 ```
 
 </Example>
@@ -718,7 +725,8 @@ reward_tokens: public(address[MAX_REWARDS])
 <Example>
 
 ```python
->>> soon
+>>> ChildGauge.reward_tokens(0)
+'0x0000000000000000000000000000000000000000'
 ```
 
 </Example>
@@ -746,7 +754,8 @@ reward_count: public(uint256)
 <Example>
 
 ```python
->>> soon
+>>> ChildGauge.reward_count()
+0
 ```
 
 </Example>
@@ -780,7 +789,8 @@ reward_integral_for: public(HashMap[address, HashMap[address, uint256]])
 <Example>
 
 ```python
->>> soon
+>>> ChildGauge.reward_integral_for('0x6B175474E89094C44Da98b954EedeAC495271d0F', '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
+0
 ```
 
 </Example>
@@ -812,7 +822,8 @@ reward_remaining: public(HashMap[address, uint256])  # fixes bad precision
 <Example>
 
 ```python
->>> soon
+>>> ChildGauge.reward_remaining('0x6B175474E89094C44Da98b954EedeAC495271d0F')
+0
 ```
 
 </Example>
@@ -821,14 +832,14 @@ reward_remaining: public(HashMap[address, uint256])  # fixes bad precision
 ::::
 
 ### `recover_remaining`
-::::description[`ChildGauge.integrate_checkpoint_of(_user: address) -> uint256: view`]
+::::description[`ChildGauge.recover_remaining(_reward_token: address)`]
 
 
-Getter for the timestamp of the last checkpoint for a user.
+Function to recover remaining reward tokens that have not been distributed. Can only be called by the reward distributor.
 
 | Parameter | Type | Description |
 | --------- | ---- | ------------ |
-| `_user` | `address` | The user address to get the integrate checkpoint for |
+| `_reward_token` | `address` | Reward token to recover |
 
 
 <SourceCode>
@@ -920,7 +931,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 <Example>
 
 ```py
->>> soon
+>>> ChildGauge.recover_remaining('0x6B175474E89094C44Da98b954EedeAC495271d0F')
 ```
 
 </Example>
@@ -956,8 +967,13 @@ External rewards are separate from CRV emissions and are not subject to boost mu
 ### `add_reward`
 ::::description[`ChildGauge.add_reward(_reward_token: address, _distributor: address)`]
 
+:::guard[Guarded Method]
+This function is only callable by the `manager` of the gauge or the `owner` of the `ChildGaugeFactory`.
+:::
 
 Function to add a reward token for distribution. When calling this function, a distributor address must be set for the reward token. Only this distributor can deposit the reward token via the `deposit_reward_token` function.
+
+Emits: `AddReward`, `SetDistributor` events.
 
 | Parameter | Type | Description |
 | --------- | ---- | ------------ |
@@ -1027,6 +1043,8 @@ This function is only callable by the current distributor of the reward token, t
 
 Function to reassign the reward distributor for a reward token.
 
+Emits: `SetDistributor` event.
+
 | Parameter | Type | Description |
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | The reward token to reassign the distributor for |
@@ -1093,6 +1111,9 @@ This example changes the distributor for the `crvUSD` reward token from `0x12345
 ### `deposit_reward_token`
 ::::description[`ChildGauge.deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint256 = WEEK)`]
 
+:::guard[Guarded Method]
+This function is only callable by the authorized `distributor` of the reward token.
+:::
 
 Function to deposit a reward token for distribution.
 
@@ -1328,7 +1349,7 @@ This example changes the manager of the gauge from `0x12345678901234567890123456
 For more information on how boosting works, please refer to the [Boosting Explainer](./overview.md#boosting) page.
 
 ### `user_checkpoint`
-::::description[`ChildGauge.user_checkpoint(_user: address) -> bool`]
+::::description[`ChildGauge.user_checkpoint(addr: address) -> bool`]
 
 
 Function to record a checkpoint for a user.
@@ -1337,7 +1358,7 @@ Returns: `True` if the checkpoint was recorded successfully (`bool`).
 
 | Parameter | Type | Description |
 | --------- | ---- | ------------ |
-| `_user` | `address` | The user address to record a checkpoint for |
+| `addr` | `address` | The user address to record a checkpoint for |
 
 
 <SourceCode>
@@ -1378,7 +1399,7 @@ def _checkpoint(_user: address):
                 # we don't have to worry about crossing inflation epochs
                 # and if we miss any weeks, those weeks inflation rates will be 0 for sure
                 # but that means no one interacted with the gauge for that long
-                integrate_inv_supply += self.inflation_rate[prev_week_time / WEEK] * 10 **18 * dt / working_supply
+                integrate_inv_supply += self.inflation_rate[prev_week_time / WEEK] * 10 ** 18 * dt / working_supply
 
             if week_time == block.timestamp:
                 break
@@ -1400,7 +1421,7 @@ def _checkpoint(_user: address):
     self.integrate_inv_supply[period] = integrate_inv_supply
 
     working_balance: uint256 = self.working_balances[_user]
-    self.integrate_fraction[_user] += working_balance * (integrate_inv_supply - self.integrate_inv_supply_of[_user]) / 10 **18
+    self.integrate_fraction[_user] += working_balance * (integrate_inv_supply - self.integrate_inv_supply_of[_user]) / 10 ** 18
     self.integrate_inv_supply_of[_user] = integrate_inv_supply
     self.integrate_checkpoint_of[_user] = block.timestamp
 
@@ -1512,8 +1533,8 @@ integrate_checkpoint_of: public(HashMap[address, uint256])
 <Example>
 
 ```py
->>> ChildGauge.integrate_checkpoint_of(todo)
-todo
+>>> ChildGauge.integrate_checkpoint_of('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
+1700000000
 ```
 
 </Example>
@@ -1551,7 +1572,7 @@ working_balances: public(HashMap[address, uint256])
 <Example>
 
 ```py
->>> ChildGauge.working_balances(0x20a440aECf78c73d484B652C46d582B4D70906A8)
+>>> ChildGauge.working_balances('0x20a440aECf78c73d484B652C46d582B4D70906A8')
 106163327646490
 ```
 
@@ -1692,7 +1713,7 @@ integrate_fraction: public(HashMap[address, uint256])
 <Example>
 
 ```py
->>> ChildGauge.integrate_fraction(0x20a440aECf78c73d484B652C46d582B4D70906A8)
+>>> ChildGauge.integrate_fraction('0x20a440aECf78c73d484B652C46d582B4D70906A8')
 0
 ```
 
@@ -1754,7 +1775,7 @@ def _checkpoint(_user: address):
                 # we don't have to worry about crossing inflation epochs
                 # and if we miss any weeks, those weeks inflation rates will be 0 for sure
                 # but that means no one interacted with the gauge for that long
-                integrate_inv_supply += self.inflation_rate[prev_week_time / WEEK] * 10 **18 * dt / working_supply
+                integrate_inv_supply += self.inflation_rate[prev_week_time / WEEK] * 10 ** 18 * dt / working_supply
 
             if week_time == block.timestamp:
                 break
@@ -1776,7 +1797,7 @@ def _checkpoint(_user: address):
     self.integrate_inv_supply[period] = integrate_inv_supply
 
     working_balance: uint256 = self.working_balances[_user]
-    self.integrate_fraction[_user] += working_balance * (integrate_inv_supply - self.integrate_inv_supply_of[_user]) / 10 **18
+    self.integrate_fraction[_user] += working_balance * (integrate_inv_supply - self.integrate_inv_supply_of[_user]) / 10 ** 18
     self.integrate_inv_supply_of[_user] = integrate_inv_supply
     self.integrate_checkpoint_of[_user] = block.timestamp
 ```
@@ -1939,6 +1960,9 @@ root_gauge: public(address)
 ### `set_root_gauge`
 ::::description[`ChildGauge.set_root_gauge(_root: address)`]
 
+:::guard[Guarded Method]
+This function is only callable by the `owner` or `manager` of the `ChildGaugeFactory`.
+:::
 
 Function to set the root gauge address in case something went wrong (e.g. between implementation updates).
 
@@ -2100,6 +2124,8 @@ This function is only callable by the `owner` of the `ChildGaugeFactory`.
 
 Function to set the killed status for the gauge.
 
+Emits: `SetKilled` event.
+
 | Parameter    | Type   | Description |
 | ------------ | ------ | ----------- |
 | `_is_killed` | `bool` | The killed status to set |
@@ -2179,12 +2205,12 @@ totalSupply: public(uint256)
 ::::
 
 ### `factory`
-::::description[`ChildGauge.factory() -> address: view`]
+::::description[`ChildGauge.factory() -> Factory: view`]
 
 
 Getter for the `ChildGaugeFactory` contract.
 
-Returns: `ChildGaugeFactory` contract (`address`).
+Returns: `ChildGaugeFactory` contract (`Factory`).
 
 
 <SourceCode>
@@ -2274,7 +2300,7 @@ def initialize(_lp_token: address, _root: address, _manager: address):
 ::::
 
 ### `version`
-::::description[`ChildGauge.version() -> String[8]`]
+::::description[`ChildGauge.version() -> String[8]: view`]
 
 
 Getter for the version of the gauge contract.
@@ -2285,9 +2311,9 @@ Returns: version (`String[8]`).
 <SourceCode>
 
 ```vyper
-VERSION: constant(String[8]) = "1.0.0"
+VERSION: constant(String[8]) = "1.1.0"
 
-@view
+@pure
 @external
 def version() -> String[8]:
     """
@@ -2302,7 +2328,7 @@ def version() -> String[8]:
 
 ```py
 >>> ChildGauge.version()
-"1.0.0"
+"1.1.0"
 ```
 
 </Example>

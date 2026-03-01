@@ -5,7 +5,7 @@ The `RootGaugeFactory` contract is used to deploy liquidity gauges on the Ethere
 
 :::vyper[`RootGaugeFactory.vy`]
 
-The source code for the `RootGaugeFactory.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/RootGaugeFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`
+The source code for the `RootGaugeFactory.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-xchain-factory/blob/master/contracts/RootGaugeFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6`](https://etherscan.io/address/0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6).
 
@@ -36,9 +36,11 @@ If `get_bridger(chain_id)` returns a non-zero address, the chain is supported an
 ::::description[`RootGaugeFactory.deploy_gauge(_chain_id: uint256, _salt: bytes32) -> RootGauge`]
 
 
-Function to deploy and initialize a new root gauge for a given chain ID. This function call reverts if there is no `bridger` contract set for the given `_chain_id`.
+Function to deploy and initialize a new root gauge for a given chain ID. This function is `@payable` to allow for bridging costs. This function call reverts if there is no `bridger` contract set for the given `_chain_id`.
 
 Returns: newly deployed gauge (`RootGauge`).
+
+Emits: `DeployedGauge` event.
 
 | Input       | Type      | Description |
 | ----------- | --------- | ----------- |
@@ -215,11 +217,11 @@ Transmitting emissions is permissionless. Anyone can do it.
 ::::description[`RootGaugeFactory.transmit_emissions(_gauge: RootGauge)`]
 
 
-Function to mint and transmit emissions to the `ChildGauge` on the destination chain. This function is permissionsless and can be called by anyone.
+Function to mint and transmit emissions to the `ChildGauge` on the destination chain. This function is permissionless and can be called by anyone.
 
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
-| `_gauge` | `address` | Root gauge to transmit emissions for |
+| `_gauge` | `RootGauge` | Root gauge to transmit emissions for |
 
 
 <SourceCode>
@@ -267,12 +269,12 @@ This example transmits CRV emissions for the `RootGauge` at `0x6233394c3C466A45A
 
 
 ### `get_bridger`
-::::description[`RootGaugeFactory.get_bridger(_chain_id: uint256) -> address: view`]
+::::description[`RootGaugeFactory.get_bridger(_chain_id: uint256) -> Bridger: view`]
 
 
 Getter for the bridger for a given chain ID. This contract is used to bridge CRV emissions to the `ChildGauge`.
 
-Returns: bridger (`address`).
+Returns: bridger (`Bridger`).
 
 | Input      | Type      | Description |
 | ----------- | --------- | ----------- |
@@ -294,8 +296,10 @@ get_bridger: public(HashMap[uint256, Bridger])
 
 <Example>
 
-
-
+```py
+>>> RootGaugeFactory.get_bridger(252)
+'0x0199429171bcE183048dccf1d5546Ca519EA9717'
+```
 
 </Example>
 
@@ -310,7 +314,7 @@ get_bridger: public(HashMap[uint256, Bridger])
 The `RootGaugeFactory` contract also provides a few getters to retrieve information about the deployed `RootGauges`.
 
 ### `get_gauge`
-::::description[`RootGaugeFactory.get_gauge(_chain_id: uint256, _idx: uint256) -> RootGauge`]
+::::description[`RootGaugeFactory.get_gauge(_chain_id: uint256, _idx: uint256) -> RootGauge: view`]
 
 
 Getter for gauges on a given chain ID and index.
@@ -335,8 +339,10 @@ get_gauge: public(HashMap[uint256, RootGauge[max_value(uint256)]])
 
 <Example>
 
-
-
+```py
+>>> RootGaugeFactory.get_gauge(252, 0)
+'0x6233394c3C466A45A505EFA4857489743168E9Fa'
+```
 
 </Example>
 
@@ -345,7 +351,7 @@ get_gauge: public(HashMap[uint256, RootGauge[max_value(uint256)]])
 
 
 ### `get_gauge_count`
-::::description[`RootGaugeFactory.get_gauge_count(_chain_id: uint256) -> uint256`]
+::::description[`RootGaugeFactory.get_gauge_count(_chain_id: uint256) -> uint256: view`]
 
 
 Getter to get the number of gauges for a given chain ID. This value is incremented by one for each new gauge deployed.
@@ -369,8 +375,10 @@ get_gauge_count: public(HashMap[uint256, uint256])
 
 <Example>
 
-
-
+```py
+>>> RootGaugeFactory.get_gauge_count(252)
+3
+```
 
 </Example>
 
@@ -379,7 +387,7 @@ get_gauge_count: public(HashMap[uint256, uint256])
 
 
 ### `is_valid_gauge`
-::::description[`RootGaugeFactory.is_valid_gauge(_gauge: RootGauge) -> bool`]
+::::description[`RootGaugeFactory.is_valid_gauge(_gauge: RootGauge) -> bool: view`]
 
 
 Getter to check if a gauge is valid.
@@ -388,7 +396,7 @@ Returns: `True` if the gauge is valid, `False` otherwise (`bool`).
 
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
-| `_gauge` | `address` | Root gauge to check validity for |
+| `_gauge` | `RootGauge` | Root gauge to check validity for |
 
 
 <SourceCode>
@@ -403,8 +411,10 @@ is_valid_gauge: public(HashMap[RootGauge, bool])
 
 <Example>
 
-
-
+```py
+>>> RootGaugeFactory.is_valid_gauge('0x6233394c3C466A45A505EFA4857489743168E9Fa')
+True
+```
 
 </Example>
 
@@ -422,7 +432,7 @@ The `RootGaugeFactory` contract also provides a few getters to retrieve informat
 ::::description[`RootGaugeFactory.get_implementation() -> address: view`]
 
 
-Getter for the `RootGauge` implementation contract. This implementation contract is used to deploy new `RootGauge` contracts using
+Getter for the `RootGauge` implementation contract. This implementation contract is used to deploy new `RootGauge` contracts using Vyper's built-in `create_minimal_proxy_to` function.
 
 Returns: implementation address (`address`).
 
@@ -439,8 +449,10 @@ get_implementation: public(address)
 
 <Example>
 
-
-
+```py
+>>> RootGaugeFactory.get_implementation()
+'0x96720942F9fF22eFd8611F696E5333Fe3671717a'
+```
 
 </Example>
 
@@ -550,8 +562,10 @@ get_child_factory: public(HashMap[uint256, address])
 
 <Example>
 
-
-
+```py
+>>> RootGaugeFactory.get_child_factory(252)
+'0x0B8D6B6CeFC7Aa1C2852442e518443B1b22e1C52'
+```
 
 </Example>
 
@@ -584,8 +598,10 @@ get_child_implementation: public(HashMap[uint256, address])
 
 <Example>
 
-
-
+```py
+>>> RootGaugeFactory.get_child_implementation(252)
+'0x6A611215540555A7feBCB64CB0Ed11Ac90F165Af'
+```
 
 </Example>
 
@@ -710,8 +726,10 @@ def __init__(_call_proxy: CallProxy, _owner: address):
 
 <Example>
 
-
-
+```py
+>>> RootGaugeFactory.call_proxy()
+'0x0000000000000000000000000000000000000000'
+```
 
 </Example>
 
