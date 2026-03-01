@@ -6,7 +6,7 @@ The `Hooker` contract is a versatile and essential component within the Curve Fi
 
 :::vyper[`Hooker.vy`]
 
-The source code for the `Hooker.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-burners/blob/main/contracts/hooks/Hooker.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `Hooker.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-burners/blob/main/contracts/hooks/Hooker.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 The `Hooker` contract is deployed on the following chains:
 
@@ -405,7 +405,7 @@ def _shot(hook: Hook, hook_input: HookInput):
 ::::description[`Hooker.duty_counter() -> uint64: view`]
 
 
-Getter for the duty counter value. This varaible is used to record the current week number and is used to manage and reset the cooldown periods for hook compensations, ensuring that hooks do not exceed their compensation limits within a given week.
+Getter for the duty counter value. This variable is used to record the current week number and is used to manage and reset the cooldown periods for hook compensations, ensuring that hooks do not exceed their compensation limits within a given week.
 
 Returns: duty counter (`uint64`).
 
@@ -438,7 +438,7 @@ duty_counter: public(uint64)
 ::::description[`Hooker.act(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _receiver: address=msg.sender) -> uint256`]
 
 
-Function to execute hooks. Unlike, `duty_act` (which is specifically for the fee distribution process), this function allows the execuction of more general hooks.
+Function to execute hooks. Unlike, `duty_act` (which is specifically for the fee distribution process), this function allows the execution of more general hooks.
 
 Returns: received compensation (`uint256`).
 
@@ -551,7 +551,7 @@ def _shot(hook: Hook, hook_input: HookInput):
 ::::
 
 ### `calc_compensation`
-::::description[`Hooker.calc_compensation(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _duty: bool=False, _ts: uint256=block.timestamp) -> uint256`]
+::::description[`Hooker.calc_compensation(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _duty: bool=False, _ts: uint256=block.timestamp) -> uint256: view`]
 
 
 Function to calculate the compensation for executing specific hooks.
@@ -795,12 +795,12 @@ SUPPORTED_INTERFACES: constant(bytes4[2]) = [
 
 
 ### `supportsInterface`
-::::description[`Hooker.supportsInterface(_interface_id: bytes4) -> bool`]
+::::description[`Hooker.supportsInterface(_interface_id: bytes4) -> bool: pure`]
 
 
 Function to check if the burner supports the correct interface, as specified by the [ERC-165](https://eips.ethereum.org/EIPS/eip-165) standard. This method makes sure the contract is compatible with the `FeeCollector` contract.
 
-Returns: true or false (`bool`)
+Returns: true or false (`bool`).
 
 | Input   | Type      | Description                    |
 | ------- | --------- | ------------------------------ |

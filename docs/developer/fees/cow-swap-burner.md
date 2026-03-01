@@ -5,7 +5,7 @@ The `CowSwapBurner` is an essential component of the fee burning architecture, d
 
 :::vyper[`CowSwapBurner.vy`]
 
-The source code for the `CowSwapBurner.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-burners/blob/main/contracts/burners/CowSwapBurner.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `CowSwapBurner.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-burners/blob/main/contracts/burners/CowSwapBurner.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 The `CowSwapBurner` is only deployed on Ethereum and Gnosis so far, as CowSwap is only deployed on these chains.[^1]
 
@@ -16,7 +16,7 @@ The `CowSwapBurner` is only deployed on Ethereum and Gnosis so far, as CowSwap i
 
 :::
 
-This system simplifies fee burning by requiring only a single burner contract. A simple function call can create an order that sells a accrued fee token into the target token.
+This system simplifies fee burning by requiring only a single burner contract. A simple function call can create an order that sells an accrued fee token into the target token.
 
 The old system used various kinds of burners with hardcoded routes, which often did not result in the most efficient fee burning mechanism, thereby "losing" fees that could be distributed among veCRV holders.
 
@@ -119,7 +119,7 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 ::::
 
 ### `get_current_order`
-::::description[`CowSwapBurner.get_current_order(sell_token: address=empty(address)) -> GPv2Order_Data`]
+::::description[`CowSwapBurner.get_current_order(sell_token: address=empty(address)) -> GPv2Order_Data: view`]
 
 
 Getter for the current order parameters of a token.
@@ -285,10 +285,10 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 ::::
 
 ### `getTradableOrder`
-::::description[`CowSwapBurner.getTradeableOrder(_owner: address, _sender: address, _ctx: bytes32, _static_input: Bytes[STATIC_DATA_LEN], _offchain_input: Bytes[OFFCHAIN_DATA_LEN]) -> GPv2Order_Data`]
+::::description[`CowSwapBurner.getTradeableOrder(_owner: address, _sender: address, _ctx: bytes32, _static_input: Bytes[STATIC_DATA_LEN], _offchain_input: Bytes[OFFCHAIN_DATA_LEN]) -> GPv2Order_Data: view`]
 
 
-Function to generate a order for the WatchTower.
+Function to generate an order for the WatchTower.
 
 Returns: order parameters (`GPv2Order_Data`).
 
@@ -298,7 +298,7 @@ Returns: order parameters (`GPv2Order_Data`).
 | `_sender`         | `address`                  | `msg.sender` context calling `isValidSignature` |
 | `_ctx`            | `bytes32`                  | Execution context                               |
 | `_static_input`   | `Bytes[STATIC_DATA_LEN]`   | `sellToken` encoded as `bytes(Bytes[20])`       |
-| `_offchain_input` | `Bxtes[OFFCHAIN_DATA_LEN]` | Not used, zero-length bytes                     |
+| `_offchain_input` | `Bytes[OFFCHAIN_DATA_LEN]` | Not used, zero-length bytes                     |
 
 <SourceCode>
 
@@ -381,7 +381,7 @@ def _get_order(sell_token: ERC20) -> GPv2Order_Data:
 ::::
 
 ### `verify`
-::::description[`CowSwapBurner.verify(_owner: address, _sender: address, _hash: bytes32, _domain_separator: bytes32, _ctx: bytes32, _static_input: Bytes[STATIC_DATA_LEN], _offchain_input: Bytes[OFFCHAIN_DATA_LEN], _order: GPv2Order_Data)`]
+::::description[`CowSwapBurner.verify(_owner: address, _sender: address, _hash: bytes32, _domain_separator: bytes32, _ctx: bytes32, _static_input: Bytes[STATIC_DATA_LEN], _offchain_input: Bytes[OFFCHAIN_DATA_LEN], _order: GPv2Order_Data): view`]
 
 
 Function to verify CowSwap orders to ensure that the order adheres to the conditions set by the contract and can be executed properly.
@@ -391,7 +391,7 @@ Function to verify CowSwap orders to ensure that the order adheres to the condit
 | `_owner`            | `address`                  | Owner of conditional order (self)                      |
 | `_sender`           | `address`                  | `msg.sender` context calling `isValidSignature`        |
 | `_hash`             | `bytes32`                  | `EIP-712` order digest                                 |
-| `_domain_seperator` | `bytes32`                  | `EIP-712` domain separator                             |
+| `_domain_separator` | `bytes32`                  | `EIP-712` domain separator                             |
 | `_ctx`              | `bytes32`                  | Execution context                                      |
 | `_static_input`     | `Bytes[STATIC_DATA_LEN]`   | ConditionalOrder's staticData (coin address)           |
 | `_offchain_input`   | `Bytes[OFFCHAIN_DATA_LEN]` | Conditional order type-specific data NOT known at time of creation for a specific discrete order (or zero-length bytes if not applicable).  |
@@ -461,7 +461,7 @@ def verify(
 ::::
 
 ### `isValidSignature`
-::::description[`CowSwapBurner.isValidSignature(_hash: bytes32, signature: Bytes[1792]) -> bytes4`]
+::::description[`CowSwapBurner.isValidSignature(_hash: bytes32, signature: Bytes[1792]) -> bytes4: view`]
 
 
 Function to verify a ERC-1271 signature for a given hash.
@@ -570,7 +570,7 @@ This function is only callable by the `owner` of the `FeeCollector` contract.
 
 :::
 
-Function to set the a new `target_threshold` value.
+Function to set a new `target_threshold` value.
 
 | Input               | Type      | Description                |
 | ------------------- | --------- | -------------------------- |
@@ -619,7 +619,7 @@ Additionally, there is a recover function which lets the `owner` or `emergency_o
 
 Function to push the entire balance of the target coin to the `FeeCollector`. This function can be called externally, but is also called directly by the `FeeCollector` before the target coins are forwarded to the hooker contract using the `forward` function.
 
-Returns: amout of target coins pushed (`uint256`).
+Returns: amount of target coins pushed (`uint256`).
 
 <SourceCode>
 
@@ -720,12 +720,12 @@ SUPPORTED_INTERFACES: constant(bytes4[4]) = [
 
 
 ### `supportsInterface`
-::::description[`CowSwapBurner.supportsInterface(_interface_id: bytes4) -> bool`]
+::::description[`CowSwapBurner.supportsInterface(_interface_id: bytes4) -> bool: pure`]
 
 
 Function to check if the burner supports the correct interface, as specified by the [ERC-165](https://eips.ethereum.org/EIPS/eip-165) standard. This method makes sure the contract is compatible with the `FeeCollector` contract.
 
-Returns: true or false (`bool`)
+Returns: true or false (`bool`).
 
 | Input           | Type     | Description         |
 | --------------- | -------- | ------------------- |
@@ -984,7 +984,7 @@ ADD_DATA: public(constant(bytes32)) = 0x058315b749613051abcbf50cf2d605b4fa4a4155
 
 Getter for the burner version. 
 
-Returns: version (`String[20]`)
+Returns: version (`String[20]`).
 
 <SourceCode>
 
