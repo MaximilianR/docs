@@ -2,7 +2,7 @@
 # Withdraw & Burn
 
 
-In order to be able to burn admin fees into the fee token, those fees have to be claimed prior. **Admin fees can be claimed by anyone.**Somethimes, the function to claim the fees is guarded and therefore only called by the proxy contract (admin or owner of the pool). If thats the case, users can just call the claim function via the proxy contract (as the function is not guarded there).
+In order to be able to burn admin fees into the fee token, those fees have to be claimed prior. **Admin fees can be claimed by anyone.** Sometimes, the function to claim the fees is guarded and therefore only called by the proxy contract (admin or owner of the pool). If that's the case, users can just call the claim function via the proxy contract (as the function is not guarded there).
 
 Claiming fees can differ based on which source they are claimed from:
 
@@ -21,7 +21,7 @@ Admin fees can either be claimed through the corresponding PoolProxy or directly
 
 ### `admin_balances`
 
-::::description[`Pool.admin_balances(i: uint256) -> uint256:`]
+::::description[`Pool.admin_balances(i: uint256) -> uint256: view`]
 
 
 Getter for the admin fees of coin `i` in a specific pool.
@@ -60,7 +60,7 @@ def admin_balances(i: uint256) -> uint256:
 
 ### `withdraw_admin_fees`
 
-::::description[`PoolProxy.withdraw_admin_fees(_pool: address):`]
+::::description[`PoolProxy.withdraw_admin_fees(_pool: address)`]
 
 
 :::info
@@ -111,7 +111,7 @@ def withdraw_admin_fees(_pool: address):
 
 ### `withdraw_many`
 
-::::description[`PoolProxy.withdraw_many(_pools: address[20]):`]
+::::description[`PoolProxy.withdraw_many(_pools: address[20])`]
 
 
 :::info
@@ -125,7 +125,7 @@ Function to withdraw fees from multiple pools in a single call.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_pool` |  `address` | Pool Address |
+| `_pools` |  `address[20]` | Pool Addresses |
 
 <SourceCode>
 
@@ -172,7 +172,7 @@ Fees are mostly claimed directly from the pool.
 
 ### `claim_admin_fees`
 
-::::description[`Pool.claim_admin_fees():`]
+::::description[`Pool.claim_admin_fees()`]
 
 
 Function to claim admin fees from a crypto pool.
@@ -282,11 +282,13 @@ def _claim_admin_fees():
 
 ::::
 
-## Curve StablecoincrvUSD fees are based on the borrow rate of the corresponding markets. Fees are accurred in crvUSD token. They can be claimed from the according Controller.
+## Curve Stablecoin
+
+crvUSD fees are based on the borrow rate of the corresponding markets. Fees are accrued in crvUSD token. They can be claimed from the according Controller.
 
 ### `admin_fees`
 
-::::description[`Controller.admin_fees() -> uint256:`]
+::::description[`Controller.admin_fees() -> uint256: view`]
 
 
 Getter for the currently claimable admin fees form a Controller. These fees can be collected via the `collect_fees()` function (see below).
@@ -327,7 +329,7 @@ def admin_fees() -> uint256:
 
 ### `collect_fees`
 
-::::description[`Controller.collect_fees():`]
+::::description[`Controller.collect_fees()`]
 
 
 Function to collects all fees, including borrowing-based fees (interest rate) and AMM-based fees (swap fee, if applicable).
@@ -398,7 +400,7 @@ All admin fees are accumulated in the [0xECB](https://etherscan.io/address/0xeCb
 
 ### `burn`
 
-::::description[`0xECB.burn(_coin: address):`]
+::::description[`0xECB.burn(_coin: address)`]
 
 
 :::guard[Guarded Method]
@@ -446,7 +448,7 @@ def burn(_coin: address):
 
 ### `burn_many`
 
-::::description[`0xECB.burn_many(_coins: address[20]):`]
+::::description[`0xECB.burn_many(_coins: address[20])`]
 
 
 :::guard[Guarded Method]
@@ -458,10 +460,6 @@ This function is only callable by EOA to prevent flashloan exploits.
 
 Executes the burn process on many coins at once. 
 
-:::note
-
-
-:::
 
 Burning can be very gas intensive. In some cases burning 20 coins at once is not possible due to the block gas limit.
 
@@ -502,12 +500,14 @@ def burn_many(_coins: address[20]):
 
 ### `donate_admin_fees`
 
-::::description[`0xECB.donate_admin_fees(_pool: address):`]
+::::description[`0xECB.donate_admin_fees(_pool: address)`]
 
 
 :::warning
 
-**Most pools do not have this donation function implemented!**:::
+**Most pools do not have this donation function implemented!**
+
+:::
 
 :::guard[Guarded Method]
 
@@ -547,14 +547,16 @@ def donate_admin_fees(_pool: address):
 
 :::
 
-### `donate_admin_fees`
+### `set_donate_approval`
 
-::::description[`0xECB.set_donate_approval(_pool: address, _caller: address, _is_approved: bool):`]
+::::description[`0xECB.set_donate_approval(_pool: address, _caller: address, _is_approved: bool)`]
 
 
 :::warning
 
-**Most pools do not have this donation function implemented!**:::
+**Most pools do not have this donation function implemented!**
+
+:::
 
 :::guard[Guarded Method]
 

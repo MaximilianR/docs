@@ -5,13 +5,13 @@ Fees are distributed to veCRV holders through the FeeDistributor contract in the
 
 :::deploy[Contract Source & Deployment]
 
-**FeeDistributor**contract is deployed to the Ethereum mainnet at: [0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc](https://etherscan.io/address/0xa464e6dcda8ac41e03616f95f4bc98a13b8922dc).  
-Source code available on [Github](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/FeeDistributor.vy).  
+**FeeDistributor** contract is deployed to the Ethereum mainnet at: [0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc](https://etherscan.io/address/0xa464e6dcda8ac41e03616f95f4bc98a13b8922dc).
+Source code available on [GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/FeeDistributor.vy).  
 
 
 :::
 
-**Fees are distributed on a  weekly basis.**The porportional amount of fees that each user is to receive is calculated based on their veCRV balance relative to the total veCRV supply.This amount is calculated at the start of the week.  
+**Fees are distributed on a weekly basis.** The proportional amount of fees that each user is to receive is calculated based on their veCRV balance relative to the total veCRV supply. This amount is calculated at the start of the week.  
 The actual distribution occurs at the end of the week based on the fees that were collected. As such, a user that creates a new vote-lock should expect to receive their first fee payout at the end of the following epoch week.
 
 :::info[Changing the Reward Token]
@@ -87,10 +87,10 @@ def __init__(
 ::::
 
 ### `claim`
-::::description[`FeeDistributor.claim(_addr: address = msg.sender) -> uint256:`]
+::::description[`FeeDistributor.claim(_addr: address = msg.sender) -> uint256`]
 
 
-Functions to claim fees for an account.  
+Function to claim fees for an account.  
 
 Returns: amount of rewards claimed (`uint256`). 
 
@@ -226,16 +226,16 @@ def _claim(addr: address, ve: address, _last_token_time: uint256) -> uint256:
 ::::
 
 ### `claim_many`
-::::description[`FeeDistributor.claim_many(_receivers: address[20]) -> bool:`]
+::::description[`FeeDistributor.claim_many(_receivers: address[20]) -> bool`]
 
 
 Function to perform multiple claims in a single call. This is useful to claim for multiple accounts at once, or for making many claims against the same account if that account has performed more than 50 veCRV related actions.
 
-Returns: true (`boolean`).
+Returns: true (`bool`).
 
 | Input   | Type   | Description |
 | ------- | ------- | ----|
-| `_addr` |  `address[20]` | List of addresses to claim for. |
+| `_receivers` |  `address[20]` | List of addresses to claim for. |
 
 <SourceCode>
 
@@ -380,12 +380,12 @@ def _claim(addr: address, ve: address, _last_token_time: uint256) -> uint256:
 
 Getter to check if tokens can be checkpointed.
 
-Returns: true or flase (`bool`).
+Returns: true or false (`bool`).
 
 <SourceCode>
 
 
-```vyper 
+```vyper
 can_checkpoint_token: public(bool)
 ```
 
@@ -471,7 +471,7 @@ def _checkpoint_token():
 ::::
 
 ### `toggle_allow_checkpoint_token`
-::::description[`FeeDistributor.toggle_allow_checkpoint_token():`]
+::::description[`FeeDistributor.toggle_allow_checkpoint_token()`]
 
 
 :::guard[Guarded Method]
@@ -481,7 +481,7 @@ This function is only callable by the `admin` of the contract.
 
 :::
 
-Funtion to toggle permission for checkpointing by an account.
+Function to toggle permission for checkpointing by an account.
 
 <SourceCode>
 
@@ -521,9 +521,7 @@ def toggle_allow_checkpoint_token():
 ::::description[`FeeDistributor.checkpoint_total_supply()`]
 
 
-Function to perform multiple claims in a single call. This is useful to claim for multiple accounts at once, or for making many claims against the same account if that account has performed more than 50 veCRV related actions.
-
-Returns: true (`boolean`).
+Function to update the veCRV total supply checkpoint. The checkpoint is also updated by the first claimant each new epoch week. This function may be called independently of a claim, to reduce claiming gas costs.
 
 <SourceCode>
 
@@ -569,7 +567,7 @@ def _checkpoint_total_supply():
 ::::
 
 ### `burn`
-::::description[`FeeDistributor.burn(_coin: address) -> bool:`]
+::::description[`FeeDistributor.burn(_coin: address) -> bool`]
 
 
 Function to receive 3CRV or crvUSD into the contract and trigger a token checkpoint.
@@ -611,16 +609,16 @@ def burn(_coin: address) -> bool:
 
 ## Killing The FeeDistributor
 
-The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and block the ability to claim or burn. The contract can not be unkilled. 
+The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and blocks the ability to claim or burn. The contract cannot be unkilled. 
 
 
 ### `is_killed`
 ::::description[`FeeDistributor.is_killed() -> bool: view`]
 
 
-Getter method to check if the `FeeDistributor` contract is killed. When killed, the contract blocks `claim` and `burn` and the entire token balance is transfered to the `emergency_return` address.
+Getter method to check if the `FeeDistributor` contract is killed. When killed, the contract blocks `claim` and `burn` and the entire token balance is transferred to the `emergency_return` address.
 
-Returns: true or flase (`bool`).
+Returns: true or false (`bool`).
 
 <SourceCode>
 
@@ -705,7 +703,7 @@ def kill_me():
 ::::description[`FeeDistributor.emergency_return() -> address: view`]
 
 
-Getter for the emergency return address. This address can not be changed.
+Getter for the emergency return address. This address cannot be changed.
 
 Returns: emergency return (`address`).
 
@@ -741,10 +739,10 @@ The second fee distributor contract (crvUSD) uses a 5 of 9 multisig, which repla
 ::::
 
 ### `recover_balance`
-::::description[`FeeDistributor.recover_balance(_coin: address) -> bool:`]
+::::description[`FeeDistributor.recover_balance(_coin: address) -> bool`]
 
 
-Function to recover ERC20 tokens from the contract. Tokens are sent to the emergency return address. This function only works for tokens other than the address set for `token`. E.g. this function on the 3CRV distributor contract can not be called to transfer 3CRV. The same applied to crvUSD distributor.
+Function to recover ERC20 tokens from the contract. Tokens are sent to the emergency return address. This function only works for tokens other than the address set for `token`. E.g. this function on the 3CRV distributor contract cannot be called to transfer 3CRV. The same applies to the crvUSD distributor.
 
 Returns: true (`bool`).
 
@@ -856,7 +854,7 @@ future_admin: public(address)
 ::::
 
 ### `commit_admin`
-::::description[`FeeDistributor.commit_admin(_addr: address):`]
+::::description[`FeeDistributor.commit_admin(_addr: address)`]
 
 
 :::guard[Guarded Method]
@@ -899,7 +897,7 @@ def commit_admin(_addr: address):
 ::::
 
 ### `apply_admin`
-::::description[`FeeDistributor.apply_admin():`]
+::::description[`FeeDistributor.apply_admin()`]
 
 
 :::guard[Guarded Method]
@@ -910,10 +908,6 @@ This function is only callable by the `admin` of the contract.
 :::
 
 Function to apply the transfer of the ownership.
-
-| Input      | Type   | Description |
-| ----------- | -------| ----|
-| `_addr` |  `address` | Address to transfer ownership to |
 
 <SourceCode>
 
@@ -945,10 +939,10 @@ def apply_admin():
 ---
 
 
-## Query Contract Informations
+## Query Contract Information
 
 ### `ve_for_at`
-::::description[`FeeDistributor.ve_for_at(_user: address, _timestamp: uint256) -> uint256:`]
+::::description[`FeeDistributor.ve_for_at(_user: address, _timestamp: uint256) -> uint256: view`]
 
 
 Getter for the veCRV balance for `_user` at `_timestamp`.

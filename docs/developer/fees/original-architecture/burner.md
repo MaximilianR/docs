@@ -41,7 +41,11 @@ Efficiency within the intermediate conversions is the reason it is important to 
 
 :::
 
-**There are multiple burner contracts, each of which handles a different category of fee coin.**## **Deployed Burner Contracts**:::deploy[Contract Source & Deployment]
+**There are multiple burner contracts, each of which handles a different category of fee coin.**
+
+## **Deployed Burner Contracts**
+
+:::deploy[Contract Source & Deployment]
 
 Source code for burners is available on [Github](https://github.com/curvefi/curve-dao-contracts/tree/master/contracts/burners).
 
@@ -68,7 +72,9 @@ Source code for burners is available on [Github](https://github.com/curvefi/curv
 
 ## Burners
 
-### ABurner / CBurner / YBurner`ABurner`, `CBurner` and `YBurner` are collectively known as “lending burners”. They unwrap lending tokens into the underlying asset and transfer those assets onward into the underlying burner.
+### ABurner / CBurner / YBurner
+
+`ABurner`, `CBurner` and `YBurner` are collectively known as “lending burners”. They unwrap lending tokens into the underlying asset and transfer those assets onward into the underlying burner.
 
 *There is no configuration required for this burner.*
 
@@ -84,15 +90,15 @@ Swaps an asset into another asset using a Stable pool and forwards to another bu
 
 The LP Burner handles non-3CRV LP tokens. This burner is primarily used for [FRAXBP LP tokens](https://etherscan.io/address/0x3175df0976dfa876431c2e9ee6bc45b65d3473cc#code) which are converted to USDC and then sent to 0xECB for a further burn process.
 
-LP burner calls to **`StableSwap.remove_liquidity_one_coin`**to unwrap the LP token. The new asset is then transferred on to another burner.
+LP burner calls to **`StableSwap.remove_liquidity_one_coin`** to unwrap the LP token. The new asset is then transferred on to another burner.
 
 #### `swap_data`
-::::description[`LPBurner.swap_data(arg0: adress) -> pool: address, coin: address, burner: address, i: int128`]
+::::description[`LPBurner.swap_data(arg0: address) -> pool: address, coin: address, burner: address, i: int128: view`]
 
 
-Getter method for informations about the LP Token burn process.
+Getter method for information about the LP Token burn process.
 
-Retuns: pool (`address`) of the LP token, coin (`address`) in which the LP token in withdrawn, burner (`address`) where the output token is forwarded to and i (`index`) of `coin` in the pool.
+Returns: pool (`address`) of the LP token, coin (`address`) in which the LP token is withdrawn, burner (`address`) where the output token is forwarded to and i (`index`) of `coin` in the pool.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
@@ -129,7 +135,7 @@ i: 1
 ::::
 
 #### `set_swap_data`
-::::description[`LPBurner.set_swap_data(_lp_token: address, _coin: address, _burner: address) -> bool:`]
+::::description[`LPBurner.set_swap_data(_lp_token: address, _coin: address, _burner: address) -> bool`]
 
 
 :::guard[Guarded Method]
@@ -231,7 +237,7 @@ def set_swap_data(_lp_token: address, _coin: address, _burner: address) -> bool:
 
 ### MetaBurner
 
-The MetaBurner converts Metapool-paried coins to 3CRV and transfers to the FeeDistributor. It uses the registry’s **`exchange_with_best_rate`**and transfers 3CRV directly to the fee distributor.
+The MetaBurner converts Metapool-paired coins to 3CRV and transfers to the FeeDistributor. It uses the registry’s **`exchange_with_best_rate`** and transfers 3CRV directly to the fee distributor.
 
 *There is no configuration required for this burner.*
 
@@ -241,7 +247,7 @@ The MetaBurner converts Metapool-paried coins to 3CRV and transfers to the FeeDi
 Swaps non-USD denominated assets for synths, converts synths to sUSD and transfers to `UnderlyingBurner`.
 The synth burner is used to convert non-USD denominated assets into sUSD. This is accomplished via synth conversion, the same mechanism used in cross-asset swaps.
 
-When the synth burner is called to burn a non-synthetic asset, it uses `RegistrySwap.exchange_with_best_rate` to swap into a related synth. If no direct path to a synth is avaialble, a swap is made into an intermediate asset.
+When the synth burner is called to burn a non-synthetic asset, it uses `RegistrySwap.exchange_with_best_rate` to swap into a related synth. If no direct path to a synth is available, a swap is made into an intermediate asset.
 
 For synths, the burner first transfers to the [Underlying](#underlyingburner). Then it calls `UnderlyingBurner.convert_synth`, performing the cross-asset swap within the underlying burner. This is done to avoid requiring another transfer call after the settlement period has passed.
 
@@ -254,7 +260,7 @@ The optimal sequence when burning assets using the synth burner is thus:
 *The burner is configurable via the following functions:*
 
 #### `set_swap_for`
-::::description[`SynthBurner.set_swap_for(_coins: address[10], _targets: address[10]) -> bool:`]
+::::description[`SynthBurner.set_swap_for(_coins: address[10], _targets: address[10]) -> bool`]
 
 
 Function to set target coins that the burner will swap into.
@@ -263,7 +269,7 @@ For assets that can be directly swapped for a synth, the target should be set as
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_coin` |  `address[10]` | list of coins to be burned |
+| `_coins` |  `address[10]` | list of coins to be burned |
 | `_targets` |  `address[10]` | list of coins to be swapped for |
 
 :::tip
@@ -310,7 +316,7 @@ def set_swap_for(_coins: address[10], _targets: address[10]) -> bool:
 ::::
 
 #### `add_synths`
-::::description[`SynthBurner.add_synths(_synths: address[10]) -> bool:`]
+::::description[`SynthBurner.add_synths(_synths: address[10]) -> bool`]
 
 
 Register synthetic assets within the burner. This function is unguarded. For each synth to be added, a call is made to Synth.currencyKey to validate the addresss and obtain the synth currency key.
@@ -360,7 +366,7 @@ This burner unwraps wstETH to stETH and sends it back to 0xECB.
 
 ### UnderlyingBurner
 
-The underlying burner handles assets that can be directly swapped to USDC and deposits DAI/USDC/USDT into [3pool](https://curve.fi/#/ethereum/pools/3pool/deposit/) to obtain 3CRV. This is the **final step of the burn process**for many assets that require multiple intermediate swaps.
+The underlying burner handles assets that can be directly swapped to USDC and deposits DAI/USDC/USDT into [3pool](https://curve.fi/#/ethereum/pools/3pool/deposit/) to obtain 3CRV. This is the **final step of the burn process** for many assets that require multiple intermediate swaps.
 
 :::note
 
@@ -375,12 +381,12 @@ The burn process consists of:
 - For all other assets that are not DAI/USDC/USDT: Swap into USDC.  
 - For DAI/USDC/USDT: Only transfer the assets into the burner.  
 
-*Once the entire burn process has been completed you must call **`execute`**as the final action:*
+*Once the entire burn process has been completed you must call **`execute`** as the final action:*
 
-::::description[`UnderlyingBurner.execute() -> bool:`]
+::::description[`UnderlyingBurner.execute() -> bool`]
 
 
-Function to deposit all the tokens into 3pool and transfer the recieved 3CRV to the FeeDistributor contract.
+Function to deposit all the tokens into 3pool and transfer the received 3CRV to the FeeDistributor contract.
 
 <SourceCode>
 
@@ -425,7 +431,7 @@ This is the final function to be called in the burn process, after all other ste
 
 This burner converts DAI, USDC and USDT into 3CRV by adding liquidity to the 3pool and then transfers them to the FeeDistributor.
 
-::::description[`StableDepositBurner.burn(_coin: ERC20) -> bool:`]
+::::description[`StableDepositBurner.burn(_coin: ERC20) -> bool`]
 
 
 Function to add the entire burner's balance of `_coin` to the 3pool.
@@ -526,7 +532,11 @@ def withdraw_admin_fees():
 
 </SourceCode>
 
-## Configuring Fee Bruners**Burners are configured within the 0xECB contract.**### `burners`
+## Configuring Fee Burners
+
+**Burners are configured within the 0xECB contract.**
+
+### `burners`
 ::::description[`PoolProxy.burners(coin: address) -> address: view`]
 
 
@@ -562,7 +572,7 @@ burners: public(HashMap[address, address])
 ::::
 
 ### `set_burner`
-::::description[`PoolProxy.set_burner(_coin: address, _burner: address):`]
+::::description[`PoolProxy.set_burner(_coin: address, _burner: address)`]
 
 
 :::guard[Guarded Method]
@@ -644,7 +654,7 @@ def _set_burner(_coin: address, _burner: address):
 ::::
 
 ### `set_many_burners`
-::::description[`PoolProxy.set_many_burners(_coins: address[20], _burners: address[20]):`]
+::::description[`PoolProxy.set_many_burners(_coins: address[20], _burners: address[20])`]
 
 
 :::guard[Guarded Method]
@@ -728,8 +738,8 @@ def set_many_burners(_coins: address[20], _burners: address[20]):
 
 ::::
 
-### `set_kill_burner`
-::::description[`PoolProxy.set_burner_kill(_is_killed: bool):`]
+### `set_burner_kill`
+::::description[`PoolProxy.set_burner_kill(_is_killed: bool)`]
 
 
 :::guard[Guarded Method]
@@ -743,9 +753,7 @@ Disable or enable the process of fee burning.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_pool` |  `address` | Pool Address |
-| `_caller` |  `address` | Caller Address |
-| `_is_approved` |  `boolean` | True or False |
+| `_is_killed` |  `bool` | Burner kill status |
 
 <SourceCode>
 

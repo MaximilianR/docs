@@ -9,9 +9,11 @@ In June 2024, Curve deployed a new system to collect, burn, and distribute fees 
 
 Curve exchange contracts have the capability to charge an **admin fee**, claimable by the contract owner. The admin fee is represented as a percentage of the total fee collected on a swap.
 
-**There are multiple ways on how fees are obtained:**- For **stableswap exchanges**the **fee is taken in the output token**of the swap and calculated against the final amount received. For example, if swapping from USDT to USDC, the fee is taken in USDC.  
-- For **cryptoswap exchanges**the **fee is taken in the LP token of the pool**. For these kind of pools additional mechanisms like auto-rebalancing parameters need to be taken into consideration.  
-- **Curve Stablecoin**borrow **fee is taken in crvUSD**. 100% of crvUSD borrow rate fees are "admin fees".
+**There are multiple ways on how fees are obtained:**
+
+- For **stableswap exchanges** the **fee is taken in the output token** of the swap and calculated against the final amount received. For example, if swapping from USDT to USDC, the fee is taken in USDC.
+- For **cryptoswap exchanges** the **fee is taken in the LP token of the pool**. For these kind of pools additional mechanisms like auto-rebalancing parameters need to be taken into consideration.
+- **Curve Stablecoin** borrow **fee is taken in crvUSD**. 100% of crvUSD borrow rate fees are "admin fees".
 
 Liquidity providers also incur fees when adding or removing liquidity. The fee is applied such that, for example, a swap between USDC and USDT would pay roughly the same amount of fees as depositing USDC into the pool and then withdrawing USDT. The only case where a fee is not applied on withdrawal is when removing liquidity, as this does not change the imbalance of the pool in any way.
 

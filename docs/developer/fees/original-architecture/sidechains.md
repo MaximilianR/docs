@@ -4,7 +4,7 @@
 
 Fee collection on sidechains works similarly to that on the Ethereum mainnet. Collected fees are sent to a fee receiver contract and then burned. On most sidechains, tokens are burnt for [MIM](https://etherscan.io/address/0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3), as it's an easy asset to bridge back to the mainnet. These proxy contracts have a `bridge()` function to bridge the tokens to the Ethereum mainnet. 
 
-MIM is then burnt on for 3CRV on Ethereum and sent to the FeeDistributor.
+MIM is then burnt for 3CRV on Ethereum and sent to the FeeDistributor.
 
 :::note
 
@@ -48,15 +48,17 @@ def bridge(_coin: address):
 
 </Dropdown>
 
-## Bridging:::warning
+## Bridging
+
+:::warning
 
 The methods to burn and bridge assets *might slightly vary based on the chain*. The examples down below are taken from [Optimism](https://www.optimism.io/).
 
 
 :::
 
-### `brigde`
-::::description[`Bridge.bridge(coin: address) -> bool:`]
+### `bridge`
+::::description[`Bridge.bridge(coin: address) -> bool`]
 
 
 :::guard[Guarded Method]
@@ -150,7 +152,7 @@ def bridge(coin: address) -> bool:
 ## Contract Info Methods
 
 ### `PROXY_OFT`
-::::description[`Bridge.PROXY_OFT():`]
+::::description[`Bridge.PROXY_OFT() -> address: view`]
 
 
 Getter for the OFT bridger.
@@ -189,7 +191,7 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 ::::
 
 ### `TOKEN`
-::::description[`Bridge.TOKEN():`]
+::::description[`Bridge.TOKEN() -> address: view`]
 
 
 Getter for the bridge token.
@@ -232,7 +234,7 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 Receiver of the bridged funds is the 0xECB contract on Ethereum Mainnet.
 
 ### `receiver`
-::::description[`Bridge.receiver():`]
+::::description[`Bridge.receiver() -> address: view`]
 
 
 Getter for the receiver address of the bridged funds.
@@ -278,7 +280,7 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 ::::
 
 ### `set_root_receiver`
-::::description[`Bridge.set_root_receiver(receiver: address):`]
+::::description[`Bridge.set_root_receiver(receiver: address)`]
 
 
 :::guard[Guarded Method]

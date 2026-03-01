@@ -6,7 +6,7 @@ The `FeeCollector` serves as an entry point for the fee burning and distribution
 
 :::vyper[`FeeCollector.vy`]
 
-The source code for the `FeeCollector.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-burners/blob/main/contracts/FeeCollector.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `FeeCollector.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-burners/blob/main/contracts/FeeCollector.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 This version of `FeeCollector` is only deployed on the following chains, as CowSwap is only deployed on these chains:
 
@@ -75,16 +75,16 @@ Epoch start is not on Monday. The first fee distribution started on `Thu Sep 17 
 :::
 
 ### `epoch`
-::::description[`FeeCollector.epoch(ts: uint256=block.timestamp) -> Epoch`]
+::::description[`FeeCollector.epoch(ts: uint256=block.timestamp) -> Epoch: view`]
 
 
 Getter for the current epoch based on a given timestamp.
 
-Returns: current epoch value which corresponds to the `Epoch enum `(`uint256`). 
+Returns: current epoch value (`Epoch`).
 
-| Input | Type      | Description                         |
-| ----- | --------- | ----------------------------------- |
-| `ts`  | `uint256` | Timestamp; defaults to `msg.sender` |
+| Input | Type      | Description                           |
+| ----- | --------- | ------------------------------------- |
+| `ts`  | `uint256` | Timestamp; defaults to `block.timestamp` |
 
 <SourceCode>
 
@@ -135,17 +135,17 @@ def _epoch_ts(ts: uint256) -> Epoch:
 ::::
 
 ### `epoch_time_frame`
-::::description[`FeeCollector.epoch_time_frame(_epoch: Epoch, _ts: uint256=block.timestamp) -> (uint256, uint256)`]
+::::description[`FeeCollector.epoch_time_frame(_epoch: Epoch, _ts: uint256=block.timestamp) -> (uint256, uint256): view`]
 
 
 Getter for the time frame for a specific epoch and timestamp.
 
-Returns: start and end of the epoch (`uint256`).
+Returns: start and end of the epoch (`uint256, uint256`).
 
-| Input    | Type      | Description                                                             |
-| -------- | --------- | ----------------------------------------------------------------------- |
-| `_epoch` | `uint256` | Index of the Epoch enum for which to check start and end for            |
-| `_ts`    | `uint256` | Timestamp to anochr to. Defaults to the current one (`block.timestamp`) |
+| Input    | Type      | Description                                                              |
+| -------- | --------- | ------------------------------------------------------------------------ |
+| `_epoch` | `Epoch`   | Epoch enum for which to check start and end for                          |
+| `_ts`    | `uint256` | Timestamp to anchor to. Defaults to the current one (`block.timestamp`)  |
 
 <SourceCode>
 
@@ -199,7 +199,7 @@ The `FeeCollector` contract has a keeper's fee, which incentivizes external user
 
 
 ### `fee`
-::::description[`FeeCollector.fee(_epoch: Epoch=empty(Epoch), _ts: uint256=block.timestamp) -> uint256`]
+::::description[`FeeCollector.fee(_epoch: Epoch=empty(Epoch), _ts: uint256=block.timestamp) -> uint256: view`]
 
 
 Getter for the caller fee based on an epoch and timestamp. If no input is given, it returns the caller fee of the current epoch. The fee is dependent on the current epoch. The `fee` (except the one for the `forward` function) is optional and up to the burner implementation. The value starts at `0` and continuously increases to `max_fee` (`1%`), but burner contracts *can* have their own fee values. The reason for this is that it makes sense to pay the fee in the `target` token instead of many different coins, but the current CoWSwap architecture makes this very complicated to do.
@@ -208,7 +208,7 @@ Returns: fee of the epoch (`uint256`).
 
 | Input    | Type      | Description                                       |
 | -------- | --------- | ------------------------------------------------- |
-| `_epoch` | `uint256` | Index of the epoch; defaults to the current epoch |
+| `_epoch` | `Epoch`   | Index of the epoch; defaults to the current epoch |
 | `_ts`    | `uint256` | Timestamp; defaults to `block.timestamp`          |
 
 <SourceCode>
@@ -274,11 +274,11 @@ Getter for the maximum fee of an epoch. Maximum fee is set to 1% for the `COLLEC
 
 Returns: maximum fee (`uint256`).
 
-Emits: `SetMaxFee` at contract initialization
+Emits: `SetMaxFee`
 
-| Input    | Type      | Description                                    |
-| -------- | --------- | ---------------------------------------------- |
-| `_epoch` | `uint256` | Epoch enum for which to check the maximum fee. |
+| Input  | Type      | Description                                    |
+| ------ | --------- | ---------------------------------------------- |
+| `arg0` | `uint256` | Epoch enum for which to check the maximum fee. |
 
 <SourceCode>
 
@@ -333,7 +333,7 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 ::::
 
 ### `set_max_fee`
-::::description[`FeeCollector.set_max_fee(_epoch: uin256, _max_fee: uint256)`]
+::::description[`FeeCollector.set_max_fee(_epoch: Epoch, _max_fee: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -349,7 +349,7 @@ Emits: `SetMaxFee`
 
 | Input      | Type      | Description                                              |
 | ---------- | --------- | -------------------------------------------------------- |
-| `_epoch`   | `uint256` | Index of the Epoch enum for which to set the maximum fee |
+| `_epoch`   | `Epoch`   | Epoch enum for which to set the maximum fee              |
 | `_max_fee` | `uint256` | Maximum fee                                              |
 
 <SourceCode>
@@ -421,7 +421,7 @@ Getter for the target coin to which the fees are converted to. This is essential
 
 Returns: target coin (`address`).
 
-Emits: `SetTarget` at contract initialization
+Emits: `SetTarget`
 
 <SourceCode>
 
@@ -482,7 +482,7 @@ Emits: `SetTarget`
 
 | Input         | Type      | Description                          |
 | ------------- | --------- | ------------------------------------ |
-| `_new_target` | `address` | Token address of the new target coin |
+| `_new_target` | `ERC20`   | Token address of the new target coin |
 
 <SourceCode>
 
@@ -544,7 +544,7 @@ This example sets the `target` coin to `0xc02aaa39b223fe8d0a0e5c4f27ead9083c756c
 ::::description[`FeeCollector.withdraw_many(_pools: DynArray[address, MAX_LEN])`]
 
 
-:::guard[Guarded]
+:::guard[Guarded Method]
 
 This function does not work with all pools, as some of them have a `msg.sender == owner` guard with a pool proxy as the owner.
 
@@ -606,7 +606,7 @@ Function that is the primary mechanism for burning coins and can only be called 
 
 Coin addresses to collect are converted into `uint160` and sorted from small to big.
 
-A Google Colab notebook that converts addresses into `uint160` and orders them by ascending order can be found here: [ Google Colab Notebook](https://colab.research.google.com/drive/1XBP4YDXEhy2AO3U-qtlbhat4HHhZfUVp?usp=sharing).
+A Google Colab notebook that converts addresses into `uint160` and orders them by ascending order can be found here: [Google Colab Notebook](https://colab.research.google.com/drive/1XBP4YDXEhy2AO3U-qtlbhat4HHhZfUVp?usp=sharing).
 
 
 :::
@@ -724,16 +724,16 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 ::::
 
 ### `can_exchange`
-::::description[`FeeCollector.can_exchange(_coins: DynArray[ERC20, MAX_LEN]) -> bool`]
+::::description[`FeeCollector.can_exchange(_coins: DynArray[ERC20, MAX_LEN]) -> bool: view`]
 
 
 Function to check whether specified coins are allowed to be exchanged at the current timestamp. It verifies that the current epoch is `EXCHANGE` and that the coins to be exchanged are not marked as killed.
 
 Returns: true or false (`bool`).
 
-| Input          | Type                       | Description                                                              |
-| -------------- | -------------------------- | ------------------------------------------------------------------------ |
-| `can_exchange` | `DynArray[ERC20, MAX_LEN]` | Dynamic array of ERC20 token addresses to check for exchange eligibility |
+| Input    | Type                       | Description                                                              |
+| -------- | -------------------------- | ------------------------------------------------------------------------ |
+| `_coins` | `DynArray[ERC20, MAX_LEN]` | Dynamic array of ERC20 token addresses to check for exchange eligibility |
 
 <SourceCode>
 
@@ -900,7 +900,7 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 
 Function to transfer the target coin to the hooker address. This function can only be called during the `FORWARD` epoch. It charges a keeper fee on the entire balance of the forwarded coins and awards it to the caller. The function also calls the `push_target` function of the burner contract to transfer any remaining target coins back into the `FeeCollector` contract before forwarding the total balance to the hooker. Additionally, the function calls the `duty_act` method of the hooker contract, applying any specified hooks and adjusting the fee accordingly.
 
-Returns: received keeper fee (`uint256`)
+Returns: received keeper fee (`uint256`).
 
 | Input          | Type                                | Description                           |
 | -------------- | ----------------------------------- | ------------------------------------- |
@@ -1064,7 +1064,7 @@ def _act(_hook_inputs: DynArray[HookInput, MAX_HOOKS_LEN], _receiver: address) -
 ::::
 
 ### `burn`
-::::description[`FeeCollector.burn(_coin: address)`]
+::::description[`FeeCollector.burn(_coin: address) -> bool`]
 
 
 :::guard[Guarded Method]
@@ -1074,7 +1074,7 @@ This function is only callable by the `owner` of the contract.
 
 :::
 
-Function to transfer coins from the contract with approval. This function is needed for back compatability along with dealing with raw ETH.
+Function to transfer coins from the contract with approval. This function is needed for back compatibility along with dealing with raw ETH.
 
 | Input   | Type      | Description                          |
 | ------- | --------- | ------------------------------------ |
@@ -1121,7 +1121,7 @@ def burn(_coin: address) -> bool:
 ::::
 
 ### `recover`
-::::description[`FeeCollector.recover(_recovers: DynArray[RecoverInput, MAX_LEN], _receiver: address):`]
+::::description[`FeeCollector.recover(_recovers: DynArray[RecoverInput, MAX_LEN], _receiver: address)`]
 
 
 :::guard[Guarded Method]
@@ -1138,7 +1138,7 @@ Function to recover ERC20 tokens or ETH from the contract by transferring them t
 | `_recovers` | `DynArray[RecoverInput, MAX_LEN]` | Dynamic array of `RecoverInput` structs |
 | `_receiver` | `address`                         | Receiver of the recovered coins         |
 
-*Each `RecoverInput struct contains:*
+*Each `RecoverInput` struct contains:*
 
 - `coin`: `address` - The address of the ERC20 token to recover.
 - `amount`: `uint256` - The amount of the token to recover. Use `2^256-1` to recover the entire balance.
@@ -1309,7 +1309,7 @@ Emits: `SetBurner`
 
 | Input         | Type      | Description                        |
 | ------------- | --------- | ---------------------------------- |
-| `_new_burner` | `address` | Contract address of the new burner |
+| `_new_burner` | `Burner`  | Contract address of the new burner |
 
 <SourceCode>
 
@@ -1386,7 +1386,7 @@ Emits: `SetHooker`
 
 | Input         | Type      | Description                       |
 | ------------- | --------- | --------------------------------- |
-| `_new_hooker` | `address` | Address of hooker contract to set |
+| `_new_hooker` | `Hooker`  | Address of hooker contract to set |
 
 <SourceCode>
 
@@ -1482,16 +1482,16 @@ The contract includes a mechanism to "kill" certain coins across specific epochs
 
 
 ### `is_killed`
-::::description[`FeeCollector.is_killed(arg0: address) -> uint256: view`]
+::::description[`FeeCollector.is_killed(arg0: ERC20) -> Epoch: view`]
 
 
 Function to check if a coin is killed for a certain epoch. Depending on the epoch the coin is killed for, the contract restricts function calls. For example, if a coin is killed for the `COLLECT` epoch, the `collect` function cannot be called for that coin.
 
-Returns: sum of the epoch indices in the enum (`uint256`).
+Returns: sum of the epoch indices in the enum (`Epoch`).
 
-| Input   | Type      | Description                    |
-| ------- | --------- | ------------------------------ |
-| `arg0`  | `address` | Address of the coin to check   |
+| Input  | Type    | Description                    |
+| ------ | ------- | ------------------------------ |
+| `arg0` | `ERC20` | Address of the coin to check   |
 
 <SourceCode>
 
@@ -1607,7 +1607,7 @@ Getter for the current owner of the contract.
 
 Returns: owner (`address`).
 
-Emits: `SetOwner` at contract initialization
+Emits: `SetOwner`
 
 <SourceCode>
 
@@ -1660,14 +1660,14 @@ Getter for the current emergency owner of the contract.
 
 Returns: emergency owner (`address`).
 
-Emits: `SetEmergencyOwner` at contract initialization
+Emits: `SetEmergencyOwner`
 
 <SourceCode>
 
 
 
 
-```py
+```vyper
 event SetEmergencyOwner:
     emergency_owner: indexed(address)
 
@@ -1785,7 +1785,7 @@ This function is only callable by the `owner` of the contract.
 
 :::
 
-Function to a new emergency owner.
+Function to set a new emergency owner.
 
 Emits: `SetEmergencyOwner`
 

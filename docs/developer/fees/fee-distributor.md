@@ -6,7 +6,7 @@ Fees used to be distributed to [`veCRV`](https://etherscan.io/address/0x5f3b5DfE
 
 :::vyper[`FeeDistributor.vy`]
 
-The source code for the `FeeDistributor.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/FeeDistributor.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.2.7` and `0.3.7`.
+The source code for the `FeeDistributor.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/FeeDistributor.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.2.7` and `0.3.7`.
 
 There are two different `FeeDistributor` contracts deployed on Ethereum, depending on the reward token:
 
@@ -56,7 +56,7 @@ last_token_time: public(uint256)
 
 Function to check whether the `checkpoint_token` function can be called by anyone or only by the admin. The state of this variable can be changed using the `toggle_allow_checkpoint_token` function. 
 
-Returns: true or flase (`bool`).
+Returns: true or false (`bool`).
 
 <SourceCode>
 
@@ -94,7 +94,7 @@ This function is only callable by the `admin` of the contract.
 
 :::
 
-Funtion to toggle permission for checkpointing by an account.
+Function to toggle permission for checkpointing by an account.
 
 <SourceCode>
 
@@ -247,7 +247,7 @@ time_cursor: public(uint256)
 
 Getter for the timestamp of the last `checkpoint_total_supply` of veCRV.
 
-Returns: timestamp (`uin256`).
+Returns: timestamp (`uint256`).
 
 | Input  | Type      | Description          |
 | ------ | --------- | -------------------- |
@@ -284,7 +284,7 @@ This example returns the `time_cursor_of` for a given address.
 ::::
 
 ### `ve_for_at`
-::::description[`FeeDistributor.ve_for_at(_user: address, _timestamp: uint256) -> uint256`]
+::::description[`FeeDistributor.ve_for_at(_user: address, _timestamp: uint256) -> uint256: view`]
 
 
 Getter for the veCRV balance of a user at a certain timestamp.
@@ -343,7 +343,7 @@ def ve_for_at(_user: address, _timestamp: uint256) -> uint256:
 
 Getter for the total supply of veCRV at the beginning of an epoch.
 
-Returns: vecrv supply (`uint256`).
+Returns: veCRV supply (`uint256`).
 
 | Input  | Type      | Description                  |
 | ------ | --------- | ---------------------------- |
@@ -382,7 +382,7 @@ ve_supply: public(uint256[1000000000000000])  # VE total supply at week bounds
 
 ## Killing The FeeDistributor
 
-The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and block the ability to claim or burn. The contract can not be unkilled. 
+The `FeeDistributor` can be killed by the `admin` of the contract, which is the Curve DAO. Doing so, transfers the entire token balance to the `emergency_return` address and blocks the ability to claim or burn. The contract can not be unkilled.
 
 :::colab[Google Colab Notebook]
 
@@ -395,9 +395,9 @@ A Google Colab notebook that simulates killing the `FeeDistributor` and its resp
 ::::description[`FeeDistributor.is_killed() -> bool: view`]
 
 
-Getter method to check if the `FeeDistributor` contract is killed. When killed, the contract blocks `claim` and `burn` and the entire token balance is transfered to the `emergency_return` address.
+Getter method to check if the `FeeDistributor` contract is killed. When killed, the contract blocks `claim` and `burn` and the entire token balance is transferred to the `emergency_return` address.
 
-Returns: true or flase (`bool`).
+Returns: true or false (`bool`).
 
 <SourceCode>
 

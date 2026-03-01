@@ -8,7 +8,7 @@ The `FeeSplitter` is a contract that collects and splits accumulated crvUSD fees
 
 :::vyper[`FeeSplitter.vy`]
 
-The source code for the `FeeSplitter.vy` contract can be found on [ GitHub](https://github.com/curvefi/fee-splitter/blob/main/contracts/FeeSplitter.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.0` and utilizes a [snekmate module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) to handle contract ownership.
+The source code for the `FeeSplitter.vy` contract can be found on [GitHub](https://github.com/curvefi/fee-splitter/blob/main/contracts/FeeSplitter.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.0` and utilizes a [snekmate module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) to handle contract ownership.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x2dFd89449faff8a532790667baB21cF733C064f2`](https://etherscan.io/address/0x2dfd89449faff8a532790667bab21cf733c064f2).
 
@@ -46,9 +46,9 @@ The FeeSplitter supports both static and dynamic weights for fee distribution. D
 
 Consider the following receivers and their respective weight caps:
 
-- `receiver1` has a **dynamic**weight with a cap of 10% 
-- `receiver2` has a **static**weight of 10%
-- `receiver3` has a **static**weight of 80%
+- `receiver1` has a **dynamic** weight with a cap of 10%
+- `receiver2` has a **static** weight of 10%
+- `receiver3` has a **static** weight of 80%
 
 Due to the dynamic nature of `receiver1`'s weight, the actual weight is determined in the receiver contract based on different conditions (e.g. ratio of staked assets, etc.). If the receiver contract would ask for more than 10% of the total weight, the weight is ultimately capped at 10%. If he asks for less than 10%, the spare weight is then rolled over to the weight of the `excess_receiver` (in this case `receiver3`).
 
@@ -291,7 +291,7 @@ The next example shows how to dispatch fees from specific `Controller` contracts
 
 Getter for the addresses and weights of receivers at index `arg0`. Receivers can be added/removed/modified by the DAO using the `set_receivers` function.
 
-Returns: `Receiver` struct consisting of `address` and `weight`.
+Returns: `Receiver` struct consisting of `address` and `weight` (`Receiver`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -327,7 +327,7 @@ receivers: public(DynArray[Receiver, MAX_RECEIVERS])
 ::::
 
 ### `n_receivers`
-::::description[`FeeSplitter.n_receivers() -> uint256`]
+::::description[`FeeSplitter.n_receivers() -> uint256: view`]
 
 
 Getter for the total number of receivers the fees are split to.
@@ -369,12 +369,12 @@ def n_receivers() -> uint256:
 ::::
 
 ### `excess_receiver`
-::::description[`FeeSplitter.excess_receiver() -> address`]
+::::description[`FeeSplitter.excess_receiver() -> address: view`]
 
 
-Getter for the excess receiver. That is the last receiver address in [`receivers`](#receivers) and is the one that receives additional weight ontop of his on weight, if prior receivers with a dynamic weight allocate less than their cap (see this example at the top).
+Getter for the excess receiver. That is the last receiver address in [`receivers`](#receivers) and is the one that receives additional weight on top of its own weight, if prior receivers with a dynamic weight allocate less than their cap (see this example at the top).
 
-Returns: excess receiver (`address`)
+Returns: excess receiver (`address`).
 
 <SourceCode>
 
@@ -418,14 +418,14 @@ def excess_receiver() -> address:
 ::::description[`FeeSplitter.set_receivers(receivers: DynArray[Receiver, MAX_RECEIVERS])`]
 
 
-:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the current `owner` of the contract.
 
 
 :::
 
-Function to set receivers and their respective weights. New receveivers can not simply be added or removed from the exisiting array of receivers. One must include the current receivers in the array of `Receiver` structs. The weight is based on a scale of 1e5, meaning e.g. 100% corresponds to a weight value of 10000, and 50% would be a weight value of 5000. 
+Function to set receivers and their respective weights. New receivers can not simply be added or removed from the existing array of receivers. One must include the current receivers in the array of `Receiver` structs. The weight is based on a scale of 1e5, meaning e.g. 100% corresponds to a weight value of 10000, and 50% would be a weight value of 5000. 
 
 The function will revert if a receiver address is `ZERO_ADDRESS`, if the weight is `0` or greater than `10000` (`MAX_BPS`), or if the sum of the weights of all receivers does not equal `10000` (100%). 
 
@@ -527,16 +527,13 @@ If, later on, a third receiver with a weight of 1000 (at the cost of reducing th
 The contract maintains a list of [`controllers`](#controllers) from which fees can be claimed. This list is updated to match the controllers registered in the crvUSD Factory contract. The [`update_controllers`](#update_controllers) function is used to keep this list current.
 
 
-The contract maintains a list of allowed `Controller` contracts from which fees can be claimed. This list is updated to match the controllers registered in the crvUSD Factory contract. The `update_controllers` function is used to keep this list current.
-
-
 ### `controllers`
 ::::description[`FeeSplitter.controllers(arg0: uint256) -> IController: view`]
 
 
 Getter for the `Controller` at index `arg0`.
 
-Returns: controller (`address`).
+Returns: controller (`IController`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -600,9 +597,9 @@ def collect_fees() -> uint256:
 ::::description[`FeeSplitter.allowed_controllers(arg0: address) -> bool: view`]
 
 
-Getter for the allowed controller address at index `arg0`.
+Getter method to check whether a controller is allowed.
 
-Returns: allowed controller address (`address`).
+Returns: true or false whether the controller is allowed (`bool`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -816,7 +813,7 @@ In this example, the `update_controllers` function is called to synchronize the 
 
 ## Contract Ownership
 
-Ownership of the contract is managed using the [`ownable.vy`](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) module from 🐍 [Snekmate](https://github.com/pcaversaccio/snekmate) which implements a basic control access mechanism, where there is an `owner` that can be granted exclusive access to specific functions.
+Ownership of the contract is managed using the [`ownable.vy`](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) module from [Snekmate](https://github.com/pcaversaccio/snekmate) which implements a basic control access mechanism, where there is an `owner` that can be granted exclusive access to specific functions.
 
 
 ### `owner`
@@ -912,7 +909,7 @@ def __init__():
 ::::description[`FeeSplitter.transfer_ownership(new_owner: address)`]
 
 
-:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the current `owner` of the contract.
 
@@ -1024,7 +1021,7 @@ def _transfer_ownership(new_owner: address):
 <Example>
 
 
-In this example, the ownership of the contract is transferred to a new address. The ownership is transfered from the Curve DAO to our overlord Vitalik Buterin.
+In this example, the ownership of the contract is transferred to a new address. The ownership is transferred from the Curve DAO to our overlord Vitalik Buterin.
 
 ```shell
 >>> FeeSplitter.owner()
@@ -1046,7 +1043,7 @@ In this example, the ownership of the contract is transferred to a new address. 
 ::::description[`FeeSplitter.renounce_ownership()`]
 
 
-:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the current `owner` of the contract.
 
@@ -1055,7 +1052,7 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to renounce the ownership of the contract. Calling this method will leave the contract without an owner, thereby removing any functionality that is only available to the owner.
 
-Emits: `OwnershipTransferred` from `Ownable.vy`.
+Emits: `OwnershipTransferred`
 
 <SourceCode>
 
@@ -1183,7 +1180,7 @@ In this example, the ownership of the contract is renounced.
 
 Getter for the version of the contract.
 
-Returns: version (`String[8]`). 
+Returns: version (`String[8]`).
 
 <SourceCode>
 
