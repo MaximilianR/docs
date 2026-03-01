@@ -1,18 +1,18 @@
 # Address Provider
 
 
-The `AddressProvider` serves as the **entry point contract for Curve's various registries**and is deployed on all chains where Curve is operational. The contract holds the most important contract addresses.
+The `AddressProvider` serves as the **entry point contract for Curve's various registries** and is deployed on all chains where Curve is operational. The contract holds the most important contract addresses.
 
 :::github[GitHub]
 
-Source code of the `AddressProvider.vy` contract can be found on [ GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/AddressProviderNG.vy). A list of all deployed contracts can be found [here](../deployments.md).
+Source code of the `AddressProvider.vy` contract can be found on [GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/AddressProviderNG.vy). A list of all deployed contracts can be found [here](../deployments.md).
 
 
 :::
 
 :::warning[Contract Upgradability]
 
-The `AddressProvider` contract is managed by an `admin` who is currently an individual at Curve, rather than the Curve DAO[^1]. This **admin has the ability to update, add or remove new IDs**within the contract. When integrating this contract into systems or relying on it for critical components, it is essential to consider that these **IDs and their associated addresses can be modified at any time**.
+The `AddressProvider` contract is managed by an `admin` who is currently an individual at Curve, rather than the Curve DAO[^1]. This **admin has the ability to update, add or remove new IDs** within the contract. When integrating this contract into systems or relying on it for critical components, it is essential to consider that these **IDs and their associated addresses can be modified at any time**.
 
 [^1]: Reasoning: Due to the nature of the contract (it does not hold any user funds or has any monetary influence), it is not considered a crucial contract. It should only be used as a pure informational source. Additionally, the Curve ecosystem changes very rapidly and therefore requires fast updates for such a contract. Always putting up a DAO vote to change IDs would not be feasible.
 
@@ -38,7 +38,7 @@ struct AddressInfo:
 
 :::colab[Google Colab Notebook]
 
-A Google Colab notebook that provides a full mapping of IDs by iterating over all `ids` via calling the `get_id_info` can be found here: [ Google Colab Notebook](https://colab.research.google.com/drive/1PnvfX5E_F7_VCsmkzHrN0_OiJNsUmx9w?usp=sharing)
+A Google Colab notebook that provides a full mapping of IDs by iterating over all `ids` via calling the `get_id_info` can be found here: [Google Colab Notebook](https://colab.research.google.com/drive/1PnvfX5E_F7_VCsmkzHrN0_OiJNsUmx9w?usp=sharing)
 
 *The notebook is compatible with querying IDs for different chains and returns a table as shown below:*
 
@@ -51,12 +51,12 @@ A Google Colab notebook that provides a full mapping of IDs by iterating over al
 :::
 
 ### `ids`
-::::description[`AddressProvider.ids() -> DynArray[uint256, 1000]`]
+::::description[`AddressProvider.ids() -> DynArray[uint256, 1000]: view`]
 
 
 Getter function for all the IDs of active registry items in the AddressProvider.
 
-Returns: active ids (`DynArray[uint256, 1000]`)
+Returns: active ids (`DynArray[uint256, 1000]`).
 
 <SourceCode>
 
@@ -106,13 +106,13 @@ This method returns all populated IDs.
 ::::description[`AddressProvider.get_id_info(arg0: uint256) -> tuple: view`]
 
 
-Getter function to retrieve informations about a specific ID.
+Getter function to retrieve information about a specific ID.
 
 Returns: `AddressInfo` struct containing the addr (`address`), description (`String[256]`), version (`uint256`) and last_modified (`uint256`). 
 
 | Input  | Type      | Description                    |
 | ------ | --------- | ------------------------------ |
-| `arg0` | `uint256` | ID to get the informations for |
+| `arg0` | `uint256` | ID to get the information for |
 
 <SourceCode>
 
@@ -154,16 +154,16 @@ This method returns the address of the contract, the description, the ID version
 ::::
 
 ### `get_address`
-::::description[`AddressProvider.get_address(arg0: uint256) -> address: view`]
+::::description[`AddressProvider.get_address(_id: uint256) -> address: view`]
 
 
-Getter for the contract address of a ID.
+Getter for the contract address of an ID.
 
 Returns: contract (`address`).
 
 | Input  | Type      | Description                        |
 | ------ | --------- | ---------------------------------- |
-| `arg0` | `uint256` | ID to get the contract address for |
+| `_id` | `uint256` | ID to get the contract address for |
 
 <SourceCode>
 
@@ -304,7 +304,7 @@ IDs can be added, removed, or adjusted by the `admin` of the contract.
 
 :::warning[Contract Upgradability]
 
-The `AddressProvider` contract is managed by an `admin` who is currently an individual at Curve, rather than the Curve DAO[^1]. This **admin has the ability to update, add or remove new IDs**within the contract. When integrating this contract into systems or relying on it for critical components, it is essential to consider that these **IDs and their associated addresses can be modified at any time**.
+The `AddressProvider` contract is managed by an `admin` who is currently an individual at Curve, rather than the Curve DAO[^1]. This **admin has the ability to update, add or remove new IDs** within the contract. When integrating this contract into systems or relying on it for critical components, it is essential to consider that these **IDs and their associated addresses can be modified at any time**.
 
 [^1]: Reasoning: Due to the nature of the contract (it does not hold any user funds or has any monetary influence), it is not considered a crucial contract. It should only be used as a pure informational source. Additionally, the Curve ecosystem changes very rapidly and therefore requires fast updates for such a contract. Always putting up a DAO vote to change IDs would not be feasible.
 
@@ -315,7 +315,7 @@ The `AddressProvider` contract is managed by an `admin` who is currently an indi
 ::::description[`AddressProvider.update_id(_id: uint256, _new_address: address, _new_description: String[64])`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -398,7 +398,7 @@ This function updates the ID at index `0`.
 ::::description[`AddressProvider.update_address(_id: uint256, _address: address)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -461,10 +461,10 @@ def _update_entry_metadata(_id: uint256):
 <Example>
 
 
-This example changes the 
+This example changes the address for ID 0.
 
 ```shell
->>> AddressProvider.update_id(0, "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E")
+>>> AddressProvider.update_address(0, "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E")
 ```
 
 
@@ -477,7 +477,7 @@ This example changes the
 ::::description[`AddressProvider.update_description(_id: uint256, _description: String[256])`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -543,7 +543,7 @@ def _update_entry_metadata(_id: uint256):
 ::::description[`AddressProvider.add_new_id(_id: uint256, _address: address, _description: String[64])`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -624,21 +624,21 @@ def _add_new_id(
 ::::description[`AddressProvider.add_new_ids(_ids: DynArray[uint256, 25], _addresses: DynArray[address, 25], _descriptions: DynArray[String[64], 25])`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
 
 :::
 
-Function to add mutiple new registry items to the AddressProvider at once.
+Function to add multiple new registry items to the AddressProvider at once.
 
 Emits: `NewEntry`
 
 | Input           | Type                       | Description                                      |
 | --------------- | -------------------------- | ------------------------------------------------ |
 | `_ids`          | `DynArray[uint256, 25]`    | IDs to add; Reverts if ID number is already used |
-| `_addresss`     | `DynArray[address, 25]`    | ID addresses                                     |
+| `_addresses`    | `DynArray[address, 25]`    | ID addresses                                     |
 | `_descriptions` | `DynArray[String[64], 25]` | ID descriptions                                  |
 
 <SourceCode>
@@ -714,7 +714,7 @@ def _add_new_id(
 ::::description[`AddressProvider.remove_id(_id: uint256) -> bool`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -784,14 +784,14 @@ def _remove_id(_id: uint256) -> bool:
 ::::description[`AddressProvider.remove_ids(_ids: DynArray[uint256, 20]) -> bool`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
 
 :::
 
-Function to remove mutiple registry items from the AddressProvider at once.
+Function to remove multiple registry items from the AddressProvider at once.
 
 Returns: true (`bool`).
 
@@ -941,7 +941,7 @@ future_admin: public(address)
 ::::description[`AddressProvider.commit_transfer_ownership(_new_admin: address) -> bool`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -952,7 +952,7 @@ Function to initiate a transfer of contract ownership.
 
 Returns: true (`bool`).
 
-Events: `CommitNewAdmin`
+Emits: `CommitNewAdmin`
 
 | Input        | Type      | Description                          |    
 | ------------ | --------- | ------------------------------------ |
@@ -996,7 +996,7 @@ def commit_transfer_ownership(_new_admin: address) -> bool:
 ::::description[`AddressProvider.apply_transfer_ownership() -> bool`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `future_admin` of the contract.
 
@@ -1049,7 +1049,7 @@ def apply_transfer_ownership() -> bool:
 ::::description[`AddressProvider.revert_transfer_ownership() -> bool`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 

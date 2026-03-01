@@ -5,9 +5,9 @@ The `RateProvider` contract is designed to provide rates for token swaps.
 
 :::github[GitHub]
 
-The source code of the `RateProvider.vy` contract can be found on [ GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/RateProvider.vy).  
+The source code of the `RateProvider.vy` contract can be found on [GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/RateProvider.vy).
 
-Additionally, each `RateProvider` contract is **integrated into the chain-specific [`AddressProvider`](./address-provider.md) at `ID = 18`**. To get the **most recent contract, users are advised to fetch it directly from the `AddressProvider`**. 
+Additionally, each `RateProvider` contract is **integrated into the chain-specific [`AddressProvider`](./address-provider.md) at `ID = 18`**. To get the **most recent contract, users are advised to fetch it directly from the `AddressProvider`**.
 
 *For example, to query the `RateProvider` contract on Ethereum:*
 
@@ -39,20 +39,20 @@ CRYPTOSWAP_ABI: constant(String[64]) = "get_dy(uint256,uint256,uint256)"
 
 
 ### `get_quotes`
-::::description[`CurveRateProvider.get_quotes(source_token: address, destination_token: address, amount_in: uint256) -> DynArray[Quote, MAX_QUOTES]`]
+::::description[`CurveRateProvider.get_quotes(source_token: address, destination_token: address, amount_in: uint256) -> DynArray[Quote, MAX_QUOTES]: view`]
 
 
-Getter method which returns quotes for a specified `source_token` compared to a `destination_token` based on the input ampount `amount_in`.
+Getter method which returns quotes for a specified `source_token` compared to a `destination_token` based on the input amount `amount_in`.
 
-Returns: A dynamic array of `Quote` structs containing the following data:
+Returns: a dynamic array of `Quote` structs containing quote data for each pool (`DynArray[Quote, MAX_QUOTES]`).
 
 - `source_token_index (uint256)`: Index of the input token in the pool.
 - `dest_token_index (uint256)`: Index of the output token in the pool.
 - `is_underlying (bool)`: Indicates if a metapool is involved.
 - `amount_out (uint256)`: Amount of the destination token to be received.
 - `pool (address)`: Liquidity pool address from which the rate is provided.
-- `source_token_pool_balance (`uint256`)`: Source token balance within the pool.
-- `dest_token_pool_balance (`uint256`)`: Destination token balance within the pool.
+- `source_token_pool_balance (uint256)`: Source token balance within the pool.
+- `dest_token_pool_balance (uint256)`: Destination token balance within the pool.
 - `pool_type (uint8)`: Type of pool: `0 = Stableswap`, `1 = Cryptoswap`, `2 = LLAMMA`
 
 | Input               | Type      | Description                  |
@@ -250,7 +250,7 @@ This example shows the quotes when swapping 1000 `CRV` for `asdCRV`. The `get_qu
 ::::
 
 ### `get_aggregated_rate`
-::::description[`CurveRateProvider.get_aggregated_rate(source_token: address, destination_token: address) -> uint256`]
+::::description[`CurveRateProvider.get_aggregated_rate(source_token: address, destination_token: address) -> uint256: view`]
 
 
 Getter for the weighted aggregated rate of all quotes from the `source_token` to the `destination_token`. The calculations are based on an input amount of 1 unit of the source token. The aggregated rate is calculated as follows:
@@ -348,7 +348,7 @@ Returns: contract version (`String[8]`).
 
 
 ```vyper
-version: public(constant(String[8])) = "1.1.0"
+version: public(constant(String[8])) = "1.0.0"
 ```
 
 
@@ -361,7 +361,7 @@ version: public(constant(String[8])) = "1.1.0"
 
 ```shell
 >>> CurveRateProvider.version()
-'1.1.0'
+'1.0.0'
 ```
 
 
