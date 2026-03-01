@@ -551,7 +551,7 @@ def get_virtual_price() -> uint256:
 ::::description[`StableSwap.ma_exp_time() -> uint256: view`]
 
 
-Getter for the exponential moving-average time for the price oracle (`price_oracle`). This value can be adjusted via `set_ma_exp_time()`, as detailed in the [admin controls](../pools/admin-controls.md#set_ma_exp_time) section.
+Getter for the exponential moving-average time for the price oracle (`price_oracle`). This value can be adjusted via `set_ma_exp_time()`, as detailed in the [admin controls](./plainpool.md#set_ma_exp_time) section.
 
 Returns: EMA time for the price oracle (`uint256`).
 
@@ -583,7 +583,7 @@ ma_exp_time: public(uint256)
 ::::description[`StableSwap.D_ma_time() -> uint256: view`]
 
 
-Getter for the exponential moving-average time for the D oracle. This value can be adjusted via `set_ma_exp_time()`, as detailed in [admin controls](../pools/admin-controls.md#set_ma_exp_time).
+Getter for the exponential moving-average time for the D oracle. This value can be adjusted via `set_ma_exp_time()`, as detailed in [admin controls](./plainpool.md#set_ma_exp_time).
 
 Returns: EMA time for the D oracle (`uint256`).
 

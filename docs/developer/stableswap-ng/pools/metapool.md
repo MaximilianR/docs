@@ -2116,13 +2116,13 @@ def _dynamic_fee(xpi: uint256, xpj: uint256, _fee: uint256) -> uint256:
 
 </Dropdown>
 
-More on dynamic fees [here](../pools/overview.md#dynamic-fees).
+More on dynamic fees [here](../overview.md#dynamic-fees).
 
 ### `fee`
 ::::description[`StableSwap.fee() -> uint256: view`]
 
 
-Getter method for the fee of the pool. The fee is expressed as an integer with a 1e10 precision. This is the value set when initializing the contract and can be changed via [`set_new_fee`](../pools/admin-controls.md#set_new_fee).
+Getter method for the fee of the pool. The fee is expressed as an integer with a 1e10 precision. This is the value set when initializing the contract and can be changed via [`set_new_fee`](#set_new_fee).
 
 Returns: fee (`uint256`).
 
@@ -2324,7 +2324,7 @@ The method returns an integer with with 1e10 precision.
 ::::description[`StableSwap.offpeg_fee_multiplier() -> uint256: view`]
 
 
-Getter method for the off-peg fee multiplier. This value determines how much the fee increases when assets within the AMM depeg. This value can be changed via [`set_new_fee`](../pools/admin-controls.md#set_new_fee).
+Getter method for the off-peg fee multiplier. This value determines how much the fee increases when assets within the AMM depeg. This value can be changed via [`set_new_fee`](#set_new_fee).
 
 Returns: offpeg fee multiplier (`uint256`)
 
@@ -2561,9 +2561,9 @@ def _withdraw_admin_fees():
 
 The amplification coefficient **`A`**determines a pool’s tolerance for imbalance between the assets within it. A higher value means that trades will incur slippage sooner as the assets within the pool become imbalanced.
 
-The appropriate value for A is dependent upon the type of coin being used within the pool, and is subject to optimisation. It is possible to modify the amplification coefficient for a pool via the **`ramp_A`**function. See [admin controls](../pools/admin-controls.md#ramp_a).
+The appropriate value for A is dependent upon the type of coin being used within the pool, and is subject to optimisation. It is possible to modify the amplification coefficient for a pool via the **`ramp_A`**function. See [admin controls](#ramp_a).
 
-When a ramping of A has been initialized, the process can be stopped by calling the function [**`stop_ramp_A()`**](../pools/admin-controls.md#stop_ramp_a).
+When a ramping of A has been initialized, the process can be stopped by calling the function [**`stop_ramp_A()`**](#stop_ramp_a).
 
 ### `A`
 ::::description[`StableSwap.A() -> uint256: view`]
@@ -3391,6 +3391,859 @@ def totalSupply() -> uint256:
 ```
 
 </Example>
+
+
+::::
+
+---
+
+
+## LP Token
+
+**Pool and LP tokens are the same smart contract.** The pool itself acts as an LP Token. When coins are deposited into a Curve pool, the depositor receives pool LP (liquidity provider) tokens in return. Each Curve pool has its unique ERC20 contract representing these LP tokens, making them transferable. Holding these LP tokens allows for their deposit and staking in the pool's liquidity gauge, earning CRV token rewards. Additionally, if a metapool supports the LP token, it can be deposited there to receive the metapool's distinct LP tokens.
+
+
+### `transfer`
+::::description[`StableSwap.transfer(_to : address, _value : uint256) -> bool:`]
+
+
+Function to transfer `_value` tokens to `_to`.
+
+Returns: true (`bool`).
+
+Emits: `Transfer`
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_to` |  `address` | address to transfer token to |
+| `_value` |  `uint256` | amount of tokens to transfer |
+
+<SourceCode>
+
+
+```vyper
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    value: uint256
+
+@external
+def transfer(_to : address, _value : uint256) -> bool:
+    """
+    @dev Transfer token for a specified address
+    @param _to The address to transfer to.
+    @param _value The amount to be transferred.
+    """
+    self._transfer(msg.sender, _to, _value)
+    return True
+
+@internal
+def _transfer(_from: address, _to: address, _value: uint256):
+    # # NOTE: vyper does not allow underflows
+    # #       so the following subtraction would revert on insufficient balance
+    self.balanceOf[_from] -= _value
+    self.balanceOf[_to] += _value
+
+    log Transfer(_from, _to, _value)
+```
+
+
+</SourceCode>
+
+
+::::
+
+### `transferFrom`
+::::description[`StableSwap.transferFrom(_from : address, _to : address, _value : uint256) -> bool:`]
+
+
+Function to transfer `_value` tokens from `_from` to `_to`.
+
+Returns: true (`bool`).
+
+Emits: `Transfer`
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_from` |  `address` | address to transfer token from |
+| `_to` |  `address` | address to transfer token to |
+| `_value` |  `uint256` | amount of tokens to transfer |
+
+<SourceCode>
+
+
+```vyper
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    value: uint256
+
+@external
+def transferFrom(_from : address, _to : address, _value : uint256) -> bool:
+    """
+    @dev Transfer tokens from one address to another.
+    @param _from address The address which you want to send tokens from
+    @param _to address The address which you want to transfer to
+    @param _value uint256 the amount of tokens to be transferred
+    """
+    self._transfer(_from, _to, _value)
+
+    _allowance: uint256 = self.allowance[_from][msg.sender]
+    if _allowance != max_value(uint256):
+        self.allowance[_from][msg.sender] = _allowance - _value
+
+    return True
+
+@internal
+def _transfer(_from: address, _to: address, _value: uint256):
+    # # NOTE: vyper does not allow underflows
+    # #       so the following subtraction would revert on insufficient balance
+    self.balanceOf[_from] -= _value
+    self.balanceOf[_to] += _value
+
+    log Transfer(_from, _to, _value)
+```
+
+
+</SourceCode>
+
+
+::::
+
+### `allowance`
+::::description[`StableSwap.allowance(arg0: address, arg1: address) -> uint256: view`]
+
+
+Getter method to check the allowance of `arg0` for funds of `arg1`.
+
+Returns: allowed amount (`uint256`).
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `arg0` |  `address` | Address of the spender |
+| `arg1` |  `address` | Address of the token owner |
+
+<SourceCode>
+
+
+```vyper
+allowance: public(HashMap[address, HashMap[address, uint256]])
+```
+
+
+</SourceCode>
+
+
+::::
+
+### `approve`
+::::description[`StableSwap.approve(_spender : address, _value : uint256) -> bool:`]
+
+
+Function to approve `_spender` to transfer `_value` of tokens on behalf of `msg.sender`
+
+Returns: true (`bool`).
+
+Emits: `Approval`
+
+| Input       | Type      | Description                     |
+|-------------|-----------|---------------------------------|
+| `_spender`  | `address` | Address of the approved spender |
+| `_value`    | `uint256` | Amount of tokens to approve     |
+
+
+<SourceCode>
+
+
+```vyper
+event Approval:
+    owner: indexed(address)
+    spender: indexed(address)
+    value: uint256
+
+@external
+def approve(_spender : address, _value : uint256) -> bool:
+    """
+    @notice Approve the passed address to transfer the specified amount of
+            tokens on behalf of msg.sender
+    @dev Beware that changing an allowance via this method brings the risk that
+        someone may use both the old and new allowance by unfortunate transaction
+        ordering: https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+    @param _spender The address which will transfer the funds
+    @param _value The amount of tokens that may be transferred
+    @return bool success
+    """
+    self.allowance[msg.sender][_spender] = _value
+
+    log Approval(msg.sender, _spender, _value)
+    return True
+```
+
+
+</SourceCode>
+
+
+::::
+
+### `permit`
+::::description[`StableSwap.permit(_owner: address, _spender: address, _value: uint256, _deadline: uint256, _v: uint8, _r: bytes32, _s: bytes32) -> bool:`]
+
+
+Function to permit `spender` to spend up to `_value` amount of `_owner`'s tokens via a signature.
+
+Returns: true (`bool`).
+
+Emits: `Approval`
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_owner` |  `address` | Account which generated the signature and is granting an allowance  |
+| `_spender` |  `address` | Account which will be granted an allowance  |
+| `_value` |  `uint256` | Amount to approve |
+| `_deadline` |  `uint256` | Deadline by which signature must be submitted |
+| `_v` |  `uint8` | The last byte of the ECDSA signature |
+| `_r` |  `bytes32` | The first 32 bytes of the ECDSA signature |
+| `_s` |  `bytes32` | The second 32 bytes of the ECDSA signature |
+
+<SourceCode>
+
+
+```vyper
+event Approval:
+    owner: indexed(address)
+    spender: indexed(address)
+    value: uint256
+
+@external
+def permit(
+    _owner: address,
+    _spender: address,
+    _value: uint256,
+    _deadline: uint256,
+    _v: uint8,
+    _r: bytes32,
+    _s: bytes32
+) -> bool:
+    """
+    @notice Approves spender by owner's signature to expend owner's tokens.
+        See https://eips.ethereum.org/EIPS/eip-2612.
+    @dev Inspired by https://github.com/yearn/yearn-vaults/blob/main/contracts/Vault.vy#L753-L793
+    @dev Supports smart contract wallets which implement ERC1271
+        https://eips.ethereum.org/EIPS/eip-1271
+    @param _owner The address which is a source of funds and has signed the Permit.
+    @param _spender The address which is allowed to spend the funds.
+    @param _value The amount of tokens to be spent.
+    @param _deadline The timestamp after which the Permit is no longer valid.
+    @param _v The bytes[64] of the valid secp256k1 signature of permit by owner
+    @param _r The bytes[0:32] of the valid secp256k1 signature of permit by owner
+    @param _s The bytes[32:64] of the valid secp256k1 signature of permit by owner
+    @return True, if transaction completes successfully
+    """
+    assert _owner != empty(address)
+    assert block.timestamp <= _deadline
+
+    nonce: uint256 = self.nonces[_owner]
+    digest: bytes32 = keccak256(
+        concat(
+            b"\x19\x01",
+            self._domain_separator(),
+            keccak256(_abi_encode(EIP2612_TYPEHASH, _owner, _spender, _value, nonce, _deadline))
+        )
+    )
+
+    if _owner.is_contract:
+        sig: Bytes[65] = concat(_abi_encode(_r, _s), slice(convert(_v, bytes32), 31, 1))
+        # reentrancy not a concern since this is a staticcall
+        assert ERC1271(_owner).isValidSignature(digest, sig) == ERC1271_MAGIC_VAL
+    else:
+        assert ecrecover(digest, convert(_v, uint256), convert(_r, uint256), convert(_s, uint256)) == _owner
+
+    self.allowance[_owner][_spender] = _value
+    self.nonces[_owner] = nonce + 1
+
+    log Approval(_owner, _spender, _value)
+    return True
+```
+
+
+</SourceCode>
+
+
+::::
+
+### `name`
+::::description[`StableSwap.name() -> String[64]: view`]
+
+
+Getter for the name of the LP token.
+
+Returns: name (`String[64]`).
+
+<SourceCode>
+
+
+```vyper
+name: public(immutable(String[64]))
+
+@external
+def __init__(
+    _name: String[32],
+    _symbol: String[10],
+    _A: uint256,
+    _fee: uint256,
+    _offpeg_fee_multiplier: uint256,
+    _ma_exp_time: uint256,
+    _coins: DynArray[address, MAX_COINS],
+    _rate_multipliers: DynArray[uint256, MAX_COINS],
+    _asset_types: DynArray[uint8, MAX_COINS],
+    _method_ids: DynArray[bytes4, MAX_COINS],
+    _oracles: DynArray[address, MAX_COINS],
+):
+    ...
+
+    name = _name
+
+    ...
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> StableSwap.name()
+'USDV-crvUSD'
+```
+
+
+</Example>
+
+
+::::
+
+### `symbol`
+::::description[`StableSwap.symbol() -> String[32]: view`]
+
+
+Getter for the symbol of the LP token.
+
+Returns: symbol (`String[32]`).
+
+<SourceCode>
+
+
+```vyper
+symbol: public(immutable(String[32]))
+
+@external
+def __init__(
+    _name: String[32],
+    _symbol: String[10],
+    _A: uint256,
+    _fee: uint256,
+    _offpeg_fee_multiplier: uint256,
+    _ma_exp_time: uint256,
+    _coins: DynArray[address, MAX_COINS],
+    _rate_multipliers: DynArray[uint256, MAX_COINS],
+    _asset_types: DynArray[uint8, MAX_COINS],
+    _method_ids: DynArray[bytes4, MAX_COINS],
+    _oracles: DynArray[address, MAX_COINS],
+):
+    ...
+
+    symbol = _symbol
+
+    ...
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> StableSwap.symbol()
+'USDVcrvUSD'
+```
+
+
+</Example>
+
+
+::::
+
+### `decimals`
+::::description[`StableSwap.decimals() -> uint8: view`]
+
+
+Getter for the decimals of the LP token.
+
+Returns: decimals (uint8).
+
+<SourceCode>
+
+
+```vyper
+decimals: public(constant(uint8)) = 18
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> StableSwap.decimals()
+18
+```
+
+
+</Example>
+
+
+::::
+
+### `version`
+::::description[`StableSwap.version() -> String[8]: view`]
+
+
+Getter for the version of the LP token.
+
+Returns: version (`String[8]`).
+
+<SourceCode>
+
+
+```vyper
+version: public(constant(String[8])) = "v7.0.0"
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> StableSwap.version()
+"v7.0.0"
+```
+
+
+</Example>
+
+
+::::
+
+### `balanceOf`
+::::description[`StableSwap.balanceOf(arg0: address) -> uint256: view`]
+
+
+Getter for the LP token balance of `arg0`.
+
+Returns: token balance (`uint256`).
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `arg0` |  `address` | address to check the balance of |
+
+<SourceCode>
+
+
+```vyper
+balanceOf: public(HashMap[address, uint256])
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> StableSwap.balanceOf("0x7a16fF8270133F063aAb6C9977183D9e72835428")
+999808484451757093697730
+```
+
+
+</Example>
+
+
+::::
+
+### `nonces`
+::::description[`StableSwap.nonces(arg0: address) -> uint256: view`]
+
+
+Getter for the nonce.
+
+Returns: nonces (`uint256`).
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `arg0` |  `address` | address |
+
+<SourceCode>
+
+
+```vyper
+nonces: public(HashMap[address, uint256])
+```
+
+
+</SourceCode>
+
+
+::::
+
+### `salt`
+::::description[`StableSwap.salt() -> bytes32: view`]
+
+
+Getter for the salt of the LP token.
+
+Returns: salt (`bytes32`).
+
+<SourceCode>
+
+
+```vyper
+salt: public(immutable(bytes32))
+
+@external
+def __init__(
+    _name: String[32],
+    _symbol: String[10],
+    _A: uint256,
+    _fee: uint256,
+    _offpeg_fee_multiplier: uint256,
+    _ma_exp_time: uint256,
+    _coins: DynArray[address, MAX_COINS],
+    _rate_multipliers: DynArray[uint256, MAX_COINS],
+    _asset_types: DynArray[uint8, MAX_COINS],
+    _method_ids: DynArray[bytes4, MAX_COINS],
+    _oracles: DynArray[address, MAX_COINS],
+):
+    ...
+
+    # EIP712 related params -----------------
+    NAME_HASH = keccak256(name)
+    salt = block.prevhash
+    CACHED_CHAIN_ID = chain.id
+    CACHED_DOMAIN_SEPARATOR = keccak256(
+        _abi_encode(
+            EIP712_TYPEHASH,
+            NAME_HASH,
+            VERSION_HASH,
+            chain.id,
+            self,
+            salt,
+        )
+    )
+
+    ...
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> StableSwap.salt()
+HexBytes('0x814188b56f08130fe7b283343b64baa08f4d207229dc52776968b62b977c8f46')
+```
+
+
+</Example>
+
+
+::::
+
+### `DOMAIN_SEPARATOR`
+::::description[`StableSwap.DOMAIN_SEPARATOR() -> bytes32: view`]
+
+
+Getter for the domain separator.
+
+Returns: domain separator (`bytes32`).
+
+<SourceCode>
+
+
+```vyper
+CACHED_DOMAIN_SEPARATOR: immutable(bytes32)
+
+@view
+@external
+def DOMAIN_SEPARATOR() -> bytes32:
+    """
+    @notice EIP712 domain separator.
+    @return bytes32 Domain Separator set for the current chain.
+    """
+    return self._domain_separator()
+
+@view
+@internal
+def _domain_separator() -> bytes32:
+    if chain.id != CACHED_CHAIN_ID:
+        return keccak256(
+            _abi_encode(
+                EIP712_TYPEHASH,
+                NAME_HASH,
+                VERSION_HASH,
+                chain.id,
+                self,
+                salt,
+            )
+        )
+    return CACHED_DOMAIN_SEPARATOR
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> StableSwap.DOMAIN_SEPARATOR()
+HexBytes('0xf60903716a331f2ad023b28477aceee88e5180cab4694c497f4f9cefac657989')
+```
+
+
+</Example>
+
+
+::::
+
+---
+
+
+## Admin Controls
+
+The following methods are guarded and may only be called by the **`admin`** of the Stableswap-NG Factory.
+
+
+### `ramp_A`
+::::description[`StableSwap.ramp_A(_future_A: uint256, _future_time: uint256):`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the Factory.
+
+
+:::
+
+Function to ramp amplification coefficient A. Minimum ramp time is 86400 (24h).
+
+*Limitations when ramping A:*
+
+- `block.timestamp` >= `initial_A_time` + `MIN_RAMP_TIME`
+- `_future_time` >= `block.timestamp` + `MIN_RAMP_TIME`
+- `future_A` > 0
+- `future_A` < `MAX_A (1000000)`
+
+Emits: `RampA`
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_future_A` |  `uint256` | future A value |
+| `_future_time` |  `uint256` | timestamp until ramping should occur; needs to be at least 24h (`MIN_RAMP_TIME`) |
+
+<SourceCode>
+
+
+```vyper
+A_PRECISION: constant(uint256) = 100
+MAX_A: constant(uint256) = 10 **6
+MAX_A_CHANGE: constant(uint256) = 10
+
+MIN_RAMP_TIME: constant(uint256) = 86400
+
+event RampA:
+    old_A: uint256
+    new_A: uint256
+    initial_time: uint256
+    future_time: uint256
+
+@external
+def ramp_A(_future_A: uint256, _future_time: uint256):
+    assert msg.sender == factory.admin()  # dev: only owner
+    assert block.timestamp >= self.initial_A_time + MIN_RAMP_TIME
+    assert _future_time >= block.timestamp + MIN_RAMP_TIME  # dev: insufficient time
+
+    _initial_A: uint256 = self._A()
+    _future_A_p: uint256 = _future_A * A_PRECISION
+
+    assert _future_A > 0 and _future_A < MAX_A
+    if _future_A_p < _initial_A:
+        assert _future_A_p * MAX_A_CHANGE >= _initial_A
+    else:
+        assert _future_A_p <= _initial_A * MAX_A_CHANGE
+
+    self.initial_A = _initial_A
+    self.future_A = _future_A_p
+    self.initial_A_time = block.timestamp
+    self.future_A_time = _future_time
+
+    log RampA(_initial_A, _future_A_p, block.timestamp, _future_time)
+```
+
+
+</SourceCode>
+
+
+::::
+
+### `stop_ramp_A`
+::::description[`StableSwap.stop_ramp_A():`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the Factory.
+
+
+:::
+
+Function to immediately stop the ramping A. The current value during the ramping process will be finalized as `A`.
+
+Emits: `StopRampA`
+
+<SourceCode>
+
+
+```vyper
+event StopRampA:
+    A: uint256
+    t: uint256
+
+@external
+def stop_ramp_A():
+    assert msg.sender == factory.admin()  # dev: only owner
+
+    current_A: uint256 = self._A()
+    self.initial_A = current_A
+    self.future_A = current_A
+    self.initial_A_time = block.timestamp
+    self.future_A_time = block.timestamp
+    # now (block.timestamp < t1) is always False, so we return saved A
+
+    log StopRampA(current_A, block.timestamp)
+```
+
+
+</SourceCode>
+
+
+::::
+
+### `set_new_fee`
+::::description[`StableSwap.set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the Factory.
+
+
+:::
+
+Function to set new values for `fee` and `offpeg_fee_multiplier`.
+
+*Limitations when setting new parameters:*
+
+- `_new_fee` &lt;= `MAX_FEE` (5000000000)
+- `_new_offpeg_fee_multiplier` * `_new_fee` &lt;= `MAX_FEE` * `FEE_DENOMINATOR`
+
+Emits: `ApplyNewFee`
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_new_fee` |  `uint256` | new fee |
+| `_new_offpeg_fee_multiplier` |  `uint256` | new off-peg fee multiplier |
+
+<SourceCode>
+
+
+```vyper
+MAX_FEE: constant(uint256) = 5 * 10 **9
+FEE_DENOMINATOR: constant(uint256) = 10 **10
+
+event ApplyNewFee:
+    fee: uint256
+    offpeg_fee_multiplier: uint256
+
+@external
+def set_new_fee(_new_fee: uint256, _new_offpeg_fee_multiplier: uint256):
+
+    assert msg.sender == factory.admin()
+
+    # set new fee:
+    assert _new_fee <= MAX_FEE
+    self.fee = _new_fee
+
+    # set new offpeg_fee_multiplier:
+    assert _new_offpeg_fee_multiplier * _new_fee <= MAX_FEE * FEE_DENOMINATOR  # dev: offpeg multiplier exceeds maximum
+    self.offpeg_fee_multiplier = _new_offpeg_fee_multiplier
+
+    log ApplyNewFee(_new_fee, _new_offpeg_fee_multiplier)
+```
+
+
+</SourceCode>
+
+
+::::
+
+### `set_ma_exp_time`
+::::description[`StableSwap.set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the Factory.
+
+
+:::
+
+Function to set the moving average window for `ma_exp_time` and `D_ma_time`.
+
+*Limitations when setting new fee parameters:*
+
+- `_ma_exp_time` and `_D_ma_time` > 0
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_ma_exp_time` |  `uint256` | new ma exp time |
+| `_D_ma_time` |  `uint256` | new D ma time |
+
+<SourceCode>
+
+
+```vyper
+@external
+def set_ma_exp_time(_ma_exp_time: uint256, _D_ma_time: uint256):
+    """
+    @notice Set the moving average window of the price oracles.
+    @param _ma_exp_time Moving average window. It is time_in_seconds / ln(2)
+    """
+    assert msg.sender == factory.admin()  # dev: only owner
+    assert 0 not in [_ma_exp_time, _D_ma_time]
+
+    self.ma_exp_time = _ma_exp_time
+    self.D_ma_time = _D_ma_time
+```
+
+
+</SourceCode>
 
 
 ::::

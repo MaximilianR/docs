@@ -55,7 +55,7 @@ def _unpack(_packed: uint256) -> uint256[3]:
 ## Exchange Methods*The contract offers two different ways to exchange tokens:*
 
 - A regular `exchange` method.
-- A `exchange_underlying` method, which swaps tokens based on native token transfers into the pool. More [here](../../stableswap-ng/pools/overview.md#exchange_received).
+- A `exchange_underlying` method, which swaps tokens based on native token transfers into the pool. More [here](../../stableswap-ng/overview.md#exchange_received).
 
 
 ### `exchange`
@@ -245,7 +245,7 @@ def _exchange(
 ::::description[`TriCrypto.exchange_underlying(i: uint256, j: uint256, dx: uint256, min_dy: uint256, receiver: address = msg.sender) -> uint256:`]
 
 
-Function to exchange between two underlying tokens. More [here](../../stableswap-ng/pools/overview.md#exchange_received).
+Function to exchange between two underlying tokens. More [here](../../stableswap-ng/overview.md#exchange_received).
 
 Returns: amount of output coin `j` received (`uint256`).
 
