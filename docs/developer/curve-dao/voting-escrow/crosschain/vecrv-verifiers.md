@@ -12,6 +12,16 @@ The `VecrvVerifier` contract is used to verify and update the total supply and i
 
 The source code for the `VecrvVerifier` contract is available on [GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/vecrv/verifiers/VecrvVerifier.sol). The contract is written in [Solidity](https://soliditylang.org/) version `0.8.18`.
 
+The `VecrvVerifier` contract is deployed at the following addresses:
+
+- :logos-optimism: Optimism: [`0x4eee0D7F5C84EF30AEd22137EED4188ac778f97f`](https://optimistic.etherscan.io/address/0x4eee0D7F5C84EF30AEd22137EED4188ac778f97f)
+- :logos-arbitrum: Arbitrum: [`0x852F32c22C5035EA12566EDFB4415625776D75d5`](https://arbiscan.io/address/0x852F32c22C5035EA12566EDFB4415625776D75d5)
+- :logos-fraxtal: Fraxtal: [`0x4D1AF9911e4c19f64Be36c36EF39Fd026Bc9bb61`](https://fraxscan.com/address/0x4D1AF9911e4c19f64Be36c36EF39Fd026Bc9bb61)
+- :logos-sonic: Sonic: [`0x38334e319D257d8f580f66393d25A6CD647A6AbC`](https://sonicscan.org/address/0x38334e319D257d8f580f66393d25A6CD647A6AbC)
+- :logos-mantle: Mantle: [`0x820945D1E5759a57874846371F22b56b73c6AE85`](https://mantlescan.xyz/address/0x820945D1E5759a57874846371F22b56b73c6AE85)
+- :logos-base: Base: [`0x3fE593E651Cd0B383AD36b75F4159f30BB0631A6`](https://basescan.org/address/0x3fE593E651Cd0B383AD36b75F4159f30BB0631A6)
+- :logos-taiko: Taiko: [`0x3B519ae13D7CeB72CC922815f5dAaD741aD5087B`](https://taikoscan.io/address/0x3B519ae13D7CeB72CC922815f5dAaD741aD5087B)
+
 <ContractABI>
 
 
@@ -25,7 +35,7 @@ The source code for the `VecrvVerifier` contract is available on [GitHub](https:
 
 
 ### `BLOCK_HASH_ORACLE`
-::::description[`VecrvVerifier.BLOCK_HASH_ORACLE() -> address: public`]
+::::description[`VecrvVerifier.BLOCK_HASH_ORACLE() -> address: view`]
 
 Getter for the block hash oracle contract, which is used to retrieve block hashes and state roots for verification.
 
@@ -41,7 +51,7 @@ address public immutable BLOCK_HASH_ORACLE;
 
 <Example>
 
-This examples returns the block has oracle on Optimism.
+This example returns the block hash oracle on Optimism.
 
 ```shell
 >>> VecrvVerifier.BLOCK_HASH_ORACLE()
@@ -58,7 +68,7 @@ This examples returns the block has oracle on Optimism.
 
 Returns the minimum number of slope changes required for a valid proof. This is set to 4, corresponding to 1 month (assuming 1 week per slope change).
 
-Returns: minimum slope change (`uint256`).
+Returns: minimum slope changes count (`uint256`).
 
 <SourceCode>
 
@@ -87,7 +97,7 @@ This example returns the minimum slope change count.
 
 Getter for the veCRV oracle contract, which is called to update the total supply and user balances after verification.
 
-Returns: vecrv oracle (`address`).
+Returns: veCRV oracle (`address`).
 
 <SourceCode>
 
@@ -103,7 +113,7 @@ constructor(address _ve_oracle) {
 
 <Example>
 
-This example returns the minimum slope change count.
+This example returns the VE_ORACLE address on Optimism.
 
 ```shell
 >>> VecrvVerifier.VE_ORACLE()
@@ -122,13 +132,16 @@ Verifies a user's veCRV balance and updates the total veCRV supply using a block
 
 | Input               | Type      | Description                    |
 | ------------------- | --------- | ------------------------------ |
-| `_user_`            | `address` | User to verify the balance for |
+| `_user`             | `address` | User to verify the balance for |
 | `_block_header_rlp` | `bytes`   | RLP-encoded block header       |
-| `_proof_rlp`        | `bytes`   | state proof of the parameters  |
+| `_proof_rlp`        | `bytes`   | State proof of the parameters  |
 
 <SourceCode>
 
-```solidity title="VecrvVerifier.sol"
+<Tabs>
+<TabItem value="VecrvVerifier.sol" label="VecrvVerifier.sol">
+
+```solidity
 /// @param _user User to verify balance for
 /// @param _block_header_rlp The RLP-encoded block header
 /// @param _proof_rlp The state proof of the parameters
@@ -145,6 +158,24 @@ function verifyBalanceByBlockHash(
         _updateBalance(_user, storage_root, block_number, proofs[2].toList());
     }
 
+function _extractAccountStorageRoot(
+        bytes memory _block_header_rlp,
+        RLPReader.RLPItem memory account_proof
+    ) internal returns (bytes32, uint256) {
+        Verifier.BlockHeader memory block_header = Verifier.parseBlockHeader(_block_header_rlp);
+        require(block_header.hash != bytes32(0), "Invalid blockhash");
+        require(
+            block_header.hash == IBlockHashOracle(BLOCK_HASH_ORACLE).get_block_hash(block_header.number),
+            "Blockhash mismatch"
+        );
+        return (_extractAccountStorageRoot(block_header.stateRootHash, account_proof), block_header.number);
+    }
+```
+
+</TabItem>
+<TabItem value="VecrvVerifierCore.sol" label="VecrvVerifierCore.sol">
+
+```solidity
 function _extractAccountStorageRoot(
         bytes32 state_root_hash,
         RLPReader.RLPItem memory account_proof
@@ -236,6 +267,9 @@ function _extractAccountStorageRoot(
     }
 ```
 
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
@@ -256,13 +290,16 @@ Verifies a user's veCRV balance and updates the total veCRV supply using a state
 
 | Input               | Type      | Description                    |
 | ------------------- | --------- | ------------------------------ |
-| `_user_`            | `address` | User to verify the balance for |
-| `_block_number_`    | `uint256` | Block number to use state root |
-| `_proof_rlp_`       | `bytes`   | State proof of the parameters  |
+| `_user`             | `address` | User to verify the balance for |
+| `_block_number`     | `uint256` | Block number to use state root |
+| `_proof_rlp`        | `bytes`   | State proof of the parameters  |
 
 <SourceCode>
 
-```solidity title="VecrvVerifier.sol"
+<Tabs>
+<TabItem value="VecrvVerifier.sol" label="VecrvVerifier.sol">
+
+```solidity
 /// @param _user User to verify balance for
 /// @param _block_number Number of the block to use state root hash
 /// @param _proof_rlp The state proof of the parameters
@@ -279,7 +316,12 @@ function verifyBalanceByStateRoot(
     _updateTotal(storage_root, _block_number, proofs[1].toList());
     _updateBalance(_user, storage_root, _block_number, proofs[2].toList());
 }
+```
 
+</TabItem>
+<TabItem value="VecrvVerifierCore.sol" label="VecrvVerifierCore.sol">
+
+```solidity
 function _extractAccountStorageRoot(
         bytes32 state_root_hash,
         RLPReader.RLPItem memory account_proof
@@ -293,6 +335,9 @@ function _extractAccountStorageRoot(
         return account.storageRoot;
     }
 ```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -314,8 +359,8 @@ Verifies and updates the total veCRV supply using a block hash and state proof. 
 
 | Input         | Type      | Description                                 |
 | ------------- | --------- | ------------------------------------------- |
-| `_block_header_rlp_` | `bytes` | RLP-encoded block header from L1           |
-| `_proof_rlp_`        | `bytes` | State proof of the parameters              |
+| `_block_header_rlp` | `bytes` | RLP-encoded block header from L1           |
+| `_proof_rlp`        | `bytes` | State proof of the parameters              |
 
 <SourceCode>
 
@@ -354,8 +399,8 @@ Verifies and updates the total veCRV supply using a state root obtained from the
 
 | Input         | Type      | Description                                 |
 | ------------- | --------- | ------------------------------------------- |
-| `_block_number_` | `uint256` | Block number to use state root             |
-| `_proof_rlp_`    | `bytes`   | State proof of the parameters              |
+| `_block_number` | `uint256` | Block number to use state root             |
+| `_proof_rlp`    | `bytes`   | State proof of the parameters              |
 
 <SourceCode>
 
@@ -397,6 +442,16 @@ The `DelegationVerifier` contract is used to verify and update veCRV delegation 
 :::solidity[`DelegationVerifier.sol`]
 
 The source code for the `DelegationVerifier` contract is available on [GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/vecrv/verifiers/DelegationVerifier.sol). The contract is written in [Solidity](https://soliditylang.org/) version `0.8.18`.
+
+The `DelegationVerifier` contract is deployed at the following addresses:
+
+- :logos-optimism: Optimism: [`0x1d04Fcb6293690D75E9262A89Ac3B816772E6841`](https://optimistic.etherscan.io/address/0x1d04Fcb6293690D75E9262A89Ac3B816772E6841)
+- :logos-arbitrum: Arbitrum: [`0x820945D1E5759a57874846371F22b56b73c6AE85`](https://arbiscan.io/address/0x820945D1E5759a57874846371F22b56b73c6AE85)
+- :logos-fraxtal: Fraxtal: [`0x852F32c22C5035EA12566EDFB4415625776D75d5`](https://fraxscan.com/address/0x852F32c22C5035EA12566EDFB4415625776D75d5)
+- :logos-sonic: Sonic: [`0xC29229b477582CE810e8C261b2869b9d8c82F4a7`](https://sonicscan.org/address/0xC29229b477582CE810e8C261b2869b9d8c82F4a7)
+- :logos-mantle: Mantle: [`0x1df9cEeE7aB8804749B795D64307A3CFE0e84905`](https://mantlescan.xyz/address/0x1df9cEeE7aB8804749B795D64307A3CFE0e84905)
+- :logos-base: Base: [`0xAeB976BB02b5c36DcD57372a3B18326BfA4983C8`](https://basescan.org/address/0xAeB976BB02b5c36DcD57372a3B18326BfA4983C8)
+- :logos-taiko: Taiko: [`0xD41f7CcB1e72e282b50b0f331944f8ea7D4CACB6`](https://taikoscan.io/address/0xD41f7CcB1e72e282b50b0f331944f8ea7D4CACB6)
 
 <ContractABI>
 
@@ -446,9 +501,9 @@ constructor(address _block_hash_oracle, address _vecrv_oracle)
 ### `VE_ORACLE`
 ::::description[`DelegationVerifier.VE_ORACLE() -> address: view`]
 
-Getter for the veCRV oracle contract, which is called to update the total supply and user balances after verification.
+Getter for the veCRV oracle contract, which is called to update delegation state after verification.
 
-Returns: vecrv oracle (`address`).
+Returns: veCRV oracle (`address`).
 
 <SourceCode>
 

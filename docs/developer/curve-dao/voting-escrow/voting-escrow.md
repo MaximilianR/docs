@@ -6,7 +6,7 @@ Participating in Curve DAO governance requires that an account have a balance of
 
 The source code for the `VotingEscrow.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/VotingEscrow.vy). The contract is written using [Vyper](https://vyper.readthedocs.io) version `0.2.4`.
 
-The contract is deployed on Ethereum at [`0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2`](https://etherscan.io/address/0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2).
+The contract is deployed on :logos-ethereum: Ethereum at [`0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2`](https://etherscan.io/address/0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2).
 
 <ContractABI>
 
@@ -1465,6 +1465,16 @@ def changeController(_newController: address):
 ```
 
 </SourceCode>
+
+<Example>
+
+This example changes the Aragon controller address.
+
+```shell
+>>> VotingEscrow.changeController("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")
+```
+
+</Example>
 
 
 ::::

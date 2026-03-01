@@ -12,6 +12,7 @@
 @import './guide-cards.css';
 @import './homepage.css';
 @import './navigation.css';
+@import './sourcecode-tabs.css';
 
 :root {
   /* Map design tokens to Docusaurus variables */
