@@ -4,11 +4,11 @@ The `RewardsHandler` contract manages the distribution of crvUSD rewards to `Sav
 
 :::vyper[`RewardsHandler.vy`]
 
-The source code for the `RewardsHandler.vy` contract is available on [ GitHub](https://github.com/curvefi/scrvusd/blob/main/contracts/RewardsHandler.vy). The contract is written in [Vyper](https://vyperlang.org/) version `~=0.4`.
+The source code for the `RewardsHandler.vy` contract is available on [GitHub](https://github.com/curvefi/scrvusd/blob/main/contracts/RewardsHandler.vy). The contract is written in [Vyper](https://vyperlang.org/) version `~=0.4`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0xe8d1e2531761406af1615a6764b0d5ff52736f56`](https://etherscan.io/address/0xe8d1e2531761406af1615a6764b0d5ff52736f56).
 
-The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The audit report is available on [ GitHub](https://github.com/curvefi/scrvusd/blob/main/audits/ChainSecurity_Curve_scrvUSD_audit.pdf).
+The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The audit report is available on [GitHub](https://github.com/curvefi/scrvusd/blob/main/audits/ChainSecurity_Curve_scrvUSD_audit.pdf).
 
 :::
 
@@ -133,7 +133,7 @@ Function to take a snapshot of the current deposited supply ratio in the Vault. 
 
 Minimum time inbetween snapshots is defined by `min_snapshot_dt_seconds`. The maximum number of snapshots is set to `10^18`, which is equivalent to 31.7 billion years if a snapshot were to be taken every second.
 
-Emits: `SnapshotTaken` event.
+Emits: `SnapshotTaken`
 
 <SourceCode>
 
@@ -229,6 +229,11 @@ def _take_snapshot(_value: uint256):
 
 <Example>
 
+```shell
+>>> RewardsHandler.snapshots(0)
+(153, 1729000000)
+```
+
 </Example>
 
 
@@ -255,6 +260,11 @@ def __init__(_twa_window: uint256, _min_snapshot_dt_seconds: uint256):
 </SourceCode>
 
 <Example>
+
+```shell
+>>> RewardsHandler.min_snapshot_dt_seconds()
+3600
+```
 
 </Example>
 
@@ -291,6 +301,11 @@ def _take_snapshot(_value: uint256):
 
 <Example>
 
+```shell
+>>> RewardsHandler.last_snapshot_timestamp()
+1729000000
+```
+
 </Example>
 
 
@@ -320,6 +335,11 @@ def get_len_snapshots() -> uint256:
 </SourceCode>
 
 <Example>
+
+```shell
+>>> RewardsHandler.get_len_snapshots()
+42
+```
 
 </Example>
 
@@ -434,6 +454,11 @@ def _compute() -> uint256:
 
 <Example>
 
+```shell
+>>> RewardsHandler.compute_twa()
+153
+```
+
 </Example>
 
 
@@ -460,6 +485,11 @@ def __init__(_twa_window: uint256, _min_snapshot_dt_seconds: uint256):
 </SourceCode>
 
 <Example>
+
+```shell
+>>> RewardsHandler.twa_window()
+604800
+```
 
 </Example>
 
@@ -504,6 +534,11 @@ def weight() -> uint256:
 
 <Example>
 
+```shell
+>>> RewardsHandler.weight()
+500
+```
+
 </Example>
 
 
@@ -540,6 +575,11 @@ def __init__(
 
 <Example>
 
+```shell
+>>> RewardsHandler.minimum_weight()
+500
+```
+
 </Example>
 
 
@@ -562,6 +602,11 @@ scaling_factor: public(uint256)
 </SourceCode>
 
 <Example>
+
+```shell
+>>> RewardsHandler.scaling_factor()
+10000
+```
 
 </Example>
 
@@ -651,6 +696,11 @@ def distribution_time() -> uint256:
 
 <Example>
 
+```shell
+>>> RewardsHandler.distribution_time()
+604800
+```
+
 </Example>
 
 
@@ -667,7 +717,7 @@ For a detailed explanation of how to use the access control module, please refer
 ### `set_twa_window`
 ::::description[`RewardsHandler.set_twa_window(_twa_window: uint256)`]
 
-:::guard[Guarded Method by Snekmate 🐍]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function is restricted to the `RATE_MANAGER` role.
 
@@ -718,7 +768,7 @@ def set_twa_window(_twa_window: uint256):
 This example sets the TWA window from 604800 seconds (1 week) to 302400 seconds (1/2 week).
 
 ```shell
->>> RewardsHandler.set_twa_window()
+>>> RewardsHandler.twa_window()
 604800
 
 >>> RewardsHandler.set_twa_window(302400)
@@ -734,7 +784,7 @@ This example sets the TWA window from 604800 seconds (1 week) to 302400 seconds 
 ### `set_twa_snapshot_dt`
 ::::description[`RewardsHandler.set_twa_snapshot_dt(_min_snapshot_dt_seconds: uint256)`]
 
-:::guard[Guarded Method by Snekmate 🐍]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function is restricted to the `RATE_MANAGER` role.
 
@@ -801,7 +851,7 @@ This example sets the minimum time between snapshots from 3600 seconds (1 hour) 
 ### `set_distribution_time`
 ::::description[`RewardsHandler.set_distribution_time(new_distribution_time: uint256)`]
 
-:::guard[Guarded Method by Snekmate 🐍]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function is restricted to the `RATE_MANAGER` role.
 
@@ -878,7 +928,7 @@ This example sets the distribution time from 1 week to 1/2 week.
 ### `set_stablecoin_lens`
 ::::description[`RewardsHandler.set_stablecoin_lens(_lens: address)`]
 
-:::guard[Guarded Method by Snekmate 🐍]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function is restricted to the `LENS_MANAGER` role.
 
@@ -946,6 +996,12 @@ This example sets the `stablecoin_lens` address to `ZERO_ADDRESS`. This is just 
 
 ### `set_minimum_weight`
 ::::description[`RewardsHandler.set_minimum_weight(new_minimum_weight: uint256)`]
+
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
+
+This contract makes use of a Snekmate module to manage roles and permissions. This specific function is restricted to the `RATE_MANAGER` role.
+
+:::
 
 Function to set the minimum weight that the vault will ask for.
 
@@ -1017,9 +1073,9 @@ This example sets the minimum weight the `RewardsHandler` will ask for from 5% t
 ::::
 
 ### `set_scaling_factor`
-::::description[`RewardsHandler.weight() -> uint256: view`]
+::::description[`RewardsHandler.set_scaling_factor(new_scaling_factor: uint256)`]
 
-:::guard[Guarded Method by Snekmate 🐍]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function is restricted to the `RATE_MANAGER` role.
 
@@ -1109,6 +1165,11 @@ def __init__(
 
 <Example>
 
+```shell
+>>> RewardsHandler.vault()
+'0x0655977FEb2f289A4aB78af67BAB0d17aAb84367'
+```
+
 </Example>
 
 
@@ -1144,6 +1205,11 @@ def __init__(
 
 <Example>
 
+```shell
+>>> RewardsHandler.stablecoin()
+'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
+```
+
 </Example>
 
 
@@ -1168,13 +1234,18 @@ stablecoin_lens: public(IStablecoinLens)
 
 <Example>
 
+```shell
+>>> RewardsHandler.stablecoin_lens()
+'0xe24e2dB9f6Bb40bBe7c1C025bc87104F5401eCd7'
+```
+
 </Example>
 
 
 ::::
 
 ### `supportsInterface`
-::::description[`RewardsHandler.supportsInterface(_interfaceId: bytes32) -> bool: view`]
+::::description[`RewardsHandler.supportsInterface(interface_id: bytes4) -> bool: view`]
 
 Function to check if the contract implements a specific interface.
 
@@ -1225,6 +1296,14 @@ def supportsInterface(interface_id: bytes4) -> bool:
 
 <Example>
 
+```shell
+>>> RewardsHandler.supportsInterface('0xA1AAB33F')
+True
+
+>>> RewardsHandler.supportsInterface('0x00000000')
+False
+```
+
 </Example>
 
 
@@ -1233,7 +1312,7 @@ def supportsInterface(interface_id: bytes4) -> bool:
 ### `recover_erc20`
 ::::description[`RewardsHandler.recover_erc20(token: IERC20, receiver: address)`]
 
-:::guard[Guarded Method by Snekmate 🐍]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function is restricted to the `RECOVERY_MANAGER` role.
 
@@ -1302,9 +1381,9 @@ In this example, all [`wETH`](https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5
 
 ---
 
-## Access Control Module (Snekmate 🐍)
+## Access Control Module
 
-Ownership in this contract is handled by the [Access Control Module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/access_control.vy) provided by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate).
+Ownership in this contract is handled by the [Access Control Module](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/access_control.vy) provided by [Snekmate](https://github.com/pcaversaccio/snekmate).
 
 ### `DEFAULT_ADMIN_ROLE`
 ::::description[`RewardsHandler.DEFAULT_ADMIN_ROLE() -> bytes32: view`]
@@ -1338,6 +1417,11 @@ exports: (
 
 <Example>
 
+```shell
+>>> RewardsHandler.DEFAULT_ADMIN_ROLE()
+'0x0000000000000000000000000000000000000000000000000000000000000000'
+```
+
 </Example>
 
 
@@ -1359,6 +1443,11 @@ RATE_MANAGER: constant(bytes32) = keccak256("RATE_MANAGER")
 </SourceCode>
 
 <Example>
+
+```shell
+>>> RewardsHandler.RATE_MANAGER()
+'0x2eb8ae3bf4f7ccce3124b351006550c82803b59ffcc079d490ebdc6c9946d68c'
+```
 
 </Example>
 
@@ -1382,6 +1471,11 @@ RECOVERY_MANAGER: constant(bytes32) = keccak256("RECOVERY_MANAGER")
 
 <Example>
 
+```shell
+>>> RewardsHandler.RECOVERY_MANAGER()
+'0xb32d0a30ffa04d208c058eb0743834d445076a8f1b0a9e5e8e6eb9d3d1f5b97b'
+```
+
 </Example>
 
 
@@ -1403,6 +1497,11 @@ LENS_MANAGER: constant(bytes32) = keccak256("LENS_MANAGER")
 </SourceCode>
 
 <Example>
+
+```shell
+>>> RewardsHandler.LENS_MANAGER()
+'0xd36e60f1df655e9ed2a62ee9a03cfba12c2a2e8dd9309dbab3290ef55d30cf20'
+```
 
 </Example>
 
