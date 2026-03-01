@@ -34,4 +34,4 @@ However, native tokens like ETH are not directly supported within this implement
 
 Additionally, pools now have built-in [moving-average oracles](./stableswap-ng/pools/oracles.md).
 
-For an in-depth exploration of the new features introduced by Stableswap-NG, please refer to the  [StableSwap-NG Pool Overview](./stableswap-ng/pools/overview.md).
+For an in-depth exploration of the new features introduced by Stableswap-NG, please refer to the  [StableSwap-NG Overview](./stableswap-ng/overview.md).

@@ -104,12 +104,9 @@ export default {
                             type: 'category',
                             label: 'Pools',
                             items: [
-                                { type: 'doc', id: 'stableswap-ng/pools/overview', label: 'Overview' },
                                 { type: 'doc', id: 'stableswap-ng/pools/plainpool', label: 'Plain Pool' },
                                 { type: 'doc', id: 'stableswap-ng/pools/metapool', label: 'Metapool' },
                                 { type: 'doc', id: 'stableswap-ng/pools/oracles', label: 'Oracles' },
-                                { type: 'doc', id: 'stableswap-ng/pools/admin-controls', label: 'Admin Controls' },
-                                { type: 'doc', id: 'stableswap-ng/pools/lp-token', label: 'LP Token' },
                             ],
                         },
                         {

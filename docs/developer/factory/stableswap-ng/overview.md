@@ -17,7 +17,7 @@ A list of all deployments can be found [here](../../deployments.md).
 
 ## Asset Types
 
-Stableswap-NG pools supports various tokens with different [asset types](../../stableswap-ng/pools/overview.md#supported-assets). New asset types can be added by the `admin` of the contract via the `add_asset_type` method.
+Stableswap-NG pools supports various tokens with different [asset types](../../stableswap-ng/overview.md#supported-assets). New asset types can be added by the `admin` of the contract via the `add_asset_type` method.
 For a list of all supported assets, please see [Deployer API](deployer-api.md#assets-types).
 
 

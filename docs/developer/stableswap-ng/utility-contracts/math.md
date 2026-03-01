@@ -1,7 +1,7 @@
 # Math Contract
 
 
-The Math Contract provides **AMM Math**for Stableswap-NG Pools.
+The Math Contract provides **AMM Math** for Stableswap-NG Pools.
 
 :::deploy[Contract Source & Deployment]
 
@@ -21,7 +21,7 @@ Returns: amount of output coins to receive (`uint256`).
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `i` |  `in128` | index value of input coin |
+| `i` |  `int128` | index value of input coin |
 | `j` |  `int128` | index value of output coin |
 | `x` |  `uint256` | amount of input coin |
 | `xp` |  `DynArray[uint256, MAX_COINS]` | current balances of the coins in the pool |
@@ -130,13 +130,13 @@ def get_y(
 ::::description[`Math.get_D(_xp: DynArray[uint256, MAX_COINS], _amp: uint256, _n_coins: uint256) -> uint256:`]
 
 
-Function to iteratively calculate the  D invariant in non-overflowing integer operations.
+Function to iteratively calculate the D invariant in non-overflowing integer operations.
 
 Returns: D invariant (`uint256`).
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `xp` |  `DynArray[uint256, MAX_COINS]` | current balances of the coins in the pool |
+| `_xp` |  `DynArray[uint256, MAX_COINS]` | current balances of the coins in the pool |
 | `_amp` |  `uint256` | amplification coefficient |
 | `_n_coins` |  `uint256` | number of coins |
 
@@ -228,7 +228,7 @@ Returns: balance of coin `i` (`uint256`).
 | `A` |  `uint256` | amplification coefficient |
 | `i` |  `int128` | index value of coin |
 | `xp` |  `DynArray[uint256, MAX_COINS]` | current balances of the coins in the pool |
-| `_D` |  `uint256` | D invariant |
+| `D` |  `uint256` | D invariant |
 | `_n_coins` |  `uint256` | number of coins |
 
 <SourceCode>
@@ -334,13 +334,13 @@ def exp(x: int256) -> uint256:
 
     """
     @dev Calculates the natural exponential function of a signed integer with
-        a precision of 1e18.
+         a precision of 1e18.
     @notice Note that this function consumes about 810 gas units. The implementation
             is inspired by Remco Bloemen's implementation under the MIT license here:
             https://xn--2-umb.com/22/exp-ln.
     @dev This implementation is derived from Snekmate, which is authored
-        by pcaversaccio (Snekmate), distributed under the AGPL-3.0 license.
-        https://github.com/pcaversaccio/snekmate
+         by pcaversaccio (Snekmate), distributed under the AGPL-3.0 license.
+         https://github.com/pcaversaccio/snekmate
     @param x The 32-byte variable.
     @return int256 The 32-byte calculation result.
     """
@@ -370,7 +370,7 @@ def exp(x: int256) -> uint256:
     # we will multiply by a scaling factor later.
     y: int256 = unsafe_add(unsafe_mul(unsafe_add(value, 1346386616545796478920950773328), value) >> 96, 57155421227552351082224309758442)
     p: int256 = unsafe_add(unsafe_mul(unsafe_add(unsafe_mul(unsafe_sub(unsafe_add(y, value), 94201549194550492254356042504812), y) >> 96,\
-                        28719021644029726153956944680412240), value), 4385272521454847904659076985693276 << 96)
+                           28719021644029726153956944680412240), value), 4385272521454847904659076985693276 << 96)
 
     # We leave `p` in the "2 **192" base so that we do not have to scale it up
     # again for the division.

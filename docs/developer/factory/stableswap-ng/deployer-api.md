@@ -203,7 +203,7 @@ Emits: `PlainPoolDeployed`
 | `_offpeg_fee_multiplier` | `uint256`               | Off-peg fee multiplier |
 | `_ma_exp_time`       | `uint256`                    | MA time; set as time_in_seconds / ln(2) |
 | `_implementation_idx` | `uint256`                  | Index of the implementation to use |
-| `_asset_types`       | `DynArray[uint8, MAX_COINS]` | Asset type of the pool as an integer; more [here](../../stableswap-ng/pools/overview.md#supported-assets) |
+| `_asset_types`       | `DynArray[uint8, MAX_COINS]` | Asset type of the pool as an integer; more [here](../../stableswap-ng/overview.md#supported-assets) |
 | `_method_ids`        | `DynArray[bytes4, MAX_COINS]` | Array of first four bytes of the Keccak-256 hash of the function signatures of the oracle addresses that give rate oracles |
 | `_oracles`           | `DynArray[address, MAX_COINS]` | Array of rate oracle addresses |
 
@@ -401,7 +401,7 @@ Emits: `MetaPoolDeployed`
 | `_offpeg_fee_multiplier` | `uint256` | Off-peg multiplier |
 | `_ma_exp_time`       | `uint256`     | MA time; set as time_in_seconds / ln(2) |
 | `_implementation_idx` | `uint256`    | Index of the implementation to use |
-| `_asset_type`        | `uint8`       | Asset type of the pool as an integer; more [here](../../stableswap-ng/pools/overview.md#supported-assets) |
+| `_asset_type`        | `uint8`       | Asset type of the pool as an integer; more [here](../../stableswap-ng/overview.md#supported-assets) |
 | `_method_id`         | `bytes4`      | First four bytes of the Keccak-256 hash of the function signatures of the oracle addresses that give rate oracles |
 | `_oracle`            | `address`     | Rate oracle address |
 

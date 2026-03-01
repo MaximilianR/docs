@@ -191,7 +191,7 @@ def _transfer_out(_coin_idx: uint256, _amount: uint256, receiver: address):
 ## Exchange Methods*The contract offers two different ways to exchange tokens:*
 
 - A regular `exchange` method.
-- A novel `exchange_received` method, which swaps tokens based on the *"internal balances"* of the pool. This method is of great use for aggregators, as it **does not require token approval**of the pool, which eliminates certain smart contract risks and *can* remove one redundant ERC-20 transfer. More [here](../../stableswap-ng/pools/overview.md#exchange_received).
+- A novel `exchange_received` method, which swaps tokens based on the *"internal balances"* of the pool. This method is of great use for aggregators, as it **does not require token approval**of the pool, which eliminates certain smart contract risks and *can* remove one redundant ERC-20 transfer. More [here](../../stableswap-ng/overview.md#exchange_received).
 
 
 ### `exchange`
