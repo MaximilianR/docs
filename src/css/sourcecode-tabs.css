@@ -1,0 +1,67 @@
+/* SourceCode: compact code block titles */
+.sourcecode-content [class*="codeBlockTitle"] {
+  font-size: var(--Typography-FontSize-xs);
+  font-family: var(--Text-FontFamily-Mono);
+  font-weight: normal;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--Layer-2-Outline);
+  background: var(--ifm-background-color);
+}
+
+/* SourceCode: tabs styled to match single code block title */
+.sourcecode-content .tabs-container {
+  margin: 0 !important;
+}
+
+.sourcecode-content [class*="tabList"] {
+  margin-bottom: 0 !important;
+}
+
+.sourcecode-content ul.tabs {
+  background: var(--ifm-background-color) !important;
+  border-bottom: 1px solid var(--Layer-2-Outline) !important;
+  font-weight: normal !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  margin: 0 !important;
+}
+
+.sourcecode-content ul.tabs .tabs__item {
+  font-size: var(--Typography-FontSize-xs) !important;
+  font-family: var(--Text-FontFamily-Mono) !important;
+  font-weight: normal !important;
+  color: var(--ifm-font-color-base) !important;
+  padding: 6px 12px !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  border-bottom: 2px solid transparent !important;
+  opacity: 0.45;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.sourcecode-content ul.tabs .tabs__item--active {
+  border-bottom: 2px solid var(--ifm-font-color-base) !important;
+  opacity: 1;
+}
+
+.sourcecode-content ul.tabs .tabs__item:hover {
+  background: transparent !important;
+  opacity: 0.75;
+}
+
+.sourcecode-content ul.tabs .tabs__item--active:hover {
+  opacity: 1;
+}
+
+/* Remove bottom gap caused by float on code element */
+.sourcecode-content [class*="codeBlockLines"] {
+  float: none !important;
+  display: block !important;
+}
+
+/* Remove gap between tab bar and tab panel */
+.sourcecode-content [class*="tabItem"],
+.sourcecode-content .margin-top--md {
+  margin-top: 0 !important;
+}

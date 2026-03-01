@@ -6,7 +6,7 @@ The `L2veCRVDelegation` contract enables users to delegate their veCRV voting po
 
 The source code for the `L2veCRVDelegation.vy` contract is available on [GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/vecrv/VecrvDelegate.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.4.0`.
 
-The `VotingEscrow` on :logos-ethereum: Ethereum is deployed at [`0xde1e6A7E8297076f070E857130E593107A0E0cF5`](https://etherscan.io/address/0xde1e6A7E8297076f070E857130E593107A0E0cF5) and contract version is `0.0.1`.
+The `L2veCRVDelegation` on :logos-ethereum: Ethereum is deployed at [`0xde1e6A7E8297076f070E857130E593107A0E0cF5`](https://etherscan.io/address/0xde1e6A7E8297076f070E857130E593107A0E0cF5) and contract version is `0.0.1`.
 
 <ContractABI>
 
@@ -91,6 +91,10 @@ This example delegates their veCRV balance to `0x71F718D3e4d1449D1502A6A7595eb84
 ### `delegate_from`
 ::::description[`L2veCRVDelegation.delegate_from(_chain_id: uint256, _from: address, _to: address)`]
 
+:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the current `owner` of the contract.
+:::
+
 DAO-only function to set delegation for addresses that cannot interact directly (e.g., lost keys or non-reachable addresses). Only callable by the contract owner.
 
 Emits: `Delegate` event.
@@ -103,7 +107,10 @@ Emits: `Delegate` event.
 
 <SourceCode>
 
-```vyper title="L2veCRVDelegation.vy"
+<Tabs>
+<TabItem value="L2veCRVDelegation.vy" label="L2veCRVDelegation.vy">
+
+```vyper
 from snekmate.auth import ownable
 
 event Delegate:
@@ -137,6 +144,23 @@ def _delegate(_chain_id: uint256, _from: address, _to: address):
     self.delegation_to[_chain_id][_to] = _from
     log Delegate(_chain_id, _from, _to)
 ```
+
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -252,12 +276,16 @@ def delegation_allowed(_chain_id: uint256, _to: address) -> bool:
 
 <Example>
 
-This example checks if delegation for `0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683` is allowed on chain `146`.
+This example checks if delegation for a given address is allowed on a specific chain. Enter a chain ID and address, then click **Query** to fetch the value live from the blockchain.
 
-```shell
->>> L2veCRVDelegation.delegation_allowed(146, '0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683')
-True
-```
+<ContractCall
+  address="0xde1e6A7E8297076f070E857130E593107A0E0cF5"
+  abi={["function delegation_allowed(uint256, address) view returns (bool)"]}
+  method="delegation_allowed"
+  args={["146", "0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683"]}
+  labels={["_chain_id", "_to"]}
+  contractName="L2veCRVDelegation"
+/>
 
 </Example>
 
@@ -298,12 +326,16 @@ def delegated(_chain_id: uint256, _from: address) -> address:
 
 <Example>
 
-In this example, address `0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462` delegated his veCRV balance on chain `146` to `0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683`.
+This example returns the address to which a given user's veCRV balance is delegated on a specific chain. Enter a chain ID and delegator address, then click **Query** to fetch the value live from the blockchain.
 
-```shell
->>> L2veCRVDelegation.delegated(146, '0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462')
-'0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683'
-```
+<ContractCall
+  address="0xde1e6A7E8297076f070E857130E593107A0E0cF5"
+  abi={["function delegated(uint256, address) view returns (address)"]}
+  method="delegated"
+  args={["146", "0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462"]}
+  labels={["_chain_id", "_from"]}
+  contractName="L2veCRVDelegation"
+/>
 
 </Example>
 
@@ -346,12 +378,16 @@ def delegator(_chain_id: uint256, _to: address) -> address:
 
 <Example>
 
-This example returns the address which delegated their veCRV balance on chain `146` to `0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683`, essentially the delegator.
+This example returns the address that delegated their veCRV balance to a given address on a specific chain. Enter a chain ID and delegatee address, then click **Query** to fetch the value live from the blockchain.
 
-```shell
->>> L2veCRVDelegation.delegator(146, '0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683')
-'0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462'
-```
+<ContractCall
+  address="0xde1e6A7E8297076f070E857130E593107A0E0cF5"
+  abi={["function delegator(uint256, address) view returns (address)"]}
+  method="delegator"
+  args={["146", "0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683"]}
+  labels={["_chain_id", "_to"]}
+  contractName="L2veCRVDelegation"
+/>
 
 </Example>
 
@@ -361,4 +397,202 @@ This example returns the address which delegated their veCRV balance on chain `1
 
 ## Contract Ownership
 
-Contract ownership is handled via the snekmate `ownable` module. The `owner` of the contract is the DAO, and ownership can be transferred using the `transfer_ownership()` function.
+Ownership of the contract is managed using the [`ownable.vy`](https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/auth/ownable.vy) module from 🐍 [Snekmate](https://github.com/pcaversaccio/snekmate) which implements a basic access control mechanism, where there is an `owner` that can be granted exclusive access to specific functions.
+
+
+### `owner`
+::::description[`L2veCRVDelegation.owner() -> address: view`]
+
+Getter for the owner of the contract. This is the address that can call restricted functions like `transfer_ownership` and `delegate_from`.
+
+Returns: contract owner (`address`).
+
+<SourceCode>
+
+<Tabs>
+<TabItem value="L2veCRVDelegation.vy" label="L2veCRVDelegation.vy">
+
+```vyper
+from snekmate.auth import ownable
+initializes: ownable
+exports: (
+    ownable.transfer_ownership,
+    ownable.owner,
+)
+
+@deploy
+def __init__(_owner: address):
+    """
+    @notice Contract constructor
+    @param _owner Owner address
+    """
+    ownable.__init__()
+    ownable._transfer_ownership(_owner)
+```
+
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@deploy
+@payable
+def __init__():
+    """
+    @dev To omit the opcodes for checking the `msg.value`
+        in the creation-time EVM bytecode, the constructor
+        is declared as `payable`.
+    @notice The `owner` role will be assigned to
+            the `msg.sender`.
+    """
+    self._transfer_ownership(msg.sender)
+```
+
+</TabItem>
+</Tabs>
+
+</SourceCode>
+
+<Example>
+
+<ContractCall
+  address="0xde1e6A7E8297076f070E857130E593107A0E0cF5"
+  abi={["function owner() view returns (address)"]}
+  method="owner"
+  contractName="L2veCRVDelegation"
+/>
+
+</Example>
+
+::::
+
+### `transfer_ownership`
+::::description[`L2veCRVDelegation.transfer_ownership(new_owner: address)`]
+
+:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the current `owner` of the contract.
+:::
+
+Function to transfer the ownership of the contract to a new address.
+
+| Input       | Type      | Description                |
+| ----------- | --------- | -------------------------- |
+| `new_owner` | `address` | New owner of the contract  |
+
+<SourceCode>
+
+<Tabs>
+<TabItem value="L2veCRVDelegation.vy" label="L2veCRVDelegation.vy">
+
+```vyper
+from snekmate.auth import ownable
+initializes: ownable
+exports: (
+    ownable.transfer_ownership,
+    ownable.owner,
+)
+
+@deploy
+def __init__(_owner: address):
+    """
+    @notice Contract constructor
+    @param _owner Owner address
+    """
+    ownable.__init__()
+    ownable._transfer_ownership(_owner)
+```
+
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+event OwnershipTransferred:
+    previous_owner: indexed(address)
+    new_owner: indexed(address)
+
+@external
+def transfer_ownership(new_owner: address):
+    """
+    @dev Transfers the ownership of the contract
+        to a new account `new_owner`.
+    @notice Note that this function can only be
+            called by the current `owner`. Also,
+            the `new_owner` cannot be the zero address.
+    @param new_owner The 20-byte address of the new owner.
+    """
+    self._check_owner()
+    assert new_owner != empty(address), "ownable: new owner is the zero address"
+    self._transfer_ownership(new_owner)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+
+@internal
+def _transfer_ownership(new_owner: address):
+    """
+    @dev Transfers the ownership of the contract
+        to a new account `new_owner`.
+    @notice This is an `internal` function without
+            access restriction.
+    @param new_owner The 20-byte address of the new owner.
+    """
+    old_owner: address = self.owner
+    self.owner = new_owner
+    log OwnershipTransferred(old_owner, new_owner)
+```
+
+</TabItem>
+</Tabs>
+
+</SourceCode>
+
+<Example>
+
+In this example, the ownership of the contract is transferred to a new address.
+
+```shell
+>>> L2veCRVDelegation.transfer_ownership("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")
+```
+
+</Example>
+
+::::
+
+---
+
+## Other Methods
+
+### `version`
+::::description[`L2veCRVDelegation.version() -> String: view`]
+
+Getter for the contract version.
+
+Returns: contract version (`String`).
+
+<SourceCode>
+
+```vyper title="L2veCRVDelegation.vy"
+version: public(constant(String[8])) = "0.0.1"
+```
+
+</SourceCode>
+
+<Example>
+
+<ContractCall
+  address="0xde1e6A7E8297076f070E857130E593107A0E0cF5"
+  abi={["function version() view returns (string)"]}
+  method="version"
+  contractName="L2veCRVDelegation"
+/>
+
+</Example>
+
+::::

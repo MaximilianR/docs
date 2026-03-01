@@ -99,11 +99,4 @@
   margin-right: 1em;
 }
 
-/* Remove margin from tabs wrapper inside */
-.content :global(.tabs-container) {
-  margin: 0;
-}
-
-.content :global(.tabs) {
-  border-bottom: 1px solid var(--Layer-2-Outline);
-}
+/* Code block title and tab overrides are in src/css/sourcecode-tabs.css (global) */
