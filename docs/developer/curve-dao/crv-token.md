@@ -92,7 +92,7 @@ This example approves `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` to transfer 1
 ::::
 
 ### `allowance`
-::::description[`CRV.allowance(_owner: address, _spender: address) -> uint256`]
+::::description[`CRV.allowance(_owner: address, _spender: address) -> uint256: view`]
 
 
 Getter method to check the amount of tokens that `_owner` has allowed `_spender` to use.
@@ -217,7 +217,7 @@ Additionally, transfers to `ZERO_ADDRESS` are not allowed.
 
 :::
 
-Function to transfer `_value` tokens from `_from_` to `_to`.
+Function to transfer `_value` tokens from `_from` to `_to`.
 
 Returns: true (`bool`).
 
@@ -331,7 +331,7 @@ This example returns the minter contract address.
 ::::
 
 ### `mint`
-::::description[`CRV.mint(_to: address, _value: uint256) -> bool:`]
+::::description[`CRV.mint(_to: address, _value: uint256) -> bool`]
 
 
 :::guard[Guarded Method]
@@ -343,7 +343,7 @@ This function is only callable by the `Minter` contract.
 
 Function to mint `_value` tokens and assign them to `_to`.
 
-Returns: true (`bool`)
+Returns: true (`bool`).
 
 Emits: `Transfer` event.
 
@@ -406,7 +406,7 @@ This example mints 1 CRV token to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`.
 ::::
 
 ### `mintable_in_timeframe`
-::::description[`CRV.mintable_in_timeframe(start: uint256, end: uint256) -> uint256`]
+::::description[`CRV.mintable_in_timeframe(start: uint256, end: uint256) -> uint256: view`]
 
 
 Getter for the mintable supply between `start` and `end` timestamps. The value is dependent on the current emission `rate` of the token.
@@ -966,10 +966,10 @@ This example sets a new admin for the CRV token contract.
 ::::
 
 ### `name`
-::::description[`CRV.name() -> String[64]`]
+::::description[`CRV.name() -> String[64]: view`]
 
 
-Getter for the name of the token. Name of the token can be changed by calling the **`set_name`**function.
+Getter for the name of the token. Name of the token can be changed by calling the **`set_name`** function.
 
 Returns: token name (`String[64]`).
 
@@ -1009,10 +1009,10 @@ This example returns the name of the CRV token.
 ::::
 
 ### `symbol`
-::::description[`CRV.symbol() -> String[32]`]
+::::description[`CRV.symbol() -> String[32]: view`]
 
 
-Getter of the token symbol. Symbol of the token can be changed by calling the **`set_name`**function.
+Getter of the token symbol. Symbol of the token can be changed by calling the **`set_name`** function.
 
 Returns: token symbol (`String[32]`).
 
@@ -1105,7 +1105,7 @@ This example changes the name and symbol of the CRV token.
 ::::
 
 ### `set_minter`
-::::description[`CRV.set_minter(_minter: address):`]
+::::description[`CRV.set_minter(_minter: address)`]
 
 
 :::warning[Changing the `minter` contract is not possible anymore!]
@@ -1167,7 +1167,7 @@ This example attempts to set the minter contract address. Since the minter is al
 ::::
 
 ### `available_supply`
-::::description[`CRV.available_supply() -> uint256`]
+::::description[`CRV.available_supply() -> uint256: view`]
 
 
 Getter for the current number of CRV tokens - claimed or unclaimed - in existence.
@@ -1210,7 +1210,7 @@ This example returns the current available supply of CRV tokens. The value is fe
 ::::
 
 ### `totalSupply`
-::::description[`CRV.totalSupply() -> uint256`]
+::::description[`CRV.totalSupply() -> uint256: view`]
 
 
 Getter for the total number of tokens in existence.
@@ -1295,13 +1295,13 @@ This example returns the number of decimals of the CRV token.
 ::::description[`CRV.balanceOf(arg0: address) -> uint256: view`]
 
 
-Getter for the crv token balance of a specific address.
+Getter for the CRV token balance of a specific address.
 
 Returns: balance (`uint256`).
 
-| Input      | Type   | Description |
-| ----------- | -------| ----|
-| `arg0` |  `address` | wallet to check CRV balance for |
+| Input  | Type      | Description                     |
+| ------ | --------- | ------------------------------- |
+| `arg0` | `address` | Wallet to check CRV balance for |
 
 <SourceCode>
 

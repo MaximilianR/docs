@@ -51,11 +51,11 @@ Emits: `UpdateBalance`
 
 | Input   | Type      | Description |
 | ------- | --------- | ----------- |
-| `_user` | `address` | Address of the user to update the balance. |
-| `_user_point_epoch` | `uint256` | Last `_user`s checkpointed epoch  |
-| `_user_point_history` | `Point` | Last `_user`s point history |
-| `_locked` | `LockedBalance` | _user`s locked balance |
-| `_block_number` | `uint256` | block number |
+| `_user` | `address` | Address of the user to update the balance |
+| `_user_point_epoch` | `uint256` | Last `_user`'s checkpointed epoch  |
+| `_user_point_history` | `Point` | Last `_user`'s point history |
+| `_locked` | `LockedBalance` | `_user`'s locked balance |
+| `_block_number` | `uint256` | Block number |
 
 <SourceCode>
 
@@ -290,7 +290,7 @@ def _check_role(role: bytes32, account: address):
 
 
 ### `totalSupply`
-::::description[`L2VotingEscrowOracle.totalSupply(_timestamp: uint256 = block.timestamp) -> uint256`]
+::::description[`L2VotingEscrowOracle.totalSupply(_timestamp: uint256 = block.timestamp) -> uint256: view`]
 
 Getter for the total veCRV voting power at a given timestamp.
 
@@ -361,7 +361,7 @@ The `L2VotingEscrowOracle` contract supports delegation of veCRV balances, allow
 
 
 ### `delegated`
-::::description[`L2VotingEscrowOracle.delegated(_from: address) -> address`]
+::::description[`L2VotingEscrowOracle.delegated(_from: address) -> address: view`]
 
 Getter for the address to which the veCRV balance of `_from` is delegated. If not delegated, returns `_from` itself.
 
@@ -408,7 +408,7 @@ This example shows the delegation of `0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462
 
 
 ### `delegator`
-::::description[`L2VotingEscrowOracle.delegator(_to: address) -> address`]
+::::description[`L2VotingEscrowOracle.delegator(_to: address) -> address: view`]
 
 Getter for the address that delegated its veCRV balance to `_to`. If not delegated, returns `_to` itself.
 
@@ -445,7 +445,7 @@ This example returns the delegator of `0x71F718D3e4d1449D1502A6A7595eb84eBcCB168
 
 ```shell
 >>> L2VotingEscrowOracle.delegator("0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683")
-"0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462"            # no delegation
+"0x5802ad5D5B1c63b3FC7DE97B55e6db19e5d36462"
 ```
 
 </Example>
@@ -461,6 +461,8 @@ This contract makes use of a Snekmate module to manage roles and permissions. Ca
 :::
 
 Function to update the delegation of veCRV balance from `_from` to `_to`.
+
+Emits: `Delegate`
 
 | Input         | Type      | Description                                 |
 | ------------- | --------- | ------------------------------------------- |
@@ -547,7 +549,7 @@ The `L2VotingEscrowOracle` contract uses a role-based access control system, imp
 
 The role identifier for accounts allowed to update user balances.
 
-Returns: role hash (`bytes32`)
+Returns: role hash (`bytes32`).
 
 <SourceCode>
 
@@ -583,7 +585,7 @@ This example returns the `BALANCE_VERIFIER` role as `bytes32` of the veCRV Oracl
 
 The role identifier for accounts allowed to update total supply.
 
-Returns: role hash (`bytes32`)
+Returns: role hash (`bytes32`).
 
 <SourceCode>
 
@@ -619,7 +621,7 @@ This example returns the `TOTAL_VERIFIER` role as `bytes32` of the veCRV Oracle 
 
 The role identifier for accounts allowed to update delegation.
 
-Returns: role hash (`bytes32`)
+Returns: role hash (`bytes32`).
 
 <SourceCode>
 
@@ -711,6 +713,8 @@ This contract makes use of a Snekmate module to manage roles and permissions. Gr
 
 Function to grant a role to an account.
 
+Emits: `RoleGranted`
+
 | Input      | Type      | Description                                 |
 | ---------- | --------- | ------------------------------------------- |
 | `role`     | `bytes32` | Role identifier                             |
@@ -783,6 +787,8 @@ This contract makes use of a Snekmate module to manage roles and permissions. Re
 
 Function to revoke a role from an account.
 
+Emits: `RoleRevoked`
+
 | Input      | Type      | Description                                 |
 | ---------- | --------- | ------------------------------------------- |
 | `role`     | `bytes32` | Role identifier                             |
@@ -846,7 +852,7 @@ def _revoke_role(role: bytes32, account: address):
 
 
 ### `supportsInterface`
-::::description[`L2VotingEscrowOracle.supportsInterface(interfaceId: bytes4):`]
+::::description[`L2VotingEscrowOracle.supportsInterface(interface_id: bytes4) -> bool: view`]
 
 Getter to check if the contract implements a specific interface ID.
 
@@ -854,7 +860,7 @@ Returns: true or false (`bool`).
 
 | Input         | Type      | Description                                 |
 | ------------- | --------- | ------------------------------------------- |
-| `interfaceId` | `bytes4`  | Interface identifier                        |
+| `interface_id` | `bytes4`  | Interface identifier                        |
 
 <SourceCode>
 
@@ -979,7 +985,7 @@ The contract provides getter functions that allow querying detailed information 
 
 
 ### `get_last_user_slope`
-::::description[`L2VotingEscrowOracle.get_last_user_slope(_addr: address) -> int128`]
+::::description[`L2VotingEscrowOracle.get_last_user_slope(_addr: address) -> int128: view`]
 
 Returns the most recently recorded rate of voting power decrease (slope) for a user.
 
@@ -1038,7 +1044,7 @@ def _get_user_after_delegation(_user: address) -> address:
 
 
 ### `locked__end`
-::::description[`L2VotingEscrowOracle.locked__end(_addr: address) -> uint256`]
+::::description[`L2VotingEscrowOracle.locked__end(_addr: address) -> uint256: view`]
 
 Getter for the timestamp when a user's lock finishes.
 
@@ -1202,16 +1208,16 @@ This example returns the user point epoch of an address.
 
 
 ### `user_point_history`
-::::description[`L2VotingEscrowOracle.user_point_history(_addr: address, epoch: uint256):`]
+::::description[`L2VotingEscrowOracle.user_point_history(arg0: address, arg1: uint256) -> Point: view`]
 
 Getter for the point history for a user at a given index.
 
 Returns: `Point` struct containing bias (`int128`), slope (`int128`), ts (`uint256`) and blk (`uint256`).
 
-| Input      | Type      | Description           |
-| ---------- | --------- | --------------------- |
-| `_addr`    | `address` | Address of the user   |
-| `epoch`    | `uint256` | Epoch index           |
+| Input  | Type      | Description         |
+| ------ | --------- | ------------------- |
+| `arg0` | `address` | Address of the user |
+| `arg1` | `uint256` | Epoch index         |
 
 <SourceCode>
 
@@ -1242,7 +1248,7 @@ This example returns the user point history of the address `0x71F718D3e4d1449D15
 
 
 ### `locked`
-::::description[`L2VotingEscrowOracle.locked(arg0: address) -> amount: int128, end: uint256`]
+::::description[`L2VotingEscrowOracle.locked(arg0: address) -> LockedBalance: view`]
 
 Returns the locked balance struct for a user.
 
@@ -1279,15 +1285,15 @@ This example returns the total amount of CRV tokens locked, along with the times
 
 
 ### `slope_changes`
-::::description[`L2VotingEscrowOracle.slope_changes(arg0: uint256) -> int128`]
+::::description[`L2VotingEscrowOracle.slope_changes(arg0: uint256) -> int128: view`]
 
 Getter for the slope change at a given future timestamp.
 
-Returns: slope change (`uint256`).
+Returns: slope change (`int128`).
 
-| Input      | Type      | Description                                 |
-| ---------- | --------- | ------------------------------------------- |
-| `timestamp`| `uint256` | Timestamp                                   |
+| Input  | Type      | Description |
+| ------ | --------- | ----------- |
+| `arg0` | `uint256` | Timestamp   |
 
 <SourceCode>
 
@@ -1314,7 +1320,7 @@ slope_changes: public(HashMap[uint256, int128])
 
 Getter for the last ETH block number at which an update was made.
 
-Returns: block number (`uint256`)
+Returns: block number (`uint256`).
 
 <SourceCode>
 

@@ -77,7 +77,7 @@ def _delegate(_chain_id: uint256, _from: address, _to: address):
 
 <Example>
 
-This example delegates their veCRV balance to `0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683` on chain `146`
+This example delegates the caller's veCRV balance to `0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683` on chain `146`.
 
 ```shell
 >>> L2veCRVDelegation.delegate(146, '0x71F718D3e4d1449D1502A6A7595eb84eBcCB1683')
@@ -244,11 +244,11 @@ This example shows how to allow and revoke delegation.
 
 
 ### `delegation_allowed`
-::::description[`L2veCRVDelegation.delegation_allowed(_chain_id: uint256, _to: address) -> bool`]
+::::description[`L2veCRVDelegation.delegation_allowed(_chain_id: uint256, _to: address) -> bool: view`]
 
 Getter method to check whether delegation to a given address is currently allowed on a specific chain.
 
-Returns: `true` if delegation is allowed, `false` otherwise.
+Returns: `true` if delegation is allowed, `false` otherwise (`bool`).
 
 | Input       | Type      | Description          |
 | ----------- | --------- | -------------------- |
@@ -293,9 +293,11 @@ This example checks if delegation for a given address is allowed on a specific c
 
 
 ### `delegated`
-::::description[`L2veCRVDelegation.delegated(_chain_id: uint256, _from: address) -> address`]
+::::description[`L2veCRVDelegation.delegated(_chain_id: uint256, _from: address) -> address: view`]
 
 Returns the address to which a given user's veCRV balance is delegated on a specific chain. If no delegation is set, returns the original address.
+
+Returns: delegation destination (`address`).
 
 | Input       | Type      | Description |
 | ----------- | --------- | ----------- |
@@ -343,7 +345,7 @@ This example returns the address to which a given user's veCRV balance is delega
 
 
 ### `delegator`
-::::description[`L2veCRVDelegation.delegator(_chain_id: uint256, _to: address) -> address`]
+::::description[`L2veCRVDelegation.delegator(_chain_id: uint256, _to: address) -> address: view`]
 
 Getter for the address that delegated their veCRV balance to a given address on a specific chain. If no delegator is set, returns the `_to` address itself.
 
@@ -351,7 +353,7 @@ Returns: delegator (`address`).
 
 | Input       | Type      | Description                          |
 | ----------- | --------- | ------------------------------------ |
-| `_chain_id` | `uint256` | Chain ID where to set the delegation |
+| `_chain_id` | `uint256` | Chain ID to check for                |
 | `_to`       | `address` | Delegatee                            |
 
 <SourceCode>
@@ -475,6 +477,8 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 :::
 
 Function to transfer the ownership of the contract to a new address.
+
+Emits: `OwnershipTransferred`
 
 | Input       | Type      | Description                |
 | ----------- | --------- | -------------------------- |
