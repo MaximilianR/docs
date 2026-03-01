@@ -8,11 +8,11 @@ import ThemedImage from '@theme/ThemedImage';
 
 To follow this guide, make sure **"Advanced Mode"** is enabled in your user settings.
 
-Before diving in, please make sure you're familiar with the concept of bands. You can read more about them [here](/user/llamalend/liquidation-protection/how-it-works#bands-n).
+Before diving in, please make sure you're familiar with the concept of bands. You can read more about them [here](/user/llamalend/liquidation-protection/how-it-works).
 
 This guide is very similar to the [Beginner: Open & Close](./open-and-close.md) tutorial. The only difference is that you'll be able to set a **custom number of bands** — which defaults to 10 in non-advanced mode. Everything else works exactly the same.
 
-Make sure you understand the **consequences and benefits** of using more or fewer bands. You'll find a quick summary further down in this guide, or read more [here](/user/llamalend/liquidation-protection/how-it-works#bands-n).
+Make sure you understand the **consequences and benefits** of using more or fewer bands. You'll find a quick summary further down in this guide, or read more [here](/user/llamalend/liquidation-protection/how-it-works).
 
 ## Customizing Bands
 

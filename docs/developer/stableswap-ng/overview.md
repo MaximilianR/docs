@@ -7,12 +7,12 @@ import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 
 Source code is available on [ GitHub](https://github.com/curvefi/stableswap-ng). The following documentation covers source code up until commit number [`5f582a6`](https://github.com/curvefi/stableswap-ng/commit/5f582a6b8f709d863825c5fbe026cd3b4fa2d840).
 
-All stableswap-ng deployments can be found in the "Deployment Addresses" section. [↗](../../deployments.md)
+All stableswap-ng deployments can be found in the "Deployment Addresses" section. [↗](../deployments.md)
 
 
 :::
 
-For an in-depth understanding of the Stableswap invariant design, please refer to the official [Stableswap whitepaper](../../assets/pdf/whitepaper_stableswap.pdf).
+For an in-depth understanding of the Stableswap invariant design, please refer to the official [Stableswap whitepaper](/pdf/whitepapers/whitepaper_stableswap.pdf).
 
 
 ---

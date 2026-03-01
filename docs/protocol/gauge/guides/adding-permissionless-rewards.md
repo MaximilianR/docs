@@ -72,4 +72,4 @@ There is no additional setup needed on the user side.
 
 ## Claiming and Viewing Rewards
 
-From a user side, rewards can simply be claimed via the UI. More here: [Claiming Rewards](/user/dex/liquidity#claiming-rewards).
+From a user side, rewards can simply be claimed via the UI. More here: [Claiming Rewards](/user/dex/liquidity).

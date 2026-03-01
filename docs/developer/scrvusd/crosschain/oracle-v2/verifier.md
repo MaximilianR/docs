@@ -281,7 +281,8 @@ contract ScrvusdVerifierV1 {
 ---
 
 
-## scrvUSD Verifier V2:::solidity[`ScrvusdVerifierV2.sol`]
+## scrvUSD Verifier V2
+:::solidity[`ScrvusdVerifierV2.sol`]
 
 The source code for the `ScrvusdVerifierV2` contract is available on [ GitHub](https://github.com/curvefi/storage-proofs/blob/main/contracts/scrvusd/verifiers/ScrvusdVerifierV2.sol). The contract is written in [Solidity](https://soliditylang.org/) version `0.8.18`.
 

@@ -9,7 +9,7 @@ The algorithm also incorporates a **dynamic fee structure**that responds to chan
 
 :::pdf[Whitepaper]
 
-For a detailed overview of the design, please read the official [whitepaper](../assets/pdf/whitepaper_cryptoswap.pdf).
+For a detailed overview of the design, please read the official [whitepaper](/pdf/whitepapers/whitepaper_cryptoswap.pdf).
 
 
 :::

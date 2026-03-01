@@ -387,7 +387,8 @@ def set_use_chainlink(do_it: bool):
 
 ::::
 
-## Terminology used in Code| terminology used in code | |
+## Terminology used in Code
+| terminology used in code | |
 |-----------|----------------|
 | $\alpha$ | `alpha` |
 | $\exp$  | `exp(power: int256) -> uint256:` |

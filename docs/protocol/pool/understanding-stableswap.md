@@ -17,7 +17,7 @@ It was introduced in the paper [“Stableswap: Efficient Mechanism for Stablecoi
 The algorithm **combines features of both constant sum (fixed swap price) and constant product (`x*y=k`) curves**, allowing for **low-slippage trades near the peg while maintaining deep liquidity and arbitrage incentives when prices drift**.
 
 :::info
-In October 2023, the initial Stableswap implementation was reworked into **Stableswap-NG**, introducing crucial features to further enhance efficiency. More: [Evolution Stableswap-NG](#evolution-stableswap-ng)
+In October 2023, the initial Stableswap implementation was reworked into **Stableswap-NG**, introducing crucial features to further enhance efficiency. More: Evolution Stableswap-NG
 :::
 
 ## How it Works

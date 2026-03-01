@@ -1788,7 +1788,8 @@ def get_amount_for_price(p: uint256) -> (uint256, bool):
 ---
 
 
-## Bands*"Each band works like Uniswap V3, concentrating liquidity between two prices, and being all in the collateral at the lower price and all in crvUSD at the higher price. However since the entire interval of prices are aggressively placed with respect to the market (higher than oracle price when it's moving up and lower when it's moving down), each band gets arbed to hold all of either collateral or stablecoin in the opposite manner than expected when LP-ing with Uniswap V3."*[^2]
+## Bands
+*"Each band works like Uniswap V3, concentrating liquidity between two prices, and being all in the collateral at the lower price and all in crvUSD at the higher price. However since the entire interval of prices are aggressively placed with respect to the market (higher than oracle price when it's moving up and lower when it's moving down), each band gets arbed to hold all of either collateral or stablecoin in the opposite manner than expected when LP-ing with Uniswap V3."*[^2]
 
 [^2]: https://github.com/chanhosuh/curvefi-math/blob/master/LLAMMA.ipynb
 

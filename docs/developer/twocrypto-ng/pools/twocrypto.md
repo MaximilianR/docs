@@ -3002,7 +3002,7 @@ Out [2]:  150537307454780254829
 
 ## Fees and Pool Profits
 
-The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
+The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../cryptoswap-overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
 
 Additionally, just as for other curve pools, there is an `ADMIN_FEE`, which is hardcoded to 50%. All twocrypto-ng pools share a universal `fee_receiver`, which is determined within the Factory contract. Unlike for most other Curve pools, there is no external method to claim the admin fees. They are claimed when removing liquidity single sided.
 
@@ -3395,7 +3395,7 @@ Out [1]:  4177413767556756716238
 
 ## Price Scaling
 
-Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
+Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../cryptoswap-overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
 
 
 ### `price_scale`
@@ -3549,7 +3549,7 @@ Out [1]:  680564733841876929619973849625130958848000000000600
 
 ## Bonding Curve Parameters
 
-A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../overview.md#bonding-curve-parameters).
+A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../cryptoswap-overview.md#bonding-curve-parameters).
 
 Bonding curve parameters `A` and `gamma` values are [upgradable](./admin-controls.md#parameter-changes) by the the pools admin.
 
@@ -3676,7 +3676,8 @@ Out [1]:  145000000000000
 ---
 
 
-## Oracle Methods*All pools have their own built in exponential moving average price oracle.*
+## Oracle Methods
+*All pools have their own built in exponential moving average price oracle.*
 
 Prices and oracles are adjusted by when calling the internal `tweak_price` method, which happens at `add_liquidity`, `remove_liquidity_one_coin` and `_exchange`.
 
