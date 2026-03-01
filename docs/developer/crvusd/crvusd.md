@@ -1,7 +1,7 @@
 # crvUSD
 
 
-:::github[GitHub]
+:::vyper[`Stablecoin.vy`]
 
 The source code of the `crvUSD` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/Stablecoin.vy).
 

@@ -3,7 +3,7 @@
 ## Concept of PegKeepers
 
 PegKeepers are contracts that help stabilize the peg of crvUSD. Each Keeper is allocated a specific amount of crvUSD to secure the peg. 
-The DAO decides this balance and can be **raised or lowered**by calling `set_debt_ceiling()` in the [Factory](../factory.md).
+The DAO decides this balance and can be **raised or lowered** by calling `set_debt_ceiling()` in the [Factory](../factory.md).
 
 
 The underlying actions of the PegKeepers can be divided into two actions, which get executed when calling [`update()`](#update):
@@ -20,9 +20,9 @@ PegKeepers **do not actually mint or burn crvUSD tokens**. They have a defined a
 
 :::
 
-:::deploy[Contract Source & Deployment]
+:::vyper[`PegKeeper.vy`]
 
-Source code for this contract is available on [Github](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeper.vy). 
+Source code for this contract is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeper.vy). 
 
 | PegKeepers                | Deployment Address  |
 | ------------------------- | ------------------- |

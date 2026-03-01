@@ -3,11 +3,11 @@
 
 The `AggregateStablePrice.vy` contract is designed to **get an aggregated price of crvUSD based on multiple multiple stableswap pools weighted by their TVL**. 
 
-:::github[GitHub]
+:::vyper[`AggregateStablePrice.vy`]
 
-There are three iterations of the `AggregateStablePrice` contract. Source code for the contracts can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/price_oracles). 
+There are three iterations of the `AggregateStablePrice` contract. Source code for the contracts can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/price_oracles).
 
-The `AggregateStablePrice.vy` contract has been deployed on [Ethereum](https://etherscan.io/address/0x18672b1b0c623a30089A280Ed9256379fb0E4E62) and [Arbitrum](https://arbiscan.io/address/0x44a4FdFb626Ce98e36396d491833606309520330).
+The `AggregateStablePrice.vy` contract has been deployed on :logos-ethereum: [Ethereum](https://etherscan.io/address/0x18672b1b0c623a30089A280Ed9256379fb0E4E62) and :logos-arbitrum: [Arbitrum](https://arbiscan.io/address/0x44a4FdFb626Ce98e36396d491833606309520330).
 
 
 :::

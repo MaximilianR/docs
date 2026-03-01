@@ -1,6 +1,12 @@
 # LLAMMA
 
-LLAMMA (Lending Liquidating Automated Market Maker Algorithm) is the **market-making contract that rebalances the collateral of a loan**. It is an algorithm implemented into a smart contract which is **responsible for liquidating and de-liquidating collateral based on market conditions**through arbitrage traders. Each individual market has its own AMM **containing the collateral and borrowable asset**. E.g. the AMM of the [ETH&lt;&gt;crvUSD](https://etherscan.io/address/0x1681195c176239ac5e72d9aebacf5b2492e0c4ee) contains of `ETH` and `crvUSD`.
+LLAMMA (Lending Liquidating Automated Market Maker Algorithm) is the **market-making contract that rebalances the collateral of a loan**. It is an algorithm implemented into a smart contract which is **responsible for liquidating and de-liquidating collateral based on market conditions** through arbitrage traders. Each individual market has its own AMM **containing the collateral and borrowable asset**. E.g. the AMM of the [ETH&lt;&gt;crvUSD](https://etherscan.io/address/0x1681195c176239ac5e72d9aebacf5b2492e0c4ee) contains of `ETH` and `crvUSD`.
+
+:::vyper[`AMM.vy`]
+
+Each market deploys its own AMM from a blueprint contract. Source code is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/AMM.vy). Relevant deployments can be found [here](../deployments.md).
+
+:::
 
 :::info[Contract Versions]
 The AMM (LLAMMA) contract is shared across all Controller versions. Unlike the Controller, the AMM API has remained stable — the same contract is used by both crvUSD mint markets and Llamalend markets. For version details, see the [crvUSD Overview](./overview.md#controller--amm-versions).

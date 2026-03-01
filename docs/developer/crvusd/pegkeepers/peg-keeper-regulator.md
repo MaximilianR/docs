@@ -3,9 +3,9 @@
 
 The regulator contract supervises prices and other parameters telling whether the PegKeeper are allowed to provide or withdraw crvUSD.
 
-:::github[GitHub]
+:::vyper[`PegKeeperRegulator.vy`]
 
-Source code for the `PegKeeperRegulator.vy` contract is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeperRegulator.vy).
+Source code for the `PegKeeperRegulator.vy` contract is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeperRegulator.vy). Relevant deployments can be found [here](../../deployments.md).
 
 
 :::

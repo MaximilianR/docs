@@ -3,11 +3,11 @@
 
 The `FlashLender.vy` contract is an [`ERC-3156`](https://eips.ethereum.org/EIPS/eip-3156) contract that allows users to take out a flash loan for `crvUSD`. The flash loan must be repaid within the same transaction; otherwise, the transaction will revert.
 
-:::github[GitHub]
+:::vyper[`FlashLender.vy`]
 
-The source code for the `FlashLender.vy` contract can be found on [GitHub ](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/flashloan/FlashLender.vy). Additionally, a `DummyFlashBorrower.vy` contract showcasing a potential usage of a flash loan can also be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/testing/DummyFlashBorrower.vy).
+The source code for the `FlashLender.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/flashloan/FlashLender.vy). Additionally, a `DummyFlashBorrower.vy` contract showcasing a potential usage of a flash loan can also be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/testing/DummyFlashBorrower.vy).
 
-The `FlashLender.vy` is deployed at [`0x26dE7861e213A5351F6ED767d00e0839930e9eE1`](https://etherscan.io/address/0x26dE7861e213A5351F6ED767d00e0839930e9eE1) on Ethereum.
+The `FlashLender.vy` is deployed on :logos-ethereum: Ethereum at [`0x26dE7861e213A5351F6ED767d00e0839930e9eE1`](https://etherscan.io/address/0x26dE7861e213A5351F6ED767d00e0839930e9eE1).
 
 
 :::

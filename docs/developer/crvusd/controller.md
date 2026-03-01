@@ -7,6 +7,12 @@ The Controller contract acts as a on-chain interface for **creating loans and fu
 
 **Each market has its own Controller**, automatically deployed from a blueprint contract, as soon as a new market is added via the `add_market` function or, for lending markets, via the `create` or `create_from_pool` function within the respective Factory.
 
+:::vyper[`Controller.vy`]
+
+Each market deploys its own Controller from a blueprint contract. Source code is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/Controller.vy). Relevant deployments can be found [here](../deployments.md).
+
+:::
+
 :::info[Contract Versions]
 This page documents **Controller V3** (Vyper 0.3.10), the current blueprint used for new crvUSD mint markets and all Llamalend markets. Where the API differs from earlier versions, both implementations are shown in tabs.
 

@@ -1,6 +1,12 @@
 # Oracle
 
-As crvusd markets use interal oracles, they utilizes in-house liquidity pools to aggregate the price of collateral. But there is a possibility to use Chainlink oracle prices as safety limits.
+As crvUSD markets use internal oracles, they utilize in-house liquidity pools to aggregate the price of collateral. But there is a possibility to use Chainlink oracle prices as safety limits.
+
+:::vyper[`CryptoWithStablePrice*.vy`]
+
+Each market has its own oracle contract. Source code is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/price_oracles). Relevant deployments can be found [here](../deployments.md).
+
+:::
 
 :::warning
 
@@ -17,7 +23,9 @@ For abbreviations, see [here](./oracle.md#terminology-used-in-code).
 
 :::
 
-## EMA of TVL`_ema_tvl()` calculates the *exponential moving average* (EMA) of the *total value locked* (TVL) for `TRICRYPTO` pools.
+## EMA of TVL
+
+`_ema_tvl()` calculates the *exponential moving average* (EMA) of the *total value locked* (TVL) for `TRICRYPTO` pools.
 
 This value is subsequently used in the internal function `_raw_price()` to compute the *weighted price of ETH*.
 
