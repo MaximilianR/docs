@@ -1,4 +1,4 @@
-import AuditCardGrid from '@site/src/components/AuditCardGrid';
+import AuditGrids from '@site/src/partials/_auditGrids.md';
 
 # Security
 
@@ -35,18 +35,4 @@ Security audits and disclosure reports are available on [GitHub](https://github.
 
 ## Security Audits
 
-### DAO
-
-<AuditCardGrid category="dao" />
-
-### DEX
-
-<AuditCardGrid category="dex" />
-
-### Infrastructure
-
-<AuditCardGrid category="infrastructure" />
-
-### Stablecoin and Lending
-
-<AuditCardGrid category="stablecoin" />
+<AuditGrids />
