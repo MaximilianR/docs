@@ -7,7 +7,7 @@ The Curve DAO Token (CRV) is the protocol's governance token. It is based on the
 
 The source code for the `CRV.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-dao-contracts/blob/567927551903f71ce5a73049e077be87111963cc/contracts/ERC20CRV.vy). The contract is written using [Vyper](https://vyper.readthedocs.io) version `0.2.4`.
 
-The token is deployed on Ethereum at [`0xD533a949740bb3306d119CC777fa900bA034cd52`](https://etherscan.io/address/0xD533a949740bb3306d119CC777fa900bA034cd52).
+The token is deployed on :logos-ethereum: Ethereum at [`0xD533a949740bb3306d119CC777fa900bA034cd52`](https://etherscan.io/address/0xD533a949740bb3306d119CC777fa900bA034cd52).
 
 <ContractABI>
 
