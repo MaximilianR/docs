@@ -21,7 +21,7 @@ veCRV is not transferable. If you lock CRV into veCRV, the only way to get it ba
 Holding veCRV has four main benefits:
 
 1. [**Revenue Share**](../vecrv/revenue): Receive a share of the weekly fee revenue Curve generates
-2. [**Gauge weight voting**](../dao/voting-gauges): Decide which pools and Llamalend markets receive the weekly CRV inflation
+2. [**Gauge weight voting**](../dao/gauge-weights): Decide which pools and Llamalend markets receive the weekly CRV inflation
 3. [**Voting**](../dao/proposals): Vote on governance proposals
 4. [**Boosting**](../vecrv/boosting): Boost your own CRV rewards by up to 2.5x if you provide liquidity to a pool or lending market
 

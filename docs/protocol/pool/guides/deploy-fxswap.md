@@ -140,7 +140,7 @@ To fine-tune the pool, enable the **Advanced** toggle. However, before experimen
 | **Allowed Extra Profit** | Sets profit-taking buffer for rebalancing. |
 | **Adjustment Step** | Step size for rebalancing operations. |
 | **Moving Average Time** | Smooths price changes over time using an EMA (in seconds). |
-| **Donation Duration** | Duration (in seconds) over which Refuels (donations) unlock linearly. Default is 7 days. More here: [FXSwap Refuels](../understanding-fxswap.md#refuels-donations).|
+| **Donation Duration** | Duration (in seconds) over which Refuels (donations) unlock linearly. Default is 7 days. More here: [FXSwap Refuels](../understanding-fxswap.md#refuels).|
 
 > 📖 **Further reading**: [Understanding FXSwap](../understanding-fxswap.md)
 
@@ -202,5 +202,5 @@ Once everything looks correct, click the blue **Create Pool** button at the bott
 ## What to do after deployment
 
 ✅ **Seed initial liquidity** — a pool with zero balance cannot process trades.  
-✅ (Optional) **Add Refuels (Donations)** — Refuels help maintain pool efficiency by subsidizing rebalancing costs. You can add them via the standard `add_liquidity` function or use the community UI at [crvhub.com/refuel](https://crvhub.com/refuel). More here: [FXSwap Refuels](../understanding-fxswap.md#refuels-donations)  
+✅ (Optional) **Add Refuels (Donations)** — Refuels help maintain pool efficiency by subsidizing rebalancing costs. You can add them via the standard `add_liquidity` function or use the community UI at [crvhub.com/refuel](https://crvhub.com/refuel). More here: [FXSwap Refuels](../understanding-fxswap.md#refuels)  
 ✅ (Optional) **[Create a gauge](/protocol/gauge/overview)** to distribute CRV or other incentives to LPs.

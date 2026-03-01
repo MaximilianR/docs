@@ -15,7 +15,8 @@ Technically speaking, allowance is always granted but if certain checks do not p
 
 ---
 
-## Providing*The Regulator will only grant allowance to the PegKeeper to provide crvUSD to the pool if the following requirements are met. If any of these conditions are not satisfied, the function will return 0, causing the transaction to ultimately revert:*
+## Providing
+*The Regulator will only grant allowance to the PegKeeper to provide crvUSD to the pool if the following requirements are met. If any of these conditions are not satisfied, the function will return 0, causing the transaction to ultimately revert:*
 
 - **Providing is not paused**: This is checked using the `is_killed` method. If providing is paused, no crvUSD can be added to the pool.
 - **Aggregated crvUSD price is higher than 1.0**: The crvUSD price, obtained from the `aggregator` contract, must be above 1.0 (`10**18`). If the price is equal to or below 1.0, providing crvUSD is not allowed.
@@ -215,7 +216,8 @@ def _get_max_ratio(_debt_ratios: DynArray[uint256, MAX_LEN]) -> uint256:
 ---
 
 
-## Withdrawing*The Regulator will grant allowance to the PegKeeper to withdraw crvUSD from the pool if the following requirements are met. If any of these conditions are not met, the function will return 0, causing the transaction to ultimately revert:*
+## Withdrawing
+*The Regulator will grant allowance to the PegKeeper to withdraw crvUSD from the pool if the following requirements are met. If any of these conditions are not met, the function will return 0, causing the transaction to ultimately revert:*
 
 - **Withdrawing is not paused**: This is checked using the `is_killed` method. If withdrawing is paused, no crvUSD can be removed from the pool.
 - **Aggregated crvUSD price is less than 1.0**: The crvUSD price, obtained from the `aggregator` contract, must be above 1.0 (`10**18`). If the price is equal to or below 1.0, withdrawing crvUSD is not allowed.

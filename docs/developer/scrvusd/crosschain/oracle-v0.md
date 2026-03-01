@@ -4,7 +4,7 @@
 `scrvUSD` on Ethereum is an ERC-4626 compatible token. While the contract provides a price through various methods, such as `pricePerShare` or `pricePerAsset`, it is not treated as an ERC-4626 token when bridged to other chains. Consequently, it will lack methods to return its continuously updating price. To address this, Curve uses a system to commit to and verify the price of `scrvUSD` on other chains.
 
 
-The source code for the contracts is available on [ GitHub](https://github.com/curvefi/curve-xdao):
+The source code for the contracts is available on [GitHub](https://github.com/curvefi/curve-xdao):
 
 - [:logos-vyper: `scrvUSDOracle.vy`](https://github.com/curvefi/curve-xdao/blob/feat/scrvusd-oracle/contracts/oracles/scrvUSDOracle.vy) written in [Vyper](https://vyperlang.org/) version `0.4.0`
 - [:logos-vyper: `BlockHashOracle.vy`](https://github.com/curvefi/curve-xdao/blob/feat/scrvusd-oracle/contracts/oracles/BlockHashOracle.vy) written in [Vyper](https://vyperlang.org/) version `0.3.10`
@@ -80,7 +80,7 @@ Function to update the price of the scrvUSD token.
 
 Returns: relative price change of final price with 10**18 precision (`uint256`).
 
-Emits: `PriceUpdate` event.
+Emits: `PriceUpdate`
 
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
@@ -182,13 +182,8 @@ def _total_supply(parameters: uint256[ASSETS_PARAM_CNT + SUPPLY_PARAM_CNT]) -> u
 
 This example updates the price of the scrvUSD token.
 
-```py
->>> scrvUSDOracle.price()
-1008353536323212312
-
->>> scrvUSDOracle.update_price()
-
->>> scrvUSDOracle.price()
+```shell
+>>> scrvUSDOracle.update_price([21000000000000000000, 5000000000000000000, 20000000000000000000, 1700000000, 100000000000000, 1699000000, 1000000000000000000, 1700000001])
 1009393556372147140
 ```
 
@@ -219,6 +214,10 @@ price: public(Interval)  # price of asset per share
 
 <Example>
 
+```shell
+>>> scrvUSDOracle.price()
+(1008353536323212312, 1009393556372147140)
+```
 
 </Example>
 
@@ -247,6 +246,10 @@ time: public(Interval)
 
 <Example>
 
+```shell
+>>> scrvUSDOracle.time()
+(1700000000, 1700001000)
+```
 
 </Example>
 
@@ -310,6 +313,10 @@ def _price_per_share(ts: uint256) -> uint256:
 
 <Example>
 
+```shell
+>>> scrvUSDOracle.pricePerShare(1700000500)
+1008873546347679726
+```
 
 </Example>
 
@@ -373,6 +380,10 @@ def _price_per_share(ts: uint256) -> uint256:
 
 <Example>
 
+```shell
+>>> scrvUSDOracle.pricePerAsset(1700000500)
+991206327886504218
+```
 
 </Example>
 
@@ -424,6 +435,13 @@ def _price_per_share(ts: uint256) -> uint256:
 
 <Example>
 
+```shell
+>>> scrvUSDOracle.price_oracle()
+1008873546347679726
+
+>>> scrvUSDOracle.price_oracle(1)
+991206327886504218
+```
 
 </Example>
 
@@ -441,7 +459,7 @@ Because the rates are stored over time, the price can change suddenly and can le
 ::::description[`scrvUSDOracle.max_acceleration() -> uint256: view`]
 
 
-Getter for the maximum acceleration. The value is set at initialization and can be changed by the [`owner`](#owner) using the [`set_max_acceleration`](#set_max_acceleration) function.
+Getter for the maximum acceleration. The value is set at initialization and can be changed by the `owner` using the [`set_max_acceleration`](#set_max_acceleration) function.
 
 Returns: maximum acceleration (`uint256`).
 
@@ -468,6 +486,10 @@ def __init__(_initial_price: uint256, _max_acceleration: uint256):
 
 <Example>
 
+```shell
+>>> scrvUSDOracle.max_acceleration()
+1000000000000
+```
 
 </Example>
 
@@ -478,10 +500,9 @@ def __init__(_initial_price: uint256, _max_acceleration: uint256):
 ::::description[`scrvUSDOracle.set_max_acceleration(_max_acceleration: uint256)`]
 
 
-:::guard[Guarded Method by Snekmate 🐍]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function is only callable by the `owner`.
-
 
 :::
 
@@ -552,6 +573,10 @@ prover: public(address)
 
 <Example>
 
+```shell
+>>> scrvUSDOracle.prover()
+'0x47ca04Ee05f167583122833abfb0f14aC5677Ee4'
+```
 
 </Example>
 
@@ -562,10 +587,9 @@ prover: public(address)
 ::::description[`scrvUSDOracle.set_prover(_prover: address)`]
 
 
-:::guard[Guarded Method by Snekmate 🐍]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function is only callable by the `owner`.
-
 
 :::
 
@@ -620,16 +644,14 @@ This example sets the prover to the `0x47ca04Ee05f167583122833abfb0f14aC5677Ee4`
 The `BlockHashOracle` contract is providing Ethereum's `blockhash(block number)` values. Optimism stores some latest known blockhash, so the OP stack oracle works like simply saving latest known.
 
 ### `commit`
-::::description[`BlockHashOracle.commit(_block_number: uint256) -> uint256: view`]
+::::description[`BlockHashOracle.commit() -> uint256`]
 
 
-Function to commit (and apply) a block hash.
+Function to commit (and apply) a block hash. Same as `apply()` but also saves the committer.
 
 Returns: block number (`uint256`).
 
-| Input | Type | Description |
-| ----- | ---- | ----------- |
-| `_block_number` | `uint256` | Block number |
+Emits: `CommitBlockHash` and `ApplyBlockHash`
 
 <SourceCode>
 
@@ -686,12 +708,14 @@ def _update_block_hash() -> (uint256, bytes32):
 ::::
 
 ### `apply`
-::::description[`BlockHashOracle.apply() -> uint256: view`]
+::::description[`BlockHashOracle.apply() -> uint256`]
 
 
 Function to apply a block hash.
 
 Returns: block number (`uint256`).
+
+Emits: `ApplyBlockHash`
 
 <SourceCode>
 
@@ -854,8 +878,9 @@ commitments: public(HashMap[address, HashMap[uint256, bytes32]])
 
 <Example>
 
-```py
->>> soon
+```shell
+>>> BlockHashOracle.commitments('0x47ca04Ee05f167583122833abfb0f14aC5677Ee4', 21192041)
+'0x9db78f319e1bfde9cb0723b6e96de3dce6d378b01b341a5e45546ac4b7f7269a'
 ```
 
 </Example>
@@ -869,12 +894,12 @@ commitments: public(HashMap[address, HashMap[uint256, bytes32]])
 ## scrvUSD Prover
 
 ### `prove`
-::::description[`ScrvusdProver.prove(bytes, bytes) -> bool`]
+::::description[`ScrvusdProver.prove(bytes, bytes) -> uint256`]
 
 
 Function to prove parameters of scrvUSD rate.
 
-Returns: `bool` indicating success.
+Returns: relative price change (`uint256`).
 
 | Input | Type | Description |
 | ----- | ---- | ----------- |
@@ -985,8 +1010,8 @@ contract ScrvusdProver {
 
 <Example>
 
-```py
->>> ScrvUSDProver.prove()
+```shell
+>>> ScrvusdProver.prove(block_header_rlp, proof_rlp)
 ```
 
 </Example>
@@ -1017,6 +1042,10 @@ constructor(address _block_hash_oracle, address _scrvusd_oracle) {
 
 <Example>
 
+```shell
+>>> ScrvusdProver.BLOCK_HASH_ORACLE()
+'0x988d1037e9608B21050A8EFba0c6C45e01A3Bce7'
+```
 
 </Example>
 
@@ -1046,6 +1075,10 @@ constructor(address _block_hash_oracle, address _scrvusd_oracle) {
 
 <Example>
 
+```shell
+>>> ScrvusdProver.SCRVUSD_ORACLE()
+'0xC772063cE3e622B458B706Dd2e36309418A1aE42'
+```
 
 </Example>
 

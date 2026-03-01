@@ -2642,7 +2642,7 @@ def get_y(
 
 ## Fees and Pool Profits
 
-The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
+The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../cryptoswap-overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
 
 Additionally, just as for other curve pools, there is an `ADMIN_FEE`, which is hardcoded to 50%. All twocrypto-ng pools share a universal `fee_receiver`, which is determined within the Factory contract.
 
@@ -3343,7 +3343,7 @@ xcp_profit_a: public(uint256)  # <--- Full profit at last claim of admin fees.
 
 ## Price Scaling
 
-Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
+Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../cryptoswap-overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
 
 ### `price_scale`
 ::::description[`TriCrypto.price_scale(k: uint256) -> uint256:`]
@@ -3723,7 +3723,7 @@ packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 
 ## Bonding Curve Parameters
 
-A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../overview.md#bonding-curve-parameters).
+A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../cryptoswap-overview.md#bonding-curve-parameters).
 
 Bonding curve parameters `A` and `gamma` values are [upgradable](./admin-controls.md#amplification-coefficient-and-gamma) by the the pools admin.
 

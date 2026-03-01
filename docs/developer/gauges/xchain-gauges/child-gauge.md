@@ -1346,7 +1346,7 @@ This example changes the manager of the gauge from `0x12345678901234567890123456
 
 ## Checkpoints and Boosting
 
-For more information on how boosting works, please refer to the [Boosting Explainer](./overview.md#boosting) page.
+For more information on how boosting works, please refer to the [Boosting Explainer](./overview.md#boosting-on-sidechains) page.
 
 ### `user_checkpoint`
 ::::description[`ChildGauge.user_checkpoint(addr: address) -> bool`]

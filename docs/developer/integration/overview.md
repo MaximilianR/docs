@@ -31,4 +31,4 @@ The `RateProvider` contract **provides exchange rates for token swaps** using di
 
 ### Fetching Pools
 
-[](./meta-registry.md#fetching-liquidity-pools) Discover how to check on-chain pools containing two specific assets.
+[](./meta-registry.md#finding-pools) Discover how to check on-chain pools containing two specific assets.

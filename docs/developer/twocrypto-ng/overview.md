@@ -37,7 +37,7 @@ A contract which contains different **math functions used in the AMM**.
   </DocCard>
   <DocCard title="Liquidity Gauge Blueprint">
 
-A liquidity gauge blueprint contract which deploys a liquidity gauge of a pool on Ethereum. On sidechains, gauges need to be deployed via the [`RootChainGaugeFactory`](../../gauges/xchain-gauges/root-gauge-factory.md).
+A liquidity gauge blueprint contract which deploys a liquidity gauge of a pool on Ethereum. On sidechains, gauges need to be deployed via the [`RootChainGaugeFactory`](../gauges/xchain-gauges/root-gauge-factory.md).
 
   </DocCard>
 </DocCardGrid>
