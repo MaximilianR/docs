@@ -48,21 +48,27 @@ Receives LayerZero messages from L2s on Ethereum mainnet, triggers crvUSD mintin
 
 Live monitoring of FastBridge activity is available at the [FastBridge Monitor](https://curvefi.github.io/fast-bridge/).
 
-### Vaults (Ethereum Mainnet)
+### Ethereum Mainnet
+
+| Network Route | Contract | Address |
+|---------|----------|---------|
+| :logos-arbitrum: Arbitrum | FastBridgeVault | [`0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D`](https://etherscan.io/address/0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D) |
+| :logos-optimism: Optimism | FastBridgeVault | [`0x97d024859B68394122B3d0bb407dD7299cC8E937`](https://etherscan.io/address/0x97d024859B68394122B3d0bb407dD7299cC8E937) |
+| :logos-fraxtal: Fraxtal | FastBridgeVault | [`0x5EF620631AA46e7d2F6f963B6bE4F6823521B9eC`](https://etherscan.io/address/0x5EF620631AA46e7d2F6f963B6bE4F6823521B9eC) |
+| :logos-arbitrum: Arbitrum | VaultMessengerLZ | [`0x15945526b5c32d963391343e9bc080838fe3e6d9`](https://etherscan.io/address/0x15945526b5c32d963391343e9bc080838fe3e6d9) |
+| :logos-optimism: Optimism | VaultMessengerLZ | [`0x4a10d0ff9e394f3a3dcdb297973db40ce304b44f`](https://etherscan.io/address/0x4a10d0ff9e394f3a3dcdb297973db40ce304b44f) |
+| :logos-fraxtal: Fraxtal | VaultMessengerLZ | [`0xec0e1c5cc900d87b1fa44584310c43f82f75870f`](https://etherscan.io/address/0xec0e1c5cc900d87b1fa44584310c43f82f75870f) |
+
+### Layer 2 Networks
 
 | Network | Contract | Address |
 |---------|----------|---------|
-| Arbitrum | FastBridgeVault | [0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D](https://etherscan.io/address/0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D) |
-| Optimism | FastBridgeVault | [0x97d024859B68394122B3d0bb407dD7299cC8E937](https://etherscan.io/address/0x97d024859B68394122B3d0bb407dD7299cC8E937) |
-| Fraxtal | FastBridgeVault | [0x5EF620631AA46e7d2F6f963B6bE4F6823521B9eC](https://etherscan.io/address/0x5EF620631AA46e7d2F6f963B6bE4F6823521B9eC) |
-
-### FastBridgeL2 Contracts
-
-| Network | Contract | Address |
-|---------|----------|---------|
-| Arbitrum | FastBridgeL2 | [0x1f2af270029d028400265ce1dd0919ba8780dae1](https://arbiscan.io/address/0x1f2af270029d028400265ce1dd0919ba8780dae1) |
-| Optimism | FastBridgeL2 | [0xd16d5ec345dd86fb63c6a9c43c517210f1027914](https://optimistic.etherscan.io/address/0xd16d5ec345dd86fb63c6a9c43c517210f1027914) |
-| Fraxtal | FastBridgeL2 | [0x3fe593e651cd0b383ad36b75f4159f30bb0631a6](https://fraxscan.com/address/0x3fe593e651cd0b383ad36b75f4159f30bb0631a6) |
+| :logos-arbitrum: Arbitrum | FastBridgeL2 | [`0x1f2af270029d028400265ce1dd0919ba8780dae1`](https://arbiscan.io/address/0x1f2af270029d028400265ce1dd0919ba8780dae1) |
+| :logos-optimism: Optimism | FastBridgeL2 | [`0xd16d5ec345dd86fb63c6a9c43c517210f1027914`](https://optimistic.etherscan.io/address/0xd16d5ec345dd86fb63c6a9c43c517210f1027914) |
+| :logos-fraxtal: Fraxtal | FastBridgeL2 | [`0x3fe593e651cd0b383ad36b75f4159f30bb0631a6`](https://fraxscan.com/address/0x3fe593e651cd0b383ad36b75f4159f30bb0631a6) |
+| :logos-arbitrum: Arbitrum | L2MessengerLZ | [`0x14e11c1b8f04a7de306a7b5bf21bbca0d5cf79ff`](https://arbiscan.io/address/0x14e11c1b8f04a7de306a7b5bf21bbca0d5cf79ff) |
+| :logos-optimism: Optimism | L2MessengerLZ | [`0x7a1f2f99b65f6c3b2413648c86c0326cff8d8837`](https://optimistic.etherscan.io/address/0x7a1f2f99b65f6c3b2413648c86c0326cff8d8837) |
+| :logos-fraxtal: Fraxtal | L2MessengerLZ | [`0x672c38258729060bf443ba28faef4f2db154c6fc`](https://fraxscan.com/address/0x672c38258729060bf443ba28faef4f2db154c6fc) |
 
 ---
 
