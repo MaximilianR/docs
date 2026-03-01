@@ -2,6 +2,10 @@
 
 LLAMMA (Lending Liquidating Automated Market Maker Algorithm) is the **market-making contract that rebalances the collateral of a loan**. It is an algorithm implemented into a smart contract which is **responsible for liquidating and de-liquidating collateral based on market conditions**through arbitrage traders. Each individual market has its own AMM **containing the collateral and borrowable asset**. E.g. the AMM of the [ETH&lt;&gt;crvUSD](https://etherscan.io/address/0x1681195c176239ac5e72d9aebacf5b2492e0c4ee) contains of `ETH` and `crvUSD`.
 
+:::info[Contract Versions]
+The AMM (LLAMMA) contract is shared across all Controller versions. Unlike the Controller, the AMM API has remained stable — the same contract is used by both crvUSD mint markets and Llamalend markets. For version details, see the [crvUSD Overview](./overview.md#controller--amm-versions).
+:::
+
 :::info Getting familiar with LLAMMA
 Before interacting with the `LLAMMA` contract, it is highly advised to read the following section to gain a broader understanding of the system: [LLAMMA Explainer](llamma-explainer.md).
 :::
