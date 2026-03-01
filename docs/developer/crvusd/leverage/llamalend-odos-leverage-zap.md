@@ -1,7 +1,7 @@
 # LeverageZapOdos
 
 
-This Zap contract is specifically designed to **create or repay leveraged loans**using the [**Odos router**](https://odos.xyz/).
+This Zap contract is specifically designed to **create or repay leveraged loans** using the [**Odos router**](https://odos.xyz/).
 
 :::vyper[`LeverageZapOdos.vy`]
 

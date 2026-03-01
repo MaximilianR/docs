@@ -11,7 +11,9 @@ A list of all contract deployments can be found [here](../../deployments.md).
 
 ## General Concepts
 
-## Stabilization MethodPegKeepers are specialized contracts **designed to maintain the stability of the crvUSD peg**. They hold a pre-minted supply of crvUSD tokens to be utilized for peg stabilization efforts. The operation of PegKeepers is **restricted to only two actions: depositing and withdrawing from liquidity pools**. As long as these pre-minted crvUSD tokens are not deposited anywhere, they can and should be counted as out-of-circulation.
+## Stabilization Method
+
+PegKeepers are specialized contracts **designed to maintain the stability of the crvUSD peg**. They hold a pre-minted supply of crvUSD tokens to be utilized for peg stabilization efforts. The operation of PegKeepers is **restricted to only two actions: depositing and withdrawing from liquidity pools**. As long as these pre-minted crvUSD tokens are not deposited anywhere, they can and should be counted as out-of-circulation.
 
 These contracts are each associated with a specific liquidity pool that includes crvUSD and another fiat-redeemable USD stablecoin.
 
@@ -45,7 +47,7 @@ The initial version of `PegKeeper.vy` encountered two significant problems:
 ## Spam Attack Issue
 
 A notable challenge in the first version of PegKeepers was its **susceptibility to spam attacks**.  
-This issue stemmed from the ability of an attacker to manipulate the price of crvUSD very close to 1, followed by executing the `update` function to make a minimal deposit (or withdrawal), before moving the price back. With a mandatory **15-minute cooldown**before the `update` function could be called again, an attacker could exploit this interval to periodically disrupt the PegKeepers' capacity for peg stabilization.  
+This issue stemmed from the ability of an attacker to manipulate the price of crvUSD very close to 1, followed by executing the `update` function to make a minimal deposit (or withdrawal), before moving the price back. With a mandatory **15-minute cooldown** before the `update` function could be called again, an attacker could exploit this interval to periodically disrupt the PegKeepers' capacity for peg stabilization.  
 Although executing such an attack would entail **significant costs for the attacker**, resulting in **substantial revenue for the liquidity pool**, the potential for continuous exploitation was still present. This issue highlighted the need for a refined approach to prevent such manipulative activities and ensure the effective stabilization of the peg.
 
 
@@ -59,14 +61,16 @@ A more critical issue arose when a PegKeeper engaged in a deposit, essentially t
 ---
 
 
-## PegKeeperV2 and Regulator:::github[GitHub]
+## PegKeeperV2 and Regulator
+
+:::github[GitHub]
 
 Research regarding PegKeeperV2 can be found here: [`curve-stablecoin-researches`](https://github.com/curvefi/curve-stablecoin-researches/tree/main/peg_keeper).
 
 
 :::
 
-The transition to PegKeeperV2 marks a significant refinement in the system's architecture, introducing a **clear division of duties between two specialized contracts**. The **`PegKeeperV2`**contract is now **exclusively focused on carrying out the operational tasks**essential for maintaining the peg's stability, while the **`PegKeeperRegulator`**contract assumes a **pivotal role in oversight and regulation**.
+The transition to PegKeeperV2 marks a significant refinement in the system's architecture, introducing a **clear division of duties between two specialized contracts**. The **`PegKeeperV2`** contract is now **exclusively focused on carrying out the operational tasks** essential for maintaining the peg's stability, while the **`PegKeeperRegulator`** contract assumes a **pivotal role in oversight and regulation**.
 
 Central to this new structure is the `PegKeeperRegulator.vy` contract, which grants the PegKeepers allowance to deposit or withdraw crvUSD based on different conditions. Additionally, the contract has the option to **pause and unpause the deposit and withdrawal actions**through its admin or emergency admin.
 

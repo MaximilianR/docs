@@ -16,6 +16,7 @@ Technically speaking, allowance is always granted but if certain checks do not p
 ---
 
 ## Providing
+
 *The Regulator will only grant allowance to the PegKeeper to provide crvUSD to the pool if the following requirements are met. If any of these conditions are not satisfied, the function will return 0, causing the transaction to ultimately revert:*
 
 - **Providing is not paused**: This is checked using the `is_killed` method. If providing is paused, no crvUSD can be added to the pool.
@@ -217,6 +218,7 @@ def _get_max_ratio(_debt_ratios: DynArray[uint256, MAX_LEN]) -> uint256:
 
 
 ## Withdrawing
+
 *The Regulator will grant allowance to the PegKeeper to withdraw crvUSD from the pool if the following requirements are met. If any of these conditions are not met, the function will return 0, causing the transaction to ultimately revert:*
 
 - **Withdrawing is not paused**: This is checked using the `is_killed` method. If withdrawing is paused, no crvUSD can be removed from the pool.
@@ -343,7 +345,9 @@ def _get_price(_info: PegKeeperInfo) -> uint256:
 ---
 
 
-## Parameters*The Regulator uses several parameters:*
+## Parameters
+
+*The Regulator uses several parameters:*
 
 - `worst_price_threshold` is a threshold value for the price of the pegged coin. If the threshold is exceeded, providing crvUSD will not be allowed as the pegged coin is potentially depegged (too far away from other pegged coins' prices).
 - `price_deviation` represents an absolute error value and is used to check if prices (`get_p` and `price_oracle`) are within a certain range of each other in order to prevent spam attacks.

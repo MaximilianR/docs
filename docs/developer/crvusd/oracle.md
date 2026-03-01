@@ -388,6 +388,7 @@ def set_use_chainlink(do_it: bool):
 ::::
 
 ## Terminology used in Code
+
 | terminology used in code | |
 |-----------|----------------|
 | $\alpha$ | `alpha` |

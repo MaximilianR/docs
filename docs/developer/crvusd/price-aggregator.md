@@ -20,7 +20,7 @@ This aggregated price of crvUSD is used in multiple different components in the 
 
 ## Calculations
 
-The `AggregateStablePrice` contract calculates the **weighted average price of crvUSD across multiple liquidity pools**, considering only those pools with sufficient liquidity (`MIN_LIQUIDITY = 100,000 * 10**18`). The calculation is based on the **exponential moving average (EMA) of the Total-Value-Locked (TVL)**for each pool, determining the liquidity considered in the price aggregation.
+The `AggregateStablePrice` contract calculates the **weighted average price of crvUSD across multiple liquidity pools**, considering only those pools with sufficient liquidity (`MIN_LIQUIDITY = 100,000 * 10**18`). The calculation is based on the **exponential moving average (EMA) of the Total-Value-Locked (TVL)** for each pool, determining the liquidity considered in the price aggregation.
 
 
 ## EMA TVL Calculation

@@ -2837,7 +2837,9 @@ def can_skip_bands(n_end: int256) -> bool:
 ---
 
 
-## AMM and Oracle Prices:::info[A user's loan is only in soft-liquidation when the price oracle is within the bands of the deposited collateral]
+## AMM and Oracle Prices
+
+:::info[A user's loan is only in soft-liquidation when the price oracle is within the bands of the deposited collateral]
 
 A position enters soft-liquidation mode only when the price oracle falls within a band where the user has deposited collateral. For example, if a user has collateral deposited between bands 10 and 0, they will not enter soft-liquidation as long as the oracle price stays outside these bands. In this scenario, the only "loss" the user faces is the variable interest rate of the market. Additionally, there is a rather rare possibility that a user's loan was fully soft-liquidated, resulting in all their collateral being converted to the borrowable asset. In such a case, the user would be out of soft-liquidation because the price oracle is below the lowest band.
 
@@ -3511,7 +3513,11 @@ def __init__(
 ---
 
 
-## Fees and Interest Rates**There are three different types of "fees" within the AMM:**- **`fee`**: This is charged on token exchanges within the AMM.
+## Fees and Interest Rates
+
+**There are three different types of "fees" within the AMM:**
+
+- **`fee`**: This is charged on token exchanges within the AMM.
 - **`admin_fee`**: This determines the percentage of the total fees that are distributed to veCRV holders.
 - **`rate`**: This represents the borrow rate a user pays on their loan.
 

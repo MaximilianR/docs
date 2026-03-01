@@ -3,7 +3,7 @@ import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 # Curve Stablecoin: Overview
 Curve Stablecoin infrastructure enables users to **mint crvUSD using a selection of crypto collaterals**. Adding new collaterals is subject to DAO approval. 
 
-`crvUSD` is designed to provide a more **capital-efficient**stablecoin mechanism and **smoother liquidations**, while maintaining a decentralized design which the Curve DAO governs.
+`crvUSD` is designed to provide a more **capital-efficient** stablecoin mechanism and **smoother liquidations**, while maintaining a decentralized design which the Curve DAO governs.
 
 :::github[GitHub]
 

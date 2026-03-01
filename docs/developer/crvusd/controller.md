@@ -24,7 +24,7 @@ For full version details, see the [crvUSD Overview](./overview.md#controller--am
 *Controller contracts are currently used for the following two cases:*
 
 
-- **Curve Stablecoin - minting crvUSD**Minting crvUSD is only possible with whitelised collateral by the DAO and requires users to provide collateral against which they can mint[^1] crvUSD. Provided collateral is deposited into LLAMMA according to the number of bands chosen. Subsequently, **crvUSD is backed by the assets provided as collateral**.
+- **Curve Stablecoin - minting crvUSD:** Minting crvUSD is only possible with whitelised collateral by the DAO and requires users to provide collateral against which they can mint[^1] crvUSD. Provided collateral is deposited into LLAMMA according to the number of bands chosen. Subsequently, **crvUSD is backed by the assets provided as collateral**.
 
     <figure>
     <img src="../assets/images/mint_controller1.svg" alt="" width="500" />
@@ -56,7 +56,7 @@ For full version details, see the [crvUSD Overview](./overview.md#controller--am
 
 ## Creating and Repaying Loans
 
-New loans are created via the **`ceate_loan`**function. When creating a loan the user needs to specify the **amount of collateral**, **debt**and the **number of bands**to deposit the collateral into. 
+New loans are created via the **`create_loan`** function. When creating a loan the user needs to specify the **amount of collateral**, **debt** and the **number of bands** to deposit the collateral into. 
 
 The maximum amount of borrowable debt is determined by the number of bands, the amount of collateral, and the oracle price.
 
@@ -5349,7 +5349,9 @@ This example returns a list of all users with negative health and therefore elig
 ---
 
 
-## Loan Info Methods*All user information, such as `debt`, `health`, etc., is stored within the Controller contract.*
+## Loan Info Methods
+
+*All user information, such as `debt`, `health`, etc., is stored within the Controller contract.*
 
 ### `debt`
 ::::description[`Controller.debt(user: address) -> uint256`]
@@ -6365,10 +6367,12 @@ def _remove_from_list(_for: address):
 ---
 
 
-## Fees*There are two types of fees:*
+## Fees
 
-1. `Borrowing-based fee`: Borrowers pay **interest**on the debt borrowed.
-2. `AMM-based fee`: **Swap fee**for trades within the AMM. There is also the option for an **admin fee**, but at the time of writing, admin fees are set to zero[^2], meaning all swap fees go to the liquidity providers, who are the borrowers themselves.
+*There are two types of fees:*
+
+1. `Borrowing-based fee`: Borrowers pay **interest** on the debt borrowed.
+2. `AMM-based fee`: **Swap fee** for trades within the AMM. There is also the option for an **admin fee**, but at the time of writing, admin fees are set to zero[^2], meaning all swap fees go to the liquidity providers, who are the borrowers themselves.
 
 [^2]: Technically, admin fees within the AMMs are not zero. Currently, the admin fees of the AMMs are set to 1 (= 1/1e18), making them virtually nonexistent. The reason for this is to increase oracle manipulation resistance.
 
@@ -6840,11 +6844,13 @@ This example shows the effect of claiming fees. Before calling `collect_fees`, t
 ---
 
 
-## Loan and Liquidation Discount*New values for `loan_discount` and `liquidation_discount` can be assigned by the admin of the Factory, which is the DAO.*
+## Loan and Liquidation Discount
 
-The **loan discount**is the percentage used to discount the collateral for calculating the maximum borrowable amount when creating a loan.
+*New values for `loan_discount` and `liquidation_discount` can be assigned by the admin of the Factory, which is the DAO.*
 
-The **liquidation discount**is used to discount the collateral for calculating the recoverable value upon liquidation at the current market price.
+The **loan discount** is the percentage used to discount the collateral for calculating the maximum borrowable amount when creating a loan.
+
+The **liquidation discount** is used to discount the collateral for calculating the recoverable value upon liquidation at the current market price.
 
 ### `loan_discount`
 ::::description[`Controller.loan_discount() -> uint256: view`]

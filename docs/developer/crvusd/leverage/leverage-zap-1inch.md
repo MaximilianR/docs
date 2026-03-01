@@ -1,7 +1,7 @@
 # LeverageZap1inch.vy
 
 
-This Zap contract is specifically designed to **create or repay leveraged loans**using the [**1inch router**](https://1inch.io/aggregation-protocol/).
+This Zap contract is specifically designed to **create or repay leveraged loans** using the [**1inch router**](https://1inch.io/aggregation-protocol/).
 
 :::vyper[`LeverageZap1inch.vy`]
 
