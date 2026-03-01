@@ -529,7 +529,7 @@ def __exchange(
 
 :::note
 
-More informations on this method [here](./overview.md#exchange_received).
+More information on this method [here](../overview.md#exchange_received).
 
 
 :::
