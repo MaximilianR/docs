@@ -6,7 +6,7 @@ This contract is called off-chain via LayerZero's `lzRead` functionality.
 
 :::vyper[`MainnetBlockView.vy`]
 
-The source code for the `MainnetBlockView.vy` contract can be found on [ GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/MainnetBlockView.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
+The source code for the `MainnetBlockView.vy` contract can be found on [GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/MainnetBlockView.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0xb10CfacE69cc0B7F1AE0Dc8E6aD186914f6e7EEA`](https://etherscan.io/address/0xb10CfacE69cc0B7F1AE0Dc8E6aD186914f6e7EEA).
 
@@ -25,7 +25,7 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0xb10CfacE69cc0B7F1AE
 
 
 ### `get_blockhash`
-::::description[`MainnetBlockView.get_blockhash(_block_number: uint256 = block.number - 65, _avoid_failure: bool = False) -> (uint256, bytes32)`]
+::::description[`MainnetBlockView.get_blockhash(_block_number: uint256 = block.number - 65, _avoid_failure: bool = False) -> (uint256, bytes32): view`]
 
 Retrieves the block hash for a given block number. The valid range for historical block hashes is between the last 64 and the last 8192 blocks.
 
@@ -35,7 +35,7 @@ Block Range Constraints:
 - **Too old:** Blocks older than 8192 blocks (EVM limit post EIP-2935)
 - **Valid range:** Between `block.number - 8192` and `block.number - 64`
 
-**Returns:** A tuple containing `(block_number, block_hash)`
+Returns: a tuple containing the block number and block hash (`(uint256, bytes32)`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |

@@ -4,7 +4,7 @@ The `BlockOracle` contract is a decentralized block hash oracle which implements
 
 :::vyper[`BlockOracle.vy`]
 
-The source code for the `BlockOracle.vy` contract can be found on [ GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/BlockOracle.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
+The source code for the `BlockOracle.vy` contract can be found on [GitHub](https://github.com/curvefi/blockhash-oracle/blob/main/contracts/BlockOracle.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.4.3`.
 
 The contract is deployed on all supported chains at `0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8`.
 
@@ -41,7 +41,7 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to add a committer.
 
-Event: `AddCommitter`
+Emits: `AddCommitter`
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -73,7 +73,7 @@ def add_committer(_committer: address, _bump_threshold: bool = False):
         assert len(self.committers) < MAX_COMMITTERS, "Max committers reached"
         self.is_committer[_committer] = True
         self.committers.append(_committer)
-        log  AddCommitter(committer=_committer)
+        log AddCommitter(committer=_committer)
 
         if _bump_threshold:
             self.threshold += 1
@@ -134,7 +134,7 @@ def remove_committer(_committer: address):
                 new_committers.append(committer)
         self.committers = new_committers
 
-        log  RemoveCommitter(committer=_committer)
+        log RemoveCommitter(committer=_committer)
 ```
 
 </SourceCode>
@@ -150,11 +150,11 @@ def remove_committer(_committer: address):
 ::::
 
 ### `get_all_committers`
-::::description[`BlockOracle.get_all_committers() -> DynArray[address, MAX_COMMITTERS]`]
+::::description[`BlockOracle.get_all_committers() -> DynArray[address, MAX_COMMITTERS]: view`]
 
 Getter which returns all registered committers.
 
-Returns: array of all committers (`DynArray[address, MAX_COMMITTERS]`)
+Returns: array of all committers (`DynArray[address, MAX_COMMITTERS]`).
 
 <SourceCode>
 
@@ -190,7 +190,7 @@ def get_all_committers() -> DynArray[address, MAX_COMMITTERS]:
 
 Getter for the committers at a specific index.
 
-Returns: address of the committer at the specified index
+Returns: address of the committer at the specified index (`address`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -223,7 +223,7 @@ This example returns the committer at index 0.
 
 Getter to check if a certain address is a committer.
 
-Returns: true if the address is a committer, false otherwise
+Returns: true if the address is a committer, false otherwise (`bool`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -288,7 +288,7 @@ def set_threshold(_new_threshold: uint256):
     ), "Threshold cannot be greater than number of committers"
     self.threshold = _new_threshold
 
-    log  SetThreshold(new_threshold=_new_threshold)
+    log SetThreshold(new_threshold=_new_threshold)
 ```
 
 </SourceCode>
@@ -308,7 +308,7 @@ def set_threshold(_new_threshold: uint256):
 
 Getter for the threshold of how many matching commitments required to confirm a block.
 
-Returns: number of commitments required (uint256).
+Returns: number of commitments required (`uint256`).
 
 <SourceCode>
 
@@ -340,9 +340,9 @@ Only registered committers may call commit functions. The contract maintains a m
 
 Function to commit a block hash and optionally attempt to apply it.
 
-Returns: bool if the block was applied
+Returns: true if the block was applied (`bool`).
 
-Event: `CommitBlock`
+Emits: `CommitBlock`
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -375,7 +375,7 @@ def commit_block(_block_number: uint256, _block_hash: bytes32, _apply: bool = Tr
 
     self.committer_votes[msg.sender][_block_number] = _block_hash
     self.commitment_count[_block_number][_block_hash] += 1
-    log  CommitBlock(committer=msg.sender, block_number=_block_number, block_hash=_block_hash)
+    log CommitBlock(committer=msg.sender, block_number=_block_number, block_hash=_block_hash)
 
     # Optional attempt to apply block
     if _apply and self.commitment_count[_block_number][_block_hash] >= self.threshold:
@@ -402,7 +402,7 @@ True
 
 Getter for the committed hash by a specific committer for a specific block number.
 
-Returns: committed hash for the committer and block number, or empty bytes32 if no commitment
+Returns: committed hash for the committer and block number, or empty bytes32 if no commitment (`bytes32`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -435,7 +435,7 @@ committer_votes: public(
 
 Getter for the number of commitments for a specific hash at a specific block number.
 
-Returns: number of commitments for the hash at the block number
+Returns: number of commitments for the hash at the block number (`uint256`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -474,7 +474,7 @@ Block application includes both permissionless (anyone can call) and owner-only 
 
 Function to apply a block hash if it has sufficient commitments.
 
-Event: `ApplyBlock`
+Emits: `ApplyBlock`
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -517,7 +517,7 @@ def _apply_block(_block_number: uint256, _block_hash: bytes32):
     self.block_hash[_block_number] = _block_hash
     if self.last_confirmed_block_number < _block_number:
         self.last_confirmed_block_number = _block_number
-    log  ApplyBlock(block_number=_block_number, block_hash=_block_hash)
+    log ApplyBlock(block_number=_block_number, block_hash=_block_hash)
 ```
 
 </SourceCode>
@@ -540,6 +540,8 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 :::
 
 Function to apply a block hash with admin rights.
+
+Emits: `ApplyBlock`
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -575,11 +577,11 @@ def admin_apply_block(_block_number: uint256, _block_hash: bytes32):
 ::::
 
 ### `get_block_hash`
-::::description[`BlockOracle.get_block_hash(_block_number: uint256) -> bytes32`]
+::::description[`BlockOracle.get_block_hash(_block_number: uint256) -> bytes32: view`]
 
 Getter for the confirmed block hash for a given block number.
 
-Returns: confirmed block hash or empty `bytes32` if not confirmed
+Returns: confirmed block hash or empty `bytes32` if not confirmed (`bytes32`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -619,7 +621,7 @@ def get_block_hash(_block_number: uint256) -> bytes32:
 
 Getter for the last confirmed block number.
 
-Returns: most recently confirmed block number (uint256).
+Returns: most recently confirmed block number (`uint256`).
 
 <SourceCode>
 
@@ -649,8 +651,8 @@ Functions for submitting and retrieving full block headers. Only the designated 
 ### `submit_block_header`
 ::::description[`BlockOracle.submit_block_header(_header_data: bh_rlp.BlockHeader)`]
 
-:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
-This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the current `owner` of the contract.
+:::guard[Guarded Method]
+This function can only be called by the designated `header_verifier` contract.
 :::
 
 Function to submit a block header.
@@ -695,7 +697,7 @@ def submit_block_header(_header_data: bh_rlp.BlockHeader):
     if _header_data.block_number > self.last_confirmed_header.block_number:
         self.last_confirmed_header = _header_data
 
-    log  SubmitBlockHeader(
+    log SubmitBlockHeader(
         block_number=_header_data.block_number,
         block_hash=_header_data.block_hash,
     )
@@ -714,11 +716,11 @@ def submit_block_header(_header_data: bh_rlp.BlockHeader):
 ::::
 
 ### `get_state_root`
-::::description[`BlockOracle.get_state_root(_block_number: uint256) -> bytes32`]
+::::description[`BlockOracle.get_state_root(_block_number: uint256) -> bytes32: view`]
 
 Getter for the state root for a given block number.
 
-Returns: state root from the block header, or empty `bytes32` if the header is not submitted.
+Returns: state root from the block header, or empty `bytes32` if the header is not submitted (`bytes32`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -756,7 +758,7 @@ def get_state_root(_block_number: uint256) -> bytes32:
 
 Getter for the block header for a specific block number.
 
-Returns: block header tuple containing (parent_hash, state_root, transactions_root, receipts_root, block_number, timestamp)
+Returns: block header tuple containing (block_hash, parent_hash, state_root, receipt_root, block_number, timestamp) (`tuple`).
 
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
@@ -787,7 +789,7 @@ block_header: public(HashMap[uint256, bh_rlp.BlockHeader])  # block_number => he
 
 Getter for the last confirmed header.
 
-Returns: block header tuple of the most recently confirmed header
+Returns: block header tuple of the most recently confirmed header (`tuple`).
 
 <SourceCode>
 
@@ -869,7 +871,7 @@ def set_header_verifier(_verifier: address):
 
 Getter for the block header verifier.
 
-Returns: verifier (`address`)
+Returns: verifier (`address`).
 
 <SourceCode>
 
