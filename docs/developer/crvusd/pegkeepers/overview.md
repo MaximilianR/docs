@@ -32,7 +32,7 @@ PegKeepers significantly influence the interest rate of crvUSD markets. The inte
 
 *The DebtFraction is defined as:*
 
-$$\text\{DebtFraction\} = \frac\{\{\text\{PegKeeperDebt\}\}\}\{\{\text\{TotalDebt\}\}\}$$
+$$\text{DebtFraction} = \frac{{\text{PegKeeperDebt}}}{{\text{TotalDebt}}}$$
 
 For a comprehensive understanding of the factors influencing the interest rate, please refer to the [MonetaryPolicy](../monetary-policy.md#interest-rate-mechanics) section.
 

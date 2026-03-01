@@ -62,7 +62,7 @@ The maximum amount of borrowable debt is determined by the number of bands, the 
 
 The loan-to-value (LTV) ratio depends on the number of bands `N` and the parameter `A`. The higher the number of bands, the lower the LTV. More on bands [here](../crvusd/amm.md#bands).
 
-$$LTV = \text\{100%\} - \text\{loan_discount\} - 100 * \frac\{N\}\{2*A\}$$
+$$LTV = \text{100%} - \text{loan_discount} - 100 * \frac{N}{2*A}$$
 
 
 :::info[V3 Only — Extra Health Buffer]

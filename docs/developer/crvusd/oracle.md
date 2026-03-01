@@ -50,9 +50,9 @@ def _ema_tvl() -> uint256[N_POOLS]:
 
 </Dropdown>
 
-$$tvl_\{i\} = \frac\{TS_i * VP_i\}\{10^\{18\}\}$$
+$$tvl_{i} = \frac{TS_i * VP_i}{10^{18}}$$
 
-$$\text\{last_tvl\}_i = \frac\{tvl_i * (10^\{18\} - \alpha) + \text\{last_tvl\}_i * \alpha\}\{10^\{18\}\}$$
+$$\text{last_tvl}_i = \frac{tvl_i * (10^{18} - \alpha) + \text{last_tvl}_i * \alpha}{10^{18}}$$
 
 
 $tvl_i = \text{TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]`  
@@ -203,13 +203,13 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 
 </Dropdown>
 
-$$price_\{weighted\} = (\frac\{price_\{eth\} * price_\{crvusd\}\}\{price_\{usd\}\}) * weight$$
+$$price_{weighted} = (\frac{price_{eth} * price_{crvusd}}{price_{usd}}) * weight$$
 
-$$totalPrice_\{weighted\} = \frac\{\sum\{price_\{weighted\}\}\}\{\sum\{weight\}\}$$
+$$totalPrice_{weighted} = \frac{\sum{price_{weighted}}}{\sum{weight}}$$
 
-$$price_\{stETH\} = min(price_\{stETH\}, 10^\{18\}) * \frac\{rate_\{wstETH\}\}\{10^\{18\}\}$$
+$$price_{stETH} = min(price_{stETH}, 10^{18}) * \frac{rate_{wstETH}}{10^{18}}$$
 
-$$price = price_\{stETH\} * totalPrice_\{weighted\}$$
+$$price = price_{stETH} * totalPrice_{weighted}$$
 
 $price_{weighted} =$ weighted price of ETH  
 $totalPrice_{weighted} =$ total weighted price of ETH  

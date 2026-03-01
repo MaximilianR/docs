@@ -28,13 +28,13 @@ The `AggregateStablePrice` contract calculates the **weighted average price of c
 The price calculation starts with determining the EMA of the TVL from different Curve Stableswap liquidity pools using the `_ema_tvl` function. This internal function computes the EMA TVLs based on the formula below, which adjusts for the time since the last update to smooth out short-term volatility in the TVL data, providing a more stable and representative average value over the specified time window (`TVL_MA_TIME = 50000`):
 
 $$\alpha = 
-    \begin\{cases\} 
-    1 & \text\{if last_timestamp\} = \text\{current_timestamp\}, \\
-    e^\{-\frac\{(\text\{current_timestamp\} - \text\{last_timestamp\}) * 10^\{18\}\}\{\text\{TVL_MA_TIME\}\}\} & \text\{otherwise\}.
-    \end\{cases\}
+    \begin{cases} 
+    1 & \text{if last_timestamp} = \text{current_timestamp}, \\
+    e^{-\frac{(\text{current_timestamp} - \text{last_timestamp}) * 10^{18}}{\text{TVL_MA_TIME}}} & \text{otherwise}.
+    \end{cases}
 $$
 
-$$\text\{ema_tvl\}_\{i\} = \frac\{\text\{new_tvl\}_i * (10^\{18\} - \alpha) + \text\{tvl\}_i * \alpha\}\{10^\{18\}\}$$
+$$\text{ema_tvl}_{i} = \frac{\text{new_tvl}_i * (10^{18} - \alpha) + \text{tvl}_i * \alpha}{10^{18}}$$
 
 *The code snippet provided illustrates the implementation of the above formula in the contract.*
 
@@ -132,23 +132,23 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 
 *Finally, the contract calculates an average price:*
 
-$$\text\{average price\} = \frac\{\text\{DPsum\}\}\{\text\{Dsum\}\}$$
+$$\text{average price} = \frac{\text{DPsum}}{\text{Dsum}}$$
 
 *Next, a variance measure `e` is computed for each pool's price relative to the average, adjusting by `SIGMA` to normalize:*
 
-$$\text\{e\}_i = \frac\{(\max(p, p_\{\text\{avg\}\}) - \min(p, p_\{\text\{avg\}\}))^2\}\{\frac\{\text\{SIGMA\}^2\}\{10^\{18\}\}\}$$
+$$\text{e}_i = \frac{(\max(p, p_{\text{avg}}) - \min(p, p_{\text{avg}}))^2}{\frac{\text{SIGMA}^2}{10^{18}}}$$
 
-$$\text\{e\}_\{min\} = \min(\text\{e\}_i, \text\{max_value(uint256)\})$$
+$$\text{e}_{min} = \min(\text{e}_i, \text{max_value(uint256)})$$
 
 Applying an exponential decay based on these variance measures to weigh each pool's contribution to the final average price, reducing the influence of prices far from the minimum variance. 
 
-$$w = \frac\{\text\{D\}_i * e^\left(\{\text\{e\}_i - e_\{min\}\}\right)\}\{10^\{18\}\}$$
+$$w = \frac{\text{D}_i * e^\left({\text{e}_i - e_{min}}\right)}{10^{18}}$$
 
 Next, sum up all `w` to store it in `w_sum` and calculate the product of `w * prices[i]`, which is stored in `wp_sum`.
 
 *Finally, the weighted average price of `crvUSD` is calculated:*
 
-$$\text\{final price\} = \frac\{\text\{wp_sum\}\}\{\text\{w_sum\}\}$$
+$$\text{final price} = \frac{\text{wp_sum}}{\text{w_sum}}$$
 
 
 ---

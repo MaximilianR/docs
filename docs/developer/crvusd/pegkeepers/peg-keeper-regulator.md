@@ -34,11 +34,11 @@ Additionally, the system has implemented limit ratios to ensure a balanced and s
 
 *The allowed amount to provide and the max debt ratio to provide is calculated as follows:*
 
-$$\text\{allowedToProvide\} = \frac\{\text\{maxRatio\} \times \text\{total\}\}\{10^\{18\}\} - \text\{debt\}$$
+$$\text{allowedToProvide} = \frac{\text{maxRatio} \times \text{total}}{10^{18}} - \text{debt}$$
 
-$$\text\{maxRatio\} = \frac\{(\alpha + \beta \times \frac\{\text\{rsum\}\}\{10^\{18\}\})^2\}\{10^\{18\}\}$$
+$$\text{maxRatio} = \frac{(\alpha + \beta \times \frac{\text{rsum}}{10^{18}})^2}{10^{18}}$$
 
-$$\text\{rsum\} = \sum_\{i=n_\{pk\}\}^\{n\} \sqrt\{r_i \times 10^\{18\}\}$$
+$$\text{rsum} = \sum_{i=n_{pk}}^{n} \sqrt{r_i \times 10^{18}}$$
 
 Where:
 
