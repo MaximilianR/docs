@@ -17,6 +17,17 @@ Additionally, each `MetaRegistry` is integrated into the chain-specific [`Addres
 '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC'
 ```
 
+The contract is deployed on :logos-ethereum: Ethereum at [`0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC`](https://etherscan.io/address/0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC).
+
+<ContractABI>
+
+
+```json
+[{"name":"CommitNewAdmin","inputs":[{"name":"deadline","type":"uint256","indexed":true},{"name":"admin","type":"address","indexed":true}],"anonymous":false,"type":"event"},{"name":"NewAdmin","inputs":[{"name":"admin","type":"address","indexed":true}],"anonymous":false,"type":"event"},{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"_address_provider","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"add_registry_handler","inputs":[{"name":"_registry_handler","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"update_registry_handler","inputs":[{"name":"_index","type":"uint256"},{"name":"_registry_handler","type":"address"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"get_registry_handlers_from_pool","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"address[10]"}]},{"stateMutability":"view","type":"function","name":"get_base_registry","inputs":[{"name":"registry_handler","type":"address"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"find_pool_for_coins","inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"find_pool_for_coins","inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"i","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"find_pools_for_coins","inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"}],"outputs":[{"name":"","type":"address[]"}]},{"stateMutability":"view","type":"function","name":"get_admin_balances","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_admin_balances","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_balances","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_balances","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_base_pool","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_base_pool","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_coin_indices","inputs":[{"name":"_pool","type":"address"},{"name":"_from","type":"address"},{"name":"_to","type":"address"}],"outputs":[{"name":"","type":"int128"},{"name":"","type":"int128"},{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"get_coin_indices","inputs":[{"name":"_pool","type":"address"},{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"int128"},{"name":"","type":"int128"},{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"get_coins","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"address[8]"}]},{"stateMutability":"view","type":"function","name":"get_coins","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"address[8]"}]},{"stateMutability":"view","type":"function","name":"get_decimals","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_decimals","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_fees","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256[10]"}]},{"stateMutability":"view","type":"function","name":"get_fees","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256[10]"}]},{"stateMutability":"view","type":"function","name":"get_gauge","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_gauge","inputs":[{"name":"_pool","type":"address"},{"name":"gauge_idx","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_gauge","inputs":[{"name":"_pool","type":"address"},{"name":"gauge_idx","type":"uint256"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_gauge_type","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"int128"}]},{"stateMutability":"view","type":"function","name":"get_gauge_type","inputs":[{"name":"_pool","type":"address"},{"name":"gauge_idx","type":"uint256"}],"outputs":[{"name":"","type":"int128"}]},{"stateMutability":"view","type":"function","name":"get_gauge_type","inputs":[{"name":"_pool","type":"address"},{"name":"gauge_idx","type":"uint256"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"int128"}]},{"stateMutability":"view","type":"function","name":"get_lp_token","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_lp_token","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_n_coins","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"get_n_coins","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"get_n_underlying_coins","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"get_n_underlying_coins","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"get_pool_asset_type","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"get_pool_asset_type","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"get_pool_from_lp_token","inputs":[{"name":"_token","type":"address"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_pool_from_lp_token","inputs":[{"name":"_token","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_pool_params","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256[20]"}]},{"stateMutability":"view","type":"function","name":"get_pool_params","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256[20]"}]},{"stateMutability":"view","type":"function","name":"get_pool_name","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"string"}]},{"stateMutability":"view","type":"function","name":"get_pool_name","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"string"}]},{"stateMutability":"view","type":"function","name":"get_underlying_balances","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_underlying_balances","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_underlying_coins","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"address[8]"}]},{"stateMutability":"view","type":"function","name":"get_underlying_coins","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"address[8]"}]},{"stateMutability":"view","type":"function","name":"get_underlying_decimals","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_underlying_decimals","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256[8]"}]},{"stateMutability":"view","type":"function","name":"get_virtual_price_from_lp_token","inputs":[{"name":"_token","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"get_virtual_price_from_lp_token","inputs":[{"name":"_token","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"is_meta","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"is_meta","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"is_registered","inputs":[{"name":"_pool","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"is_registered","inputs":[{"name":"_pool","type":"address"},{"name":"_handler_id","type":"uint256"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"pool_count","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"pool_list","inputs":[{"name":"_index","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"address_provider","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"owner","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_registry","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"registry_length","inputs":[],"outputs":[{"name":"","type":"uint256"}]}]
+```
+
+</ContractABI>
+
 
 :::
 
@@ -25,7 +36,7 @@ Additionally, each `MetaRegistry` is integrated into the chain-specific [`Addres
 <Dropdown title="`_get_registry_handlers_from_pool(_pool: address) -&gt; address[MAX_REGISTRIES]:`">
 
 
-```py
+```shell
 # registry and registry handlers are considered to be the same here.
 # registry handlers are just wrapper contracts that simplify/fix underlying registries
 # for integrating it into the Metaregistry.
@@ -126,12 +137,12 @@ A Jupyter notebook showcasing how to fetch pools directly from the blockchain, w
 
 Getter method for a list of pools that contain both the `_from` and `_to` tokens. It is designed to identify specific swap routes. The method returns all pools containing the specified assets, disregarding metrics such as total value locked (TVL) or other parameters.
 
-Returns: pools (`DynArray[address, 1000]`).
-
 | Input   | Type      | Description                    |
 | ------- | --------- | ------------------------------ |
 | `_from` | `address` | Address of coin to be sent     |
 | `_to`   | `address` | Address of coin to be received |
+
+Returns: pools (`DynArray[address, 1000]`).
 
 <SourceCode>
 
@@ -211,15 +222,7 @@ def find_pool_for_coins(
 
 In this example, we search for pools that include `crvUSD` and `ETH`. The function returns all pools including those two assets.
 
-```shell
->>> MetaRegistry.find_pools_for_coins('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')
-[[0x4eBdF703948ddCEA3B11f675B4D1Fba9d2414A14]           # triCRV: crvUSD &lt;&gt; ETH &lt;&gt; CRV
-[0x6A62EE3e5c4b412Cd9167D3aFd5E481e1E30715a]            # triOSAK: ETH &lt;&gt; crvUSD &lt;&gt; OSAK
-[0x5b3BA844b3859f56524e99Ae54857b36c8Ae3eFE]            # tirLDO: crvUSD &lt;&gt; ETH &lt;&gt; LDO
-[0xBed58C1053fd347843883eadE0781f562A66f623]            # triCVG: crvUSD &lt;&gt; ETH &lt;&gt; CVG
-[0x888a9cCA07Ad3A79Ee6671843A36941A45ECaF5A]            # yoooo: crvUSD &lt;&gt; DPI &lt;&gt; ETH
-[0xb72c9B6EfEd482c9Ba0D379164283E1EDf8212CF]]           # yoooo: crvUSD &lt;&gt; DPI &lt;&gt; ETH
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function find_pools_for_coins(address _from, address _to) view returns (address[])"]} method="find_pools_for_coins" args={["0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E", "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"]} labels={["_from", "_to"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -233,13 +236,13 @@ In this example, we search for pools that include `crvUSD` and `ETH`. The functi
 
 Getter method for a pool that holds two coins (even if the pool is a metapool). The index in the query returns the index of the list of pools containing the two coins. The method returns all pools containing the specified assets, disregarding metrics such as total value locked (TVL) or other parameters.
 
-Returns: pool (`address`).
-
 | Input   | Type      | Description                    |
 | ------- | --------- | ------------------------------ |
 | `_from` | `address` | Address of coin to be sent     |
 | `_to`   | `address` | Address of coin to be received |
 | `i`     | `uint256` | Index of the pool to return    |
+
+Returns: pool (`address`).
 
 <SourceCode>
 
@@ -289,13 +292,7 @@ def find_pool_for_coins(_from: address, _to: address, i: uint256 = 0) -> address
 
 In this example, we search for a single pool at index `i` which includes `crvUSD` and `ETH`. This method essentially returns the pools returned by `find_pools_for_coins`.
 
-```shell
->>> MetaRegistry.find_pool_for_coins('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 0)
-'0x4eBdF703948ddCEA3B11f675B4D1Fba9d2414A14'            # triCRV: crvUSD &lt;&gt; ETH &lt;&gt; CRV
-
->>> MetaRegistry.find_pool_for_coins('0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 1)
-'0x6A62EE3e5c4b412Cd9167D3aFd5E481e1E30715a'            # triOSAK: ETH &lt;&gt; crvUSD &lt;&gt; OSAK
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function find_pool_for_coins(address _from, address _to, uint256 i) view returns (address)"]} method="find_pool_for_coins" args={["0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E", "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", 0]} labels={["_from", "_to", "i"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -353,10 +350,7 @@ def pool_count() -> uint256:
 <Example>
 
 
-```shell
->>> MetaRegistry.pool_count()
-1155
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function pool_count() view returns (uint256)"]} method="pool_count" contractName="MetaRegistry" />
 
 
 </Example>
@@ -370,11 +364,11 @@ def pool_count() -> uint256:
 
 Getter for the pool at `_index`, with the index starting at `0`.
 
-Returns: pool (`address`).
-
 | Input    | Type      | Description       |
 | -------  | --------- | ----------------- |
 | `_index` | `uint256` | Index of the pool |
+
+Returns: pool (`address`).
 
 <SourceCode>
 
@@ -416,13 +410,7 @@ def pool_list(_index: uint256) -> address:
 
 These examples essentially return the pools at index `0` and `1`, which are the first and second pools added to the `MetaRegistry`.
 
-```shell
->>> MetaRegistry.pool_list(0)
-'0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7'
-
->>> MetaRegistry.pool_list(1)
-'0xDeBF20617708857ebe4F679508E7b7863a8A8EeE'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function pool_list(uint256 _index) view returns (address)"]} method="pool_list" args={[0]} labels={["_index"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -436,12 +424,12 @@ These examples essentially return the pools at index `0` and `1`, which are the 
 
 Getter for the name of a pool.
 
-Returns: name (`String[64]`).
-
 | Input         | Type      | Description |
 | ------------- | --------- | ------------------- |
 | `_pool`       | `address` | Address of the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: name (`String[64]`).
 
 <SourceCode>
 
@@ -497,10 +485,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_pool_name('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
-'3pool'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_pool_name(address _pool) view returns (string)"]} method="get_pool_name" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -514,12 +499,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter method to check if a pool is a metapool. Metapools are pools that pair a coin to a base pool.
 
-Returns: true or false (`bool`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: true or false (`bool`).
 
 <SourceCode>
 
@@ -584,10 +569,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 An example is the [LUSD-3CRV](https://etherscan.io/address/0xed279fdd11ca84beef15af5d39bb4d4bee23f0ca) pool, which pairs [Liquity's](https://www.liquity.org/) [LUSD](https://etherscan.io/address/0x5f98805a4e8be255a32880fdec7f6728c6568ba0) against [3CRV](https://etherscan.io/address/0x6c3f90f043a72fa612cbac8115ee7e52bde6e490). 3CRV is a liquidity pool token that represents a share of a pool containing DAI, USDC, and USDT.
 
-```shell
->>> MetaRegistry.is_meta('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
-'true'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function is_meta(address _pool) view returns (bool)"]} method="is_meta" args={["0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -601,12 +583,12 @@ An example is the [LUSD-3CRV](https://etherscan.io/address/0xed279fdd11ca84beef1
 
 Getter for the base pool of a metapool. This function can also be called on non-metapool pools; in that case, there is no base pool and the function will return `ZERO_ADDRESS`.
 
-Returns: base pool (`address`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: base pool (`address`).
 
 <SourceCode>
 
@@ -674,13 +656,7 @@ In the case of the LUSD-3CRV pool example, the function will return the 3pool as
 
 [^2]: A base pool is also a regular pool.
 
-```shell
->>> MetaRegistry.get_base_pool('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
-'0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7'
-
->>> MetaRegistry.get_base_pool('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
-'0x0000000000000000000000000000000000000000'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_base_pool(address _pool) view returns (address)"]} method="get_base_pool" args={["0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -694,12 +670,12 @@ In the case of the LUSD-3CRV pool example, the function will return the 3pool as
 
 Getter for the fee parameters that a Curve pool charges per swap. The fee data returned varies depending on the type of pool (see examples below).
 
-Returns: fee parameters (`uint256[10]`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: fee parameters (`uint256[10]`).
 
 <SourceCode>
 
@@ -771,16 +747,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 **Cryptoswap** pools return `fee`, `admin_fee` percentage, `mid_fee` and `out_fee`. The fee is the dynamic fee charged per swap, and ranges between `mid_fee` (balances in the pool are fully balanced) and the `out_fee` (balances in the pool are fully imbalanced).
 
-```shell
->>> MetaRegistry.get_fees('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')     # stableswap
-1000000, 5000000000, 0, 0, 0, 0, 0, 0, 0, 0
-
->>> MetaRegistry.get_fees('0xdb74dfdd3bb46be8ce6c33dc9d82777bcfc3ded5')     # stableswap-ng
-1000000, 5000000000, 50000000000, 0, 0, 0, 0, 0, 0, 0
-
->>> MetaRegistry.get_fees('0xd51a44d3fae010294c616388b506acda1bfaae46')     # cryptoswap
-8889269, 5000000000, 3000000, 30000000, 0, 0, 0, 0, 0, 0
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_fees(address _pool) view returns (uint256[10])"]} method="get_fees" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -794,12 +761,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the parameters of a pool. The parameters returned varies depending on the type of pool (see examples below).
 
-Returns: parameters (`uint256[MAX_POOL_PARAMS]`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: parameters (`uint256[MAX_POOL_PARAMS]`).
 
 <SourceCode>
 
@@ -867,13 +834,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 **Cryptoswap** pools return the amplification coefficient (`A`), `D` invariant, `gamma`, `allowed_extra_profit`, `fee_gamma`, `adjustment_step` and `ma_half_time`.
 
-```shell
->>> MetaRegistry.get_pool_params('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
-2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-
->>> MetaRegistry.get_pool_params('0xd51a44d3fae010294c616388b506acda1bfaae46')
-1707629, 24588676849282493872649954, 11809167828997, 2000000000000, 500000000000000, 490000000000000, 600, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_pool_params(address _pool) view returns (uint256[20])"]} method="get_pool_params" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -887,12 +848,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the LP token of a pool.
 
-Returns: LP token (`address`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: LP token (`address`).
 
 <SourceCode>
 
@@ -955,10 +916,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_lp_token('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
-'0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_lp_token(address _pool) view returns (address)"]} method="get_lp_token" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -972,12 +930,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the asset type of a pool according to: **`0 = USD`, `1 = ETH`, `2 = BTC`, `3 = Other`, `4 = CryptoPool`**. The asset type is only a property of StableSwap pools and is not enforced in CryptoSwap pools (which always return 4).
 
-Returns: asset type (`uint256`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: asset type (`uint256`).
 
 <SourceCode>
 
@@ -1040,16 +998,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_pool_asset_type('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')      # 3pool (USD)
-0
-
->>> MetaRegistry.get_pool_asset_type('0xDB74dfDD3BB46bE8Ce6C33dC9D82777BCFc3dEd5')      # weETH/wETH (ETH)
-1
-
->>> MetaRegistry.get_pool_asset_type('0xd51a44d3fae010294c616388b506acda1bfaae46')      # tricryptoUSDT (cryptoswap)
-4
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_pool_asset_type(address _pool) view returns (uint256)"]} method="get_pool_asset_type" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1063,12 +1012,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the liquidity pool contract derived from an LP token.
 
-Returns: pool (`address`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_token`      | `address` | Address of the LP token                    |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: pool (`address`).
 
 <SourceCode>
 
@@ -1107,10 +1056,7 @@ def _get_pool_from_lp_token(_token: address) -> address:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_pool_from_lp_token('0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490')
-'0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_pool_from_lp_token(address _token) view returns (address)"]} method="get_pool_from_lp_token" args={["0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"]} labels={["_token"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1124,12 +1070,12 @@ def _get_pool_from_lp_token(_token: address) -> address:
 
 Getter for a token's virtual price. The virtual price of any pool starts with a value of `1.0` and increases as the pool accrues fees. This number constantly increases for StableSwap pools unless the pool's amplification coefficient changes. For CryptoSwap pools, there are moments when the virtual price can decrease (e.g., admin fee claims, changes to the pool's parameters, etc.).
 
-Returns: virtual price of the LP token (`uint256`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_token`      | `address` | Address of the LP token                    |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: virtual price of the LP token (`uint256`).
 
 <SourceCode>
 
@@ -1206,10 +1152,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_virtual_price_from_lp_token('0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490')
-1033796609988765878
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_virtual_price_from_lp_token(address _token) view returns (uint256)"]} method="get_virtual_price_from_lp_token" args={["0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"]} labels={["_token"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1223,12 +1166,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Function to check if a pool is registered in the `MetaRegistry`.
 
-Returns: true or false (`bool`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: true or false (`bool`).
 
 <SourceCode>
 
@@ -1285,10 +1228,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.is_registered('0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7')
-'true'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function is_registered(address _pool) view returns (bool)"]} method="is_registered" args={["0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1302,13 +1242,13 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the liquidity gauge of a pool.
 
-Returns: gauge address (`address`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `gauge_idx`   | `uint256` | Index of the gauge; defaults to 0          |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: gauge address (`address`).
 
 <SourceCode>
 
@@ -1374,10 +1314,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_gauge('0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7')
-'0xbFcF63294aD7105dEa65aA58F8AE5BE2D9d0952A'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_gauge(address _pool) view returns (address)"]} method="get_gauge" args={["0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1391,13 +1328,13 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the gauge type of the gauge associated with a liquidity pool.
 
-Returns: gauge type (`int128`).
-
 | Input         | Type      | Description                                |
 | ------------  | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `gauge_idx`   | `uint256` | Index of the gauge; defaults to 0          |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: gauge type (`int128`).
 
 <SourceCode>
 
@@ -1463,13 +1400,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_gauge_type('0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7')
-0
-
->>> MetaRegistry.get_gauge_type('0xd51a44d3fae010294c616388b506acda1bfaae46')
-5
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_gauge_type(address _pool) view returns (int128)"]} method="get_gauge_type" args={["0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1483,12 +1414,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter method for the coins in a pool. If the pool is a metapool, the method returns the LP token of the base pool, not the underlying coins. To additionally return the underlying coins, see: [`get_underlying_coins`](#get_underlying_coins).
 
-Returns: coins (`address[MAX_COINS]`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: coins (`address[MAX_COINS]`).
 
 <SourceCode>
 
@@ -1552,17 +1483,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_coins('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')    # LUSD-3CRV pool
-[[0x5f98805A4E8be255a32880FDeC7F6728C6568bA0]                               # LUSD
-[0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490]                                # 3CRV (basepool LP token)
-[0x0000000000000000000000000000000000000000]
-[0x0000000000000000000000000000000000000000]
-[0x0000000000000000000000000000000000000000]
-[0x0000000000000000000000000000000000000000]
-[0x0000000000000000000000000000000000000000]
-[0x0000000000000000000000000000000000000000]]
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_coins(address _pool) view returns (address[8])"]} method="get_coins" args={["0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1576,12 +1497,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the number of coins in a pool. If the pool is a metapool, the method returns `2`, the meta- and base pool token. To additionally return the number of coins including the underlying ones from the base pool, see: [`get_n_underlying_coins`](#get_underlying_coins).
 
-Returns: number of coins (`uint256`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: number of coins (`uint256`).
 
 <SourceCode>
 
@@ -1644,10 +1565,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_n_coins('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
-3
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_n_coins(address _pool) view returns (uint256)"]} method="get_n_coins" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1661,12 +1579,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the decimals of the coins in a pool. If the pool is a metapool, the method returns the decimals of the meta- and base pool token. To additionally return the decimals of the underlying coin from the base pool, see: [`get_underlying_decimals`](#get_underlying_decimals).
 
-Returns: coin decimals (`uint256[MAX_COINS]`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: coin decimals (`uint256[MAX_COINS]`).
 
 <SourceCode>
 
@@ -1730,13 +1648,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_decimals('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
-18, 6, 6, 0, 0, 0, 0, 0         # decimals of DAI, USDT, USDC
-
->>> MetaRegistry.get_decimals('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
-18, 18, 0, 0, 0, 0, 0, 0        # decimals of LUSD, 3CRV
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_decimals(address _pool) view returns (uint256[8])"]} method="get_decimals" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1750,12 +1662,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the coin balances in a pool. If the pool is a metapool, the method returns the balances of the meta- and base pool tokens. To additionally return the balances of the underlying coins from the base pool, see: [`get_underlying_balances`](#get_underlying_balances).
 
-Returns: balances (`uint256[MAX_COINS]`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: balances (`uint256[MAX_COINS]`).
 
 <SourceCode>
 
@@ -1819,13 +1731,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_balances('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
-147006104035945155794243533, 141336760960804, 94869577680718, 0, 0, 0, 0, 0
-
->>> MetaRegistry.get_balances('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA') 
-6781730641038140101957300, 5934556341193690490470482, 0, 0, 0, 0, 0, 0
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_balances(address _pool) view returns (uint256[8])"]} method="get_balances" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1839,12 +1745,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for all coins in a pool, including the underlying ones. For non-metapools, it returns the same value as [`get_coins`](#get_coins).
 
-Returns: underlying coins (`address[MAX_COINS]`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: underlying coins (`address[MAX_COINS]`).
 
 <SourceCode>
 
@@ -1908,17 +1814,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_underlying_coins('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
-[[0x5f98805A4E8be255a32880FDeC7F6728C6568bA0]       # LUSD
-[0x6B175474E89094C44Da98b954EedeAC495271d0F]        # DAI
-[0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48]        # USDC
-[0xdAC17F958D2ee523a2206206994597C13D831ec7]        # USDT
-[0x0000000000000000000000000000000000000000]
-[0x0000000000000000000000000000000000000000]
-[0x0000000000000000000000000000000000000000]
-[0x0000000000000000000000000000000000000000]]
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_underlying_coins(address _pool) view returns (address[8])"]} method="get_underlying_coins" args={["0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -1932,12 +1828,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the number of coins in a pool, including the underlying ones. For non-metapools, it returns the same value as [`get_n_coins`](#get_n_coins).
 
-Returns: number of coins (`uint256`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: number of coins (`uint256`).
 
 <SourceCode>
 
@@ -2000,10 +1896,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_n_underlying_coins('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
-4
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_n_underlying_coins(address _pool) view returns (uint256)"]} method="get_n_underlying_coins" args={["0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -2017,12 +1910,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the decimals of the coins in a pool, including those for the underlying ones. For non-metapools, it returns the same value as [`get_decimals`](#get_decimals).
 
-Returns: coin decimals (`uint256[MAX_COINS]`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: coin decimals (`uint256[MAX_COINS]`).
 
 <SourceCode>
 
@@ -2086,10 +1979,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_underlying_decimals('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
-18, 18, 6, 6, 0, 0, 0, 0        # decimals of LUSD, DAI, USDC, USDT
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_underlying_decimals(address _pool) view returns (uint256[8])"]} method="get_underlying_decimals" args={["0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -2103,12 +1993,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter method for the coin balances in a pool, including those for the underlying ones. For non-metapools, it returns the same value as [`get_balances`](#get_balances).
 
-Returns: coin balances (`uint256[MAX_COINS]`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: coin balances (`uint256[MAX_COINS]`).
 
 <SourceCode>
 
@@ -2172,10 +2062,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_underlying_balances('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
-4362795413803847111710482, 7574850164613791626778647, 7282723353910, 4888387736171, 0, 0, 0, 0          # balances of LUSD, DAI, USDC, USDT
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_underlying_balances(address _pool) view returns (uint256[8])"]} method="get_underlying_balances" args={["0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -2189,12 +2076,12 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the pool's admin balances. The admin balances are essentially the fees that can be claimed and paid out to veCRV holders.
 
-Returns: admin balances (`uint256[MAX_COINS]`).
-
 | Input         | Type      | Description                                |
 | ------------- | --------- | ------------------------------------------ |
 | `_pool`       | `address` | Address of the pool                        |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0 |
+
+Returns: admin balances (`uint256[MAX_COINS]`).
 
 <SourceCode>
 
@@ -2258,13 +2145,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_admin_balances('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7')
-1590779934844205413773, 3866051363, 5204415383, 0, 0, 0, 0, 0           # admin balances of DAI, USDC, USDT (3pool)
-
->>> MetaRegistry.get_admin_balances('0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA')
-574625025164093926144, 321761837541842998875, 0, 0, 0, 0, 0, 0          # admin balances of LUSD, 3CRV (LUSD&lt;&gt;CRV)
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_admin_balances(address _pool) view returns (uint256[8])"]} method="get_admin_balances" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -2278,14 +2159,14 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter method that converts coin addresses to indices.
 
-Returns: index for `_from` (`int128`), index for `_to` (`int128`) and whether the market a metapool or not (`bool`).
-
 | Input         | Type      | Description                                    |
 | ------------- | --------- | ---------------------------------------------- |
 | `_pool`       | `address` | Address of the pool                            |
 | `_from`       | `address` | Coin address to be used as `i` within the pool |
 | `_to`         | `address` | Coin address to be used as `j` within the pool |
 | `_handler_id` | `uint256` | ID of the `RegistryHandler`; defaults to 0     |
+
+Returns: index for `_from` (`int128`), index for `_to` (`int128`) and whether the market a metapool or not (`bool`).
 
 <SourceCode>
 
@@ -2352,13 +2233,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 The first example checks the index of `DAI` and `USDC` within the 3pool. The second one checks the index of `LUSD` and `USDC` within the `LUSD&lt;&gt;3CRV` pool.
 
-```shell
->>> MetaRegistry.get_coin_indices('0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7', '0x6B175474E89094C44Da98b954EedeAC495271d0F', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')
-0, 1, false     # DAI is coin index0, USDC is coin index1 and no metapool
-
->>> MetaRegistry.get_coin_indices('0x5f98805A4E8be255a32880FDeC7F6728C6568bA0', '0x6B175474E89094C44Da98b954EedeAC495271d0F', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48')
-0, 2, true      # LUSD is coin index0, USDC is coin index1 and its a metapool
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_coin_indices(address _pool, address _from, address _to) view returns (int128, int128, bool)"]} method="get_coin_indices" args={["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7", "0x6B175474E89094C44Da98b954EedeAC495271d0F", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]} labels={["_pool", "_from", "_to"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -2396,11 +2271,11 @@ A Google Colab notebook showcasing how to query registries or add/update them ca
 
 Getter for the `RegistryHandler` that a pool has been registered in. Usually, each pool is registered in a single registry.
 
-Returns: `RegistryHandler` (`address[MAX_REGISTRIES]`).
-
 | Input         | Type      | Description         |
 | ------------- | --------- | ------------------- |
 | `_pool`       | `address` | Address of the pool |
+
+Returns: `RegistryHandler` (`address[MAX_REGISTRIES]`).
 
 <SourceCode>
 
@@ -2456,10 +2331,7 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_registry_handlers_from_pool('0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7')
-'0x46a8a9CF4Fc8e99EC3A14558ACABC1D93A27de68'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_registry_handlers_from_pool(address _pool) view returns (address[10])"]} method="get_registry_handlers_from_pool" args={["0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7"]} labels={["_pool"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -2473,11 +2345,11 @@ def _get_registry_handlers_from_pool(_pool: address) -> address[MAX_REGISTRIES]:
 
 Getter for the `BaseRegistry` associated with a `RegistryHandler`.
 
-Returns: `BaseRegistry` (`address`).
-
 | Input              | Type      | Description                |
 | ------------------ | --------- | -------------------------- |
 | `registry_handler` | `address` | `RegistryHandler` contract |
+
+Returns: `BaseRegistry` (`address`).
 
 <SourceCode>
 
@@ -2510,10 +2382,7 @@ def get_base_registry(registry_handler: address) -> address:
 <Example>
 
 
-```shell
->>> MetaRegistry.get_base_registry('0x46a8a9CF4Fc8e99EC3A14558ACABC1D93A27de68')
-'0x90E00ACe148ca3b23Ac1bC8C240C2a7Dd9c2d7f5'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_base_registry(address registry_handler) view returns (address)"]} method="get_base_registry" args={["0x46a8a9CF4Fc8e99EC3A14558ACABC1D93A27de68"]} labels={["registry_handler"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -2527,11 +2396,11 @@ def get_base_registry(registry_handler: address) -> address:
 
 Getter for the `RegistryHandler` at index `arg0`. New handlers can be added via the [`add_registry_handler`](#add_registry_handler) function.
 
-Returns: `Registry` (`address`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `arg0` | `uint256` | Index (starts at `0`) |
+
+Returns: `Registry` (`address`).
 
 <SourceCode>
 
@@ -2552,10 +2421,7 @@ registry_length: public(uint256)
 <Example>
 
 
-```shell
->>> MetaRegistry.get_registry(0)
-'0x46a8a9CF4Fc8e99EC3A14558ACABC1D93A27de68'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function get_registry(uint256 arg0) view returns (address)"]} method="get_registry" args={[0]} labels={["arg0"]} contractName="MetaRegistry" />
 
 
 </Example>
@@ -2590,10 +2456,7 @@ registry_length: public(uint256)
 <Example>
 
 
-```shell
->>> MetaRegistry.registry_length()
-7
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function registry_length() view returns (uint256)"]} method="registry_length" contractName="MetaRegistry" />
 
 
 </Example>
@@ -2631,10 +2494,7 @@ def __init__(_address_provider: address):
 <Example>
 
 
-```shell
->>> MetaRegistry.address_provider()
-'0x0000000022D53366457F9d5E68Ec105046FC4383'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function address_provider() view returns (address)"]} method="address_provider" contractName="MetaRegistry" />
 
 
 </Example>
@@ -2686,10 +2546,7 @@ def __init__(_address_provider: address):
 <Example>
 
 
-```shell
->>> MetaRegistry.owner()
-'0xEdf2C58E16Cc606Da1977e79E1e69e79C54fe242'
-```
+<ContractCall address="0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC" abi={["function owner() view returns (address)"]} method="owner" contractName="MetaRegistry" />
 
 
 </Example>

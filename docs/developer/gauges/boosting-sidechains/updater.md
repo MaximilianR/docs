@@ -39,7 +39,7 @@ VOTING_ESCROW: public(constant(address)) = 0x5f3b5DfEb7B28CDbD7FAba78963EE202a49
 
 <Example>
 
-```python
+```shell
 >>> Updater.VOTING_ESCROW()
 '0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2'
 ```
@@ -74,7 +74,7 @@ def __init__(_ovm_chain: address, _ovm_messenger: address):
 
 <Example>
 
-```python
+```shell
 >>> Updater.ovm_chain()
 '0x0000000000000000000000000000000000000000'
 ```
@@ -109,7 +109,7 @@ def __init__(_ovm_chain: address, _ovm_messenger: address):
 
 <Example>
 
-```python
+```shell
 >>> Updater.ovm_messenger()
 '0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed'  # Fraxtal L1 Cross Domain Messenger Proxy
 ```
@@ -125,7 +125,7 @@ def __init__(_ovm_chain: address, _ovm_messenger: address):
 
 Function to update the voting escrow information on the alternate chain. This call transmits the following information: current `epoch`, `point_history` of the current epoch, `user_point_epoch` of the user, `user_point_history` of the user at their `user_point_epoch`, `locked` balance, and `slope_changes` for the past 12 weeks.
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user to update the voting escrow information for. Defaults to the caller of the function. |
 | `_gas_limit` | `uint32` | The gas limit for the transaction. If 0, the function will attempt to retrieve the gas limit from the alternate chain. |
@@ -209,7 +209,7 @@ def update(_user: address = msg.sender, _gas_limit: uint32 = 0):
 
 <Example>
 
-```python
+```shell
 >>> Updater.update()
 ```
 

@@ -10,6 +10,12 @@ The source code for the `L2MessengerLZ.vy` contract can be found on [GitHub](htt
 
 The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](/pdf/audits/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
 
+The contract is deployed on the following L2 networks:
+
+- :logos-arbitrum: Arbitrum: [`0x14e11c1b8f04a7de306a7b5bf21bbca0d5cf79ff`](https://arbiscan.io/address/0x14e11c1b8f04a7de306a7b5bf21bbca0d5cf79ff)
+- :logos-optimism: Optimism: [`0x7a1f2f99b65f6c3b2413648c86c0326cff8d8837`](https://optimistic.etherscan.io/address/0x7a1f2f99b65f6c3b2413648c86c0326cff8d8837)
+- :logos-fraxtal: Fraxtal: [`0x672c38258729060bf443ba28faef4f2db154c6fc`](https://fraxscan.com/address/0x672c38258729060bf443ba28faef4f2db154c6fc)
+
 :::
 
 ---
@@ -35,7 +41,7 @@ Initiates a fast bridge by sending a message to the peer contract on the main ch
 | `_amount` | `uint256` | Amount of crvUSD to mint |
 | `_lz_fee_refund` | `address` | Address to receive excess LayerZero fees |
 
-Emits: `Initiated`
+Emits: `Initiated` event.
 
 <SourceCode>
 
@@ -74,7 +80,7 @@ def initiate_fast_bridge(_to: address, _amount: uint256, _lz_fee_refund: address
 
 <Example>
 
-```python
+```shell
 >>> L2MessengerLZ.initiate_fast_bridge('0x1234...', 10000 * 10**18, '0x5678...')
 ```
 
@@ -114,7 +120,7 @@ def quote_message_fee() -> uint256:
 
 <Example>
 
-```python
+```shell
 >>> L2MessengerLZ.quote_message_fee()
 45678900000000
 ```
@@ -146,7 +152,7 @@ vault_eid: public(uint32)
 
 <Example>
 
-```python
+```shell
 >>> L2MessengerLZ.vault_eid()
 30101
 ```
@@ -172,7 +178,7 @@ fast_bridge_l2: public(address)
 
 <Example>
 
-```python
+```shell
 >>> L2MessengerLZ.fast_bridge_l2()
 '0x1f2af270029d028400265ce1dd0919ba8780dae1'
 ```
@@ -198,7 +204,7 @@ gas_limit: public(uint128)
 
 <Example>
 
-```python
+```shell
 >>> L2MessengerLZ.gas_limit()
 200000
 ```
@@ -216,9 +222,9 @@ The L2MessengerLZ contract includes several administrative functions that allow 
 ### `set_fast_bridge_l2`
 ::::description[`L2MessengerLZ.set_fast_bridge_l2(_fast_bridge_l2: address)`]
 
-:::guard[Guarded Method]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
-This function is only callable by the `owner` of the contract.
+This contract makes use of a Snekmate module to handle ownership. This specific function is only callable by the `owner` of the contract.
 
 :::
 
@@ -228,9 +234,12 @@ Updates the address of the FastBridgeL2 contract that is authorized to initiate 
 | ---------- | --------- | ------------ |
 | `_fast_bridge_l2` | `address` | New FastBridgeL2 contract address |
 
-Emits: `SetFastBridgeL2`
+Emits: `SetFastBridgeL2` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="L2MessengerLZ.vy" label="L2MessengerLZ.vy">
 
 ```vyper
 @external
@@ -246,11 +255,28 @@ def set_fast_bridge_l2(_fast_bridge_l2: address):
     log SetFastBridgeL2(fast_bridge_l2=_fast_bridge_l2)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> L2MessengerLZ.set_fast_bridge_l2('0x1f2af270029d028400265ce1dd0919ba8780dae1')
 ```
 
@@ -261,9 +287,9 @@ def set_fast_bridge_l2(_fast_bridge_l2: address):
 ### `set_vault_eid`
 ::::description[`L2MessengerLZ.set_vault_eid(_vault_eid: uint32)`]
 
-:::guard[Guarded Method]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
-This function is only callable by the `owner` of the contract.
+This contract makes use of a Snekmate module to handle ownership. This specific function is only callable by the `owner` of the contract.
 
 :::
 
@@ -273,9 +299,12 @@ Updates the LayerZero endpoint ID of the mainnet vault contract. Only the contra
 | ---------- | --------- | ------------ |
 | `_vault_eid` | `uint32` | New vault endpoint ID |
 
-Emits: `SetVaultEid`
+Emits: `SetVaultEid` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="L2MessengerLZ.vy" label="L2MessengerLZ.vy">
 
 ```vyper
 @external
@@ -291,11 +320,28 @@ def set_vault_eid(_vault_eid: uint32):
     log SetVaultEid(vault_eid=_vault_eid)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> L2MessengerLZ.set_vault_eid(30101)
 ```
 
@@ -306,9 +352,9 @@ def set_vault_eid(_vault_eid: uint32):
 ### `set_gas_limit`
 ::::description[`L2MessengerLZ.set_gas_limit(_gas_limit: uint128)`]
 
-:::guard[Guarded Method]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
-This function is only callable by the `owner` of the contract.
+This contract makes use of a Snekmate module to handle ownership. This specific function is only callable by the `owner` of the contract.
 
 :::
 
@@ -318,9 +364,12 @@ Updates the gas limit for LayerZero message execution on the destination chain. 
 | ---------- | --------- | ------------ |
 | `_gas_limit` | `uint128` | New gas limit for destination chain execution |
 
-Emits: `SetGasLimit`
+Emits: `SetGasLimit` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="L2MessengerLZ.vy" label="L2MessengerLZ.vy">
 
 ```vyper
 @external
@@ -335,11 +384,28 @@ def set_gas_limit(_gas_limit: uint128):
     log SetGasLimit(gas_limit=_gas_limit)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> L2MessengerLZ.set_gas_limit(200000)
 ```
 

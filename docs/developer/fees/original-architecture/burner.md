@@ -98,11 +98,11 @@ LP burner calls to **`StableSwap.remove_liquidity_one_coin`** to unwrap the LP t
 
 Getter method for information about the LP Token burn process.
 
-Returns: pool (`address`) of the LP token, coin (`address`) in which the LP token is withdrawn, burner (`address`) where the output token is forwarded to and i (`index`) of `coin` in the pool.
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `arg0` |  `address` | LP Token Address |
+
+Returns: pool (`address`) of the LP token, coin (`address`) in which the LP token is withdrawn, burner (`address`) where the output token is forwarded to and i (`index`) of `coin` in the pool.
 
 <SourceCode>
 
@@ -147,13 +147,13 @@ This function is only callable by the `owner` or `emergency_owner` of the contra
 
 Function to set the swap data of a LP token.
 
-Returns: true (`bool`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_lp_token` |  `address` | LP token address |
-| `_coin` |  `address` | coin address to swap the LP token to |
-| `_burner` |  `address` | burner address to forward to  |
+| `_coin` |  `address` | Coin address to swap the LP token to |
+| `_burner` |  `address` | Burner address to forward to |
+
+Returns: true (`bool`).
 
 <SourceCode>
 
@@ -269,8 +269,10 @@ For assets that can be directly swapped for a synth, the target should be set as
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_coins` |  `address[10]` | list of coins to be burned |
-| `_targets` |  `address[10]` | list of coins to be swapped for |
+| `_coins` |  `address[10]` | List of coins to be burned |
+| `_targets` |  `address[10]` | List of coins to be swapped for |
+
+Returns: true (`bool`).
 
 :::tip
 
@@ -313,22 +315,33 @@ def set_swap_for(_coins: address[10], _targets: address[10]) -> bool:
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> SynthBurner.set_swap_for(["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"], ["0x5e74C9036fb86BD7eCdcb084a0673EFc32eA31cb"])
+```
+
+
+</Example>
+
 ::::
 
 #### `add_synths`
 ::::description[`SynthBurner.add_synths(_synths: address[10]) -> bool`]
 
 
-Register synthetic assets within the burner. This function is unguarded. For each synth to be added, a call is made to Synth.currencyKey to validate the addresss and obtain the synth currency key.
+Register synthetic assets within the burner. This function is unguarded. For each synth to be added, a call is made to `Synth.currencyKey` to validate the address and obtain the synth currency key.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_synths` |  `address[10]` | list of synth tokens to register |
+| `_synths` |  `address[10]` | List of synth tokens to register |
+
+Returns: true (`bool`).
 
 :::note
 
-If you wish to set less than 10 `_coins`, fill the remaining array slots with `ZERO_ADDRESS`.    
-The address as index `n` within this list corresponds to the address at index `n` within `coins`.
+If you wish to set less than 10 `_synths`, fill the remaining array slots with `ZERO_ADDRESS`.
+The address at index `n` within this list corresponds to the address at index `n` within `_synths`.
 
 
 :::
@@ -356,6 +369,15 @@ def add_synths(_synths: address[10]) -> bool:
 
 
 </SourceCode>
+
+<Example>
+
+```shell
+>>> SynthBurner.add_synths(["0x57Ab1ec28D129707052df4dF418D58a2D46d5f51"])
+```
+
+
+</Example>
 
 ::::
 
@@ -388,6 +410,15 @@ The burn process consists of:
 
 Function to deposit all the tokens into 3pool and transfer the received 3CRV to the FeeDistributor contract.
 
+Returns: true (`bool`).
+
+:::note
+
+This is the final function to be called in the burn process, after all other steps are completed. Calling this function does not do anything if the burner has a balance of zero for DAI, USDC and USDT.
+
+
+:::
+
 <SourceCode>
 
 
@@ -417,13 +448,14 @@ def execute() -> bool:
 
 </SourceCode>
 
-:::note
+<Example>
 
-This is the final function to be called in the burn process, after all other steps are completed. Calling this function does not do anything if the burner has a balance of zero for DAI, USDC and USDT.
+```shell
+>>> UnderlyingBurner.execute()
+```
 
 
-:::
-
+</Example>
 
 ::::
 
@@ -436,10 +468,16 @@ This burner converts DAI, USDC and USDT into 3CRV by adding liquidity to the 3po
 
 Function to add the entire burner's balance of `_coin` to the 3pool.
 
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_coin` |  `ERC20` | Address of the coin being converted |
+
+Returns: true (`bool`).
+
 <SourceCode>
 
 
-```vyper 
+```vyper
 @external
 def burn(_coin: ERC20) -> bool:
     """
@@ -479,6 +517,14 @@ def _burn(_amounts: uint256[N_COINS]):
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> StableDepositBurner.burn("0xdAC17F958D2ee523a2206206994597C13D831ec7")
+```
+
+
+</Example>
 
 ::::
 
@@ -542,11 +588,11 @@ def withdraw_admin_fees():
 
 Getter for the burner contract address for `coin`.
 
-Returns: burner of a coin (`address`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `coin` |  `address` | Token Address |
+
+Returns: burner of a coin (`address`).
 
 <SourceCode>
 
@@ -561,7 +607,7 @@ burners: public(HashMap[address, address])
 <Example>
 
 ```shell
->>> GaugeController.burners("0x056fd409e1d7a124bd7017459dfea2f387b6d5cd")
+>>> PoolProxy.burners("0x056fd409e1d7a124bd7017459dfea2f387b6d5cd")
 '0xE4b65889469ad896e866331f0AB5652C1EcfB3E6'
 ```
 
@@ -584,12 +630,12 @@ This function is only callable by the `ownership_admin` of the contract.
 
 Function to set burner of `_coin` to `_burner` address.
 
-Emits: `AddBurner`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_coin` |  `address` | Token Address |
 | `_burner` |  `address` | Burner Address |
+
+Emits: `AddBurner` event.
 
 <SourceCode>
 
@@ -651,6 +697,15 @@ def _set_burner(_coin: address, _burner: address):
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> PoolProxy.set_burner("0xdAC17F958D2ee523a2206206994597C13D831ec7", "0x786B374B5eef874279f4B7b4de16940e57301A58")
+```
+
+
+</Example>
+
 ::::
 
 ### `set_many_burners`
@@ -664,14 +719,14 @@ This function is only callable by the `ownership_admin` of the contract.
 
 :::
 
-Function to set many burner for multiple coins at once. 
-
-Emits: `AddBurner`
+Function to set many burners for multiple coins at once.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_coins` |  `address[20]` | Token Addresses. The address at index `n` within this list corresponds to the address at index `n` within `coins` |
 | `_burners` |  `address[20]` | Burner Addresses. If less than 20 burners are set, the remaining array slots need to be filled with `ZERO_ADDRESS`. |
+
+Emits: `AddBurner` event.
 
 <SourceCode>
 
@@ -736,6 +791,15 @@ def set_many_burners(_coins: address[20], _burners: address[20]):
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> PoolProxy.set_many_burners(["0xdAC17F958D2ee523a2206206994597C13D831ec7"], ["0x786B374B5eef874279f4B7b4de16940e57301A58"])
+```
+
+
+</Example>
+
 ::::
 
 ### `set_burner_kill`
@@ -778,7 +842,7 @@ def set_burner_kill(_is_killed: bool):
 <Example>
 
 ```shell
->>> GaugeController.set_burner_kill("False")
+>>> PoolProxy.set_burner_kill("False")
 ```
 
 

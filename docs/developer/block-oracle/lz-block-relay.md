@@ -34,7 +34,7 @@ This section covers owner-only functions for configuring LayerZero channels, pee
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the current `owner` of the contract.
 :::
 
-Configure read functionality
+Function to configure read functionality.
 
 | Input         | Type      | Description                          |
 |--------------|-----------|--------------------------------------|
@@ -43,7 +43,12 @@ Configure read functionality
 | `_mainnet_eid`   | `uint32`  | Mainnet endpoint ID                  |
 | `_mainnet_view`  | `address` | MainnetBlockView contract address    |
 
+Emits: `PeerSet` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
 
 ```vyper
 read_enabled: public(bool)
@@ -84,8 +89,22 @@ def set_read_config(
     OApp._setPeer(_read_channel, peer)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
 ```vyper
-# OApp.vy
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
+```vyper
 event PeerSet:
     eid: uint32
     peer: bytes32
@@ -104,6 +123,9 @@ def _setPeer(_eid: uint32, _peer: bytes32):
 
     log PeerSet(eid=_eid, peer=_peer)
 ```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -132,6 +154,9 @@ Sets the BlockOracle address for this contract.
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
+
 ```vyper
 interface IBlockOracle:
     def commit_block(block_number: uint256, block_hash: bytes32) -> bool: nonpayable
@@ -150,6 +175,21 @@ def set_block_oracle(_oracle: address):
 
     self.block_oracle = IBlockOracle(_oracle)
 ```
+
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -178,6 +218,9 @@ Withdraws ETH from the contract. ETH can be accumulated from LayerZero refunds.
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
+
 ```vyper
 from snekmate.auth import ownable
 
@@ -193,6 +236,21 @@ def withdraw_eth(_amount: uint256):
     assert self.balance >= _amount, "Insufficient balance"
     send(msg.sender, _amount)
 ```
+
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -223,6 +281,9 @@ Returns: Lz Endpoint (`address`).
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
+
 ```vyper
 from ..modules.oapp_vyper.src import OApp  # main module
 
@@ -237,8 +298,10 @@ exports: (
 )
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 # LayerZero EndpointV2 interface
 interface ILayerZeroEndpointV2:
     def quote(_params: MessagingParams, _sender: address) -> MessagingFee: view
@@ -250,6 +313,9 @@ interface ILayerZeroEndpointV2:
 # The LayerZero endpoint associated with the given OApp
 endpoint: public(immutable(ILayerZeroEndpointV2))
 ```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -271,13 +337,16 @@ endpoint on Arbitrum
 
 Getter for the peer address (OApp instance) for a given endpoint ID.
 
-Returns: peer address (`bytes32`) for the given endpoint ID.
-
 | Input | Type   | Description      |
 |-------|--------|------------------|
 | `_eid`  | `uint32` | The endpoint ID. |
 
+Returns: peer address for the given endpoint ID (`bytes32`).
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
 
 ```vyper
 from ..modules.oapp_vyper.src import OApp  # main module
@@ -293,11 +362,16 @@ exports: (
 )
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 # Mapping to store peers associated with corresponding endpoints
 peers: public(HashMap[uint32, bytes32])
 ```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -321,14 +395,17 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Sets the peer address (OApp instance) for a corresponding endpoint. This establishes a trusted cross-chain communication channel.
 
-Emits: `PeerSet`
-
 | Input | Type   | Description                      |
 |-------|--------|----------------------------------|
 | `_eid`  | `uint32` | The endpoint ID.                 |
 | `_peer` | `bytes32`| The peer address (OApp instance) |
 
+Emits: `PeerSet` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
 
 ```vyper
 from ..modules.oapp_vyper.src import OApp  # main module
@@ -344,8 +421,10 @@ exports: (
 )
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 event PeerSet:
     eid: uint32
     peer: bytes32
@@ -380,6 +459,21 @@ def _setPeer(_eid: uint32, _peer: bytes32):
     log PeerSet(eid=_eid, peer=_peer)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
@@ -406,7 +500,12 @@ Function to set peers for a corresponding endpoints. This is a batched version o
 | `_eids`  | `DynArray[uint32, MAX_N_BROADCAST]` | The endpoint IDs                 |
 | `_peers` | `DynArray[address, MAX_N_BROADCAST]` | Addresses of the peers to associate |
 
+Emits: `PeerSet` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
 
 ```vyper
 from ..modules.oapp_vyper.src import OApp  # main module
@@ -435,8 +534,22 @@ def set_peers(_eids: DynArray[uint32, MAX_N_BROADCAST], _peers: DynArray[address
         OApp._setPeer(_eids[i], convert(_peers[i], bytes32))
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
 ```vyper
-# OApp.vy
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
+```vyper
 event PeerSet:
     eid: uint32
     peer: bytes32
@@ -455,6 +568,9 @@ def _setPeer(_eid: uint32, _peer: bytes32):
 
     log PeerSet(eid=_eid, peer=_peer)
 ```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -483,6 +599,9 @@ Sets the delegate address for the OApp. The delegate can manage LayerZero config
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
+
 ```vyper
 from ..modules.oapp_vyper.src import OApp  # main module
 
@@ -497,8 +616,10 @@ exports: (
 )
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 # LayerZero EndpointV2 interface
 interface ILayerZeroEndpointV2:
     def quote(_params: MessagingParams, _sender: address) -> MessagingFee: view
@@ -521,6 +642,21 @@ def setDelegate(_delegate: address):
     extcall endpoint.setDelegate(_delegate)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
@@ -538,15 +674,18 @@ def setDelegate(_delegate: address):
 
 Function to check whether an address is an approved composeMsg sender to the Endpoint.
 
-Returns: true or false (`bool`)
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_origin` | `Origin` | Struct containing of srcEid, sender and nonce  |
 | `_message` | `Bytes[MAX_MESSAGE_SIZE]` | The lzReceive payload  |
 | `_sender` | `address` |  The sender address |
 
+Returns: true or false (`bool`).
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
 
 ```vyper
 from ..modules.oapp_vyper.src import OApp  # main module
@@ -562,8 +701,10 @@ exports: (
 )
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 struct Origin:
     srcEid: uint32
     sender: bytes32
@@ -584,6 +725,9 @@ def isComposeMsgSender(
     return _sender == self
 ```
 
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
@@ -602,13 +746,16 @@ True
 
 Function to check if the path initialization is allowed based on the provided origin.
 
-Returns: true or false (`bool`)
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_origin` | `Origin` | Struct containing of srcEid, sender and nonce  |
 
+Returns: true or false (`bool`).
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
 
 ```vyper
 from ..modules.oapp_vyper.src import OApp  # main module
@@ -624,8 +771,10 @@ exports: (
 )
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 struct Origin:
     srcEid: uint32
     sender: bytes32
@@ -643,6 +792,9 @@ def allowInitializePath(_origin: Origin) -> bool:
     """
     return self.peers[_origin.srcEid] == _origin.sender
 ```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -666,14 +818,17 @@ Vyper-specific: If your app relies on ordered execution, you must change this fu
 
 Function which retrieves the next nonce for a given source endpoint and sender address. The path nonce starts from 1. If 0 is returned it means that there is NO nonce ordered enforcement. Is required by the off-chain executor to determine the OApp expects msg execution is ordered. This is also enforced by the OApp.
 
-Returns: next nonce (`uint64`)
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_srcEid` | `uint32` | The source endpoint ID.  |
 | `_sender` | `bytes32` | The sender address. |
 
+Returns: next nonce (`uint64`).
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
 
 ```vyper
 from ..modules.oapp_vyper.src import OApp  # main module
@@ -689,8 +844,10 @@ exports: (
 )
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 @external
 @pure
 def nextNonce(_srcEid: uint32, _sender: bytes32) -> uint64:
@@ -707,6 +864,9 @@ def nextNonce(_srcEid: uint32, _sender: bytes32) -> uint64:
     """
     return 0
 ```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -852,14 +1012,13 @@ Only broadcast what was received via lzRead to prevent potentially malicious has
 
 Function to broadcast the latest confirmed block hash to specified chains.
 
-Emits: `BlockHashBroadcast`
-
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_target_eids` | `DynArray[uint32, MAX_N_BROADCAST]` | List of chain IDs to broadcast to |
 | `_target_fees` | `DynArray[uint256, MAX_N_BROADCAST]` | List of fees per chain (must match _target_eids length) |
 | `_lz_receive_gas_limit` | `uint128` | Gas limit for lzReceive (same for all targets) |
+
+Emits: `BlockHashBroadcast` event.
 
 <SourceCode>
 
@@ -933,6 +1092,9 @@ This function may emit events such as block hash commit or broadcast events, dep
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
+
 ```vyper
 @payable
 @external
@@ -997,13 +1159,40 @@ def lzReceive(
         self._commit_block(block_number, block_hash)
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 struct Origin:
     srcEid: uint32
     sender: bytes32
     nonce: uint64
+
+@internal
+def _lzReceive(
+    _origin: Origin,
+    _guid: bytes32,
+    _message: Bytes[MAX_MESSAGE_SIZE],
+    _executor: address,
+    _extraData: Bytes[MAX_EXTRA_DATA_SIZE],
+):
+    """
+    @dev Entry point for receiving messages or packets from the endpoint.
+    @param _origin The origin information containing the source endpoint and sender address.
+    @param _guid The unique identifier for the received LayerZero message.
+    @param _message The payload of the received message.
+    @param _executor The address of the executor for the received message.
+    @param _extraData Additional arbitrary data provided by the corresponding executor.
+    """
+    # Verify that the sender is the endpoint
+    assert msg.sender == endpoint.address, "OApp: only endpoint"
+
+    # Verify that the message comes from a trusted peer
+    assert self._getPeerOrRevert(_origin.srcEid) == _origin.sender, "OApp: invalid sender"
 ```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -1029,14 +1218,17 @@ struct Origin:
 
 Quotes the fee required for reading a block hash from mainnet via LayerZero. Only callable if read is enabled.
 
-Returns: Fee in native tokens required for the read operation (`uint256`).
-
 | Input            | Type      | Description                                 |
 |------------------|-----------|---------------------------------------------|
 | `_read_gas_limit`| `uint128` | Gas to be provided in return message        |
 | `_value`         | `uint128` | Value to be provided in return message      |
 
+Returns: Fee in native tokens required for the read operation (`uint256`).
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
 
 ```vyper
 @external
@@ -1069,8 +1261,10 @@ def quote_read_fee(
     ).nativeFee
 ```
 
+</TabItem>
+<TabItem value="OptionsBuilder.vy" label="OptionsBuilder.vy (LayerZero)">
+
 ```vyper
-# OptionsBuilder.vy
 @internal
 @pure
 def newOptions() -> Bytes[MAX_OPTIONS_TOTAL_SIZE]:
@@ -1109,8 +1303,10 @@ def addExecutorOption(
     )
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 interface ILayerZeroEndpointV2:
     def quote(_params: MessagingParams, _sender: address) -> MessagingFee: view
     def send(_params: MessagingParams, _refundAddress: address) -> MessagingReceipt: payable
@@ -1165,6 +1361,9 @@ def _getPeerOrRevert(_eid: uint32) -> bytes32:
     return peer
 ```
 
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
@@ -1183,14 +1382,17 @@ def _getPeerOrRevert(_eid: uint32) -> bytes32:
 
 Estimates the LayerZero fee required to broadcast a block hash to each specified target chain. Useful for integrators to determine the cost of broadcasting to multiple chains before submitting a transaction. Only targets with a configured peer will return a nonzero fee.
 
-Returns: An array of fees in native tokens (`DynArray[uint256, MAX_N_BROADCAST]`), one per target chain, with zero for any target not configured.
-
 | Input | Type | Description |
 |------|------|-------------|
 | `_target_eids`   | `DynArray[uint32, MAX_N_BROADCAST]` | List of target chain endpoint IDs to quote broadcast fees for. |
 | `_lz_receive_gas_limit` | `uint128` | Gas limit to be provided for the lzReceive call on each target.     |
 
+Returns: an array of fees in native tokens, one per target chain, with zero for any target not configured (`DynArray[uint256, MAX_N_BROADCAST]`).
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="LZBlockRelay.vy" label="LZBlockRelay.vy">
 
 ```vyper
 @external
@@ -1228,8 +1430,10 @@ def quote_broadcast_fees(
     return fees
 ```
 
+</TabItem>
+<TabItem value="OptionsBuilder.vy" label="OptionsBuilder.vy (LayerZero)">
+
 ```vyper
-# OptionsBuilder.vy
 from . import VyperConstants as constants
 
 MAX_OPTIONS_TOTAL_SIZE: constant(uint256) = constants.MAX_OPTIONS_TOTAL_SIZE
@@ -1273,8 +1477,10 @@ def addExecutorOption(
     )
 ```
 
+</TabItem>
+<TabItem value="OApp.vy" label="OApp.vy (LayerZero)">
+
 ```vyper
-# OApp.vy
 interface ILayerZeroEndpointV2:
     def quote(_params: MessagingParams, _sender: address) -> MessagingFee: view
     def send(_params: MessagingParams, _refundAddress: address) -> MessagingReceipt: payable
@@ -1328,6 +1534,9 @@ def _getPeerOrRevert(_eid: uint32) -> bytes32:
     assert peer != empty(bytes32), "OApp: no peer"
     return peer
 ```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -1431,7 +1640,7 @@ mainnet_eid: public(uint32)
 
 Getter for the `MainnetBlockViewer` contract.
 
-Returns: `MainnetBlockViewer` (`address`).
+Returns: MainnetBlockView contract address (`address`).
 
 <SourceCode>
 
@@ -1457,7 +1666,7 @@ mainnet_block_view: public(address)
 
 Getter for the `BlockOracle` contract.
 
-Returns: `BlockOracle` (`address`).
+Returns: BlockOracle contract address (`address`).
 
 <SourceCode>
 

@@ -10,6 +10,20 @@ The source code for the `VaultMessengerLZ.vy` contract can be found on [GitHub](
 
 The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](/pdf/audits/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
 
+The contract is deployed on :logos-ethereum: Ethereum for the following L2 routes:
+
+- :logos-arbitrum: Arbitrum: [`0x15945526b5c32d963391343e9bc080838fe3e6d9`](https://etherscan.io/address/0x15945526b5c32d963391343e9bc080838fe3e6d9)
+- :logos-optimism: Optimism: [`0x4a10d0ff9e394f3a3dcdb297973db40ce304b44f`](https://etherscan.io/address/0x4a10d0ff9e394f3a3dcdb297973db40ce304b44f)
+- :logos-fraxtal: Fraxtal: [`0xec0e1c5cc900d87b1fa44584310c43f82f75870f`](https://etherscan.io/address/0xec0e1c5cc900d87b1fa44584310c43f82f75870f)
+
+<ContractABI>
+
+```json
+[{"anonymous":false,"inputs":[{"components":[{"name":"srcEid","type":"uint32"},{"name":"sender","type":"bytes32"},{"name":"nonce","type":"uint64"}],"indexed":false,"name":"origin","type":"tuple"},{"indexed":false,"name":"guid","type":"bytes32"},{"indexed":false,"name":"message","type":"bytes"}],"name":"Receive","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"vault","type":"address"}],"name":"SetVault","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previous_owner","type":"address"},{"indexed":true,"name":"new_owner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"eid","type":"uint32"},{"indexed":false,"name":"peer","type":"bytes32"}],"name":"PeerSet","type":"event"},{"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"new_owner","type":"address"}],"name":"transfer_ownership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"renounce_ownership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"endpoint","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"uint32"}],"name":"peers","outputs":[{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_eid","type":"uint32"},{"name":"_peer","type":"bytes32"}],"name":"setPeer","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_delegate","type":"address"}],"name":"setDelegate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"components":[{"name":"srcEid","type":"uint32"},{"name":"sender","type":"bytes32"},{"name":"nonce","type":"uint64"}],"name":"_origin","type":"tuple"},{"name":"_message","type":"bytes"},{"name":"_sender","type":"address"}],"name":"isComposeMsgSender","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"components":[{"name":"srcEid","type":"uint32"},{"name":"sender","type":"bytes32"},{"name":"nonce","type":"uint64"}],"name":"_origin","type":"tuple"}],"name":"allowInitializePath","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_srcEid","type":"uint32"},{"name":"_sender","type":"bytes32"}],"name":"nextNonce","outputs":[{"name":"","type":"uint64"}],"stateMutability":"pure","type":"function"},{"inputs":[{"name":"_vault","type":"address"}],"name":"set_vault","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"components":[{"name":"srcEid","type":"uint32"},{"name":"sender","type":"bytes32"},{"name":"nonce","type":"uint64"}],"name":"_origin","type":"tuple"},{"name":"_guid","type":"bytes32"},{"name":"_message","type":"bytes"},{"name":"_executor","type":"address"},{"name":"_extraData","type":"bytes"}],"name":"lzReceive","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"vault","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_endpoint","type":"address"}],"outputs":[],"stateMutability":"nonpayable","type":"constructor"}]
+```
+
+</ContractABI>
+
 :::
 
 ---
@@ -31,7 +45,7 @@ Receives LayerZero messages originating from L2 networks and processes fast brid
 | `_executor` | `address` | Address of the executor for the message |
 | `_extraData` | `Bytes[OApp.MAX_EXTRA_DATA_SIZE]` | Additional data passed by the executor |
 
-Emits: `Receive`
+Emits: `Receive` event.
 
 <SourceCode>
 
@@ -80,7 +94,7 @@ def lzReceive(
 
 <Example>
 
-```python
+```shell
 >>> VaultMessengerLZ.lzReceive(origin, guid, message, executor, extra_data)
 ```
 
@@ -111,10 +125,14 @@ vault: public(IVault)
 
 <Example>
 
-```python
->>> VaultMessengerLZ.vault()
-'0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D'
-```
+This example returns the vault address on the Arbitrum route messenger. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x15945526b5c32d963391343e9bc080838fe3e6d9"
+  abi={["function vault() view returns (address)"]}
+  method="vault"
+  contractName="VaultMessengerLZ"
+/>
 
 </Example>
 
@@ -129,9 +147,9 @@ The VaultMessengerLZ contract includes administrative functions that allow the c
 ### `set_vault`
 ::::description[`VaultMessengerLZ.set_vault(_vault: IVault)`]
 
-:::guard[Guarded Method]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
-This function is only callable by the `owner` of the contract.
+This contract makes use of a Snekmate module to handle ownership. This specific function is only callable by the `owner` of the contract.
 
 :::
 
@@ -141,9 +159,12 @@ Updates the address of the FastBridgeVault contract that receives mint commands.
 | ---------- | --------- | ------------ |
 | `_vault` | `IVault` | New FastBridgeVault contract address |
 
-Emits: `SetVault`
+Emits: `SetVault` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="VaultMessengerLZ.vy" label="VaultMessengerLZ.vy">
 
 ```vyper
 @external
@@ -159,11 +180,28 @@ def set_vault(_vault: IVault):
     log SetVault(vault=_vault)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> VaultMessengerLZ.set_vault('0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D')
 ```
 

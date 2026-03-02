@@ -7,6 +7,17 @@ The `AddressProvider` serves as the **entry point contract for Curve's various r
 
 Source code of the `AddressProvider.vy` contract can be found on [GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/AddressProviderNG.vy). A list of all deployed contracts can be found [here](../deployments.md).
 
+The contract is deployed on :logos-ethereum: Ethereum at [`0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98`](https://etherscan.io/address/0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98).
+
+<ContractABI>
+
+
+```json
+[{"name":"NewEntry","inputs":[{"name":"id","type":"uint256","indexed":true},{"name":"addr","type":"address","indexed":false},{"name":"description","type":"string","indexed":false}],"anonymous":false,"type":"event"},{"name":"EntryModified","inputs":[{"name":"id","type":"uint256","indexed":true},{"name":"version","type":"uint256","indexed":false}],"anonymous":false,"type":"event"},{"name":"EntryRemoved","inputs":[{"name":"id","type":"uint256","indexed":true}],"anonymous":false,"type":"event"},{"name":"CommitNewAdmin","inputs":[{"name":"admin","type":"address","indexed":true}],"anonymous":false,"type":"event"},{"name":"NewAdmin","inputs":[{"name":"admin","type":"address","indexed":true}],"anonymous":false,"type":"event"},{"stateMutability":"nonpayable","type":"constructor","inputs":[],"outputs":[]},{"stateMutability":"view","type":"function","name":"ids","inputs":[],"outputs":[{"name":"","type":"uint256[]"}]},{"stateMutability":"view","type":"function","name":"get_address","inputs":[{"name":"_id","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"nonpayable","type":"function","name":"add_new_id","inputs":[{"name":"_id","type":"uint256"},{"name":"_address","type":"address"},{"name":"_description","type":"string"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"add_new_ids","inputs":[{"name":"_ids","type":"uint256[]"},{"name":"_addresses","type":"address[]"},{"name":"_descriptions","type":"string[]"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"update_id","inputs":[{"name":"_id","type":"uint256"},{"name":"_new_address","type":"address"},{"name":"_new_description","type":"string"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"update_address","inputs":[{"name":"_id","type":"uint256"},{"name":"_address","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"update_description","inputs":[{"name":"_id","type":"uint256"},{"name":"_description","type":"string"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"remove_id","inputs":[{"name":"_id","type":"uint256"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"remove_ids","inputs":[{"name":"_ids","type":"uint256[]"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"commit_transfer_ownership","inputs":[{"name":"_new_admin","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"apply_transfer_ownership","inputs":[],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"revert_transfer_ownership","inputs":[],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"admin","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"future_admin","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"num_entries","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"check_id_exists","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"get_id_info","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"tuple","components":[{"name":"addr","type":"address"},{"name":"description","type":"string"},{"name":"version","type":"uint256"},{"name":"last_modified","type":"uint256"}]}]}]
+```
+
+</ContractABI>
+
 
 :::
 
@@ -91,10 +102,7 @@ def ids() -> DynArray[uint256, 1000]:
 
 This method returns all populated IDs.
 
-```shell
->>> AddressProvider.ids()
-0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 19, 21, 22, 23, 25, 18
-```
+<ContractCall address="0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98" abi={["function ids() view returns (uint256[])"]} method="ids" contractName="AddressProvider" />
 
 
 </Example>
@@ -108,11 +116,11 @@ This method returns all populated IDs.
 
 Getter function to retrieve information about a specific ID.
 
-Returns: `AddressInfo` struct containing the addr (`address`), description (`String[256]`), version (`uint256`) and last_modified (`uint256`). 
-
 | Input  | Type      | Description                    |
 | ------ | --------- | ------------------------------ |
 | `arg0` | `uint256` | ID to get the information for |
+
+Returns: `AddressInfo` struct containing the addr (`address`), description (`String[256]`), version (`uint256`) and last_modified (`uint256`).
 
 <SourceCode>
 
@@ -139,13 +147,7 @@ get_id_info: public(HashMap[uint256, AddressInfo])
 
 This method returns the address of the contract, the description, the ID version (which is incremented by 1 each time the ID is updated), and the timestamp of the last modification. When calling the function for an unpopulated ID, it returns an empty `AddressInfo` struct.
 
-```shell
->>> AddressProvider.get_id_info(0)
-'0x90E00ACe148ca3b23Ac1bC8C240C2a7Dd9c2d7f5, Stableswap Custom Pool Registry, 1, 1712655599'
-
->>> AddressProvider.get_id_info(9)
-'0x0000000000000000000000000000000000000000, '', 0, 0'
-```
+<ContractCall address="0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98" abi={["function get_id_info(uint256 arg0) view returns (tuple(address addr, string description, uint256 version, uint256 last_modified))"]} method="get_id_info" args={[0]} labels={["arg0"]} contractName="AddressProvider" />
 
 
 </Example>
@@ -159,11 +161,11 @@ This method returns the address of the contract, the description, the ID version
 
 Getter for the contract address of an ID.
 
-Returns: contract (`address`).
-
 | Input  | Type      | Description                        |
 | ------ | --------- | ---------------------------------- |
 | `_id` | `uint256` | ID to get the contract address for |
+
+Returns: contract (`address`).
 
 <SourceCode>
 
@@ -201,10 +203,7 @@ def get_address(_id: uint256) -> address:
 
 This method returns the address of an ID.
 
-```shell
->>> AddressProvider.get_address(0)
-'0x90E00ACe148ca3b23Ac1bC8C240C2a7Dd9c2d7f5'
-```
+<ContractCall address="0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98" abi={["function get_address(uint256 _id) view returns (address)"]} method="get_address" args={[0]} labels={["_id"]} contractName="AddressProvider" />
 
 
 </Example>
@@ -218,11 +217,11 @@ This method returns the address of an ID.
 
 Function to check if an ID exists.
 
-Returns: true or false (`bool`).
-
 | Input  | Type      | Description |
 | ------ | --------- | ----------- |
 | `arg0` | `uint256` | ID to check |
+
+Returns: true or false (`bool`).
 
 <SourceCode>
 
@@ -243,13 +242,7 @@ check_id_exists: public(HashMap[uint256, bool])
 
 This method checks if a certain ID exists.
 
-```shell
->>> AddressProvider.check_id_exists(0)
-'true'
-
->>> AddressProvider.check_id_exists(9)
-'false'
-```
+<ContractCall address="0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98" abi={["function check_id_exists(uint256 arg0) view returns (bool)"]} method="check_id_exists" args={[0]} labels={["arg0"]} contractName="AddressProvider" />
 
 
 </Example>
@@ -284,10 +277,7 @@ num_entries: public(uint256)
 
 This method returns the total number of IDs added to the `AddressProvider`.
 
-```shell
->>> AddressProvider.num_entries()
-20
-```
+<ContractCall address="0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98" abi={["function num_entries() view returns (uint256)"]} method="num_entries" contractName="AddressProvider" />
 
 
 </Example>
@@ -324,13 +314,13 @@ This function can only be called by the `admin` of the contract.
 
 Function to update the address and description of an ID.
 
-Emits: `EntryModified`
-
 | Input              | Type         | Description     |
 | ------------------ | ------------ | --------------- |
 | `_id`              | `uint256`    | ID to update    |
 | `_new_address`     | `address`    | New address     |
 | `_new_description` | `String[64]` | New description |
+
+Emits: `EntryModified` event.
 
 <SourceCode>
 
@@ -407,12 +397,12 @@ This function can only be called by the `admin` of the contract.
 
 Function to update the address of an ID.
 
-Emits: `EntryModified`
-
 | Input      | Type      | Description                  |
 | ---------- | --------- | ---------------------------- |
 | `_id`      | `uint256` | ID to change the address for |
 | `_address` | `address` | New address to change it to  |
+
+Emits: `EntryModified` event.
 
 <SourceCode>
 
@@ -486,12 +476,12 @@ This function can only be called by the `admin` of the contract.
 
 Function to update the description of an ID.
 
-Emits: `EntryModified`
-
-| Input          | Type          | Description                      |    
+| Input          | Type          | Description                      |
 | -------------- | ------------- | -------------------------------- |
 | `_id`          | `uint256`     | ID to change the description for |
 | `_description` | `String[256]` | New description                  |
+
+Emits: `EntryModified` event.
 
 <SourceCode>
 
@@ -550,15 +540,15 @@ This function can only be called by the `admin` of the contract.
 
 :::
 
-Function to add a new registry item to the AddressProvider. 
-
-Emits: `NewEntry`
+Function to add a new registry item to the AddressProvider.
 
 | Input          | Type         | Description                                     |
 | -------------- | ------------ | ----------------------------------------------- |
 | `_id`          | `uint256`    | ID to add; Reverts if ID number is already used |
 | `_address`     | `address`    | New address                                     |
 | `_description` | `String[64]` | New description                                 |
+
+Emits: `NewEntry` event.
 
 <SourceCode>
 
@@ -633,13 +623,13 @@ This function can only be called by the `admin` of the contract.
 
 Function to add multiple new registry items to the AddressProvider at once.
 
-Emits: `NewEntry`
-
 | Input           | Type                       | Description                                      |
 | --------------- | -------------------------- | ------------------------------------------------ |
 | `_ids`          | `DynArray[uint256, 25]`    | IDs to add; Reverts if ID number is already used |
 | `_addresses`    | `DynArray[address, 25]`    | ID addresses                                     |
 | `_descriptions` | `DynArray[String[64], 25]` | ID descriptions                                  |
+
+Emits: `NewEntry` event.
 
 <SourceCode>
 
@@ -723,13 +713,13 @@ This function can only be called by the `admin` of the contract.
 
 Function to remove a registry item from the AddressProvider.
 
-Returns: true (`bool`).
-
-Emits: `EntryRemoved`
-
 | Input | Type      | Description  |
 | ----- | --------- | ------------ |
 | `_id` | `uint256` | ID to remove |
+
+Returns: true (`bool`).
+
+Emits: `EntryRemoved` event.
 
 <SourceCode>
 
@@ -793,13 +783,13 @@ This function can only be called by the `admin` of the contract.
 
 Function to remove multiple registry items from the AddressProvider at once.
 
-Returns: true (`bool`).
-
-Emits: `EntryRemoved`
-
 | Input  | Type                    | Description   |
 | ------ | ----------------------- | ------------- |
 | `_ids` | `DynArray[uint256, 20]` | IDs to remove |
+
+Returns: true (`bool`).
+
+Emits: `EntryRemoved` event.
 
 <SourceCode>
 
@@ -890,10 +880,7 @@ def __init__():
 <Example>
 
 
-```shell
->>> AddressProvider.admin()
-'0x2d12D0907A388811e3AA855A550F959501d303EE'
-```
+<ContractCall address="0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98" abi={["function admin() view returns (address)"]} method="admin" contractName="AddressProvider" />
 
 
 </Example>
@@ -926,10 +913,7 @@ future_admin: public(address)
 <Example>
 
 
-```shell
->>> AddressProvider.future_admin()
-'0x0000000000000000000000000000000000000000'
-```
+<ContractCall address="0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98" abi={["function future_admin() view returns (address)"]} method="future_admin" contractName="AddressProvider" />
 
 
 </Example>
@@ -950,13 +934,13 @@ This function can only be called by the `admin` of the contract.
 
 Function to initiate a transfer of contract ownership.
 
-Returns: true (`bool`).
-
-Emits: `CommitNewAdmin`
-
-| Input        | Type      | Description                          |    
+| Input        | Type      | Description                          |
 | ------------ | --------- | ------------------------------------ |
 | `_new_admin` | `address` | Address to transfer the ownership to |
+
+Returns: true (`bool`).
+
+Emits: `CommitNewAdmin` event.
 
 <SourceCode>
 
@@ -1007,7 +991,7 @@ Function to finalize a transfer of contract ownership.
 
 Returns: true (`bool`).
 
-Emits: `NewAdmin`
+Emits: `NewAdmin` event.
 
 <SourceCode>
 

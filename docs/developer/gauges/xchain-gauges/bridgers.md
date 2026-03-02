@@ -3,7 +3,7 @@
 
 Bridger wrappers are contracts used to transmit `ERC-20` tokens and especially `CRV` emissions across chains. Due to the increasing number of networks to which Curve deploys, bridge wrappers adhere to a specific interface documented below and allow for a modular bridging system.
 
-:::vyper[Bridgers.vy]
+:::vyper[`Bridgers.vy`]
 
 The source code for the various `Bridger Wrappers` contracts can be found on [ GitHub](https://github.com/curvefi/curve-xchain-factory/tree/master/contracts/bridgers). The code varies slightly to adapt to different chain-specific implementations.
 
@@ -65,7 +65,7 @@ def cost() -> uint256:
 
 This example returns the cost of bridging denominated in `ETH` with a precision of 18 decimals.
 
-```py
+```shell
 >>> Bridger.cost()
 2000000000000000    # 0.002 ETH
 ```
@@ -161,7 +161,7 @@ def bridge(_token: address, _to: address, _amount: uint256):
 
 This example bridges 10,000 `CRV` to the address `0x1234567890123456789012345678901234567890` on Arbitrum.
 
-```py
+```shell
 >>> Bridger.bridge('0xD533a949740bb3306d119CC777fa900bA034cd52', '0x1234567890123456789012345678901234567890', 10000000000000000000000)
 ```
 
@@ -176,11 +176,11 @@ This example bridges 10,000 `CRV` to the address `0x1234567890123456789012345678
 
 Function to check if the bridger contract has been approved by the `RootGauge`.
 
-Returns: `True` if the bridger has been approved by the `RootGauge`, `False` otherwise (`bool`).
-
 | Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_account` | `address` | The address of the bridger contract to check |
+
+Returns: `True` if the bridger has been approved by the `RootGauge`, `False` otherwise (`bool`).
 
 
 <SourceCode>
@@ -203,7 +203,7 @@ def check(_account: address) -> bool:
 
 <Example>
 
-```py
+```shell
 >>> Bridger.check('0x1234567890123456789012345678901234567890')
 True
 ```

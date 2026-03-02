@@ -39,14 +39,14 @@ Approval may only be from `zero -> nonzero` or from `nonzero -> zero` in order t
 
 Function to approve `_spender` to transfer `_value` tokens on behalf of `msg.sender`.
 
-Returns: true (`bool`).
-
-Emits: `Approval` event.
-
 | Input      | Type      | Description       |
 | ---------- | --------- | ----------------- |
 | `_spender` | `address` | Spender address   |
 | `_value`   | `uint256` | Amount to approve |
+
+Returns: true (`bool`).
+
+Emits: `Approval` event.
 
 <SourceCode>
 
@@ -97,12 +97,12 @@ This example approves `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` to transfer 1
 
 Getter method to check the amount of tokens that `_owner` has allowed `_spender` to use.
 
-Returns: amount of tokens (`uint256`) that `_owner` has allowed `_spender` to use.
-
 | Input      | Type      | Description     |
-|------------|-----------|---------------- |
+| ---------- | --------- | --------------- |
 | `_owner`   | `address` | Owner address   |
 | `_spender` | `address` | Spender address |
+
+Returns: amount of tokens (`uint256`) that `_owner` has allowed `_spender` to use.
 
 <SourceCode>
 
@@ -125,12 +125,16 @@ def allowance(_owner : address, _spender : address) -> uint256:
 
 <Example>
 
-This example returns the amount of CRV tokens that `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` is allowed to spend on behalf of `0x7a16fF8270133F063aAb6C9977183D9e72835428`.
+This example returns the amount of CRV tokens that a spender is allowed to spend on behalf of an owner. Enter addresses and click **Query** to fetch the value live from the blockchain.
 
-```shell
->>> CRV.allowance('0x7a16fF8270133F063aAb6C9977183D9e72835428', '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
-0
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function allowance(address, address) view returns (uint256)"]}
+  method="allowance"
+  args={["0x7a16fF8270133F063aAb6C9977183D9e72835428", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"]}
+  labels={["address", "address"]}
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -152,14 +156,14 @@ Additionally, transfers to `ZERO_ADDRESS` are not allowed.
 
 Function to transfer `_value` tokens from `msg.sender` to `_to`.
 
-Returns: true (`bool`).
-
-Emits: `Transfer` event.
-
 | Input    | Type      | Description                    |
 | -------- | --------- | ------------------------------ |
 | `_to`    | `address` | Receiver address of the tokens |
 | `_value` | `uint256` | Amount of tokens to transfer   |
+
+Returns: true (`bool`).
+
+Emits: `Transfer` event.
 
 <SourceCode>
 
@@ -219,15 +223,15 @@ Additionally, transfers to `ZERO_ADDRESS` are not allowed.
 
 Function to transfer `_value` tokens from `_from` to `_to`.
 
-Returns: true (`bool`).
-
-Emits: `Transfer` event.
-
 | Input    | Type      | Description                    |
 | -------- | --------- | ------------------------------ |
 | `_from`  | `address` | Address to send tokens from    |
 | `_to`    | `address` | Receiver address of the tokens |
 | `_value` | `uint256` | Amount of tokens to transfer   |
+
+Returns: true (`bool`).
+
+Emits: `Transfer` event.
 
 <SourceCode>
 
@@ -318,12 +322,14 @@ minter: public(address)
 
 <Example>
 
-This example returns the minter contract address.
+This example returns the minter contract address. The value is fetched live from the blockchain.
 
-```shell
->>> CRV.minter()
-'0xd061D61a4d941c39E5453435B6345Dc261C2fcE0'
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function minter() view returns (address)"]}
+  method="minter"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -343,14 +349,14 @@ This function is only callable by the `Minter` contract.
 
 Function to mint `_value` tokens and assign them to `_to`.
 
-Returns: true (`bool`).
-
-Emits: `Transfer` event.
-
 | Input    | Type      | Description                   |
 | -------- | --------- | ----------------------------- |
 | `_to`    | `address` | Receiver of the minted tokens |
 | `_value` | `uint256` | Amount to mint                |
+
+Returns: true (`bool`).
+
+Emits: `Transfer` event.
 
 <SourceCode>
 
@@ -411,12 +417,12 @@ This example mints 1 CRV token to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`.
 
 Getter for the mintable supply between `start` and `end` timestamps. The value is dependent on the current emission `rate` of the token.
 
-Returns: mintable tokens (`uint256`).
-
 | Input   | Type      | Description     |
-|-------- | --------- | --------------- |
+| ------- | --------- | --------------- |
 | `start` | `uint256` | Start timestamp |
 | `end`   | `uint256` | End timestamp   |
+
+Returns: mintable tokens (`uint256`).
 
 <SourceCode>
 
@@ -470,12 +476,16 @@ def mintable_in_timeframe(start: uint256, end: uint256) -> uint256:
 
 <Example>
 
-This example returns the mintable CRV supply between two timestamps (`1704067200` to `1704153600`).
+This example returns the mintable CRV supply between two timestamps. Enter start and end timestamps and click **Query** to fetch the value live from the blockchain.
 
-```shell
->>> CRV.mintable_in_timeframe(1704067200, 1704153600)
-573744014880952380952380
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function mintable_in_timeframe(uint256, uint256) view returns (uint256)"]}
+  method="mintable_in_timeframe"
+  args={["1704067200", "1704153600"]}
+  labels={["uint256", "uint256"]}
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -488,13 +498,13 @@ This example returns the mintable CRV supply between two timestamps (`1704067200
 
 Function to burn `_value` tokens of the function caller by sending them to `ZERO_ADDRESS`.
 
-Returns: true (`bool`).
-
-Emits: `Transfer` event.
-
 | Input    | Type      | Description              |
 | -------- | --------- | ------------------------ |
 | `_value` | `uint256` | Amount of tokens to burn |
+
+Returns: true (`bool`).
+
+Emits: `Transfer` event.
 
 <SourceCode>
 
@@ -899,12 +909,14 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 <Example>
 
-This example returns the current admin of the CRV token contract.
+This example returns the current admin of the CRV token contract. The value is fetched live from the blockchain.
 
-```shell
->>> CRV.admin()
-'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function admin() view returns (address)"]}
+  method="admin"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -924,11 +936,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to change the admin of the contract.
 
-Emits: `SetAdmin` event.
-
 | Input    | Type      | Description       |
 | -------- | --------- | ----------------- |
-| `_admin` | `address` | New Admin Address |
+| `_admin` | `address` | New admin address |
+
+Emits: `SetAdmin` event.
 
 <SourceCode>
 
@@ -996,12 +1008,14 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 <Example>
 
-This example returns the name of the CRV token.
+This example returns the name of the CRV token. The value is fetched live from the blockchain.
 
-```shell
->>> CRV.name()
-'Curve DAO Token'
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function name() view returns (string)"]}
+  method="name"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -1040,12 +1054,14 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 <Example>
 
-This example returns the symbol of the CRV token.
+This example returns the symbol of the CRV token. The value is fetched live from the blockchain.
 
-```shell
->>> CRV.symbol()
-'CRV'
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function symbol() view returns (string)"]}
+  method="symbol"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -1108,13 +1124,6 @@ This example changes the name and symbol of the CRV token.
 ::::description[`CRV.set_minter(_minter: address)`]
 
 
-:::warning[Changing the `minter` contract is not possible anymore!]
-
-This function was only utilized during the initial deployment of the Curve DAO Token. The code permits setting the `minter` exclusively when the current minter is `ZERO_ADDRESS`, a condition met solely at the time of deployment. Consequently, the `minter` variable could only be set once and cannot be changed thereafter.
-
-
-:::
-
 :::guard[Guarded Method]
 
 This function is only callable by the `admin` of the contract.
@@ -1122,13 +1131,20 @@ This function is only callable by the `admin` of the contract.
 
 :::
 
-Function to set the minter contract for the token.
+:::warning[Changing the `minter` contract is not possible anymore!]
 
-Emits: `SetMinter` event.
+This function was only utilized during the initial deployment of the Curve DAO Token. The code permits setting the `minter` exclusively when the current minter is `ZERO_ADDRESS`, a condition met solely at the time of deployment. Consequently, the `minter` variable could only be set once and cannot be changed thereafter.
+
+
+:::
+
+Function to set the minter contract for the token.
 
 | Input     | Type      | Description             |
 | --------- | --------- | ----------------------- |
 | `_minter` | `address` | Minter contract address |
+
+Emits: `SetMinter` event.
 
 <SourceCode>
 
@@ -1279,12 +1295,14 @@ def __init__(_name: String[64], _symbol: String[32], _decimals: uint256):
 
 <Example>
 
-This example returns the number of decimals of the CRV token.
+This example returns the number of decimals of the CRV token. The value is fetched live from the blockchain.
 
-```shell
->>> CRV.decimals()
-18
-```
+<ContractCall
+  address="0xD533a949740bb3306d119CC777fa900bA034cd52"
+  abi={["function decimals() view returns (uint256)"]}
+  method="decimals"
+  contractName="CRV"
+/>
 
 </Example>
 
@@ -1297,11 +1315,11 @@ This example returns the number of decimals of the CRV token.
 
 Getter for the CRV token balance of a specific address.
 
-Returns: balance (`uint256`).
-
 | Input  | Type      | Description                     |
 | ------ | --------- | ------------------------------- |
 | `arg0` | `address` | Wallet to check CRV balance for |
+
+Returns: balance (`uint256`).
 
 <SourceCode>
 

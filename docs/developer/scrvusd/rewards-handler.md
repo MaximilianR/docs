@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # RewardsHandler
 
 The `RewardsHandler` contract manages the distribution of crvUSD rewards to `Savings crvUSD (scrvUSD)`. The contract takes snapshots of the ratio of crvUSD deposited into the Vault relative to the total circulating supply of crvUSD to calculate a time-weighted average of this ratio to determine the amount of rewards to request from the `FeeSplitter`.
@@ -733,6 +736,9 @@ Emits: `TWAWindowUpdated` event.
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="RewardsHandler.vy" label="RewardsHandler.vy">
+
 ```vyper
 from snekmate.auth import access_control
 
@@ -760,6 +766,23 @@ def set_twa_window(_twa_window: uint256):
     access_control._check_role(RATE_MANAGER, msg.sender)
     twa._set_twa_window(_twa_window)
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -800,6 +823,9 @@ Emits: `SnapshotIntervalUpdated` event.
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="RewardsHandler.vy" label="RewardsHandler.vy">
+
 ```vyper
 from snekmate.auth import access_control
 
@@ -827,6 +853,23 @@ def set_twa_snapshot_dt(_min_snapshot_dt_seconds: uint256):
     access_control._check_role(RATE_MANAGER, msg.sender)
     twa._set_snapshot_dt(_min_snapshot_dt_seconds)
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -867,6 +910,9 @@ Emits: `UpdateProfitMaxUnlockTime` and `StrategyReported` events from the `Vault
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="RewardsHandler.vy" label="RewardsHandler.vy">
+
 ```vyper
 from snekmate.auth import access_control
 
@@ -904,6 +950,23 @@ def set_distribution_time(new_distribution_time: uint256):
     # enact the changes
     extcall vault.process_report(vault.address)
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -1011,6 +1074,9 @@ Function to set the minimum weight that the vault will ask for.
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="RewardsHandler.vy" label="RewardsHandler.vy">
+
 ```vyper
 from snekmate.auth import access_control
 
@@ -1052,6 +1118,23 @@ def _set_minimum_weight(new_minimum_weight: uint256):
     log MinimumWeightUpdated(new_minimum_weight)
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
@@ -1087,6 +1170,9 @@ Emits: `ScalingFactorUpdated` event.
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="RewardsHandler.vy" label="RewardsHandler.vy">
+
 ```vyper
 event ScalingFactorUpdated:
     new_scaling_factor: uint256
@@ -1109,6 +1195,23 @@ def _set_scaling_factor(new_scaling_factor: uint256):
 
     log ScalingFactorUpdated(new_scaling_factor)
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -1327,6 +1430,9 @@ Function to recover funds accidently sent to the contract. This function can not
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="RewardsHandler.vy" label="RewardsHandler.vy">
+
 ```vyper
 from ethereum.ercs import IERC20
 
@@ -1364,6 +1470,23 @@ def recover_erc20(token: IERC20, receiver: address):
 
     assert extcall token.transfer(receiver, balance_to_recover, default_return_value=True)
 ```
+
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 

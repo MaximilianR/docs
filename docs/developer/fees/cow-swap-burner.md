@@ -14,6 +14,15 @@ The `CowSwapBurner` is only deployed on Ethereum and Gnosis so far, as CowSwap i
 
 [^1]: CowSwap recently deployed on Arbitrum. In the future, a new burner contract will be deployed on Arbitrum as well.
 
+<ContractABI>
+
+
+```json
+[{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"_fee_collector","type":"address"},{"name":"_composable_cow","type":"address"},{"name":"_vault_relayer","type":"address"},{"name":"_target_threshold","type":"uint256"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"burn","inputs":[{"name":"_coins","type":"address[]"},{"name":"_receiver","type":"address"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"get_current_order","inputs":[],"outputs":[{"name":"","type":"tuple","components":[{"name":"sellToken","type":"address"},{"name":"buyToken","type":"address"},{"name":"receiver","type":"address"},{"name":"sellAmount","type":"uint256"},{"name":"buyAmount","type":"uint256"},{"name":"validTo","type":"uint32"},{"name":"appData","type":"bytes32"},{"name":"feeAmount","type":"uint256"},{"name":"kind","type":"bytes32"},{"name":"partiallyFillable","type":"bool"},{"name":"sellTokenBalance","type":"bytes32"},{"name":"buyTokenBalance","type":"bytes32"}]}]},{"stateMutability":"view","type":"function","name":"get_current_order","inputs":[{"name":"sell_token","type":"address"}],"outputs":[{"name":"","type":"tuple","components":[{"name":"sellToken","type":"address"},{"name":"buyToken","type":"address"},{"name":"receiver","type":"address"},{"name":"sellAmount","type":"uint256"},{"name":"buyAmount","type":"uint256"},{"name":"validTo","type":"uint32"},{"name":"appData","type":"bytes32"},{"name":"feeAmount","type":"uint256"},{"name":"kind","type":"bytes32"},{"name":"partiallyFillable","type":"bool"},{"name":"sellTokenBalance","type":"bytes32"},{"name":"buyTokenBalance","type":"bytes32"}]}]},{"stateMutability":"view","type":"function","name":"getTradeableOrder","inputs":[{"name":"_owner","type":"address"},{"name":"_sender","type":"address"},{"name":"_ctx","type":"bytes32"},{"name":"_static_input","type":"bytes"},{"name":"_offchain_input","type":"bytes"}],"outputs":[{"name":"","type":"tuple","components":[{"name":"sellToken","type":"address"},{"name":"buyToken","type":"address"},{"name":"receiver","type":"address"},{"name":"sellAmount","type":"uint256"},{"name":"buyAmount","type":"uint256"},{"name":"validTo","type":"uint32"},{"name":"appData","type":"bytes32"},{"name":"feeAmount","type":"uint256"},{"name":"kind","type":"bytes32"},{"name":"partiallyFillable","type":"bool"},{"name":"sellTokenBalance","type":"bytes32"},{"name":"buyTokenBalance","type":"bytes32"}]}]},{"stateMutability":"view","type":"function","name":"verify","inputs":[{"name":"_owner","type":"address"},{"name":"_sender","type":"address"},{"name":"_hash","type":"bytes32"},{"name":"_domain_separator","type":"bytes32"},{"name":"_ctx","type":"bytes32"},{"name":"_static_input","type":"bytes"},{"name":"_offchain_input","type":"bytes"},{"name":"_order","type":"tuple","components":[{"name":"sellToken","type":"address"},{"name":"buyToken","type":"address"},{"name":"receiver","type":"address"},{"name":"sellAmount","type":"uint256"},{"name":"buyAmount","type":"uint256"},{"name":"validTo","type":"uint32"},{"name":"appData","type":"bytes32"},{"name":"feeAmount","type":"uint256"},{"name":"kind","type":"bytes32"},{"name":"partiallyFillable","type":"bool"},{"name":"sellTokenBalance","type":"bytes32"},{"name":"buyTokenBalance","type":"bytes32"}]}],"outputs":[]},{"stateMutability":"view","type":"function","name":"isValidSignature","inputs":[{"name":"_hash","type":"bytes32"},{"name":"signature","type":"bytes"}],"outputs":[{"name":"","type":"bytes4"}]},{"stateMutability":"nonpayable","type":"function","name":"push_target","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"pure","type":"function","name":"supportsInterface","inputs":[{"name":"_interface_id","type":"bytes4"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"set_target_threshold","inputs":[{"name":"_target_threshold","type":"uint256"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"recover","inputs":[{"name":"_coins","type":"address[]"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"fee_collector","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"vault_relayer","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"composable_cow","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"ADD_DATA","inputs":[],"outputs":[{"name":"","type":"bytes32"}]},{"stateMutability":"view","type":"function","name":"VERSION","inputs":[],"outputs":[{"name":"","type":"string"}]},{"stateMutability":"view","type":"function","name":"created","inputs":[{"name":"arg0","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"target_threshold","inputs":[],"outputs":[{"name":"","type":"uint256"}]}]
+```
+
+</ContractABI>
+
 :::
 
 This system simplifies fee burning by requiring only a single burner contract. A simple function call can create an order that sells an accrued fee token into the target token.
@@ -56,11 +65,11 @@ Getter method to check if a conditional order for coin `arg0` has been created. 
 
 [^2]: The `burn` function can only be called indirectly by the `fee_receiver` via the `collect` function.
 
-Returns: true or false (`bool`).
-
 | Input  | Type      | Description              |
 | ------ | --------- | ------------------------ |
 | `arg0` | `address` | Address of coin to check |
+
+Returns: true or false (`bool`).
 
 <SourceCode>
 
@@ -107,10 +116,14 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 
 <Example>
 
-```shell
->>> CowSwapBurner.created('0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83')
-'true'
-```
+<ContractCall
+  address="0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b"
+  abi={["function created(address) view returns (bool)"]}
+  method="created"
+  args={["0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83"]}
+  labels={["arg0"]}
+  contractName="CowSwapBurner"
+/>
 
 
 </Example>
@@ -124,9 +137,13 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 
 Getter for the current order parameters of a token.
 
+| Input        | Type      | Description                           |
+| ------------ | --------- | ------------------------------------- |
+| `sell_token` | `address` | Token address to check parameters for |
+
 Returns: GPv2Order_Data consisting of:
 
-- sellToken: `ERC20` 
+- sellToken: `ERC20`
 - buyToken: `ERC20`
 - receiver: `address`
 - sellAmount: `uint256`
@@ -138,10 +155,6 @@ Returns: GPv2Order_Data consisting of:
 - partiallyFillable: `bool`
 - sellTokenBalance: `bytes32`
 - buyTokenBalance: `bytes32`
-
-| Input        | Type      | Description                           |
-| ------------ | --------- | ------------------------------------- |
-| `sell_token` | `address` | Token address to check parameters for |
 
 <SourceCode>
 
@@ -290,8 +303,6 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 
 Function to generate an order for the WatchTower.
 
-Returns: order parameters (`GPv2Order_Data`).
-
 | Input             | Type                       | Description                                     |
 | ----------------- | -------------------------- | ----------------------------------------------- |
 | `_owner`          | `address`                  | Owner of the order                              |
@@ -299,6 +310,8 @@ Returns: order parameters (`GPv2Order_Data`).
 | `_ctx`            | `bytes32`                  | Execution context                               |
 | `_static_input`   | `Bytes[STATIC_DATA_LEN]`   | `sellToken` encoded as `bytes(Bytes[20])`       |
 | `_offchain_input` | `Bytes[OFFCHAIN_DATA_LEN]` | Not used, zero-length bytes                     |
+
+Returns: order parameters (`GPv2Order_Data`).
 
 <SourceCode>
 
@@ -466,12 +479,12 @@ def verify(
 
 Function to verify a ERC-1271 signature for a given hash.
 
-Returns: `ERC1271_MAGIC_VALUE` if signature is OK (`bytes4`).
-
 | Input       | Type          | Description                                                            |
 | ----------- | ------------- | ---------------------------------------------------------------------- |
 | `_hash`     | `bytes32`     | Hash of a signed data                                                  |
 | `signature` | `Bytes[1792]` | Signature for the object. (GPv2Order.Data, PayloadStruct) in this case |
+
+Returns: `ERC1271_MAGIC_VALUE` if signature is OK (`bytes4`).
 
 <SourceCode>
 
@@ -548,10 +561,12 @@ def __init__(_fee_collector: FeeCollector,
 
 <Example>
 
-```shell
->>> CowSwapBurner.target_threshold()
-50000000000000000000
-```
+<ContractCall
+  address="0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b"
+  abi={["function target_threshold() view returns (uint256)"]}
+  method="target_threshold"
+  contractName="CowSwapBurner"
+/>
 
 
 </Example>
@@ -725,11 +740,11 @@ SUPPORTED_INTERFACES: constant(bytes4[4]) = [
 
 Function to check if the burner supports the correct interface, as specified by the [ERC-165](https://eips.ethereum.org/EIPS/eip-165) standard. This method makes sure the contract is compatible with the `FeeCollector` contract.
 
-Returns: true or false (`bool`).
-
 | Input           | Type     | Description         |
 | --------------- | -------- | ------------------- |
 | `_interface_id` | `bytes4` | ID of the interface |
+
+Returns: true or false (`bool`).
 
 <SourceCode>
 
@@ -825,10 +840,12 @@ def __init__(_fee_collector: FeeCollector,
 
 <Example>
 
-```shell
->>> CowSwapBurner.fee_collector()
-'0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00'
-```
+<ContractCall
+  address="0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b"
+  abi={["function fee_collector() view returns (address)"]}
+  method="fee_collector"
+  contractName="CowSwapBurner"
+/>
 
 
 </Example>
@@ -883,10 +900,12 @@ def __init__(_fee_collector: FeeCollector,
 
 <Example>
 
-```shell
->>> CowSwapBurner.composable_cow()
-'0xfdaFc9d1902f4e0b84f65F49f244b32b31013b74'
-```
+<ContractCall
+  address="0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b"
+  abi={["function composable_cow() view returns (address)"]}
+  method="composable_cow"
+  contractName="CowSwapBurner"
+/>
 
 
 </Example>
@@ -932,10 +951,12 @@ def __init__(_fee_collector: FeeCollector,
 
 <Example>
 
-```shell
->>> CowSwapBurner.vault_relayer()
-'0xC92E8bdf79f0507f65a392b0ab4667716BFE0110'
-```
+<ContractCall
+  address="0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b"
+  abi={["function vault_relayer() view returns (address)"]}
+  method="vault_relayer"
+  contractName="CowSwapBurner"
+/>
 
 
 </Example>
@@ -967,10 +988,12 @@ ADD_DATA: public(constant(bytes32)) = 0x058315b749613051abcbf50cf2d605b4fa4a4155
 
 <Example>
 
-```shell
->>> CowSwapBurner.ADD_DATA()
-'0x058315b749613051abcbf50cf2d605b4fa4a41554ec35d73fd058fc530da559f'
-```
+<ContractCall
+  address="0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b"
+  abi={["function ADD_DATA() view returns (bytes32)"]}
+  method="ADD_DATA"
+  contractName="CowSwapBurner"
+/>
 
 
 </Example>
@@ -1002,10 +1025,12 @@ VERSION: public(constant(String[20])) = "CowSwap"
 
 <Example>
 
-```shell
->>> CowSwapBurner.VERSION()
-'CowSwap'
-```
+<ContractCall
+  address="0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b"
+  abi={["function VERSION() view returns (string)"]}
+  method="VERSION"
+  contractName="CowSwapBurner"
+/>
 
 
 </Example>

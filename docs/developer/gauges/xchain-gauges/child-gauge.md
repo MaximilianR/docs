@@ -18,13 +18,13 @@ The source code for the `ChildGauge.vy` contract can be found on [ GitHub](https
 
 Function to initialize the gauge. A child gauge is initialized directly when deploying it from the `ChildGaugeFactory` via the [`deploy_gauge`](./child-gauge-factory.md#deploy_gauge) function.
 
-Emits: `SetGaugeManager` event.
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_lp_token` | `address` | The LP token address |
 | `_root` | `address` | The root gauge address |
 | `_manager` | `address` | The manager address |
+
+Emits: `SetGaugeManager` event.
 
 
 <SourceCode>
@@ -62,7 +62,7 @@ def initialize(_lp_token: address, _root: address, _manager: address):
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.initialize(lp_token, root, manager)
 ```
 
@@ -82,13 +82,13 @@ def initialize(_lp_token: address, _root: address, _manager: address):
 
 Function to deposit `_value` of LP tokens into the gauge. When depositing LP tokens into the gauge, the contract mints the equivalent amount of "gauge tokens" to the user which represent the user's share of liquidity in the gauge. Additionally, the function also allows for claiming any pending external rewards (not CRV emissions).
 
-Emits: `Deposit`, `Transfer`, `UpdateLiquidityLimit` events.
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_value` | `uint256` | The amount of liquidity to deposit |
 | `_addr` | `address` | The address to deposit for |
 | `_claim_rewards` | `bool` | Whether to claim rewards. Defaults to `False` |
+
+Emits: `Deposit`, `Transfer`, `UpdateLiquidityLimit` events.
 
 
 <SourceCode>
@@ -220,7 +220,7 @@ def _update_liquidity_limit(_user: address, _user_balance: uint256, _total_suppl
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.deposit(1000000000000000000, '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', False)
 ```
 
@@ -235,13 +235,13 @@ def _update_liquidity_limit(_user: address, _user_balance: uint256, _total_suppl
 
 Function to withdraw `_value` of LP tokens from the gauge. When withdrawing LP tokens from the gauge, the contract burns the equivalent amount of "gauge tokens" from the user. Additionally, the function also allows for claiming any pending external rewards (not CRV emissions).
 
-Emits: `Withdraw`, `Transfer`, `UpdateLiquidityLimit` events.
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_value` | `uint256` | The amount of liquidity to withdraw |
 | `_claim_rewards` | `bool` | Whether to claim rewards. Defaults to `False` |
 | `_receiver` | `address` | The address to transfer the withdrawn LP tokens to. Defaults to `msg.sender` |
+
+Emits: `Withdraw`, `Transfer`, `UpdateLiquidityLimit` events.
 
 
 <SourceCode>
@@ -347,7 +347,7 @@ def _checkpoint(_user: address):
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.withdraw(1000000000000000000, False)
 ```
 
@@ -373,7 +373,7 @@ The following functions allow for claiming external rewards (not CRV emissions).
 
 Function to claim available reward tokens for a given address. Claimed rewards cannot be redirected to a different address when claiming for another user.
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_addr` | `address` | The address to claim rewards for. Defaults to `msg.sender` |
 | `_receiver` | `address` | The address to transfer rewards to. Defaults to `empty(address)` |
@@ -459,7 +459,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.claim_rewards()
 ```
 
@@ -474,12 +474,12 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 
 Function to get the number of claimed reward tokens for a user.
 
-Returns: number of claimed reward tokens for a user (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_addr` | `address` | The address to get the number of claimed rewards for |
 | `_token` | `address` | The token to get the number of claimed rewards for |
+
+Returns: number of claimed reward tokens for a user (`uint256`).
 
 
 <SourceCode>
@@ -503,7 +503,7 @@ def claimed_reward(_addr: address, _token: address) -> uint256:
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.claimed_reward('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x6B175474E89094C44Da98b954EedeAC495271d0F')
 0
 ```
@@ -519,12 +519,12 @@ def claimed_reward(_addr: address, _token: address) -> uint256:
 
 Function to get the number of claimable reward tokens for a user.
 
-Returns: number of claimable reward tokens for a user (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_user` | `address` | The address to get the number of claimable rewards for |
 | `_reward_token` | `address` | The token to get the number of claimable rewards for |
+
+Returns: number of claimable reward tokens for a user (`uint256`).
 
 
 <SourceCode>
@@ -563,7 +563,7 @@ def claimable_reward(_user: address, _reward_token: address) -> uint256:
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.claimable_reward('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x6B175474E89094C44Da98b954EedeAC495271d0F')
 0
 ```
@@ -579,11 +579,11 @@ def claimable_reward(_user: address, _reward_token: address) -> uint256:
 
 Getter for the reward receiver of the caller. By default, this value is set to `empty(address)`, which means the rewards will be claimed to the user. But e.g. for integrations like Convex, the `rewards_receiver` is set to another contract address, from which the rewards are further distributed.
 
-Returns: reward receiver for a user (`address`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user to get the reward receiver for. |
+
+Returns: reward receiver for a user (`address`).
 
 
 <SourceCode>
@@ -597,7 +597,7 @@ rewards_receiver: public(HashMap[address, address])
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.rewards_receiver('0x1234567890123456789012345678901234567890')
 '0x0000000000000000000000000000000000000000'
 ```
@@ -613,7 +613,7 @@ rewards_receiver: public(HashMap[address, address])
 
 Function to set the default reward receiver for the caller. When set to empty(address), rewards are sent to the caller.
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_receiver` | `address` | The address to set as the default reward receiver for |
 
@@ -638,7 +638,7 @@ def set_rewards_receiver(_receiver: address):
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.rewards_receiver('0x1234567890123456789012345678901234567890')
 '0x0000000000000000000000000000000000000000'
 
@@ -666,11 +666,11 @@ The following functions allow for retrieving reward data for a specific reward t
 
 Getter for the reward data for a specific reward token.
 
-Returns: Reward struct containing the distributor (`address`), period finish (`uint256`), rate (`uint256`), last update (`uint256`), and integral (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | The reward token to get the reward data for |
+
+Returns: Reward struct containing the distributor (`address`), period finish (`uint256`), rate (`uint256`), last update (`uint256`), and integral (`uint256`).
 
 
 <SourceCode>
@@ -690,7 +690,7 @@ reward_data: public(HashMap[address, Reward])
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.reward_data('0x6B175474E89094C44Da98b954EedeAC495271d0F')
 {'distributor': '0x...', 'period_finish': 0, 'rate': 0, 'last_update': 0, 'integral': 0}
 ```
@@ -706,11 +706,11 @@ reward_data: public(HashMap[address, Reward])
 
 Getter for the added reward token at index `arg0`. New tokens are populated to this variable when calling the `add_reward` function.
 
-Returns: reward token at index `arg0` (`address`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `arg0` | `uint256` | The index of the reward token to get |
+
+Returns: reward token at index `arg0` (`address`).
 
 
 <SourceCode>
@@ -724,7 +724,7 @@ reward_tokens: public(address[MAX_REWARDS])
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.reward_tokens(0)
 '0x0000000000000000000000000000000000000000'
 ```
@@ -753,7 +753,7 @@ reward_count: public(uint256)
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.reward_count()
 0
 ```
@@ -769,12 +769,12 @@ reward_count: public(uint256)
 
 Getter for the reward integral for a specific reward token and claiming address.
 
-Returns: reward integral (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | The reward token to get the reward integral for |
 | `_claiming_address` | `address` | The address to get the reward integral for |
+
+Returns: reward integral (`uint256`).
 
 
 <SourceCode>
@@ -788,7 +788,7 @@ reward_integral_for: public(HashMap[address, HashMap[address, uint256]])
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.reward_integral_for('0x6B175474E89094C44Da98b954EedeAC495271d0F', '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
 0
 ```
@@ -804,11 +804,11 @@ reward_integral_for: public(HashMap[address, HashMap[address, uint256]])
 
 Getter for the remaining reward for a specific reward token.
 
-Returns: the remaining reward for a specific reward token (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | The reward token to get the remaining reward for |
+
+Returns: the remaining reward for a specific reward token (`uint256`).
 
 
 <SourceCode>
@@ -821,7 +821,7 @@ reward_remaining: public(HashMap[address, uint256])  # fixes bad precision
 
 <Example>
 
-```python
+```shell
 >>> ChildGauge.reward_remaining('0x6B175474E89094C44Da98b954EedeAC495271d0F')
 0
 ```
@@ -837,7 +837,7 @@ reward_remaining: public(HashMap[address, uint256])  # fixes bad precision
 
 Function to recover remaining reward tokens that have not been distributed. Can only be called by the reward distributor.
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | Reward token to recover |
 
@@ -930,7 +930,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.recover_remaining('0x6B175474E89094C44Da98b954EedeAC495271d0F')
 ```
 
@@ -973,12 +973,12 @@ This function is only callable by the `manager` of the gauge or the `owner` of t
 
 Function to add a reward token for distribution. When calling this function, a distributor address must be set for the reward token. Only this distributor can deposit the reward token via the `deposit_reward_token` function.
 
-Emits: `AddReward`, `SetDistributor` events.
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | The reward token to add |
 | `_distributor` | `address` | The distributor of the reward token |
+
+Emits: `AddReward`, `SetDistributor` events.
 
 
 <SourceCode>
@@ -1021,7 +1021,7 @@ def add_reward(_reward_token: address, _distributor: address):
 
 This example sets the distributor for the `crvUSD` reward token to `0x1234567890123456789012345678901234567890`. Only this address can deposit `crvUSD` to the gauge using the `deposit_reward_token` function.
 
-```py
+```shell
 >>> ChildGauge.add_reward('0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5', '0x1234567890123456789012345678901234567890')
 ```
 
@@ -1043,12 +1043,12 @@ This function is only callable by the current distributor of the reward token, t
 
 Function to reassign the reward distributor for a reward token.
 
-Emits: `SetDistributor` event.
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | The reward token to reassign the distributor for |
 | `_distributor` | `address` | The address of the new distributor |
+
+Emits: `SetDistributor` event.
 
 
 <SourceCode>
@@ -1081,7 +1081,7 @@ def set_reward_distributor(_reward_token: address, _distributor: address):
 
 This example changes the distributor for the `crvUSD` reward token from `0x1234567890123456789012345678901234567890` to `0x9876543210987654321098765432109876543210`.
 
-```py
+```shell
 >>> ChildGauge.reward_data('0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5')
 {
     'distributor': '0x1234567890123456789012345678901234567890',
@@ -1117,7 +1117,7 @@ This function is only callable by the authorized `distributor` of the reward tok
 
 Function to deposit a reward token for distribution.
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_reward_token` | `address` | The reward token to deposit |
 | `_amount` | `uint256` | The amount of the reward token to deposit |
@@ -1170,7 +1170,7 @@ def deposit_reward_token(_reward_token: address, _amount: uint256, _epoch: uint2
 
 This example deposits `10,000` `crvUSD` tokens as rewards over `7` days.
 
-```python
+```shell
 >>> ChildGauge.deposit_reward_token('0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5', 10000000000000000000000, 604800)
 ```
 
@@ -1200,7 +1200,7 @@ manager: public(address)
 
 This example returns the manager of the gauge, which is `0x1234567890123456789012345678901234567890`.
 
-```py
+```shell
 >>> ChildGauge.manager()
 '0x1234567890123456789012345678901234567890'
 ```
@@ -1223,11 +1223,11 @@ This function is only callable by the `manager` of the gauge or the `owner` of t
 
 Function to set the gauge manager.
 
-Emits: `SetGaugeManager` event.
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_gauge_manager` | `address` | The address to set as the new manager of the gauge |
+
+Emits: `SetGaugeManager` event.
 
 
 <SourceCode>
@@ -1262,7 +1262,7 @@ def set_gauge_manager(_gauge_manager: address):
 
 This example changes the manager of the gauge from `0x1234567890123456789012345678901234567890` to `0x9876543210987654321098765432109876543210`.
 
-```py
+```shell
 >>> ChildGauge.manager()
 '0x1234567890123456789012345678901234567890'
 
@@ -1290,11 +1290,11 @@ This function is only callable by the `manager` of the gauge or the `owner` of t
 
 Function to set the manager for the gauge. This function is a copy of the `set_gauge_manager` function for back-compatability.
 
-Emits: `SetGaugeManager` event.
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_gauge_manager` | `address` | The address to set as the new manager of the gauge |
+
+Emits: `SetGaugeManager` event.
 
 
 <SourceCode>
@@ -1327,7 +1327,7 @@ def set_manager(_gauge_manager: address):
 
 This example changes the manager of the gauge from `0x1234567890123456789012345678901234567890` to `0x9876543210987654321098765432109876543210`. It has the same effect as the `set_gauge_manager` function.
 
-```py
+```shell
 >>> ChildGauge.manager()
 '0x1234567890123456789012345678901234567890'
 
@@ -1354,11 +1354,11 @@ For more information on how boosting works, please refer to the [Boosting Explai
 
 Function to record a checkpoint for a user.
 
-Returns: `True` if the checkpoint was recorded successfully (`bool`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `addr` | `address` | The user address to record a checkpoint for |
+
+Returns: `True` if the checkpoint was recorded successfully (`bool`).
 
 
 <SourceCode>
@@ -1456,7 +1456,7 @@ def _update_liquidity_limit(_user: address, _user_balance: uint256, _total_suppl
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.user_checkpoint('0x20a440aECf78c73d484B652C46d582B4D70906A8')
 True
 ```
@@ -1497,7 +1497,7 @@ def integrate_checkpoint() -> uint256:
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.integrate_checkpoint()
 1729778435
 ```
@@ -1513,11 +1513,11 @@ def integrate_checkpoint() -> uint256:
 
 Getter for the timestamp of the last checkpoint for a user.
 
-Returns: timestamp of the last checkpoint (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to get the integrate checkpoint for |
+
+Returns: timestamp of the last checkpoint (`uint256`).
 
 
 <SourceCode>
@@ -1532,7 +1532,7 @@ integrate_checkpoint_of: public(HashMap[address, uint256])
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.integrate_checkpoint_of('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
 1700000000
 ```
@@ -1554,11 +1554,11 @@ Getter for the working balances of a user. This represents the effective liquidi
 - 1 LP token with 1.5 boost = working_balances(user) = 1.5
 - 1 LP token with 2.5 boost = working_balances(user) = 2.5
 
-Returns: working balance of a user (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to get the working balance for |
+
+Returns: working balance of a user (`uint256`).
 
 
 <SourceCode>
@@ -1571,7 +1571,7 @@ working_balances: public(HashMap[address, uint256])
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.working_balances('0x20a440aECf78c73d484B652C46d582B4D70906A8')
 106163327646490
 ```
@@ -1602,7 +1602,7 @@ working_supply: public(uint256)
 
 The working supply in our example is equal to the working_balance of `0x20a440aECf78c73d484B652C46d582B4D70906A8` because its the only user that has provided liquidity so far.
 
-```py
+```shell
 >>> ChildGauge.working_supply()
 106163327646490
 ```
@@ -1642,7 +1642,7 @@ period: public(int128)
 
 Period is one, because only one checkpoint has been recorded so far (when depositing liquidity).
 
-```python
+```shell
 >>> ChildGauge.period()
 1
 ```
@@ -1658,11 +1658,11 @@ Period is one, because only one checkpoint has been recorded so far (when deposi
 
 Getter for the period timestamp for a specific period.
 
-Returns: the period timestamp for a specific period (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_period` | `int128` | The period to get the timestamp for |
+
+Returns: the period timestamp for a specific period (`uint256`).
 
 
 <SourceCode>
@@ -1677,7 +1677,7 @@ period_timestamp: public(HashMap[int128, uint256])
 
 This example returns the timestamp of the first period, which is the timestamp of the first checkpoint (when depositing liquidity).
 
-```python
+```shell
 >>> ChildGauge.period_timestamp(1)
 1729778435      # exactly the timestamp of the first checkpoint which was the deposit of liquidity
 ```
@@ -1693,11 +1693,11 @@ This example returns the timestamp of the first period, which is the timestamp o
 
 Getter for the total amount of CRV, both mintable and already minted, that has been allocated to `_user` from this gauge.
 
-Returns: integral of accrued rewards (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to get the integrate fraction for |
+
+Returns: integral of accrued rewards (`uint256`).
 
 
 <SourceCode>
@@ -1712,7 +1712,7 @@ integrate_fraction: public(HashMap[address, uint256])
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.integrate_fraction('0x20a440aECf78c73d484B652C46d582B4D70906A8')
 0
 ```
@@ -1728,11 +1728,11 @@ integrate_fraction: public(HashMap[address, uint256])
 
 Function to get the number of claimable CRV emissions for a user.
 
-Returns: the number of claimable CRV emissions for a user (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `addr` | `address` | The address to get the number of claimable CRV emissions for |
+
+Returns: the number of claimable CRV emissions for a user (`uint256`).
 
 
 <SourceCode>
@@ -1808,7 +1808,7 @@ def _checkpoint(_user: address):
 
 This example returns the number of claimable CRV emissions for `0x20a440aECf78c73d484B652C46d582B4D70906A8`, which currently is `0`.
 
-```python
+```shell
 >>> ChildGauge.claimable_tokens('0x20a440aECf78c73d484B652C46d582B4D70906A8')
 0
 ```
@@ -1824,9 +1824,11 @@ This example returns the number of claimable CRV emissions for `0x20a440aECf78c7
 
 Getter for the CRV emission inflation rate for a specific week.
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_period` | `uint256` | The week to get the inflation rate for |
+
+Returns: CRV emission inflation rate (`uint256`).
 
 
 <SourceCode>
@@ -1841,7 +1843,7 @@ inflation_rate: public(HashMap[uint256, uint256])
 
 This example returns the CRV emission inflation rate for the first week, which is `0`.
 
-```python
+```shell
 >>> ChildGauge.inflation_rate(1)
 0
 ```
@@ -1857,11 +1859,11 @@ This example returns the CRV emission inflation rate for the first week, which i
 
 Getter for the inverse supply of CRV at a given period that tracks a cumulative measure of inverse supply over time in relation to the CRV emissions.
 
-Returns: inverse supply of CRV at a given period (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_period` | `int128` | The period to get the inverse supply for |
+
+Returns: inverse supply of CRV at a given period (`uint256`).
 
 
 <SourceCode>
@@ -1877,7 +1879,7 @@ integrate_inv_supply: public(HashMap[int128, uint256])
 
 This example returns the inverse supply of CRV at the first period, which is `0`.
 
-```py
+```shell
 >>> ChildGauge.integrate_inv_supply(1)
 0
 ```
@@ -1893,11 +1895,11 @@ This example returns the inverse supply of CRV at the first period, which is `0`
 
 The integrate_inv_supply_of variable is a mapping (HashMap[address, uint256]) that stores a user-specific cumulative measure of inverse supply up to the last checkpoint for each user. It is used to calculate the individual CRV emissions that a user is entitled to based on their participation in the gauge.
 
-Returns: inverse supply of CRV at a given period for a user (`uint256`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_user` | `address` | The user address to get the inverse supply for |
+
+Returns: inverse supply of CRV at a given period for a user (`uint256`).
 
 
 <SourceCode>
@@ -1914,7 +1916,7 @@ integrate_checkpoint_of: public(HashMap[address, uint256])
 
 This example returns the inverse supply of CRV at the first period for `0x20a440aECf78c73d484B652C46d582B4D70906A8`, which is `0`.
 
-```py
+```shell
 >>> ChildGauge.integrate_inv_supply_of('0x20a440aECf78c73d484B652C46d582B4D70906A8')
 0
 ```
@@ -1947,7 +1949,7 @@ root_gauge: public(address)
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.root_gauge()
 '0x12C3F630ec8f8A07C539b5F933e8E62F9b627396'
 ```
@@ -1966,7 +1968,7 @@ This function is only callable by the `owner` or `manager` of the `ChildGaugeFac
 
 Function to set the root gauge address in case something went wrong (e.g. between implementation updates).
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_root` | `address` | The root gauge address to set |
 
@@ -1992,7 +1994,7 @@ def set_root_gauge(_root: address):
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.root_gauge()
 '0x12C3F630ec8f8A07C539b5F933e8E62F9b627396'
 
@@ -2026,7 +2028,7 @@ voting_escrow: public(address)
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.voting_escrow()
 '0x0000000000000000000000000000000000000000'
 ```
@@ -2063,7 +2065,7 @@ def update_voting_escrow():
 
 This example shows the following: The gauge has been deployed without a voting escrow contract to be set in the `ChildGaugeFactory`. Therefore, the voting escrow address is `0x0000000000000000000000000000000000000000`. After the voting escrow contract has been set in the `ChildGaugeFactory`, the `update_voting_escrow()` function is called, and the voting escrow address is set to mirror the voting escrow contract set in the `ChildGaugeFactory`.
 
-```py
+```shell
 >>> ChildGauge.voting_escrow()
 '0x0000000000000000000000000000000000000000'
 
@@ -2101,7 +2103,7 @@ is_killed: public(bool)
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.is_killed()
 False
 ```
@@ -2124,11 +2126,11 @@ This function is only callable by the `owner` of the `ChildGaugeFactory`.
 
 Function to set the killed status for the gauge.
 
-Emits: `SetKilled` event.
-
-| Parameter    | Type   | Description |
+| Input        | Type   | Description |
 | ------------ | ------ | ----------- |
 | `_is_killed` | `bool` | The killed status to set |
+
+Emits: `SetKilled` event.
 
 
 <SourceCode>
@@ -2152,7 +2154,7 @@ def set_killed(_is_killed: bool):
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.is_killed()
 False
 
@@ -2194,7 +2196,7 @@ totalSupply: public(uint256)
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.totalSupply()
 1000000000000000000000000
 ```
@@ -2230,7 +2232,7 @@ FACTORY: immutable(Factory)
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.factory()
 '0x0B8D6B6CeFC7Aa1C2852442e518443B1b22e1C52'
 ```
@@ -2289,7 +2291,7 @@ def initialize(_lp_token: address, _root: address, _manager: address):
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.lp_token()
 '0xF25E1dB1f0c7BD1a29761a1FcDaE187B8718CF18'
 ```
@@ -2326,7 +2328,7 @@ def version() -> String[8]:
 
 <Example>
 
-```py
+```shell
 >>> ChildGauge.version()
 "1.1.0"
 ```
