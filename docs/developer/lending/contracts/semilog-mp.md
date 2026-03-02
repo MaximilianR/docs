@@ -8,7 +8,7 @@ The **borrow rate**in the semi-logarithmic MonetaryPolicy contract is **intricat
 
 :::vyper[`SemilogMonetaryPolicy.vy`]
 
-The source code for the `SemilogMonetaryPolicy.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/mpolicies/SemilogMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `SemilogMonetaryPolicy.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/mpolicies/SemilogMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
@@ -45,9 +45,13 @@ $$\text\{rate\} = \text\{rate\}_\{\text\{min\}\} \cdot \left(\frac\{\text\{rate\
 ---
 
 
-## Rates**The rate values are based on 1e18 and NOT annualized.***To calculate the Borrow APR:*
+## Rates
 
-$$\text\{borrowAPR\} = \frac\{\text\{rate\} * 365 * 86400\}\{10^\{18\}\}$$
+**The rate values are based on 1e18 and NOT annualized.**
+
+*To calculate the Borrow APR:*
+
+$$\text{borrowAPR} = \frac{\text{rate} \cdot 365 \cdot 86400}{10^{18}}$$
 
 Rate calculations occur within the MonetaryPolicy contract. The rate is regularly updated by the internal `_save_rate` method in the Controller. This happens whenever a new loan is initiated (`_create_loan`), collateral is either added (`add_collateral`) or removed (`remove_collateral`), additional debt is incurred (`borrow_more` and `borrow_more_extended`), debt is repaid (`repay`, `repay_extended`), or a loan undergoes liquidation (`_liquidate`).
 
@@ -260,12 +264,12 @@ Out [1]:  7882992245
 ::::
 
 ### `rate_write`
-::::description[`SemiLogMonetaryPolicy.rate_write(_for: address = msg.sender) -> uint256:`]
+::::description[`SemiLogMonetaryPolicy.rate_write(_for: address = msg.sender) -> uint256`]
 
 
 Function to update the rate of a lending market.
 
-Returns: rate (`uint256`)
+Returns: rate (`uint256`).
 
 <SourceCode>
 
@@ -350,12 +354,12 @@ Function to set new values for `min_rate` and `max_rate`, and consequently `log_
 - `MIN_RATE = 31709791 (0.01%)`
 - `MAX_RATE = 317097919837 (1000%)`
 
-Emits: `SetRates`
-
 | Input      | Type      | Description    |
 | ---------- | --------- | -------------- |
 | `min_rate` | `uint256` | New value for the minimum rate. |
 | `max_rate` | `uint256` | New value for the maximum rate. |
+
+Emits: `SetRates` event.
 
 <SourceCode>
 
@@ -778,7 +782,7 @@ Out [1]:  317097919837
 
 Getter for the borrowed token. This is a immutable variable and is set at deployment (`__init__()`).
 
-Returns: borrowable token from the lending market (`address`)
+Returns: borrowable token from the lending market (`address`).
 
 <SourceCode>
 

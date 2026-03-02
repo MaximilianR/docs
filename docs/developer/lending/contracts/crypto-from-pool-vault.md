@@ -3,13 +3,13 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This oracle contract takes the **price oracle from a Curve liquidity pool and applies the redemption of the vault token to it**. This is often used when having **ERC-4626 Vault tokens**with `pricePerShare`, `convertToAsset`, or other similar functions which essentially return the price of one vault token compared to the underlying assets. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvusd/oracles/price-aggregator.md), but experience has shown that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
+This oracle contract takes the **price oracle from a Curve liquidity pool and applies the redemption of the vault token to it**. This is often used when having **ERC-4626 Vault tokens** with `pricePerShare`, `convertToAsset`, or other similar functions which essentially return the price of one vault token compared to the underlying assets. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvusd/oracles/price-aggregator.md), but experience has shown that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
 
 These kinds of oracle contracts **need to be deployed manually**, as there is currently no `Factory` to do so.
 
 :::vyper[`CryptoFromPoolVault.vy`]
 
-The source code for the `CryptoFromPoolVault.vy` contract can be found on [:logos-github: GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVault.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolVaultWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVaultWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `CryptoFromPoolVault.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVault.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolVaultWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVaultWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::warning[Oracle Suitability]
 
@@ -133,7 +133,7 @@ The [oracle contract](https://etherscan.io/address/0x002688C4296A2C4d800F271fe6F
 
 :::
 
-Additionally, the `CryptoFromPoolVault.vy` contract has a **built-in mechanism that considers a certain maximum speed of price change within the vault**when calculating the oracle price. This feature is not included in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
+Additionally, the `CryptoFromPoolVault.vy` contract has a **built-in mechanism that considers a certain maximum speed of price change within the vault** when calculating the oracle price. This feature is not included in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
 
 <SourceCode>
 
@@ -147,10 +147,10 @@ In this example, `pricePerShare` is used, but it can really be any equivalent me
 `cached_price_per_share` and `cached_timestamp` are internal variables that are updated whenever the `price_w` function is called. The first value is set to the current redemption rate within the vault at the block when the function is called, and the second value to the current timestamp (`block.timestamp`).
 
 <Tabs>
-<TabItem value="cryptofrompoolvaul-vy" label="CryptoFromPoolVaul.vy">
+<TabItem value="cryptofrompoolvaul-vy" label="CryptoFromPoolVault.vy">
 
 
-```py
+```vyper
 PPS_MAX_SPEED: constant(uint256) = 10**16 / 60  # Max speed of pricePerShare change
 
 cached_price_per_share: public(uint256)
@@ -178,10 +178,10 @@ def _pps_w() -> uint256:
 </SourceCode>
 
 ### `price`
-::::description[`CryptoFromPoolVault.price() -> uint256`]
+::::description[`CryptoFromPoolVault.price() -> uint256: view`]
 
 
-Getter for the price of the collateral asset denominated against the borrowed token and applying the conversion rate form a vault.
+Getter for the price of the collateral asset denominated against the borrowed token and applying the conversion rate from a vault.
 
 Returns: oracle price (`uint256`).
 
@@ -332,7 +332,7 @@ def _raw_price() -> uint256:
 ::::description[`CryptoFromPoolVault.price_w() -> uint256`]
 
 
-This function calculates and writes the price while updating `cached_rate` and `cached_timestamp`. It method is called whenever the `_exchange` function is called within the AMM contract of the lending market.
+This function calculates and writes the price while updating `cached_rate` and `cached_timestamp`. This method is called whenever the `_exchange` function is called within the AMM contract of the lending market.
 
 Returns: oracle price (`uint256`).
 

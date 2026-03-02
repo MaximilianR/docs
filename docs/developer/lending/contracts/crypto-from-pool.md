@@ -7,7 +7,7 @@ Oracle contract for a collateral token that **fetches its price from a single Cu
 
 :::vyper[`CryptoFromPool.vy`]
 
-The source code for the `CryptoFromPool.vy` contract can be found on [:logos-github: GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPool.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `CryptoFromPool.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPool.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
@@ -23,7 +23,7 @@ The oracle contracts are fully immutable. Once deployed, they cannot change any 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 <Tabs>
-<TabItem value="crpyotfrompool-vy" label="CrpyotFromPool.vy">
+<TabItem value="crpyotfrompool-vy" label="CryptoFromPool.vy">
 
 
 ```vyper
@@ -60,7 +60,7 @@ def __init__(
 </Tabs>
 
 <Tabs>
-<TabItem value="crpyotfrompoolwagg-vy" label="CrpyotFromPoolWAgg.vy">
+<TabItem value="crpyotfrompoolwagg-vy" label="CryptoFromPoolWAgg.vy">
 
 
 ```vyper
@@ -111,7 +111,7 @@ In the CRV short market, `CRV` serves as the collateral token, while `crvUSD` is
 
 When calling the `create_from_pool` function, the code automatically checks the index of the tokens within the liquidity pool. Subsequently, it passes these values as constructor arguments during the creation of the oracle contract from the blueprint implementation.
 
-```py
+```vyper
 # the following arguments will be passed into the `__init__` function:
 pool = '0x4ebdf703948ddcea3b11f675b4d1fba9d2414a14'
 N = 3
@@ -146,7 +146,7 @@ The following source code includes all changes up to commit hash [86cae3a](https
 <TabItem value="cryptofrompool-vy" label="CryptoFromPool.vy">
 
 
-```py
+```vyper
 @external
 @view
 def price() -> uint256:
@@ -182,7 +182,7 @@ def _raw_price() -> uint256:
 <TabItem value="cryptofrompoolwagg-vy" label="CryptoFromPoolWAgg.vy">
 
 
-```py
+```vyper
 interface StableAggregator:
     def price() -> uint256: view
     def price_w() -> uint256: nonpayable
@@ -238,7 +238,7 @@ def _raw_price() -> uint256:
 ::::
 
 ### `price_w`
-::::description[`CryptoFromPool.price_w() -> uint256:`]
+::::description[`CryptoFromPool.price_w() -> uint256`]
 
 
 Function to return the price and update the state of the blockchain. This function is called whenever the `_exchange` function from the LLAMMA is called. For contracts applying the aggregated crvUSD price, it essentially multiplies the collateral price with the aggregated crvUSD price.
@@ -291,7 +291,7 @@ def _raw_price() -> uint256:
 <TabItem value="cryptofrompoolwagg-vy" label="CryptoFromPoolWAgg.vy">
 
 
-```py
+```vyper
 interface StableAggregator:
     def price() -> uint256: view
     def price_w() -> uint256: nonpayable
@@ -390,7 +390,7 @@ def _exchange(i: uint256, j: uint256, amount: uint256, minmax_amount: uint256, _
 ::::description[`CryptoFromPool.POOL() -> address: view`]
 
 
-Getter for the liquidity pool the from where the oracle is used.
+Getter for the liquidity pool from which the oracle price is fetched.
 
 Returns: liquidity pool (`address`).
 
@@ -664,7 +664,7 @@ def __init__(
 Getter for the `NO_ARGUMENT` storage variable. This is an additional variable to ensure the correct price oracle is fetched from a pool with more than two coins.
 The variable is set to `false` if the pool from which the price oracle is taken has only two coins.
 
-Returns: true or false (`bool`)
+Returns: true or false (`bool`).
 
 <SourceCode>
 
