@@ -5,9 +5,9 @@ This Zap contract is specifically designed to **create leveraged loans**using **
 
 :::vyper[`LeverageZap.vy`]
 
-The source code for the `LeverageZap.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/zaps/LeverageZap.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `LeverageZap.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/zaps/LeverageZap.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
-An accompanying JavaScript library for Curve Lending can be found here: [ GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
+An accompanying JavaScript library for Curve Lending can be found here: [GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
 
 :::
 
@@ -40,15 +40,15 @@ This function is only callable by the `Controller` which is used to create the l
 
 Function to perform a callback method to create a leveraged position. The functions input arguments are passed from the `Controller` contract.
 
-Returns: [0 and leveraged collateral] (`uint256[2]`), which is the amount of collateral received as a result of leveraging up.
-
 | Input           | Type                   | Description  |
 | --------------- | ---------------------- | ------------ |
-| `user`          | `address`              | User address to create a leveraged position. | 
-| `stablecoins`   | `uint256`              | Amount of stablecoins. Always 0 when calling this method. | 
-| `collateral`    | `uint256`              | Amount of collateral tokens provided by the user. | 
-| `debt`          | `uint256`              | Amount of be borrowed. | 
-| `callback_args` | `DynArray[uint256, 5]` | Array of callback arguments consisting of `[route_idx, min_recv]` | 
+| `user`          | `address`              | User address to create a leveraged position. |
+| `stablecoins`   | `uint256`              | Amount of stablecoins. Always 0 when calling this method. |
+| `collateral`    | `uint256`              | Amount of collateral tokens provided by the user. |
+| `debt`          | `uint256`              | Amount of be borrowed. |
+| `callback_args` | `DynArray[uint256, 5]` | Array of callback arguments consisting of `[route_idx, min_recv]` |
+
+Returns: [0 and leveraged collateral] (`uint256[2]`), which is the amount of collateral received as a result of leveraging up.
 
 <SourceCode>
 
@@ -267,7 +267,7 @@ def exchange_multiple(
 *The contract includes various helper functions:*
 
 ### `get_collateral`
-::::description[`LeverageZap.get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256`]
+::::description[`LeverageZap.get_collateral(stablecoin: uint256, route_idx: uint256) -> uint256: view`]
 
 
 Function to calculate the expected amount of collateral tokens for 'exchanging' a given amount of stablecoins using a specific route.
@@ -414,7 +414,7 @@ def get_exchange_multiple_amount(
 ::::
 
 ### `get_collateral_underlying`
-::::description[`LeverageZap.get_collateral_underlying(stablecoin: uint256, route_idx: uint256) -> uint256`]
+::::description[`LeverageZap.get_collateral_underlying(stablecoin: uint256, route_idx: uint256) -> uint256: view`]
 
 
 Function to calculate the expected amount of collateral for a given amount of `stablecoin`. This is exactly the same function as `get_collateral` but is needed to make the ABI the same as the ABI for sfrxETH and wstETH.
@@ -563,7 +563,7 @@ This function is used for markets like sfrxETH or wstETH to fetch the amount of 
 ::::
 
 ### `max_borrowable`
-::::description[`LeverageZap.max_borrowable(collateral: uint256, N: uint256, route_idx: uint256) -> uint256`]
+::::description[`LeverageZap.max_borrowable(collateral: uint256, N: uint256, route_idx: uint256) -> uint256: view`]
 
 
 :::warning
@@ -575,13 +575,13 @@ This function is used for markets like sfrxETH or wstETH to fetch the amount of 
 
 Function to calculate the maximum amount of crvUSD to be borrowed using leverage.
 
-Returns: maximum borrowable amount (`uint256`).
-
 | Input        | Type      | Description                                         |
 | ------------ | --------- | --------------------------------------------------- |
 | `collateral` | `uint256` | Amount of collateral (at its native precision).     |
 | `N`          | `uint256` | Number of bands to deposit into.                    |
 | `route_idx`  | `uint256` | Index of the route to be used for exchanging stablecoin to collateral. |
+
+Returns: maximum borrowable amount (`uint256`).
 
 <SourceCode>
 
@@ -658,7 +658,7 @@ def _max_borrowable(collateral: uint256, N: uint256, route_idx: uint256) -> uint
 ::::
 
 ### `max_collateral`
-::::description[`LeverageZap.max_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256`]
+::::description[`LeverageZap.max_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256: view`]
 
 
 :::warning
@@ -670,13 +670,13 @@ def _max_borrowable(collateral: uint256, N: uint256, route_idx: uint256) -> uint
 
 Function to calculate the maximum collateral position that can be created using leverage.
 
-Returns: total amount of collateral, i.e., user_collateral + max_leverage collateral (`uint256`).
-
 | Input        | Type      | Description                                         |
 | ------------ | --------- | --------------------------------------------------- |
 | `collateral` | `uint256` | Amount of collateral (at its native precision).     |
 | `N`          | `uint256` | Number of bands to deposit into.                    |
 | `route_idx`  | `uint256` | Index of the route to be used for exchanging stablecoin to collateral. |
+
+Returns: total amount of collateral, i.e., user_collateral + max_leverage collateral (`uint256`).
 
 <SourceCode>
 
@@ -849,7 +849,7 @@ def get_exchange_multiple_amount(
 ::::
 
 ### `max_borrowable_and_collateral`
-::::description[`LeverageZap.max_borrowable_and_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256[2]`]
+::::description[`LeverageZap.max_borrowable_and_collateral(collateral: uint256, N: uint256, route_idx: uint256) -> uint256[2]: view`]
 
 
 :::warning
@@ -861,13 +861,13 @@ def get_exchange_multiple_amount(
 
 Function to calculate the maximum amount of crvUSD to be borrowed and the maximum amount of collateral for the position when using leverage. This function combines `max_borrowable` and `max_collateral` into one.
 
-Returns: maximum borrowable crvUSD and maximum collateral for the position.
-
 | Input        | Type      | Description                                         |
 | ------------ | --------- | --------------------------------------------------- |
 | `collateral` | `uint256` | Amount of collateral (at its native precision).     |
 | `N`          | `uint256` | Number of bands to deposit into.                    |
 | `route_idx`  | `uint256` | Index of the route to be used for exchanging stablecoin to collateral. |
+
+Returns: maximum borrowable crvUSD and maximum collateral for the position.
 
 <SourceCode>
 
@@ -911,7 +911,7 @@ def max_borrowable_and_collateral(collateral: uint256, N: uint256, route_idx: ui
 ::::
 
 ### `calculate_debt_n1`
-::::description[`LeverageZap.calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256, route_idx: uint256) -> int256`]
+::::description[`LeverageZap.calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256, route_idx: uint256) -> int256: view`]
 
 
 Function to calculate the upper band number for the deposit to sit in, to support the given debt with full leverage. This essentially means that all borrowed stablecoin is converted to the collateral token and deposited in addition to the collateral provided by the user. The method reverts if the requested debt is too high.

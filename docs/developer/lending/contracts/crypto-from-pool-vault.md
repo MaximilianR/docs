@@ -3,7 +3,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This oracle contract takes the **price oracle from a Curve liquidity pool and applies the redemption of the vault token to it**. This is often used when having **ERC-4626 Vault tokens**with `pricePerShare`, `convertToAsset`, or other similar functions which essentially return the price of one vault token compared to the underlying assets. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvusd/price-aggregator.md), but experience has shown that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
+This oracle contract takes the **price oracle from a Curve liquidity pool and applies the redemption of the vault token to it**. This is often used when having **ERC-4626 Vault tokens**with `pricePerShare`, `convertToAsset`, or other similar functions which essentially return the price of one vault token compared to the underlying assets. The first oracle contracts were deployed without considering the [aggregated price of crvUSD](../../crvusd/oracles/price-aggregator.md), but experience has shown that it makes sense to include this value in the calculation. The respective differences are documented in the relevant sections.
 
 These kinds of oracle contracts **need to be deployed manually**, as there is currently no `Factory` to do so.
 
@@ -188,7 +188,7 @@ Returns: oracle price (`uint256`).
 <SourceCode>
 
 
-The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
+The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/oracles/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
@@ -339,7 +339,7 @@ Returns: oracle price (`uint256`).
 <SourceCode>
 
 
-The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
+The `CryptoFromPoolVault.vy` oracle contract does not take the aggregated price of crvUSD from the [`PriceAggregator.vy` contract](../../crvusd/oracles/price-aggregator.md) into account. Experience has shown that it makes sense to include this value in the oracle calculations. This is implemented in the `CryptoFromPoolVaultWAgg.vy` oracle contract.
 
 The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 

@@ -2,11 +2,19 @@
 
 MonetaryPolicy contracts are integrated into the crvUSD ecosystem, where they play a pivotal role in determining the interest rates for crvUSD markets.
 
-:::deploy[Contract Source & Deployment]
+:::vyper[`AggMonetaryPolicy.vy`]
 
-Source code is available on [Github](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/mpolicies).
-Relevant contract deployments can be found [here](../deployments.md).
+The source code for the `AggMonetaryPolicy.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/mpolicies/AggMonetaryPolicy4.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.7`.
 
+The contract is deployed on :logos-ethereum: Ethereum at [`0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1`](https://etherscan.io/address/0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1).
+
+<ContractABI>
+
+```json
+[{"name": "SetAdmin", "inputs": [{"name": "admin", "type": "address", "indexed": false}], "anonymous": false, "type": "event"}, {"name": "AddPegKeeper", "inputs": [{"name": "peg_keeper", "type": "address", "indexed": true}], "anonymous": false, "type": "event"}, {"name": "RemovePegKeeper", "inputs": [{"name": "peg_keeper", "type": "address", "indexed": true}], "anonymous": false, "type": "event"}, {"name": "SetRate", "inputs": [{"name": "rate", "type": "uint256", "indexed": false}], "anonymous": false, "type": "event"}, {"name": "SetSigma", "inputs": [{"name": "sigma", "type": "uint256", "indexed": false}], "anonymous": false, "type": "event"}, {"name": "SetTargetDebtFraction", "inputs": [{"name": "target_debt_fraction", "type": "uint256", "indexed": false}], "anonymous": false, "type": "event"}, {"stateMutability": "nonpayable", "type": "constructor", "inputs": [{"name": "admin", "type": "address"}, {"name": "price_oracle", "type": "address"}, {"name": "controller_factory", "type": "address"}, {"name": "peg_keepers", "type": "address[5]"}, {"name": "rate", "type": "uint256"}, {"name": "sigma", "type": "uint256"}, {"name": "target_debt_fraction", "type": "uint256"}], "outputs": []}, {"stateMutability": "nonpayable", "type": "function", "name": "set_admin", "inputs": [{"name": "admin", "type": "address"}], "outputs": []}, {"stateMutability": "nonpayable", "type": "function", "name": "add_peg_keeper", "inputs": [{"name": "pk", "type": "address"}], "outputs": []}, {"stateMutability": "nonpayable", "type": "function", "name": "remove_peg_keeper", "inputs": [{"name": "pk", "type": "address"}], "outputs": []}, {"stateMutability": "view", "type": "function", "name": "rate", "inputs": [], "outputs": [{"name": "", "type": "uint256"}]}, {"stateMutability": "nonpayable", "type": "function", "name": "rate_write", "inputs": [], "outputs": [{"name": "", "type": "uint256"}]}, {"stateMutability": "nonpayable", "type": "function", "name": "set_rate", "inputs": [{"name": "rate", "type": "uint256"}], "outputs": []}, {"stateMutability": "nonpayable", "type": "function", "name": "set_sigma", "inputs": [{"name": "sigma", "type": "uint256"}], "outputs": []}, {"stateMutability": "nonpayable", "type": "function", "name": "set_target_debt_fraction", "inputs": [{"name": "target_debt_fraction", "type": "uint256"}], "outputs": []}, {"stateMutability": "view", "type": "function", "name": "admin", "inputs": [], "outputs": [{"name": "", "type": "address"}]}, {"stateMutability": "view", "type": "function", "name": "rate0", "inputs": [], "outputs": [{"name": "", "type": "uint256"}]}, {"stateMutability": "view", "type": "function", "name": "sigma", "inputs": [], "outputs": [{"name": "", "type": "int256"}]}, {"stateMutability": "view", "type": "function", "name": "target_debt_fraction", "inputs": [], "outputs": [{"name": "", "type": "uint256"}]}, {"stateMutability": "view", "type": "function", "name": "peg_keepers", "inputs": [{"name": "arg0", "type": "uint256"}], "outputs": [{"name": "", "type": "address"}]}, {"stateMutability": "view", "type": "function", "name": "PRICE_ORACLE", "inputs": [], "outputs": [{"name": "", "type": "address"}]}, {"stateMutability": "view", "type": "function", "name": "CONTROLLER_FACTORY", "inputs": [], "outputs": [{"name": "", "type": "address"}]}]
+```
+
+</ContractABI>
 
 :::
 
@@ -14,7 +22,7 @@ Relevant contract deployments can be found [here](../deployments.md).
 
 The interest rates in crvUSD markets are not static but fluctuate based on a set of factors, including:
 
-- The price of crvUSD, which is determined through an aggregated oracle price from multiple Curve Stableswap pools ([details here](../crvusd/price-aggregator.md)).
+- The price of crvUSD, which is determined through an aggregated oracle price from multiple Curve Stableswap pools ([details here](../oracles/price-aggregator.md)).
 - The variables `sigma`, `rate0`, `TargetFraction`, and the `DebtFraction` specific to PegKeepers.
 
 :::tip
@@ -102,12 +110,7 @@ def calculate_rate() -> uint256:
 
 <Example>
 
-
-```shell
->>> MonetaryPolicy.rate()
-2130219534
-```
-
+<ContractCall address="0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1" abi={["function rate() view returns (uint256)"]} method="rate" contractName="MonetaryPolicy" />
 
 </Example>
 
@@ -150,12 +153,7 @@ def __init__(admin: address,
 
 <Example>
 
-
-```shell
->>> MonetaryPolicy.rate0()
-3488077118
-```
-
+<ContractCall address="0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1" abi={["function rate0() view returns (uint256)"]} method="rate0" contractName="MonetaryPolicy" />
 
 </Example>
 
@@ -163,7 +161,7 @@ def __init__(admin: address,
 ::::
 
 ### `set_rate`
-::::description[`MonetaryPolicy.set_rate(rate: uint256):`]
+::::description[`MonetaryPolicy.set_rate(rate: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -175,11 +173,11 @@ This function is only callable by the `admin` of the contract, which is the Curv
 
 Function to set a new rate0. New `rate0` has to be less than or equal to `MAX_RATE (=43959106799)`.
 
-Emits: `SetRate`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `rate` |  `uint256` | New rate0 value |
+
+Emits: `SetRate` event.
 
 <SourceCode>
 
@@ -216,12 +214,12 @@ def set_rate(rate: uint256):
 ::::
 
 ### `sigma`
-::::description[`MonetaryPolicy.sigma() -> uint256: view`]
+::::description[`MonetaryPolicy.sigma() -> int256: view`]
 
 
 Getter for the sigma value. The following needs to hold: $10^{14} \leq \sigma \leq 10^{18}$.
 
-Returns: sigma (`uint256`).
+Returns: sigma (`int256`).
 
 <SourceCode>
 
@@ -253,12 +251,7 @@ def __init__(admin: address,
 
 <Example>
 
-
-```shell
->>> MonetaryPolicy.sigma()
-20000000000000000
-```
-
+<ContractCall address="0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1" abi={["function sigma() view returns (int256)"]} method="sigma" contractName="MonetaryPolicy" />
 
 </Example>
 
@@ -266,7 +259,7 @@ def __init__(admin: address,
 ::::
 
 ### `set_sigma`
-::::description[`MonetaryPolicy.set_sigma(sigma: uint256):`]
+::::description[`MonetaryPolicy.set_sigma(sigma: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -278,11 +271,11 @@ This function is only callable by the `admin` of the contract, which is the Curv
 
 Function to set a new sigma value. New value must be inbetween `MIN_SIGMA` and `MAX_SIGMA`.
 
-Emits: `SetSigma`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `sigma` |  `uint256` | New sigma value |
+
+Emits: `SetSigma` event.
 
 <SourceCode>
 
@@ -356,12 +349,7 @@ def __init__(admin: address,
 
 <Example>
 
-
-```shell
->>> MonetaryPolicy.target_debt_fraction()
-100000000000000000              # 10%
-```
-
+<ContractCall address="0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1" abi={["function target_debt_fraction() view returns (uint256)"]} method="target_debt_fraction" contractName="MonetaryPolicy" />
 
 </Example>
 
@@ -369,7 +357,7 @@ def __init__(admin: address,
 ::::
 
 ### `set_target_debt_fraction`
-::::description[`MonetaryPolicy.set_target_debt_fraction(target_debt_fraction: uint256):`]
+::::description[`MonetaryPolicy.set_target_debt_fraction(target_debt_fraction: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -381,11 +369,11 @@ This function is only callable by the `admin` of the contract, which is the Curv
 
 Function to set a new value for the debt fraction target. New value needs to be less than or equal to `MAX_TARGET_DEBT_FRACTION`.
 
-Emits: `SetTargetDebtFraction`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `target_debt_fraction` |  `uint256` | New debt fraction target value |
+
+Emits: `SetTargetDebtFraction` event.
 
 <SourceCode>
 
@@ -434,11 +422,11 @@ PegKeepers must be added to the MonetaryPolicy contract to calculate the rate as
 
 Getter for the PegKeeper contract at index `arg0`.
 
-Returns: PegKeeper contracts (`address`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index of the PegKeeper |
+
+Returns: PegKeeper contracts (`address`).
 
 <SourceCode>
 
@@ -472,12 +460,7 @@ def __init__(admin: address,
 
 <Example>
 
-
-```shell
->>> MonetaryPolicy.peg_keepers(0)
-'0xaA346781dDD7009caa644A4980f044C50cD2ae22'
-```
-
+<ContractCall address="0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1" abi={["function peg_keepers(uint256) view returns (address)"]} method="peg_keepers" args={["0"]} labels={["arg0"]} contractName="MonetaryPolicy" />
 
 </Example>
 
@@ -485,7 +468,7 @@ def __init__(admin: address,
 ::::
 
 ### `add_peg_keeper`
-::::description[`MonetaryPolicy.add_peg_keeper(pk: PegKeeper):`]
+::::description[`MonetaryPolicy.add_peg_keeper(pk: PegKeeper)`]
 
 
 :::guard[Guarded Method]
@@ -497,11 +480,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to add an existing PegKeeper to the monetary policy contract.
 
-Emits: `AddPegKeeper`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `pk` |  `PegKeeper` | PegKeeper address to add |
+
+Emits: `AddPegKeeper` event.
 
 <SourceCode>
 
@@ -542,7 +525,7 @@ def add_peg_keeper(pk: PegKeeper):
 ::::
 
 ### `remove_peg_keeper`
-::::description[`MonetaryPolicy.remove_peg_keeper(pk: PegKeeper):`]
+::::description[`MonetaryPolicy.remove_peg_keeper(pk: PegKeeper)`]
 
 
 :::guard[Guarded Method]
@@ -554,11 +537,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to remove an existing PegKeeper from the monetary policy contract.
 
-Emits: `RemovePegKeeper`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `pk` |  `PegKeeper` | PegKeeper address to remove |
+
+Emits: `RemovePegKeeper` event.
 
 <SourceCode>
 
@@ -593,7 +576,7 @@ def remove_peg_keeper(pk: PegKeeper):
 
 
 ```shell
->>> MonetaryPolicy.remove_peg_keeper("PegKeeper address"):
+>>> MonetaryPolicy.remove_peg_keeper("PegKeeper address")
 ```
 
 
@@ -636,12 +619,7 @@ def __init__(admin: address,
 
 <Example>
 
-
-```shell
->>> MonetaryPolicy.admin()
-'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
-```
-
+<ContractCall address="0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1" abi={["function admin() view returns (address)"]} method="admin" contractName="MonetaryPolicy" />
 
 </Example>
 
@@ -649,7 +627,7 @@ def __init__(admin: address,
 ::::
 
 ### `set_admin`
-::::description[`MonetaryPolicy.set_admin(admin: address):`]
+::::description[`MonetaryPolicy.set_admin(admin: address)`]
 
 
 :::guard[Guarded Method]
@@ -661,11 +639,11 @@ This function is only callable by the `admin` of the contract, which is the Curv
 
 Function to set a new admin.
 
-Emits: `SetAdmin`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `admin` |  `address` | New admin address |
+
+Emits: `SetAdmin` event.
 
 <SourceCode>
 
@@ -735,20 +713,15 @@ def __init__(admin: address,
 
 <Example>
 
-
-```shell
->>> MonetaryPolicy.PRICE_ORACLE()
-'0x18672b1b0c623a30089A280Ed9256379fb0E4E62'
-```
-
+<ContractCall address="0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1" abi={["function PRICE_ORACLE() view returns (address)"]} method="PRICE_ORACLE" contractName="MonetaryPolicy" />
 
 </Example>
 
 
 ::::
 
-### `CONTROLLER_FACOTRY`
-::::description[`MonetaryPolicy.CONTROLLER_FACOTRY() -> address: view`]
+### `CONTROLLER_FACTORY`
+::::description[`MonetaryPolicy.CONTROLLER_FACTORY() -> address: view`]
 
 
 Getter for the controller factory contract. immutable variable!
@@ -781,12 +754,7 @@ def __init__(admin: address,
 
 <Example>
 
-
-```shell
->>> MonetaryPolicy.CONTROLLER_FACOTRY()
-'0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC'
-```
-
+<ContractCall address="0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1" abi={["function CONTROLLER_FACTORY() view returns (address)"]} method="CONTROLLER_FACTORY" contractName="MonetaryPolicy" />
 
 </Example>
 
@@ -794,10 +762,12 @@ def __init__(admin: address,
 ::::
 
 ### `rate_write`
-::::description[`MonetaryPolicy.rate_write() -> uint256:`]
+::::description[`MonetaryPolicy.rate_write() -> uint256`]
 
 
 When adding a new market via the factory contract, `rate_write` is called to check if the MonetaryPolicy contract has the correct ABI.
+
+Returns: the current rate (`uint256`).
 
 <SourceCode>
 
@@ -841,6 +811,7 @@ def calculate_rate() -> uint256:
 
 ```shell
 >>> MonetaryPolicy.rate_write()
+3488503937
 ```
 
 </Example>

@@ -5,7 +5,7 @@ The `FlashLender.vy` contract is an [`ERC-3156`](https://eips.ethereum.org/EIPS/
 
 :::vyper[`FlashLender.vy`]
 
-The source code for the `FlashLender.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/flashloan/FlashLender.vy). Additionally, a `DummyFlashBorrower.vy` contract showcasing a potential usage of a flash loan can also be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/testing/DummyFlashBorrower.vy).
+The source code for the `FlashLender.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/flashloan/FlashLender.vy). Additionally, a `DummyFlashBorrower.vy` contract showcasing a potential usage of a flash loan can also be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/testing/DummyFlashBorrower.vy).
 
 The `FlashLender.vy` is deployed on :logos-ethereum: Ethereum at [`0x26dE7861e213A5351F6ED767d00e0839930e9eE1`](https://etherscan.io/address/0x26dE7861e213A5351F6ED767d00e0839930e9eE1).
 
@@ -24,16 +24,16 @@ The contract does not charge any fees on flash loans. The `fee` and `flashFee` m
 
 Function to take out a flash loan of `amount` of `token` and send them to the `receiver`. The `receiver` address must be a contract that implements the `onFlashLoan(initiator: address, token: address, amount: uint256, fee: uint256, data: Bytes[10**5])` interface. A flash loan must be repaid within the same transaction; otherwise, the transaction will revert. Additionally, the method allows passing custom `data` to the `receiver` contract.
 
-Returns: `True` (`bool`)
-
-Emits: `FlashLoan`
-
 | Input      | Type                   | Description                                   |
 | ---------- | ---------------------- | --------------------------------------------- |
 | `receiver` | `ERC3156FlashBorrower` | Contract to receive the flash loan            |
 | `token`    | `address`              | Address of the token to take the flash loan in|
 | `amount`   | `uint256`              | Amount of tokens to flash loan                |
 | `data`     | `Bytes[10**5]`         | Custom data to pass to the receiver contract  |
+
+Returns: `True` (`bool`).
+
+Emits: `FlashLoan`
 
 <SourceCode>
 
@@ -84,12 +84,12 @@ def flashLoan(receiver: ERC3156FlashBorrower, token: address, amount: uint256, d
 ::::
 
 ### `maxFlashLoan`
-::::description[`FlashLender.maxFlashLoan(token: address) -> uint256`]
+::::description[`FlashLender.maxFlashLoan(token: address) -> uint256: view`]
 
 
 Getter for the maximum amount of flash-loanable tokens. This corresponds to the token balance of the contract (`token.balanceOf(FlashLender)`).
 
-Returns: maximum flash-loanable amount (`uint256`)
+Returns: maximum flash-loanable amount (`uint256`).
 
 | Input   | Type      | Description                                                  |
 | ------- | --------- | ------------------------------------------------------------ |
@@ -174,7 +174,7 @@ fee: public(constant(uint256)) = 0  # 1 == 0.01 %
 ::::
 
 ### `flashFee`
-::::description[`FlashLender.flashFee(token: address, amount: uint256) -> uint256`]
+::::description[`FlashLender.flashFee(token: address, amount: uint256) -> uint256: view`]
 
 
 Getter for the flash fee when taking out a flash loan of `amount` of `token`. This method will always return `0` and will always revert if `token != CRVUSD`.
@@ -231,7 +231,7 @@ reverts: "FlashLender: Unsupported currency"
 ::::
 
 ### `supportedTokens`
-::::description[`FlashLender.supportedTokens(token: address) -> bool`]
+::::description[`FlashLender.supportedTokens(token: address) -> bool: view`]
 
 
 Getter for the supported token by the `FlashLender`. The only supported token is `crvUSD`. Due to the immutability of the contract, no further supported tokens can be added.

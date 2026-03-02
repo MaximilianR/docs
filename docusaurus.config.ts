@@ -282,8 +282,15 @@ const config: Config = {
           // conflict on case-insensitive filesystems and should be handled via server config)
           { from: '/developer/crvUSD/monetarypolicy', to: '/developer/crvusd/monetary-policy' },
           { from: '/developer/crvUSD/flashlender', to: '/developer/crvusd/flash-lender' },
-          { from: '/developer/crvUSD/priceaggregator', to: '/developer/crvusd/price-aggregator' },
-          { from: '/developer/crvUSD/priceaggregator_old', to: '/developer/crvusd/price-aggregator-old' },
+          { from: '/developer/crvUSD/priceaggregator', to: '/developer/crvusd/oracles/price-aggregator' },
+          { from: '/developer/crvUSD/priceaggregator_old', to: '/developer/crvusd/oracles/price-aggregator-old' },
+          // crvUSD subfolder restructure — old flat paths → new subfolder paths
+          { from: '/developer/crvusd/oracle', to: '/developer/crvusd/oracles/overview' },
+          { from: '/developer/crvusd/price-aggregator', to: '/developer/crvusd/oracles/price-aggregator' },
+          { from: '/developer/crvusd/price-aggregator-old', to: '/developer/crvusd/oracles/price-aggregator-old' },
+          { from: '/developer/crvusd/crypto-from-pool-vault-w-agg', to: '/developer/crvusd/oracles/crypto-from-pool-vault-w-agg' },
+          { from: '/developer/crvusd/crypto-from-pools-rate-w-agg', to: '/developer/crvusd/oracles/crypto-from-pools-rate-w-agg' },
+          // monetary-policy/monetary-policy.md resolves to /developer/crvusd/monetary-policy (same-name-as-parent)
           { from: '/developer/crvUSD/factory/factory_full', to: '/developer/crvusd/factory' },
           { from: '/developer/crvusd/factory/overview', to: '/developer/crvusd/factory' },
           { from: '/developer/crvusd/factory/deployer-api', to: '/developer/crvusd/factory' },

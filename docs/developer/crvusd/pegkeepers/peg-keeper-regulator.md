@@ -5,7 +5,7 @@ The regulator contract supervises prices and other parameters telling whether th
 
 :::vyper[`PegKeeperRegulator.vy`]
 
-Source code for the `PegKeeperRegulator.vy` contract is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeperRegulator.vy). Relevant deployments can be found [here](../../deployments.md).
+Source code for the `PegKeeperRegulator.vy` contract is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeperRegulator.vy). Relevant deployments can be found [here](../../deployments.md).
 
 
 :::
@@ -71,6 +71,8 @@ $\text{allowedToProvide} = \frac{0.25 \times 25000000}{1} - 0 = 6250000$
 ::::description[`PegKeeperRegulator.provide_allowed(_pk: address=msg.sender) -> uint256`]
 
 
+Function to check how much crvUSD a PegKeeper is allowed to provide into a liquidity pool. If the PegKeeper is not permitted to provide any, the function will return 0.
+
 :::warning
 
 This function may return a higher amount than the actual crvUSD that can be deposited, as it does not consider the current crvUSD balance of the PegKeeper. The returned value is capped by the maximum crvUSD balance of the PegKeeper in the `_provide` function of the PegKeeper itself.
@@ -78,13 +80,11 @@ This function may return a higher amount than the actual crvUSD that can be depo
 
 :::
 
-Function to check how much crvUSD a PegKeeper is allowed to provide into a liquidity pool. If the PegKeeper is not permitted to provide any, the function will return 0.
-
-Returns: amount of crvUSD allowed to provide (`uint256`).
-
 | Input | Type      | Description                                         |
 | ----- | --------- | --------------------------------------------------- |
 | `_pk` | `address` | PegKeeper address; Defaults to `msg.sender` as the function is usually called by the PegKeeper itself |
+
+Returns: amount of crvUSD allowed to provide (`uint256`).
 
 <SourceCode>
 
@@ -230,6 +230,8 @@ def _get_max_ratio(_debt_ratios: DynArray[uint256, MAX_LEN]) -> uint256:
 ::::description[`PegKeeperRegulator.withdraw_allowed(_pk: address=msg.sender) -> uint256`]
 
 
+Function to check how much crvUSD a PegKeeper is allowed to withdraw from the pool.
+
 :::warning
 
 If allowance to withdraw is granted, the function will always return `max_value(uint256)`. The actual value to withdraw is limited within the `_withdraw` function of the PegKeeper itself.
@@ -237,14 +239,11 @@ If allowance to withdraw is granted, the function will always return `max_value(
 
 :::
 
-Function to check how much crvUSD a PegKeeper is allowed to withdraw from the pool.
-
-Returns: amount of crvUSD allowed to withdraw (`uint256`).
-
 | Input | Type      | Description                                          |
 | ----- | --------- | ---------------------------------------------------- |
 | `_pk` | `address` | PegKeeper address; defaults to `msg.sender` as it's usually called by the PegKeeper itself |
 
+Returns: amount of crvUSD allowed to withdraw (`uint256`).
 
 <SourceCode>
 
@@ -397,15 +396,6 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 
 </Example>
 
-<Example>
-
-```shell
->>> soon
-```
-
-
-</Example>
-
 
 ::::
 
@@ -545,7 +535,7 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ::::description[`PegKeeperRegulator.set_worst_price_threshold(_threshold: uint256)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -600,7 +590,7 @@ def set_worst_price_threshold(_threshold: uint256):
 ::::description[`PegKeeperRegulator.set_price_deviation(_deviation: uint256)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -655,7 +645,7 @@ def set_price_deviation(_deviation: uint256):
 ::::description[`PegKeeperRegulator.set_debt_parameters(_alpha: uint256, _beta: uint256)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -772,7 +762,7 @@ peg_keepers: public(DynArray[PegKeeperInfo, MAX_LEN])
 ::::description[`PegKeeperRegulator.add_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN])`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -846,7 +836,7 @@ def add_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN]):
 ::::description[`PegKeeperRegulator.remove_peg_keepers(_peg_keepers: DynArray[PegKeeper, MAX_LEN])`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -972,7 +962,7 @@ is_killed: public(Killed)
 ::::description[`PegKeeperRegulator.set_killed(_is_killed: Killed)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` or `emergency` of the contract.
 
@@ -1087,7 +1077,7 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 ::::description[`PegKeeperRegulator.set_admin(_admin: address)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -1184,11 +1174,11 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _fee_receiver: address, _admi
 
 Function to set a new emergency admin for the contract.
 
-Emits: `SetEmergencyAdmin`
-
 | Input    | Type      | Description  |
 | -------- | --------- | ------------ |
 | `_admin` | `address` | New emergency admin address |
+
+Emits: `SetEmergencyAdmin`
 
 <SourceCode>
 
@@ -1308,7 +1298,7 @@ def __init__(_stablecoin: ERC20, _agg: Aggregator, _admin: address, _emergency_a
 ::::description[`PegKeeperRegulator.set_fee_receiver(_fee_receiver: address)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -1361,7 +1351,7 @@ def set_fee_receiver(_fee_receiver: address):
 ::::description[`PegKeeperRegulator.set_aggregator(_agg: Aggregator)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -1374,7 +1364,7 @@ Emits: `SetAggregator`
 
 | Input           | Type      | Description             |
 | --------------- | --------- | ----------------------- |
-| `_fee_receiver` | `address` | New aggregator contract |
+| `_agg` | `address` | New aggregator contract |
 
 <SourceCode>
 
