@@ -333,24 +333,26 @@ export default {
                 { type: 'doc', id: 'crvusd/crvusd', label: 'crvUSD Token' },
                 { type: 'doc', id: 'crvusd/controller', label: 'Controller' },
                 { type: 'doc', id: 'crvusd/amm', label: 'LLAMMA (AMM)' },
+                { type: 'doc', id: 'crvusd/flash-lender', label: 'FlashLender' },
                 {
                     type: 'category',
                     label: 'Oracles',
                     items: [
-                        { type: 'doc', id: 'crvusd/oracle', label: 'Oracle' },
-                        { type: 'doc', id: 'crvusd/price-aggregator', label: 'PriceAggregator' },
-                        { type: 'doc', id: 'crvusd/price-aggregator-old', label: 'PriceAggregator (Old)' },
+                        { type: 'doc', id: 'crvusd/oracles/overview', label: 'Overview' },
+                        { type: 'doc', id: 'crvusd/oracles/crypto-from-pool-vault-w-agg', label: 'CryptoFromPoolVaultWAgg' },
+                        { type: 'doc', id: 'crvusd/oracles/crypto-from-pools-rate-w-agg', label: 'CryptoFromPoolsRateWAgg' },
+                        { type: 'doc', id: 'crvusd/oracles/price-aggregator', label: 'PriceAggregator' },
+                        { type: 'doc', id: 'crvusd/oracles/price-aggregator-old', label: 'PriceAggregator (Old)' },
                     ],
                 },
                 {
                     type: 'category',
                     label: 'Monetary Policy',
                     items: [
-                        { type: 'doc', id: 'crvusd/monetary-policy', label: 'Monetary Policy' },
+                        { type: 'doc', id: 'crvusd/monetary-policy/monetary-policy', label: 'Monetary Policy' },
                     ],
                 },
-                { type: 'doc', id: 'crvusd/flash-lender', label: 'FlashLender' },
-                { type: 'doc', id: 'crvusd/factory', label: 'Factory' },
+                { type: 'doc', id: 'crvusd/factory', label: 'MarketFactory' },
                 {
                     type: 'category',
                     label: 'PegKeepers',

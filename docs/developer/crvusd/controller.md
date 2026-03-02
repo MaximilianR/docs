@@ -2,6 +2,7 @@
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 
 The Controller contract acts as a on-chain interface for **creating loans and further managing existing positions**. It holds all user debt information. External liquidations are also done through it.
 
@@ -9,7 +10,7 @@ The Controller contract acts as a on-chain interface for **creating loans and fu
 
 :::vyper[`Controller.vy`]
 
-Each market deploys its own Controller from a blueprint contract. Source code is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/Controller.vy). Relevant deployments can be found [here](../deployments.md).
+Each market deploys its own Controller from a blueprint contract. Source code is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/Controller.vy). Relevant deployments can be found [here](../deployments.md).
 
 :::
 
@@ -29,33 +30,18 @@ For full version details, see the [crvUSD Overview](./overview.md#controller--am
 
 *Controller contracts are currently used for the following two cases:*
 
+<DocCardGrid>
+  <DocCard title="Curve Stablecoin" icon="crvusd" link="./overview" linkText="crvUSD Overview">
 
-- **Curve Stablecoin - minting crvUSD:** Minting crvUSD is only possible with whitelised collateral by the DAO and requires users to provide collateral against which they can mint[^1] crvUSD. Provided collateral is deposited into LLAMMA according to the number of bands chosen. Subsequently, **crvUSD is backed by the assets provided as collateral**.
+Minting crvUSD is only possible with whitelisted collateral approved by the DAO. Users provide collateral, which is deposited into LLAMMA according to the number of bands chosen. crvUSD is **backed by the assets provided as collateral**. The system does not actually mint crvUSD — tokens are "pre-minted" to the Controller from which they can be borrowed.
 
-    <figure>
-    <img src="../assets/images/mint_controller1.svg" alt="" width="500" />
-    <figcaption></figcaption>
-    </figure>
+  </DocCard>
+  <DocCard title="Curve Lending Markets" icon="vyper" link="../lending/overview" linkText="Lending Overview">
 
-    [^1]: The system does not actually mint crvUSD, as the tokens are "pre-minted". If a controller has a 100m debt ceiling, 100m crvUSD will be minted to the Controller from which the tokens can be borrowed.
+In lending markets, any token composition is possible as long as one of the assets is crvUSD. Unlike the minting system, borrowed assets are **not minted but provided by lenders** who deposit into an [ERC-4626 Vault](../lending/contracts/vault.md), where they earn interest.
 
-    Repaying the loan is straightforward: Debt is repaid, the health of the loan improves, allowing for the removal of collateral from LLAMMA. When the entire loan is repaid, the user can remove their entire collateral.
-
-
-- **Curve Lending Markets***[→ Curve Lending Overview](../lending/overview.md)*
-
-    In lending markets, not only can crvUSD be borrowed. Every lending market token composition is possible as long as one of the assets, no matter if collateral or borrowable asset, is crvUSD.
-
-    The main difference compared to the minting system above is that there are no tokens minted (neglecting the ERC-4626 vault token here) and therefore **not backed by the provided collateral token**. E.g., if there is a CRV&lt;&gt;crvUSD lending market, with CRV as collateral and crvUSD as borrowable asset, then the borrowed crvUSD are not minted but rather borrowed. **Borrowable assets are provided by lenders**, who deposit the assets into an [ERC-4626 Vault](../lending/contracts/vault.md), where they earn interest for lending out their assets.
-
-
-    <figure>
-    <img src="../assets/images/lending_overview.svg" alt="" width="600" />
-    <figcaption></figcaption>
-    </figure>
-
-
-    Repaying the loan is straightforward: Debt is repaid, the health of the loan improves, allowing for the removal of collateral from LLAMMA. When the entire loan is repaid, the user can remove their entire collateral.
+  </DocCard>
+</DocCardGrid>
 
 ---
 
@@ -68,7 +54,7 @@ The maximum amount of borrowable debt is determined by the number of bands, the 
 
 The loan-to-value (LTV) ratio depends on the number of bands `N` and the parameter `A`. The higher the number of bands, the lower the LTV. More on bands [here](../crvusd/amm.md#bands).
 
-$$LTV = \text{100%} - \text{loan_discount} - 100 * \frac{N}{2*A}$$
+$$LTV = 100\% - \text{loan\_discount} - 100 \cdot \frac{N}{2 \cdot A}$$
 
 
 :::info[V3 Only — Extra Health Buffer]
@@ -90,14 +76,14 @@ A simple notebook showcasing how to create a loan using `create_loan` and then h
 
 Function to create a new loan, requiring specification of the amount of `collateral` to be deposited into `N` bands and the amount of `debt` to be borrowed. The lower bands choosen, the higher the loss when the position is in soft-liquiation. Should there already be an existing loan, the function will revert. Before creating a loan, there is the option to set [`extra_health`](#extra_health) using [`set_extra_health`](#set_extra_health) which leads to a higher health when entering soft liquidation.
 
-Emits: `UserState`, `Borrow`, `Deposit` and `Transfer`
-
 | Input        | Type      | Description                           |
 | ------------ | --------- | ------------------------------------- |
 | `collateral` | `uint256` | Amount of collateral token to put up as collateral (at its native precision) |
 | `debt`       | `uint256` | Amount of debt to take on             |
 | `N`          | `uint256` | Number of bands to deposit into; must range between `MIN_TICKS` and `MAX_TICKS` |
 | `_for`       | `address` | Address to create the loan for (requires [`approval`](#approve)); **V3 only** |
+
+Emits: `UserState`, `Borrow`, `Deposit` and `Transfer`
 
 <SourceCode>
 
@@ -449,12 +435,10 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 ::::
 
 ### `create_loan_extended`
-::::description[`Controller.create_loan_extended(collateral: uint256, debt: uint256, N: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
+::::description[`Controller.create_loan_extended(collateral: uint256, debt: uint256, N: uint256, callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b"")`]
 
 
 Function to create a new loan using callbacks. This function passes the stablecoin to a callback first, enabling the construction of leverage. Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/leverage-zap-1inch.md#building-leverage). Before creating a loan, there is the option to set [`extra_health`](#extra_health) using [`set_extra_health`](#set_extra_health) which leads to a higher health when entering soft liquidation.
-
-Emits: `UserState`, `Borrow`, `Deposit`, and `Transfer`
 
 | Input           | Type                  | Description                                           |
 | --------------- | --------------------- | ----------------------------------------------------- |
@@ -465,6 +449,8 @@ Emits: `UserState`, `Borrow`, `Deposit`, and `Transfer`
 | `callback_args` | `DynArray[uint256,5]` | Extra arguments for the callback (up to 5), such as `min_amount`, etc. See [`LeverageZap1inch.vy`](./leverage/leverage-zap-1inch.md) for more information |
 | `callback_bytes` | `Bytes[10**4]`       | Callback bytes passed to the LeverageZap. Defaults to `b""` |
 | `_for`       | `address` | Address to create the loan for (requires [`approval`](#approve)); **V3 only** |
+
+Emits: `UserState`, `Borrow`, `Deposit`, and `Transfer`
 
 <SourceCode>
 
@@ -1584,14 +1570,14 @@ This example shows the upper band into which the collateral is deposited.
 
 Function to partially or fully repay `_d_debt` amount of debt. If `_d_debt` exceeds the total debt amount of the user, a full repayment will be done.
 
-Emits: `UserState` and `Repay`
-
 | Input              | Type      | Description                                                     |
 | ------------------ | --------- | --------------------------------------------------------------- |
 | `_d_debt`          | `uint256` | Amount of debt to repay                                         |
 | `_for`             | `address` | Address to repay the debt for; defaults to `msg.sender`         |
 | `max_active_band`  | `int256`  | Highest active band. Used to prevent front-running the repay; defaults to `2**255-1` |
 | `use_eth`          | `bool`    | Use wrapping/unwrapping if collateral is ETH                    |
+
+Emits: `UserState` and `Repay`
 
 <SourceCode>
 
@@ -1989,12 +1975,10 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 ::::
 
 ### `repay_extended`
-::::description[`Controller.repay_extended(callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b]
+::::description[`Controller.repay_extended(callbacker: address, callback_args: DynArray[uint256,5], callback_bytes: Bytes[10**4] = b"")`]
 
 
 Extended function to repay a loan but obtain a stablecoin for that from a callback (to deleverage). Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/leverage-zap-1inch.md#unwinding-leverage).
-
-Emits: `UserState` and `Repay`
 
 | Input            | Type                  | Description                                          |
 | ---------------- | --------------------- | ---------------------------------------------------- |
@@ -2002,6 +1986,8 @@ Emits: `UserState` and `Repay`
 | `callback_args`  | `DynArray[uint256,5]` | Extra arguments for the callback (up to 5), such as `min_amount` |
 | `callback_bytes` | `Bytes[10**4]`        | Callback bytes passed to the LeverageZap. Defaults to `b""` |
 | `_for`       | `address` | Address to repay debt for (requires approval); **V3 only** |
+
+Emits: `UserState` and `Repay`
 
 <SourceCode>
 
@@ -2447,12 +2433,12 @@ An already existing loan can be managed in different ways:
 
 Function to add extra collateral to an existing loan. Reverts when trying to add `0` collateral tokens.
 
-Emits: `UserState` and `Borrow`
-
 | Input        | Type      | Description                    |
 | ------------ | --------- | ------------------------------ |
 | `collateral` | `uint256` | Amount of collateral to add    |
 | `_for`       | `address` | Address to add collateral for; defaults to `msg.sender` |
+
+Emits: `UserState` and `Borrow`
 
 <SourceCode>
 
@@ -2818,12 +2804,12 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 
 Function to remove collateral from an existing loan.
 
-Emits: `UserState` and `RemoveCollateral`
-
 | Input        | Type      | Description                                                |
 | ------------ | --------- | ---------------------------------------------------------- |
 | `collateral` | `uint256` | Amount of collateral to remove                             |
 | `_for`    | `address`    | Address to remove collateral for |
+
+Emits: `UserState` and `RemoveCollateral`
 
 <SourceCode>
 
@@ -3207,13 +3193,13 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 
 Function to borrow more assets while adding more collateral (not necessary).
 
-Emits: `UserState` and `Borrow`
-
 | Input        | Type      | Description                      |
 | ------------ | --------- | -------------------------------- |
 | `collateral` | `uint256` | Amount of collateral to add      |
 | `debt`       | `uint256` | Amount of debt to take           |
 | `_for`       | `address` | Address to borrow for (requires approval); **V3 only** |
+
+Emits: `UserState` and `Borrow`
 
 <SourceCode>
 
@@ -3592,8 +3578,6 @@ def deposit_range(user: address, amount: uint256, n1: int256, n2: int256):
 
 Function to borrow more assets while adding more collateral. This method uses callacks to build up leverage. Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/leverage-zap-1inch.md#building-leverage).
 
-Emits: `UserState` and `Borrow`
-
 | Input            | Type                  | Description                      |
 | ---------------- | --------------------- | -------------------------------- |
 | `collateral`     | `uint256`             | Amount of collateral to add      |
@@ -3603,6 +3587,8 @@ Emits: `UserState` and `Borrow`
 | `callback_args` | `DynArray[uint256,5]` | Extra arguments for the callback (up to 5), such as `min_amount`, etc; see [`LeverageZap1inch.vy`](./leverage/leverage-zap-1inch.md) for more informations |
 | `callback_bytes` | `Bytes[10**4]`        | Callback bytes passed to the LeverageZap. Defaults to `b""` |
 | `_for`       | `address` | Address to borrow for (requires approval); **V3 only** |
+
+Emits: `UserState` and `Borrow`
 
 <SourceCode>
 
@@ -4220,13 +4206,13 @@ This example shows the calculated health based on changes in collateral and borr
 
 Function to perform a bad liquidation (or self-liquidation) of `user` if `health` is not good.
 
-Emits: `UserState`, `Repay`, and `Liquidate`
-
 | Input    | Type      | Description                                                          |
 | -------- | --------- | -------------------------------------------------------------------- |
 | `user`   | `address` | Address to be liquidated                                             |
 | `min_x`  | `uint256` | Minimal amount of asset to receive (to avoid liquidators being sandwiched) |
 | `use_eth`| `bool`    | Use wrapping/unwrapping if collateral is ETH                        |
+
+Emits: `UserState`, `Repay`, and `Liquidate`
 
 <SourceCode>
 
@@ -4685,8 +4671,6 @@ def withdraw(user: address, frac: uint256) -> uint256[2]:
 
 Extended function to perform a bad liquidation (or self-liquidation) of `user` if `health` is not good using callbacks. Earlier implementations of the contract did not have `callback_bytes` argument. This was added to enable [leveraging/de-leveraging using the 1inch router](./leverage/leverage-zap-1inch.md).
 
-Emits: `Repay` and `Liquidate`
-
 | Input            | Type                  | Description                                                                |
 | ---------------- | --------------------- | -------------------------------------------------------------------------- |
 | `user`           | `address`             | Address to be liquidated                                                   |
@@ -4696,6 +4680,8 @@ Emits: `Repay` and `Liquidate`
 | `callbacker`     | `address`             | Address of the callback contract                                          |
 | `callback_args`  | `DynArray[uint256,5]` | Extra arguments for the callback (up to 5), such as `min_amount`          |
 | `callback_bytes` | `Bytes[10**4]`        | Callback bytes passed to the LeverageZap. Defaults to `b""` |
+
+Emits: `Repay` and `Liquidate`
 
 <SourceCode>
 
@@ -6183,7 +6169,7 @@ This example returns the state of a user's loan, including the collateral compos
 ::::
 
 ### `loans`
-::::description[`Controller.liquidation_discounts(arg0: uint256) -> uint256: view`]
+::::description[`Controller.loans(arg0: uint256) -> address: view`]
 
 
 Getter for the user address that created a loan at index `arg0`. Only loans with debt greater than 0 are included. Liquidated ones get removed.
@@ -6257,7 +6243,7 @@ def _remove_from_list(_for: address):
 ::::
 
 ### `loan_ix`
-::::description[`Controller.loan_ix(arg0: address) -> address: view`]
+::::description[`Controller.loan_ix(arg0: address) -> uint256: view`]
 
 
 Getter for the user's loan in the list. Only loans with debt greater than 0 are included. Liquidated ones get removed.
@@ -7168,7 +7154,7 @@ log SetBorrowingDiscounts(loan_discount, liquidation_discount)
 
 Each controller has a monetary policy contract. This contract is responsible for the interest rates within the markets. 
 
-While [monetary policies for minting markets](../crvusd/monetary-policy.md) depend on several factors such as the price of crvUSD, pegkeeper debt, etc., the monetary policy for lending markets is solely based on a [semi-log monetary policy](../lending/contracts/semilog-mp.md) which determines the rate based on the utilization of the assets.
+While [monetary policies for minting markets](./monetary-policy/monetary-policy.md) depend on several factors such as the price of crvUSD, pegkeeper debt, etc., the monetary policy for lending markets is solely based on a [semi-log monetary policy](../lending/contracts/semilog-mp.md) which determines the rate based on the utilization of the assets.
 
 
 ### `monetary_policy`
@@ -7584,7 +7570,7 @@ def __init__(
 ::::
 
 ### `amm_price`
-::::description[`Controller.amm_price() -> uint256:`]
+::::description[`Controller.amm_price() -> uint256: view`]
 
 
 Getter for the current price from the AMM.
@@ -7722,7 +7708,7 @@ def _get_p(n: int256, x: uint256, y: uint256) -> uint256:
 
 
 ```shell
->>> Controller.amm_price():
+>>> Controller.amm_price()
 42852102383927213434085
 ```
 
@@ -7824,7 +7810,7 @@ redeemed: public(uint256)
 ## Callbacks
 
 ### `set_callback`
-::::description[`Controller.set_callback(cb: address) -> uint256: view`]
+::::description[`Controller.set_callback(cb: address)`]
 
 
 :::guard[Guarded Method]

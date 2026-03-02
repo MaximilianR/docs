@@ -1,18 +1,297 @@
 # PriceAggregator
 
 
-The `AggregateStablePrice.vy` contract is designed to **get an aggregated price of crvUSD based on multiple multiple stableswap pools weighted by their TVL**. 
+The `AggregateStablePrice.vy` contract is designed to **get an aggregated price of crvUSD based on multiple stableswap pools weighted by their TVL**.
 
 :::vyper[`AggregateStablePrice.vy`]
 
-There are three iterations of the `AggregateStablePrice` contract. Source code for the contracts can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/price_oracles).
+There are three iterations of the `AggregateStablePrice` contract. Source code for the contracts can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/price_oracles). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.7`.
 
-The `AggregateStablePrice.vy` contract has been deployed on :logos-ethereum: [Ethereum](https://etherscan.io/address/0x18672b1b0c623a30089A280Ed9256379fb0E4E62) and :logos-arbitrum: [Arbitrum](https://arbiscan.io/address/0x44a4FdFb626Ce98e36396d491833606309520330).
+- :logos-ethereum: Ethereum: [`0x18672b1b0c623a30089A280Ed9256379fb0E4E62`](https://etherscan.io/address/0x18672b1b0c623a30089A280Ed9256379fb0E4E62)
+- :logos-arbitrum: Arbitrum: [`0x44a4FdFb626Ce98e36396d491833606309520330`](https://arbiscan.io/address/0x44a4FdFb626Ce98e36396d491833606309520330)
 
+<ContractABI>
+
+```json
+[
+  {
+    "name": "AddPricePair",
+    "inputs": [
+      {
+        "name": "n",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "pool",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "is_inverse",
+        "type": "bool",
+        "indexed": false
+      }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "RemovePricePair",
+    "inputs": [
+      {
+        "name": "n",
+        "type": "uint256",
+        "indexed": false
+      }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "MovePricePair",
+    "inputs": [
+      {
+        "name": "n_from",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "n_to",
+        "type": "uint256",
+        "indexed": false
+      }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "SetAdmin",
+    "inputs": [
+      {
+        "name": "admin",
+        "type": "address",
+        "indexed": false
+      }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "stablecoin",
+        "type": "address"
+      },
+      {
+        "name": "sigma",
+        "type": "uint256"
+      },
+      {
+        "name": "admin",
+        "type": "address"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "set_admin",
+    "inputs": [
+      {
+        "name": "_admin",
+        "type": "address"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "sigma",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "stablecoin",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "add_price_pair",
+    "inputs": [
+      {
+        "name": "_pool",
+        "type": "address"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "remove_price_pair",
+    "inputs": [
+      {
+        "name": "n",
+        "type": "uint256"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "ema_tvl",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "price",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "price_w",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "price_pairs",
+    "inputs": [
+      {
+        "name": "arg0",
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "pool",
+            "type": "address"
+          },
+          {
+            "name": "is_inverse",
+            "type": "bool"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "last_timestamp",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "last_tvl",
+    "inputs": [
+      {
+        "name": "arg0",
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "TVL_MA_TIME",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "last_price",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "admin",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ]
+  }
+]
+```
+
+</ContractABI>
 
 :::
 
-This aggregated price of crvUSD is used in multiple different components in the system such as in [monetary policy contracts](./monetary-policy.md), [PegKeepers](../crvusd/pegkeepers/overview.md) or [oracles for lending markets](../lending/contracts/oracle-overview.md).
+This aggregated price of crvUSD is used in multiple different components in the system such as in [monetary policy contracts](../monetary-policy/monetary-policy.md), [PegKeepers](../pegkeepers/overview.md) or [oracles for lending markets](../../lending/contracts/oracle-overview.md).
 
 
 ---
@@ -27,21 +306,21 @@ The `AggregateStablePrice` contract calculates the **weighted average price of c
 
 The price calculation starts with determining the EMA of the TVL from different Curve Stableswap liquidity pools using the `_ema_tvl` function. This internal function computes the EMA TVLs based on the formula below, which adjusts for the time since the last update to smooth out short-term volatility in the TVL data, providing a more stable and representative average value over the specified time window (`TVL_MA_TIME = 50000`):
 
-$$\alpha = 
-    \begin{cases} 
-    1 & \text{if last_timestamp} = \text{current_timestamp}, \\
-    e^{-\frac{(\text{current_timestamp} - \text{last_timestamp}) * 10^{18}}{\text{TVL_MA_TIME}}} & \text{otherwise}.
+$$\alpha =
+    \begin{cases}
+    1 & \text{if last\_timestamp} = \text{current\_timestamp}, \\
+    e^{-\frac{(\text{current\_timestamp} - \text{last\_timestamp}) \cdot 10^{18}}{\text{TVL\_MA\_TIME}}} & \text{otherwise}.
     \end{cases}
 $$
 
-$$\text{ema_tvl}_{i} = \frac{\text{new_tvl}_i * (10^{18} - \alpha) + \text{tvl}_i * \alpha}{10^{18}}$$
+$$\text{ema\_tvl}_{i} = \frac{\text{new\_tvl}_i \cdot (10^{18} - \alpha) + \text{tvl}_i \cdot \alpha}{10^{18}}$$
 
 *The code snippet provided illustrates the implementation of the above formula in the contract.*
 
 <Dropdown title="Source code for `_ema_tvl`">
 
 
-```py
+```vyper
 TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 
 @internal
@@ -78,7 +357,7 @@ The `_price` function then uses these EMA TVLs to calculate the aggregated price
 <Dropdown title="Source code for `_price`">
 
 
-```py
+```vyper
 @internal
 @view
 def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
@@ -138,11 +417,11 @@ $$\text{average price} = \frac{\text{DPsum}}{\text{Dsum}}$$
 
 $$\text{e}_i = \frac{(\max(p, p_{\text{avg}}) - \min(p, p_{\text{avg}}))^2}{\frac{\text{SIGMA}^2}{10^{18}}}$$
 
-$$\text{e}_{min} = \min(\text{e}_i, \text{max_value(uint256)})$$
+$$\text{e}_{\min} = \min(\text{e}_i, \text{max\_value(uint256)})$$
 
 Applying an exponential decay based on these variance measures to weigh each pool's contribution to the final average price, reducing the influence of prices far from the minimum variance. 
 
-$$w = \frac{\text{D}_i * e^\left({\text{e}_i - e_{min}}\right)}{10^{18}}$$
+$$w = \frac{\text{D}_i \cdot e^{-(\text{e}_i - e_{\min})}}{10^{18}}$$
 
 Next, sum up all `w` to store it in `w_sum` and calculate the product of `w * prices[i]`, which is stored in `wp_sum`.
 
@@ -157,7 +436,7 @@ $$\text{final price} = \frac{\text{wp_sum}}{\text{w_sum}}$$
 ## Price and TVL Methods
 
 ### `price`
-::::description[`PriceAggregator3.price() -> uint256`]
+::::description[`PriceAggregator3.price() -> uint256: view`]
 
 
 Getter for the aggregated price of crvUSD based on the prices of crvUSD within different `price_pairs`.
@@ -166,8 +445,6 @@ Returns: aggregated crvUSD price (`uint256`).
 
 <SourceCode>
 
-
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
 ```vyper
@@ -203,11 +480,7 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
         price_pair: PricePair = self.price_pairs[i]
         pool_supply: uint256 = tvls[i]
         if pool_supply >= MIN_LIQUIDITY:
-            p: uint256 = 0
-            if price_pair.include_index:
-                p = price_pair.pool.price_oracle(0)
-            else:
-                p = price_pair.pool.price_oracle()
+            p: uint256 = price_pair.pool.price_oracle()
             if price_pair.is_inverse:
                 p = 10**36 / p
             prices[i] = p
@@ -264,12 +537,12 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 
 <Example>
 
-
-```shell
->>> PriceAggregator3.price()
-'996396341581883374'
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function price() view returns (uint256)"]}
+  method="price"
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -286,8 +559,6 @@ Returns: aggregated crvUSD price (`uint256`).
 
 <SourceCode>
 
-
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
 ```vyper
@@ -333,11 +604,7 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
         price_pair: PricePair = self.price_pairs[i]
         pool_supply: uint256 = tvls[i]
         if pool_supply >= MIN_LIQUIDITY:
-            p: uint256 = 0
-            if price_pair.include_index:
-                p = price_pair.pool.price_oracle(0)
-            else:
-                p = price_pair.pool.price_oracle()
+            p: uint256 = price_pair.pool.price_oracle()
             if price_pair.is_inverse:
                 p = 10**36 / p
             prices[i] = p
@@ -410,14 +677,12 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ::::description[`PriceAggregator3.last_price() -> uint256: view`]
 
 
-Getter for the last aggregated price of crvUSD. This variable was set to $10^{18}$ (1.00) when initializing the contract and is updated to the current aggreagated crvUSD price every time [`price_w`](#price_w) is called.
+Getter for the last aggregated price of crvUSD. This variable was set to $10^{18}$ (1.00) when initializing the contract and is updated to the current aggregated crvUSD price every time [`price_w`](#price_w) is called.
 
 Returns: last aggregated price of crvUSD (`uint256`). 
 
 <SourceCode>
 
-
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
 ```vyper
@@ -437,12 +702,12 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 
 <Example>
 
-
-```shell
->>> PriceAggregator3.last_price()
-996507976702758416
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function last_price() view returns (uint256)"]}
+  method="last_price"
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -460,8 +725,6 @@ Returns: timestamp of the last price write (`uint256`).
 <SourceCode>
 
 
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
 
 ```vyper
 last_timestamp: public(uint256)
@@ -472,12 +735,12 @@ last_timestamp: public(uint256)
 
 <Example>
 
-
-```shell
->>> PriceAggregator3.last_timestamp()
-1721751359
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function last_timestamp() view returns (uint256)"]}
+  method="last_timestamp"
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -485,7 +748,7 @@ last_timestamp: public(uint256)
 ::::
 
 ### `ema_tvl`
-::::description[`PriceAggregator3.ema_tvl() -> DynArray[uint256, MAX_PAIRS]`]
+::::description[`PriceAggregator3.ema_tvl() -> DynArray[uint256, MAX_PAIRS]: view`]
 
 
 Getter for the exponential moving-average value of TVL across all `price_pairs`.
@@ -494,8 +757,6 @@ Returns: array of ema tvls (`DynArray[uint256, MAX_PAIRS]`).
 
 <SourceCode>
 
-
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
 ```vyper
@@ -543,12 +804,12 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 
 <Example>
 
-
-```shell
->>> PriceAggregator3.ema_tvl()
-10085178042490008379928667, 11342234393448956020187903, 1388144609005835030282562, 784009711366175597305745
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function ema_tvl() view returns (uint256[])"]}
+  method="ema_tvl"
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -570,8 +831,6 @@ Returns: last ema tvl (`uint256`).
 <SourceCode>
 
 
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
 
 ```vyper
 last_tvl: public(uint256[MAX_PAIRS])
@@ -582,15 +841,14 @@ last_tvl: public(uint256[MAX_PAIRS])
 
 <Example>
 
-
-```shell
->>> PriceAggregator3.last_tvl(0)
-10085527382061879315424954
-
->>> PriceAggregator3.last_tvl(1)
-11342418534974695610766448
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function last_tvl(uint256) view returns (uint256)"]}
+  method="last_tvl"
+  args={["0"]}
+  labels={["arg0"]}
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -608,8 +866,6 @@ Returns: ema periodicity (`uint256`).
 <SourceCode>
 
 
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
 
 ```vyper
 TVL_MA_TIME: public(constant(uint256)) = 50000  # s
@@ -620,12 +876,12 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 
 <Example>
 
-
-```shell
->>> PriceAggregator3.TVL_MA_TIME()
-50000
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function TVL_MA_TIME() view returns (uint256)"]}
+  method="TVL_MA_TIME"
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -638,21 +894,23 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 ## Contract Info Methods
 
 ### `sigma`
-::::description[`PriceAggregator3.SIGMA() -> uint256: view`]
+::::description[`PriceAggregator3.sigma() -> uint256: view`]
 
 
-Getter for the sigma value. SIGMA is a predefined constant that influences the adjustment of price deviations, affecting how variations in individual stablecoin prices contribute to the overall average stablecoin price. The value of `sigma` was set to `1000000000000000` when initializing the contract and the variable is immutale, meaning it can not be adjusted.
+Getter for the sigma value. SIGMA is a predefined constant that influences the adjustment of price deviations, affecting how variations in individual stablecoin prices contribute to the overall average stablecoin price. The value of `sigma` was set to `1000000000000000` when initializing the contract and the variable is immutable, meaning it can not be adjusted.
 
 Returns: sigma value (`uint256`).
 
 <SourceCode>
 
 
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-
 ```vyper
 SIGMA: immutable(uint256)
+
+@external
+@view
+def sigma() -> uint256:
+    return SIGMA
 
 @external
 def __init__(stablecoin: address, sigma: uint256, admin: address):
@@ -668,12 +926,12 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 
 <Example>
 
-
-```shell
->>> PriceAggregator3.sigma()
-1000000000000000
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function sigma() view returns (uint256)"]}
+  method="sigma"
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -681,7 +939,7 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ::::
 
 ### `stablecoin`
-::::description[`PriceAggregator3.STABLECOIN() -> uint256: view`]
+::::description[`PriceAggregator3.stablecoin() -> address: view`]
 
 
 Getter for the crvUSD contract address.
@@ -691,11 +949,13 @@ Returns: crvUSD contract (`address`).
 <SourceCode>
 
 
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-
 ```vyper
 STABLECOIN: immutable(address)
+
+@external
+@view
+def stablecoin() -> address:
+    return STABLECOIN
 
 @external
 def __init__(stablecoin: address, sigma: uint256, admin: address):
@@ -711,12 +971,12 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 
 <Example>
 
-
-```shell
->>> PriceAggregator3.STABLECOIN()
-'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function stablecoin() view returns (address)"]}
+  method="stablecoin"
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -731,12 +991,12 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 All liquidity pools used to calculate the aggregated price are stored in `price_pairs`. New price pairs can be added or removed by the DAO using `add_price_pair` and `remove_price_pair`.
 
 ### `price_pairs`
-::::description[`PriceAggregator3.price_pairs(arg0: uint256) -> PricePair`]
+::::description[`PriceAggregator3.price_pairs(arg0: uint256) -> PricePair: view`]
 
 
 Getter for the price pairs added to the `PriceAggregator` contract. New pairs can be added using the [`add_price_pair`](#add_price_pair) function.
 
-Returns: `PricePair` struct consisting of the pool (`address`) amd of it is inverse (`bool`).
+Returns: `PricePair` struct consisting of the pool (`address`) and if it is inverse (`bool`).
 
 | Input  | Type      | Description             |
 | ------ | --------- | ----------------------- |
@@ -745,25 +1005,10 @@ Returns: `PricePair` struct consisting of the pool (`address`) amd of it is inve
 <SourceCode>
 
 
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-=== PriceAggregator3.vy"
-
-    ```vyper
-    struct PricePair:
-        pool: Stableswap
-        is_inverse: bool
-        include_index: bool
-
-    price_pairs: public(PricePair[MAX_PAIRS])
-    ```
-
-
 ```vyper
 struct PricePair:
     pool: Stableswap
     is_inverse: bool
-    include_index: bool
 
 price_pairs: public(PricePair[MAX_PAIRS])
 ```
@@ -773,15 +1018,14 @@ price_pairs: public(PricePair[MAX_PAIRS])
 
 <Example>
 
-
-```shell
->>> PriceAggregator3.price_pairs(0)     # PriceAggregator on Ethereum
-'0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E, false'
-
->>> PriceAggregator3.price_pairs(0)     # PriceAggregator on Arbitrum
-'0xec090cf6DD891D2d014beA6edAda6e05E025D93d, true, true'
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function price_pairs(uint256) view returns (tuple(address,bool))"]}
+  method="price_pairs"
+  args={["0"]}
+  labels={["arg0"]}
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -794,23 +1038,19 @@ price_pairs: public(PricePair[MAX_PAIRS])
 
 :::guard[Guarded Method]
 
-This function is only callable by the `admin` of the contract.
-
+This function is only callable by the `admin` of the contract. The `admin` is the Curve DAO (via the CurveOwnershipAgent).
 
 :::
 
 Function to add a new price pair to the `PriceAggregator`.
 
-Emits: `AddPricePair`
+| Input   | Type         | Description               |
+| ------- | ------------ | ------------------------- |
+| `_pool` | `Stableswap` | Pool to add as price pair |
 
-| Input   | Type      | Description               |
-| ------- | --------- | ------------------------- |
-| `_pool` | `address` | Pool to add as price pair |
+Emits: `AddPricePair` event.
 
 <SourceCode>
-
-
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
 ```vyper
@@ -846,7 +1086,7 @@ def add_price_pair(_pool: Stableswap):
 
 
 ```shell
->>> soon
+>>> PriceAggregator3.add_price_pair("0xpool_address")
 ```
 
 
@@ -861,25 +1101,21 @@ def add_price_pair(_pool: Stableswap):
 
 :::guard[Guarded Method]
 
-This function is only callable by the `admin` of the contract.
-
+This function is only callable by the `admin` of the contract. The `admin` is the Curve DAO (via the CurveOwnershipAgent).
 
 :::
 
 Function to remove the price pair at index `n` from the `PriceAggregator`.
 
-Emits: `RemovePricePair` and conditionally `MovePricePair`[^1].
-
-[^1]: `MovePricePair` event is emitted when the removed price pair is not the last one which was added. In this case, price pairs need to be adjusted accordingly.
-
 | Input | Type      | Description                       |
 | ----- | --------- | --------------------------------- |
 | `n`   | `uint256` | Index of the price pair to remove |
 
+Emits: `RemovePricePair` event and conditionally `MovePricePair` event.[^1]
+
+[^1]: `MovePricePair` event is emitted when the removed price pair is not the last one which was added. In this case, price pairs need to be adjusted accordingly.
+
 <SourceCode>
-
-
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
 ```vyper
@@ -913,7 +1149,7 @@ def remove_price_pair(n: uint256):
 
 
 ```shell
->>> soon
+>>> PriceAggregator3.remove_price_pair(0)
 ```
 
 
@@ -940,9 +1176,6 @@ Returns: current admin (`address`).
 <SourceCode>
 
 
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
-
-
 ```vyper
 admin: public(address)
 
@@ -960,11 +1193,12 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 
 <Example>
 
-
-```shell
->>> soon
-```
-
+<ContractCall
+  address="0x18672b1b0c623a30089A280Ed9256379fb0E4E62"
+  abi={["function admin() view returns (address)"]}
+  method="admin"
+  contractName="PriceAggregator3"
+/>
 
 </Example>
 
@@ -977,23 +1211,19 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 
 :::guard[Guarded Method]
 
-This function is only callable by the `admin` of the contract.
-
+This function is only callable by the `admin` of the contract. The `admin` is the Curve DAO (via the CurveOwnershipAgent).
 
 :::
 
-Function to set a new adderss as the `admin` of the contract.
-
-Emits: `SetAdmin`
+Function to set a new address as the `admin` of the contract.
 
 | Input    | Type      | Description                     |
 | -------- | --------- | ------------------------------- |
-| `_admin` | `uint256` | New address to set the admin to |
+| `_admin` | `address` | New address to set the admin to |
+
+Emits: `SetAdmin` event.
 
 <SourceCode>
-
-
-The following source code includes all changes up to commit hash [86cae3a](https://github.com/curvefi/curve-stablecoin/tree/86cae3a89f2138122be428b3c060cc75fa1df1b0); any changes made after this commit are not included.
 
 
 ```vyper
@@ -1018,7 +1248,7 @@ def set_admin(_admin: address):
 
 
 ```shell
->>> soon
+>>> PriceAggregator3.set_admin("0xnew_admin_address")
 ```
 
 

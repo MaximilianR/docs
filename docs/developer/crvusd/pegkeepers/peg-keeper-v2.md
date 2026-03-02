@@ -3,7 +3,7 @@
 
 :::vyper[`PegKeeperV2.vy`]
 
-Source code for the `PegKeeperV2.vy` contract is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeperV2.vy). Relevant deployments can be found [here](../../deployments.md).
+Source code for the `PegKeeperV2.vy` contract is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeperV2.vy). Relevant deployments can be found [here](../../deployments.md).
 
 
 :::
@@ -23,16 +23,16 @@ For a detailed overview on the additional checks implemented, please see: [Provi
 ::::description[`PegKeeperV2.update(_beneficiary: address = msg.sender) -> uint256`]
 
 
-Function to provide or withdraw coins from the pool to stabilize it. The `_beneficiary` address is awarded a share of the profits for calling the function. There is a delay determined by the `action_delay` variable before the function can be called again. If it is called prior to that, the function will return 0. The maximum amount to provide is to get the pool to a 50/50 balance. Obviously, the PegKeeper is ultimately limited by its own balance of crvUSD. It can't deposit more than it has.  
+Function to provide or withdraw coins from the pool to stabilize it. The `_beneficiary` address is awarded a share of the profits for calling the function. There is a delay determined by the `action_delay` variable before the function can be called again. If it is called prior to that, the function will return 0. The maximum amount to provide is to get the pool to a 50/50 balance. Obviously, the PegKeeper is ultimately limited by its own balance of crvUSD. It can't deposit more than it has.
 If a PegKeeper is ultimately allowed to deposit or withdraw is determined by the [`PegKeeperRegulator`](./peg-keeper-regulator.md).
-
-Returns: amount of profit received by the beneficiary (`uint256`).
-
-Emits: `Provide` or `Withdraw`
 
 | Input          | Type      | Description |
 | -------------- | --------- | ----------- |
 | `_beneficiary` | `address` | Address to receive the caller profit. Defaults to `msg.sender` |
+
+Returns: amount of profit received by the beneficiary (`uint256`).
+
+Emits: `Provide` or `Withdraw`
 
 <Dropdown title="Source code for providing crvUSD to the pool">
 
@@ -421,14 +421,14 @@ def _calc_profit_from(lp_balance: uint256, virtual_price: uint256, debt: uint256
 ::::description[`PegKeeperV2.estimate_caller_profit() -> uint256`]
 
 
+Function to estimate the profit that a caller would receive from calling the `update()` function.
+
 :::warning
 
 This estimation is not precise and tends to be conservative, as the actual profit might be higher due to the increasing virtual price over time.
 
 
 :::
-
-Function to estimate the profit that a caller would receive from calling the `update()` function. 
 
 Returns: estimated caller profit (`uint256`).
 
@@ -534,7 +534,7 @@ def _calc_profit_from(lp_balance: uint256, virtual_price: uint256, debt: uint256
 
 Getter for the caller share, which represents the share of the profit generated when the `update()` function is called. This share is designed to incentivize users to call the function. SHARE_PRECISION is set to $10^5$.
 
-Returns: caller share (`uint256`)
+Returns: caller share (`uint256`).
 
 <SourceCode>
 
@@ -585,7 +585,7 @@ def __init__(
 ::::description[`PegKeeperV2.set_new_caller_share(_new_caller_share: uint256)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.    
 
@@ -887,7 +887,7 @@ def __init__(
 ::::description[`PegKeeperV2.set_new_regulator(_new_regulator: Regulator)`]
 
 
-:::guard[Guarded Methods]
+:::guard[Guarded Method]
 
 This function can only be called by the `admin` of the contract.
 
@@ -1160,7 +1160,7 @@ def apply_new_admin():
 
 Getter for the admin deadline. When commiting a new admin, there is a delay of three days (`ADMIN_ACTIONS_DELAY`) before the change of ownership can be applied. Otherwise the call will revert.
 
-Returns: timestamp after which the new admin can be applied (`uint256`)
+Returns: timestamp after which the new admin can be applied (`uint256`).
 
 <SourceCode>
 

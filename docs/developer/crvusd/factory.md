@@ -1,14 +1,14 @@
-# Factory
+# MarketFactory
 
-The crvUSD Factory enables the **creation of new markets**and adjustments, including **setting a new fee receiver**, **modifying the debt ceiling**of an existing market, or **updating blueprint implementations**.
+The crvUSD MarketFactory enables the **creation of new markets**and adjustments, including **setting a new fee receiver**, **modifying the debt ceiling**of an existing market, or **updating blueprint implementations**.
 
 Other than the pool factory, this factory **does not allow permissionless deployment of new markets**. Only its **`admin`**, the CurveOwnershipAgent, can call to add a market. Therefore, adding a new market requires a successfully passed DAO vote.
 
-:::deploy[Contract Source & Deployment]
+:::vyper[`ControllerFactory.vy`]
 
-**crvUSD Market Factory**contract is deployed to the Ethereum mainnet at: [0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC](https://etherscan.io/address/0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC#code).
-Source code available on [Github](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/ControllerFactory.vy).
+The source code for the `ControllerFactory.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/ControllerFactory.vy).
 
+The contract is deployed on :logos-ethereum: Ethereum at [`0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC`](https://etherscan.io/address/0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC#code).
 
 :::
 
@@ -22,7 +22,7 @@ A new crvUSD market can be added by the CurveOwnershipAgent. Therefore, adding a
 
 
 ### `add_market`
-::::description[`ControllerFactory.add_market(token: address, A: uint256, fee: uint256, admin_fee: uint256, _price_oracle_contract: address, monetary_policy: address, loan_discount: uint256, liquidation_discount: uint256, debt_ceiling: uint256) -> address[2]:`]
+::::description[`ControllerFactory.add_market(token: address, A: uint256, fee: uint256, admin_fee: uint256, _price_oracle_contract: address, monetary_policy: address, loan_discount: uint256, liquidation_discount: uint256, debt_ceiling: uint256) -> address[2]`]
 
 
 :::guard[Guarded Method]
@@ -33,10 +33,6 @@ This function is only callable by the `admin` of the contract.
 :::
 
 Function to add a new market and automatically deploy a new AMM and a Controller from the implementation contracts (see [Implementations](#implementations)). Additionally, when initializing a new market, **`rate_write()`**from the MonetaryPolicy contract is called to check if it has a correct ABI.
-
-Returns: AMM and Controller contracts (`address`).
-
-Emits: `AddNewMarket`
 
 | Input                    | Type      | Description                                                  |
 | ------------------------ | --------- | ------------------------------------------------------------ |
@@ -57,6 +53,10 @@ There are some limitation values for adding new markets regarding `fee`, `A` and
 
 
 :::
+
+Returns: AMM and Controller contracts (`address`).
+
+Emits: `AddNewMarket`
 
 <SourceCode>
 
@@ -260,7 +260,7 @@ def set_admin(_admin: address):
 ## Debt Ceilings
 
 ### `debt_ceiling`
-::::description[`ControllerFactory.debt_ceiling(agr0: address) -> uint256: view`]
+::::description[`ControllerFactory.debt_ceiling(arg0: address) -> uint256: view`]
 
 
 Getter for the current debt ceiling of a market.
@@ -330,7 +330,7 @@ debt_ceiling: public(HashMap[address, uint256])
 ::::
 
 ### `rug_debt_ceiling`
-::::description[`ControllerFactory.rug_debt_ceiling(_to: address):`]
+::::description[`ControllerFactory.rug_debt_ceiling(_to: address)`]
 
 
 Function to remove stablecoins above the debt seiling from a controller and burn them. This function is used to burn residual crvUSD when the debt ceiling was lowered.
@@ -395,7 +395,7 @@ def _set_debt_ceiling(addr: address, debt_ceiling: uint256, update: bool):
 ::::
 
 ### `set_debt_ceiling`
-::::description[`ControllerFactory.set_debt_ceiling(_to: address, debt_ceiling: uint256):`]
+::::description[`ControllerFactory.set_debt_ceiling(_to: address, debt_ceiling: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -407,14 +407,12 @@ This function is only callable by the `admin` of the contract.
 
 Function to set the debt ceiling of a market and mint the token amount given for it.
 
-Returns: debt ceiling (`uint256`).
-
-Emits: `MintForMarket` or `RemoveFromMarket` or `SetDebtCeiling`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_to` |  `address` | Address to set debt ceiling for |
 | `debt_ceiling` |  `uint256` | Maximum to be allowed to mint |
+
+Emits: `MintForMarket` or `RemoveFromMarket` or `SetDebtCeiling`
 
 <SourceCode>
 
@@ -572,7 +570,7 @@ def __init__(stablecoin: ERC20,
 ::::
 
 ### `set_fee_receiver`
-::::description[`ControllerFactory.set_fee_receiver(fee_receiver: address):`]
+::::description[`ControllerFactory.set_fee_receiver(fee_receiver: address)`]
 
 
 :::guard[Guarded Method]
@@ -584,11 +582,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to set the fee receiver address.
 
-Emits: `SetFeeReceiver`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `fee_receiver` |  `address` | Address of the receiver |
+
+Emits: `SetFeeReceiver`
 
 <SourceCode>
 
@@ -628,7 +626,7 @@ def set_fee_receiver(fee_receiver: address):
 ::::
 
 ### `collect_fees_above_ceiling`
-::::description[`ControllerFactory.collect_fees_above_ceiling(_to: address):`]
+::::description[`ControllerFactory.collect_fees_above_ceiling(_to: address)`]
 
 
 :::guard[Guarded Method]
@@ -756,7 +754,7 @@ amm_implementation: public(address)
 ::::
 
 ### `set_implementations`
-::::description[`ControllerFactory.set_implementations(controller: address, amm: address):`]
+::::description[`ControllerFactory.set_implementations(controller: address, amm: address)`]
 
 
 :::guard[Guarded Method]
@@ -768,12 +766,12 @@ This function is only callable by the `admin` of the contract.
 
 Function to set new implementations (blueprints) for Controller and AMM. Setting new implementations for Controller and AMM does not affect the existing ones.
 
-Emits: `SetImplementations`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `controller` |  `Address` | Address of the controller blueprint |
-| `amm` |  `Address` | Address of the amm blueprint |
+| `controller` |  `address` | Address of the controller blueprint |
+| `amm` |  `address` | Address of the amm blueprint |
+
+Emits: `SetImplementations`
 
 <SourceCode>
 
@@ -808,7 +806,7 @@ def set_implementations(controller: address, amm: address):
 <Example>
 
 ```shell
->>> ControllerFactory.set_implementation("new controller implementation, new amm implementation")
+>>> ControllerFactory.set_implementations("new controller implementation", "new amm implementation")
 ```
 
 
@@ -915,7 +913,7 @@ def total_debt() -> uint256:
 ::::
 
 ### `get_controller`
-::::description[`ControllerFactory.get_controller(collateral: address, i: uint256 = 0) -> address:`]
+::::description[`ControllerFactory.get_controller(collateral: address, i: uint256 = 0) -> address: view`]
 
 
 Getter for the controller address for `collateral`.
@@ -959,7 +957,7 @@ def get_controller(collateral: address, i: uint256 = 0) -> address:
 ::::
 
 ### `get_amm`
-::::description[`ControllerFactory.get_amm(collateral: address, i: uint256 = 0) -> address:`]
+::::description[`ControllerFactory.get_amm(collateral: address, i: uint256 = 0) -> address: view`]
 
 
 Getter for the amm address for `collateral`.
@@ -1003,7 +1001,7 @@ def get_amm(collateral: address, i: uint256 = 0) -> address:
 ::::
 
 ### `controllers`
-::::description[`ControllerFactory.controllers(arg0: uint256) -> address:`]
+::::description[`ControllerFactory.controllers(arg0: uint256) -> address: view`]
 
 
 Getter for the controller address at index `arg0`.
@@ -1039,7 +1037,7 @@ controllers: public(address[MAX_CONTROLLERS])
 ::::
 
 ### `amms`
-::::description[`ControllerFactory.amms(arg0: uint256) -> address:`]
+::::description[`ControllerFactory.amms(arg0: uint256) -> address: view`]
 
 
 Getter for the amm address at index `arg0`.
@@ -1140,10 +1138,15 @@ collaterals: public(address[MAX_CONTROLLERS])
 ::::
 
 ### `collaterals_index`
-::::description[`ControllerFactory.collaterals(arg0: address, arg1: uint256) -> uint256: view`]
+::::description[`ControllerFactory.collaterals_index(arg0: address, arg1: uint256) -> uint256: view`]
 
 
 Getter for the index of a controller for `arg0`.
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `arg0` |  `address` | Address of collateral |
+| `arg1` |  `uint256` | Index |
 
 Returns: index (`uint256`).
 
@@ -1153,11 +1156,6 @@ The returned value is $2^{128}$ + index.
 
 
 :::
-
-| Input      | Type   | Description |
-| ----------- | -------| ----|
-| `arg0` |  `address` | Address of collateral |
-| `arg0` |  `uint256` | Index |
 
 <SourceCode>
 
@@ -1172,7 +1170,7 @@ collaterals_index: public(HashMap[address, uint256[1000]])
 <Example>
 
 ```shell
->>> ControllerFactory.collaterals(0xac3E018457B222d93114458476f3E3416Abbe38F, 0)
+>>> ControllerFactory.collaterals_index(0xac3E018457B222d93114458476f3E3416Abbe38F, 0)
 340282366920938463463374607431768211456
 ```
 
@@ -1285,7 +1283,7 @@ def __init__(stablecoin: ERC20,
 ::::
 
 ### `set_admin`
-::::description[`ControllerFactory.set_admin(admin: address):`]
+::::description[`ControllerFactory.set_admin(admin: address)`]
 
 
 :::guard[Guarded Method]
@@ -1297,11 +1295,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to set the admin of the contract.
 
-Emits: `SetAdmin`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `admin` |  `address` | New admin |
+
+Emits: `SetAdmin`
 
 <SourceCode>
 

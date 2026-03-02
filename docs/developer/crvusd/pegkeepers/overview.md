@@ -2,7 +2,7 @@
 
 :::github[GitHub]
 
-Source code of all PegKeepers can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/stabilizer).
+Source code of all PegKeepers can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/stabilizer).
 
 A list of all contract deployments can be found [here](../../deployments.md).
 
@@ -34,7 +34,7 @@ PegKeepers significantly influence the interest rate of crvUSD markets. The inte
 
 $$\text{DebtFraction} = \frac{{\text{PegKeeperDebt}}}{{\text{TotalDebt}}}$$
 
-For a comprehensive understanding of the factors influencing the interest rate, please refer to the [MonetaryPolicy](../monetary-policy.md#interest-rate-mechanics) section.
+For a comprehensive understanding of the factors influencing the interest rate, please refer to the [MonetaryPolicy](../monetary-policy/monetary-policy.md#interest-rate-mechanics) section.
 
 
 ---

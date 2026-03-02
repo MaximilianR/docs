@@ -5,11 +5,11 @@ This Zap contract is specifically designed to **create or repay leveraged loans*
 
 :::vyper[`LeverageZap1inch.vy`]
 
-The source code for the `LeverageZap1inch.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/zaps/LeverageZap1inch.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `LeverageZap1inch.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/zaps/LeverageZap1inch.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x3294514B78Df4Bb90132567fcf8E5e99f390B687`](https://etherscan.io/address/0x3294514B78Df4Bb90132567fcf8E5e99f390B687).
 
-An accompanying JavaScript library for Curve Lending can be found here: [ GitHub](https://github.com/curvefi/curve-lending-js).
+An accompanying JavaScript library for Curve Lending can be found here: [GitHub](https://github.com/curvefi/curve-lending-js).
 
 :::
 
@@ -92,7 +92,7 @@ To enable the functionality of such Zap contracts, minor modifications were nece
 
 ## Building Leverage
 
-To build up leverage, the `LeverageZap1inch.vy` contract uses the `callback_deposit` function. Additionally, there is a `max_borrowable` function that calculates the maximum borrowable amount when using leverage. For an accompanying JavaScript library, see [ GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
+To build up leverage, the `LeverageZap1inch.vy` contract uses the `callback_deposit` function. Additionally, there is a `max_borrowable` function that calculates the maximum borrowable amount when using leverage. For an accompanying JavaScript library, see [GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
 
 
 *Flow of building leverage:*
@@ -159,7 +159,7 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 
 
 ### `callback_deposit`
-::::description[`LeverageZap1inch.callback_deposit(user: address, stablecoins: uint256, user_collateral: uint256, d_debt: uint256, callback_args: DynArray[uint256, 10], callback_bytes: Bytes[10**4] = b]
+::::description[`LeverageZap1inch.callback_deposit(user: address, stablecoins: uint256, user_collateral: uint256, d_debt: uint256, callback_args: DynArray[uint256, 10], callback_bytes: Bytes[10**4] = b"")]
 
 
 :::guard[Guarded Method]
@@ -177,10 +177,6 @@ The following callback arguments need to be passed to this function via `create_
 - `callback_args[1] = controller_id`: index of the controller in the factory contract fetched from `Factory.controllers(controller_id)`.
 - `callback_args[2] = user_borrowed`: amount of borrowed token provided by the user (which is exchanged for the collateral token).
 
-Returns: 0 and additional collateral (`uint256[2]`).
-
-Emits: `Deposit`
-
 | Input             | Type                    | Description  |
 | ----------------- | ----------------------- | ------------ |
 | `user`            | `address`               | User address to create a leveraged position for. |
@@ -189,6 +185,10 @@ Emits: `Deposit`
 | `d_debt`          | `uint256`               | Amount to be borrowed (in addition to what has already been borrowed). |
 | `callback_args`   | `DynArray[uint256, 10]` | Callback arguments. |
 | `callback_bytes`  | `Bytes[10**4] = b""`    | Callback bytes. |
+
+Returns: 0 and additional collateral (`uint256[2]`).
+
+Emits: `Deposit`
 
 <SourceCode>
 
@@ -323,12 +323,12 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 ::::
 
 ### `max_borrowable`
-::::description[`LeverageZap1inch.max_borrowable(controller: address, _user_collateral: uint256, _leverage_collateral: uint256, N: uint256, p_avg: uint256) -> uint256`]
+::::description[`LeverageZap1inch.max_borrowable(controller: address, _user_collateral: uint256, _leverage_collateral: uint256, N: uint256, p_avg: uint256) -> uint256: view`]
 
 
 Function to calculate the maximum borrowable using leverage. The maximum borrowable amount essentially comes down to:
 
-$$\text{max_borrowable} = \frac{\text{collateral}}{\frac{1}{\text{k_effective} \times \text{max_p_base}} - \frac{1}{\text{p_avg}}}$$
+$$\text{max\_borrowable} = \frac{\text{collateral}}{\frac{1}{\text{k\_effective} \times \text{max\_p\_base}} - \frac{1}{\text{p\_avg}}}$$
 
 with $\text{k\_effective}$ and $\text{max\_p\_base}$ being calculated with the internal `_get_k_effective` and `_max_p_base` methods. $\text{p\_avg}$ is the average price of the collateral.
 
@@ -457,7 +457,7 @@ def _max_p_base(controller: address) -> uint256:
 
 To deleverage loans, the `LeverageZap1inch.vy` contract uses the `callback_repay` function.
 
-For an accompanying JavaScript library, see [ GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
+For an accompanying JavaScript library, see [GitHub](https://github.com/curvefi/curve-lending-js?tab=readme-ov-file#leverage-createloan-borrowmore-repay).
 
 *Flow of deleveraging:*
 
@@ -520,7 +520,7 @@ def execute_callback(callbacker: address, callback_sig: bytes4,
 
 
 ### `callback_repay`
-::::description[`LeverageZap1inch.callback_repay(user: address, stablecoins: uint256, collateral: uint256, debt: uint256, callback_args: DynArray[uint256,10], callback_bytes: Bytes[10 **4] = b]
+::::description[`LeverageZap1inch.callback_repay(user: address, stablecoins: uint256, collateral: uint256, debt: uint256, callback_args: DynArray[uint256, 10], callback_bytes: Bytes[10**4] = b"")]
 
 
 :::guard[Guarded Method]
@@ -539,10 +539,6 @@ The following `callback_args` need to be passed to this function via `repay_exte
 - `callback_args[2] = user_collateral`: amount of collateral token provided by the user (which is exchanged for the borrowed token).
 - `callback_args[3] = user_borrowed`: amount of borrowed tokens to repay.
 
-Returns: borrowed_from_state_collateral + borrowed_from_user_collateral + user_borrowed and remaining_collateral (`uint256[2]`).
-
-Emits: `Repay`
-
 | Input             | Type                    | Description  |
 | ----------------- | ----------------------- | ------------ |
 | `user`            | `address`               | User address to unwind a leveraged position for. |
@@ -551,6 +547,10 @@ Emits: `Repay`
 | `d_debt`          | `uint256`               | Value returned from `user_state`. |
 | `callback_args`   | `DynArray[uint256, 10]` | Callback arguments. |
 | `callback_bytes`  | `Bytes[10**4] = b""`    | Callback bytes. |
+
+Returns: borrowed_from_state_collateral + borrowed_from_user_collateral + user_borrowed and remaining_collateral (`uint256[2]`).
+
+Emits: `Repay`
 
 <SourceCode>
 

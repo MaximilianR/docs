@@ -1,10 +1,10 @@
-# Oracle
+# Overview
 
 As crvUSD markets use internal oracles, they utilize in-house liquidity pools to aggregate the price of collateral. But there is a possibility to use Chainlink oracle prices as safety limits.
 
 :::vyper[`CryptoWithStablePrice*.vy`]
 
-Each market has its own oracle contract. Source code is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/price_oracles). Relevant deployments can be found [here](../deployments.md).
+Each market has its own oracle contract. Source code is available on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/curve_stablecoin/price_oracles). Relevant deployments can be found [here](../../deployments.md).
 
 :::
 
@@ -12,16 +12,32 @@ Each market has its own oracle contract. Source code is available on [ GitHub](h
 
 Every market has its own price oracle contract, which can be fetched by calling `price_oracle_contract` within the controller of the market. The [wstETH oracle](https://etherscan.io/address/0xc1793A29609ffFF81f10139fa0A7A444c9e106Ad#code) will be used for the purpose of this documentation. Please be aware that oracle contracts can vary based on the collateral token.
 
-
 :::
 
 :::tip
 
-The formulas below use slightly different terminologies than the code to make them easier to read.  
-For abbreviations, see [here](./oracle.md#terminology-used-in-code).
-
+The formulas below use slightly different terminologies than the code to make them easier to read.
+For abbreviations, see [here](#terminology-used-in-code).
 
 :::
+
+## CryptoWithStablePrice\* Variants
+
+The `CryptoWithStablePrice` oracle family is specifically designed for **crvUSD mint markets**. Each variant is tailored to a particular collateral type — the wstETH variant shown on this page is the most complex, using TVL-weighted tricrypto pools, staked ETH pricing, and optional Chainlink safety limits. Other variants are simpler, but all share the same core pattern: **read price oracles from Curve pools, apply collateral-specific adjustments, and optionally bound with Chainlink**.
+
+| Variant | Collateral | Vyper | Pools | TVL Weighting |
+| ------- | ---------- | ----- | ----- | ------------- |
+| [`CryptoWithStablePrice`](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoWithStablePrice.vy) | sfrxETH | `0.3.10` | 2 tricrypto + 2 stableswap | Yes |
+| [`CryptoWithStablePriceTBTC`](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoWithStablePriceTBTC.vy) | tBTC | `0.3.10` | 2 tricrypto + 2 stableswap | Yes |
+| [`CryptoWithStablePriceWstethN`](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoWithStablePriceWstethN.vy) | wstETH | `0.3.10` | 2 tricrypto + 2 stableswap + staked swap | Yes |
+| [`CryptoWithStablePriceWBTC`](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoWithStablePriceWBTC.vy) | WBTC | `0.3.10` | 2 tricrypto + 2 stableswap | Yes |
+| [`CryptoWithStablePriceAndChainlink`](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoWithStablePriceAndChainlink.vy) | ETH | `0.3.10` | 1 tricrypto + 1 stableswap | No |
+| [`CryptoWithStablePriceFrxethN`](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoWithStablePriceFrxethN.vy) | sfrxETH v2 | `0.3.10` | 2 tricrypto + 2 stableswap + staked swap | Yes |
+
+Not all crvUSD markets use `CryptoWithStablePrice*` oracles. Some markets use oracle contracts from the `CryptoFromPool*` family, which are shared with the lending system:
+
+- **[CryptoFromPoolVaultWAgg](./crypto-from-pool-vault-w-agg.md)** — for ERC-4626 vault token collateral (e.g., sFRAX)
+- **[CryptoFromPoolsRateWAgg](./crypto-from-pools-rate-w-agg.md)** — for collateral requiring multi-pool price chaining with rate adjustments
 
 ## EMA of TVL
 
@@ -58,9 +74,9 @@ def _ema_tvl() -> uint256[N_POOLS]:
 
 </Dropdown>
 
-$$tvl_{i} = \frac{TS_i * VP_i}{10^{18}}$$
+$$tvl_{i} = \frac{TS_i \cdot VP_i}{10^{18}}$$
 
-$$\text{last_tvl}_i = \frac{tvl_i * (10^{18} - \alpha) + \text{last_tvl}_i * \alpha}{10^{18}}$$
+$$\text{last\_tvl}_i = \frac{tvl_i \cdot (10^{18} - \alpha) + \text{last\_tvl}_i \cdot \alpha}{10^{18}}$$
 
 
 $tvl_i = \text{TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]`  
@@ -70,7 +86,7 @@ $\text{last\_tvl}_i = \text{smoothed TVL of i-th pool}$ in `TRICRYPTO[N_POOLS]`
 
 
 ### `ema_tvl`
-::::description[`Oracle.ema_tvl() -> uint256[N_POOLS]:`]
+::::description[`Oracle.ema_tvl() -> uint256[N_POOLS]: view`]
 
 
 Function to calculate the Total-Value-Locked (TVL) Exponential-Moving-Average (EMA) of the `TRICRYPTO` pools. 
@@ -121,16 +137,16 @@ def _ema_tvl() -> uint256[N_POOLS]:
 ::::
 
 ### `last_tvl`
-::::description[`Oracle.last_tvl(arg0: uint256) -> uint256:`]
+::::description[`Oracle.last_tvl(arg0: uint256) -> uint256: view`]
 
 
 Getter for the `last_tvl` of the tricrypto pool at index `arg0`.
 
-Returns: `last_tvl` (`uint256[N_POOLS]`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `arg0` |  `uint256` | Index |
+
+Returns: last tvl value (`uint256`).
 
 <SourceCode>
 
@@ -211,13 +227,13 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 
 </Dropdown>
 
-$$price_{weighted} = (\frac{price_{eth} * price_{crvusd}}{price_{usd}}) * weight$$
+$$price_{weighted} = \frac{price_{eth} \cdot price_{crvusd}}{price_{usd}} \cdot weight$$
 
 $$totalPrice_{weighted} = \frac{\sum{price_{weighted}}}{\sum{weight}}$$
 
-$$price_{stETH} = min(price_{stETH}, 10^{18}) * \frac{rate_{wstETH}}{10^{18}}$$
+$$price_{stETH} = \min(price_{stETH}, 10^{18}) \cdot \frac{rate_{wstETH}}{10^{18}}$$
 
-$$price = price_{stETH} * totalPrice_{weighted}$$
+$$price = price_{stETH} \cdot totalPrice_{weighted}$$
 
 $price_{weighted} =$ weighted price of ETH  
 $totalPrice_{weighted} =$ total weighted price of ETH  
@@ -313,13 +329,13 @@ The oracle contracts have the option to utilize Chainlink prices, which serve as
 Chainlink limits can be turned on and off by calling `set_use_chainlink(do_it: bool)`, which can only be done by the admin of the Factory contract.
 
 <figure>
-  <img src="../assets/images/oracle_chainlink_vs_internal.png" alt="" width="400" />
+  <img src="../../assets/images/oracle_chainlink_vs_internal.png" alt="" width="400" />
   <figcaption>Chainlink vs Internal Oracle</figcaption>
 </figure>
 
 
 ### `use_chainlink`
-::::description[`Oracle.use_chainlink() -> bool:`]
+::::description[`Oracle.use_chainlink() -> bool: view`]
 
 
 Getter method to check if chainlink oracles are turned on or off.
@@ -351,7 +367,7 @@ use_chainlink: public(bool)
 ::::
 
 ### `set_use_chainlink`
-::::description[`Oracle.set_use_chainlink(do_it: bool):`]
+::::description[`Oracle.set_use_chainlink(do_it: bool)`]
 
 
 :::guard[Guarded Method]
@@ -413,7 +429,7 @@ def set_use_chainlink(do_it: bool):
 ## Contract Info Methods
 
 ### `N_POOLS`
-::::description[`Oracle.N_POOLS() -> uint256:`]
+::::description[`Oracle.N_POOLS() -> uint256: view`]
 
 
 Getter for the number of external pools used by the oracle.
@@ -445,12 +461,12 @@ N_POOLS: public(constant(uint256)) = 2
 ::::
 
 ### `TRICRYPTO`
-::::description[`Oracle.TRICRYPTO(arg0: uint256) -> uint256:`]
+::::description[`Oracle.TRICRYPTO(arg0: uint256) -> address: view`]
 
 
 Getter for the tricrypto pool at index `arg0`.
 
-Returns: `last_tvl` (`uint256[N_POOLS]`).
+Returns: tricrypto pool address (`address`).
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
@@ -481,7 +497,7 @@ TRICRYPTO: public(immutable(Tricrypto[N_POOLS]))
 ::::
 
 ### `TRICRYPTO_IX`
-::::description[`Oracle.TRICRYPTO_IX(arg0: uint256) -> uint256:`]
+::::description[`Oracle.TRICRYPTO_IX(arg0: uint256) -> uint256: view`]
 
 
 Getter for the index of ETH in the tricrypto pool w.r.t the coin at index 0.
@@ -524,7 +540,7 @@ TRICRYPTO_IX: public(immutable(uint256[N_POOLS]))
 ::::
 
 ### `STABLESWAP_AGGREGATOR`
-::::description[`Oracle.STABLESWAP_AGGREGATOR() -> address:`]
+::::description[`Oracle.STABLESWAP_AGGREGATOR() -> address: view`]
 
 
 Getter for contract of the crvusd price aggregator.
@@ -556,10 +572,10 @@ STABLESWAP_AGGREGATOR: public(immutable(StableAggregator))
 ::::
 
 ### `STABLESWAP`
-::::description[`Oracle.STABLESWAP(arg0: uint256) -> address:`]
+::::description[`Oracle.STABLESWAP(arg0: uint256) -> address: view`]
 
 
-Getter for the stableswap pool at index `arg0`., 
+Getter for the stableswap pool at index `arg0`.
 
 Returns: stableswap pool (`address`).
 
@@ -592,7 +608,7 @@ STABLESWAP: public(immutable(Stableswap[N_POOLS]))
 ::::
 
 ### `STABLECOIN`
-::::description[`Oracle.STABLECOIN() -> address:`]
+::::description[`Oracle.STABLECOIN() -> address: view`]
 
 
 Getter for the contract address of crvUSD.
@@ -624,7 +640,7 @@ STABLECOIN: public(immutable(address))
 ::::
 
 ### `FACTORY`
-::::description[`Oracle.FACTORY() -> address:`]
+::::description[`Oracle.FACTORY() -> address: view`]
 
 
 Getter for the contract address of the Factory.
@@ -656,7 +672,7 @@ FACTORY: public(immutable(ControllerFactory))
 ::::
 
 ### `BOUND_SIZE`
-::::description[`Oracle.BOUND_SIZE() -> uint256:`]
+::::description[`Oracle.BOUND_SIZE() -> uint256: view`]
 
 
 Getter for the bound size of the chainlink oracle limits. This essentially is the size of the safety limits.
@@ -688,7 +704,7 @@ BOUND_SIZE: public(immutable(uint256))
 ::::
 
 ### `STAKEDSWAP`
-::::description[`Oracle.STAKEDSWAP() -> address:`]
+::::description[`Oracle.STAKEDSWAP() -> address: view`]
 
 
 Getter for the stETH/ETH stableswap pool.
@@ -720,7 +736,7 @@ STAKEDSWAP: public(immutable(Stableswap))
 ::::
 
 ### `WSTETH`
-::::description[`Oracle.WSTETH() -> address:`]
+::::description[`Oracle.WSTETH() -> address: view`]
 
 
 Getter for the wstETH contract address.
@@ -752,7 +768,7 @@ WSTETH: public(immutable(wstETH))
 ::::
 
 ### `last_timestamp`
-::::description[`Oracle.last_timestamp() -> uint256:`]
+::::description[`Oracle.last_timestamp() -> uint256: view`]
 
 
 Getter for the last timestamp when `price_w()` was called.
@@ -784,7 +800,7 @@ last_timestamp: public(uint256)
 ::::
 
 ### `TVL_MA_TIME`
-::::description[`Oracle.TVL_MA_TIME() -> uint256:`]
+::::description[`Oracle.TVL_MA_TIME() -> uint256: view`]
 
 
 Getter for the Exponential-Moving-Average time.
@@ -894,14 +910,12 @@ def _raw_price(tvls: uint256[N_POOLS], agg_price: uint256) -> uint256:
 ::::
 
 ### `price_w` 
-::::description[`Oracle.price_w() -> uint256:`]
+::::description[`Oracle.price_w() -> uint256`]
 
 
 Function to obtain the oracle price of the collateral token and update `last_tvl` and `last_timestamp`. This function is used in the AMM.
 
-| Input      | Type   | Description |
-| ----------- | -------| ----|
-| `arg0` |  `uint256` | `last_tvl` of tricrypto pool at index `arg0` |
+Returns: oracle price of the collateral token (`uint256`).
 
 <SourceCode>
 

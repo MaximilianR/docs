@@ -3,7 +3,7 @@
 
 :::vyper[`Stablecoin.vy`]
 
-The source code of the `crvUSD` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/Stablecoin.vy).
+The source code of the `crvUSD` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/Stablecoin.vy).
 
 
 :::
@@ -72,7 +72,7 @@ minter: public(address)
 ::::
 
 ### `mint`
-::::description[`crvUSD.mint(_to: address, _value: uint256) -> bool:`]
+::::description[`crvUSD.mint(_to: address, _value: uint256) -> bool`]
 
 
 :::guard[Guarded Method]
@@ -84,14 +84,14 @@ This function is only callable by the `minter` of the contract, which is the Fac
 
 Function to mint `_value` amount of tokens to `_to`.
 
-Returns: true (`bool`).
-
-Emits: `Transfer`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_to` |  `address` | Address newly minted tokens are credited to |
 | `_value` |  `uint256` | Amount of tokens to mint |
+
+Returns: true (`bool`).
+
+Emits: `Transfer`
 
 <SourceCode>
 
@@ -143,7 +143,7 @@ The `mint` function is only used when adding a new market or raising a market's 
 ::::
 
 ### `set_minter`
-::::description[`crvUSD.set_minter(_minter: address):`]
+::::description[`crvUSD.set_minter(_minter: address)`]
 
 
 :::guard[Guarded Method]
@@ -155,11 +155,11 @@ This function is only callable by the `admin` of the contract, which is the Fact
 
 Function to set the minter address of the token.
 
-Emits: `SetMinter`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_minter` |  `address` | New minter address |
+
+Emits: `SetMinter`
 
 <SourceCode>
 
@@ -201,18 +201,18 @@ The function will revert if any EOA (Externally Owned Account) or contract other
 ::::
 
 ### `burn` 
-::::description[`crvUSD.burn(_value: uint256) -> bool:`]
+::::description[`crvUSD.burn(_value: uint256) -> bool`]
 
 
 Function to burn `_value` amount of tokens from `msg.sender`.
 
-Returns: true (`bool`).
-
-Emits: `Transfer`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_value` |  `uint256` | Amount of tokens to burn |
+
+Returns: true (`bool`).
+
+Emits: `Transfer`
 
 <SourceCode>
 
@@ -257,19 +257,19 @@ def _burn(_from: address, _value: uint256):
 ::::
 
 ### `burnFrom`
-::::description[`crvUSD.burnFrom(_from: address, _value: uint256) -> bool:`]
+::::description[`crvUSD.burnFrom(_from: address, _value: uint256) -> bool`]
 
 
 Function to burn `_value` amount of tokens from `_from`.
-
-Returns: true (`boolean`).
-
-Emits: `Transfer`
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_from` |  `address` | Address to burn tokens for |
 | `_value` |  `uint256` | Amount of tokens to burn |
+
+Returns: true (`bool`).
+
+Emits: `Transfer`
 
 <SourceCode>
 
@@ -565,7 +565,7 @@ totalSupply: public(uint256)
 ## Allowances and Approvals
 
 ### `allowance`
-::::description[`crvUSD.allowance(arg0: address, arg1: address) -> uint256`]
+::::description[`crvUSD.allowance(arg0: address, arg1: address) -> uint256: view`]
 
 
 Getter method to check the allowance.
@@ -601,19 +601,19 @@ allowance: public(HashMap[address, HashMap[address, uint256]])
 ::::
 
 ### `approve`
-::::description[`crvUSD.approve(_spender: address, _value: uint256) -> bool:`]
+::::description[`crvUSD.approve(_spender: address, _value: uint256) -> bool`]
 
 
-Fucntion to allow `_spender` to transfer up to `_value` amount of tokens from the caller's amount.
-
-Returns: true (`bool`).
-
-Emits: `Approval`
+Function to allow `_spender` to transfer up to `_value` amount of tokens from the caller's amount.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_spender` |  `address` | Address permitted to spend up to `_value` amount of caller's funds |
-| `_value` |  `address` | Amount of tokens `_spender` is allowed to spend |
+| `_value` |  `uint256` | Amount of tokens `_spender` is allowed to spend |
+
+Returns: true (`bool`).
+
+Emits: `Approval`
 
 <SourceCode>
 
@@ -663,19 +663,19 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ::::
 
 ### `increaseAllowance`
-::::description[`crvUSD.increaseAllowance(_spender: address, _add_value: uint256) -> bool:`]
+::::description[`crvUSD.increaseAllowance(_spender: address, _add_value: uint256) -> bool`]
 
 
 Function to increase the allowance granted to `_spender`.
-
-Returns: true (`bool`).
-
-Emits: `Approval`
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_spender` |  `address` | Address to increase the allowance of |
 | `_add_value` |  `uint256` | Amount to increase the allwance by |
+
+Returns: true (`bool`).
+
+Emits: `Approval`
 
 :::note
 
@@ -736,19 +736,19 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ::::
 
 ### `decreaseAllowance`
-::::description[`crvUSD.decreaseAllowance(_spender: address, _sub_value: uint256) -> bool:`]
+::::description[`crvUSD.decreaseAllowance(_spender: address, _sub_value: uint256) -> bool`]
 
 
 Function to decrease the allowance granted to `_spender`.
-
-Returns: true (`bool`).
-
-Emits: `Approval`
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_spender` |  `address` | Address to decrease the allowance of |
 | `_sub_value` |  `uint256` | Amount to decrease the allwance by |
+
+Returns: true (`bool`).
+
+Emits: `Approval`
 
 :::note
 
@@ -808,14 +808,10 @@ def _approve(_owner: address, _spender: address, _value: uint256):
 ::::
 
 ### `permit`
-::::description[`crvUSD.permit(_owner: address, _spender: address, _value: uint256, _deadline: uint256, _v: uint8,, _r: bytes32, _s: bytes32) -> bool:`]
+::::description[`crvUSD.permit(_owner: address, _spender: address, _value: uint256, _deadline: uint256, _v: uint8, _r: bytes32, _s: bytes32) -> bool`]
 
 
 Function to permit `_spender` to spend up to `_value` amount of `_owner`'s tokens via a signature.
-
-Returns: true (`bool`).
-
-Emits: `Approval`
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
@@ -826,6 +822,10 @@ Emits: `Approval`
 | `_v` |  `uint256` | Last byte of the ECDSA signature |
 | `_r` |  `uint256` | First 32 bytes of the ECDSA signature |
 | `_s` |  `uint256` | Second 32 bytes of the ECDSA signature |
+
+Returns: true (`bool`).
+
+Emits: `Approval`
 
 :::note
 

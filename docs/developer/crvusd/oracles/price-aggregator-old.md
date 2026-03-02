@@ -1,13 +1,21 @@
 # PriceAggregator (Old)
 
 
-The AggregatorStablePrice contract is designed to **aggregate the prices of crvUSD based on multiple Curve Stableswap pools**. This price is primarily used as an oracle for calculating the interest rate but also for [PegKeepers](../crvusd/pegkeepers/overview.md) to determine whether to mint and deposit or withdraw and burn.
+The AggregatorStablePrice contract is designed to **aggregate the prices of crvUSD based on multiple Curve Stableswap pools**. This price is primarily used as an oracle for calculating the interest rate but also for [PegKeepers](../pegkeepers/overview.md) to determine whether to mint and deposit or withdraw and burn.
 
-:::deploy[Contract Source & Deployment]
+:::vyper[`AggregateStablePrice.vy`]
 
-Source code is available on [ Github](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/AggregateStablePrice2.vy). 
-Relevant contract deployments can be found [here](../deployments.md).
+The source code for the `AggregateStablePrice.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/AggregateStablePrice2.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.7`.
 
+The contract is deployed on :logos-ethereum: Ethereum at [`0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7`](https://etherscan.io/address/0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7).
+
+<ContractABI>
+
+```json
+[{"name":"AddPricePair","inputs":[{"name":"n","type":"uint256","indexed":false},{"name":"pool","type":"address","indexed":false},{"name":"is_inverse","type":"bool","indexed":false}],"anonymous":false,"type":"event"},{"name":"RemovePricePair","inputs":[{"name":"n","type":"uint256","indexed":false}],"anonymous":false,"type":"event"},{"name":"MovePricePair","inputs":[{"name":"n_from","type":"uint256","indexed":false},{"name":"n_to","type":"uint256","indexed":false}],"anonymous":false,"type":"event"},{"name":"SetAdmin","inputs":[{"name":"admin","type":"address","indexed":false}],"anonymous":false,"type":"event"},{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"stablecoin","type":"address"},{"name":"sigma","type":"uint256"},{"name":"admin","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_admin","inputs":[{"name":"_admin","type":"address"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"sigma","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"stablecoin","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"nonpayable","type":"function","name":"add_price_pair","inputs":[{"name":"_pool","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"remove_price_pair","inputs":[{"name":"n","type":"uint256"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"price","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"price_pairs","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"tuple","components":[{"name":"pool","type":"address"},{"name":"is_inverse","type":"bool"}]}]},{"stateMutability":"view","type":"function","name":"admin","inputs":[],"outputs":[{"name":"","type":"address"}]}]
+```
+
+</ContractABI>
 
 :::
 
@@ -21,21 +29,21 @@ The `PriceAggregator` contract calculates the weighted average price of crvUSD a
 
 The price calculation begins with determining the EMA of the TVL from different Curve Stableswap liquidity pools using the `_ema_tvl` function. This internal function computes the EMA TVLs based on the following formula, which adjusts for the time since the last update to smooth out short-term volatility in the TVL data, providing a more stable and representative average value over the specified time window (`TVL_MA_TIME` set to 50,000 seconds):
 
-$$\alpha = 
-    \begin{cases} 
-    1 & \text{if last_timestamp} = \text{current_timestamp}, \\
-    e^{-\frac{(\text{current_timestamp} - \text{last_timestamp}) * 10^{18}}{\text{TVL_MA_TIME}}} & \text{otherwise}.
+$$\alpha =
+    \begin{cases}
+    1 & \text{if last\_timestamp} = \text{current\_timestamp}, \\
+    e^{-\frac{(\text{current\_timestamp} - \text{last\_timestamp}) \cdot 10^{18}}{\text{TVL\_MA\_TIME}}} & \text{otherwise}.
     \end{cases}
 $$
 
-$$\text{ema_tvl}_{i} = \frac{\text{new_tvl}_i * (10^{18} - \alpha) + \text{tvl}_i * \alpha}{10^{18}}$$
+$$\text{ema\_tvl}_{i} = \frac{\text{new\_tvl}_i \cdot (10^{18} - \alpha) + \text{tvl}_i \cdot \alpha}{10^{18}}$$
 
 *The code snippet provided illustrates the implementation of the above formula in the contract.*
 
 <Dropdown title="**`_ema_tvl`**">
 
 
-```py
+```vyper
 TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 
 @internal
@@ -72,7 +80,7 @@ The `_price` function then uses these EMA TVLs to calculate the aggregated price
 <Dropdown title="**`_price`**">
 
 
-```py
+```vyper
 @internal
 @view
 def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
@@ -135,11 +143,11 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 
     $$\text{e}_i = \frac{(\max(p, p_{\text{avg}}) - \min(p, p_{\text{avg}}))^2}{\frac{\text{SIGMA}^2}{10^{18}}}$$
 
-    $$\text{e}_{min} = \min(\text{e}_i, \text{max_value(uint256)})$$
+    $$\text{e}_{\min} = \min(\text{e}_i, \text{max\_value(uint256)})$$
 
 - Applies an exponential decay based on these variance measures to weigh each pool's contribution to the final average price, reducing the influence of prices far from the minimum variance.
 
-    $$w = \frac{\text{D}_i * e^\left({\text{e}_i - e_{min}}\right)}{10^{18}}$$
+    $$w = \frac{\text{D}_i \cdot e^{-(\text{e}_i - e_{\min})}}{10^{18}}$$
 
 - Sums up all `w` to store it in `w_sum` and calculates the product of `w * prices[i]`, which is stored in `wp_sum`.
 - Finally calculates the weighted average price as `wp_sum / w_sum`, with weights adjusted for both liquidity and price variance.
@@ -151,7 +159,7 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 ## Prices
 
 ### `price`
-::::description[`PriceAggregator.price() -> uint256:`]
+::::description[`PriceAggregator.price() -> uint256: view`]
 
 
 Function to calculate the weighted price of crvUSD.
@@ -225,10 +233,7 @@ def _price(tvls: DynArray[uint256, MAX_PAIRS]) -> uint256:
 <Example>
 
 
-```shell
->>> PriceAggregator.price()
-999964013300395878
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function price() view returns (uint256)"]} method="price" contractName="PriceAggregator" />
 
 
 </Example>
@@ -280,10 +285,7 @@ def price_w() -> uint256:
 <Example>
 
 
-```shell
->>> PriceAggregator.last_price()
-999385898759491513
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function last_price() view returns (uint256)"]} method="last_price" contractName="PriceAggregator" />
 
 
 </Example>
@@ -292,7 +294,7 @@ def price_w() -> uint256:
 ::::
 
 ### `ema_tvl`
-::::description[`PriceAggregator.ema_tvl() -> DynArray[uint256, MAX_PAIRS]`]
+::::description[`PriceAggregator.ema_tvl() -> DynArray[uint256, MAX_PAIRS]: view`]
 
 
 Getter for the exponential moving-average of the TVL in `price_pairs`.
@@ -342,10 +344,7 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 <Example>
 
 
-```shell
->>> PriceAggregator.ema_tvl()
-59321570154325618129121893, 42600769394518064802429328, 8535901977675585449164114, 4775645754381802242168047
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function ema_tvl() view returns (uint256[])"]} method="ema_tvl" contractName="PriceAggregator" />
 
 
 </Example>
@@ -354,7 +353,7 @@ def _ema_tvl() -> DynArray[uint256, MAX_PAIRS]:
 ::::
 
 ### `last_tvl`
-::::description[`PriceAggregator.last_tvl(arg0: uint256) -> uint256:`]
+::::description[`PriceAggregator.last_tvl(arg0: uint256) -> uint256: view`]
 
 
 Getter for the total value locked of price pair (pool).
@@ -378,10 +377,7 @@ last_tvl: public(uint256[MAX_PAIRS])
 <Example>
 
 
-```shell
->>> PriceAggregator.last_tvl()
-1689448067
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function last_tvl(uint256) view returns (uint256)"]} method="last_tvl" args={["0"]} labels={["arg0"]} contractName="PriceAggregator" />
 
 
 </Example>
@@ -390,7 +386,7 @@ last_tvl: public(uint256[MAX_PAIRS])
 ::::
 
 ### `price_w`
-::::description[`PriceAggregator.price_w() -> uint256:`]
+::::description[`PriceAggregator.price_w() -> uint256`]
 
 
 Function to calculate and write the price. If called successfully, updates `last_tvl`, `last_price` and `last_timestamp`.
@@ -485,7 +481,7 @@ All price pairs added to the contract are considered when calculating the `price
 
 
 ### `price_pairs`
-::::description[`PriceAggregator.price_pairs(arg0: uint256) -> tuple: view`]
+::::description[`PriceAggregator.price_pairs(arg0: uint256) -> PricePair: view`]
 
 
 Getter for the price pair at index `arg0` and whether the price pair is inverse.
@@ -509,10 +505,7 @@ price_pairs: public(PricePair[MAX_PAIRS])
 <Example>
 
 
-```shell
->>> PriceAggregator.price_pairs(0)
-'0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E, false'
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function price_pairs(uint256) view returns (tuple(address,bool))"]} method="price_pairs" args={["0"]} labels={["arg0"]} contractName="PriceAggregator" />
 
 
 </Example>
@@ -521,7 +514,7 @@ price_pairs: public(PricePair[MAX_PAIRS])
 ::::
 
 ### `add_price_pair`
-::::description[`PriceAggregator.add_price_pair(_pool: Stableswap):`]
+::::description[`PriceAggregator.add_price_pair(_pool: Stableswap)`]
 
 
 :::guard[Guarded Method]
@@ -533,11 +526,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to add a price pair to the PriceAggregator.
 
-Emits: `AddPricePair`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_pool` |  `address` | Price pair to add |
+| `_pool` |  `Stableswap` | Price pair to add |
+
+Emits: `AddPricePair` event.
 
 <SourceCode>
 
@@ -582,7 +575,7 @@ def add_price_pair(_pool: Stableswap):
 ::::
 
 ### `remove_price_pair`
-::::description[`PriceAggregator.remove_price_pair(n: uint256):`]
+::::description[`PriceAggregator.remove_price_pair(n: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -594,11 +587,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to remove a price pair from the contract. If a prior pool than the latest added one gets removed, the function will move the latest added price pair to the removed pair pairs index to not mess up `price_pairs`.
 
-Emits: `RemovePricePair` and possibly `MovePricePair`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `n` |  `uint256` | Index of the price pair to remove |
+
+Emits: `RemovePricePair` event and possibly `MovePricePair` event.
 
 <SourceCode>
 
@@ -631,7 +624,7 @@ def remove_price_pair(n: uint256):
 
 
 ```shell
->>> PriceAggregator.remove_price_pair("0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E")
+>>> PriceAggregator.remove_price_pair(0)
 ```
 
 
@@ -672,10 +665,7 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 <Example>
 
 
-```shell
->>> PriceAggregator.admin()
-'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function admin() view returns (address)"]} method="admin" contractName="PriceAggregator" />
 
 
 </Example>
@@ -684,7 +674,7 @@ def __init__(stablecoin: address, sigma: uint256, admin: address):
 ::::
 
 ### `set_admin`
-::::description[`PriceAggregator.set_admin(_admin: address):`]
+::::description[`PriceAggregator.set_admin(_admin: address)`]
 
 
 :::guard[Guarded Method]
@@ -696,11 +686,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to set a new admin.
 
-Emits: `SetAdmin`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_admin` |  `address` | new admin address |
+| `_admin` |  `address` | New admin address |
+
+Emits: `SetAdmin` event.
 
 <SourceCode>
 
@@ -741,8 +731,8 @@ def set_admin(_admin: address):
 
 ## Contract Info Methods
 
-### `SIGMA`
-::::description[`PriceAggregator.SIGMA() -> uint256: view`]
+### `sigma`
+::::description[`PriceAggregator.sigma() -> uint256: view`]
 
 
 Getter for the sigma value. SIGMA is a predefined constant that influences the adjustment of price deviations, affecting how variations in individual stablecoin prices contribute to the overall average stablecoin price.
@@ -759,6 +749,12 @@ SIGMA: immutable(uint256)
 @view
 def sigma() -> uint256:
     return SIGMA
+
+@external
+def __init__(stablecoin: address, sigma: uint256, admin: address):
+    STABLECOIN = stablecoin
+    SIGMA = sigma  # The change is so rare that we can change the whole thing altogether
+    self.admin = admin
 ```
 
 
@@ -767,10 +763,7 @@ def sigma() -> uint256:
 <Example>
 
 
-```shell
->>> PriceAggregator.SIGMA()
-1000000000000000
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function sigma() view returns (uint256)"]} method="sigma" contractName="PriceAggregator" />
 
 
 </Example>
@@ -778,8 +771,8 @@ def sigma() -> uint256:
 
 ::::
 
-### `STABLECOIN`
-::::description[`PriceAggregator.STABLECOIN() -> address: view`]
+### `stablecoin`
+::::description[`PriceAggregator.stablecoin() -> address: view`]
 
 
 Getter for the stablecoin contract address.
@@ -796,6 +789,12 @@ STABLECOIN: immutable(address)
 @view
 def stablecoin() -> address:
     return STABLECOIN
+
+@external
+def __init__(stablecoin: address, sigma: uint256, admin: address):
+    STABLECOIN = stablecoin
+    SIGMA = sigma  # The change is so rare that we can change the whole thing altogether
+    self.admin = admin
 ```
 
 
@@ -804,10 +803,7 @@ def stablecoin() -> address:
 <Example>
 
 
-```shell
->>> PriceAggregator.STABLECOIN()
-'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function stablecoin() view returns (address)"]} method="stablecoin" contractName="PriceAggregator" />
 
 
 </Example>
@@ -816,7 +812,7 @@ def stablecoin() -> address:
 ::::
 
 ### `last_timestamp`
-::::description[`PriceAggregator.last_timestamp() -> uint256:`]
+::::description[`PriceAggregator.last_timestamp() -> uint256: view`]
 
 
 Getter for the latest timestamp. Variable is updated when [`price_w`](#price_w) is called.
@@ -836,10 +832,7 @@ last_timestamp: public(uint256)
 <Example>
 
 
-```shell
->>> PriceAggregator.last_timestamp()
-1689448067
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function last_timestamp() view returns (uint256)"]} method="last_timestamp" contractName="PriceAggregator" />
 
 
 </Example>
@@ -868,10 +861,7 @@ TVL_MA_TIME: public(constant(uint256)) = 50000  # s
 <Example>
 
 
-```shell
->>> PriceAggregator.TVL_MA_TIME()
-50000
-```
+<ContractCall address="0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7" abi={["function TVL_MA_TIME() view returns (uint256)"]} method="TVL_MA_TIME" contractName="PriceAggregator" />
 
 </Example>
 

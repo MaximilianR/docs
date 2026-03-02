@@ -4,7 +4,7 @@ LLAMMA (Lending Liquidating Automated Market Maker Algorithm) is the **market-ma
 
 :::vyper[`AMM.vy`]
 
-Each market deploys its own AMM from a blueprint contract. Source code is available on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/AMM.vy). Relevant deployments can be found [here](../deployments.md).
+Each market deploys its own AMM from a blueprint contract. Source code is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/AMM.vy). Relevant deployments can be found [here](../deployments.md).
 
 :::
 
@@ -62,14 +62,14 @@ This function is only callable by the `admin` of the contract, which is the `Con
 
 Function to deposit collateral `amount` for `user` in the range between the upper band `n1` and the lower band `n2`. Values for `n1` and `n2` are already determined in the `Controller` contract using the internal `_calculate_debt_n1` method.
 
-Emits: `Deposit`
-
 | Input    | Type      | Description                       |
 | -------- | --------- | --------------------------------- |
 | `user`   | `address` | User address.                     |
 | `amount` | `uint256` | Amount of collateral to deposit.  |
 | `n1`     | `int256`  | Lower band in the deposit range.  |
 | `n2`     | `int256`  | Upper band in the deposit range.  |
+
+Emits: `Deposit`
 
 <SourceCode>
 
@@ -224,7 +224,7 @@ def _calculate_debt_n1(collateral: uint256, debt: uint256, N: uint256) -> int256
 ::::
 
 ### `withdraw`
-::::description[`AMM.withdraw(user: address, frac: uint256) -> uint256[2]:`]
+::::description[`AMM.withdraw(user: address, frac: uint256) -> uint256[2]`]
 
 
 :::guard[Guarded Method]
@@ -372,14 +372,10 @@ A Google Colab notebook that showcases the use of `exchange` and `exchange_dy` c
 :::
 
 ### `exchange`
-::::description[`AMM.exchange(i: uint256, j: uint256, in_amount: uint256, min_amount: uint256, _for: address = msg.sender) -> uint256[2]:`]
+::::description[`AMM.exchange(i: uint256, j: uint256, in_amount: uint256, min_amount: uint256, _for: address = msg.sender) -> uint256[2]`]
 
 
 Function to exchange `in_amount` of token `i` for a minimum amount of `min_amount` of token `j`. If the exchange results in less than `min_amount` of tokens, the function call reverts.
-
-Returns: amount of coins swapped in and out (`uint256`).
-
-Emits: `TokenExchange`
 
 | Input        | Type      | Description                                         |
 | ------------ | --------- | --------------------------------------------------- |
@@ -388,6 +384,10 @@ Emits: `TokenExchange`
 | `in_amount`  | `uint256` | Amount of input coin to swap.                       |
 | `min_amount` | `uint256` | Minimum amount of output coin to get.               |
 | `_for`       | `address` | Address to send coins to. Defaults to `msg.sender`. |
+
+Returns: amount of coins swapped in and out (`uint256`).
+
+Emits: `TokenExchange`
 
 <SourceCode>
 
@@ -817,14 +817,10 @@ def calc_swap_in(pump: bool, out_amount: uint256, p_o: uint256[2], in_precision:
 ::::
 
 ### `exchange_dy`
-::::description[`AMM.exchange_dy(i: uint256, j: uint256, out_amount: uint256, max_amount: uint256, _for: address = msg.sender) -> uint256[2]:`]
+::::description[`AMM.exchange_dy(i: uint256, j: uint256, out_amount: uint256, max_amount: uint256, _for: address = msg.sender) -> uint256[2]`]
 
 
 Function to exchange a maximum amount of `max_amount` of input token `i` for a total of `out_amount` of output token `j`. If `max_amount` is not enough to cover the purchase of `out_amount` of tokens, the function will revert.
-
-Returns: amount of coins swapped in and out (`uint256`).
-
-Emits: `TokenExchange`
 
 | Input        | Type      | Description                                          |
 | ------------ | --------- | ---------------------------------------------------- |
@@ -833,6 +829,10 @@ Emits: `TokenExchange`
 | `out_amount` | `uint256` | Desired amout of output tokens to receive.           |
 | `max_amount` | `uint256` | Maximum amount of input token to use.                |
 | `_for`       | `address` | Address to send coins to (defaults to `msg.sender`). |
+
+Returns: amount of coins swapped in and out (`uint256`).
+
+Emits: `TokenExchange`
 
 <SourceCode>
 
@@ -1262,7 +1262,7 @@ def calc_swap_in(pump: bool, out_amount: uint256, p_o: uint256[2], in_precision:
 ::::
 
 ### `get_dy`
-::::description[`AMM.get_dy(i: uint256, j: uint256, in_amount: uint256) -> uint256:`]
+::::description[`AMM.get_dy(i: uint256, j: uint256, in_amount: uint256) -> uint256: view`]
 
 
 Function to calculate the amount of output tokens `j` to receive when exchanging for `in_amount` of input token `i`. 
@@ -1356,7 +1356,7 @@ def _get_dxdy(i: uint256, j: uint256, amount: uint256, is_in: bool) -> DetailedT
 ::::
 
 ### `get_dx`
-::::description[`AMM.get_dx(i: uint256, j: uint256, out_amount: uint256) -> uint256:`]
+::::description[`AMM.get_dx(i: uint256, j: uint256, out_amount: uint256) -> uint256: view`]
 
 
 Function to calculate the `in_amount` of token `i` required to receive `out_amount` of token `j`.
@@ -1456,14 +1456,14 @@ The function essentially returns how much input tokens (`crvUSD`) are needed to 
 ::::
 
 ### `get_dydx`
-::::description[`AMM.get_dydx(i: uint256, j: uint256, out_amount: uint256) -> (uint256, uint256):`]
+::::description[`AMM.get_dydx(i: uint256, j: uint256, out_amount: uint256) -> (uint256, uint256): view`]
 
 
 Function to calculate both the input amount required and the output amount received when swapping tokens `i` for a specified `out_amount` of token `j`. This function performs similar calculations to `get_dx` but additionally returns the amount of output tokens received.
 
 Function to calculate the `in_amount` required and `out_amount` received.
 
-Returns: out and in amount (`uint256`).|
+Returns: out and in amount (`(uint256, uint256)`).
 
 | Input       | Type      | Description                               |
 | ----------- | --------- | ----------------------------------------- |
@@ -1555,7 +1555,7 @@ def _get_dxdy(i: uint256, j: uint256, amount: uint256, is_in: bool) -> DetailedT
 ::::
 
 ### `get_dxdy`
-::::description[`AMM.get_dxdy(i: uint256, j: uint256, in_amount: uint256) -> (uint256, uint256):`]
+::::description[`AMM.get_dxdy(i: uint256, j: uint256, in_amount: uint256) -> (uint256, uint256): view`]
 
 
 Function to calculate both the input and output amounts when swapping `in_amount` of token `i` for token `j`. This function performs similar calculations to `get_dy` but additionally returns the amount of input tokens used in the swap.
@@ -2264,7 +2264,7 @@ This user uses 4 bands for their loan. The function returns the collateral compo
 ::::
 
 ### `get_sum_xy`
-::::description[`AMM.get_sum_xy(user: address) -> uint256[2]:`]
+::::description[`AMM.get_sum_xy(user: address) -> uint256[2]: view`]
 
 
 Function to measure the amount of borrow and collateral token a user currently owns inside the AMM. This function does not include the borrowed tokens from the market in any way but rather reflects the current collateral composition summed up across the entire AMM.
@@ -2352,7 +2352,7 @@ This function returns the total balance of the borrow and collateral token acros
 ::::
 
 ### `read_user_tick_numbers`
-::::description[`AMM.read_user_tick_numbers(user: address) -> int256[2]:`]
+::::description[`AMM.read_user_tick_numbers(user: address) -> int256[2]: view`]
 
 
 Getter for the band (tick) numbers of a user's loan. 
@@ -2598,7 +2598,7 @@ def get_xy_up(user: address, use_y: bool) -> uint256:
 ::::
 
 ### `get_x_down`
-::::description[`AMM.get_x_down(user: address) -> uint256:`]
+::::description[`AMM.get_x_down(user: address) -> uint256: view`]
 
 
 Function to measure the amount of x (borrowable token) in band n for `user` if its adiabatically traded down.
@@ -3605,7 +3605,7 @@ The fee value is denominated to a base of $10^{18}$. Therefore, `190000000000000
 ::::
 
 ### `set_fee`
-::::description[`AMM.set_fee(fee: uint256):`]
+::::description[`AMM.set_fee(fee: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -3797,7 +3797,7 @@ admin_fees_y: public(uint256)
 ::::
 
 ### `set_admin_fee`
-::::description[`AMM.set_admin_fee(fee: uint256):`]
+::::description[`AMM.set_admin_fee(fee: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -3854,7 +3854,7 @@ def set_admin_fee(fee: uint256):
 
 ::::
 
-### `reset_admin_fee`
+### `reset_admin_fees`
 ::::description[`AMM.reset_admin_fees()`]
 
 

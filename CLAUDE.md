@@ -49,7 +49,7 @@ Doc files are `.md` (not `.mdx`), but MDX features (JSX, imports) are still supp
 
 ### Markdown Features
 
-- **Math**: Use KaTeX syntax — inline `$...$` and display `$$...$$` blocks (via `remark-math` + `rehype-katex`)
+- **Math**: Use KaTeX syntax — inline `$...$` and display `$$...$$` blocks (via `remark-math` + `rehype-katex`). Important KaTeX rules: use `\cdot` or `\times` for multiplication (not `*`), use `\min`/`\max` for function names (not bare `min`/`max`), escape underscores inside `\text{}` as `\text{last\_tvl}` (unescaped `_` becomes a subscript), and never use `%` inside math blocks (KaTeX treats it as a comment)
 - **Diagrams**: Use Mermaid code blocks (``` ```mermaid ```) — rendered by `@docusaurus/theme-mermaid`
 - **Logo shortcodes**: Write `:logos-<name>:` in markdown to render an inline SVG from `static/img/logos/<name>.svg` (handled by the `remark-logos.js` plugin)
 - **Custom admonitions**: Beyond standard Docusaurus admonitions (`note`, `tip`, `info`, `warning`, `caution`, `danger`), many site-specific keywords are configured: `tip-green`, `example`, `description`, `deploy`, `github`, `vyper`, `solidity`, `colab`, `guard`, `telegram`, `notebook`, `bug`, `pdf`, `abstract`. Developer reference pages heavily use `::::description` (function docs), `:::vyper`/`:::solidity` (contract info header), and `:::guard` (access-controlled methods).
