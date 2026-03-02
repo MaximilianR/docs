@@ -5,20 +5,21 @@ import TabItem from '@theme/TabItem';
 
 The `SecondaryMonetaryPolicy` contract calculates borrow rates based on the utilization in a lending market. It uses parameters derived from the target utilization and ratios at 0% and 100% utilization to define a hyperbolic dependency. The rate is dynamically adjusted based on the current utilization and the rate from the AMM (Automated Market Maker), which mints crvUSD.
 
-This design ensures that when the target utilization is met, the borrow rate in the lending market matches the borrow rate of the minting market. At 0% utilization, the rate is defined as \(\alpha \times \text\{rate\}_\{\text\{AMM\}\}\) and at 100% utilization as \(\beta \times \text\{rate\}_\{\text\{AMM\}\}\).
+This design ensures that when the target utilization is met, the borrow rate in the lending market matches the borrow rate of the minting market. At 0% utilization, the rate is defined as $\alpha \times \text{rate}\_{\text{AMM}}$ and at 100% utilization as $\beta \times \text{rate}\_{\text{AMM}}$.
 
 :::vyper[`SecondaryMonetaryPolicy.vy`]
 
-The source code for the `SecondaryMonetaryPolicy.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/mpolicies/SecondaryMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `SecondaryMonetaryPolicy.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/mpolicies/SecondaryMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
 ---
 
-## Calculations:::colab[Google Colab Notebook]
+## Calculations
+
+:::colab[Google Colab Notebook]
 
 An interactive Google Colab notebook that plots the interest rate depending on utilization can be found here: [https://colab.research.google.com/drive/1lU0SWtvQoJHNe7pLiKD33nYBKacljhck?usp=sharing](https://colab.research.google.com/drive/1lU0SWtvQoJHNe7pLiKD33nYBKacljhck?usp=sharing).
-
 
 :::
 
@@ -26,7 +27,7 @@ An interactive Google Colab notebook that plots the interest rate depending on u
 
 The formula for calculating the borrow rate is as follows:
 
-$$\text\{rate\} = \text\{rate\}_\{\text\{AMM\}\} \left( r_\{\text\{minf\}\} + \frac\{A\}\{u_\{\text\{inf\}\} - \text\{utilization\}\} \right) + \text\{shift\}$$
+$$\text{rate} = \text{rate}_{\text{AMM}} \left( r_{\text{minf}} + \frac{A}{u_{\text{inf}} - \text{utilization}} \right) + \text{shift}$$
 
 $\text{shift}$ is an additional value which shifts the entire rate curve up or down by a specified amount.[^1]
 
@@ -35,20 +36,20 @@ $\text{shift}$ is an additional value which shifts the entire rate curve up or d
 
 ### Parameters
 
-Depending on **target utilization ( \(u_0\) )**, **rate ratio at 0% utilization ( \(\alpha\) )**, and **rate ratio at 100% utilization ( \(\beta\) )**, the coefficients for the hyperbolic dependency are calculated as follows:
+Depending on **target utilization ($u_0$)**, **rate ratio at 0% utilization ($\alpha$)**, and **rate ratio at 100% utilization ($\beta$)**, the coefficients for the hyperbolic dependency are calculated as follows:
 
-$$u_\{\text\{inf\}\} = \frac\{(\beta - 1) \times u_0\}\{(\beta - 1) \times u_0 - (1 - u_0) \times (1 - \alpha)\}$$
+$$u_{\text{inf}} = \frac{(\beta - 1) \times u_0}{(\beta - 1) \times u_0 - (1 - u_0) \times (1 - \alpha)}$$
 
-$$A = (1 - \alpha) \times (u_\{\text\{inf\}\} - u_0) \times \frac\{u_\{\text\{inf\}\}\}\{u_0\}$$
+$$A = (1 - \alpha) \times (u_{\text{inf}} - u_0) \times \frac{u_{\text{inf}}}{u_0}$$
 
-$$r_\{\text\{minf\}\} = \alpha - \frac\{A\}\{u_\{\text\{inf\}\}\}$$
+$$r_{\text{minf}} = \alpha - \frac{A}{u_{\text{inf}}}$$
 
 
 *Where:*
 
-- \(u_0 = \text\{target utilization\}\)
-- \(\alpha = \text\{low ratio\}\)
-- \(\beta = \text\{high ratio\}\)
+- $u_0 = \text{target utilization}$
+- $\alpha = \text{low ratio}$
+- $\beta = \text{high ratio}$
 
 Alpha ($\alpha$) and Beta ($\beta$) essentially determine how the borrow rate scales with utilization. For example:
 
@@ -68,9 +69,13 @@ Also, the `A` parameter has nothing to do with the amplification coefficient use
 ---
 
 
-## Rates**The rate values are based on 1e18 and NOT annualized.***To calculate the Borrow APR (annualized):*
+## Rates
 
-$$\text\{borrowAPR\} = \frac\{\text\{rate\} * 365 * 86400\}\{10^\{18\}\}$$
+**The rate values are based on 1e18 and NOT annualized.**
+
+*To calculate the Borrow APR (annualized):*
+
+$$\text{borrowAPR} = \frac{\text{rate} \cdot 365 \cdot 86400}{10^{18}}$$
 
 Rate calculations occur within the MonetaryPolicy contract. The rate is regularly updated by the internal `_save_rate` method in the Controller. This happens whenever a new loan is initiated (`_create_loan`), collateral is either added (`add_collateral`) or removed (`remove_collateral`), additional debt is incurred (`borrow_more` and `borrow_more_extended`), debt is repaid (`repay`, `repay_extended`), or a loan undergoes liquidation (`_liquidate`).
 
@@ -163,7 +168,7 @@ def set_rate(rate: uint256) -> uint256:
 </SourceCode>
 
 ### `rate`
-:::description[`MonetaryPolicy.rate(_for: address = msg.sender) -> uint256`]
+::::description[`SecondaryMonetaryPolicy.rate(_for: address = msg.sender) -> uint256: view`]
 
 
 Getter for the borrow rate for a specific lending market.
@@ -222,10 +227,10 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 </Example>
 
 
-:::
+::::
 
 ### `future_rate`
-:::description[`MonetaryPolicy.future_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256`]
+::::description[`SecondaryMonetaryPolicy.future_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256: view`]
 
 
 Function to calculate the future borrow rate for a lending market given a specific change in reserves and debt.
@@ -286,10 +291,10 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 </Example>
 
 
-:::
+::::
 
 ### `rate_write`
-:::description[`MonetaryPolicy.rate_write(_for: address = msg.sender) -> uint256:`]
+::::description[`SecondaryMonetaryPolicy.rate_write(_for: address = msg.sender) -> uint256`]
 
 
 Function to calculate the rate of a lending market, similar to the `rate` method. However, the key difference is that this function updates the rate and therefore changes the state of the blockchain. This method is usually called by the Controller.
@@ -347,7 +352,7 @@ def calculate_rate(_for: address, d_reserves: int256, d_debt: int256) -> uint256
 </Example>
 
 
-:::
+::::
 
 ---
 
@@ -381,7 +386,7 @@ For parameter calculations see [here](#parameters).
 
 
 ### `parameters`
-:::description[`MonetaryPolicy.parameters() -> tuple: view`]
+::::description[`SecondaryMonetaryPolicy.parameters() -> tuple: view`]
 
 
 Getter for the parameters of the monetary policy. These parameters can be changed by the admin of the contract using the `set_parameters` function. This function does NOT return the `target_rate` ($u_0$), `low_ratio` ($\alpha$), or `high_ratio` ($\beta$), but rather the derived parameters based on those values.
@@ -415,10 +420,10 @@ parameters: public(Parameters)
 <Example>
 
 ```shell
->>> MonetaryPolicy.parameters()         # mp for BTC lending market (follows wBTC mint market)
+>>> SecondaryMonetaryPolicy.parameters()         # mp for BTC lending market (follows wBTC mint market)
 1046153846153846153, 120710059171597632, 384615384615384617, 0
 
->>> MonetaryPolicy.parameters()         # mp for wstETH lending market (follows wETH mint market)
+>>> SecondaryMonetaryPolicy.parameters()         # mp for wstETH lending market (follows wETH mint market)
 1046153846153846153, 120710059171597632, 384615384615384617, 1268391679
 ```
 
@@ -435,10 +440,10 @@ $shift = \frac{1268391679 \times 365 \times 86400}{10^{18}} = 0.04$
 :::
 
 
-:::
+::::
 
 ### `set_parameters`
-:::description[`MonetaryPolicy.set_parameters(target_utilization: uint256, low_ratio: uint256, high_ratio: uint256, rate_shift: uint256)`]
+::::description[`SecondaryMonetaryPolicy.set_parameters(target_utilization: uint256, low_ratio: uint256, high_ratio: uint256, rate_shift: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -450,14 +455,14 @@ This function is only callable by the `admin` of the contract.
 
 Function to update the rate of a lending market.
 
-Emits: `SetParameters`
-
 | Input                | Type      | Description                                                                           |
 | -------------------- | --------- | ------------------------------------------------------------------------------------- |
 | `target_utilization` | `uint256` | Target ratio of the market utilization. Needs to be between 1% and 99%, usually set to 80%. |
 | `low_ratio`          | `uint256` | Low ratio. Needs to be higher than 1%.                                                |
 | `high_ratio`         | `uint256` | High ratio. Needs to be lower than 100%.                                              |
 | `rate_shift`         | `uint256` | Value by which the rate curve is shifted.                                                |
+
+Emits: `SetParameters` event.
 
 <SourceCode>
 
@@ -535,7 +540,7 @@ def get_params(u_0: uint256, alpha: uint256, beta: uint256, rate_shift: uint256)
 </Example>
 
 
-:::
+::::
 
 ---
 
@@ -543,7 +548,7 @@ def get_params(u_0: uint256, alpha: uint256, beta: uint256, rate_shift: uint256)
 ## Contract Info Methods
 
 ### `AMM`
-:::description[`MonetaryPolicy.parameters() -> tuple: view`]
+::::description[`SecondaryMonetaryPolicy.AMM() -> address: view`]
 
 
 Getter for the AMM contract (used for minting crvUSD), which is used for rate comparison.
@@ -597,7 +602,7 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 <Example>
 
 ```shell
->>> MonetaryPolicy.AMM()
+>>> SecondaryMonetaryPolicy.AMM()
 '0xE0438Eb3703bF871E31Ce639bd351109c88666ea'
 ```
 
@@ -605,10 +610,10 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 </Example>
 
 
-:::
+::::
 
 ### `BORROWED_TOKEN`
-:::description[`MonetaryPolicy.parameters() -> tuple: view`]
+::::description[`SecondaryMonetaryPolicy.BORROWED_TOKEN() -> address: view`]
 
 
 Getter for the token borrowed from the lending market.
@@ -662,7 +667,7 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 <Example>
 
 ```shell
->>> MonetaryPolicy.BORROWED_TOKEN()
+>>> SecondaryMonetaryPolicy.BORROWED_TOKEN()
 '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
 ```
 
@@ -670,10 +675,10 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 </Example>
 
 
-:::
+::::
 
 ### `FACTORY`
-:::description[`MonetaryPolicy.parameters() -> tuple: view`]
+::::description[`SecondaryMonetaryPolicy.FACTORY() -> address: view`]
 
 
 Getter for the lending factory contract.
@@ -727,7 +732,7 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 <Example>
 
 ```shell
->>> MonetaryPolicy.FACTORY()
+>>> SecondaryMonetaryPolicy.FACTORY()
 '0xeA6876DDE9e3467564acBeE1Ed5bac88783205E0'
 ```
 
@@ -735,4 +740,4 @@ def __init__(factory: Factory, amm: IAMM, borrowed_token: ERC20,
 </Example>
 
 
-:::
+::::

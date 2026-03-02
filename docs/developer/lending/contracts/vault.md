@@ -3,11 +3,11 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The vault is an **implementation of a [ERC-4626](https://ethereum.org/developers/docs/standards/tokens/erc-4626)**vault which **deposits the underlying asset into the controller**and **tracks the progress of the fees earned**. 
+The vault is an **implementation of a [ERC-4626](https://ethereum.org/developers/docs/standards/tokens/erc-4626)** vault which **deposits the underlying asset into the controller** and **tracks the progress of the fees earned**. 
 
 :::vyper[`Vault.vy`]
 
-The source code for the `Vault.vy` contract can be found on [ GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/Vault.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `Vault.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/Vault.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
@@ -114,7 +114,9 @@ Additionally, methods like `mint()`, `deposit()`, `redeem()`, and `withdraw()` c
 ---
 
 
-## Depositing Assets and Minting Shares:::colab[Google Colab Notebook]
+## Depositing Assets and Minting Shares
+
+:::colab[Google Colab Notebook]
 
 A google colab notebook on how to use the `deposit` and `mint` functions can be found here: [https://colab.research.google.com/drive/1Qj9nOk5TYXp6j6go3VIh6--r5VILnoo9?usp=sharing](https://colab.research.google.com/drive/1Qj9nOk5TYXp6j6go3VIh6--r5VILnoo9?usp=sharing).
 
@@ -136,19 +138,19 @@ A newer version of the vault contract allows for setting a maximum supply of ass
 :::
 
 ### `deposit`
-::::description[`Vault.deposit(assets: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`Vault.deposit(assets: uint256, receiver: address = msg.sender) -> uint256`]
 
 
 Function to deposit a specified number of assets of the underlying token (`borrowed_token`) into the vault and mint the corresponding amount of shares to `receiver`. There is no cap when depositing assets into the vault - as many token as desired can be deposited into it.
-
-Returns: minted shares (`uint256`).
-
-Emits: `Deposit`, `Transfer` and `SetRate`
 
 | Input       | Type      | Description                                                           |
 |-------------|-----------|-----------------------------------------------------------------------|
 | `assets`    | `uint256` | Amount of assets to deposit.                                          |
 | `receiver`  | `address` | Receiver of the minted shares. Defaults to `msg.sender`.              |
+
+Returns: minted shares (`uint256`).
+
+Emits: `Deposit`, `Transfer`, and `SetRate` events.
 
 <SourceCode>
 
@@ -346,7 +348,7 @@ Out [3]:  997552662404145514069
 ::::
 
 ### `maxDeposit`
-::::description[`Vault.maxDeposit(receiver: address) -> uint256:`]
+::::description[`Vault.maxDeposit(receiver: address) -> uint256: view`]
 
 
 Getter for the maximum amount of assets `receiver` can deposit. Essentially equals to `max_value(uint256)`.
@@ -397,7 +399,7 @@ should return borrowed_token.balanceOf("0x7a16fF8270133F063aAb6C9977183D9e728354
 ::::
 
 ### `previewDeposit`
-::::description[`Vault.previewDeposit(assets: uint256) -> uint256:`]
+::::description[`Vault.previewDeposit(assets: uint256) -> uint256: view`]
 
 
 Function to simulate the effects of depositing `assets` into the vault based on the current state.
@@ -462,19 +464,19 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ::::
 
 ### `mint`
-::::description[`Vault.mint(shares: uint256, receiver: address = msg.sender) -> uint256:`]
+::::description[`Vault.mint(shares: uint256, receiver: address = msg.sender) -> uint256`]
 
 
-Function to mint a specific amount of shares (`shares`) to `receiver` by depositing the necessary number of assets into the vault. 
-
-Returns: amount of assets deposited (`uint256`).
-
-Emits: `Deposit`, `Transfer` and `SetRate`
+Function to mint a specific amount of shares (`shares`) to `receiver` by depositing the necessary number of assets into the vault.
 
 | Input       | Type      | Description                                                      |
 |-------------|-----------|------------------------------------------------------------------|
 | `shares`    | `uint256` | Number of shares to be minted.                                   |
 | `receiver`  | `address` | Receiver of the minted shares. Defaults to `msg.sender`.         |
+
+Returns: amount of assets deposited (`uint256`).
+
+Emits: `Deposit`, `Transfer`, and `SetRate` events.
 
 <SourceCode>
 
@@ -672,7 +674,7 @@ Out [3]:  1097552662404145514069
 ::::
 
 ### `maxMint`
-::::description[`Vault.maxMint(receiver: address) -> uint256:`]
+::::description[`Vault.maxMint(receiver: address) -> uint256: view`]
 
 
 Getter for the maximum amount of shares a user can mint. Essentially equals to `max_value(uint256)`.
@@ -737,7 +739,7 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ::::
 
 ### `previewMint`
-::::description[`Vault.previewMint(shares: uint256) -> uint256:`]
+::::description[`Vault.previewMint(shares: uint256) -> uint256: view`]
 
 
 Function to simulate the number of assets required to mint a specified amount of shares (`shares`) given the current state of the vault.
@@ -803,7 +805,7 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 ::::
 
 ### `convertToShares`
-::::description[`Vault.convertToShares(assets: uint256) -> uint256:`]
+::::description[`Vault.convertToShares(assets: uint256) -> uint256: view`]
 
 
 Function to calculate the amount of shares received for a given amount of `assets` provided.
@@ -872,7 +874,7 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ::::description[`Vault.maxSupply() -> uint256: view`]
 
 
-Getter for the maximum amount of assets that can be supplied to the vault. This function is only avaliable in a newer version of the vault contract.
+Getter for the maximum amount of assets that can be supplied to the vault. This function is only available in a newer version of the vault contract.
 
 Returns: maximum supply (`uint256`).
 
@@ -919,8 +921,8 @@ def set_max_supply(max_supply: uint256):
 
 ::::
 
-### `set_max_supply `
-::::description[`Vault.set_max_supply(max_supply: uint256):`]
+### `set_max_supply`
+::::description[`Vault.set_max_supply(max_supply: uint256)`]
 
 
 :::guard[Guarded Method]
@@ -930,9 +932,9 @@ This function is only callable by the `admin` of the factory.
 
 :::
 
-Function to set the maximum amount of assets that can be supplied to the vault. This function is only avaliable in a newer version of the vault contract.
+Function to set the maximum amount of assets that can be supplied to the vault. This function is only available in a newer version of the vault contract.
 
-Emits: `SetMaxSupply`
+Emits: `SetMaxSupply` event.
 
 | Input      | Type      | Description                   |
 |------------|-----------|-------------------------------|
@@ -984,7 +986,9 @@ def set_max_supply(max_supply: uint256):
 ---
 
 
-## Withdrawing Assets and Redeeming Shares:::colab[Google Colab Notebook]
+## Withdrawing Assets and Redeeming Shares
+
+:::colab[Google Colab Notebook]
 
 A Google Colab notebook on how to use the `withdraw` and `mint` functions, as well as how shares are priced, can be found here: [https://colab.research.google.com/drive/1Ta69fsIc7zmtjFlQ94a8MDYYLeo4GJJI?usp=sharing](https://colab.research.google.com/drive/1Ta69fsIc7zmtjFlQ94a8MDYYLeo4GJJI?usp=sharing).
 
@@ -1007,20 +1011,20 @@ To prevent this scenario, the borrow rate is based on the utilization rate of th
 :::
 
 ### `withdraw`
-::::description[`Vault.withdraw(assets: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`]
+::::description[`Vault.withdraw(assets: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256`]
 
 
 Function to withdraw `assets` from `owner` to the `receiver` and burn the corresponding amount of shares.
 
-Returns: shares withdrawn (`uint256`).
-
-Emits: `Withdraw`, `Transfer` and `SetRate`
-
 | Input      | Type     | Description                                        |
 | ---------- | -------- | -------------------------------------------------- |
 | `assets`   | `uint256` | Amount of assets to withdraw.                     |
-| `receiver` | `address` | Receiver of the shares. Defaults to `msg.sender`. |
+| `receiver` | `address` | Receiver of the withdrawn assets. Defaults to `msg.sender`. |
 | `owner`    | `address` | Address of whose shares to burn. Defaults to `msg.sender`. |
+
+Returns: shares withdrawn (`uint256`).
+
+Emits: `Withdraw`, `Transfer`, and `SetRate` events.
 
 <SourceCode>
 
@@ -1231,7 +1235,7 @@ Out [5]:  999999899754665824864192
 ::::
 
 ### `maxWithdraw`
-::::description[`Vault.maxWithdraw(owner: address) -> uint256:`]
+::::description[`Vault.maxWithdraw(owner: address) -> uint256: view`]
 
 
 Getter for the maximum amount of assets withdrawable by `owner`.
@@ -1298,7 +1302,7 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 ::::
 
 ### `previewWithdraw`
-::::description[`Vault.previewWithdraw(assets: uint256) -> uint256:`]
+::::description[`Vault.previewWithdraw(assets: uint256) -> uint256: view`]
 
 
 Function to simulate the amount of shares getting burned when withdrawing `assets`.
@@ -1307,7 +1311,7 @@ Returns: number of shares burned (`uint256`).
 
 | Input   | Type      | Description                      |
 |---------|-----------|----------------------------------|
-| `asset` | `address` | Number of assets to withdraw. |
+| `assets` | `uint256` | Number of assets to withdraw. |
 
 <SourceCode>
 
@@ -1364,20 +1368,20 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ::::
 
 ### `redeem`
-::::description[`Vault.redeem(shares: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256:`]
+::::description[`Vault.redeem(shares: uint256, receiver: address = msg.sender, owner: address = msg.sender) -> uint256`]
 
 
 Function to redeem (and burn) `shares` from `owner` and send the received assets to `receiver`. Shares are burned when they are redeemed.
-
-Returns: assets received (`uint256`).
-
-Emits: `Withdraw`, `Transfer` and `SetRate`
 
 | Input     | Type      | Description                                        |
 |-----------|-----------|----------------------------------------------------|
 | `shares`  | `uint256` | Amount of shares to redeem.                        |
 | `receiver`| `address` | Receiver of the shares. Defaults to `msg.sender`. |
 | `owner`   | `address` | Address of whose shares to burn. Defaults to `msg.sender`. |
+
+Returns: assets received (`uint256`).
+
+Emits: `Withdraw`, `Transfer`, and `SetRate` events.
 
 <SourceCode>
 
@@ -1593,7 +1597,7 @@ Out [5]:  999999999999999999999998
 ::::
 
 ### `maxRedeem`
-::::description[`Vault.maxRedeem(owner: address) -> uint256:`]
+::::description[`Vault.maxRedeem(owner: address) -> uint256: view`]
 
 
 Getter for the maximum redeemable shares from `owner`.
@@ -1660,7 +1664,7 @@ def _convert_to_shares(assets: uint256, is_floor: bool = True,
 ::::
 
 ### `previewRedeem`
-::::description[`Vault.previewRedeem(shares: uint256) -> uint256:`]
+::::description[`Vault.previewRedeem(shares: uint256) -> uint256: view`]
 
 
 Function to simulate the number of assets received when redeeming (burning) `shares`.
@@ -1732,7 +1736,7 @@ def _convert_to_assets(shares: uint256, is_floor: bool = True,
 ::::
 
 ### `convertToAssets`
-::::description[`Vault.convertToAssets(shares: uint256) -> uint256:`]
+::::description[`Vault.convertToAssets(shares: uint256) -> uint256: view`]
 
 
 Function to calculate the amount of assets received when converting `shares` to assets.
@@ -1806,11 +1810,11 @@ Interest rates within lending markets are intricately linked to the market's uti
 
 The vault contract has two public methods, named `borrow_apr` and `lend_apr`. These methods are designed to compute and return the **annualized rates for borrowing and lending**, respectively, standardized to a base of 1e18.
 
-- **Borrow Rate:**This is the interest rate charged on the amount borrowed by a user.
-- **Lend Rate:**Conversely, this rate represents the yield a user earns by lending their assets to the vault.
+- **Borrow Rate:** This is the interest rate charged on the amount borrowed by a user.
+- **Lend Rate:** Conversely, this rate represents the yield a user earns by lending their assets to the vault.
 
 
-```py
+```shell
 In  [1]: Vault.borrow_apr()
 Out [1]: 352629439534800000                 # -> 0.352 -> 35.2%
 
@@ -1825,24 +1829,24 @@ More on rates and when they are updated here: [SemiLog Monetary Policy](./semilo
 
 *The formula to calculate the annual percentage rate (APR) for borrowing is outlined as follows:*
 
-$$\text\{borrowAPR\} = \frac\{\text\{rate\} * 365 * 86400\}\{10^\{18\}\}$$
+$$\text{borrowAPR} = \frac{\text{rate} \cdot 365 \cdot 86400}{10^{18}}$$
 
 
 *The APR for lending is directly linked to the APR for borrowing, defined by:*
 
-$$\text\{lendAPR\} = \text\{borrowAPR\} * \text\{utilization\}$$
+$$\text{lendAPR} = \text{borrowAPR} \cdot \text{utilization}$$
 
 
 *Additionally, the utilization ratio is determined by the following:*[^1]
 
-$$\text\{utilization\} = \frac\{\text\{debt\}\}\{\text\{totalAssets\}\}$$
+$$\text{utilization} = \frac{\text{debt}}{\text{totalAssets}}$$
 
 [^1]: This ratio represents the proportion of borrowed assets (debt) to the total assets supplied in the vault. It's a key metric that reflects the level of asset utilization within the vault. Borrowed assets, or debt, are obtained through the `total_debt` method from the Controller, while the `totalAssets` method within the Vault provides the value of total assets supplied.
 
 ---
 
 ### `borrow_apr`
-::::description[`Vault.borrow_apr() -> uint256`]
+::::description[`Vault.borrow_apr() -> uint256: view`]
 
 
 Getter for the annualized borrow APR. The user pays this rate on the assets borrowed.
@@ -1906,7 +1910,7 @@ rate: public(uint256)
 ::::
 
 ### `lend_apr`
-::::description[`Vault.lend_apr() -> uint256:`]
+::::description[`Vault.lend_apr() -> uint256: view`]
 
 
 Getter for the annualized lending APR. The value is based on the utilization is awarded to the user for supplying underlying asset (`borrowed_token`) to the vault.
@@ -1987,7 +1991,7 @@ rate: public(uint256)
 ## Contract Info Methods
 
 ### `asset`
-::::description[`Vault.asset() -> ERC20:`]
+::::description[`Vault.asset() -> ERC20: view`]
 
 
 Getter for the underlying asset used by the vault, which is the `borrowed_token`.
@@ -2032,7 +2036,7 @@ def asset() -> ERC20:
 ::::
 
 ### `totalAssets`
-::::description[`Vault.totalAssets() -> uint256:`]
+::::description[`Vault.totalAssets() -> uint256: view`]
 
 
 Getter for the total amount of the underlying asset (`borrowed_token`) held by the vault. These are the total assets that can be lent out.
@@ -2085,7 +2089,7 @@ def _total_assets() -> uint256:
 ::::
 
 ### `pricePerShare`
-::::description[`Vault.pricePerShare(is_floor: bool = True) -> uint256:`]
+::::description[`Vault.pricePerShare(is_floor: bool = True) -> uint256: view`]
 
 
 Getter for the price of one share in asset tokens.

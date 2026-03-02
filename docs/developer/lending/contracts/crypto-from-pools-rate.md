@@ -10,7 +10,7 @@ These kinds of oracle contracts **need to be deployed manually**, as there is cu
 
 :::vyper[`CryptoFromPoolsRate.vy`]
 
-The source code for the `CryptoFromPoolsRate.vy` contract can be found on [:logos-github: GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolsRate.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolsRateWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolsRateWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `CryptoFromPoolsRate.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolsRate.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolsRateWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolsRateWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
@@ -579,7 +579,7 @@ The oracle contract utilizes the `stored_rates` from a stableswap pool and consi
 <SourceCode>
 
 
-```py
+```vyper
 RATE_MAX_SPEED: constant(uint256) = 10**16 / 60  # Max speed of Rate change
 
 @internal
@@ -619,7 +619,7 @@ Based on the values of `rate` and `cached_rate`, specific calculations are requi
 
 
 ### `stored_rate`
-::::description[`CryptoFromPoolsRate.stored_rate() -> uint256`]
+::::description[`CryptoFromPoolsRate.stored_rate() -> uint256: view`]
 
 
 Getter for the stored rates fetched from a stableswap pool. 
@@ -766,7 +766,7 @@ def _stored_rate_w() -> uint256:
 
 Getter for the cached timestamp. This value is updated whenever the `price_w` method is called.
 
-Returns: cached timestamp (`uint256`)
+Returns: cached timestamp (`uint256`).
 
 <SourceCode>
 
@@ -819,7 +819,7 @@ def _stored_rate_w() -> uint256:
 ::::description[`CryptoFromPoolsRate.USE_RATES(arg0: uint256) -> bool: view`]
 
 
-Getter method to check wether the pool at index `arg0` uses rates or not. Pool indices are fetched via [`POOLS`](#pools).
+Getter method to check whether the pool at index `arg0` uses rates or not. Pool indices are fetched via [`POOLS`](#pools).
 
 Returns: whether to apply rates or not (`bool`).
 
@@ -1054,12 +1054,12 @@ COLLATERAL_IX: public(immutable(DynArray[uint256, MAX_POOLS]))
 ::::
 
 ### `NO_ARGUMENT`
-::::description[`CryptoFromPoolsRate.NO_ARGUMENT(arg0: uin256) -> bool: view`]
+::::description[`CryptoFromPoolsRate.NO_ARGUMENT(arg0: uint256) -> bool: view`]
 
 
 Getter for the `NO_ARGUMENT` storage variable. This is an additional variable to ensure the correct price oracle is fetched from a pool.
 
-Returns: true or false (bool)
+Returns: true or false (`bool`).
 
 | Input  | Type      | Description |
 | ------ | --------- | ----------- |

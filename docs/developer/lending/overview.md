@@ -1,5 +1,5 @@
 # Curve Lending: Overview
-Curve lending allows the **creation of permissionless lending/borrowing markets to borrow crvUSD against any token, or to borrow any token against crvUSD in an isolated mode**, powered by **LLAMMA**for soft-liquidations. All markets are **isolated**from each other and do not intertwine.
+Curve lending allows the **creation of permissionless lending/borrowing markets to borrow crvUSD against any token, or to borrow any token against crvUSD in an isolated mode**, powered by **LLAMMA** for soft-liquidations. All markets are **isolated** from each other and do not intertwine.
 
 The **borrowable liquidity is provided by willing lenders**through [Vaults](./contracts/vault.md), which are [ERC4626](https://ethereum.org/en/developers/docs/standards/tokens/erc-4626/) contracts with some additional methods for convenience.
 
@@ -11,18 +11,20 @@ Source code for all lending-relevant contracts is available on [GitHub](https://
 
 :::
 
-## Overview*The entire system is similar to the one for minting crvUSD. Every lending market has a individual **Controller**, **LLAMMA**, and **Vault**.*
+## Overview
+
+*The entire system is similar to the one for minting crvUSD. Every lending market has an individual **Controller**, **LLAMMA**, and **Vault**.*
 
 <figure>
   <img src="../assets/images/lending_overview.svg" alt="" width="600" />
   <figcaption></figcaption>
 </figure>
 
-The **Controller**is some sort of on-chain interface. Most user actions, such as *creating or repaying loans or managing existing ones*, are done through this contract.
+The **Controller** is some sort of on-chain interface. Most user actions, such as *creating or repaying loans or managing existing ones*, are done through this contract.
 
-The **LLAMMA**is an AMM that holds the collateral assets. This is where the magic around *soft-liquidations* happens. Full documentation can be found [here](../crvusd/amm.md).
+The **LLAMMA** is an AMM that holds the collateral assets. This is where the magic around *soft-liquidations* happens. Full documentation can be found [here](../crvusd/amm.md).
 
-The **Vault**is where willing *lenders provide assets to be borrowed*. The contract does not actually hold any borrowable assets; they are held by the Controller.
+The **Vault** is where willing *lenders provide assets to be borrowed*. The contract does not actually hold any borrowable assets; they are held by the Controller.
 
 
 ---
@@ -37,7 +39,7 @@ Because Curve Lending operates very similarly to the system for minting crvUSD, 
 
 ## Vault
 
-The Vault is an **implementation of the ERC4626 vault which deposits assets into the Controller contract**and tracks the **progress of fees earned**. It is a standard factory (non-blueprint) contract that also creates the AMM and Controller using `initialize()`.
+The Vault is an **implementation of the ERC4626 vault which deposits assets into the Controller contract** and tracks the **progress of fees earned**. It is a standard factory (non-blueprint) contract that also creates the AMM and Controller using `initialize()`.
 
 <Dropdown title="`initialize()`">
 
@@ -140,13 +142,13 @@ The factory allows the **permissionless creation of borrowing/lending markets wi
 
 ## Oracles
 
-Curve lending markets use **EMA oracles**as price sources to value the underlying collaterals. There are **multiple different oracles in use**. For example, one version uses the `price_oracle` of a single Curve pool, while another version uses an oracle contract that chains together multiple price oracles from different liquidity pools.
+Curve lending markets use **EMA oracles** as price sources to value the underlying collaterals. There are **multiple different oracles in use**. For example, one version uses the `price_oracle` of a single Curve pool, while another version uses an oracle contract that chains together multiple price oracles from different liquidity pools.
 
 [→ More here](./contracts/oracle-overview.md)
 
 
 ## Monetary Policies
 
-Lending markets uses a semi-log monetary policy for lending markets where the **borrow rate does not depend on the price of crvUSD**but just on the **utilization of the market**.
+Lending markets use a semi-log monetary policy for lending markets where the **borrow rate does not depend on the price of crvUSD**but just on the **utilization of the market**.
 
 [→ More here](./contracts/mp-overview.md)
