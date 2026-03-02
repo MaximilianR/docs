@@ -75,11 +75,12 @@ def __init__(
 
 <Example>
 
-```shell
->>> FeeDistributor.token()
-'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
-```
-
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function token() view returns (address)"]}
+  method="token"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -90,9 +91,7 @@ def __init__(
 ::::description[`FeeDistributor.claim(_addr: address = msg.sender) -> uint256`]
 
 
-Function to claim fees for an account.  
-
-Returns: amount of rewards claimed (`uint256`). 
+Function to claim fees for an account.
 
 :::note
 
@@ -106,6 +105,10 @@ Every veCRV related action (locking, extending a lock, increasing the locktime) 
 | Input   | Type   | Description |
 | ------- | ------- | ----|
 | `_addr` |  `address` | Addresses to claim for. Defaults to `msg.sender`. |
+
+Returns: amount of rewards claimed (`uint256`).
+
+Emits: `Claimed` event.
 
 <SourceCode>
 
@@ -231,16 +234,18 @@ def _claim(addr: address, ve: address, _last_token_time: uint256) -> uint256:
 
 Function to perform multiple claims in a single call. This is useful to claim for multiple accounts at once, or for making many claims against the same account if that account has performed more than 50 veCRV related actions.
 
-Returns: true (`bool`).
-
 | Input   | Type   | Description |
 | ------- | ------- | ----|
 | `_receivers` |  `address[20]` | List of addresses to claim for. |
 
+Returns: true (`bool`).
+
+Emits: `Claimed` event.
+
 <SourceCode>
 
 
-```vyper 
+```vyper
 event Claimed:
     recipient: indexed(address)
     amount: uint256
@@ -394,11 +399,12 @@ can_checkpoint_token: public(bool)
 
 <Example>
 
-```shell
->>> FeeDistributor.can_checkpoint_token()
-'true'
-```
-
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function can_checkpoint_token() view returns (bool)"]}
+  method="can_checkpoint_token"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -409,12 +415,14 @@ can_checkpoint_token: public(bool)
 ::::description[`FeeDistributor.checkpoint_token()`]
 
 
-Function to update the token checkpoint. The token checkpoint tracks the balance of 3CRV within the distributor to determine the amount of fees to distribute in the given week. The checkpoint can be updated at most once every 24 hours. Fees that are received between the last checkpoint of the previous week and first checkpoint of the new week will be split evenly between the weeks. To ensure full distribution of fees in the current week, the burn process must be completed prior to the last checkpoint within the week. A token checkpoint is automatically taken during any `claim` action, if the last checkpoint is more than 24 hours old. 
+Function to update the token checkpoint. The token checkpoint tracks the balance of 3CRV within the distributor to determine the amount of fees to distribute in the given week. The checkpoint can be updated at most once every 24 hours. Fees that are received between the last checkpoint of the previous week and first checkpoint of the new week will be split evenly between the weeks. To ensure full distribution of fees in the current week, the burn process must be completed prior to the last checkpoint within the week. A token checkpoint is automatically taken during any `claim` action, if the last checkpoint is more than 24 hours old.
+
+Emits: `CheckpointToken` event.
 
 <SourceCode>
 
 
-```vyper 
+```vyper
 event CheckpointToken:
     time: uint256
     tokens: uint256
@@ -468,6 +476,15 @@ def _checkpoint_token():
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> FeeDistributor.checkpoint_token()
+```
+
+
+</Example>
+
 ::::
 
 ### `toggle_allow_checkpoint_token`
@@ -483,10 +500,12 @@ This function is only callable by the `admin` of the contract.
 
 Function to toggle permission for checkpointing by an account.
 
+Emits: `ToggleAllowCheckpointToken` event.
+
 <SourceCode>
 
 
-```vyper 
+```vyper
 event ToggleAllowCheckpointToken:
     toggle_flag: bool
 
@@ -508,7 +527,6 @@ def toggle_allow_checkpoint_token():
 
 ```shell
 >>> FeeDistributor.toggle_allow_checkpoint_token()
-'true'
 ```
 
 
@@ -564,6 +582,15 @@ def _checkpoint_total_supply():
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> FeeDistributor.checkpoint_total_supply()
+```
+
+
+</Example>
+
 ::::
 
 ### `burn`
@@ -576,10 +603,12 @@ Function to receive 3CRV or crvUSD into the contract and trigger a token checkpo
 | ------- | -------| ----|
 | `_coin` |  `address` | Address of the coin being received. |
 
+Returns: true (`bool`).
+
 <SourceCode>
 
 
-```vyper 
+```vyper
 @external
 def burn(_coin: address) -> bool:
     """
@@ -601,6 +630,15 @@ def burn(_coin: address) -> bool:
 
 
 </SourceCode>
+
+<Example>
+
+```shell
+>>> FeeDistributor.burn("0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490")
+```
+
+
+</Example>
 
 ::::
 
@@ -632,10 +670,12 @@ is_killed: public(bool)
 
 <Example>
 
-```shell
->>> FeeDistributor.is_killed()
-'false'
-```
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function is_killed() view returns (bool)"]}
+  method="is_killed"
+  contractName="FeeDistributor"
+/>
 
 
 </Example>
@@ -647,13 +687,6 @@ is_killed: public(bool)
 ::::description[`FeeDistributor.kill_me()`]
 
 
-:::danger
-
-Killing transfers the entire token balance to the [`emergency_return`](#emergency_return) address and blocks the ability to `claim` or `burn`.
-
-
-:::
-
 :::guard[Guarded Method]
 
 This function is only callable by the `admin` of the contract.
@@ -663,10 +696,17 @@ This function is only callable by the `admin` of the contract.
 
 Function to kill the `FeeDistributor` contract.
 
+:::danger
+
+Killing transfers the entire token balance to the [`emergency_return`](#emergency_return) address and blocks the ability to `claim` or `burn`.
+
+
+:::
+
 <SourceCode>
 
 
-```vyper 
+```vyper
 is_killed: public(bool)
 
 @external
@@ -719,19 +759,12 @@ emergency_return: public(address)
 
 <Example>
 
-
-Due to the fact that the emergency return address can not be changed and Curve used a ownership agent back then when the distributor contract for 3CRV was deployed, this one was set as the emergency return address.
-
-The second fee distributor contract (crvUSD) uses a 5 of 9 multisig, which replaced the ownership agent.
-
-```shell
->>> FeeDistributor.emergency_return()               # 3CRV distributor
-'0x00669DF67E4827FCc0E48A1838a8d5AB79281909'
-
->>> FeeDistributor.emergency_return()               # crvUSD distributor
-'0x467947EE34aF926cF1DCac093870f613C96B1E0c'
-```
-
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function emergency_return() view returns (address)"]}
+  method="emergency_return"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -742,18 +775,25 @@ The second fee distributor contract (crvUSD) uses a 5 of 9 multisig, which repla
 ::::description[`FeeDistributor.recover_balance(_coin: address) -> bool`]
 
 
-Function to recover ERC20 tokens from the contract. Tokens are sent to the emergency return address. This function only works for tokens other than the address set for `token`. E.g. this function on the 3CRV distributor contract cannot be called to transfer 3CRV. The same applies to the crvUSD distributor.
+:::guard[Guarded Method]
 
-Returns: true (`bool`).
+This function is only callable by the `admin` of the contract.
+
+
+:::
+
+Function to recover ERC20 tokens from the contract. Tokens are sent to the emergency return address. This function only works for tokens other than the address set for `token`. E.g. this function on the 3CRV distributor contract cannot be called to transfer 3CRV. The same applies to the crvUSD distributor.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_coin` |  `address` | Coin Address to recover |
+| `_coin` |  `address` | Coin address to recover |
+
+Returns: true (`bool`).
 
 <SourceCode>
 
 
-```vyper 
+```vyper
 @external
 def recover_balance(_coin: address) -> bool:
     """
@@ -784,6 +824,15 @@ def recover_balance(_coin: address) -> bool:
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> FeeDistributor.recover_balance("0xdAC17F958D2ee523a2206206994597C13D831ec7")
+```
+
+
+</Example>
+
 ::::
 
 ---
@@ -811,11 +860,12 @@ admin: public(address)
 
 <Example>
 
-```shell
->>> FeeDistributor.admin()
-'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
-```
-
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function admin() view returns (address)"]}
+  method="admin"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -842,11 +892,12 @@ future_admin: public(address)
 
 <Example>
 
-```shell
->>> FeeDistributor.future_admin()
-'0x0000000000000000000000000000000000000000'
-```
-
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function future_admin() view returns (address)"]}
+  method="future_admin"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -870,10 +921,12 @@ Function to commit transfer of the ownership.
 | ----------- | -------| ---- |
 | `_addr` |  `address` | Address to commit the ownership transfer to. |
 
+Emits: `CommitAdmin` event.
+
 <SourceCode>
 
 
-```vyper 
+```vyper
 event CommitAdmin:
     admin: address
 
@@ -894,6 +947,15 @@ def commit_admin(_addr: address):
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> FeeDistributor.commit_admin("0x0000000000000000000000000000000000000000")
+```
+
+
+</Example>
+
 ::::
 
 ### `apply_admin`
@@ -909,10 +971,12 @@ This function is only callable by the `admin` of the contract.
 
 Function to apply the transfer of the ownership.
 
+Emits: `ApplyAdmin` event.
+
 <SourceCode>
 
 
-```vyper 
+```vyper
 event ApplyAdmin:
     admin: address
 
@@ -933,6 +997,15 @@ def apply_admin():
 
 
 </SourceCode>
+
+<Example>
+
+```shell
+>>> FeeDistributor.apply_admin()
+```
+
+
+</Example>
 
 ::::
 
@@ -979,11 +1052,14 @@ def ve_for_at(_user: address, _timestamp: uint256) -> uint256:
 
 <Example>
 
-```shell
->>> FeeDistributor.ve_for_at("0x989AEb4d175e16225E39E87d0D97A3360524AD80", 1685972555)
-290896146145001156884162140
-```
-
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function ve_for_at(address _user, uint256 _timestamp) view returns (uint256)"]}
+  method="ve_for_at"
+  args={["0x989AEb4d175e16225E39E87d0D97A3360524AD80", "1685972555"]}
+  labels={["_user", "_timestamp"]}
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -1036,11 +1112,12 @@ def __init__(
 
 <Example>
 
-```shell
->>> FeeDistributor.start_time()
-1600300800
-```
-
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function start_time() view returns (uint256)"]}
+  method="start_time"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -1057,10 +1134,12 @@ Getter for the user epoch of `arg0`.
 | ----------- | -------| ----|
 | `arg0` |  `address` | Address to get the user epoch for. |
 
+Returns: user epoch (`uint256`).
+
 <SourceCode>
 
 
-```vyper 
+```vyper
 user_epoch_of: public(HashMap[address, uint256])
 ```
 
@@ -1069,11 +1148,14 @@ user_epoch_of: public(HashMap[address, uint256])
 
 <Example>
 
-```shell
->>> FeeDistributor.user_epoch_of("0x989AEb4d175e16225E39E87d0D97A3360524AD80")
-7739
-```
-
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function user_epoch_of(address) view returns (uint256)"]}
+  method="user_epoch_of"
+  args={["0x989AEb4d175e16225E39E87d0D97A3360524AD80"]}
+  labels={["arg0"]}
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -1126,11 +1208,12 @@ def __init__(
 
 <Example>
 
-```shell
->>> FeeDistributor.voting_escrow()
-'0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2'
-```
-
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function voting_escrow() view returns (address)"]}
+  method="voting_escrow"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -1157,10 +1240,12 @@ token_last_balance: public(uint256)
 
 <Example>
 
-```shell
->>> FeeDistributor.token_last_balance()
-4576710126386983907488318
-```
+<ContractCall
+  address="0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc"
+  abi={["function token_last_balance() view returns (uint256)"]}
+  method="token_last_balance"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 

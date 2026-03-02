@@ -57,12 +57,12 @@ Slopes and biases change both when a user deposits and locks governance tokens, 
 
 Function to deposit `_value` CRV into the VotingEscrow and create a new lock until `_unlock_time`. The unlock time is rounded down to whole weeks.
 
-Emits: `Deposit` and `Supply`
-
 | Input          | Type      | Description                        |
 | -------------- | --------- | ---------------------------------- |
 | `_value`       | `uint256` | Amount of CRV to deposit           |
 | `_unlock_time` | `uint256` | Timestamp of the unlock time       |
+
+Emits: `Deposit` and `Supply` events.
 
 <SourceCode>
 
@@ -117,11 +117,11 @@ This example creates a new lock of 100 CRV tokens until a specified unlock times
 
 Function to deposit `_value` additional CRV tokens to an existing lock without modifying the unlock time.
 
-Emits: `Deposit` and `Supply`
-
 | Input    | Type      | Description                       |
 | -------- | --------- | --------------------------------- |
 | `_value` | `uint256` | Amount of CRV to additionally lock |
+
+Emits: `Deposit` and `Supply` events.
 
 <SourceCode>
 
@@ -171,11 +171,11 @@ This example adds 100 CRV tokens to an existing lock.
 
 Function to extend the unlock time on an already existing lock until `_unlock_time`. The unlock time is rounded down to whole weeks.
 
-Emits: `Deposit` and `Supply`
-
 | Input          | Type      | Description            |
 | -------------- | --------- | ---------------------- |
 | `_unlock_time` | `uint256` | New unlock timestamp   |
+
+Emits: `Deposit` and `Supply` events.
 
 <SourceCode>
 
@@ -229,12 +229,12 @@ This example extends the unlock time of an existing lock to a new timestamp.
 
 Function to deposit `_value` tokens for `_addr` and add them to an existing lock. Anyone (even a smart contract) can deposit for someone else, but cannot extend their locktime or deposit for a brand new user.
 
-Emits: `Deposit` and `Supply`
-
 | Input    | Type      | Description                   |
 | -------- | --------- | ----------------------------- |
 | `_addr`  | `address` | Address to deposit for        |
 | `_value` | `uint256` | Amount of tokens to lock      |
+
+Emits: `Deposit` and `Supply` events.
 
 <SourceCode>
 
@@ -285,7 +285,7 @@ This example deposits 100 CRV tokens into an existing lock owned by another addr
 
 Function to withdraw all deposited CRV tokens once a lock has expired.
 
-Emits: `Withdraw` and `Supply`
+Emits: `Withdraw` and `Supply` events.
 
 <SourceCode>
 
@@ -396,12 +396,12 @@ These are not real ERC-20 balances. They measure voting weights that decay linea
 
 :::
 
-Returns: voting power (`uint256`).
-
 | Input  | Type      | Description                                    |
 | ------ | --------- | ---------------------------------------------- |
 | `addr` | `address` | User wallet address                            |
 | `_t`   | `uint256` | Timestamp; defaults to `block.timestamp`       |
+
+Returns: voting power (`uint256`).
 
 <SourceCode>
 
@@ -462,12 +462,12 @@ This example returns the current veCRV balance (voting power) of an address. Ent
 
 Getter for the veCRV balance (= voting power) of `addr` at block height `_block`.
 
-Returns: voting power (`uint256`) at a specific block.
-
 | Input    | Type      | Description              |
 | -------- | --------- | ------------------------ |
 | `addr`   | `address` | User wallet address      |
 | `_block` | `uint256` | Block height             |
+
+Returns: voting power (`uint256`) at a specific block.
 
 <SourceCode>
 
@@ -538,10 +538,14 @@ def balanceOfAt(addr: address, _block: uint256) -> uint256:
 
 This example returns the veCRV balance (voting power) of an address at a specific block height.
 
-```shell
->>> VotingEscrow.balanceOfAt("0x7a16fF8270133F063aAb6C9977183D9e72835428", 18483472)
-27109584974408936745457887
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function balanceOfAt(address, uint256) view returns (uint256)"]}
+  method="balanceOfAt"
+  args={["0x7a16fF8270133F063aAb6C9977183D9e72835428", "18483472"]}
+  labels={["address", "block"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -554,11 +558,11 @@ This example returns the veCRV balance (voting power) of an address at a specifi
 
 Getter for the current total supply of veCRV (= total voting power) at timestamp `t`. Defaults to `block.timestamp`.
 
-Returns: total voting power (`uint256`).
-
 | Input | Type      | Description                              |
 | ----- | --------- | ---------------------------------------- |
 | `t`   | `uint256` | Timestamp; defaults to `block.timestamp` |
+
+Returns: total voting power (`uint256`).
 
 <SourceCode>
 
@@ -609,11 +613,11 @@ This example returns the current total veCRV voting power. The value is fetched 
 
 Getter for the total supply of veCRV (= total voting power) at block height `_block`.
 
-Returns: total voting power (`uint256`) at a specific block.
-
 | Input    | Type      | Description  |
 | -------- | --------- | ------------ |
 | `_block` | `uint256` | Block height |
+
+Returns: total voting power (`uint256`) at a specific block.
 
 <SourceCode>
 
@@ -659,10 +663,14 @@ def totalSupplyAt(_block: uint256) -> uint256:
 
 This example returns the total veCRV voting power at a specific block height.
 
-```shell
->>> VotingEscrow.totalSupplyAt(18483472)
-652219245965489504779222536
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function totalSupplyAt(uint256) view returns (uint256)"]}
+  method="totalSupplyAt"
+  args={["18483472"]}
+  labels={["block"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -707,11 +715,11 @@ This example returns the total amount of CRV tokens locked in the contract. The 
 
 Getter for the locked balance of address `arg0`. Returns the `LockedBalance` struct containing the locked amount and the unlock timestamp.
 
-Returns: amount (`int128`) and unlock time (`uint256`).
-
 | Input  | Type      | Description    |
 | ------ | --------- | -------------- |
 | `arg0` | `address` | User address   |
+
+Returns: amount (`int128`) and unlock time (`uint256`).
 
 <SourceCode>
 
@@ -729,10 +737,14 @@ locked: public(HashMap[address, LockedBalance])
 
 This example returns the locked CRV amount and unlock timestamp for a given address.
 
-```shell
->>> VotingEscrow.locked("0x7a16fF8270133F063aAb6C9977183D9e72835428")
-27191329036660104386777000, 1808956800
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function locked(address) view returns (int128, uint256)"]}
+  method="locked"
+  args={["0x7a16fF8270133F063aAb6C9977183D9e72835428"]}
+  labels={["address"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -745,11 +757,11 @@ This example returns the locked CRV amount and unlock timestamp for a given addr
 
 Getter for the timestamp when `_addr`'s lock finishes.
 
-Returns: unlock timestamp (`uint256`).
-
 | Input   | Type      | Description  |
 | ------- | --------- | ------------ |
 | `_addr` | `address` | User address |
+
+Returns: unlock timestamp (`uint256`).
 
 <SourceCode>
 
@@ -777,10 +789,14 @@ def locked__end(_addr: address) -> uint256:
 
 This example returns the unlock timestamp for a given address.
 
-```shell
->>> VotingEscrow.locked__end("0x7a16fF8270133F063aAb6C9977183D9e72835428")
-1808956800
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function locked__end(address) view returns (uint256)"]}
+  method="locked__end"
+  args={["0x7a16fF8270133F063aAb6C9977183D9e72835428"]}
+  labels={["address"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -793,11 +809,11 @@ This example returns the unlock timestamp for a given address.
 
 Getter for the most recently recorded rate of voting power decrease for `addr`.
 
-Returns: slope value (`int128`).
-
 | Input  | Type      | Description  |
 | ------ | --------- | ------------ |
 | `addr` | `address` | User address |
+
+Returns: slope value (`int128`).
 
 <SourceCode>
 
@@ -829,10 +845,14 @@ def get_last_user_slope(addr: address) -> int128:
 
 This example returns the most recent rate of voting power decrease for a given address.
 
-```shell
->>> VotingEscrow.get_last_user_slope("0x7a16fF8270133F063aAb6C9977183D9e72835428")
-215557846878647453
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function get_last_user_slope(address) view returns (int128)"]}
+  method="get_last_user_slope"
+  args={["0x7a16fF8270133F063aAb6C9977183D9e72835428"]}
+  labels={["address"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -881,11 +901,11 @@ This example returns the current global epoch. The value is fetched live from th
 
 Getter for the global point history at epoch `arg0`. Each point records the aggregate bias, slope, timestamp, and block number.
 
-Returns: bias (`int128`), slope (`int128`), ts (`uint256`) and blk (`uint256`).
-
 | Input  | Type      | Description  |
 | ------ | --------- | ------------ |
 | `arg0` | `uint256` | Epoch number |
+
+Returns: bias (`int128`), slope (`int128`), ts (`uint256`) and blk (`uint256`).
 
 <SourceCode>
 
@@ -905,10 +925,14 @@ point_history: public(Point[100000000000000000000000000000])  # epoch -> unsigne
 
 This example returns the global point history at epoch 3 (bias, slope, timestamp, block number).
 
-```shell
->>> VotingEscrow.point_history(3)
-127357905207521710167, 4570173769659, 1597370987, 10655341
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function point_history(uint256) view returns (int128, int128, uint256, uint256)"]}
+  method="point_history"
+  args={["3"]}
+  labels={["epoch"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -921,11 +945,11 @@ This example returns the global point history at epoch 3 (bias, slope, timestamp
 
 Getter for the current checkpoint epoch for a specific user. This is incremented each time the user's lock state changes (create, increase amount, increase time, withdraw).
 
-Returns: user epoch (`uint256`).
-
 | Input  | Type      | Description  |
 | ------ | --------- | ------------ |
 | `arg0` | `address` | User address |
+
+Returns: user epoch (`uint256`).
 
 <SourceCode>
 
@@ -939,10 +963,14 @@ user_point_epoch: public(HashMap[address, uint256])
 
 This example returns the current checkpoint epoch for a specific user.
 
-```shell
->>> VotingEscrow.user_point_epoch("0x7a16fF8270133F063aAb6C9977183D9e72835428")
-5
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function user_point_epoch(address) view returns (uint256)"]}
+  method="user_point_epoch"
+  args={["0x7a16fF8270133F063aAb6C9977183D9e72835428"]}
+  labels={["address"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -955,12 +983,12 @@ This example returns the current checkpoint epoch for a specific user.
 
 Getter for a user's point history at a specific user epoch. Each point records the user's bias, slope, timestamp, and block number at that checkpoint.
 
-Returns: bias (`int128`), slope (`int128`), ts (`uint256`) and blk (`uint256`).
-
 | Input  | Type      | Description       |
 | ------ | --------- | ----------------- |
 | `arg0` | `address` | User address      |
 | `arg1` | `uint256` | User epoch number |
+
+Returns: bias (`int128`), slope (`int128`), ts (`uint256`) and blk (`uint256`).
 
 <SourceCode>
 
@@ -974,10 +1002,14 @@ user_point_history: public(HashMap[address, Point[1000000000]])  # user -> Point
 
 This example returns the point history for a user at their first checkpoint (bias, slope, timestamp, block number).
 
-```shell
->>> VotingEscrow.user_point_history("0x7a16fF8270133F063aAb6C9977183D9e72835428", 1)
-127357905207521710167, 4570173769659, 1597565455, 10655341
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function user_point_history(address, uint256) view returns (int128, int128, uint256, uint256)"]}
+  method="user_point_history"
+  args={["0x7a16fF8270133F063aAb6C9977183D9e72835428", "1"]}
+  labels={["address", "epoch"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -990,12 +1022,12 @@ This example returns the point history for a user at their first checkpoint (bia
 
 Convenience getter for the timestamp of checkpoint `_idx` for `_addr`.
 
-Returns: timestamp (`uint256`).
-
 | Input   | Type      | Description       |
 | ------- | --------- | ----------------- |
 | `_addr` | `address` | User address      |
 | `_idx`  | `uint256` | User epoch number |
+
+Returns: timestamp (`uint256`).
 
 <SourceCode>
 
@@ -1026,10 +1058,14 @@ def user_point_history__ts(_addr: address, _idx: uint256) -> uint256:
 
 This example returns the timestamp of the first checkpoint for a given address.
 
-```shell
->>> VotingEscrow.user_point_history__ts("0x7a16fF8270133F063aAb6C9977183D9e72835428", 1)
-1597565455
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function user_point_history__ts(address, uint256) view returns (uint256)"]}
+  method="user_point_history__ts"
+  args={["0x7a16fF8270133F063aAb6C9977183D9e72835428", "1"]}
+  labels={["address", "epoch"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1042,11 +1078,11 @@ This example returns the timestamp of the first checkpoint for a given address.
 
 Getter for scheduled slope changes at a future timestamp. When a lock expires, the global slope decreases. These changes are pre-scheduled so the contract doesn't need to iterate over all users.
 
-Returns: signed slope change (`int128`).
-
 | Input  | Type      | Description               |
 | ------ | --------- | ------------------------- |
 | `arg0` | `uint256` | Timestamp (rounded to week) |
+
+Returns: signed slope change (`int128`).
 
 <SourceCode>
 
@@ -1060,10 +1096,14 @@ slope_changes: public(HashMap[uint256, int128])  # time -> signed slope change
 
 This example returns the scheduled slope change at a specific future timestamp.
 
-```shell
->>> VotingEscrow.slope_changes(1808956800)
--215557846878647453
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function slope_changes(uint256) view returns (int128)"]}
+  method="slope_changes"
+  args={["1808956800"]}
+  labels={["timestamp"]}
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1116,10 +1156,12 @@ smart_wallet_checker: public(address)
 
 This example returns the current SmartWalletChecker contract address.
 
-```shell
->>> VotingEscrow.smart_wallet_checker()
-'0xca719728Ef172d0961768581fdF35CB116e0B7a4'
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function smart_wallet_checker() view returns (address)"]}
+  method="smart_wallet_checker"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1146,10 +1188,12 @@ future_smart_wallet_checker: public(address)
 
 This example returns the future SmartWalletChecker contract address (zero address means no pending change).
 
-```shell
->>> VotingEscrow.future_smart_wallet_checker()
-'0x0000000000000000000000000000000000000000'
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function future_smart_wallet_checker() view returns (address)"]}
+  method="future_smart_wallet_checker"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1274,10 +1318,12 @@ def __init__(token_addr: address, _name: String[64], _symbol: String[32], _versi
 
 This example returns the CRV token address locked in the contract.
 
-```shell
->>> VotingEscrow.token()
-'0xD533a949740bb3306d119CC777fa900bA034cd52'
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function token() view returns (address)"]}
+  method="token"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1304,10 +1350,12 @@ name: public(String[64])
 
 This example returns the name of the token.
 
-```shell
->>> VotingEscrow.name()
-'Vote-escrowed CRV'
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function name() view returns (string)"]}
+  method="name"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1334,10 +1382,12 @@ symbol: public(String[32])
 
 This example returns the symbol of the token.
 
-```shell
->>> VotingEscrow.symbol()
-'veCRV'
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function symbol() view returns (string)"]}
+  method="symbol"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1364,10 +1414,12 @@ version: public(String[32])
 
 This example returns the version of the contract.
 
-```shell
->>> VotingEscrow.version()
-'veCRV_1.0.0'
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function version() view returns (string)"]}
+  method="version"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1394,10 +1446,12 @@ decimals: public(uint256)
 
 This example returns the number of decimals of the token.
 
-```shell
->>> VotingEscrow.decimals()
-18
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function decimals() view returns (uint256)"]}
+  method="decimals"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1424,10 +1478,12 @@ controller: public(address)
 
 This example returns the Aragon controller address.
 
-```shell
->>> VotingEscrow.controller()
-'0xc4AD0Ef33A0A4ddA3461c479ccb6c36d1e4B7Be4'
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function controller() view returns (address)"]}
+  method="controller"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1505,10 +1561,12 @@ def __init__(token_addr: address, _name: String[64], _symbol: String[32], _versi
 
 This example returns whether transfers are enabled (always `True` for Aragon compatibility).
 
-```shell
->>> VotingEscrow.transfersEnabled()
-True
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function transfersEnabled() view returns (bool)"]}
+  method="transfersEnabled"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1541,10 +1599,12 @@ admin: public(address)  # Can and will be a smart contract
 
 This example returns the current admin of the contract (CurveOwnershipAgent).
 
-```shell
->>> VotingEscrow.admin()
-'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function admin() view returns (address)"]}
+  method="admin"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1571,10 +1631,12 @@ future_admin: public(address)
 
 This example returns the future admin address (zero address means no pending transfer).
 
-```shell
->>> VotingEscrow.future_admin()
-'0x0000000000000000000000000000000000000000'
-```
+<ContractCall
+  address="0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2"
+  abi={["function future_admin() view returns (address)"]}
+  method="future_admin"
+  contractName="VotingEscrow"
+/>
 
 </Example>
 
@@ -1593,11 +1655,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to commit the transfer of ownership to `addr`. Changes need to be applied via [`apply_transfer_ownership`](#apply_transfer_ownership).
 
-Emits: `CommitOwnership`
-
 | Input  | Type      | Description       |
 | ------ | --------- | ----------------- |
 | `addr` | `address` | New admin address |
+
+Emits: `CommitOwnership` event.
 
 <SourceCode>
 
@@ -1645,7 +1707,7 @@ This function is only callable by the `admin` of the contract.
 
 Function to apply the previously committed ownership transfer.
 
-Emits: `ApplyOwnership`
+Emits: `ApplyOwnership` event.
 
 <SourceCode>
 

@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Crosschain scrvUSD
 
 
@@ -78,13 +81,13 @@ Contract that contains information about the price of scrvUSD. It uses a `max_ac
 
 Function to update the price of the scrvUSD token.
 
-Returns: relative price change of final price with 10**18 precision (`uint256`).
-
-Emits: `PriceUpdate`
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_parameters` | `uint256[ASSETS_PARAM_CNT + SUPPLY_PARAM_CNT]` | Parameters |
+
+Returns: relative price change of final price with 10**18 precision (`uint256`).
+
+Emits: `PriceUpdate` event.
 
 <SourceCode>
 
@@ -198,7 +201,7 @@ This example updates the price of the scrvUSD token.
 
 Getter for the previous and future price of crvUSD.
 
-Returns: `Interval` struct containing `previous` and `future` prices.
+Returns: `Interval` struct containing `previous` and `future` prices (`Interval`).
 
 <SourceCode>
 
@@ -230,7 +233,7 @@ price: public(Interval)  # price of asset per share
 
 Getter for the previous and future time of when the price will be updated.
 
-Returns: `Interval` struct containing `previous` and `future` timestamps (`uint256`).
+Returns: `Interval` struct containing `previous` and `future` timestamps (`Interval`).
 
 <SourceCode>
 
@@ -269,11 +272,11 @@ This function is not precise. The price is smoothed over time to eliminate sharp
 
 Getter for the price per share of the scrvUSD token. The function uses linear interpolation to calculate the price and assumes that updates are often enough for the absolute difference to be approximately equal to the relative difference.
 
-Returns: price per share of the scrvUSD token (`uint256`).
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_ts`         | `uint256` | Timestamp to get the price at |
+
+Returns: price per share of the scrvUSD token (`uint256`).
 
 <SourceCode>
 
@@ -336,11 +339,11 @@ This function is not precise. The price is smoothed over time to eliminate sharp
 
 Getter for the price per asset of the scrvUSD token. The function uses linear interpolation to calculate the price and assumes that updates are often enough for the absolute difference to be approximately equal to the relative difference.
 
-Returns: price per asset of the scrvUSD token (`uint256`).
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_ts`         | `uint256` | Timestamp to get the price at |
+
+Returns: price per asset of the scrvUSD token (`uint256`).
 
 <SourceCode>
 
@@ -394,7 +397,7 @@ def _price_per_share(ts: uint256) -> uint256:
 ::::description[`scrvUSDOracle.price_oracle() -> uint256: view`]
 
 
-Getter for the price of the scrvUSD token. This function is an alias for `pricePerShare` and `pricePerAsset` and is made for compatability reasons.
+Getter for the price of the scrvUSD token. This function is an alias for `pricePerShare` and `pricePerAsset` and is made for compatibility reasons.
 
 Returns: price of scrvUSD (`uint256`).
 
@@ -514,6 +517,9 @@ Function to set the maximum acceleration.
 
 <SourceCode>
 
+<Tabs>
+<TabItem value="scrvUSDOracle.vy" label="scrvUSDOracle.vy">
+
 ```vyper
 max_acceleration: public(uint256)  # precision 10**18
 
@@ -531,11 +537,26 @@ def set_max_acceleration(_max_acceleration: uint256):
     self.max_acceleration = _max_acceleration
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```py
+```shell
 >>> scrvUSDOracle.max_acceleration()
 1000000000000000000
 
@@ -599,7 +620,12 @@ Function to set the prover contract.
 | ------------- | --------- | ---------------------------- |
 | `_prover`     | `address` | Prover contract |
 
+Emits: `SetProver` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="scrvUSDOracle.vy" label="scrvUSDOracle.vy">
 
 ```vyper
 prover: public(address)
@@ -615,13 +641,28 @@ def set_prover(_prover: address):
     log SetProver(_prover)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
 This example sets the prover to the `0x47ca04Ee05f167583122833abfb0f14aC5677Ee4` contract.
 
-```py
+```shell
 >>> scrvUSDOracle.prover()
 '0x0000000000000000000000000000000000000000'
 
@@ -651,7 +692,7 @@ Function to commit (and apply) a block hash. Same as `apply()` but also saves th
 
 Returns: block number (`uint256`).
 
-Emits: `CommitBlockHash` and `ApplyBlockHash`
+Emits: `CommitBlockHash` and `ApplyBlockHash` events.
 
 <SourceCode>
 
@@ -698,7 +739,7 @@ def _update_block_hash() -> (uint256, bytes32):
 
 <Example>
 
-```py
+```shell
 >>> BlockHashOracle.commit()
 ```
 
@@ -715,7 +756,7 @@ Function to apply a block hash.
 
 Returns: block number (`uint256`).
 
-Emits: `ApplyBlockHash`
+Emits: `ApplyBlockHash` event.
 
 <SourceCode>
 
@@ -759,7 +800,7 @@ def _update_block_hash() -> (uint256, bytes32):
 
 <Example>
 
-```py
+```shell
 >>> BlockHashOracle.apply()
 ```
 
@@ -774,11 +815,11 @@ def _update_block_hash() -> (uint256, bytes32):
 
 Getter for the block hash of a given block number. This function will revert if the block hash has not been set.
 
-Returns: block hash (`bytes32`).
-
 | Input | Type | Description |
 | ----- | ---- | ----------- |
 | `_number` | `uint256` | Block number |
+
+Returns: block hash (`bytes32`).
 
 <SourceCode>
 
@@ -804,7 +845,7 @@ def get_block_hash(_number: uint256) -> bytes32:
 
 This example returns the block hash for block number 21192041 (on Ethereum).
 
-```py
+```shell
 >>> BlockHashOracle.get_block_hash(21192041)
 '0x9db78f319e1bfde9cb0723b6e96de3dce6d378b01b341a5e45546ac4b7f7269a'
 
@@ -823,12 +864,11 @@ Error: Returned error: execution reverted
 
 Getter for the block hash of a given block number.
 
-Returns: block hash (`bytes32`).
-
-
 | Input | Type | Description |
 | ----- | ---- | ----------- |
 | `_number` | `uint256` | Block number |
+
+Returns: block hash (`bytes32`).
 
 <SourceCode>
 
@@ -842,7 +882,7 @@ block_hash: public(HashMap[uint256, bytes32])
 
 This example returns the block hash for block number 21192041 (on Ethereum).
 
-```py
+```shell
 >>> BlockHashOracle.block_hash(21192041)
 '0x9db78f319e1bfde9cb0723b6e96de3dce6d378b01b341a5e45546ac4b7f7269a'
 
@@ -861,12 +901,12 @@ This example returns the block hash for block number 21192041 (on Ethereum).
 
 Getter for the block hash of a given block number.
 
-Returns: block hash (`bytes32`).
-
 | Input | Type | Description |
 | ----- | ---- | ----------- |
-| `_committer` | `address` | The committer's address. |
-| `_number` | `uint256` | The block number. |
+| `_committer` | `address` | The committer's address |
+| `_number` | `uint256` | The block number |
+
+Returns: block hash (`bytes32`).
 
 <SourceCode>
 
@@ -899,12 +939,12 @@ commitments: public(HashMap[address, HashMap[uint256, bytes32]])
 
 Function to prove parameters of scrvUSD rate.
 
-Returns: relative price change (`uint256`).
-
 | Input | Type | Description |
 | ----- | ---- | ----------- |
-| `_block_header_rlp` | `bytes` | The block header of any block. |
-| `_proof_rlp` | `bytes` | The state proof of the parameters. |
+| `_block_header_rlp` | `bytes` | The block header of any block |
+| `_proof_rlp` | `bytes` | The state proof of the parameters |
+
+Returns: relative price change (`uint256`).
 
 <SourceCode>
 

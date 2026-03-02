@@ -13,6 +13,15 @@ This version of `FeeCollector` is only deployed on the following chains, as CowS
 - :logos-ethereum: Ethereum at [`0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00`](https://etherscan.io/address/0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00)
 - :logos-gnosis: Gnosis at [`0xBb7404F9965487a9DdE721B3A5F0F3CcfA9aa4C5`](https://gnosisscan.io/address/0xBb7404F9965487a9DdE721B3A5F0F3CcfA9aa4C5)
 
+<ContractABI>
+
+
+```json
+[{"name":"SetMaxFee","inputs":[{"name":"epoch","type":"uint256","indexed":true},{"name":"max_fee","type":"uint256","indexed":false}],"anonymous":false,"type":"event"},{"name":"SetBurner","inputs":[{"name":"burner","type":"address","indexed":true}],"anonymous":false,"type":"event"},{"name":"SetHooker","inputs":[{"name":"hooker","type":"address","indexed":true}],"anonymous":false,"type":"event"},{"name":"SetTarget","inputs":[{"name":"target","type":"address","indexed":true}],"anonymous":false,"type":"event"},{"name":"SetKilled","inputs":[{"name":"coin","type":"address","indexed":true},{"name":"epoch_mask","type":"uint256","indexed":false}],"anonymous":false,"type":"event"},{"name":"SetOwner","inputs":[{"name":"owner","type":"address","indexed":true}],"anonymous":false,"type":"event"},{"name":"SetEmergencyOwner","inputs":[{"name":"emergency_owner","type":"address","indexed":true}],"anonymous":false,"type":"event"},{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"_target_coin","type":"address"},{"name":"_weth","type":"address"},{"name":"_owner","type":"address"},{"name":"_emergency_owner","type":"address"}],"outputs":[]},{"stateMutability":"payable","type":"fallback"},{"stateMutability":"nonpayable","type":"function","name":"withdraw_many","inputs":[{"name":"_pools","type":"address[]"}],"outputs":[]},{"stateMutability":"payable","type":"function","name":"burn","inputs":[{"name":"_coin","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"epoch","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"epoch","inputs":[{"name":"ts","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"epoch_time_frame","inputs":[{"name":"_epoch","type":"uint256"}],"outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"epoch_time_frame","inputs":[{"name":"_epoch","type":"uint256"},{"name":"_ts","type":"uint256"}],"outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"fee","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"fee","inputs":[{"name":"_epoch","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"fee","inputs":[{"name":"_epoch","type":"uint256"},{"name":"_ts","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"nonpayable","type":"function","name":"transfer","inputs":[{"name":"_transfers","type":"tuple[]","components":[{"name":"coin","type":"address"},{"name":"to","type":"address"},{"name":"amount","type":"uint256"}]}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"collect","inputs":[{"name":"_coins","type":"address[]"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"collect","inputs":[{"name":"_coins","type":"address[]"},{"name":"_receiver","type":"address"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"can_exchange","inputs":[{"name":"_coins","type":"address[]"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"payable","type":"function","name":"forward","inputs":[{"name":"_hook_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"payable","type":"function","name":"forward","inputs":[{"name":"_hook_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]},{"name":"_receiver","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"nonpayable","type":"function","name":"recover","inputs":[{"name":"_recovers","type":"tuple[]","components":[{"name":"coin","type":"address"},{"name":"amount","type":"uint256"}]},{"name":"_receiver","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_max_fee","inputs":[{"name":"_epoch","type":"uint256"},{"name":"_max_fee","type":"uint256"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_burner","inputs":[{"name":"_new_burner","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_hooker","inputs":[{"name":"_new_hooker","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_target","inputs":[{"name":"_new_target","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_killed","inputs":[{"name":"_input","type":"tuple[]","components":[{"name":"coin","type":"address"},{"name":"killed","type":"uint256"}]}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_owner","inputs":[{"name":"_new_owner","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_emergency_owner","inputs":[{"name":"_new_owner","type":"address"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"target","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"max_fee","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"burner","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"hooker","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"is_killed","inputs":[{"name":"arg0","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"owner","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"emergency_owner","inputs":[],"outputs":[{"name":"","type":"address"}]}]
+```
+
+</ContractABI>
+
 :::
 
 This new architecture simplifies the collection of fees and the burning of these fees into a designated fee token. The `FeeCollector` introduces a [`target`](#target) variable that represents the token into which all collected fees are burned. This variable can be changed to any token, but such a change requires a successfully passed on-chain vote, as the contract is fully controlled by the Curve DAO.
@@ -80,11 +89,11 @@ Epoch start is not on Monday. The first fee distribution started on `Thu Sep 17 
 
 Getter for the current epoch based on a given timestamp.
 
-Returns: current epoch value (`Epoch`).
-
 | Input | Type      | Description                           |
 | ----- | --------- | ------------------------------------- |
 | `ts`  | `uint256` | Timestamp; defaults to `block.timestamp` |
+
+Returns: current epoch value (`Epoch`).
 
 <SourceCode>
 
@@ -125,9 +134,12 @@ def _epoch_ts(ts: uint256) -> Epoch:
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function epoch() view returns (uint256)"]}
+  method="epoch"
+  contractName="FeeCollector"
+/>
 
 </Example>
 
@@ -140,12 +152,12 @@ def _epoch_ts(ts: uint256) -> Epoch:
 
 Getter for the time frame for a specific epoch and timestamp.
 
-Returns: start and end of the epoch (`uint256, uint256`).
-
 | Input    | Type      | Description                                                              |
 | -------- | --------- | ------------------------------------------------------------------------ |
 | `_epoch` | `Epoch`   | Epoch enum for which to check start and end for                          |
 | `_ts`    | `uint256` | Timestamp to anchor to. Defaults to the current one (`block.timestamp`)  |
+
+Returns: start and end of the epoch (`uint256, uint256`).
 
 <SourceCode>
 
@@ -181,9 +193,14 @@ def _epoch_time_frame(epoch: Epoch, ts: uint256) -> (uint256, uint256):
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function epoch_time_frame(uint256) view returns (uint256, uint256)"]}
+  method="epoch_time_frame"
+  args={["2"]}
+  labels={["_epoch"]}
+  contractName="FeeCollector"
+/>
 
 </Example>
 
@@ -204,12 +221,12 @@ The `FeeCollector` contract has a keeper's fee, which incentivizes external user
 
 Getter for the caller fee based on an epoch and timestamp. If no input is given, it returns the caller fee of the current epoch. The fee is dependent on the current epoch. The `fee` (except the one for the `forward` function) is optional and up to the burner implementation. The value starts at `0` and continuously increases to `max_fee` (`1%`), but burner contracts *can* have their own fee values. The reason for this is that it makes sense to pay the fee in the `target` token instead of many different coins, but the current CoWSwap architecture makes this very complicated to do.
 
-Returns: fee of the epoch (`uint256`).
-
 | Input    | Type      | Description                                       |
 | -------- | --------- | ------------------------------------------------- |
 | `_epoch` | `Epoch`   | Index of the epoch; defaults to the current epoch |
 | `_ts`    | `uint256` | Timestamp; defaults to `block.timestamp`          |
+
+Returns: fee of the epoch (`uint256`).
 
 <SourceCode>
 
@@ -257,9 +274,12 @@ def _epoch_ts(ts: uint256) -> Epoch:
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function fee() view returns (uint256)"]}
+  method="fee"
+  contractName="FeeCollector"
+/>
 
 </Example>
 
@@ -272,13 +292,11 @@ def _epoch_ts(ts: uint256) -> Epoch:
 
 Getter for the maximum fee of an epoch. Maximum fee is set to 1% for the `COLLECT` and `FORWARD` epochs. This value can be changed by the `owner` of the contract using the [`set_max_fee`](#set_max_fee) function.
 
+| Input  | Type      | Description                                   |
+| ------ | --------- | --------------------------------------------- |
+| `arg0` | `uint256` | Epoch enum for which to check the maximum fee |
+
 Returns: maximum fee (`uint256`).
-
-Emits: `SetMaxFee`
-
-| Input  | Type      | Description                                    |
-| ------ | --------- | ---------------------------------------------- |
-| `arg0` | `uint256` | Epoch enum for which to check the maximum fee. |
 
 <SourceCode>
 
@@ -323,9 +341,14 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function max_fee(uint256) view returns (uint256)"]}
+  method="max_fee"
+  args={["2"]}
+  labels={["arg0"]}
+  contractName="FeeCollector"
+/>
 
 </Example>
 
@@ -345,12 +368,12 @@ This function is only callable by the `owner` of the contract.
 
 Function to set `max_fee` for a specific epoch. The maximum fee cannot be greater than 1 (100%).
 
-Emits: `SetMaxFee`
+| Input      | Type      | Description                                 |
+| ---------- | --------- | ------------------------------------------- |
+| `_epoch`   | `Epoch`   | Epoch enum for which to set the maximum fee |
+| `_max_fee` | `uint256` | Maximum fee                                 |
 
-| Input      | Type      | Description                                              |
-| ---------- | --------- | -------------------------------------------------------- |
-| `_epoch`   | `Epoch`   | Epoch enum for which to set the maximum fee              |
-| `_max_fee` | `uint256` | Maximum fee                                              |
+Emits: `SetMaxFee` event.
 
 <SourceCode>
 
@@ -389,7 +412,7 @@ def set_max_fee(_epoch: Epoch, _max_fee: uint256):
 
 This example sets the maximum fee for the `COLLECT` epoch to `0.05`.
 
-```console
+```shell
 >>> FeeCollector.set_max_fee(Epoch.COLLECT, 0.05)
 ```
 
@@ -420,8 +443,6 @@ The `FeeCollector` contract has a [`target`](#target) variable, which represents
 Getter for the target coin to which the fees are converted to. This is essentially the reward token that is being distributed to veCRV holders.
 
 Returns: target coin (`address`).
-
-Emits: `SetTarget`
 
 <SourceCode>
 
@@ -456,9 +477,12 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function target() view returns (address)"]}
+  method="target"
+  contractName="FeeCollector"
+/>
 
 </Example>
 
@@ -478,11 +502,11 @@ This function is only callable by the `owner` of the contract.
 
 Function to change the target coin of the contract.
 
-Emits: `SetTarget`
+| Input         | Type    | Description                          |
+| ------------- | ------- | ------------------------------------ |
+| `_new_target` | `ERC20` | Token address of the new target coin |
 
-| Input         | Type      | Description                          |
-| ------------- | --------- | ------------------------------------ |
-| `_new_target` | `ERC20`   | Token address of the new target coin |
+Emits: `SetTarget` event.
 
 <SourceCode>
 
@@ -729,11 +753,11 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 
 Function to check whether specified coins are allowed to be exchanged at the current timestamp. It verifies that the current epoch is `EXCHANGE` and that the coins to be exchanged are not marked as killed.
 
-Returns: true or false (`bool`).
-
 | Input    | Type                       | Description                                                              |
 | -------- | -------------------------- | ------------------------------------------------------------------------ |
 | `_coins` | `DynArray[ERC20, MAX_LEN]` | Dynamic array of ERC20 token addresses to check for exchange eligibility |
+
+Returns: true or false (`bool`).
 
 <SourceCode>
 
@@ -767,9 +791,10 @@ def can_exchange(_coins: DynArray[ERC20, MAX_LEN]) -> bool:
 
 <Example>
 
-
-
-
+```shell
+>>> FeeCollector.can_exchange(["0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"])
+True
+```
 
 </Example>
 
@@ -900,8 +925,6 @@ def burn(_coins: DynArray[ERC20, MAX_COINS_LEN], _receiver: address):
 
 Function to transfer the target coin to the hooker address. This function can only be called during the `FORWARD` epoch. It charges a keeper fee on the entire balance of the forwarded coins and awards it to the caller. The function also calls the `push_target` function of the burner contract to transfer any remaining target coins back into the `FeeCollector` contract before forwarding the total balance to the hooker. Additionally, the function calls the `duty_act` method of the hooker contract, applying any specified hooks and adjusting the fee accordingly.
 
-Returns: received keeper fee (`uint256`).
-
 | Input          | Type                                | Description                           |
 | -------------- | ----------------------------------- | ------------------------------------- |
 | `_hook_inputs` | `DynArray[HookInput, MAX_HOOK_LEN]` | Dynamic array of `HookInput` structs  |
@@ -913,6 +936,7 @@ Returns: received keeper fee (`uint256`).
 - `value`: `uint256` - Value associated with the hook, which can represent the amount or specific parameter needed by the hook logic.
 - `data`: `Bytes[8192]` - Additional data required by the hook, encoded as bytes. This can include various parameters or instructions specific to the hook's functionality.
 
+Returns: received keeper fee (`uint256`).
 
 <SourceCode>
 
@@ -1243,9 +1267,12 @@ def set_burner(_new_burner: Burner):
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function burner() view returns (address)"]}
+  method="burner"
+  contractName="FeeCollector"
+/>
 
 </Example>
 
@@ -1283,8 +1310,12 @@ hooker: public(Hooker)
 
 <Example>
 
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function hooker() view returns (address)"]}
+  method="hooker"
+  contractName="FeeCollector"
+/>
 
 
 </Example>
@@ -1305,11 +1336,11 @@ This function is only callable by the `owner` of the contract.
 
 Function to set a new burner contract. When setting, the contract checks if the new burner supports a certain `BURNER_INTERFACE_ID`, if not, the transaction will revert.
 
-Emits: `SetBurner`
+| Input         | Type     | Description                        |
+| ------------- | -------- | ---------------------------------- |
+| `_new_burner` | `Burner` | Contract address of the new burner |
 
-| Input         | Type      | Description                        |
-| ------------- | --------- | ---------------------------------- |
-| `_new_burner` | `Burner`  | Contract address of the new burner |
+Emits: `SetBurner` event.
 
 <SourceCode>
 
@@ -1382,11 +1413,11 @@ This function is only callable by the `owner` of the contract.
 
 Function to set a new hooker contract. When setting, the contract checks if the new hooker supports a certain `HOOKER_INTERFACE_ID: constant(bytes4) = 0xe569b44d`.
 
-Emits: `SetHooker`
+| Input         | Type     | Description                       |
+| ------------- | -------- | --------------------------------- |
+| `_new_hooker` | `Hooker` | Address of hooker contract to set |
 
-| Input         | Type      | Description                       |
-| ------------- | --------- | --------------------------------- |
-| `_new_hooker` | `Hooker`  | Address of hooker contract to set |
+Emits: `SetHooker` event.
 
 <SourceCode>
 
@@ -1487,11 +1518,11 @@ The contract includes a mechanism to "kill" certain coins across specific epochs
 
 Function to check if a coin is killed for a certain epoch. Depending on the epoch the coin is killed for, the contract restricts function calls. For example, if a coin is killed for the `COLLECT` epoch, the `collect` function cannot be called for that coin.
 
-Returns: sum of the epoch indices in the enum (`Epoch`).
-
 | Input  | Type    | Description                    |
 | ------ | ------- | ------------------------------ |
 | `arg0` | `ERC20` | Address of the coin to check   |
+
+Returns: sum of the epoch indices in the enum (`Epoch`).
 
 <SourceCode>
 
@@ -1511,9 +1542,14 @@ struct KilledInput:
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function is_killed(address) view returns (uint256)"]}
+  method="is_killed"
+  args={["0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"]}
+  labels={["arg0"]}
+  contractName="FeeCollector"
+/>
 
 </Example>
 
@@ -1533,11 +1569,11 @@ This function is only callable by the `owner` or `emergency_owner` of the contra
 
 Function to kill a coin for a specific epoch.
 
-Emits: `SetKilled`
+| Input    | Type                             | Description                    |
+| -------- | -------------------------------- | ------------------------------ |
+| `_input` | `DynArray[KilledInput, MAX_LEN]` | Array of `KilledInput` structs |
 
-| Input   | Type                                 | Description                                      |
-| ------- | ------------------------------------ | ------------------------------------------------ |
-| `_input` | `DynArray[KilledInput, MAX_LEN]`     | Array of `KilledInput` structs                   |
+Emits: `SetKilled` event.
 
 *Each `KilledInput` struct contains:*
 
@@ -1607,8 +1643,6 @@ Getter for the current owner of the contract.
 
 Returns: owner (`address`).
 
-Emits: `SetOwner`
-
 <SourceCode>
 
 
@@ -1643,9 +1677,12 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function owner() view returns (address)"]}
+  method="owner"
+  contractName="FeeCollector"
+/>
 
 </Example>
 
@@ -1659,8 +1696,6 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 Getter for the current emergency owner of the contract.
 
 Returns: emergency owner (`address`).
-
-Emits: `SetEmergencyOwner`
 
 <SourceCode>
 
@@ -1696,9 +1731,12 @@ def __init__(_target_coin: ERC20, _weth: wETH, _owner: address, _emergency_owner
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00"
+  abi={["function emergency_owner() view returns (address)"]}
+  method="emergency_owner"
+  contractName="FeeCollector"
+/>
 
 </Example>
 
@@ -1718,11 +1756,11 @@ This function is only callable by the `owner` of the contract.
 
 Function to set a new owner.
 
-Emits: `SetOwner`
-
 | Input        | Type      | Description              |
 | ------------ | --------- | ------------------------ |
 | `_new_owner` | `address` | Address of the new owner |
+
+Emits: `SetOwner` event.
 
 <SourceCode>
 
@@ -1787,11 +1825,11 @@ This function is only callable by the `owner` of the contract.
 
 Function to set a new emergency owner.
 
-Emits: `SetEmergencyOwner`
-
 | Input        | Type      | Description                        |
 | ------------ | --------- | ---------------------------------- |
 | `_new_owner` | `address` | Address of the new emergency owner |
+
+Emits: `SetEmergencyOwner` event.
 
 <SourceCode>
 

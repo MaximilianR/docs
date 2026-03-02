@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # scrvUSD Crosschain Oracle
 
 
@@ -25,7 +28,7 @@ The contract has three different functions for the scrvUSD share price (or its i
 ::::description[`ScrvusdOracleV2.update_price(_parameters: uint256[ALL_PARAM_CNT], _ts: uint256, _block_number: uint256) -> uint256`]
 
 
-:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the `PRICE_PARAMETERS_VERIFIER` role.
 
@@ -34,17 +37,20 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to update the price using scrvUSD vault parameters.
 
-Returns: absolute relative price change of the final price with 10^18 precision (`uint256`).
-
-Emits: `PriceUpdate` event.
-
 | Input           | Type      | Description                  |
 | --------------- | --------- | ---------------------------- |
 | `_parameters`   | `uint256[ALL_PARAM_CNT]` | Parameters of the Yearn Vault |
 | `_ts`           | `uint256` | Timestamp at which the parameters are true |
 | `_block_number` | `uint256` | Block number of parameters to linearize updates |
 
+Returns: absolute relative price change of the final price with 10^18 precision (`uint256`).
+
+Emits: `PriceUpdate` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="ScrvusdOracleV2.vy" label="ScrvusdOracleV2.vy">
 
 ```vyper
 event PriceUpdate:
@@ -143,13 +149,30 @@ def _raw_price(ts: uint256, parameters_ts: uint256) -> uint256:
     return self._total_assets(parameters) * 10**18 // self._total_supply(parameters, ts)
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
 This example updates the price of scrvUSD.
 
-```py
+```shell
 >>> ScrvusdOracleV2.update_price()
 ```
 
@@ -164,13 +187,13 @@ This example updates the price of scrvUSD.
 
 Function to compute the raw approximated share or asset price without smoothening out.
 
-Returns: raw `pricePerShare()` or `pricePerAsset()` (`uint256`).
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_i` | `uint256` | 0 for `pricePerShare()` and 1 for `pricePerAsset()`; defaults to 0  |
 | `_ts` | `uint256` | Timestamp at which to see the price (only near period is supported) |
 | `_parameters_ts` | `uint256` | Timestamp for the price parameters |
+
+Returns: raw `pricePerShare()` or `pricePerAsset()` (`uint256`).
 
 <SourceCode>
 
@@ -269,11 +292,11 @@ def _total_supply(p: PriceParams, ts: uint256) -> uint256:
 
 This example returns the raw share or asset price of scrvUSD.
 
-```py
-ScrvusdOracleV2.raw_price(0)
+```shell
+>>> ScrvusdOracleV2.raw_price(0)
 # returns pricePerShare()
 
-ScrvusdOracleV2.raw_price(1)
+>>> ScrvusdOracleV2.raw_price(1)
 # returns pricePerAsset()
 ```
 
@@ -288,11 +311,11 @@ ScrvusdOracleV2.raw_price(1)
 
 Getter for the lower bound of the share or asset price.
 
-Returns: lower bound of `pricePerShare()` (`uint256`).
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_i` | `uint256` | 0 for `pricePerShare()` and 1 for `pricePerAsset()` |
+
+Returns: lower bound of `pricePerShare()` (`uint256`).
 
 <SourceCode>
 
@@ -369,11 +392,11 @@ def raw_price(
 
 This example returns the lower bound of `pricePerShare()` or `pricePerAsset()`.
 
-```py
-ScrvusdOracleV2.price_v0(0)
+```shell
+>>> ScrvusdOracleV2.price_v0(0)
 # returns pricePerShare()
 
-ScrvusdOracleV2.price_v0(1)
+>>> ScrvusdOracleV2.price_v0(1)
 # returns pricePerAsset()
 ```
 
@@ -388,11 +411,11 @@ ScrvusdOracleV2.price_v0(1)
 
 Getter for the approximate share or asset price assuming no new interactions.
 
-Returns: approximate `pricePerShare()` (`uint256`).
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_i` | `uint256` | 0 for `pricePerShare()` and 1 for `pricePerAsset()` |
+
+Returns: approximate `pricePerShare()` (`uint256`).
 
 <SourceCode>
 
@@ -469,11 +492,11 @@ def raw_price(
 
 This example returns the approximate `pricePerShare()` or `pricePerAsset()`.
 
-```py
-ScrvusdOracleV2.price_v1(0)
+```shell
+>>> ScrvusdOracleV2.price_v1(0)
 # returns pricePerShare()
 
-ScrvusdOracleV2.price_v1(1)
+>>> ScrvusdOracleV2.price_v1(1)
 # returns pricePerAsset()
 ```
 
@@ -488,11 +511,11 @@ ScrvusdOracleV2.price_v1(1)
 
 Getter for the approximate share or asset price assuming constant rewards over time.
 
-Returns: approximate `pricePerShare()` (`uint256`).
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_i` | `uint256` | 0 for `pricePerShare()` and 1 for `pricePerAsset()` |
+
+Returns: approximate `pricePerShare()` (`uint256`).
 
 <SourceCode>
 
@@ -568,11 +591,11 @@ def raw_price(
 
 This example returns the approximate `pricePerShare()` or `pricePerAsset()` using the assumption that crvUSD gains same rewards.
 
-```py
-ScrvusdOracleV2.price_v2(0)
+```shell
+>>> ScrvusdOracleV2.price_v2(0)
 # returns pricePerShare()
 
-ScrvusdOracleV2.price_v2(1)
+>>> ScrvusdOracleV2.price_v2(1)
 # returns pricePerAsset()
 ```
 
@@ -601,7 +624,7 @@ last_block_number: public(uint256)  # Warning: used both for price parameters an
 
 This example returns the block number of the most recent update.
 
-```py
+```shell
 >>> ScrvusdOracleV2.last_block_number()
 17153668
 ```
@@ -653,7 +676,7 @@ def __init__(_initial_price: uint256):
 
 This example returns the current `profit_max_unlock_time`.
 
-```py
+```shell
 >>> ScrvusdOracleV2.profit_max_unlock_time()
 604800
 ```
@@ -667,7 +690,7 @@ This example returns the current `profit_max_unlock_time`.
 ::::description[`ScrvusdOracleV2.update_profit_max_unlock_time(_profit_max_unlock_time: uint256, _block_number: uint256) -> bool`]
 
 
-:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the `UNLOCK_TIME_VERIFIER` role.
 
@@ -676,14 +699,17 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to set a new value for `profit_max_unlock_time`. This happens within the [`ScrvUSDVeriferV2`](./verifier.md#scrvusd-verifier-v2) contract when a period is verified using a block hash ([`verifyPeriodByBlockHash()`](./verifier.md#verifyperiodbyblockhash)).
 
-Returns: boolean whether the value changed (`bool`).
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_profit_max_unlock_time` | `uint256` | New `profit_max_unlock_time` value |
 | `_block_number` | `uint256` | Block number of parameters to linearize updates |
 
+Returns: boolean whether the value changed (`bool`).
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="ScrvusdOracleV2.vy" label="ScrvusdOracleV2.vy">
 
 ```vyper
 from snekmate.auth import access_control
@@ -720,13 +746,30 @@ def update_profit_max_unlock_time(_profit_max_unlock_time: uint256, _block_numbe
     return prev_value != _profit_max_unlock_time
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
 This example updates the `profit_max_unlock_time` value.
 
-```py
+```shell
 >>> ScrvusdOracleV2.profit_max_unlock_time()
 604800
 
@@ -773,7 +816,7 @@ def __init__(_initial_price: uint256):
 
 This example returns the maximum price increment per second of scrvusd.
 
-```py
+```shell
 >>> ScrvusdOracleV2.max_price_increment()
 2000000000000
 ```
@@ -787,7 +830,7 @@ This example returns the maximum price increment per second of scrvusd.
 ::::description[`ScrvusdOracleV2.set_max_price_increment(_max_price_increment: uint256)`]
 
 
-:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the `DEFAULT_ADMIN_ROLE` role.
 
@@ -797,13 +840,16 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 Function to set a new value for `max_price_increment`. The new value must be less than the stableswaps minimum fee.
 $\frac{fee}{2 * \text{block_time}}$ is considered to be safe.
 
-Emits: `SetMaxPriceIncrement` event.
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_max_price_increment` | `uint256` | New `max_price_increment` value |
 
+Emits: `SetMaxPriceIncrement` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="ScrvusdOracleV2.vy" label="ScrvusdOracleV2.vy">
 
 ```vyper
 from snekmate.auth import access_control
@@ -838,13 +884,30 @@ def set_max_price_increment(_max_price_increment: uint256):
     log SetMaxPriceIncrement(_max_price_increment)
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
 This example updates the `max_price_increment` value.
 
-```py
+```shell
 >>> ScrvusdOracleV2.max_price_increment()
 2000000000000
 
@@ -888,7 +951,7 @@ def __init__(_initial_price: uint256):
 
 This example returns the `max_v2_duration` value.
 
-```py
+```shell
 >>> ScrvusdOracleV2.max_v2_duration()
 24
 ```
@@ -902,7 +965,7 @@ This example returns the `max_v2_duration` value.
 ::::description[`ScrvusdOracleV2.set_max_v2_duration(_max_v2_duration: uint256)`]
 
 
-:::guard[Guarded Method by [Snekmate 🐍](https://github.com/pcaversaccio/snekmate)]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
 This contract makes use of a Snekmate module to manage roles and permissions. This specific function can only be called by the `DEFAULT_ADMIN_ROLE` role.
 
@@ -911,13 +974,16 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to set a new value for `max_v2_duration`. The new value must be less than `MAX_V2_DURATION` (4 years).
 
-Emits: `SetMaxV2Duration` event.
-
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
 | `_max_v2_duration` | `uint256` | Maximum v2 approximation duration (in weeks) |
 
+Emits: `SetMaxV2Duration` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="ScrvusdOracleV2.vy" label="ScrvusdOracleV2.vy">
 
 ```vyper
 from snekmate.auth import access_control
@@ -952,13 +1018,30 @@ def set_max_v2_duration(_max_v2_duration: uint256):
     log SetMaxV2Duration(_max_v2_duration)
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
 This example updates the `max_v2_duration` value.
 
-```py
+```shell
 >>> ScrvusdOracleV2.max_v2_duration()
 24
 

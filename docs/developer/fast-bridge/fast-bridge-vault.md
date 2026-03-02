@@ -10,6 +10,20 @@ The source code for the `FastBridgeVault.vy` contract can be found on [GitHub](h
 
 The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](/pdf/audits/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
 
+The contract is deployed on :logos-ethereum: Ethereum for the following L2 routes:
+
+- :logos-arbitrum: Arbitrum: [`0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D`](https://etherscan.io/address/0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D)
+- :logos-optimism: Optimism: [`0x97d024859B68394122B3d0bb407dD7299cC8E937`](https://etherscan.io/address/0x97d024859B68394122B3d0bb407dD7299cC8E937)
+- :logos-fraxtal: Fraxtal: [`0x5EF620631AA46e7d2F6f963B6bE4F6823521B9eC`](https://etherscan.io/address/0x5EF620631AA46e7d2F6f963B6bE4F6823521B9eC)
+
+<ContractABI>
+
+```json
+[{"anonymous":false,"inputs":[{"indexed":true,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Minted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"status","type":"bool"}],"name":"RugScheduled","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"fee","type":"uint256"}],"name":"SetFee","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"fee_receiver","type":"address"}],"name":"SetFeeReceiver","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"actor","type":"address"},{"indexed":false,"name":"killed","type":"bool"}],"name":"SetKilled","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"token","type":"address"},{"indexed":false,"name":"receiver","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Recovered","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"role","type":"bytes32"},{"indexed":true,"name":"account","type":"address"},{"indexed":true,"name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"role","type":"bytes32"},{"indexed":true,"name":"account","type":"address"},{"indexed":true,"name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"role","type":"bytes32"},{"indexed":true,"name":"previousAdminRole","type":"bytes32"},{"indexed":true,"name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"inputs":[{"name":"arg0","type":"bytes32"},{"name":"arg1","type":"address"}],"name":"hasRole","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"role","type":"bytes32"},{"name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"role","type":"bytes32"},{"name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"role","type":"bytes32"},{"name":"account","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"role","type":"bytes32"},{"name":"admin_role","type":"bytes32"}],"name":"set_role_admin","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"schedule_rug","outputs":[{"name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_receiver","type":"address"},{"name":"_amount","type":"uint256"}],"name":"mint","outputs":[{"name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_status","type":"bool"}],"name":"set_killed","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_status","type":"bool"},{"name":"_who","type":"address"}],"name":"set_killed","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_new_fee","type":"uint256"}],"name":"set_fee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_new_fee_receiver","type":"address"}],"name":"set_fee_receiver","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"components":[{"name":"coin","type":"address"},{"name":"amount","type":"uint256"}],"name":"_recovers","type":"tuple[]"},{"name":"_receiver","type":"address"}],"name":"recover","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"version","outputs":[{"name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MINTER_ROLE","outputs":[{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"KILLER_ROLE","outputs":[{"name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"CRVUSD","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MINTER","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"fee","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"fee_receiver","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"rug_scheduled","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"address"}],"name":"is_killed","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_ownership","type":"address"},{"name":"_emergency","type":"address"},{"name":"_minters","type":"address[]"}],"outputs":[],"stateMutability":"nonpayable","type":"constructor"}]
+```
+
+</ContractABI>
+
 :::
 
 ---
@@ -32,9 +46,12 @@ If the vault does not have enough crvUSD at the time of the call (e.g. the nativ
 
 Returns: Amount of crvUSD actually transferred to the receiver (`uint256`).
 
-Emits: `Minted`
+Emits: `Minted` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="FastBridgeVault.vy" label="FastBridgeVault.vy">
 
 ```vyper
 @external
@@ -68,11 +85,22 @@ def mint(_receiver: address, _amount: uint256) -> uint256:
     return available
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+# @dev Returns `True` if `account` has been granted `role`.
+hasRole: public(HashMap[bytes32, HashMap[address, bool]])
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeVault.mint('0x1234...', 10000 * 10**18)
 10000000000000000000000
 ```
@@ -88,7 +116,7 @@ Checks if the vault needs to rug (reduce) its debt ceiling due to changes in the
 
 Returns: Boolean indicating whether rugging is needed (`bool`).
 
-Emits: `RugScheduled`
+Emits: `RugScheduled` event.
 
 <SourceCode>
 
@@ -109,7 +137,7 @@ def schedule_rug() -> bool:
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeVault.schedule_rug()
 False
 ```
@@ -143,10 +171,16 @@ balanceOf: public(HashMap[address, uint256])
 
 <Example>
 
-```python
->>> FastBridgeVault.balanceOf('0x1234...')
-0
-```
+This example returns the pending crvUSD balance for a given address on the Arbitrum route vault. Enter an address and click **Query** to fetch the value live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function balanceOf(address) view returns (uint256)"]}
+  method="balanceOf"
+  args={["0x0000000000000000000000000000000000000000"]}
+  labels={["arg0"]}
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -169,10 +203,14 @@ fee: public(uint256)  # 10^18 precision
 
 <Example>
 
-```python
->>> FastBridgeVault.fee()
-0
-```
+This example returns the current fee rate on the Arbitrum route vault. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function fee() view returns (uint256)"]}
+  method="fee"
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -195,10 +233,14 @@ fee_receiver: public(address)
 
 <Example>
 
-```python
->>> FastBridgeVault.fee_receiver()
-'0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00'
-```
+This example returns the current fee receiver address on the Arbitrum route vault. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function fee_receiver() view returns (address)"]}
+  method="fee_receiver"
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -221,10 +263,14 @@ rug_scheduled: public(bool)
 
 <Example>
 
-```python
->>> FastBridgeVault.rug_scheduled()
-False
-```
+This example returns whether a rug operation is currently scheduled on the Arbitrum route vault. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function rug_scheduled() view returns (bool)"]}
+  method="rug_scheduled"
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -251,10 +297,16 @@ is_killed: public(HashMap[address, bool])
 
 <Example>
 
-```python
->>> FastBridgeVault.is_killed('0x0000...')
-False
-```
+This example checks the kill status for the zero address (global kill switch) on the Arbitrum route vault. Enter an address and click **Query** to fetch the value live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function is_killed(address) view returns (bool)"]}
+  method="is_killed"
+  args={["0x0000000000000000000000000000000000000000"]}
+  labels={["address"]}
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -277,10 +329,14 @@ version: public(constant(String[8])) = "0.0.1"
 
 <Example>
 
-```python
->>> FastBridgeVault.version()
-'0.0.1'
-```
+This example returns the contract version on the Arbitrum route vault. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function version() view returns (string)"]}
+  method="version"
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -303,10 +359,14 @@ MINTER_ROLE: public(constant(bytes32)) = keccak256("MINTER")
 
 <Example>
 
-```python
->>> FastBridgeVault.MINTER_ROLE()
-b'\xf0\x88{\xa6^\xe2\x02N\xa8\x81\xd9\x1bt\xc2E\x0e\xf1\x9e\x15W\xf0;\xed>\xa9\xf1k\x03|\xbe-\xc9'
-```
+This example returns the MINTER_ROLE identifier on the Arbitrum route vault. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function MINTER_ROLE() view returns (bytes32)"]}
+  method="MINTER_ROLE"
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -329,10 +389,14 @@ KILLER_ROLE: public(constant(bytes32)) = keccak256("KILLER")
 
 <Example>
 
-```python
->>> FastBridgeVault.KILLER_ROLE()
-b'\x99\xf84\xfa\xe7\x1e\xae\x91\x9b\x81\x02\x81z\x18\xb0-eU\x05ij\x88\xccI\xe3\nImu\xa0-\xec'
-```
+This example returns the KILLER_ROLE identifier on the Arbitrum route vault. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function KILLER_ROLE() view returns (bytes32)"]}
+  method="KILLER_ROLE"
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -355,10 +419,14 @@ CRVUSD: public(constant(IERC20)) = IERC20(0xf939E0A03FB07F59A73314E73794Be0E57ac
 
 <Example>
 
-```python
->>> FastBridgeVault.CRVUSD()
-'0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E'
-```
+This example returns the crvUSD token address on the Arbitrum route vault. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function CRVUSD() view returns (address)"]}
+  method="CRVUSD"
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -381,10 +449,14 @@ MINTER: public(constant(IMinter)) = IMinter(0xC9332fdCB1C491Dcc683bAe86Fe3cb7036
 
 <Example>
 
-```python
->>> FastBridgeVault.MINTER()
-'0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC'
-```
+This example returns the MINTER (ControllerFactory) contract address on the Arbitrum route vault. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D"
+  abi={["function MINTER() view returns (address)"]}
+  method="MINTER"
+  contractName="FastBridgeVault"
+/>
 
 </Example>
 
@@ -412,9 +484,12 @@ Emergency function to kill or unkill specific minters or all minting operations.
 | `_status` | `bool` | Boolean whether to stop minter from working |
 | `_who` | `address` | Minter to kill/unkill, empty address to kill all receiving (default: empty address) |
 
-Emits: `SetKilled`
+Emits: `SetKilled` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="FastBridgeVault.vy" label="FastBridgeVault.vy">
 
 ```vyper
 @external
@@ -430,11 +505,33 @@ def set_killed(_status: bool, _who: address=empty(address)):
     log SetKilled(actor=_who, killed=_status)
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+# @dev Returns `True` if `account` has been granted `role`.
+hasRole: public(HashMap[bytes32, HashMap[address, bool]])
+
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeVault.set_killed(True, '0x1234...')
 ```
 
@@ -457,9 +554,12 @@ Updates the fee rate applied to bridge transactions. Only the admin can call thi
 | ---------- | --------- | ------------ |
 | `_new_fee` | `uint256` | New fee rate with 10^18 precision (max: 10^18) |
 
-Emits: `SetFee`
+Emits: `SetFee` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="FastBridgeVault.vy" label="FastBridgeVault.vy">
 
 ```vyper
 @external
@@ -475,11 +575,36 @@ def set_fee(_new_fee: uint256):
     log SetFee(fee=_new_fee)
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+# @dev The default 32-byte admin role.
+DEFAULT_ADMIN_ROLE: public(constant(bytes32)) = empty(bytes32)
+
+# @dev Returns `True` if `account` has been granted `role`.
+hasRole: public(HashMap[bytes32, HashMap[address, bool]])
+
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeVault.set_fee(0)
 ```
 
@@ -502,9 +627,12 @@ Updates the address that receives fees from bridge transactions. Only the admin 
 | ---------- | --------- | ------------ |
 | `_new_fee_receiver` | `address` | New fee receiver address |
 
-Emits: `SetFeeReceiver`
+Emits: `SetFeeReceiver` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="FastBridgeVault.vy" label="FastBridgeVault.vy">
 
 ```vyper
 @external
@@ -520,11 +648,36 @@ def set_fee_receiver(_new_fee_receiver: address):
     log SetFeeReceiver(fee_receiver=_new_fee_receiver)
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+# @dev The default 32-byte admin role.
+DEFAULT_ADMIN_ROLE: public(constant(bytes32)) = empty(bytes32)
+
+# @dev Returns `True` if `account` has been granted `role`.
+hasRole: public(HashMap[bytes32, HashMap[address, bool]])
+
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeVault.set_fee_receiver('0xa2Bcd...')
 ```
 
@@ -548,9 +701,12 @@ Emergency function to recover ERC20 tokens from the contract. This is needed in 
 | `_recovers` | `DynArray[RecoverInput, 32]` | Array of (token, amount) pairs to recover |
 | `_receiver` | `address` | Address to receive the recovered tokens |
 
-Emits: `Recovered`
+Emits: `Recovered` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="FastBridgeVault.vy" label="FastBridgeVault.vy">
 
 ```vyper
 @external
@@ -571,11 +727,36 @@ def recover(_recovers: DynArray[RecoverInput, 32], _receiver: address):
         log Recovered(token=input.coin, receiver=_receiver, amount=amount)
 ```
 
+</TabItem>
+<TabItem value="access_control.vy" label="access_control.vy (Snekmate 🐍)">
+
+```vyper
+# @dev The default 32-byte admin role.
+DEFAULT_ADMIN_ROLE: public(constant(bytes32)) = empty(bytes32)
+
+# @dev Returns `True` if `account` has been granted `role`.
+hasRole: public(HashMap[bytes32, HashMap[address, bool]])
+
+@internal
+@view
+def _check_role(role: bytes32, account: address):
+    """
+    @dev Reverts with a standard message if `account`
+         is missing `role`.
+    @param role The 32-byte role definition.
+    @param account The 20-byte address of the account.
+    """
+    assert self.hasRole[role][account], "access_control: account is missing role"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeVault.recover([('0xf939...', 1000 * 10**18)], '0x1234...')
 ```
 

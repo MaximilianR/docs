@@ -41,14 +41,17 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to add a committer.
 
-Emits: `AddCommitter`
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_committer` | `address` | Address of the committer to add |
 | `_bump_threshold` | `bool` | If true, automatically increase threshold by 1 |
 
+Emits: `AddCommitter` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="BlockOracle.vy" label="BlockOracle.vy">
 
 ```vyper
 event AddCommitter:
@@ -79,6 +82,21 @@ def add_committer(_committer: address, _bump_threshold: bool = False):
             self.threshold += 1
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
@@ -100,13 +118,16 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to remove a committer.
 
-Emits: `RemoveCommitter`
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_committer` | `address` | Address of the committer to remove |
 
+Emits: `RemoveCommitter` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="BlockOracle.vy" label="BlockOracle.vy">
 
 ```vyper
 event RemoveCommitter:
@@ -136,6 +157,21 @@ def remove_committer(_committer: address):
 
         log RemoveCommitter(committer=_committer)
 ```
+
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -190,11 +226,11 @@ def get_all_committers() -> DynArray[address, MAX_COMMITTERS]:
 
 Getter for the committers at a specific index.
 
-Returns: address of the committer at the specified index (`address`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `arg0` | `uint256` | Index of the committer  |
+
+Returns: address of the committer at the specified index (`address`).
 
 <SourceCode>
 
@@ -223,11 +259,11 @@ This example returns the committer at index 0.
 
 Getter to check if a certain address is a committer.
 
-Returns: true if the address is a committer, false otherwise (`bool`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `arg0` | `address` | Address to check  |
+
+Returns: true if the address is a committer, false otherwise (`bool`).
 
 <SourceCode>
 
@@ -261,13 +297,16 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to update the threshold for block applications.
 
-Emits: `SetThreshold`
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_new_threshold` | `uint256` | New `threshold` value  |
 
+Emits: `SetThreshold` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="BlockOracle.vy" label="BlockOracle.vy">
 
 ```vyper
 event SetThreshold:
@@ -290,6 +329,21 @@ def set_threshold(_new_threshold: uint256):
 
     log SetThreshold(new_threshold=_new_threshold)
 ```
+
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -340,15 +394,15 @@ Only registered committers may call commit functions. The contract maintains a m
 
 Function to commit a block hash and optionally attempt to apply it.
 
-Returns: true if the block was applied (`bool`).
-
-Emits: `CommitBlock`
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_block_number` | `uint256` | Block number to commit  |
 | `_block_hash` | `bytes32` | The hash to commit |
 | `_apply` | `bool` | `true` -> check if threshold is met and applies the block. |
+
+Returns: true if the block was applied (`bool`).
+
+Emits: `CommitBlock` event.
 
 <SourceCode>
 
@@ -402,12 +456,12 @@ True
 
 Getter for the committed hash by a specific committer for a specific block number.
 
-Returns: committed hash for the committer and block number, or empty bytes32 if no commitment (`bytes32`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `arg0` | `address` | Address of the committer |
 | `arg1` | `uint256` | Block number |
+
+Returns: committed hash for the committer and block number, or empty bytes32 if no commitment (`bytes32`).
 
 <SourceCode>
 
@@ -435,12 +489,12 @@ committer_votes: public(
 
 Getter for the number of commitments for a specific hash at a specific block number.
 
-Returns: number of commitments for the hash at the block number (`uint256`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `arg0` | `uint256` | Block number |
 | `arg1` | `bytes32` | Hash to get count for |
+
+Returns: number of commitments for the hash at the block number (`uint256`).
 
 <SourceCode>
 
@@ -474,12 +528,12 @@ Block application includes both permissionless (anyone can call) and owner-only 
 
 Function to apply a block hash if it has sufficient commitments.
 
-Emits: `ApplyBlock`
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_block_number` | `uint256` | Block number to apply  |
 | `_block_hash` | `bytes32` | The block hash to apply |
+
+Emits: `ApplyBlock` event.
 
 <SourceCode>
 
@@ -541,14 +595,17 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to apply a block hash with admin rights.
 
-Emits: `ApplyBlock`
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_block_number` | `uint256` | Block number to apply  |
 | `_block_hash` | `bytes32` | Hash to apply |
 
+Emits: `ApplyBlock` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="BlockOracle.vy" label="BlockOracle.vy">
 
 ```vyper
 @external
@@ -563,6 +620,21 @@ def admin_apply_block(_block_number: uint256, _block_hash: bytes32):
     ownable._check_owner()
     self._apply_block(_block_number, _block_hash)
 ```
+
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -581,11 +653,11 @@ def admin_apply_block(_block_number: uint256, _block_hash: bytes32):
 
 Getter for the confirmed block hash for a given block number.
 
-Returns: confirmed block hash or empty `bytes32` if not confirmed (`bytes32`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_block_number` | `uint256` | Block number  |
+
+Returns: confirmed block hash or empty `bytes32` if not confirmed (`bytes32`).
 
 <SourceCode>
 
@@ -657,11 +729,11 @@ This function can only be called by the designated `header_verifier` contract.
 
 Function to submit a block header.
 
-Emits: `SubmitBlockHeader`
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_header_data` | `bh_rlp.BlockHeader` | Block header to submit  |
+
+Emits: `SubmitBlockHeader` event.
 
 <SourceCode>
 
@@ -720,11 +792,11 @@ def submit_block_header(_header_data: bh_rlp.BlockHeader):
 
 Getter for the state root for a given block number.
 
-Returns: state root from the block header, or empty `bytes32` if the header is not submitted (`bytes32`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_block_number` | `uint256` | Block number |
+
+Returns: state root from the block header, or empty `bytes32` if the header is not submitted (`bytes32`).
 
 <SourceCode>
 
@@ -758,11 +830,11 @@ def get_state_root(_block_number: uint256) -> bytes32:
 
 Getter for the block header for a specific block number.
 
-Returns: block header tuple containing (block_hash, parent_hash, state_root, receipt_root, block_number, timestamp) (`tuple`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `arg0` | `uint256` | Block number |
+
+Returns: block header tuple containing (block_hash, parent_hash, state_root, receipt_root, block_number, timestamp) (`tuple`).
 
 <SourceCode>
 
@@ -825,13 +897,16 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to set the block header verifier.
 
-Emits: `SetHeaderVerifier`
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_verifier` | `address` | Block verifier address  |
 
+Emits: `SetHeaderVerifier` event.
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="BlockOracle.vy" label="BlockOracle.vy">
 
 ```vyper
 event SetHeaderVerifier:
@@ -853,6 +928,21 @@ def set_header_verifier(_verifier: address):
     self.header_verifier = _verifier
     log SetHeaderVerifier(old_verifier=old_verifier, new_verifier=_verifier)
 ```
+
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
 
 </SourceCode>
 

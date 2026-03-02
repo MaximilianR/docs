@@ -30,7 +30,7 @@ Returns: admin balances (`uint256`).
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `i` |  `uint256` | coin index |
+| `i` |  `uint256` | Coin index |
 
 <SourceCode>
 
@@ -63,6 +63,8 @@ def admin_balances(i: uint256) -> uint256:
 ::::description[`PoolProxy.withdraw_admin_fees(_pool: address)`]
 
 
+Function to claim admin fees from `_pool` into this contract. This is the first step in the fee burning process.
+
 :::info
 
 This function is called from the PoolProxy.
@@ -70,11 +72,9 @@ This function is called from the PoolProxy.
 
 :::
 
-Function to claim admin fees from `pool` into this contract. This is the first step in the fee burning process. 
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_pool` |  `address` | pool address |
+| `_pool` |  `address` | Pool address |
 
 <SourceCode>
 
@@ -100,7 +100,6 @@ def withdraw_admin_fees(_pool: address):
 
 ```shell
 >>> PoolProxy.withdraw_admin_fees("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
-'whatever amount of admin fees sit in the contract'
 ```
 
 
@@ -114,14 +113,14 @@ def withdraw_admin_fees(_pool: address):
 ::::description[`PoolProxy.withdraw_many(_pools: address[20])`]
 
 
+Function to withdraw fees from multiple pools in a single call.
+
 :::info
 
 This function is called from the PoolProxy.
 
 
 :::
-
-Function to withdraw fees from multiple pools in a single call.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
@@ -153,8 +152,7 @@ def withdraw_many(_pools: address[20]):
 <Example>
 
 ```shell
->>> PoolProxy.withdraw_many("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7", "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD")
-'whatever amount of admin fees sit in the contract'
+>>> PoolProxy.withdraw_many(["0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7", "0xA5407eAE9Ba41422680e2e00537571bcC53efBfD"])
 ```
 
 
@@ -177,10 +175,12 @@ Fees are mostly claimed directly from the pool.
 
 Function to claim admin fees from a crypto pool.
 
+Emits: `ClaimAdminFee` event.
+
 <SourceCode>
 
 
-```vyper 
+```vyper
 event ClaimAdminFee:
     admin: indexed(address)
     tokens: uint256
@@ -291,12 +291,14 @@ crvUSD fees are based on the borrow rate of the corresponding markets. Fees are 
 ::::description[`Controller.admin_fees() -> uint256: view`]
 
 
-Getter for the currently claimable admin fees form a Controller. These fees can be collected via the `collect_fees()` function (see below).
+Getter for the currently claimable admin fees from a Controller. These fees can be collected via the `collect_fees()` function (see below).
+
+Returns: claimable admin fees (`uint256`).
 
 <SourceCode>
 
 
-```vyper 
+```vyper
 @external
 @view
 def admin_fees() -> uint256:
@@ -332,12 +334,16 @@ def admin_fees() -> uint256:
 ::::description[`Controller.collect_fees()`]
 
 
-Function to collects all fees, including borrowing-based fees (interest rate) and AMM-based fees (swap fee, if applicable).
+Function to collect all fees, including borrowing-based fees (interest rate) and AMM-based fees (swap fee, if applicable).
+
+Returns: amount of fees collected (`uint256`).
+
+Emits: `CollectFees` event.
 
 <SourceCode>
 
 
-```vyper 
+```vyper
 @external
 @nonreentrant('lock')
 def collect_fees() -> uint256:
@@ -444,6 +450,15 @@ def burn(_coin: address):
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> PoolProxy.burn("0xdAC17F958D2ee523a2206206994597C13D831ec7")
+```
+
+
+</Example>
+
 ::::
 
 ### `burn_many`
@@ -496,18 +511,21 @@ def burn_many(_coins: address[20]):
 
 </SourceCode>
 
+<Example>
+
+```shell
+>>> PoolProxy.burn_many(["0xdAC17F958D2ee523a2206206994597C13D831ec7", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"])
+```
+
+
+</Example>
+
 ::::
 
 ### `donate_admin_fees`
 
 ::::description[`0xECB.donate_admin_fees(_pool: address)`]
 
-
-:::warning
-
-**Most pools do not have this donation function implemented!**
-
-:::
 
 :::guard[Guarded Method]
 
@@ -516,11 +534,17 @@ This function is only callable by the `ownership_admin` or its prior approved wa
 
 :::
 
-Function donate a pool’s current admin fees to the pool LPs.
+Function to donate a pool’s current admin fees to the pool LPs.
+
+:::warning
+
+**Most pools do not have this donation function implemented!**
+
+:::
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_pool` |  `address` | pool addresses |
+| `_pool` |  `address` | Pool address |
 
 <SourceCode>
 
@@ -530,7 +554,7 @@ interface Curve:
     def donate_admin_fees(): nonpayable
 
 @external
-@nonreentrant('lock')
+@nonreentrant(‘lock’)
 def donate_admin_fees(_pool: address):
     """
     @notice Donate admin fees of `_pool` pool
@@ -545,18 +569,21 @@ def donate_admin_fees(_pool: address):
 
 </SourceCode>
 
-:::
+<Example>
+
+```shell
+>>> PoolProxy.donate_admin_fees("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7")
+```
+
+
+</Example>
+
+::::
 
 ### `set_donate_approval`
 
 ::::description[`0xECB.set_donate_approval(_pool: address, _caller: address, _is_approved: bool)`]
 
-
-:::warning
-
-**Most pools do not have this donation function implemented!**
-
-:::
 
 :::guard[Guarded Method]
 
@@ -567,11 +594,17 @@ This function is only callable by the `ownership_admin` of the contract.
 
 Function to set donation approval for `_pool` to `_caller`.
 
+:::warning
+
+**Most pools do not have this donation function implemented!**
+
+:::
+
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_pool` |  `address` | pool address |
-| `_caller` |  `address` | address to set approval for |
-| `_is_approved` |  `bool` | approval status |
+| `_pool` |  `address` | Pool address |
+| `_caller` |  `address` | Address to set approval for |
+| `_is_approved` |  `bool` | Approval status |
 
 <SourceCode>
 
@@ -596,4 +629,13 @@ def set_donate_approval(_pool: address, _caller: address, _is_approved: bool):
 
 </SourceCode>
 
-:::
+<Example>
+
+```shell
+>>> PoolProxy.set_donate_approval("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7", "0x989AEb4d175e16225E39E87d0D97A3360524AD80", True)
+```
+
+
+</Example>
+
+::::

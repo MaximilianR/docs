@@ -35,14 +35,17 @@ Block Range Constraints:
 - **Too old:** Blocks older than 8192 blocks (EVM limit post EIP-2935)
 - **Valid range:** Between `block.number - 8192` and `block.number - 64`
 
-Returns: a tuple containing the block number and block hash (`(uint256, bytes32)`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `_block_number` | `uint256` | Block number to get the hash for. Defaults to `block.number - 65` |
 | `_avoid_failure` | `bool` | If `True`, returns `(0, 0x0)` on failure instead of reverting. Useful for cross-chain calls. |
 
+Returns: a tuple containing the block number and block hash (`(uint256, bytes32)`).
+
 <SourceCode>
+
+<Tabs>
+<TabItem value="MainnetBlockView.vy" label="MainnetBlockView.vy">
 
 ```vyper
 from snekmate.utils import block_hash as snekmate_block_hash
@@ -86,8 +89,10 @@ def get_blockhash(
     return requested_block_number, snekmate_block_hash._block_hash(requested_block_number)
 ```
 
+</TabItem>
+<TabItem value="block_hash.vy" label="block_hash.vy (Snekmate 🐍)">
+
 ```vyper
-# block_hash.vy
 # Source code of this Vyper module can be found here:
 # https://github.com/pcaversaccio/snekmate/blob/main/src/snekmate/utils/block_hash.vy
 
@@ -200,32 +205,37 @@ def _get_history_storage(block_number: uint256) -> bytes32:
     )
 ```
 
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-Get the default block hash (65 blocks ago)
+Get the default block hash (65 blocks ago):
 
-```shell
->>> MainnetBlockView.get_blockhash()
-(22787735, 0x74fd0de77691b8408e795cfea10366f6ba340fcf2800d019abea8945d07fcb72)
-```
+<ContractCall
+  address="0xb10CfacE69cc0B7F1AE0Dc8E6aD186914f6e7EEA"
+  abi={["function get_blockhash() view returns (uint256, bytes32)"]}
+  method="get_blockhash"
+  contractName="MainnetBlockView"
+/>
 
-Get a specific block hash
+Get a specific block hash:
 
 ```shell
 >>> MainnetBlockView.get_blockhash(22787600)
 (22787600, 0x4bdaa00a7e9b85a9ab25565ef2d2de8817cbba08dd0c6880ecee4ac4674e1378)
 ```
 
-Use avoid_failure parameter
+Use avoid_failure parameter:
 
 ```shell
 >>> MainnetBlockView.get_blockhash(22787809, True)  # Too recent
 (0, 0x0000000000000000000000000000000000000000000000000000000000000000)
 ```
 
-Error when block is too recent (without avoid_failure)
+Error when block is too recent (without avoid_failure):
 
 ```shell
 >>> MainnetBlockView.get_blockhash(1, False)  # Will revert

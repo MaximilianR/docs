@@ -16,6 +16,17 @@ Additionally, each `RateProvider` contract is **integrated into the chain-specif
 '0xA834f3d23749233c9B61ba723588570A1cCA0Ed7'
 ```
 
+The contract is deployed on :logos-ethereum: Ethereum at [`0xA834f3d23749233c9B61ba723588570A1cCA0Ed7`](https://etherscan.io/address/0xA834f3d23749233c9B61ba723588570A1cCA0Ed7).
+
+<ContractABI>
+
+
+```json
+[{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"address_provider","type":"address"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"get_quotes","inputs":[{"name":"source_token","type":"address"},{"name":"destination_token","type":"address"},{"name":"amount_in","type":"uint256"}],"outputs":[{"name":"","type":"tuple[]","components":[{"name":"source_token_index","type":"uint256"},{"name":"dest_token_index","type":"uint256"},{"name":"is_underlying","type":"bool"},{"name":"amount_out","type":"uint256"},{"name":"pool","type":"address"},{"name":"source_token_pool_balance","type":"uint256"},{"name":"dest_token_pool_balance","type":"uint256"},{"name":"pool_type","type":"uint8"}]}]},{"stateMutability":"view","type":"function","name":"get_aggregated_rate","inputs":[{"name":"source_token","type":"address"},{"name":"destination_token","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"version","inputs":[],"outputs":[{"name":"","type":"string"}]},{"stateMutability":"view","type":"function","name":"ADDRESS_PROVIDER","inputs":[],"outputs":[{"name":"","type":"address"}]}]
+```
+
+</ContractABI>
+
 
 :::
 
@@ -44,6 +55,12 @@ CRYPTOSWAP_ABI: constant(String[64]) = "get_dy(uint256,uint256,uint256)"
 
 Getter method which returns quotes for a specified `source_token` compared to a `destination_token` based on the input amount `amount_in`.
 
+| Input               | Type      | Description                  |
+| ------------------- | --------- | ---------------------------- |
+| `source_token`      | `address` | Source token.                |
+| `destination_token` | `address` | Destination token.           |
+| `amount_in`         | `uint256` | Amount of tokens the provided rate is based on. |
+
 Returns: a dynamic array of `Quote` structs containing quote data for each pool (`DynArray[Quote, MAX_QUOTES]`).
 
 - `source_token_index (uint256)`: Index of the input token in the pool.
@@ -54,12 +71,6 @@ Returns: a dynamic array of `Quote` structs containing quote data for each pool 
 - `source_token_pool_balance (uint256)`: Source token balance within the pool.
 - `dest_token_pool_balance (uint256)`: Destination token balance within the pool.
 - `pool_type (uint8)`: Type of pool: `0 = Stableswap`, `1 = Cryptoswap`, `2 = LLAMMA`
-
-| Input               | Type      | Description                  |
-| ------------------- | --------- | ---------------------------- |
-| `source_token`      | `address` | Source token.                |
-| `destination_token` | `address` | Destination token.           |
-| `amount_in`         | `uint256` | Amount of tokens the provided rate is based on. |
 
 <SourceCode>
 
@@ -237,11 +248,7 @@ def _get_pool_type(pool: address, metaregistry: Metaregistry) -> uint8:
 
 This example shows the quotes when swapping 1000 `CRV` for `asdCRV`. The `get_quotes` method returns two `Quote` structs because there are two pools that can facilitate the trade:
 
-```shell
->>> CurveRateProvider.get_quotes('0x11cdb42b0eb46d95f990bedd4695a6e3fa034978', '0x75289388d50364c3013583d97bd70ced0e183e32', 10**21)
-[0, 1, false, 714858885217291769395, 0xB85246768Cfea42b0c935265Db798C9Ae457646f, 252287097613511084984749, 79868164306389315090776, 1]
-[0, 2, false, 720123483984082032033, 0x5C959D2c1a49B637Fb988c40d663265F8Bf6d289, 1172262450081282857543531, 447584250494794848814622, 1]
-```
+<ContractCall address="0xA834f3d23749233c9B61ba723588570A1cCA0Ed7" abi={["function get_quotes(address source_token, address destination_token, uint256 amount_in) view returns (tuple(uint256 source_token_index, uint256 dest_token_index, bool is_underlying, uint256 amount_out, address pool, uint256 source_token_pool_balance, uint256 dest_token_pool_balance, uint8 pool_type)[])"]} method="get_quotes" args={["0x11cdb42b0eb46d95f990bedd4695a6e3fa034978", "0x75289388d50364c3013583d97bd70ced0e183e32", "1000000000000000000000"]} labels={["source_token", "destination_token", "amount_in"]} contractName="RateProvider" />
 
 
 </Example>
@@ -259,12 +266,12 @@ Getter for the weighted aggregated rate of all quotes from the `source_token` to
   2. The total balance is computed by summing the normalized balances of the source and destination tokens across all pools.
   3. The weight for each quote is determined by the proportion of its normalized pool balance to the total balance. The weighted average is then computed by summing the product of each quote's output amount and its weight.
 
-Returns: aggregated rate (`uint256`).
-
 | Input               | Type      | Description                  |
 | ------------------- | --------- | ---------------------------- |
 | `source_token`      | `address` | Source token.                |
 | `destination_token` | `address` | Destination token.           |
+
+Returns: aggregated rate (`uint256`).
 
 <SourceCode>
 
@@ -323,10 +330,7 @@ def weighted_average_quote(
 <Example>
 
 
-```shell
->>> CurveRateProvider.get_aggregated_rate('0x11cdb42b0eb46d95f990bedd4695a6e3fa034978', '0x75289388d50364c3013583d97bd70ced0e183e32')
-719612081529229719
-```
+<ContractCall address="0xA834f3d23749233c9B61ba723588570A1cCA0Ed7" abi={["function get_aggregated_rate(address source_token, address destination_token) view returns (uint256)"]} method="get_aggregated_rate" args={["0x11cdb42b0eb46d95f990bedd4695a6e3fa034978", "0x75289388d50364c3013583d97bd70ced0e183e32"]} labels={["source_token", "destination_token"]} contractName="RateProvider" />
 
 
 </Example>
@@ -359,10 +363,7 @@ version: public(constant(String[8])) = "1.0.0"
 <Example>
 
 
-```shell
->>> CurveRateProvider.version()
-'1.0.0'
-```
+<ContractCall address="0xA834f3d23749233c9B61ba723588570A1cCA0Ed7" abi={["function version() view returns (string)"]} method="version" contractName="RateProvider" />
 
 
 </Example>
@@ -402,10 +403,7 @@ def __init__(address_provider: address):
 <Example>
 
 
-```shell
->>> CurveRateProvider.ADDRESS_PROVIDER()
-'0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98'
-```
+<ContractCall address="0xA834f3d23749233c9B61ba723588570A1cCA0Ed7" abi={["function ADDRESS_PROVIDER() view returns (address)"]} method="ADDRESS_PROVIDER" contractName="RateProvider" />
 
 
 </Example>

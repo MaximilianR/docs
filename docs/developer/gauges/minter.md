@@ -7,7 +7,16 @@ The `Minter` is responsible for the **issuance and distribution of CRV tokens** 
 
 The source code for the `Minter.vy` contract is available on [GitHub](https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.2.4`.
 
-The contract is deployed on :logos-ethereum: Ethereum at [0xd061D61a4d941c39E5453435B6345Dc261C2fcE0](https://etherscan.io/address/0xd061D61a4d941c39E5453435B6345Dc261C2fcE0#code).
+The contract is deployed on :logos-ethereum: Ethereum at [`0xd061D61a4d941c39E5453435B6345Dc261C2fcE0`](https://etherscan.io/address/0xd061D61a4d941c39E5453435B6345Dc261C2fcE0#code).
+
+<ContractABI>
+
+
+```json
+[{"name":"Minted","inputs":[{"type":"address","name":"recipient","indexed":true},{"type":"address","name":"gauge","indexed":false},{"type":"uint256","name":"minted","indexed":false}],"anonymous":false,"type":"event"},{"outputs":[],"inputs":[{"type":"address","name":"_token"},{"type":"address","name":"_controller"}],"stateMutability":"nonpayable","type":"constructor"},{"name":"mint","outputs":[],"inputs":[{"type":"address","name":"gauge_addr"}],"stateMutability":"nonpayable","type":"function","gas":100038},{"name":"mint_many","outputs":[],"inputs":[{"type":"address[8]","name":"gauge_addrs"}],"stateMutability":"nonpayable","type":"function","gas":408502},{"name":"mint_for","outputs":[],"inputs":[{"type":"address","name":"gauge_addr"},{"type":"address","name":"_for"}],"stateMutability":"nonpayable","type":"function","gas":101219},{"name":"toggle_approve_mint","outputs":[],"inputs":[{"type":"address","name":"minting_user"}],"stateMutability":"nonpayable","type":"function","gas":36726},{"name":"token","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1301},{"name":"controller","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1331},{"name":"minted","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"arg0"},{"type":"address","name":"arg1"}],"stateMutability":"view","type":"function","gas":1669},{"name":"allowed_to_mint_for","outputs":[{"type":"bool","name":""}],"inputs":[{"type":"address","name":"arg0"},{"type":"address","name":"arg1"}],"stateMutability":"view","type":"function","gas":1699}]
+```
+
+</ContractABI>
 
 :::
 
@@ -27,11 +36,11 @@ CRV tokens can be minted in several ways:
 
 Function to mint CRV for the caller from a single gauge.
 
-Emits: `Minted` event.
-
 | Input        | Type      | Description     |
 | ------------ | --------- | --------------- |
 | `gauge_addr` | `address` | Gauge address to get mintable CRV amount from |
+
+Emits: `Minted` event.
 
 
 <SourceCode>
@@ -101,12 +110,12 @@ This example mints all CRV for the caller from `0xe5d5aa1bbe72f68df42432813485ca
 
 Function to mint CRV for a different address and transfer it to them. In order to do this, the caller must have been previously approved by `for` using [`toggle_approve_mint`](#toggle_approve_mint).
 
-Emits: `Minted` event.
-
 | Input        | Type      | Description     |
 | ------------ | --------- | --------------- |
 | `gauge_addr` | `address` | Gauge address to get mintable CRV amount from |
 | `_for`       | `address` | Address to mint to |
+
+Emits: `Minted` event.
 
 
 <SourceCode>
@@ -183,11 +192,11 @@ This example mints all CRV for `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` from
 
 Function to mint CRV for the caller from multiple gauges. This function does not allow for minting for or to different addresses. It claims for `msg.sender` and transfers the minted tokens to them. The maximum number of gauges that can be specified is eight. For example, if only minting from one gauge, leave the remaining array entries as `ZERO_ADDRESS`.
 
-Emits: `Minted` event.
-
 | Input         | Type         | Description |
 | ------------- | ------------ | ----------- |
 | `gauge_addrs` | `address[8]` | List of gauge addresses to mint from |
+
+Emits: `Minted` event.
 
 
 <SourceCode>
@@ -264,12 +273,12 @@ This example mints all CRV for the caller from three gauges at once.
 
 Getter for the total amount of CRV minted from a specific gauge to a specific user.
 
-Returns: amount of CRV minted (`uint256`).
-
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
 | `arg0` | `address` | User address  |
 | `arg1` | `address` | Gauge address |
+
+Returns: amount of CRV minted (`uint256`).
 
 
 <SourceCode>
@@ -283,10 +292,7 @@ minted: public(HashMap[address, HashMap[address, uint256]])
 
 <Example>
 
-```py
->>> Minter.minted('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0xe5d5aa1bbe72f68df42432813485ca1fc998de32')
-0
-```
+<ContractCall address="0xd061D61a4d941c39E5453435B6345Dc261C2fcE0" abi={["function minted(address arg0, address arg1) view returns (uint256)"]} method="minted" args={["0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", "0xe5d5aa1bbe72f68df42432813485ca1fc998de32"]} labels={["arg0", "arg1"]} contractName="Minter" />
 
 </Example>
 
@@ -299,12 +305,12 @@ minted: public(HashMap[address, HashMap[address, uint256]])
 
 Function to check if a specific user can mint for another user. Allowance is toggled using the [`toggle_approve_mint`](#toggle_approve_mint) function.
 
-Returns: true or false (`bool`).
-
 | Input  | Type      | Description       |
 | ------ | --------- | ----------------- |
 | `arg0` | `address` | Address of minter |
 | `arg1` | `address` | Address of user   |
+
+Returns: true or false (`bool`).
 
 
 <SourceCode>
@@ -318,10 +324,7 @@ allowed_to_mint_for: public(HashMap[address, HashMap[address, bool]])
 
 <Example>
 
-```py
->>> Minter.allowed_to_mint_for('0x989AEb4d175e16225E39E87d0D97A3360524AD80', '0xF147b8125d2ef93FB6965Db97D6746952a133934')
-False
-```
+<ContractCall address="0xd061D61a4d941c39E5453435B6345Dc261C2fcE0" abi={["function allowed_to_mint_for(address arg0, address arg1) view returns (bool)"]} method="allowed_to_mint_for" args={["0x989AEb4d175e16225E39E87d0D97A3360524AD80", "0xF147b8125d2ef93FB6965Db97D6746952a133934"]} labels={["arg0", "arg1"]} contractName="Minter" />
 
 </Example>
 
@@ -404,10 +407,7 @@ def __init__(_token: address, _controller: address):
 
 <Example>
 
-```py
->>> Minter.token()
-'0xD533a949740bb3306d119CC777fa900bA034cd52'
-```
+<ContractCall address="0xd061D61a4d941c39E5453435B6345Dc261C2fcE0" abi={["function token() view returns (address)"]} method="token" contractName="Minter" />
 
 </Example>
 
@@ -438,10 +438,7 @@ def __init__(_token: address, _controller: address):
 
 <Example>
 
-```py
->>> Minter.controller()
-'0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB'
-```
+<ContractCall address="0xd061D61a4d941c39E5453435B6345Dc261C2fcE0" abi={["function controller() view returns (address)"]} method="controller" contractName="Minter" />
 
 </Example>
 

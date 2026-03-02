@@ -13,6 +13,15 @@ There are two different `FeeDistributor` contracts deployed on Ethereum, dependi
 - <img src="../assets/images/logos/3crv.png" alt="" width="18" height="18" /> `3CRV`: [0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc](https://etherscan.io/address/0xa464e6dcda8ac41e03616f95f4bc98a13b8922dc)
 - :logos-crvusd: `crvUSD`: [0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914](https://etherscan.io/address/0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914)
 
+<ContractABI>
+
+
+```json
+[{"name":"CommitAdmin","inputs":[{"name":"admin","type":"address","indexed":false}],"anonymous":false,"type":"event"},{"name":"ApplyAdmin","inputs":[{"name":"admin","type":"address","indexed":false}],"anonymous":false,"type":"event"},{"name":"ToggleAllowCheckpointToken","inputs":[{"name":"toggle_flag","type":"bool","indexed":false}],"anonymous":false,"type":"event"},{"name":"CheckpointToken","inputs":[{"name":"time","type":"uint256","indexed":false},{"name":"tokens","type":"uint256","indexed":false}],"anonymous":false,"type":"event"},{"name":"Claimed","inputs":[{"name":"recipient","type":"address","indexed":true},{"name":"amount","type":"uint256","indexed":false},{"name":"claim_epoch","type":"uint256","indexed":false},{"name":"max_epoch","type":"uint256","indexed":false}],"anonymous":false,"type":"event"},{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"_voting_escrow","type":"address"},{"name":"_start_time","type":"uint256"},{"name":"_token","type":"address"},{"name":"_admin","type":"address"},{"name":"_emergency_return","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"checkpoint_token","inputs":[],"outputs":[]},{"stateMutability":"view","type":"function","name":"ve_for_at","inputs":[{"name":"_user","type":"address"},{"name":"_timestamp","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"nonpayable","type":"function","name":"checkpoint_total_supply","inputs":[],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"claim","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"nonpayable","type":"function","name":"claim","inputs":[{"name":"_addr","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"nonpayable","type":"function","name":"claim_many","inputs":[{"name":"_receivers","type":"address[20]"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"burn","inputs":[{"name":"_coin","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"commit_admin","inputs":[{"name":"_addr","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"apply_admin","inputs":[],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"toggle_allow_checkpoint_token","inputs":[],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"kill_me","inputs":[],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"recover_balance","inputs":[{"name":"_coin","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"start_time","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"time_cursor","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"time_cursor_of","inputs":[{"name":"arg0","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"user_epoch_of","inputs":[{"name":"arg0","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"last_token_time","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"tokens_per_week","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"voting_escrow","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"token","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"total_received","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"token_last_balance","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"ve_supply","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"admin","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"future_admin","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"can_checkpoint_token","inputs":[],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"emergency_return","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"is_killed","inputs":[],"outputs":[{"name":"","type":"bool"}]}]
+```
+
+</ContractABI>
+
 :::
 
 ---
@@ -41,9 +50,12 @@ last_token_time: public(uint256)
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
+  abi={["function last_token_time() view returns (uint256)"]}
+  method="last_token_time"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -63,7 +75,7 @@ Returns: true or false (`bool`).
 
 
 
-```vyper 
+```vyper
 can_checkpoint_token: public(bool)
 ```
 
@@ -74,9 +86,12 @@ can_checkpoint_token: public(bool)
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
+  abi={["function can_checkpoint_token() view returns (bool)"]}
+  method="can_checkpoint_token"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -96,12 +111,14 @@ This function is only callable by the `admin` of the contract.
 
 Function to toggle permission for checkpointing by an account.
 
+Emits: `ToggleAllowCheckpointToken` event.
+
 <SourceCode>
 
 
 
 
-```vyper 
+```vyper
 event ToggleAllowCheckpointToken:
     toggle_flag: bool
 
@@ -232,9 +249,12 @@ time_cursor: public(uint256)
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
+  abi={["function time_cursor() view returns (uint256)"]}
+  method="time_cursor"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -247,11 +267,11 @@ time_cursor: public(uint256)
 
 Getter for the timestamp of the last `checkpoint_total_supply` of veCRV.
 
-Returns: timestamp (`uint256`).
-
 | Input  | Type      | Description          |
 | ------ | --------- | -------------------- |
 | `arg0` | `address` | Address to check for |
+
+Returns: timestamp (`uint256`).
 
 <SourceCode>
 
@@ -289,12 +309,12 @@ This example returns the `time_cursor_of` for a given address.
 
 Getter for the veCRV balance of a user at a certain timestamp.
 
-Returns: veCRV balance (`uint256`).
-
 | Input        | Type      | Description                            |
 | ------------ | --------- | -------------------------------------- |
 | `_user`      | `address` | Address to query the veCRV balance for |
 | `_timestamp` | `uint256` | Timestamp                              |
+
+Returns: veCRV balance (`uint256`).
 
 <SourceCode>
 
@@ -343,11 +363,11 @@ def ve_for_at(_user: address, _timestamp: uint256) -> uint256:
 
 Getter for the total supply of veCRV at the beginning of an epoch.
 
-Returns: veCRV supply (`uint256`).
-
 | Input  | Type      | Description                  |
 | ------ | --------- | ---------------------------- |
 | `arg0` | `uint256` | Timestamp of the epoch start |
+
+Returns: veCRV supply (`uint256`).
 
 <SourceCode>
 
@@ -404,7 +424,7 @@ Returns: true or false (`bool`).
 
 
 
-```vyper 
+```vyper
 is_killed: public(bool)
 ```
 
@@ -415,9 +435,12 @@ is_killed: public(bool)
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
+  abi={["function is_killed() view returns (bool)"]}
+  method="is_killed"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -428,8 +451,6 @@ is_killed: public(bool)
 ::::description[`FeeDistributor.kill_me()`]
 
 
-By killing the `FeeDistributor`, the entire token balance is transferred to the [`emergency_return`](#emergency_return) address, and the ability to further call the `claim`, `claim_many`, or `burn` functions is blocked.
-
 :::guard[Guarded Method]
 
 This function is only callable by the `admin` of the contract.
@@ -437,7 +458,7 @@ This function is only callable by the `admin` of the contract.
 
 :::
 
-Function to kill the `FeeDistributor` contract.
+By killing the `FeeDistributor`, the entire token balance is transferred to the [`emergency_return`](#emergency_return) address, and the ability to further call the `claim`, `claim_many`, or `burn` functions is blocked.
 
 <SourceCode>
 
@@ -529,11 +550,11 @@ The second fee distributor contract (crvUSD) uses a 5 of 9 multisig, which repla
 
 Function to recover ERC20 tokens from the contract. Tokens are sent to the emergency return address. This function only works for tokens other than the address set for `token`. E.g. this function on the 3CRV distributor contract can not be called to transfer 3CRV. The same applied to crvUSD distributor.
 
-Returns: true (`bool`).
-
 | Input   | Type      | Description       |
 | ------- | --------- | ----------------- |
 | `_coin` | `address` | Tokens to recover |
+
+Returns: true (`bool`).
 
 <SourceCode>
 
@@ -607,7 +628,7 @@ Returns: admin (`address`).
 
 
 
-```vyper 
+```vyper
 admin: public(address)
 ```
 
@@ -618,9 +639,12 @@ admin: public(address)
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
+  abi={["function admin() view returns (address)"]}
+  method="admin"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -640,7 +664,7 @@ Returns: future admin (`address`).
 
 
 
-```vyper 
+```vyper
 future_admin: public(address)
 ```
 
@@ -651,9 +675,12 @@ future_admin: public(address)
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
+  abi={["function future_admin() view returns (address)"]}
+  method="future_admin"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -673,11 +700,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to commit transfer of the ownership.
 
-Emits: `CommitAdmin`
+| Input   | Type      | Description                                   |
+| ------- | --------- | --------------------------------------------- |
+| `_addr` | `address` | Address to commit the ownership transfer to |
 
-| Input      | Type   | Description |
-| ----------- | -------| ---- |
-| `_addr` |  `address` | Address to commit the ownership transfer to. |
+Emits: `CommitAdmin` event.
 
 <SourceCode>
 
@@ -735,7 +762,7 @@ This function is only callable by the `admin` of the contract.
 
 Function to apply the transfer of the ownership.
 
-Emits: `ApplyAdmin`
+Emits: `ApplyAdmin` event.
 
 <SourceCode>
 
@@ -903,9 +930,12 @@ def __init__(
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
+  abi={["function voting_escrow() view returns (address)"]}
+  method="voting_escrow"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -962,9 +992,12 @@ def __init__(
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
+  abi={["function token() view returns (address)"]}
+  method="token"
+  contractName="FeeDistributor"
+/>
 
 </Example>
 
@@ -977,11 +1010,11 @@ def __init__(
 
 Getter for the user epoch of an address. This value increments by one each time rewards are claimed.
 
-Returns: user epoch (`uint256`).
-
 | Input  | Type      | Description                       |
 | ------ | --------- | --------------------------------- |
 | `arg0` | `address` | Address to get the user epoch for |
+
+Returns: user epoch (`uint256`).
 
 <SourceCode>
 

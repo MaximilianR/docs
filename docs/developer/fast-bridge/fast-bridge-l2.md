@@ -10,6 +10,12 @@ The source code for the `FastBridgeL2.vy` contract can be found on [GitHub](http
 
 The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](/pdf/audits/ChainSecurity_Curve_Fast_Bridge_audit.pdf).
 
+The contract is deployed on the following L2 networks:
+
+- :logos-arbitrum: Arbitrum: [`0x1f2af270029d028400265ce1dd0919ba8780dae1`](https://arbiscan.io/address/0x1f2af270029d028400265ce1dd0919ba8780dae1)
+- :logos-optimism: Optimism: [`0xd16d5ec345dd86fb63c6a9c43c517210f1027914`](https://optimistic.etherscan.io/address/0xd16d5ec345dd86fb63c6a9c43c517210f1027914)
+- :logos-fraxtal: Fraxtal: [`0x3fe593e651cd0b383ad36b75f4159f30bb0631a6`](https://fraxscan.com/address/0x3fe593e651cd0b383ad36b75f4159f30bb0631a6)
+
 :::
 
 ---
@@ -32,7 +38,7 @@ Function to initiate a fast bridge transaction for crvUSD tokens from L2 to main
 
 Returns: The actual amount of crvUSD that was bridged (`uint256`).
 
-Emits: `Bridge`
+Emits: `Bridge` event.
 
 <SourceCode>
 
@@ -100,7 +106,7 @@ def bridge(_token: IERC20, _to: address, _amount: uint256, _min_amount: uint256=
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.bridge(crvusd, '0x1234567890abcdef1234567890abcdef12345678', 10000 * 10**18)
 10000000000000000000000
 ```
@@ -159,7 +165,7 @@ def _get_available(ts: uint256=block.timestamp) -> uint256:
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.allowed_to_bridge()
 (1000000000000000000, 500000000000000000000000)
 ```
@@ -221,7 +227,7 @@ def bridger_cost() -> uint256:
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.cost()
 234567890000000
 ```
@@ -253,7 +259,7 @@ min_amount: public(uint256)  # Minimum amount to initiate bridge. Might be costl
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.min_amount()
 1000000000000000000
 ```
@@ -280,7 +286,7 @@ limit: public(uint256)  # Maximum amount to bridge in an INTERVAL, so there's no
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.limit()
 500000000000000000000000
 ```
@@ -311,7 +317,7 @@ bridged: public(HashMap[uint256, uint256])  # Amounts of bridge coins per INTERV
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.bridged(block.timestamp // 151200)
 125000000000000000000000
 ```
@@ -337,7 +343,7 @@ bridger: public(IBridger)
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.bridger()
 '0x8a5a5299f35614ac558aa290c2d5856edec1b5ad'
 ```
@@ -363,7 +369,7 @@ messenger: public(IMessenger)
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.messenger()
 '0x14e11c1b8f04a7de306a7b5bf21bbca0d5cf79ff'
 ```
@@ -389,7 +395,7 @@ CRVUSD: public(immutable(IERC20))
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.CRVUSD()
 '0xe5AfcF332a5457E8FafCD668BcE3dF953762Dfe7'
 ```
@@ -415,7 +421,7 @@ VAULT: public(immutable(address))
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.VAULT()
 '0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D'
 ```
@@ -441,7 +447,7 @@ version: public(constant(String[8])) = "0.0.1"
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.version()
 '0.0.1'
 ```
@@ -459,9 +465,9 @@ The FastBridgeL2 contract includes several administrative functions that allow t
 ### `set_min_amount`
 ::::description[`FastBridgeL2.set_min_amount(_min_amount: uint256)`]
 
-:::guard[Guarded Method]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
-This function is only callable by the `owner` of the contract.
+This contract makes use of a Snekmate module to handle ownership. This specific function is only callable by the `owner` of the contract.
 
 :::
 
@@ -471,9 +477,12 @@ Updates the minimum amount of crvUSD required to initiate a bridge transaction. 
 | ---------- | --------- | ------------ |
 | `_min_amount` | `uint256` | New minimum amount required for bridging |
 
-Emits: `SetMinAmount`
+Emits: `SetMinAmount` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="FastBridgeL2.vy" label="FastBridgeL2.vy">
 
 ```vyper
 min_amount: public(uint256)  # Minimum amount to initiate bridge. Might be costly to claim on Ethereum
@@ -490,11 +499,28 @@ def set_min_amount(_min_amount: uint256):
     log SetMinAmount(min_amount=_min_amount)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.set_min_amount(5000 * 10**18)
 ```
 
@@ -505,9 +531,9 @@ def set_min_amount(_min_amount: uint256):
 ### `set_limit`
 ::::description[`FastBridgeL2.set_limit(_limit: uint256)`]
 
-:::guard[Guarded Method]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
-This function is only callable by the `owner` of the contract.
+This contract makes use of a Snekmate module to handle ownership. This specific function is only callable by the `owner` of the contract.
 
 :::
 
@@ -517,9 +543,12 @@ Updates the rate limit for crvUSD bridging per 42-hour interval. Only the contra
 | ---------- | --------- | ------------ |
 | `_limit` | `uint256` | New limit for crvUSD bridging per interval |
 
-Emits: `SetLimit`
+Emits: `SetLimit` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="FastBridgeL2.vy" label="FastBridgeL2.vy">
 
 ```vyper
 limit: public(uint256)  # Maximum amount to bridge in an INTERVAL, so there's no queue to resolve to claim on Ethereum
@@ -536,11 +565,28 @@ def set_limit(_limit: uint256):
     log SetLimit(limit=_limit)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.set_limit(1000000 * 10**18)
 ```
 
@@ -551,9 +597,9 @@ def set_limit(_limit: uint256):
 ### `set_bridger`
 ::::description[`FastBridgeL2.set_bridger(_bridger: IBridger)`]
 
-:::guard[Guarded Method]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
-This function is only callable by the `owner` of the contract.
+This contract makes use of a Snekmate module to handle ownership. This specific function is only callable by the `owner` of the contract.
 
 :::
 
@@ -563,9 +609,12 @@ Updates the bridger contract that handles the native bridge transaction. Only th
 | ---------- | --------- | ------------ |
 | `_bridger` | `IBridger` | New bridger contract address |
 
-Emits: `SetBridger`
+Emits: `SetBridger` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="FastBridgeL2.vy" label="FastBridgeL2.vy">
 
 ```vyper
 bridger: public(IBridger)
@@ -585,11 +634,28 @@ def set_bridger(_bridger: IBridger):
     log SetBridger(bridger=_bridger)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.set_bridger('0x8a5a5299f35614ac558aa290c2d5856edec1b5ad')
 ```
 
@@ -600,9 +666,9 @@ def set_bridger(_bridger: IBridger):
 ### `set_messenger`
 ::::description[`FastBridgeL2.set_messenger(_messenger: IMessenger)`]
 
-:::guard[Guarded Method]
+:::guard[Guarded Method by [Snekmate](https://github.com/pcaversaccio/snekmate)]
 
-This function is only callable by the `owner` of the contract.
+This contract makes use of a Snekmate module to handle ownership. This specific function is only callable by the `owner` of the contract.
 
 :::
 
@@ -612,9 +678,12 @@ Updates the messenger contract that handles fast message delivery to the mainnet
 | ---------- | --------- | ------------ |
 | `_messenger` | `IMessenger` | New messenger contract address |
 
-Emits: `SetMessenger`
+Emits: `SetMessenger` event.
 
 <SourceCode>
+
+<Tabs>
+<TabItem value="FastBridgeL2.vy" label="FastBridgeL2.vy">
 
 ```vyper
 messenger: public(IMessenger)
@@ -632,11 +701,28 @@ def set_messenger(_messenger: IMessenger):
     log SetMessenger(messenger=_messenger)
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
+
+```vyper
+owner: public(address)
+
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
+
+</TabItem>
+</Tabs>
+
 </SourceCode>
 
 <Example>
 
-```python
+```shell
 >>> FastBridgeL2.set_messenger('0x14e11c1b8f04a7de306a7b5bf21bbca0d5cf79ff')
 ```
 

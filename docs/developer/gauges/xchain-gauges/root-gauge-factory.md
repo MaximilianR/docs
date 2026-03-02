@@ -9,6 +9,15 @@ The source code for the `RootGaugeFactory.vy` contract can be found on [GitHub](
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6`](https://etherscan.io/address/0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6).
 
+<ContractABI>
+
+
+```json
+[{"name":"ChildUpdated","inputs":[{"name":"_chain_id","type":"uint256","indexed":true},{"name":"_new_bridger","type":"address","indexed":false},{"name":"_new_factory","type":"address","indexed":false},{"name":"_new_implementation","type":"address","indexed":false}],"anonymous":false,"type":"event"},{"name":"DeployedGauge","inputs":[{"name":"_implementation","type":"address","indexed":true},{"name":"_chain_id","type":"uint256","indexed":true},{"name":"_deployer","type":"address","indexed":true},{"name":"_salt","type":"bytes32","indexed":false},{"name":"_gauge","type":"address","indexed":false}],"anonymous":false,"type":"event"},{"name":"TransferOwnership","inputs":[{"name":"_old_owner","type":"address","indexed":false},{"name":"_new_owner","type":"address","indexed":false}],"anonymous":false,"type":"event"},{"name":"UpdateCallProxy","inputs":[{"name":"_old_call_proxy","type":"address","indexed":false},{"name":"_new_call_proxy","type":"address","indexed":false}],"anonymous":false,"type":"event"},{"name":"UpdateImplementation","inputs":[{"name":"_old_implementation","type":"address","indexed":false},{"name":"_new_implementation","type":"address","indexed":false}],"anonymous":false,"type":"event"},{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"_call_proxy","type":"address"},{"name":"_owner","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"transmit_emissions","inputs":[{"name":"_gauge","type":"address"}],"outputs":[]},{"stateMutability":"payable","type":"function","name":"deploy_gauge","inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_salt","type":"bytes32"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"nonpayable","type":"function","name":"deploy_child_gauge","inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_lp_token","type":"address"},{"name":"_salt","type":"bytes32"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"deploy_child_gauge","inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_lp_token","type":"address"},{"name":"_salt","type":"bytes32"},{"name":"_manager","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_child","inputs":[{"name":"_chain_id","type":"uint256"},{"name":"_bridger","type":"address"},{"name":"_child_factory","type":"address"},{"name":"_child_impl","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_implementation","inputs":[{"name":"_implementation","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_call_proxy","inputs":[{"name":"_call_proxy","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"commit_transfer_ownership","inputs":[{"name":"_future_owner","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"accept_transfer_ownership","inputs":[],"outputs":[]},{"stateMutability":"view","type":"function","name":"version","inputs":[],"outputs":[{"name":"","type":"string"}]},{"stateMutability":"view","type":"function","name":"call_proxy","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_bridger","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_child_factory","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_child_implementation","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_implementation","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_gauge","inputs":[{"name":"arg0","type":"uint256"},{"name":"arg1","type":"uint256"}],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"get_gauge_count","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"is_valid_gauge","inputs":[{"name":"arg0","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"view","type":"function","name":"owner","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"future_owner","inputs":[],"outputs":[{"name":"","type":"address"}]}]
+```
+
+</ContractABI>
+
 :::
 
 ---
@@ -38,14 +47,14 @@ If `get_bridger(chain_id)` returns a non-zero address, the chain is supported an
 
 Function to deploy and initialize a new root gauge for a given chain ID. This function is `@payable` to allow for bridging costs. This function call reverts if there is no `bridger` contract set for the given `_chain_id`.
 
-Returns: newly deployed gauge (`RootGauge`).
-
-Emits: `DeployedGauge` event.
-
 | Input       | Type      | Description |
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
 | `_salt`     | `bytes32` | Salt for the child gauge |
+
+Returns: newly deployed gauge (`RootGauge`).
+
+Emits: `DeployedGauge` event.
 
 
 <SourceCode>
@@ -274,11 +283,11 @@ This example transmits CRV emissions for the `RootGauge` at `0x6233394c3C466A45A
 
 Getter for the bridger for a given chain ID. This contract is used to bridge CRV emissions to the `ChildGauge`.
 
-Returns: bridger (`Bridger`).
-
 | Input      | Type      | Description |
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
+
+Returns: bridger (`Bridger`).
 
 
 <SourceCode>
@@ -296,10 +305,7 @@ get_bridger: public(HashMap[uint256, Bridger])
 
 <Example>
 
-```py
->>> RootGaugeFactory.get_bridger(252)
-'0x0199429171bcE183048dccf1d5546Ca519EA9717'
-```
+<ContractCall address="0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6" abi={["function get_bridger(uint256 arg0) view returns (address)"]} method="get_bridger" args={[252]} labels={["arg0"]} contractName="RootGaugeFactory" />
 
 </Example>
 
@@ -319,12 +325,12 @@ The `RootGaugeFactory` contract also provides a few getters to retrieve informat
 
 Getter for gauges on a given chain ID and index.
 
-Returns: gauge (`address`).
-
 | Input      | Type      | Description |
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
 | `_idx`      | `uint256` | Index of the gauge |
+
+Returns: gauge (`address`).
 
 
 <SourceCode>
@@ -339,10 +345,7 @@ get_gauge: public(HashMap[uint256, RootGauge[max_value(uint256)]])
 
 <Example>
 
-```py
->>> RootGaugeFactory.get_gauge(252, 0)
-'0x6233394c3C466A45A505EFA4857489743168E9Fa'
-```
+<ContractCall address="0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6" abi={["function get_gauge(uint256 arg0, uint256 arg1) view returns (address)"]} method="get_gauge" args={[252, 0]} labels={["arg0", "arg1"]} contractName="RootGaugeFactory" />
 
 </Example>
 
@@ -356,11 +359,11 @@ get_gauge: public(HashMap[uint256, RootGauge[max_value(uint256)]])
 
 Getter to get the number of gauges for a given chain ID. This value is incremented by one for each new gauge deployed.
 
-Returns: number of gauges (`uint256`).
-
 | Input      | Type      | Description |
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
+
+Returns: number of gauges (`uint256`).
 
 
 <SourceCode>
@@ -375,10 +378,7 @@ get_gauge_count: public(HashMap[uint256, uint256])
 
 <Example>
 
-```py
->>> RootGaugeFactory.get_gauge_count(252)
-3
-```
+<ContractCall address="0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6" abi={["function get_gauge_count(uint256 arg0) view returns (uint256)"]} method="get_gauge_count" args={[252]} labels={["arg0"]} contractName="RootGaugeFactory" />
 
 </Example>
 
@@ -392,11 +392,11 @@ get_gauge_count: public(HashMap[uint256, uint256])
 
 Getter to check if a gauge is valid.
 
-Returns: `True` if the gauge is valid, `False` otherwise (`bool`).
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_gauge` | `RootGauge` | Root gauge to check validity for |
+
+Returns: `True` if the gauge is valid, `False` otherwise (`bool`).
 
 
 <SourceCode>
@@ -411,10 +411,7 @@ is_valid_gauge: public(HashMap[RootGauge, bool])
 
 <Example>
 
-```py
->>> RootGaugeFactory.is_valid_gauge('0x6233394c3C466A45A505EFA4857489743168E9Fa')
-True
-```
+<ContractCall address="0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6" abi={["function is_valid_gauge(address arg0) view returns (bool)"]} method="is_valid_gauge" args={["0x6233394c3C466A45A505EFA4857489743168E9Fa"]} labels={["arg0"]} contractName="RootGaugeFactory" />
 
 </Example>
 
@@ -449,10 +446,7 @@ get_implementation: public(address)
 
 <Example>
 
-```py
->>> RootGaugeFactory.get_implementation()
-'0x96720942F9fF22eFd8611F696E5333Fe3671717a'
-```
+<ContractCall address="0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6" abi={["function get_implementation() view returns (address)"]} method="get_implementation" contractName="RootGaugeFactory" />
 
 </Example>
 
@@ -480,11 +474,11 @@ Changing the implementation contract requires a change on all child factories.
 
 Function to set the implementation contract of the `RootGauge`.
 
-Emits: `UpdateImplementation` event.
-
 | Input             | Type        | Description |
 | ----------------- | ----------- | ----------- |
 | `_implementation` | `address`   | Address of the new implementation |
+
+Emits: `UpdateImplementation` event.
 
 
 <SourceCode>
@@ -543,11 +537,11 @@ This example sets the `RootGauge` implementation to the address `0x6233394c3C466
 
 Getter for the child factory for a given chain ID.
 
-Returns: child factory address (`address`).
-
 | Input       | Type      | Description |
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
+
+Returns: child factory address (`address`).
 
 
 <SourceCode>
@@ -562,10 +556,7 @@ get_child_factory: public(HashMap[uint256, address])
 
 <Example>
 
-```py
->>> RootGaugeFactory.get_child_factory(252)
-'0x0B8D6B6CeFC7Aa1C2852442e518443B1b22e1C52'
-```
+<ContractCall address="0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6" abi={["function get_child_factory(uint256 arg0) view returns (address)"]} method="get_child_factory" args={[252]} labels={["arg0"]} contractName="RootGaugeFactory" />
 
 </Example>
 
@@ -579,11 +570,11 @@ get_child_factory: public(HashMap[uint256, address])
 
 Getter for the child implementation for a given chain ID.
 
-Returns: child implementation address (`address`).
-
 | Input      | Type      | Description |
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
+
+Returns: child implementation address (`address`).
 
 
 <SourceCode>
@@ -598,10 +589,7 @@ get_child_implementation: public(HashMap[uint256, address])
 
 <Example>
 
-```py
->>> RootGaugeFactory.get_child_implementation(252)
-'0x6A611215540555A7feBCB64CB0Ed11Ac90F165Af'
-```
+<ContractCall address="0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6" abi={["function get_child_implementation(uint256 arg0) view returns (address)"]} method="get_child_implementation" args={[252]} labels={["arg0"]} contractName="RootGaugeFactory" />
 
 </Example>
 
@@ -622,14 +610,14 @@ This function is only callable by the `owner` of the contract.
 
 Function to set different child properties for a given chain ID such as the bridger contract, `ChildGaugeFactory` and `ChildGauge` implementation.
 
-Emits: `ChildUpdated` event.
-
 | Input      | Type      | Description |
 | ----------- | --------- | ----------- |
 | `_chain_id` | `uint256` | Chain ID of the child gauge |
 | `_bridger`  | `Bridger` | Bridger contract for the child gauge |
 | `_child_factory` | `address` | Address of the new `ChildGaugeFactory` |
 | `_child_impl` | `address` | Address of the new `ChildGauge` implementation |
+
+Emits: `ChildUpdated` event.
 
 
 <SourceCode>
@@ -726,10 +714,7 @@ def __init__(_call_proxy: CallProxy, _owner: address):
 
 <Example>
 
-```py
->>> RootGaugeFactory.call_proxy()
-'0x0000000000000000000000000000000000000000'
-```
+<ContractCall address="0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6" abi={["function call_proxy() view returns (address)"]} method="call_proxy" contractName="RootGaugeFactory" />
 
 </Example>
 
@@ -750,11 +735,11 @@ This function is only callable by the `owner` of the contract.
 
 Function to set the call proxy.
 
-Emits: `UpdateCallProxy` event.
-
 | Input         | Type        | Description       |
 | ------------- | ----------- | ----------------- |
 | `_call_proxy` | `CallProxy` | Call proxy to set |
+
+Emits: `UpdateCallProxy` event.
 
 
 <SourceCode>

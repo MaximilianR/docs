@@ -23,15 +23,15 @@ Child gauges can either be deployed from the `RootChainFactory` or directly from
 
 Function to deploy a new gauge.
 
-Returns: newly deployed gauge (`address`).
-
-Emits: `DeployedGauge` event.
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_lp_token` | `address` | LP token to deploy gauge for |
 | `_salt` | `bytes32` | Salt to deterministically deploy gauge |
 | `_manager` | `address` | Address to set as manager of the gauge; defaults to `msg.sender` |
+
+Returns: newly deployed gauge (`address`).
+
+Emits: `DeployedGauge` event.
 
 
 <SourceCode>
@@ -148,11 +148,11 @@ When claiming emissions via `claim` or `claim_many`, and `is_mirrored` is set to
 
 Function to mint all CRV emissions belonging to `msg.sender` from a given gauge.
 
-Emits: `Minted`
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to mint CRV emissions from |
+
+Emits: `Minted` event.
 
 
 <SourceCode>
@@ -235,11 +235,11 @@ def _psuedo_mint(_gauge: address, _user: address):
 
 Function to mint all CRV emissions belonging to `msg.sender` from multiple gauges.
 
-Emits: `Minted`
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_gauges` | `address[32]` | Array of gauges to mint CRV emissions from |
+
+Emits: `Minted` event.
 
 
 <SourceCode>
@@ -320,17 +320,17 @@ def _psuedo_mint(_gauge: address, _user: address):
 
 
 ### `minted`
-::::description[`ChildGaugeFactory.minted(_user: address, _gauge: address) -> uint256`]
+::::description[`ChildGaugeFactory.minted(_user: address, _gauge: address) -> uint256: view`]
 
 
 Getter to check the amount of CRV emissions minted for a user from a given gauge.
-
-Returns: Amount of CRV emissions minted (`uint256`).
 
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_user` | `address` | User to check minted amount for |
 | `_gauge` | `address` | Gauge to check minted amount for |
+
+Returns: Amount of CRV emissions minted (`uint256`).
 
 
 <SourceCode>
@@ -370,11 +370,11 @@ Getter to check gauge data. The variable stores a `uint256` value where the bits
 - `[2:3]`: `has_counterpart`
 - `[3:256]`: `last_request`
 
-Returns: gauge data (`uint256`).
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to check data for |
+
+Returns: gauge data (`uint256`).
 
 
 <SourceCode>
@@ -405,11 +405,11 @@ gauge_data: public(HashMap[address, uint256])
 
 Getter to check if a gauge is valid.
 
-Returns: `True` if the gauge is valid, `False` otherwise (`bool`).
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to check validity for |
+
+Returns: `True` if the gauge is valid, `False` otherwise (`bool`).
 
 
 <SourceCode>
@@ -448,11 +448,11 @@ True
 
 Getter for gauge associated with a given LP token.
 
-Returns: gauge (`address`).
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_lp_token` | `address` | LP token to check gauge for |
+
+Returns: gauge (`address`).
 
 
 <SourceCode>
@@ -512,11 +512,11 @@ get_gauge_count: public(uint256)
 
 Getter for the gauge address at a given index. First gauge has index `0`, second has index `1`, etc.
 
-Returns: gauge (`address`).
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_idx` | `uint256` | Index to check gauge for |
+
+Returns: gauge (`address`).
 
 
 <SourceCode>
@@ -546,16 +546,16 @@ This example returns the first two child gauges deployed via the `ChildGaugeFact
 
 
 ### `last_request`
-::::description[`ChildGaugeFactory.last_request(_gauge: address) -> uint256`]
+::::description[`ChildGaugeFactory.last_request(_gauge: address) -> uint256: view`]
 
 
 Getter for the last request timestamp for a gauge. This variable updates whenever CRV emissions were minted from the according gauge.
 
-Returns: last request timestamp (`uint256`).
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to check last request timestamp for |
+
+Returns: last request timestamp (`uint256`).
 
 
 <SourceCode>
@@ -595,11 +595,11 @@ def last_request(_gauge: address) -> uint256:
 
 Getter to check if a gauge is mirrored.
 
-Returns: `True` if the gauge is mirrored, `False` otherwise (`bool`).
-
 | Input    | Type      | Description |
 | -------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to check mirrored status for |
+
+Returns: `True` if the gauge is mirrored, `False` otherwise (`bool`).
 
 
 <SourceCode>
@@ -646,12 +646,12 @@ This function is only callable by the `owner` of the contract.
 
 Function to set the mirrored status of a gauge.
 
-Emits: `UpdateMirrored` event.
-
 | Input      | Type      | Description |
 | ---------- | --------- | ----------- |
 | `_gauge` | `address` | Gauge to set mirrored status for |
 | `_mirrored` | `bool` | New mirrored status |
+
+Emits: `UpdateMirrored` event.
 
 
 <SourceCode>
@@ -746,11 +746,11 @@ This function is only callable by the `owner` of the contract.
 
 Function to set the implementation address.
 
-Emits: `UpdateImplementation` event.
-
 | Input         | Type        | Description |
 | ------------- | ----------- | ----------- |
 | `_implementation` | `address` | New implementation address |
+
+Emits: `UpdateImplementation` event.
 
 
 <SourceCode>
@@ -915,12 +915,12 @@ This function is only callable by the `owner` or `manager` of the contract.
 
 Function to set the `root_factory` and `root_implementation` addresses.
 
-Emits: `UpdateRoot` event.
-
 | Input      | Type      | Description |
 | ---------- | --------- | ----------- |
 | `_factory` | `address` | New `RootGaugeFactory` address |
 | `_implementation` | `address` | New `RootGauge` implementation address |
+
+Emits: `UpdateRoot` event.
 
 
 <SourceCode>
@@ -1108,11 +1108,11 @@ This function is only callable by the `owner` of the contract.
 
 Function to set the `VotingEscrow` contract.
 
-Emits: `UpdateVotingEscrow` event.
-
 | Input      | Type      | Description |
 | ---------- | --------- | ----------- |
 | `_voting_escrow` | `address` | New voting escrow address |
+
+Emits: `UpdateVotingEscrow` event.
 
 
 <SourceCode>
@@ -1219,11 +1219,11 @@ This function is only callable by the `owner` or `manager` of the contract.
 
 Function to change the manager address.
 
-Emits: `UpdateManager` event.
-
 | Input      | Type      | Description |
 | ---------- | --------- | ----------- |
 | `_new_manager` | `address` | New manager address |
+
+Emits: `UpdateManager` event.
 
 
 <SourceCode>
@@ -1327,11 +1327,11 @@ This function is only callable by the `owner` of the contract.
 
 Function to set or update the call proxy address.
 
-Emits: `UpdateCallProxy` event.
-
 | Input      | Type      | Description |
 | ---------- | --------- | ----------- |
 | `_new_call_proxy` | `address` | New call proxy address |
+
+Emits: `UpdateCallProxy` event.
 
 
 <SourceCode>

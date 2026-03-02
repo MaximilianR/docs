@@ -11,6 +11,8 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0x96720942F9fF22eFd86
 
 :::
 
+<ContractABI contractAddress="0x96720942F9fF22eFd8611F696E5333Fe3671717a" abi='[{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"_crv_token","type":"address"},{"name":"_gauge_controller","type":"address"},{"name":"_minter","type":"address"}],"outputs":[]},{"stateMutability":"payable","type":"fallback"},{"stateMutability":"nonpayable","type":"function","name":"transmit_emissions","inputs":[],"outputs":[]},{"stateMutability":"view","type":"function","name":"integrate_fraction","inputs":[{"name":"_user","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"nonpayable","type":"function","name":"user_checkpoint","inputs":[{"name":"_user","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"set_killed","inputs":[{"name":"_is_killed","type":"bool"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"update_bridger","inputs":[],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_child_gauge","inputs":[{"name":"_child","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"initialize","inputs":[{"name":"_bridger","type":"address"},{"name":"_chain_id","type":"uint256"},{"name":"_child","type":"address"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"version","inputs":[],"outputs":[{"name":"","type":"string"}]},{"stateMutability":"view","type":"function","name":"chain_id","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"bridger","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"child_gauge","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"factory","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"inflation_params","inputs":[],"outputs":[{"name":"","type":"tuple","components":[{"name":"rate","type":"uint256"},{"name":"finish_time","type":"uint256"}]}]},{"stateMutability":"view","type":"function","name":"last_period","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"total_emissions","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"is_killed","inputs":[],"outputs":[{"name":"","type":"bool"}]}]' />
+
 Root gauges are deployed from the `RootGaugeFactory` and makes use of Vyper's built-in [create_minimal_proxy_to](https://docs.vyperlang.org/en/stable/built-in-functions.html#create_minimal_proxy_to) function to create a EIP1167-compliant "minimal proxy contract" that duplicates the logic of the contract at target.
 
 ---
@@ -25,7 +27,7 @@ Because the root gauges are deployed using a proxy pattern, they are automatical
 
 Function to initialize the root gauge. Initializes the child gauge address, chain ID, bridger contract, and factory, aswell as sets the `inflation_params` and `last_period`. The function also sets the CRV token approval of the bridger contract to `max_value(uint256)`.
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ----------- |
 | `_bridger` | `Bridger` | The bridger contract |
 | `_chain_id` | `uint256` | The chain ID |
@@ -64,7 +66,7 @@ def initialize(_bridger: Bridger, _chain_id: uint256, _child: address):
 
 This example initializes a root gauge with a bridger contract on Arbitrum.
 
-```py
+```shell
 >>> RootGauge.initialize('0xceda55279fe22d256c4e6a6F2174C1588e94B2BB', 42161, '0x1234567890123456789012345678901234567896')
 ```
 
@@ -83,11 +85,11 @@ This example initializes a root gauge with a bridger contract on Arbitrum.
 
 Function to checkpoint a gauge and update the total emissions.
 
-Returns: true (`bool`).
-
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ----------- |
 | `_user` | `address` | The user address. This parameter is vestigial and has no impact on the function |
+
+Returns: true (`bool`).
 
 <SourceCode>
 
@@ -152,7 +154,7 @@ def user_checkpoint(_user: address) -> bool:
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.user_checkpoint('0x1234567890123456789012345678901234567896')
 ```
 
@@ -207,7 +209,7 @@ def transmit_emissions():
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.transmit_emissions()
 ```
 
@@ -222,11 +224,11 @@ def transmit_emissions():
 
 Function to query the total emissions a user is entitled to. Any value of `_user` other than the gauge address will return 0  (only the gauge itself if entitled to emissions as it is the one who mints and bridges them).
 
-Returns: The total emissions the user is entitled to (`uint256`).
-
-| Parameter | Type      | Description |
+| Input     | Type      | Description |
 | --------- | --------- | ------------ |
 | `_user`   | `address` | Address of the user |
+
+Returns: The total emissions the user is entitled to (`uint256`).
 
 <SourceCode>
 
@@ -249,7 +251,7 @@ def integrate_fraction(_user: address) -> uint256:
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.integrate_fraction('0x1234567890123456789012345678901234567896')
 0
 ```
@@ -281,7 +283,7 @@ inflation_params: public(InflationParams)
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.inflation_params()
 {'rate': 1000000000000000000, 'finish_time': 1735689600}
 ```
@@ -309,7 +311,7 @@ last_period: public(uint256)
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.last_period()
 1735689600
 ```
@@ -337,7 +339,7 @@ total_emissions: public(uint256)
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.total_emissions()
 0
 ```
@@ -415,7 +417,7 @@ bridger: public(Bridger)
 
 This example returns the bridger contract for transmitting CRV emissions from Ethereum to Arbitrum.
 
-```py
+```shell
 >>> RootGauge.bridger()
 '0xceda55279fe22d256c4e6a6F2174C1588e94B2BB'
 ```
@@ -458,7 +460,7 @@ def update_bridger():
 
 This function updates the `bridger` contract. Updating this variable is only possible when the bridger contract implementation within the `RootGaugeFactory` is updated.
 
-```py
+```shell
 >>> RootGauge.bridger()
 '0xceda55279fe22d256c4e6a6F2174C1588e94B2BB'
 
@@ -499,7 +501,7 @@ child_gauge: public(address)
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.child_gauge()
 '0xcde3Cdf332E35653A7595bA555c9fDBA3c78Ec04'
 ```
@@ -522,7 +524,7 @@ This function is only callable by the `owner` of the `RootGaugeFactory`.
 
 Function to set the child gauge in case something went wrong (e.g. between implementation updates or zkSync).
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_child` | `address` | The child gauge address |
 
@@ -550,7 +552,7 @@ def set_child_gauge(_child: address):
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.child_gauge()
 '0xcde3Cdf332E35653A7595bA555c9fDBA3c78Ec04'
 
@@ -585,7 +587,7 @@ chain_id: public(uint256)
 
 This example returns the chain ID on which the corresponding child gauge is deployed.
 
-```py
+```shell
 >>> RootGauge.chain_id()
 42161
 ```
@@ -619,7 +621,7 @@ is_killed: public(bool)
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.is_killed()
 False
 ```
@@ -642,7 +644,7 @@ This function is only callable by the `owner` of the `RootGaugeFactory`.
 
 Function to set the kill status of the gauge. If a gauge is killed, inflation params are modified accordingly to disable emissions. A gauge can be "unkilled" by setting the kill status to `False`, which restores the inflation params to their actual values.
 
-| Parameter | Type | Description |
+| Input | Type | Description |
 | --------- | ---- | ------------ |
 | `_is_killed` | `bool` | The kill status |
 
@@ -687,7 +689,7 @@ def set_killed(_is_killed: bool):
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.set_killed(True)
 
 >>> RootGauge.is_killed()
@@ -724,7 +726,7 @@ factory: public(Factory)
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.factory()
 '0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6'
 ```
@@ -760,7 +762,7 @@ def version() -> String[8]:
 
 <Example>
 
-```py
+```shell
 >>> RootGauge.version()
 '1.0.0'
 ```

@@ -25,11 +25,11 @@ The contract is deployed on all supported chains at `0xB10CDEC0DE69c88a47c280a97
 
 Function to decode RLP encoded block header into a BlockHeader struct.
 
-Returns: a `BlockHeader` struct containing decoded block data (`BlockHeader`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `encoded_header` | `Bytes[BLOCK_HEADER_SIZE]` | RLP encoded header data |
+
+Returns: a `BlockHeader` struct containing decoded block data (`BlockHeader`).
 
 <SourceCode>
 

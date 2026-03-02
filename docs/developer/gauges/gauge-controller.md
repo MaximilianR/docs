@@ -9,6 +9,15 @@ The source code for the `GaugeController.vy` contract can be found on [GitHub](h
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB`](https://etherscan.io/address/0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB).
 
+<ContractABI>
+
+
+```json
+[{"name":"CommitOwnership","inputs":[{"type":"address","name":"admin","indexed":false}],"anonymous":false,"type":"event"},{"name":"ApplyOwnership","inputs":[{"type":"address","name":"admin","indexed":false}],"anonymous":false,"type":"event"},{"name":"AddType","inputs":[{"type":"string","name":"name","indexed":false},{"type":"int128","name":"type_id","indexed":false}],"anonymous":false,"type":"event"},{"name":"NewTypeWeight","inputs":[{"type":"int128","name":"type_id","indexed":false},{"type":"uint256","name":"time","indexed":false},{"type":"uint256","name":"weight","indexed":false},{"type":"uint256","name":"total_weight","indexed":false}],"anonymous":false,"type":"event"},{"name":"NewGaugeWeight","inputs":[{"type":"address","name":"gauge_address","indexed":false},{"type":"uint256","name":"time","indexed":false},{"type":"uint256","name":"weight","indexed":false},{"type":"uint256","name":"total_weight","indexed":false}],"anonymous":false,"type":"event"},{"name":"VoteForGauge","inputs":[{"type":"uint256","name":"time","indexed":false},{"type":"address","name":"user","indexed":false},{"type":"address","name":"gauge_addr","indexed":false},{"type":"uint256","name":"weight","indexed":false}],"anonymous":false,"type":"event"},{"name":"NewGauge","inputs":[{"type":"address","name":"addr","indexed":false},{"type":"int128","name":"gauge_type","indexed":false},{"type":"uint256","name":"weight","indexed":false}],"anonymous":false,"type":"event"},{"outputs":[],"inputs":[{"type":"address","name":"_token"},{"type":"address","name":"_voting_escrow"}],"stateMutability":"nonpayable","type":"constructor"},{"name":"commit_transfer_ownership","outputs":[],"inputs":[{"type":"address","name":"addr"}],"stateMutability":"nonpayable","type":"function","gas":37597},{"name":"apply_transfer_ownership","outputs":[],"inputs":[],"stateMutability":"nonpayable","type":"function","gas":38497},{"name":"gauge_types","outputs":[{"type":"int128","name":""}],"inputs":[{"type":"address","name":"_addr"}],"stateMutability":"view","type":"function","gas":1625},{"name":"add_gauge","outputs":[],"inputs":[{"type":"address","name":"addr"},{"type":"int128","name":"gauge_type"}],"stateMutability":"nonpayable","type":"function"},{"name":"add_gauge","outputs":[],"inputs":[{"type":"address","name":"addr"},{"type":"int128","name":"gauge_type"},{"type":"uint256","name":"weight"}],"stateMutability":"nonpayable","type":"function"},{"name":"checkpoint","outputs":[],"inputs":[],"stateMutability":"nonpayable","type":"function","gas":18033784416},{"name":"checkpoint_gauge","outputs":[],"inputs":[{"type":"address","name":"addr"}],"stateMutability":"nonpayable","type":"function","gas":18087678795},{"name":"gauge_relative_weight","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"addr"}],"stateMutability":"view","type":"function"},{"name":"gauge_relative_weight","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"addr"},{"type":"uint256","name":"time"}],"stateMutability":"view","type":"function"},{"name":"gauge_relative_weight_write","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"addr"}],"stateMutability":"nonpayable","type":"function"},{"name":"gauge_relative_weight_write","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"addr"},{"type":"uint256","name":"time"}],"stateMutability":"nonpayable","type":"function"},{"name":"add_type","outputs":[],"inputs":[{"type":"string","name":"_name"}],"stateMutability":"nonpayable","type":"function"},{"name":"add_type","outputs":[],"inputs":[{"type":"string","name":"_name"},{"type":"uint256","name":"weight"}],"stateMutability":"nonpayable","type":"function"},{"name":"change_type_weight","outputs":[],"inputs":[{"type":"int128","name":"type_id"},{"type":"uint256","name":"weight"}],"stateMutability":"nonpayable","type":"function","gas":36246310050},{"name":"change_gauge_weight","outputs":[],"inputs":[{"type":"address","name":"addr"},{"type":"uint256","name":"weight"}],"stateMutability":"nonpayable","type":"function","gas":36354170809},{"name":"vote_for_gauge_weights","outputs":[],"inputs":[{"type":"address","name":"_gauge_addr"},{"type":"uint256","name":"_user_weight"}],"stateMutability":"nonpayable","type":"function","gas":18142052127},{"name":"get_gauge_weight","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"addr"}],"stateMutability":"view","type":"function","gas":2974},{"name":"get_type_weight","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"int128","name":"type_id"}],"stateMutability":"view","type":"function","gas":2977},{"name":"get_total_weight","outputs":[{"type":"uint256","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":2693},{"name":"get_weights_sum_per_type","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"int128","name":"type_id"}],"stateMutability":"view","type":"function","gas":3109},{"name":"admin","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1841},{"name":"future_admin","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1871},{"name":"token","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1901},{"name":"voting_escrow","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1931},{"name":"n_gauge_types","outputs":[{"type":"int128","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1961},{"name":"n_gauges","outputs":[{"type":"int128","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1991},{"name":"gauge_type_names","outputs":[{"type":"string","name":""}],"inputs":[{"type":"int128","name":"arg0"}],"stateMutability":"view","type":"function","gas":8628},{"name":"gauges","outputs":[{"type":"address","name":""}],"inputs":[{"type":"uint256","name":"arg0"}],"stateMutability":"view","type":"function","gas":2160},{"name":"vote_user_slopes","outputs":[{"type":"uint256","name":"slope"},{"type":"uint256","name":"power"},{"type":"uint256","name":"end"}],"inputs":[{"type":"address","name":"arg0"},{"type":"address","name":"arg1"}],"stateMutability":"view","type":"function","gas":5020},{"name":"vote_user_power","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"arg0"}],"stateMutability":"view","type":"function","gas":2265},{"name":"last_user_vote","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"arg0"},{"type":"address","name":"arg1"}],"stateMutability":"view","type":"function","gas":2449},{"name":"points_weight","outputs":[{"type":"uint256","name":"bias"},{"type":"uint256","name":"slope"}],"inputs":[{"type":"address","name":"arg0"},{"type":"uint256","name":"arg1"}],"stateMutability":"view","type":"function","gas":3859},{"name":"time_weight","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"address","name":"arg0"}],"stateMutability":"view","type":"function","gas":2355},{"name":"points_sum","outputs":[{"type":"uint256","name":"bias"},{"type":"uint256","name":"slope"}],"inputs":[{"type":"int128","name":"arg0"},{"type":"uint256","name":"arg1"}],"stateMutability":"view","type":"function","gas":3970},{"name":"time_sum","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"uint256","name":"arg0"}],"stateMutability":"view","type":"function","gas":2370},{"name":"points_total","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"uint256","name":"arg0"}],"stateMutability":"view","type":"function","gas":2406},{"name":"time_total","outputs":[{"type":"uint256","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":2321},{"name":"points_type_weight","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"int128","name":"arg0"},{"type":"uint256","name":"arg1"}],"stateMutability":"view","type":"function","gas":2671},{"name":"time_type_weight","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"uint256","name":"arg0"}],"stateMutability":"view","type":"function","gas":2490}]
+```
+
+</ContractABI>
+
 :::
 
 The contract also **acts as a registry for the gauges**, storing information such as the gauge data, minted amounts, and more.
@@ -57,13 +66,13 @@ Once a gauge has been added, it cannot be removed. Therefore, new gauges should 
 
 Function to add a new gauge to the `GaugeController`. Doing this makes the gauge eligible to receive CRV emissions.
 
-Emits: `NewGauge` event.
-
 | Input      | Type       | Description |
 | ----------- | --------- | ----------- |
 | `addr`      | `address` | Gauge address |
 | `gauge_type`| `int128`  | Gauge type |
-| `weight`    | `uint256` | Gauge weight; defaults to 0 | 
+| `weight`    | `uint256` | Gauge weight; defaults to 0 |
+
+Emits: `NewGauge` event.
 
 <SourceCode>
 
@@ -132,11 +141,11 @@ This example adds the gauge at address `0x41af8cC0811DD07F167752B821CF5B11DBa7Ca
 
 Getter for the gauge address at a specific index. Every time a new gauge is added, the variable is populated with the new gauge address. Index 0 equals to the first gauge added.
 
-Returns: gauge (`address`).
-
 | Input  | Type      | Description |
 | ------ | --------- | ----------- |
 | `arg0` | `uint256` | Gauge index |
+
+Returns: gauge (`address`).
 
 <SourceCode>
 
@@ -149,10 +158,16 @@ gauges: public(address[1000000000])
 
 <Example>
 
-```py
->>> GaugeController.gauges(0)
-'0x7ca5b0a2910B33e9759DC7dDB0413949071D7575'
-```
+This example returns the gauge address at index 0. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function gauges(uint256 arg0) view returns (address)"]}
+  method="gauges"
+  args={["0"]}
+  labels={["arg0"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -177,10 +192,14 @@ n_gauges: public(int128)
 
 <Example>
 
-```py
->>> GaugeController.n_gauges()
-468
-```
+This example returns the total number of gauges. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function n_gauges() view returns (int128)"]}
+  method="n_gauges"
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -221,12 +240,12 @@ Gauge weight votes may only be modified once every 10 days.
 
 Function to allocate a specific amount of voting power to a gauge. The voting power is expressed and measured in bps (units of 0.01%). Minimal weight is 0.01%.
 
-Emits: `VoteForGauge` event.
-
 | Input          | Type       | Description   |
 | -------------- | ---------- | ------------- |
 | `_gauge_addr`  |  `address` | Gauge address to allocate weight to |
 | `_user_weight` |  `uint256` | Weight to allocate |
+
+Emits: `VoteForGauge` event.
 
 <SourceCode>
 
@@ -395,11 +414,11 @@ This example allocates 100% of the voting power to `0x4e6bb6b7447b7b2aa268c16ab8
 
 Getter method for the total allocated voting power by a specific user. If a user has a veCRV balance but has not yet voted, this function will return 0.
 
-Returns: used voting power (`uint256`).
-
 | Input  | Type      | Description  |
 | ------ | --------- | ------------ |
 | `arg0` | `address` | User address |
+
+Returns: used voting power (`uint256`).
 
 <SourceCode>
 
@@ -411,10 +430,16 @@ vote_user_power: public(HashMap[address, uint256])  # Total vote power used by u
 
 <Example>
 
-```py
->>> GaugeController.vote_user_power('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
-10000
-```
+This example returns the total allocated voting power for a specific user. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function vote_user_power(address arg0) view returns (uint256)"]}
+  method="vote_user_power"
+  args={["0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"]}
+  labels={["arg0"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -427,12 +452,12 @@ vote_user_power: public(HashMap[address, uint256])  # Total vote power used by u
 
 Getter for the last timestamp a specific user voted for a specific gauge.
 
-Returns: timestamp (`uint256`).
-
 | Input  | Type      | Description   |
 |--------|-----------|---------------|
 | `arg0` | `address` | User address  |
 | `arg1` | `address` | Gauge address |
+
+Returns: timestamp (`uint256`).
 
 <SourceCode>
 
@@ -444,10 +469,16 @@ last_user_vote: public(HashMap[address, HashMap[address, uint256]])  # Last user
 
 <Example>
 
-```py
->>> GaugeController.last_user_vote('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
-1700000000
-```
+This example returns the last vote timestamp for a specific user and gauge. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function last_user_vote(address arg0, address arg1) view returns (uint256)"]}
+  method="last_user_vote"
+  args={["0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", "0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939"]}
+  labels={["arg0", "arg1"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -458,14 +489,14 @@ last_user_vote: public(HashMap[address, HashMap[address, uint256]])  # Last user
 ::::description[`GaugeController.vote_user_slopes(arg0: address, arg1: address) -> slope: uint256, power: uint256, end: uint256`]
 
 
-Getter method for informations about the current vote weight of a specific user for a specific gauge. In this variable, informations are stored at the time of voting.
-
-Returns: slope (`uint256`), allocated voting-power (`uint256`) and veCRV lock end (`uint256`).
+Getter method for information about the current vote weight of a specific user for a specific gauge. In this variable, information is stored at the time of voting.
 
 | Input | Type     | Description   |
 |-------|----------|---------------|
 | `arg0`| `address`| User address  |
 | `arg1`| `address`| Gauge address |
+
+Returns: slope (`uint256`), allocated voting-power (`uint256`) and veCRV lock end (`uint256`).
 
 <SourceCode>
 
@@ -477,10 +508,16 @@ vote_user_slopes: public(HashMap[address, HashMap[address, VotedSlope]])  # user
 
 <Example>
 
-```py
->>> GaugeController.vote_user_slopes('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', '0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
-(1000000000000, 10000, 1735689600)
-```
+This example returns the vote user slope data for a specific user and gauge. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function vote_user_slopes(address arg0, address arg1) view returns (uint256 slope, uint256 power, uint256 end)"]}
+  method="vote_user_slopes"
+  args={["0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", "0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939"]}
+  labels={["arg0", "arg1"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -493,12 +530,12 @@ vote_user_slopes: public(HashMap[address, HashMap[address, VotedSlope]])  # user
 
 Getter for the relative weight of specific gauge at a specific time.
 
-Returns: relative gauge weight normalized to 1e18 (`uint256`).
-
 | Input  | Type       | Description |
 | ------ | ---------- | ----------- |
 | `addr` |  `address` | Gauge address |
 | `time` |  `uint256` | Timestamp to check the weight at; Defaults to `block.timestamp` |
+
+Returns: relative gauge weight normalized to 1e18 (`uint256`).
 
 <SourceCode>
 
@@ -544,10 +581,16 @@ def _gauge_relative_weight(addr: address, time: uint256) -> uint256:
 
 <Example>
 
-```py
->>> GaugeController.gauge_relative_weight('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
-50000000000000000
-```
+This example returns the relative gauge weight for a specific gauge. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function gauge_relative_weight(address addr) view returns (uint256)"]}
+  method="gauge_relative_weight"
+  args={["0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939"]}
+  labels={["addr"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -560,12 +603,12 @@ def _gauge_relative_weight(addr: address, time: uint256) -> uint256:
 
 Function to get the gauge relative weight and also checkpoint the gauge, filling in any missing gauge data for the past weeks. This is a state-changing version of [`gauge_relative_weight`](#gauge_relative_weight).
 
-Returns: relative gauge weight normalized to 1e18 (`uint256`).
-
 | Input  | Type      | Description |
 | ------ | --------- | ----------- |
 | `addr` | `address` | Gauge address |
 | `time` | `uint256` | Timestamp to check the weight at; defaults to `block.timestamp` |
+
+Returns: relative gauge weight normalized to 1e18 (`uint256`).
 
 <SourceCode>
 
@@ -589,7 +632,7 @@ def gauge_relative_weight_write(addr: address, time: uint256 = block.timestamp) 
 
 <Example>
 
-```py
+```shell
 >>> GaugeController.gauge_relative_weight_write('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
 50000000000000000
 ```
@@ -620,7 +663,7 @@ def checkpoint():
 
 <Example>
 
-```py
+```shell
 >>> GaugeController.checkpoint()
 ```
 
@@ -656,7 +699,7 @@ def checkpoint_gauge(addr: address):
 
 <Example>
 
-```py
+```shell
 >>> GaugeController.checkpoint_gauge('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
 ```
 
@@ -678,12 +721,12 @@ This function is only callable by the `admin` of the contract.
 
 Function to change the gauge weight for a specific gauge.
 
-Emits: `NewGaugeWeight` event.
-
 | Input    | Type      | Description      |
 | -------- | --------- | ---------------- |
 | `addr`   | `address` | Gauge address    |
 | `weight` | `uint256` | New gauge weight |
+
+Emits: `NewGaugeWeight` event.
 
 <SourceCode>
 
@@ -724,11 +767,11 @@ def change_gauge_weight(addr: address, weight: uint256):
 
 Getter for the current gauge weight of gauge `addr`.
 
-Returns: gauge weight normalized to 1e18 (`uint256`).
-
 | Input  | Type      | Description |
 | ------ | --------- | ----------- |
 | `addr` | `address` | Gauge address |
+
+Returns: gauge weight normalized to 1e18 (`uint256`).
 
 <SourceCode>
 
@@ -750,10 +793,16 @@ def get_gauge_weight(addr: address) -> uint256:
 
 <Example>
 
-```py
->>> GaugeController.get_gauge_weight('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
-1000000000000000000000
-```
+This example returns the current gauge weight for a specific gauge. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function get_gauge_weight(address addr) view returns (uint256)"]}
+  method="get_gauge_weight"
+  args={["0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939"]}
+  labels={["addr"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -787,10 +836,14 @@ def get_total_weight() -> uint256:
 
 <Example>
 
-```py
->>> GaugeController.get_total_weight()
-1000000000000000000000000000000000000
-```
+This example returns the current total weight. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function get_total_weight() view returns (uint256)"]}
+  method="get_total_weight"
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -803,11 +856,11 @@ def get_total_weight() -> uint256:
 
 Getter for the summed weight of gauge type `type_id`.
 
-Returns: summed weight (`uint256`).
-
 | Input     | Type     | Description   |
 | --------- | -------- | ------------- |
 | `type_id` | `int128` | Gauge type ID |
+
+Returns: summed weight (`uint256`).
 
 <SourceCode>
 
@@ -829,10 +882,16 @@ def get_weights_sum_per_type(type_id: int128) -> uint256:
 
 <Example>
 
-```py
->>> GaugeController.get_weights_sum_per_type(0)
-1000000000000000000000
-```
+This example returns the summed weight for gauge type 0. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function get_weights_sum_per_type(int128 type_id) view returns (uint256)"]}
+  method="get_weights_sum_per_type"
+  args={["0"]}
+  labels={["type_id"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -857,14 +916,14 @@ struct Point:
 ::::description[`GaugeController.points_weight(arg0: address, arg1: uint256) -> bias: uint256, slope: uint256: view`]
 
 
-Getter for the `Point` information of a user `arg0`.
+Getter for the `Point` information of a gauge `arg0`.
+
+| Input  | Type      | Description     |
+| ------ | --------- | --------------- |
+| `arg0` | `address` | Gauge address   |
+| `arg1` | `uint256` | Timestamp       |
 
 Returns: bias (`uint256`) and slope (`uint256`).
-
-| Input  | Type      | Description   |
-| ------ | --------- | ------------- |
-| `arg0` | `address` | User address  |
-| `arg1` | `uint256` | Point |
 
 <SourceCode>
 
@@ -876,10 +935,16 @@ points_weight: public(HashMap[address, HashMap[uint256, Point]])  # gauge_addr -
 
 <Example>
 
-```py
->>> GaugeController.points_weight('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939', 1700006400)
-(1000000000000000000000, 0)
-```
+This example returns the point weight data for a specific gauge at a given timestamp. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function points_weight(address arg0, uint256 arg1) view returns (uint256 bias, uint256 slope)"]}
+  method="points_weight"
+  args={["0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939", "1700006400"]}
+  labels={["arg0", "arg1"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -892,11 +957,11 @@ points_weight: public(HashMap[address, HashMap[uint256, Point]])  # gauge_addr -
 
 Getter for the last scheduled time the gauge weight of gauge `arg0` updates. This should always be the coming Thursday at 00:00 UTC and is updated when a gauge weight is updated.
 
-Returns: timestamp (`uint256`).
-
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
 | `arg0` | `address` | Gauge address |
+
+Returns: timestamp (`uint256`).
 
 <SourceCode>
 
@@ -908,10 +973,16 @@ time_weight: public(HashMap[address, uint256])  # gauge_addr -> last scheduled t
 
 <Example>
 
-```py
->>> GaugeController.time_weight('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
-1700006400
-```
+This example returns the last scheduled time for a specific gauge. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function time_weight(address arg0) view returns (uint256)"]}
+  method="time_weight"
+  args={["0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939"]}
+  labels={["arg0"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -922,14 +993,14 @@ time_weight: public(HashMap[address, uint256])  # gauge_addr -> last scheduled t
 ::::description[`GaugeController.points_sum(arg0: int128, arg1: uint256) -> bias: uint256, slope: uint256: view`]
 
 
-Getter for informations from `Point` struct. 
-
-Returns: bias (`uint256`) and slope (`uint256`).
+Getter for information from `Point` struct.
 
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
 | `arg0` | `int128`  | Gauge type ID |
 | `arg1` | `uint256` | Timestamp     |
+
+Returns: bias (`uint256`) and slope (`uint256`).
 
 <SourceCode>
 
@@ -941,10 +1012,16 @@ points_sum: public(HashMap[int128, HashMap[uint256, Point]])  # type_id -> time 
 
 <Example>
 
-```py
->>> GaugeController.points_sum(0, 1700006400)
-(1000000000000000000000, 0)
-```
+This example returns the point sum data for gauge type 0 at a given timestamp. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function points_sum(int128 arg0, uint256 arg1) view returns (uint256 bias, uint256 slope)"]}
+  method="points_sum"
+  args={["0", "1700006400"]}
+  labels={["arg0", "arg1"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -957,11 +1034,11 @@ points_sum: public(HashMap[int128, HashMap[uint256, Point]])  # type_id -> time 
 
 Getter for the last scheduled time (next week).
 
-Returns: timestamp (`uint256`).
-
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
 | `arg0` | `uint256` | Gauge type ID |
+
+Returns: timestamp (`uint256`).
 
 <SourceCode>
 
@@ -973,10 +1050,16 @@ time_sum: public(uint256[1000000000])  # type_id -> last scheduled time (next we
 
 <Example>
 
-```py
->>> GaugeController.time_sum(0)
-1700006400
-```
+This example returns the last scheduled time for gauge type 0. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function time_sum(uint256 arg0) view returns (uint256)"]}
+  method="time_sum"
+  args={["0"]}
+  labels={["arg0"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -989,11 +1072,11 @@ time_sum: public(uint256[1000000000])  # type_id -> last scheduled time (next we
 
 Getter for the current future total weight at timestamp `arg0`.
 
-Returns: total points (`uint256`).
-
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
 | `arg0` | `uint256` | Timestamp of the next gauge weight update |
+
+Returns: total points (`uint256`).
 
 <SourceCode>
 
@@ -1005,10 +1088,16 @@ points_total: public(HashMap[uint256, uint256])  # time -> total weight
 
 <Example>
 
-```py
->>> GaugeController.points_total(1700006400)
-1000000000000000000000000000000000000
-```
+This example returns the total weight at a specific timestamp. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function points_total(uint256 arg0) view returns (uint256)"]}
+  method="points_total"
+  args={["1700006400"]}
+  labels={["arg0"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1033,10 +1122,14 @@ time_total: public(uint256)  # last scheduled time
 
 <Example>
 
-```py
->>> GaugeController.time_total()
-1700006400
-```
+This example returns the last scheduled time for gauge weight updates. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function time_total() view returns (uint256)"]}
+  method="time_total"
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1049,12 +1142,12 @@ time_total: public(uint256)  # last scheduled time
 
 Getter for the weight for gauge type `arg0` at the next update, which is at timestamp `arg1`.
 
-Returns: type weight (`uint256`).
-
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
 | `arg0` | `int128`  | Gauge type ID |
 | `arg1` | `uint256` | Timestamp     |
+
+Returns: type weight (`uint256`).
 
 <SourceCode>
 
@@ -1066,10 +1159,16 @@ points_type_weight: public(HashMap[int128, HashMap[uint256, uint256]])  # type_i
 
 <Example>
 
-```py
->>> GaugeController.points_type_weight(0, 1700006400)
-1000000000000000000
-```
+This example returns the type weight for gauge type 0 at a given timestamp. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function points_type_weight(int128 arg0, uint256 arg1) view returns (uint256)"]}
+  method="points_type_weight"
+  args={["0", "1700006400"]}
+  labels={["arg0", "arg1"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1082,11 +1181,11 @@ points_type_weight: public(HashMap[int128, HashMap[uint256, uint256]])  # type_i
 
 Getter for the last scheduled time, when the type weights update.
 
-Returns: timestamp (`uint256`).
-
 | Input  | Type      | Description   |
 | ------ | --------- | ------------- |
 | `arg0` | `uint256` | Type ID |
+
+Returns: timestamp (`uint256`).
 
 <SourceCode>
 
@@ -1098,10 +1197,16 @@ time_type_weight: public(uint256[1000000000])  # type_id -> last scheduled time 
 
 <Example>
 
-```py
->>> GaugeController.time_type_weight(0)
-1700006400
-```
+This example returns the last scheduled time for type weight updates. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function time_type_weight(uint256 arg0) view returns (uint256)"]}
+  method="time_type_weight"
+  args={["0"]}
+  labels={["arg0"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1136,11 +1241,11 @@ Each liquidity gauge is assigned a type within the `GaugeController`. Grouping g
 
 Getter for the gauge type of a specific gauge.
 
-Returns: gauge type (`int128`). 
-
 | Input   | Type      | Description   |
 | ------- | --------- | ------------- |
 | `_addr` | `address` | Gauge address |
+
+Returns: gauge type (`int128`).
 
 <SourceCode>
 
@@ -1165,10 +1270,16 @@ def gauge_types(_addr: address) -> int128:
 
 <Example>
 
-```py
->>> GaugeController.gauge_types('0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939')
-5
-```
+This example returns the gauge type for a specific gauge. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function gauge_types(address _addr) view returns (int128)"]}
+  method="gauge_types"
+  args={["0x4e6bb6b7447b7b2aa268c16ab87f4bb48bf57939"]}
+  labels={["_addr"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1193,10 +1304,14 @@ n_gauge_types: public(int128)
 
 <Example>
 
-```py
->>> GaugeController.n_gauge_types()
-13
-```
+This example returns the total number of gauge types. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function n_gauge_types() view returns (int128)"]}
+  method="n_gauge_types"
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1209,11 +1324,11 @@ n_gauge_types: public(int128)
 
 Getter for the name of a specific gauge type.
 
-Returns: type name (`string`).
-
 | Input   | Type      | Description   |
 | ------- | --------- | ------------- |
 | `arg0`  | `int128`  | Gauge type index |
+
+Returns: type name (`string`).
 
 <SourceCode>
 
@@ -1225,10 +1340,16 @@ gauge_type_names: public(HashMap[int128, String[64]])
 
 <Example>
 
-```py
->>> GaugeController.gauge_type_names(0)
-'Liquidity'
-```
+This example returns the name of gauge type 0. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function gauge_type_names(int128 arg0) view returns (string)"]}
+  method="gauge_type_names"
+  args={["0"]}
+  labels={["arg0"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1241,11 +1362,11 @@ gauge_type_names: public(HashMap[int128, String[64]])
 
 Getter for the type weight of a specific gauge type.
 
-Returns: type weight (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `type_id` |  `int128` | Gauge type ID |
+
+Returns: type weight (`uint256`).
 
 <SourceCode>
 
@@ -1287,10 +1408,16 @@ def _get_type_weight(gauge_type: int128) -> uint256:
 
 <Example>
 
-```py
->>> GaugeController.get_type_weight(0)
-1000000000000000000
-```
+This example returns the type weight for gauge type 0. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function get_type_weight(int128 type_id) view returns (uint256)"]}
+  method="get_type_weight"
+  args={["0"]}
+  labels={["type_id"]}
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1310,12 +1437,12 @@ This function is only callable by the `admin` of the contract.
 
 Function to add a new gauge type.
 
-Emits: `AddType` event.
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_name` |  `String[64]` | Gauge type name |
 | `weight` |  `uint256` | Gauge weight. Defaults to 0 |
+
+Emits: `AddType` event.
 
 <SourceCode>
 
@@ -1414,12 +1541,12 @@ This function is only callable by the `admin` of the contract.
 
 Function to change the weight for a specific gauge type.
 
-Emits: `NewTypeWeight` event.
-
 | Input     | Type      | Description   |
 | --------- | --------- | ------------- |
 | `type_id` | `int128`  | Gauge type ID |
 | `weight`  | `uint256` | New gauge type weight |
+
+Emits: `NewTypeWeight` event.
 
 <SourceCode>
 
@@ -1530,10 +1657,14 @@ def __init__(_token: address, _voting_escrow: address):
 
 <Example>
 
-```py
->>> GaugeController.token()
-'0xD533a949740bb3306d119CC777fa900bA034cd52'
-```
+This example returns the CRV token address. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function token() view returns (address)"]}
+  method="token"
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1570,10 +1701,14 @@ def __init__(_token: address, _voting_escrow: address):
 
 <Example>
 
-```py
->>> GaugeController.voting_escrow()
-'0x5f3b5DfEb7B28CDbD7FAba78963EE202a494e2A2'
-```
+This example returns the VotingEscrow contract address. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function voting_escrow() view returns (address)"]}
+  method="voting_escrow"
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1617,10 +1752,14 @@ def __init__(_token: address, _voting_escrow: address):
 
 <Example>
 
-```py
->>> GaugeController.admin()
-'0x40907540d8a6C65c637785e8f8B742ae6b0b9968'
-```
+This example returns the admin address of the contract. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function admin() view returns (address)"]}
+  method="admin"
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1645,10 +1784,14 @@ future_admin: public(address)  # Can and will be a smart contract
 
 <Example>
 
-```py
->>> GaugeController.future_admin()
-'0x0000000000000000000000000000000000000000'
-```
+This example returns the future admin address of the contract. The value is fetched live from the blockchain.
+
+<ContractCall
+  address="0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB"
+  abi={["function future_admin() view returns (address)"]}
+  method="future_admin"
+  contractName="GaugeController"
+/>
 
 </Example>
 
@@ -1668,11 +1811,11 @@ This function is only callable by the `admin` of the contract.
 
 Function to commit the ownership of the contract to `addr`.
 
-Emits: `CommitOwnership` event.
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `addr` |  `address` | new admin address |
+
+Emits: `CommitOwnership` event.
 
 <SourceCode>
 

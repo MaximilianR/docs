@@ -13,6 +13,15 @@ The `Hooker` contract is deployed on the following chains:
 - :logos-ethereum: Ethereum at [`0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D`](https://etherscan.io/address/0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D)
 - :logos-gnosis: Gnosis at [`0xE898893ebAe7b75dc4cAB0fb16e24137309ff178`](https://gnosisscan.io/address/0xE898893ebAe7b75dc4cAB0fb16e24137309ff178)
 
+<ContractABI>
+
+
+```json
+[{"name":"DutyAct","inputs":[],"anonymous":false,"type":"event"},{"name":"Act","inputs":[{"name":"receiver","type":"address","indexed":true},{"name":"compensation","type":"uint256","indexed":false}],"anonymous":false,"type":"event"},{"name":"HookShot","inputs":[{"name":"hook_id","type":"uint8","indexed":true},{"name":"compensation","type":"uint256","indexed":false}],"anonymous":false,"type":"event"},{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"_fee_collector","type":"address"},{"name":"_initial_oth","type":"tuple[]","components":[{"name":"to","type":"address"},{"name":"foreplay","type":"bytes"},{"name":"compensation_strategy","type":"tuple","components":[{"name":"amount","type":"uint256"},{"name":"cooldown","type":"tuple","components":[{"name":"duty_counter","type":"uint64"},{"name":"used","type":"uint64"},{"name":"limit","type":"uint64"}]},{"name":"start","type":"uint256"},{"name":"end","type":"uint256"},{"name":"dutch","type":"bool"}]},{"name":"duty","type":"bool"}]},{"name":"_initial_oth_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]},{"name":"_initial_hooks","type":"tuple[]","components":[{"name":"to","type":"address"},{"name":"foreplay","type":"bytes"},{"name":"compensation_strategy","type":"tuple","components":[{"name":"amount","type":"uint256"},{"name":"cooldown","type":"tuple","components":[{"name":"duty_counter","type":"uint64"},{"name":"used","type":"uint64"},{"name":"limit","type":"uint64"}]},{"name":"start","type":"uint256"},{"name":"end","type":"uint256"},{"name":"dutch","type":"bool"}]},{"name":"duty","type":"bool"}]}],"outputs":[]},{"stateMutability":"view","type":"function","name":"calc_compensation","inputs":[{"name":"_hook_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"calc_compensation","inputs":[{"name":"_hook_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]},{"name":"_duty","type":"bool"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"calc_compensation","inputs":[{"name":"_hook_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]},{"name":"_duty","type":"bool"},{"name":"_ts","type":"uint256"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"payable","type":"function","name":"duty_act","inputs":[{"name":"_hook_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"payable","type":"function","name":"duty_act","inputs":[{"name":"_hook_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]},{"name":"_receiver","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"payable","type":"function","name":"act","inputs":[{"name":"_hook_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"payable","type":"function","name":"act","inputs":[{"name":"_hook_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]},{"name":"_receiver","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"payable","type":"function","name":"one_time_hooks","inputs":[{"name":"_hooks","type":"tuple[]","components":[{"name":"to","type":"address"},{"name":"foreplay","type":"bytes"},{"name":"compensation_strategy","type":"tuple","components":[{"name":"amount","type":"uint256"},{"name":"cooldown","type":"tuple","components":[{"name":"duty_counter","type":"uint64"},{"name":"used","type":"uint64"},{"name":"limit","type":"uint64"}]},{"name":"start","type":"uint256"},{"name":"end","type":"uint256"},{"name":"dutch","type":"bool"}]},{"name":"duty","type":"bool"}]},{"name":"_inputs","type":"tuple[]","components":[{"name":"hook_id","type":"uint8"},{"name":"value","type":"uint256"},{"name":"data","type":"bytes"}]}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_hooks","inputs":[{"name":"_new_hooks","type":"tuple[]","components":[{"name":"to","type":"address"},{"name":"foreplay","type":"bytes"},{"name":"compensation_strategy","type":"tuple","components":[{"name":"amount","type":"uint256"},{"name":"cooldown","type":"tuple","components":[{"name":"duty_counter","type":"uint64"},{"name":"used","type":"uint64"},{"name":"limit","type":"uint64"}]},{"name":"start","type":"uint256"},{"name":"end","type":"uint256"},{"name":"dutch","type":"bool"}]},{"name":"duty","type":"bool"}]}],"outputs":[]},{"stateMutability":"pure","type":"function","name":"supportsInterface","inputs":[{"name":"_interface_id","type":"bytes4"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"recover","inputs":[{"name":"_coins","type":"address[]"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"fee_collector","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"hooks","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"tuple","components":[{"name":"to","type":"address"},{"name":"foreplay","type":"bytes"},{"name":"compensation_strategy","type":"tuple","components":[{"name":"amount","type":"uint256"},{"name":"cooldown","type":"tuple","components":[{"name":"duty_counter","type":"uint64"},{"name":"used","type":"uint64"},{"name":"limit","type":"uint64"}]},{"name":"start","type":"uint256"},{"name":"end","type":"uint256"},{"name":"dutch","type":"bool"}]},{"name":"duty","type":"bool"}]}]},{"stateMutability":"view","type":"function","name":"buffer_amount","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"duty_counter","inputs":[],"outputs":[{"name":"","type":"uint64"}]}]
+```
+
+</ContractABI>
+
 :::
 
 *The contract has the following key features:*
@@ -81,11 +90,11 @@ Before hooks can be executed, they need to be added via `set_hooks`. These hooks
 
 Getter for the hooks recorded in the contract.
 
-Returns: `Hook` struct consisting of the target address (`address`), a byte array containing the method identifier and additional data (`Bytes[1024]`), compensation strategy (`CompensationStrategy`) and if the hook is a duty hook or not (`bool`).
-
 | Input   | Type      | Description       |
 | ------- | --------- | ----------------- |
 | `arg0`  | `uint256` | Index of the hook |
+
+Returns: `Hook` struct consisting of the target address (`address`), a byte array containing the method identifier and additional data (`Bytes[1024]`), compensation strategy (`CompensationStrategy`) and if the hook is a duty hook or not (`bool`).
 
 <SourceCode>
 
@@ -109,9 +118,14 @@ hooks: public(DynArray[Hook, MAX_HOOKS_LEN])
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D"
+  abi={["function hooks(uint256) view returns (tuple(address,bytes,tuple(uint256,tuple(uint64,uint64,uint64),uint256,uint256,bool),bool))"]}
+  method="hooks"
+  args={["0"]}
+  labels={["arg0"]}
+  contractName="Hooker"
+/>
 
 </Example>
 
@@ -277,10 +291,6 @@ struct CompensationCooldown:
 
 Function which executes hooks as part of the fee collection process. It ensures all mandatory hooks, which are marked with the `duty` flag, are executed and handles the distribution of any associated compensation. The function checks that all mandatory duty hooks are included in the `_hook_inputs`.
 
-Returns: received compensation (`uint256`).
-
-Emits: `DutyAct`, `HookShot` and `Act`
-
 | Input          | Type                                 | Description                                                        |
 | -------------- | ------------------------------------ | ------------------------------------------------------------------ |
 | `_hook_inputs` | `DynArray[HookInput, MAX_HOOKS_LEN]` | Array of `HookInput` structs representing the hooks to be executed |
@@ -292,6 +302,9 @@ Emits: `DutyAct`, `HookShot` and `Act`
 - `value:` `uint256` - The amount of raw ETH to be sent with the hook execution.
 - `data:` `Bytes[8192]` - The data payload for the hook, including the method identifier and parameters.
 
+Returns: received compensation (`uint256`).
+
+Emits: `DutyAct`, `HookShot` and `Act` events.
 
 <SourceCode>
 
@@ -425,9 +438,12 @@ duty_counter: public(uint64)
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D"
+  abi={["function duty_counter() view returns (uint64)"]}
+  method="duty_counter"
+  contractName="Hooker"
+/>
 
 </Example>
 
@@ -440,10 +456,6 @@ duty_counter: public(uint64)
 
 Function to execute hooks. Unlike, `duty_act` (which is specifically for the fee distribution process), this function allows the execution of more general hooks.
 
-Returns: received compensation (`uint256`).
-
-Emits: `HookShot` and `Act`
-
 | Input          | Type                                 | Description                                                        |
 | -------------- | ------------------------------------ | ------------------------------------------------------------------ |
 | `_hook_inputs` | `DynArray[HookInput, MAX_HOOKS_LEN]` | Array of `HookInput` structs representing the hooks to be executed |
@@ -455,6 +467,9 @@ Emits: `HookShot` and `Act`
 - `value:` `uint256` - The amount of raw ETH to be sent with the hook execution.
 - `data:` `Bytes[8192]` - The data payload for the hook, including the method identifier and parameters.
 
+Returns: received compensation (`uint256`).
+
+Emits: `HookShot` and `Act` events.
 
 <SourceCode>
 
@@ -556,8 +571,6 @@ def _shot(hook: Hook, hook_input: HookInput):
 
 Function to calculate the compensation for executing specific hooks.
 
-Returns: amount of target coins to receive as compensation (`uint256`).
-
 | Input          | Type                                 | Description                                                                         |
 | -------------- | ------------------------------------ | ----------------------------------------------------------------------------------- |
 | `_hook_inputs` | `DynArray[HookInput, MAX_HOOKS_LEN]` | Array of `HookInput` structs representing the hooks to be executed                  |
@@ -570,6 +583,7 @@ Returns: amount of target coins to receive as compensation (`uint256`).
 - `value:` `uint256` - The amount of raw ETH to be sent with the hook execution.
 - `data:` `Bytes[8192]` - The data payload for the hook, including the method identifier and parameters.
 
+Returns: amount of target coins to receive as compensation (`uint256`).
 
 <SourceCode>
 
@@ -766,9 +780,12 @@ buffer_amount: public(uint256)
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D"
+  abi={["function buffer_amount() view returns (uint256)"]}
+  method="buffer_amount"
+  contractName="Hooker"
+/>
 
 </Example>
 
@@ -800,11 +817,11 @@ SUPPORTED_INTERFACES: constant(bytes4[2]) = [
 
 Function to check if the burner supports the correct interface, as specified by the [ERC-165](https://eips.ethereum.org/EIPS/eip-165) standard. This method makes sure the contract is compatible with the `FeeCollector` contract.
 
-Returns: true or false (`bool`).
-
 | Input   | Type      | Description                    |
 | ------- | --------- | ------------------------------ |
 | `_interface_id` | `bytes4` | ID of the interface.     |
+
+Returns: true or false (`bool`).
 
 <SourceCode>
 
@@ -838,9 +855,14 @@ def supportsInterface(_interface_id: bytes4) -> bool:
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D"
+  abi={["function supportsInterface(bytes4) pure returns (bool)"]}
+  method="supportsInterface"
+  args={["0xe569b44d"]}
+  labels={["_interface_id"]}
+  contractName="Hooker"
+/>
 
 </Example>
 
@@ -951,9 +973,12 @@ def __init__(_fee_collector: FeeCollector,
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D"
+  abi={["function fee_collector() view returns (address)"]}
+  method="fee_collector"
+  contractName="Hooker"
+/>
 
 </Example>
 

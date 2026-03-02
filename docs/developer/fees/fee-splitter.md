@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # FeeSplitter
 
 
@@ -13,6 +16,15 @@ The source code for the `FeeSplitter.vy` contract can be found on [GitHub](https
 The contract is deployed on :logos-ethereum: Ethereum at [`0x2dFd89449faff8a532790667baB21cF733C064f2`](https://etherscan.io/address/0x2dfd89449faff8a532790667bab21cf733c064f2).
 
 The source code was audited by [:logos-chainsecurity: ChainSecurity](https://www.chainsecurity.com/). The full audit report can be found [here](https://github.com/curvefi/fee-splitter/blob/main/audits/ChainSecurity.pdf).
+
+<ContractABI>
+
+
+```json
+[{"anonymous":false,"inputs":[],"name":"SetReceivers","type":"event"},{"anonymous":false,"inputs":[],"name":"LivenessProtectionTriggered","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"receiver","type":"address"},{"indexed":false,"name":"weight","type":"uint256"}],"name":"FeeDispatched","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previous_owner","type":"address"},{"indexed":true,"name":"new_owner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"inputs":[{"name":"new_owner","type":"address"}],"name":"transfer_ownership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"renounce_ownership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"update_controllers","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"n_controllers","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"address"}],"name":"allowed_controllers","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"uint256"}],"name":"controllers","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"dispatch_fees","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"controllers","type":"address[]"}],"name":"dispatch_fees","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"components":[{"name":"addr","type":"address"},{"name":"weight","type":"uint256"}],"name":"receivers","type":"tuple[]"}],"name":"set_receivers","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"excess_receiver","outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"n_receivers","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"version","outputs":[{"name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"arg0","type":"uint256"}],"name":"receivers","outputs":[{"components":[{"name":"addr","type":"address"},{"name":"weight","type":"uint256"}],"name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"name":"_crvusd","type":"address"},{"name":"_factory","type":"address"},{"components":[{"name":"addr","type":"address"},{"name":"weight","type":"uint256"}],"name":"receivers","type":"tuple[]"},{"name":"owner","type":"address"}],"outputs":[],"stateMutability":"nonpayable","type":"constructor"}]
+```
+
+</ContractABI>
 
 :::
 
@@ -105,6 +117,8 @@ Function to claim crvUSD fees from crvUSD Controllers and distribute them to add
 | Input         | Type                                                          | Description |
 | ------------- | ------------------------------------------------------------- | ----------- |
 | `controllers` | `DynArray[multiclaim.Controller, multiclaim.MAX_CONTROLLERS]` | Array of `Controllers` to claim from; defaults to claiming fees from all Controllers in [`controllers`](#controllers) |
+
+Emits: `FeeDispatched` event.
 
 <SourceCode>
 
@@ -291,11 +305,11 @@ The next example shows how to dispatch fees from specific `Controller` contracts
 
 Getter for the addresses and weights of receivers at index `arg0`. Receivers can be added/removed/modified by the DAO using the `set_receivers` function.
 
-Returns: `Receiver` struct consisting of `address` and `weight` (`Receiver`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `arg0` | `uint256` | Index of the receiver |
+
+Returns: `Receiver` struct consisting of `address` and `weight` (`Receiver`).
 
 <SourceCode>
 
@@ -317,9 +331,14 @@ receivers: public(DynArray[Receiver, MAX_RECEIVERS])
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x2dFd89449faff8a532790667baB21cF733C064f2"
+  abi={["function receivers(uint256) view returns (tuple(address,uint256))"]}
+  method="receivers"
+  args={["0"]}
+  labels={["arg0"]}
+  contractName="FeeSplitter"
+/>
 
 </Example>
 
@@ -359,9 +378,12 @@ def n_receivers() -> uint256:
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x2dFd89449faff8a532790667baB21cF733C064f2"
+  abi={["function n_receivers() view returns (uint256)"]}
+  method="n_receivers"
+  contractName="FeeSplitter"
+/>
 
 </Example>
 
@@ -405,9 +427,12 @@ def excess_receiver() -> address:
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x2dFd89449faff8a532790667baB21cF733C064f2"
+  abi={["function excess_receiver() view returns (address)"]}
+  method="excess_receiver"
+  contractName="FeeSplitter"
+/>
 
 </Example>
 
@@ -431,16 +456,16 @@ The function will revert if a receiver address is `ZERO_ADDRESS`, if the weight 
 
 Additionally, when adding receivers with dynamic weights, they must support the `DYNAMIC_WEIGHT_EIP165_ID` as specified in EIP-165 and implement a `weight()` function which returns the weight the receiver asks for.
 
-Emits: `SetReceivers`
-
 | Input       | Type                                | Description                                                  |
 | ----------- | ----------------------------------- | ------------------------------------------------------------ |
 | `receivers` | `DynArray[Receiver, MAX_RECEIVERS]` | Array of `Receiver` structs containing of address and weight |
 
+Emits: `SetReceivers` event.
+
 <SourceCode>
 
-
-
+<Tabs>
+<TabItem value="FeeSplitter.vy" label="FeeSplitter.vy">
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
 
@@ -485,8 +510,20 @@ def _set_receivers(receivers: DynArray[Receiver, MAX_RECEIVERS]):
     log SetReceivers()
 ```
 
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
 
+```vyper
+@internal
+def _check_owner():
+    """
+    @dev Throws if the sender is not the owner.
+    """
+    assert msg.sender == self.owner, "ownable: caller is not the owner"
+```
 
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -533,11 +570,11 @@ The contract maintains a list of [`controllers`](#controllers) from which fees c
 
 Getter for the `Controller` at index `arg0`.
 
-Returns: controller (`IController`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `arg0` | `uint256` | Index of the `Controller` |
+
+Returns: controller (`IController`).
 
 <SourceCode>
 
@@ -584,9 +621,14 @@ def collect_fees() -> uint256:
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x2dFd89449faff8a532790667baB21cF733C064f2"
+  abi={["function controllers(uint256) view returns (address)"]}
+  method="controllers"
+  args={["0"]}
+  labels={["arg0"]}
+  contractName="FeeSplitter"
+/>
 
 </Example>
 
@@ -599,11 +641,11 @@ def collect_fees() -> uint256:
 
 Getter method to check whether a controller is allowed.
 
-Returns: true or false whether the controller is allowed (`bool`).
-
 | Input  | Type      | Description           |
 | ------ | --------- | --------------------- |
 | `arg0` | `address` | Address of the `Controller` |
+
+Returns: true or false whether the controller is allowed (`bool`).
 
 <SourceCode>
 
@@ -640,9 +682,14 @@ allowed_controllers: public(HashMap[IController, bool])
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x2dFd89449faff8a532790667baB21cF733C064f2"
+  abi={["function allowed_controllers(address) view returns (bool)"]}
+  method="allowed_controllers"
+  args={["0x8472A9A7632b173c8Cf3a86D3afec50c35548e76"]}
+  labels={["arg0"]}
+  contractName="FeeSplitter"
+/>
 
 </Example>
 
@@ -697,9 +744,12 @@ def n_controllers() -> uint256:
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x2dFd89449faff8a532790667baB21cF733C064f2"
+  abi={["function n_controllers() view returns (uint256)"]}
+  method="n_controllers"
+  contractName="FeeSplitter"
+/>
 
 </Example>
 
@@ -792,7 +842,7 @@ def n_collaterals() -> uint256:
 
 In this example, the `update_controllers` function is called to synchronize the list of `Controllers` with the actual list in the `Factory`. To demonstrate the function's functionality, we assume an additional `Controller` has been created since the last update.
 
-```
+```shell
 >>> FeeSplitter.n_controllers()
 5
 
@@ -826,8 +876,8 @@ Returns: contract owner (`address`).
 
 <SourceCode>
 
-
-
+<Tabs>
+<TabItem value="FeeSplitter.vy" label="FeeSplitter.vy">
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
 
@@ -869,9 +919,8 @@ def __init__(
     self._set_receivers(receivers)
 ```
 
-
-
-
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
 
 ```vyper
 owner: public(address)
@@ -887,18 +936,34 @@ def __init__():
             the `msg.sender`.
     """
     self._transfer_ownership(msg.sender)
+
+@internal
+def _transfer_ownership(new_owner: address):
+    """
+    @dev Transfers the ownership of the contract
+        to a new account `new_owner`.
+    @notice This is an `internal` function without
+            access restriction.
+    @param new_owner The 20-byte address of the new owner.
+    """
+    old_owner: address = self.owner
+    self.owner = new_owner
+    log OwnershipTransferred(old_owner, new_owner)
 ```
 
-
-
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
 <Example>
 
-
-
-
+<ContractCall
+  address="0x2dFd89449faff8a532790667baB21cF733C064f2"
+  abi={["function owner() view returns (address)"]}
+  method="owner"
+  contractName="FeeSplitter"
+/>
 
 </Example>
 
@@ -922,10 +987,12 @@ Function to transfer the ownership of the contract to a new address.
 | ---------- | --------- | ------------ |
 | `new_owner` | `address` | New owner of the contract |
 
+Emits: `OwnershipTransferred` event.
+
 <SourceCode>
 
-
-
+<Tabs>
+<TabItem value="FeeSplitter.vy" label="FeeSplitter.vy">
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
 
@@ -967,9 +1034,8 @@ def __init__(
     self._set_receivers(receivers)
 ```
 
-
-
-
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
 
 ```vyper
 owner: public(address)
@@ -1013,8 +1079,8 @@ def _transfer_ownership(new_owner: address):
     log OwnershipTransferred(old_owner, new_owner)
 ```
 
-
-
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -1052,12 +1118,12 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 
 Function to renounce the ownership of the contract. Calling this method will leave the contract without an owner, thereby removing any functionality that is only available to the owner.
 
-Emits: `OwnershipTransferred`
+Emits: `OwnershipTransferred` event.
 
 <SourceCode>
 
-
-
+<Tabs>
+<TabItem value="FeeSplitter.vy" label="FeeSplitter.vy">
 
 The following source code includes all changes up to commit hash [581b897](https://github.com/curvefi/autobribe/tree/581b8978f91e426c648cf6243420fee5276166b7); any changes made after this commit are not included.
 
@@ -1099,9 +1165,8 @@ def __init__(
     self._set_receivers(receivers)
 ```
 
-
-
-
+</TabItem>
+<TabItem value="ownable.vy" label="ownable.vy (Snekmate 🐍)">
 
 ```vyper
 owner: public(address)
@@ -1143,8 +1208,8 @@ def _transfer_ownership(new_owner: address):
     log OwnershipTransferred(old_owner, new_owner)
 ```
 
-
-
+</TabItem>
+</Tabs>
 
 </SourceCode>
 
@@ -1201,7 +1266,12 @@ version: public(constant(String[8])) = "0.1.0" # no guarantees on abi stability
 
 This example fetches the version of the `FeeSplitter` contract.
 
-
+<ContractCall
+  address="0x2dFd89449faff8a532790667baB21cF733C064f2"
+  abi={["function version() view returns (string)"]}
+  method="version"
+  contractName="FeeSplitter"
+/>
 
 
 </Example>

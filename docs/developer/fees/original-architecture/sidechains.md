@@ -70,13 +70,13 @@ This function is only callable by the `owner` of the contract. Additionally, onl
 
 Function to bridge the entire balance of `_coin` to the root chain. This function must be called from its proxy contract, as its the owner.
 
-Returns: true (`bool`).
-
-Emits: `AssetBridged`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `_coin` |  `address` | coin to bridge |
+| `_coin` |  `address` | Coin to bridge |
+
+Returns: true (`bool`).
+
+Emits: `AssetBridged` event.
 
 <SourceCode>
 
@@ -157,6 +157,8 @@ def bridge(coin: address) -> bool:
 
 Getter for the OFT bridger.
 
+Returns: proxy OFT (`address`).
+
 <SourceCode>
 
 
@@ -195,6 +197,8 @@ def __init__(proxy_oft: address, receiver: address, token: address):
 
 
 Getter for the bridge token.
+
+Returns: token (`address`).
 
 <SourceCode>
 
@@ -238,6 +242,8 @@ Receiver of the bridged funds is the 0xECB contract on Ethereum Mainnet.
 
 
 Getter for the receiver address of the bridged funds.
+
+Returns: receiver (`address`).
 
 :::note
 
@@ -294,7 +300,7 @@ Function to set a new receiver address for the bridged funds.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
-| `receiver` |  `address` | new receiver address |
+| `receiver` |  `address` | New receiver address |
 
 <SourceCode>
 
