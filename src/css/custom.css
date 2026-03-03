@@ -532,7 +532,7 @@ code {
 }
 
 .heading-inline-logo {
-  border-radius: 50%;
+  border-radius: 0%;
   overflow: hidden;
   display: inline-block;
   vertical-align: middle;
@@ -542,7 +542,7 @@ code {
 }
 
 .subheading-inline-logo {
-  border-radius: 50%;
+  border-radius: 0%;
   background-size: contain;
   overflow: hidden;
   display: inline-block;
@@ -604,7 +604,7 @@ code {
 
 .theme-doc-sidebar-item-link > a[href="/user/curve-tokens/crv"]::before {
   content: '';
-  background-image: url('/img/logos/CRV_xs.png');
+  background-image: url('/img/logos/crv.png');
   background-size: contain;
   background-repeat: no-repeat;
   width: 1.2em;
@@ -616,7 +616,7 @@ code {
 
 .theme-doc-sidebar-item-link > a[href="/user/curve-tokens/vecrv"]::before {
   content: '';
-  background-image: url('/img/logos/veCRV_xs.png');
+  background-image: url('/img/logos/vecrv.png');
   background-size: contain;
   background-repeat: no-repeat;
   width: 1.2em;
@@ -628,7 +628,7 @@ code {
 
 .theme-doc-sidebar-item-link > a[href="/user/curve-tokens/crvusd"]::before {
   content: '';
-  background-image: url('/img/logos/crvUSD_xs.png');
+  background-image: url('/img/logos/crvusd.png');
   background-size: contain;
   width: 1.2em;
   height: 1.2em;
@@ -642,7 +642,7 @@ code {
 
 .theme-doc-sidebar-item-link > a[href="/user/curve-tokens/scrvusd"]::before {
   content: '';
-  background-image: url('/img/logos/scrvUSD_xs.png');
+  background-image: url('/img/logos/scrvusd.png');
   background-size: contain;
   width: 1.2em;
   height: 1.2em;

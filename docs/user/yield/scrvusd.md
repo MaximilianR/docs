@@ -5,7 +5,7 @@ hide_title: true
 import ButtonGrid from '@site/src/components/ButtonGrid';
 import ThemedImage from '@theme/ThemedImage';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
-import ScrvusdLogo from '@site/static/img/logos/scrvUSD_s.png';
+import ScrvusdLogo from '@site/static/img/logos/scrvusd.png';
 import InlinePill from '@site/src/components/InlinePill';
 import ScrvusdSupply from '@site/src/components/LiveComponents/ScrvusdSupply';
 import ScrvusdVaultAnimation from '@site/src/components/ScrvusdVaultAnimation';

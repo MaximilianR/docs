@@ -5,8 +5,8 @@ import { ethers } from 'ethers';
 // Change 1: Import the new formatter function
 import { formatNumber } from '../../utils/formatters';
 
-import CrvLogo from '@site/static/img/logos/CRV_xs.png';
-import VecrvLogo from '@site/static/img/logos/veCRV_xs.png';
+import CrvLogo from '@site/static/img/logos/crv.png';
+import VecrvLogo from '@site/static/img/logos/vecrv.png';
 
 
 // --- Configuration for this specific component ---

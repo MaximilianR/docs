@@ -7,7 +7,7 @@ sidebar_label: veCRV Revenue Share
 import ThemedImage from '@theme/ThemedImage';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 import ButtonGrid from '@site/src/components/ButtonGrid';
-import VecrvLogo from '@site/static/img/logos/veCRV_s.png';
+import VecrvLogo from '@site/static/img/logos/vecrv.png';
 
 # <img src={VecrvLogo} className="heading-inline-logo" alt="veCRV" /> veCRV Revenue Share
 

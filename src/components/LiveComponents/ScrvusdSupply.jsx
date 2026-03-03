@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { formatNumber } from '../../utils/formatters'; // Adjust path if needed
 
-import CrvusdLogo from '@site/static/img/logos/crvUSD_xs.png';
-import ScrvusdLogo from '@site/static/img/logos/scrvUSD_xs.png';
+import CrvusdLogo from '@site/static/img/logos/crvusd.png';
+import ScrvusdLogo from '@site/static/img/logos/scrvusd.png';
 
 
 // --- API Configuration ---

@@ -42,7 +42,7 @@ import BadgeGrid from '@site/src/components/BadgeGrid'
     },
     {
       title: "Gov Forum",
-      logo: "/img/logos/veCRV_md.png",
+      logo: "/img/logos/vecrv.png",
       description: "Participate in governance proposals discussions",
       href: "https://gov.curve.fi"
     },

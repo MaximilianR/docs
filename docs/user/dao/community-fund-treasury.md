@@ -5,8 +5,8 @@ sidebar_label: Community Fund & Treasury
 ---
 
 import TokenBalance from '@site/src/components/LiveComponents/TokenBalance';
-import CrvLogo from '@site/static/img/logos/CRV_xs.png';
-import CrvusdLogo from '@site/static/img/logos/crvUSD_xs.png';
+import CrvLogo from '@site/static/img/logos/crv.png';
+import CrvusdLogo from '@site/static/img/logos/crvusd.png';
 
 ## Community Fund
 

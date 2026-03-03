@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 // Change 1: Import the new formatter function
 import { formatNumber } from '../../utils/formatters';
 
-import CrvLogo from '@site/static/img/logos/CRV_xs.png';
+import CrvLogo from '@site/static/img/logos/crv.png';
 
 // --- Configuration for this specific component ---
 const CRV_CONTRACT_ADDRESS = '0xD533a949740bb3306d119CC777fa900bA034cd52';

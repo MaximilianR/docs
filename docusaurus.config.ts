@@ -94,7 +94,7 @@ const config: Config = {
       hideOnScroll: false,
       logo: {
         alt: 'Curve Logo',
-        src: 'img/logo.svg'
+        src: 'img/logo.png'
       },
       items: [
         {
