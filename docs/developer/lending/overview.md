@@ -133,9 +133,9 @@ def initialize(
 
 The factory allows the **permissionless creation of borrowing/lending markets without rehypothecation**, meaning the collateral asset cannot be lent out. A distinctive feature is its ability to generate markets from Curve pools with a `price_oracle()` method, eliminating the need for a separate price oracle. Nonetheless, these pools must adhere to one of the following standards: 
 
-- [`stableswap-ng`](../stableswap-ng/overview.md)
-- [`tricrypto-ng`](../tricrypto-ng/overview.md)
-- [`twocrypto-ng`](../twocrypto-ng/overview.md)
+- [`stableswap-ng`](../amm/stableswap-ng/overview.md)
+- [`tricrypto-ng`](../amm/tricrypto-ng/overview.md)
+- [`twocrypto-ng`](../amm/twocrypto-ng/overview.md)
 
 [→ More here](./contracts/oneway-factory.md)
 

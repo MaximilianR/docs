@@ -793,4 +793,4 @@ This example sets the call proxy to `0x1234567890123456789012345678901234567890`
 
 ## Contract Ownership
 
-For contract ownership details, see [here](../../references/curve-practices.md#commit--accept).
+For contract ownership details, see [here](../../resources/curve-practices.md#commit--accept).
