@@ -250,13 +250,13 @@ def tweak_price(
 
 </Dropdown>
 
-$$\alpha = e^\{\text\{power\}\}$$
+$$\alpha = e^{\text{power}}$$
 
 
-$$\text\{power\} = \frac\{(\text\{block.timestamp\} - \text\{last_prices_timestamp\}) \times 10^\{18\}\}\{\text\{ma_time\}\}$$
+$$\text{power} = \frac{(\text{block.timestamp} - \text{last\_prices\_timestamp}) \times 10^{18}}{\text{ma\_time}}$$
 
 
-$$\text\{EMA\} = \frac\{\min(\text\{last_prices\}, 2 \times \text\{price_scale\}) \times (10^\{18\} - \alpha) + \text\{price_oracle\} \times \alpha\}\{10^\{18\}\}$$
+$$\text{EMA} = \frac{\min(\text{last\_prices}, 2 \times \text{price\_scale}) \times (10^{18} - \alpha) + \text{price\_oracle} \times \alpha}{10^{18}}$$
 
 **Note:**The state price that goes into the EMA is capped with `2 x price_scale` to prevent manipulation.
 
@@ -650,7 +650,7 @@ def ma_time() -> uint256:
 
 Getter for the price of the LP token, calculated as follows:
 
-$$\text\{lp token price\} = 3 \times \text\{virtual_price\} \times \sqrt[3]\{\frac\{(\text\{price_oracle[0]\} \times \text\{price_oracle[1]\})\}\{10^\{24\}\}\}$$
+$$\text{lp token price} = 3 \times \text{virtual\_price} \times \sqrt[3]{\frac{(\text{price\_oracle[0]} \times \text{price\_oracle[1]})}{10^{24}}}$$
 
 Returns: LP token price (`uint256`).
 

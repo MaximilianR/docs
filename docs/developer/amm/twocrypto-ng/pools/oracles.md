@@ -117,11 +117,11 @@ The state price that goes into the EMA is capped with `2 x price_scale` to preve
 
 Getter for the oracle price of the coin at `index 1` with regard to the coin at `index 0`. The price oracle is an exponential moving-average, with a periodicity determined by `ma_time`. The aggregated prices are cached state prices (dy/dx) calculated AFTER the latest trade.
 
-$$\alpha = e^\{\text\{power\}\}$$
+$$\alpha = e^{\text{power}}$$
 
-$$\text\{power\} = -\frac\{(\text\{block.timestamp\} - \text\{last_prices_timestamp\}) \times 10^\{18\}\}\{\text\{ma_time\}\}$$
+$$\text{power} = -\frac{(\text{block.timestamp} - \text{last\_prices\_timestamp}) \times 10^{18}}{\text{ma\_time}}$$
 
-$$\text\{EMA\} = \frac\{\min(\text\{last_prices\}, 2 \times \text\{price_scale\}) \times (10^\{18\} - \alpha) + \text\{price_oracle\} \times \alpha\}\{10^\{18\}\}$$
+$$\text{EMA} = \frac{\min(\text{last\_prices}, 2 \times \text{price\_scale}) \times (10^{18} - \alpha) + \text{price\_oracle} \times \alpha}{10^{18}}$$
 
 Returns: ema oracle price of coin at index 1 w.r.t coin at index 0 (`uint256`).
 
@@ -267,11 +267,11 @@ def wad_exp(x: int256) -> int256:
 
 Getter for the oracle value for xcp. The oracle is an exponential moving-average, with a periodicity determined by `xcp_ma_time`.
 
-$$\alpha = e^\{\text\{power\}\}$$
+$$\alpha = e^{\text{power}}$$
 
-$$\text\{power\} = -\frac\{(\text\{block.timestamp\} - \text\{last_prices_timestamp\}) \times 10^\{18\}\}\{\text\{xcp_ma_time\}\}$$
+$$\text{power} = -\frac{(\text{block.timestamp} - \text{last\_prices\_timestamp}) \times 10^{18}}{\text{xcp\_ma\_time}}$$
 
-$$\text\{xcp_oracle\} = \frac\{\text\{last_xcp\} \times (10^\{18\} - \alpha) + \text\{cached_xcp_oracle\} \times \alpha\}\{10^\{18\}\}$$
+$$\text{xcp\_oracle} = \frac{\text{last\_xcp} \times (10^{18} - \alpha) + \text{cached\_xcp\_oracle} \times \alpha}{10^{18}}$$
 
 Returns: xcp ema oracle value (`uint256`).
 
@@ -825,7 +825,7 @@ def __init__(
 
 Function to calculate the price of the LP token with regard to the coin at `index 0` in the pool. The value is calculate the following:
 
-$$\text\{lp_price\} = \frac\{2 \times \text\{virtual_price\} \times \sqrt\{\text\{price_oracle\} \times 10^\{18\}\}\}\{10^\{18\}\}$$
+$$\text{lp\_price} = \frac{2 \times \text{virtual\_price} \times \sqrt{\text{price\_oracle} \times 10^{18}}}{10^{18}}$$
 
 Returns: LP token price (`uint256`).
 

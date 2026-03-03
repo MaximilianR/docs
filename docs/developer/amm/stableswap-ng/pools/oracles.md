@@ -125,11 +125,11 @@ def _calc_moving_average(
 
 *The formula to calculate the exponential moving-average essentially comes down to:*
 
-$$\alpha = e^\{\text\{power\}\}$$
+$$\alpha = e^{\text{power}}$$
 
-$$\text\{power\} = \frac\{(\text\{block.timestamp\} - \text\{ma_last_time\}) \times 10^\{18\}\}\{\text\{ma_time\}\}$$
+$$\text{power} = \frac{(\text{block.timestamp} - \text{ma\_last\_time}) \times 10^{18}}{\text{ma\_time}}$$
 
-$$\text\{EMA\} = \frac\{\text\{last_spot_value\} \times (10^\{18\} - \alpha) + \text\{last_ema_value\} \times \alpha\}\{10^\{18\}\}$$
+$$\text{EMA} = \frac{\text{last\_spot\_value} \times (10^{18} - \alpha) + \text{last\_ema\_value} \times \alpha}{10^{18}}$$
 
 *with:*
 
