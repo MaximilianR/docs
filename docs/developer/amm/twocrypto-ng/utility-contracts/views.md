@@ -6,7 +6,7 @@ The Views Contract contains **view-only external methods**, which **may be gas-i
 :::deploy[Contract Source & Deployment]
 
 Source code for this contract is available on [Github](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/CurveCryptoViews2Optimized.vy). 
-Full list of all deployments can be found [here](../../deployments.md).
+Full list of all deployments can be found [here](../../../deployments.md).
 
 
 :::
@@ -22,14 +22,14 @@ Full list of all deployments can be found [here](../../deployments.md).
 
 Function to calculate the amount of coin `j` tokens received for swapping in `dx` amount of coin `i` tokens. This function includes fees.
 
-Returns: `dy` (`uint256`).
-
 | Input | Type      | Description                                                               |
 |-------|-----------|---------------------------------------------------------------------------|
 | `i`   | `uint256` | Index of the input token (use `pool.coins(i)` to get the coin address at the i-th index). |
 | `j`   | `uint256` | Index of the output token.                                                |
 | `dx`  | `uint256` | Amount of input coin[i] tokens to be swapped.                             |
 | `swap`| `address` | Address of the pool contract where the swap will occur.                   |
+
+Returns: `dy` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -278,14 +278,14 @@ returns dy                          # tokens received
 
 Getter method for the amount of coin `i` tokens required to input for swapping out `dy` amount of coin `j`.
 
-Returns: `dx` (`uint256`).
-
 | Input | Type      | Description                                                                |
 |-------|-----------|----------------------------------------------------------------------------|
 | `i`   | `uint256` | Index of the input token (use `pool.coins(i)` to get the coin address at the i-th index). |
 | `j`   | `uint256` | Index of the output token.                                                 |
 | `dy`  | `uint256` | Desired amount of output coin[j] tokens to receive.                        |
 | `swap`| `address` | Address of the pool contract where the swap will occur.                    |
+
+Returns: `dx` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -538,14 +538,14 @@ returns dx
 
 Function to calculate the fees for `get_dy`.
 
-Returns: Approximate fee (`uint256`).
-
 | Input | Type      | Description                                                               |
 |-------|-----------|---------------------------------------------------------------------------|
 | `i`   | `uint256` | Index of the input token (use `pool.coins(i)` to get the coin address at the i-th index). |
 | `j`   | `uint256` | Index of the output token.                                                |
 | `dx`  | `uint256` | Amount of input coin[i] tokens.                                           |
 | `swap`| `address` | Address of the pool contract.                                             |
+
+Returns: Approximate fee (`uint256`).
 
 
 <SourceCode>
@@ -793,13 +793,13 @@ returns approx_fee
 
 Function to calculate the output tokens (including fees) received when withdrawing LP tokens as a single coin.
 
-Returns: `dy` (`uint256`).
-
 | Input         | Type      | Description                                                      |
 |---------------|-----------|------------------------------------------------------------------|
 | `token_amount`| `uint256` | Amount of LP tokens to be withdrawn.                             |
 | `i`           | `uint256` | Index of the coin to withdraw in (use `Pool.coins(i)` to get the coin address at the i-th index). |
 | `swap`        | `address` | Address of the pool from which to withdraw.                      |
+
+Returns: `dy` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -1029,13 +1029,13 @@ returns dy                                          # amount of tokens received
 
 Function to calculate LP tokens to be minted or burned when depositing or removing `amounts` of coins to or from the pool.
 
-Returns: `d_token` (`uint256`).
-
 | Input    | Type                | Description                                                          |
 |----------|---------------------|----------------------------------------------------------------------|
 | `amounts`| `uint256[N_COINS]`  | Array of amounts of coins being deposited or withdrawn.              |
 | `deposit`| `bool`              | Indicates the action: `True` for deposit, `False` for withdrawal.   |
 | `swap`   | `address`           | Address of the pool contract involved in the transaction.            |
+
+Returns: `d_token` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -1301,13 +1301,13 @@ returns d_token                                         # LP tokens to be burned
 
 Function to calculate the fee for `withdraw_one_coin`.
 
-Returns: Approximate fee (`uint256`).
-
 | Input         | Type      | Description                                                               |
 |---------------|-----------|---------------------------------------------------------------------------|
 | `token_amount`| `uint256` | Amount of LP tokens involved in the withdrawal.                           |
 | `i`           | `uint256` | Index of the token to be withdrawn (use `pool.coins(i)` to get the coin address at the i-th index). |
 | `swap`        | `address` | Address of the pool contract from which the withdrawal is being made.     |
+
+Returns: Approximate fee (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -1625,13 +1625,13 @@ returns apporx_fee                                      # approx fee
 
 Function to calculate the fee for `calc_token_amount`.
 
-Returns: Approximate fee (`uint256`).
-
 | Input     | Type                | Description                                                          |
 |-----------|---------------------|----------------------------------------------------------------------|
 | `amounts` | `uint256[N_COINS]`  | Array of amounts of each coin being deposited or withdrawn.          |
 | `deposit` | `bool`              | Indicates the action: `True` for deposit, `False` for withdrawal.   |
 | `swap`    | `address`           | Address of the pool contract involved in the transaction.            |
+
+Returns: Approximate fee (`uint256`).
 
 <SourceCode>
 ```vyper

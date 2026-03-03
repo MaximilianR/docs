@@ -1,6 +1,16 @@
-**Tricrypto-NG pool contains of three non-pegged assets.**:::info[Liquidity Pool (LP) Token]
+# CurveTricryptoOptimized
 
-The LP token is directly integrated into the exchange contract. Pool and LP token share the same address. 
+A Tricrypto-NG pool consists of **three non-pegged assets**. The LP token is an ERC-20 token integrated directly into the liquidity pool.
+
+:::vyper[`CurveTricryptoOptimized.vy`]
+
+The source code for the `CurveTricryptoOptimized.vy` contract can be found on [GitHub](https://github.com/curvefi/tricrypto-ng/blob/main/contracts/main/CurveTricryptoOptimized.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.10`.
+
+This is a **blueprint contract** — individual pools are deployed via the Factory. Pool and LP token share the same address. Full list of all deployments can be found [here](../../../deployments.md).
+
+:::
+
+:::info
 
 The token has the regular ERC-20 methods, which will not be further documented.
 
@@ -64,8 +74,6 @@ def _unpack(_packed: uint256) -> uint256[3]:
 
 Function to exchange `dx` amount of coin `i` for coin `j` and receive a minimum amount of `min_dy`.
 
-Returns: amount of output coin `j` received (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `i` | `uint256` | Index value for the input coin |
@@ -73,6 +81,8 @@ Returns: amount of output coin `j` received (`uint256`).
 | `dx` | `uint256` | Amount of input coin being swapped in |
 | `min_dy` | `uint256` | Minimum amount of output coin to receive |
 | `receiver` | `address` | Address to send output coin to. Defaults to `msg.sender` |
+
+Returns: amount of output coin `j` received (`uint256`).
 
 <SourceCode>
 
@@ -247,10 +257,6 @@ def _exchange(
 
 Function to exchange between two underlying tokens. More [here](../../stableswap-ng/overview.md#exchange_received).
 
-Returns: amount of output coin `j` received (`uint256`).
-
-Emits: `TokenExchange`
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `i` |  `uint256` | Index value for the input coin. |
@@ -258,6 +264,10 @@ Emits: `TokenExchange`
 | `dx` |  `uint256` | Amount of input coin being swapped in. |
 | `min_dy` |  `uint256` | Minimum amount of output coin to receive. |
 | `receiver` |  `address` | Receiver Address; defaults to msg.sender. |
+
+Returns: amount of output coin `j` received (`uint256`).
+
+Emits: `TokenExchange`
 
 <SourceCode>
 
@@ -430,13 +440,13 @@ def _exchange(
 
 Getter for the received amount of coin `j` for swapping in `dx` amount of coin `i`. This method includes fees.
 
-Returns: exact amount of output coin `j` (`uint256`).
-
 | Input | Type      | Description               |
 | ----- | --------- | ------------------------- |
 | `i`   | `uint256` | Index of input token.     |
 | `j`   | `uint256` | Index of output token.    |
 | `dx`  | `uint256` | Amount of input tokens.   |
+
+Returns: exact amount of output coin `j` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -544,13 +554,13 @@ def _get_dy_nofee(
 
 Getter for the required amount of coin `i` to input for swapping out `dy` amount of token `j`.
 
-Returns: amount of input coin `i` needed (`uint256`).
-
 | Input | Type      | Description               |
 | ----- | --------- | ------------------------- |
 | `i`   | `uint256` | Index of input token.     |
 | `j`   | `uint256` | Index of output token.    |
 | `dy`  | `uint256` | Amount of output tokens.  |
+
+Returns: amount of input coin `i` needed (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -752,11 +762,11 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 
 Getter for the charged exchange fee by the pool at the current state.
 
-Returns: fee (`uint256`).
-
 | Input | Type               | Description                                      |
 | ----- | ------------------ | ------------------------------------------------ |
 | `xp`  | `uint256[N_COINS]` | Pool balances multiplied by the coin precisions. |
+
+Returns: fee (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -845,10 +855,6 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 
 Function to add liquidity to the pool and mint the corresponding LP tokens.
 
-Returns: amount of LP tokens received (`uint256`).
-
-Emits: `AddLiquidity`
-
 | Input            | Type                | Description                                           |
 | ---------------- | ------------------- | ----------------------------------------------------- |
 | `amounts`        | `uint256[N_COINS]`  | Amount of each coin to add.                           |
@@ -856,6 +862,9 @@ Emits: `AddLiquidity`
 | `use_eth`        | `bool`              | `True` = native token is added to the pool.           |
 | `receiver`       |  `address`          | Receiver of the LP tokens; defaults to msg.sender.    |
 
+Returns: amount of LP tokens received (`uint256`).
+
+Emits: `AddLiquidity`
 
 <SourceCode>
 ```vyper
@@ -1229,12 +1238,12 @@ def newton_D(
 
 Function to calculate the charged fee on `amounts` when adding liquidity.
 
-Returns: fee (`uint256`).
-
 | Input    | Type                | Description                                      |
 | -------- | ------------------- | ------------------------------------------------ |
 | `amounts`| `uint256[N_COINS]`  | Amount of coins added to the pool.               |
 | `xp`     | `uint256[N_COINS]`  | Pool balances multiplied by the coin precisions. |
+
+Returns: fee (`uint256`).
 
 <SourceCode>
 
@@ -1300,12 +1309,8 @@ def _calc_token_fee(amounts: uint256[N_COINS], xp: uint256[N_COINS]) -> uint256:
 ::::description[`TriCrypto.remove_liquidity(_amount: uint256, min_amounts: uint256[N_COINS], use_eth: bool = False, receiver: address = msg.sender, claim_admin_fees: bool = True) -> uint256[N_COINS]:`]
 
 
-Function to remove liquidity from the pool and burn the LP tokens. When removing liquidity with this function, no fees are charged as the coins are withdrawn in balanced proportions.  
+Function to remove liquidity from the pool and burn the LP tokens. When removing liquidity with this function, no fees are charged as the coins are withdrawn in balanced proportions.
 If admin fees are claimed, they are claimed before withdrawing liquidity, ensuring the DAO gets paid first.
-
-Returns: withdrawn balances (`uint256[N_COINS]`).
-
-Emits: `RemoveLiquidity`
 
 | Input          | Type       | Description                              |
 | -------------- | ---------- | ---------------------------------------- |
@@ -1314,6 +1319,10 @@ Emits: `RemoveLiquidity`
 | `use_eth`      | `bool`     | True = withdraw ETH, False = withdraw wETH. |
 | `receiver`     | `address`  | Receiver of the coins; defaults to `msg.sender`. |
 | `claim_admin_fees` | `bool` | Whether to claim admin fees; defaults to `True`. |
+
+Returns: withdrawn balances (`uint256[N_COINS]`).
+
+Emits: `RemoveLiquidity`
 
 <SourceCode>
 
@@ -1421,10 +1430,6 @@ def remove_liquidity(
 
 Function to burn `token_amount` LP tokens and withdraw liquidity in a single token `i`.
 
-Returns: amount of coins withdrawn (`uint256`).
-
-Emits: `RemoveLiquidityOne`
-
 | Input          | Type       | Description                              |
 | -------------- | ---------- | ---------------------------------------- |
 | `token_amount` | `uint256`  | Amount of LP tokens to burn.             |
@@ -1433,6 +1438,9 @@ Emits: `RemoveLiquidityOne`
 | `use_eth`      | `bool`     | True = withdraw ETH, False = withdraw wETH. |
 | `receiver`     | `address`  | Receiver of the coins; defaults to `msg.sender`. |
 
+Returns: amount of coins withdrawn (`uint256`).
+
+Emits: `RemoveLiquidityOne`
 
 <SourceCode>
 ```vyper
@@ -1991,12 +1999,12 @@ def get_y(
 
 Function to calculate the LP tokens to be minted or burned for depositing or removing `amounts` of coins. This method takes fees into consideration.
 
-Returns: amount of LP tokens deposited or withdrawn (`uint256`).
-
 | Input      | Type               | Description                                     |
 | ---------- | ------------------ | ----------------------------------------------- |
 | `amounts`  | `uint256[N_COINS]` | Amounts of tokens being deposited or withdrawn. |
 | `deposit`  | `bool`             | `true` for deposit, `false` for withdrawal.     |
+
+Returns: amount of LP tokens deposited or withdrawn (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -2120,12 +2128,12 @@ def calc_fee_token_amount(
 
 Function to calculate the amount of output token `i` when burning `token_amount` of LP tokens. This method takes fees into consideration.
 
-Returns: amount of tokens to receive (`uint256`).
-
 | Input         | Type      | Description                              |
 | ------------- | --------- | ---------------------------------------- |
 | `token_amount`| `uint256` | Amount of LP tokens burned.              |
 | `i`           | `uint256` | Index of the coin to withdraw.           |
+
+Returns: amount of tokens to receive (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -2642,7 +2650,7 @@ def get_y(
 
 ## Fees and Pool Profits
 
-The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../cryptoswap-overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
+The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../legacy/cryptoswap-overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](#apply_new_parameters) by the admin.
 
 Additionally, just as for other curve pools, there is an `ADMIN_FEE`, which is hardcoded to 50%. All twocrypto-ng pools share a universal `fee_receiver`, which is determined within the Factory contract.
 
@@ -3343,7 +3351,7 @@ xcp_profit_a: public(uint256)  # <--- Full profit at last claim of admin fees.
 
 ## Price Scaling
 
-Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../cryptoswap-overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
+Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../legacy/cryptoswap-overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](#apply_new_parameters).
 
 ### `price_scale`
 ::::description[`TriCrypto.price_scale(k: uint256) -> uint256:`]
@@ -3351,11 +3359,11 @@ Curve v2 pools automatically adjust liquidity to optimize depth close to the pre
 
 Getter for the price scale of the coin at index `k` with regard to the coin at index 0. Price scale determines the price band around which liquidity is concentrated and is conditionally updated when calling the functions `add_liquidity`, `remove_liquidity_one_coin`, `exchange`, `exchange_underlying` or `exchange_extended`.
 
-Returns: last price (`uint256`).
-
 | Input  | Type     | Description         |
 | ------ | -------- | ------------------- |
 | `k`    | `uint256`| Index of the coin. |
+
+Returns: last price (`uint256`).
 
 <SourceCode>
 
@@ -3723,9 +3731,9 @@ packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 
 ## Bonding Curve Parameters
 
-A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../cryptoswap-overview.md#bonding-curve-parameters).
+A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../legacy/cryptoswap-overview.md#bonding-curve-parameters).
 
-Bonding curve parameters `A` and `gamma` values are [upgradable](./admin-controls.md#amplification-coefficient-and-gamma) by the the pools admin.
+Bonding curve parameters `A` and `gamma` values are [upgradable](#amplification-coefficient-and-gamma) by the the pools admin.
 
 
 ### `A`
@@ -3867,11 +3875,11 @@ def _A_gamma() -> uint256[2]:
 
 Getter for the coin at index `arg0`.
 
-Returns: coin (`address`).
-
 | Input  | Type     | Description         |
 | ------ | -------- | ------------------- |
 | `k`    | `uint256`| Index of the coin.  |
+
+Returns: coin (`address`).
 
 <SourceCode>
 
@@ -3903,11 +3911,11 @@ coins: public(immutable(address[N_COINS]))
 
 Getter for the coin balance at index `arg0`.
 
-Returns: coin balance (`address`).
-
 | Input  | Type     | Description         |
 | ------ | -------- | ------------------- |
 | `k`    | `uint256`| Index of the coin.  |
+
+Returns: coin balance (`address`).
 
 <SourceCode>
 
@@ -4066,6 +4074,615 @@ WETH20: public(immutable(address))
 >>> TriCrypto.WETH20()
 '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
 ```
+
+</Example>
+
+
+::::
+
+
+## Admin Controls
+
+All pools created through the Factory are "owned" by the admin of the Factory, which is the Curve DAO. Ownership can only be changed within the factory contract via `commit_transfer_ownership` and `accept_transfer_ownership`.
+
+Applying new parameters involves a **two-step model**. In the first step, changes need to be committed. The second step involves applying these changes.
+
+
+### Amplification Coefficient and Gamma
+
+More information about the parameters [here](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters).
+
+The appropriate value for `A` and `gamma` is dependent upon the type of coin being used within the pool, and is subject to optimisation and pool-parameter update based on the market history of the trading pair. It is possible to modify the parameters for a pool after it has been deployed. However, it requires a vote within the Curve DAO and must reach a 15% quorum.
+
+
+### `ramp_A_gamma`
+::::description[`TriCrypto.ramp_A_gamma(future_A: uint256, future_gamma: uint256, future_time: uint256)`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the Factory contract.
+
+
+:::
+
+Function to ramp A and gamma parameter values linearly. `A` and `gamma` are packed within the same variable.
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `future_A` | `uint256` | Future value of `A` |
+| `future_gamma` | `uint256` | Future value of `gamma` |
+| `future_time` | `uint256` | Timestamp at which the ramping will end |
+
+Emits: `RampAgamma`
+
+<SourceCode>
+
+
+```vyper
+event RampAgamma:
+    initial_A: uint256
+    future_A: uint256
+    initial_gamma: uint256
+    future_gamma: uint256
+    initial_time: uint256
+    future_time: uint256
+
+@external
+def ramp_A_gamma(
+    future_A: uint256, future_gamma: uint256, future_time: uint256
+):
+    """
+    @notice Initialise Ramping A and gamma parameter values linearly.
+    @dev Only accessible by factory admin, and only
+    @param future_A The future A value.
+    @param future_gamma The future gamma value.
+    @param future_time The timestamp at which the ramping will end.
+    """
+    assert msg.sender == factory.admin()  # dev: only owner
+    assert block.timestamp > self.initial_A_gamma_time + (MIN_RAMP_TIME - 1)  # dev: ramp undergoing
+    assert future_time > block.timestamp + MIN_RAMP_TIME - 1  # dev: insufficient time
+
+    A_gamma: uint256[2] = self._A_gamma()
+    initial_A_gamma: uint256 = A_gamma[0] << 128
+    initial_A_gamma = initial_A_gamma | A_gamma[1]
+
+    assert future_A > MIN_A - 1
+    assert future_A < MAX_A + 1
+    assert future_gamma > MIN_GAMMA - 1
+    assert future_gamma < MAX_GAMMA + 1
+
+    ratio: uint256 = 10**18 * future_A / A_gamma[0]
+    assert ratio < 10**18 * MAX_A_CHANGE + 1
+    assert ratio > 10**18 / MAX_A_CHANGE - 1
+
+    ratio = 10**18 * future_gamma / A_gamma[1]
+    assert ratio < 10**18 * MAX_A_CHANGE + 1
+    assert ratio > 10**18 / MAX_A_CHANGE - 1
+
+    self.initial_A_gamma = initial_A_gamma
+    self.initial_A_gamma_time = block.timestamp
+
+    future_A_gamma: uint256 = future_A << 128
+    future_A_gamma = future_A_gamma | future_gamma
+    self.future_A_gamma_time = future_time
+    self.future_A_gamma = future_A_gamma
+
+    log RampAgamma(
+        A_gamma[0],
+        future_A,
+        A_gamma[1],
+        future_gamma,
+        block.timestamp,
+        future_time,
+    )
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.ramp_A_gamma(2700000, 1300000000000, 1693674492)
+```
+
+
+</Example>
+
+
+::::
+
+### `stop_ramp_A_gamma`
+::::description[`TriCrypto.stop_ramp_A_gamma()`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the Factory contract.
+
+
+:::
+
+Function to immediately stop ramping A and gamma parameters and set them to the current value.
+
+Emits: `StopRampA`
+
+<SourceCode>
+
+
+```vyper
+event StopRampA:
+    current_A: uint256
+    current_gamma: uint256
+    time: uint256
+
+@external
+def stop_ramp_A_gamma():
+    """
+    @notice Stop Ramping A and gamma parameters immediately.
+    @dev Only accessible by factory admin.
+    """
+    assert msg.sender == factory.admin()  # dev: only owner
+
+    A_gamma: uint256[2] = self._A_gamma()
+    current_A_gamma: uint256 = A_gamma[0] << 128
+    current_A_gamma = current_A_gamma | A_gamma[1]
+    self.initial_A_gamma = current_A_gamma
+    self.future_A_gamma = current_A_gamma
+    self.initial_A_gamma_time = block.timestamp
+    self.future_A_gamma_time = block.timestamp
+
+    # ------ Now (block.timestamp < t1) is always False, so we return saved A.
+
+    log StopRampA(A_gamma[0], A_gamma[1], block.timestamp)
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.stop_ramp_A_gamma()
+```
+
+
+</Example>
+
+
+::::
+
+### Changing Parameters
+
+### `commit_new_parameters`
+::::description[`TriCrypto.commit_new_parameters(_new_mid_fee: uint256, _new_out_fee: uint256, _new_fee_gamma: uint256, _new_allowed_extra_profit: uint256, _new_adjustment_step: uint256, _new_ma_time: uint256)`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the Factory contract.
+
+
+:::
+
+Function to commit new parameters. The new parameters do not take immediate effect.
+
+Emits: `CommitNewParameters`
+
+| Input      | Type   | Description |
+| ----------- | -------| ----|
+| `_new_mid_fee` | `uint256` | New `mid_fee` value |
+| `_new_out_fee` | `uint256` | New `out_fee` value |
+| `_new_fee_gamma` | `uint256` | New `fee_gamma` value |
+| `_new_allowed_extra_profit` | `uint256` | New `allowed_extra_profit` value |
+| `_new_adjustment_step` | `uint256` | New `adjustment_step` value |
+| `_new_ma_time` | `uint256` | New `ma_time` value |
+
+<SourceCode>
+
+
+```vyper
+event CommitNewParameters:
+    deadline: indexed(uint256)
+    mid_fee: uint256
+    out_fee: uint256
+    fee_gamma: uint256
+    allowed_extra_profit: uint256
+    adjustment_step: uint256
+    ma_time: uint256
+
+future_packed_rebalancing_params: uint256
+future_packed_fee_params: uint256
+
+ADMIN_ACTIONS_DELAY: constant(uint256) = 3 * 86400
+
+@external
+def commit_new_parameters(
+    _new_mid_fee: uint256,
+    _new_out_fee: uint256,
+    _new_fee_gamma: uint256,
+    _new_allowed_extra_profit: uint256,
+    _new_adjustment_step: uint256,
+    _new_ma_time: uint256,
+):
+    """
+    @notice Commit new parameters.
+    @dev Only accessible by factory admin.
+    @param _new_mid_fee The new mid fee.
+    @param _new_out_fee The new out fee.
+    @param _new_fee_gamma The new fee gamma.
+    @param _new_allowed_extra_profit The new allowed extra profit.
+    @param _new_adjustment_step The new adjustment step.
+    @param _new_ma_time The new ma time. ma_time is time_in_seconds/ln(2).
+    """
+    assert msg.sender == Factory(self.factory).admin()  # dev: only owner
+    assert self.admin_actions_deadline == 0  # dev: active action
+
+    _deadline: uint256 = block.timestamp + ADMIN_ACTIONS_DELAY
+    self.admin_actions_deadline = _deadline
+
+    # ----------------------------- Set fee params ---------------------------
+
+    new_mid_fee: uint256 = _new_mid_fee
+    new_out_fee: uint256 = _new_out_fee
+    new_fee_gamma: uint256 = _new_fee_gamma
+
+    current_fee_params: uint256[3] = self._unpack(self.packed_fee_params)
+
+    if new_out_fee < MAX_FEE + 1:
+        assert new_out_fee > MIN_FEE - 1  # dev: fee is out of range
+    else:
+        new_out_fee = current_fee_params[1]
+
+    if new_mid_fee > MAX_FEE:
+        new_mid_fee = current_fee_params[0]
+    assert new_mid_fee <= new_out_fee  # dev: mid-fee is too high
+
+    if new_fee_gamma < 10**18:
+        assert new_fee_gamma > 0  # dev: fee_gamma out of range [1 .. 10**18]
+    else:
+        new_fee_gamma = current_fee_params[2]
+
+    self.future_packed_fee_params = self._pack(
+        [new_mid_fee, new_out_fee, new_fee_gamma]
+    )
+
+    # ----------------- Set liquidity rebalancing parameters -----------------
+
+    new_allowed_extra_profit: uint256 = _new_allowed_extra_profit
+    new_adjustment_step: uint256 = _new_adjustment_step
+    new_ma_time: uint256 = _new_ma_time
+
+    current_rebalancing_params: uint256[3] = self._unpack(self.packed_rebalancing_params)
+
+    if new_allowed_extra_profit > 10**18:
+        new_allowed_extra_profit = current_rebalancing_params[0]
+
+    if new_adjustment_step > 10**18:
+        new_adjustment_step = current_rebalancing_params[1]
+
+    if new_ma_time < 872542:  # <----- Calculated as: 7 * 24 * 60 * 60 / ln(2)
+        assert new_ma_time > 86  # dev: MA time should be longer than 60/ln(2)
+    else:
+        new_ma_time = current_rebalancing_params[2]
+
+    self.future_packed_rebalancing_params = self._pack(
+        [new_allowed_extra_profit, new_adjustment_step, new_ma_time]
+    )
+
+    # ---------------------------------- LOG ---------------------------------
+
+    log CommitNewParameters(
+        _deadline,
+        new_mid_fee,
+        new_out_fee,
+        new_fee_gamma,
+        new_allowed_extra_profit,
+        new_adjustment_step,
+        new_ma_time,
+    )
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.commit_new_parameters(20000000, 45000000, 350000000000000, 100000000000, 100000000000, 1800)
+```
+
+
+</Example>
+
+
+::::
+
+### `apply_new_parameters`
+::::description[`TriCrypto.apply_new_parameters()`]
+
+
+:::guard[Guarded Method]
+
+This function can only be called after the `admin_actions_deadline` has passed. The deadline is set when new parameters are committed via [`commit_new_parameters`](#commit_new_parameters).
+
+
+:::
+
+Function to apply the parameters from [`commit_new_parameters`](#commit_new_parameters).
+
+Emits: `NewParameters`
+
+<SourceCode>
+
+
+```vyper
+event NewParameters:
+    mid_fee: uint256
+    out_fee: uint256
+    fee_gamma: uint256
+    allowed_extra_profit: uint256
+    adjustment_step: uint256
+    ma_time: uint256
+
+packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
+#               parameters allowed_extra_profit, adjustment_step, and ma_time.
+future_packed_rebalancing_params: uint256
+
+packed_fee_params: public(uint256)  # <---- Packs mid_fee, out_fee, fee_gamma.
+future_packed_fee_params: uint256
+
+@external
+@nonreentrant("lock")
+def apply_new_parameters():
+    """
+    @notice Apply committed parameters.
+    @dev Only callable after admin_actions_deadline.
+    """
+    assert block.timestamp >= self.admin_actions_deadline  # dev: insufficient time
+    assert self.admin_actions_deadline != 0  # dev: no active action
+
+    self.admin_actions_deadline = 0
+
+    packed_fee_params: uint256 = self.future_packed_fee_params
+    self.packed_fee_params = packed_fee_params
+
+    packed_rebalancing_params: uint256 = self.future_packed_rebalancing_params
+    self.packed_rebalancing_params = packed_rebalancing_params
+
+    rebalancing_params: uint256[3] = self._unpack(packed_rebalancing_params)
+    fee_params: uint256[3] = self._unpack(packed_fee_params)
+
+    log NewParameters(
+        fee_params[0],
+        fee_params[1],
+        fee_params[2],
+        rebalancing_params[0],
+        rebalancing_params[1],
+        rebalancing_params[2],
+    )
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.apply_new_parameters()
+```
+
+
+</Example>
+
+
+::::
+
+### `revert_new_parameters`
+::::description[`TriCrypto.revert_new_parameters()`]
+
+
+:::guard[Guarded Method]
+
+This function is only callable by the `admin` of the Factory contract.
+
+
+:::
+
+Function to revert the parameters changes.
+
+<SourceCode>
+
+
+```vyper
+@external
+def revert_new_parameters():
+    """
+    @notice Revert committed parameters
+    @dev Only accessible by factory admin. Setting admin_actions_deadline to 0
+        ensures a revert in apply_new_parameters.
+    """
+    assert msg.sender == Factory(self.factory).admin()  # dev: only owner
+    self.admin_actions_deadline = 0
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.revert_new_parameters()
+```
+
+
+</Example>
+
+
+::::
+
+### `admin_actions_deadline`
+::::description[`TriCrypto.admin_actions_deadline() -> uint256: view`]
+
+
+Getter for the admin actions deadline. This is the deadline until which new parameter changes can be applied. When committing new changes, there is a three-day timespan to apply them (`ADMIN_ACTIONS_DELAY`). If called later, the call will revert.
+
+Returns: timestamp (`uint256`).
+
+<SourceCode>
+
+
+```vyper
+admin_actions_deadline: public(uint256)
+
+ADMIN_ACTIONS_DELAY: constant(uint256) = 3 * 86400
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.admin_actions_deadline()
+0
+```
+
+
+</Example>
+
+
+::::
+
+### `initial_A_gamma`
+::::description[`TriCrypto.initial_A_gamma() -> uint256: view`]
+
+
+Getter for the initial A/gamma.
+
+Returns: A/gamma (`uint256`).
+
+<SourceCode>
+
+
+```vyper
+initial_A_gamma: public(uint256)
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.initial_A_gamma()
+581076037942835227425498917514114728328226821
+```
+
+
+</Example>
+
+
+::::
+
+### `initial_A_gamma_time`
+::::description[`TriCrypto.initial_A_gamma_time() -> uint256: view`]
+
+
+Getter for the initial A/gamma time.
+
+Returns: A/gamma time (`uint256`).
+
+<SourceCode>
+
+
+```vyper
+initial_A_gamma_time: public(uint256)
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.initial_A_gamma_time()
+0
+```
+
+
+</Example>
+
+
+::::
+
+### `future_A_gamma`
+::::description[`TriCrypto.future_A_gamma() -> uint256: view`]
+
+
+Getter for the future A/gamma.
+
+Returns: future A/gamma (`uint256`).
+
+<SourceCode>
+
+
+```vyper
+future_A_gamma: public(uint256)
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.future_A_gamma()
+581076037942835227425498917514114728328226821
+```
+
+
+</Example>
+
+
+::::
+
+### `future_A_gamma_time`
+::::description[`TriCrypto.future_A_gamma_time() -> uint256: view`]
+
+
+Getter for the future A/gamma time.
+
+Returns: future A/gamma time (`uint256`).
+
+<SourceCode>
+
+
+```vyper
+future_A_gamma_time: public(uint256)
+```
+
+
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TriCrypto.future_A_gamma_time()
+0
+```
+
 
 </Example>
 

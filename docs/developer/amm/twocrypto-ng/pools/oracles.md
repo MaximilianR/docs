@@ -1,7 +1,9 @@
 # Twocrypto-NG Oracles
 
 
-## Price Oracle*Twocrypto-NG pools contains the following built-in oracle:*
+## Price Oracle
+
+*Twocrypto-NG pools contain the following built-in oracles:*
 
 
 -   **`price_oracle`**---

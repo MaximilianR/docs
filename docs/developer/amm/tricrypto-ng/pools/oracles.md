@@ -382,11 +382,11 @@ Function to calculate the exponential moving average (EMA) price for the coin at
 
 The moving average price oracle is calculated using the last_price of the trade at the previous block, and the price oracle logged before that trade. This can happen only once per block.
 
-Returns: EMA price of coin `k` (`uint256`).
-
 | Input  | Type      | Description        |
 | ------ | --------- | ------------------ |
 | `k`    | `uint256` | Index of the coin. |
+
+Returns: EMA price of coin `k` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -464,11 +464,11 @@ This function reverts if `i >= 2`.
 
 Getter for the price scale of the coin at index `k`.
 
-Returns: price scale of the coin `k` (`uint256`).
-
 | Input  | Type     | Description        |
 | ------ | -------- | ------------------ |
 | `k`    | `uint256`| Index of the coin. |
+
+Returns: price scale of the coin `k` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -518,11 +518,11 @@ This function reverts if `i >= 2`.
 
 Getter method for the last stored price for coin at index value `k`, stored in `last_prices_packed`.
 
-Returns: last stored spot price of coin `k` (`uint256`).
-
 | Input  | Type     | Description        |
 | ------ | -------- | ------------------ |
 | `k`    | `uint256`| Index of the coin. |
+
+Returns: last stored spot price of coin `k` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -609,7 +609,7 @@ last_prices_timestamp: public(uint256)
 ::::description[`CurveTricryptoOptimizedWETH.ma_time() -> uint256: view`]
 
 
-Getter for the exponential moving average time for the price oracle. This value can be adjusted via `commit_new_parameters()`, as detailed in the [admin controls](./admin-controls.md#commit_new_parameters) section.
+Getter for the exponential moving average time for the price oracle. This value can be adjusted via `commit_new_parameters()`, as detailed in the [admin controls](./tricrypto.md#commit_new_parameters) section.
 
 Returns: periodicity of the EMA (`uint256`) 
 

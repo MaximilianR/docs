@@ -1,10 +1,11 @@
+# Views Contract
 
-This contract contains **view-only external methods**which can be gas-inefficient when called from smart contracts.
+This contract contains **view-only external methods** which can be gas-inefficient when called from smart contracts.
 
 :::deploy[Contract Source & Deployment]
 
 Source code for this contract is available on [Github](https://github.com/curvefi/tricrypto-ng/blob/main/contracts/main/CurveCryptoViews3Optimized.vy).
-Full list of all deployments can be found [here](../../deployments.md).
+Full list of all deployments can be found [here](../../../deployments.md).
 
 
 :::
@@ -20,14 +21,14 @@ Full list of all deployments can be found [here](../../deployments.md).
 
 Getter method for the amount of coin `j` tokens received for swapping in `dx` amount of coin `i`. This function includes the fee.
 
-Returns: `dy` (`uint256`).
-
 | Input      | Type      | Description |
 | ---------- | --------- | ----------- |
 | `i` |  `uint256` | Index of input token (use `pool.coins(i)` to get coin address at i-th index) |
 | `j` |  `uint256` | Index of output token |
 | `dx` |  `uint256` | Amount of input coin[i] tokens |
 | `swap` |  `address` | Pool contract address  |
+
+Returns: `dy` (`uint256`).
 
 <SourceCode>
 
@@ -72,14 +73,14 @@ def get_dy(
 
 Getter method for the amount of coin[i] tokens to input for swapping out dy amount of coin[j]
 
-Returns: dx (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `i` |  `uint256` | Index of input token (check pool.coins(i) to get coin address at i-th index) |
 | `j` |  `uint256` | Index of output token |
 | `dy` |  `uint256` | amount of input coin[j] tokens received |
 | `swap` |  `address` | Pool contract address  |
+
+Returns: dx (`uint256`).
 
 :::note
 
@@ -135,13 +136,13 @@ def get_dx(
 
 Getter method for the output tokens (including fees) when withdrawing one coin.
 
-Returns: amount of output tokens (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `token_amount` |  `uint256` | LP token amount |
 | `i` |  `uint256` | Index of the token to withdraw |
 | `swap` |  `address` | Pool contract address  |
+
+Returns: amount of output tokens (`uint256`).
 
 <SourceCode>
 
@@ -237,13 +238,13 @@ def _calc_withdraw_one_coin(
 
 Function to calculate LP tokens minted or to be burned for depositing or removing `amounts` of coins to or from `swap`.
 
-Returns: LP token amount to be burned/minted (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `amounts` |  `uint256[N_COINS]` | LP token amount |
 | `deposit` |  `bool` | `True` = deposit, `False` = withdraw |
 | `swap` |  `address` | Pool contract address  |
+
+Returns: LP token amount to be burned/minted (`uint256`).
 
 <SourceCode>
 
@@ -337,14 +338,14 @@ Methods to calculate fees for **`get_dy`**, **`withdraw_one_coin`**and **`calc_t
 
 Function to calculate the fees for `get_dy`.
 
-Returns: fee (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `i` |  `uint256` | Index of input token (check pool.coins(i) to get coin address at i-th index) |
 | `j` |  `uint256` | Index of output token |
 | `dx` |  `uint256` | Amount of input coin[i] tokens |
 | `swap` |  `address` | Pool contract address  |
+
+Returns: fee (`uint256`).
 
 <SourceCode>
 
@@ -421,13 +422,13 @@ def _get_dy_nofee(
 
 Function to calculate the fees for `withdraw_one_coin`.
 
-Returns: fee (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `token_amount` |  `uint256` | LP token amount |
 | `i` |  `uint256` | Index of the token to withdraw |
 | `swap` |  `address` | Pool contract address  |
+
+Returns: fee (`uint256`).
 
 <SourceCode>
 
@@ -523,13 +524,13 @@ def _calc_withdraw_one_coin(
 
 Function to calculate the fees for `calc_token_amount`.
 
-Returns: fee (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `amounts` |  `uint256[N_COINS]` | LP token amount |
 | `deposit` |  `bool` | `True` = deposit, `False` = withdraw |
 | `swap` |  `address` | Pool contract address  |
+
+Returns: fee (`uint256`).
 
 <SourceCode>
 

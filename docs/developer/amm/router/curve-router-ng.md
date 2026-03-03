@@ -7,7 +7,7 @@ Additionally, the contract provides **functions to calculate input and output am
 
 :::deploy[Contract Source & Deployment]
 
-The `CurveRouterNG` contract has been deployed on most chains where Curve liquidity pools exist. For a full list of all deployments, see [here](../deployments.md).
+The `CurveRouterNG` contract has been deployed on most chains where Curve liquidity pools exist. For a full list of all deployments, see [here](../../deployments.md).
 
 Source code for the contract can be found on [ GitHub](https://github.com/curvefi/curve-router-ng/tree/master/contracts).
 

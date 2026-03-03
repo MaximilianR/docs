@@ -1,8 +1,11 @@
+# Math Contract
 
-**The Math Contract provides AMM Math for 3-coin Curve Cryptoswap Pools.**:::deploy[Contract Source & Deployment]
+**The Math Contract provides AMM Math for 3-coin Curve Cryptoswap Pools.**
+
+:::deploy[Contract Source & Deployment]
 
 Source code for this contract is available on [Github](https://github.com/curvefi/tricrypto-ng/blob/main/contracts/main/CurveCryptoMathOptimized3.vy). 
-Full list of all deployments can be found [here](../../deployments.md).
+Full list of all deployments can be found [here](../../../deployments.md).
 
 
 :::
@@ -18,8 +21,6 @@ Full list of all deployments can be found [here](../../deployments.md).
 
 Function to calculate x[i] given other balances x[0..N_COINS-1] and invariant D.
 
-Returns: y (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_ANN` |  `uint256` | ANN = A * N**N |
@@ -27,6 +28,8 @@ Returns: y (`uint256`).
 | `x` |  `uint256[N_COINS]` | Balances multiplied by prices and precisions of all coins |
 | `_D` |  `uint256` | Invariant |
 | `i` |  `uint256` | Index of coin to calculate y |
+
+Returns: y (`uint256`).
 
 <SourceCode>
 
@@ -249,8 +252,8 @@ def get_y(
 
 
 ```shell
->>> Math.get_y('todo')
-'todo'
+>>> Math.get_y(54321000, 14500000000000, [10**18, 10**18, 10**18], 3 * 10**18, 0)
+[999999999999999999, 0]
 ```
 
 
@@ -265,14 +268,14 @@ def get_y(
 
 Function to calculate the invariant with Newtons method using good initial guesses.
 
-Returns: D invariant (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `ANN` |  `uint256` | ANN = A * N**N |
 | `gamma` |  `uint256` | AMM.gamma() value |
 | `x_unsorted` |  `uint256[N_COINS]` | Unsorted array of coin balances |
 | `K0_prev` |  `uint256` | apriori for newton's method derived from get_y_int. Defaults to zero (no apriori) |
+
+Returns: D invariant (`uint256`).
 
 <SourceCode>
 
@@ -487,8 +490,8 @@ def newton_D(
 
 
 ```shell
->>> Math.newton_D()
-'todo'
+>>> Math.newton_D(54321000, 14500000000000, [10**18, 10**18, 10**18])
+3000000000000000000
 ```
 
 
@@ -503,13 +506,13 @@ def newton_D(
 
 Function to calculate dx/dy.
 
-Returns: dx/dy (`uint256[N_COINS-1]`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_xp` |  `uint256[N_COINS]` | Balances of the pool |
 | `_D` |  `uint256` | Current value of D |
 | `_A_gamma` |  `uint256[N_COINS-1]` | Amplification coefficient and gamma |
+
+Returns: dx/dy (`uint256[N_COINS-1]`).
 
 <SourceCode>
 
@@ -581,8 +584,8 @@ def get_p(
 
 
 ```shell
->>> Math.get_p('todo')
-'todo'
+>>> Math.get_p([10**18, 10**18, 10**18], 3 * 10**18, [54321000, 14500000000000])
+[1000000000000000000, 1000000000000000000]
 ```
 
 
@@ -597,13 +600,13 @@ def get_p(
 ::::description[`Math.cbrt(x: uint256) -> uint256:`]
 
 
-Function to calculate the cubic root of `x` in 1e18 precision.  
-
-Returns: cubic root (`uint256`).
+Function to calculate the cubic root of `x` in 1e18 precision.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `x` |  `uint256` | Value to calculate cubic root for |
+
+Returns: cubic root (`uint256`).
 
 :::tip
 
@@ -756,11 +759,11 @@ def _snekmate_log_2(x: uint256, roundup: bool) -> uint256:
 
 Function to calculate the geometric mean of a list of numbers in 1e18 precision.
 
-Returns: gemoetric mean (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_x` |  `uint256` | list of three numbers |
+
+Returns: gemoetric mean (`uint256`).
 
 <SourceCode>
 
@@ -870,12 +873,12 @@ def _cbrt(x: uint256) -> uint256:
 
 Function to calculate the reduction coefficient for `x` and `fee_gamma`. This method is used for calculating fees.
 
-Returns: reduction coefficient (`uint256`).
-
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `x` |  `uint256[N_COINS]` | Values of x |
 | `fee_gamma` |  `uint256` | Fee gamma |
+
+Returns: reduction coefficient (`uint256`).
 
 <SourceCode>
 
@@ -935,13 +938,13 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 ::::description[`Math.wad_exp(_power: int256) -> uint256:`]
 
 
-Function to calculate the natural exponential function of a signed integer with a precision of 1e18.  
-
-Returns: natural exponential (`uint256`).
+Function to calculate the natural exponential function of a signed integer with a precision of 1e18.
 
 | Input      | Type   | Description |
 | ----------- | -------| ----|
 | `_power` |  `int256` | Value to calculate the natural exponential function of|
+
+Returns: natural exponential (`uint256`).
 
 :::tip
 

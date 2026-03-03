@@ -1,8 +1,16 @@
-A Twocrypto-NG pool consists of **two non-pegged assets**. The LP token is a ERC-20 token integrated directly into the liquidity pool.
+# CurveTwocryptoOptimized
 
-:::info[Liquidity Pool (LP) Token]
+A Twocrypto-NG pool consists of **two non-pegged assets**. The LP token is an ERC-20 token integrated directly into the liquidity pool.
 
-The LP token is directly integrated into the exchange contract. Pool and LP token share the same address. 
+:::vyper[`CurveTwocryptoOptimized.vy`]
+
+The source code for the `CurveTwocryptoOptimized.vy` contract can be found on [GitHub](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/CurveTwocryptoOptimized.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.10`.
+
+This is a **blueprint contract** — individual pools are deployed via the [Factory](../../factory/twocrypto-ng/overview.md). Pool and LP token share the same address. Full list of all deployments can be found [here](../../../deployments.md).
+
+:::
+
+:::info
 
 The token has the regular ERC-20 methods, which will not be further documented.
 
@@ -200,10 +208,6 @@ def _transfer_out(_coin_idx: uint256, _amount: uint256, receiver: address):
 
 Function to exchange `dx` amount of coin `i` for coin `j` and receive a minimum amount of `min_dy`. Charged fee at current states is `Pool.fee()`.
 
-Returns: amount of output coin `j` received (`uint256`).
-
-Emits: `TokenExchange`
-
 | Input       | Type      | Description                                                |
 | ----------- | --------- | ---------------------------------------------------------- |
 | `i`         | `uint256` | Index value for the input coin.                            |
@@ -212,6 +216,9 @@ Emits: `TokenExchange`
 | `min_dy`    | `uint256` | Minimum amount of output coin to receive.                  |
 | `receiver`  | `address` | Address to send output coin to. Defaults to `msg.sender`.  |
 
+Returns: amount of output coin `j` received (`uint256`).
+
+Emits: `TokenExchange`
 
 <SourceCode>
 ```vyper
@@ -593,10 +600,6 @@ The transfer of coins into the pool and then calling `exchange_received` is high
 
 Function to exchange `dx` amount of coin `i` for coin `j` and receive a minimum amount of `min_dy`. This function requires a transfer of `dx` amount of coin `i` to the pool prior to calling this function, as this exchange is based on the change of token balances in the pool. The pool will not call `transferFrom` and will only check if a surplus of `coins[i]` is greater than or equal to `dx`. Charged fee at current states is `Pool.fee()`.
 
-Returns: amount of output coin `j` received (`uint256`).
-
-Emits: `TokenExchange`
-
 | Input       | Type      | Description                                                |
 | ----------- | --------- | ---------------------------------------------------------- |
 | `i`         | `uint256` | Index value for the input coin.                            |
@@ -604,6 +607,10 @@ Emits: `TokenExchange`
 | `dx`        | `uint256` | Amount of input coin being swapped in.                     |
 | `min_dy`    | `uint256` | Minimum amount of output coin to receive.                  |
 | `receiver`  | `address` | Address to send output coin to. Defaults to `msg.sender`.  |
+
+Returns: amount of output coin `j` received (`uint256`).
+
+Emits: `TokenExchange`
 
 
 <SourceCode>
@@ -984,13 +991,13 @@ def get_y(
 
 Getter for the received amount of coin `j` for swapping in `dx` amount of coin `i`. This method includes fees.
 
-Returns: exact amount of output coin `j` (`uint256`).
-
 | Input | Type      | Description               |
 | ----- | --------- | ------------------------- |
 | `i`   | `uint256` | Index of input token.     |
 | `j`   | `uint256` | Index of output token.    |
 | `dx`  | `uint256` | Amount of input tokens.   |
+
+Returns: exact amount of output coin `j` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -1226,13 +1233,13 @@ def get_y(
 
 Getter for the required amount of coin `i` to input for swapping out `dy` amount of token `j`.
 
-Returns: amount of input coin `i` needed (`uint256`).
-
 | Input | Type      | Description               |
 | ----- | --------- | ------------------------- |
 | `i`   | `uint256` | Index of input token.     |
 | `j`   | `uint256` | Index of output token.    |
 | `dy`  | `uint256` | Amount of output tokens.  |
+
+Returns: amount of input coin `i` needed (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -1475,11 +1482,11 @@ def get_y(
 
 Getter for the charged exchange fee by the pool at the current state.
 
-Returns: fee (`uint256`).
-
 | Input | Type               | Description                                      |
 | ----- | ------------------ | ------------------------------------------------ |
 | `xp`  | `uint256[N_COINS]` | Pool balances multiplied by the coin precisions. |
+
+Returns: fee (`uint256`).
 
 <SourceCode>
 
@@ -1544,15 +1551,15 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
 
 Function to add liquidity to the pool and mint the corresponding LP tokens.
 
-Returns: amount of LP tokens received (`uint256`).
-
-Emits: `AddLiquidity`
-
 | Input            | Type                | Description                                           |
 | ---------------- | ------------------- | ----------------------------------------------------- |
 | `amounts`        | `uint256[N_COINS]`  | Amount of each coin to add.                           |
 | `min_mint_amount`| `uint256`           | Minimum amount of LP tokens to mint.                  |
 | `receiver`       | `address`           | Receiver of the LP tokens; defaults to `msg.sender`.  |
+
+Returns: amount of LP tokens received (`uint256`).
+
+Emits: `AddLiquidity`
 
 <SourceCode>
 ```vyper
@@ -1793,12 +1800,12 @@ def newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev
 
 Function to calculate the charged fee on `amounts` when adding liquidity.
 
-Returns: fee (`uint256`).
-
 | Input    | Type                | Description                                      |
 | -------- | ------------------- | ------------------------------------------------ |
 | `amounts`| `uint256[N_COINS]`  | Amount of coins added to the pool.               |
 | `xp`     | `uint256[N_COINS]`  | Pool balances multiplied by the coin precisions. |
+
+Returns: fee (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -1867,15 +1874,15 @@ In case of any issues that result in a malfunctioning AMM state, users can safel
 
 Function to remove liquidity from the pool and burn `_amount` of LP tokens. When removing liquidity with this function, no fees are charged as the coins are withdrawn in balanced proportions. This function also updates the `xcp_oracle` since liquidity was removed.
 
-Returns: withdrawn balances (`uint256[N_COINS]`).
-
-Emits: `RemoveLiquidity`
-
 | Input         | Type                | Description                                      |
 | ------------- | ------------------- | ------------------------------------------------ |
 | `_amount`     | `uint256`           | Amount of LP tokens to burn.                     |
 | `min_amounts` | `uint256[N_COINS]`  | Minimum amounts of tokens to withdraw.           |
 | `receiver`    | `address`           | Receiver of the coins; defaults to `msg.sender`. |
+
+Returns: withdrawn balances (`uint256[N_COINS]`).
+
+Emits: `RemoveLiquidity`
 
 <SourceCode>
 ```vyper
@@ -2070,16 +2077,16 @@ def wad_exp(x: int256) -> int256:
 
 Function to burn `token_amount` LP tokens and withdraw liquidity in a single token `i`.
 
-Returns: amount of coins withdrawn (`uint256`).
-
-Emits: `RemoveLiquidityOne`
-
 | Input          | Type      | Description                                      |
 | -------------- | --------- | ------------------------------------------------ |
 | `token_amount` | `uint256` | Amount of LP tokens to burn.                     |
 | `i`            | `uint256` | Index of the token to withdraw.                  |
 | `min_amount`   | `uint256` | Minimum amount of token to withdraw.             |
 | `receiver`     | `address` | Receiver of the coins; defaults to `msg.sender`. |
+
+Returns: amount of coins withdrawn (`uint256`).
+
+Emits: `RemoveLiquidityOne`
 
 <SourceCode>
 ```vyper
@@ -2497,12 +2504,12 @@ def get_y(
 
 Function to calculate the LP tokens to be minted or burned for depositing or removing `amounts` of coins. This method takes fees into consideration.
 
-Returns: amount of LP tokens deposited or withdrawn (`uint256`).
-
 | Input      | Type               | Description                                     |
 | ---------- | ------------------ | ----------------------------------------------- |
 | `amounts`  | `uint256[N_COINS]` | Amounts of tokens being deposited or withdrawn. |
 | `deposit`  | `bool`             | `true` for deposit, `false` for withdrawal.     |
+
+Returns: amount of LP tokens deposited or withdrawn (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -2652,12 +2659,12 @@ Out [1]:  37707043389433059543
 
 Function to calculate the amount of output token `i` when burning `token_amount` of LP tokens. This method takes fees into consideration.
 
-Returns: amount of tokens to receive (`uint256`).
-
 | Input         | Type      | Description                              |
 | ------------- | --------- | ---------------------------------------- |
 | `token_amount`| `uint256` | Amount of LP tokens burned.              |
 | `i`           | `uint256` | Index of the coin to withdraw.           |
+
+Returns: amount of tokens to receive (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -3002,7 +3009,7 @@ Out [2]:  150537307454780254829
 
 ## Fees and Pool Profits
 
-The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../cryptoswap-overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](./admin-controls.md#apply_new_parameters) by the admin.
+The cryptoswap algorithm uses different fees, such as `fee`, `mid_fee`, `out_fee`, or `fee_gamma` to determine the fees charged, more on that [here](../../legacy/cryptoswap-overview.md#fees). All Fee values are denominated in 1e10 and [can be changed](#apply_new_parameters) by the admin.
 
 Additionally, just as for other curve pools, there is an `ADMIN_FEE`, which is hardcoded to 50%. All twocrypto-ng pools share a universal `fee_receiver`, which is determined within the Factory contract. Unlike for most other Curve pools, there is no external method to claim the admin fees. They are claimed when removing liquidity single sided.
 
@@ -3395,7 +3402,7 @@ Out [1]:  4177413767556756716238
 
 ## Price Scaling
 
-Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../cryptoswap-overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](./admin-controls.md#apply_new_parameters).
+Curve v2 pools automatically adjust liquidity to optimize depth close to the prevailing market rates, reducing slippage. More [here](../../legacy/cryptoswap-overview.md#price-scaling). Price scaling parameter can be adjusted by the [admin](#apply_new_parameters).
 
 
 ### `price_scale`
@@ -3549,9 +3556,9 @@ Out [1]:  680564733841876929619973849625130958848000000000600
 
 ## Bonding Curve Parameters
 
-A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../cryptoswap-overview.md#bonding-curve-parameters).
+A bonding curve is used to determine asset prices according to the pool's supply of each asset, more [here](../../legacy/cryptoswap-overview.md#bonding-curve-parameters).
 
-Bonding curve parameters `A` and `gamma` values are [upgradable](./admin-controls.md#parameter-changes) by the the pools admin.
+Bonding curve parameters `A` and `gamma` values are [upgradable](#parameter-changes) by the the pools admin.
 
 ### `A`
 ::::description[`TwoCrypto.A() -> uint256:`]
@@ -4606,11 +4613,11 @@ Out [1]:  '0x2005995a71243be9FB995DaB4742327dc76564Df'
 
 Getter for the coin at index `arg0` in the pool.
 
-Returns: precision of coins (`uint256[N_COINS]`).
-
 | Input | Type      | Description  |
 | ----- | --------- | ------------ |
 | `arg0`| `uint256` | Coin index.  |
+
+Returns: precision of coins (`uint256[N_COINS]`).
 
 <SourceCode>
 ```vyper
@@ -4708,11 +4715,11 @@ Out [1]:  '0x98EE851a00abeE0d95D08cF4CA2BdCE32aeaAF7F'
 
 Getter for the current coin balances in the pool.
 
-Returns: coin balances (`uint256`).
-
 | Input | Type      | Description  |
 | ----- | --------- | ------------ |
 | `arg0`| `uint256` | Coin index.  |
+
+Returns: coin balances (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -4729,6 +4736,441 @@ Out [1]:  55021540803117067316
 
 In  [2]:  Pool.balances(1)
 Out [2]:  317141267512073253038923
+```
+
+</Example>
+
+
+::::
+
+
+## Admin Controls
+
+Liquidity pools are deployed via the [Factory](../../factory/twocrypto-ng/overview.md). All pools deployed **share the same admin** defined within the Factory contract.
+Transferring the ownership of a pool is only possible by changing the ownership of the Factory. Admin is the Curve DAO (OwnershipAdmin).
+
+The same applies to the fee receiver of the pools. See [Factory Ownership](../../factory/overview.md#contract-ownership).
+
+
+### Parameter Changes
+
+For more information about parameters: [https://nagaking.substack.com/p/deep-dive-curve-v2-parameters](https://nagaking.substack.com/p/deep-dive-curve-v2-parameters).
+
+The appropriate value for `A` and `gamma` is dependent upon the type of coin being used within the pool, and is subject to optimization and pool-parameter update based on the market history of the trading pair.
+
+It is possible to modify the parameters for a pool after it has been deployed. Again, only the admin of the pool (= Factory admin) can do so.
+
+
+### `ramp_A_gamma`
+::::description[`TwoCrypto.ramp_A_gamma(future_A: uint256, future_gamma: uint256, future_time: uint256)`]
+
+
+:::guard[Guarded Method]
+
+This function can only be called by the `admin` of the Factory contract.
+
+
+:::
+
+Function to linearly ramp the values of `A` and `gamma`.
+
+| Input          | Type      | Description           |
+| -------------- | --------- | --------------------- |
+| `future_A`     | `uint256` | Future value of `A`   |
+| `future_gamma` | `uint256` | Future value of `gamma` |
+| `future_time`  | `uint256` | Timestamp at which the ramping will end |
+
+Emits: `RampAgamma`
+
+<SourceCode>
+```vyper
+event RampAgamma:
+    initial_A: uint256
+    future_A: uint256
+    initial_gamma: uint256
+    future_gamma: uint256
+    initial_time: uint256
+    future_time: uint256
+
+@external
+def ramp_A_gamma(
+    future_A: uint256, future_gamma: uint256, future_time: uint256
+):
+    """
+    @notice Initialise Ramping A and gamma parameter values linearly.
+    @dev Only accessible by factory admin, and only
+    @param future_A The future A value.
+    @param future_gamma The future gamma value.
+    @param future_time The timestamp at which the ramping will end.
+    """
+    assert msg.sender == factory.admin()  # dev: only owner
+    assert block.timestamp > self.initial_A_gamma_time + (MIN_RAMP_TIME - 1)  # dev: ramp undergoing
+    assert future_time > block.timestamp + MIN_RAMP_TIME - 1  # dev: insufficient time
+
+    A_gamma: uint256[2] = self._A_gamma()
+    initial_A_gamma: uint256 = A_gamma[0] << 128
+    initial_A_gamma = initial_A_gamma | A_gamma[1]
+
+    assert future_A > MIN_A - 1
+    assert future_A < MAX_A + 1
+    assert future_gamma > MIN_GAMMA - 1
+    assert future_gamma < MAX_GAMMA + 1
+
+    ratio: uint256 = 10**18 * future_A / A_gamma[0]
+    assert ratio < 10**18 * MAX_A_CHANGE + 1
+    assert ratio > 10**18 / MAX_A_CHANGE - 1
+
+    ratio = 10**18 * future_gamma / A_gamma[1]
+    assert ratio < 10**18 * MAX_A_CHANGE + 1
+    assert ratio > 10**18 / MAX_A_CHANGE - 1
+
+    self.initial_A_gamma = initial_A_gamma
+    self.initial_A_gamma_time = block.timestamp
+
+    future_A_gamma: uint256 = future_A << 128
+    future_A_gamma = future_A_gamma | future_gamma
+    self.future_A_gamma_time = future_time
+    self.future_A_gamma = future_A_gamma
+
+    log RampAgamma(
+        A_gamma[0],
+        future_A,
+        A_gamma[1],
+        future_gamma,
+        block.timestamp,
+        future_time,
+    )
+```
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TwoCrypto.ramp_A_gamma(2700000, 1300000000000, 1693674492)
+```
+
+
+</Example>
+
+
+::::
+
+### `stop_ramp_A_gamma`
+::::description[`TwoCrypto.stop_ramp_A_gamma()`]
+
+
+:::guard[Guarded Method]
+
+This function can only be called by the `admin` of the Factory contract.
+
+
+:::
+
+Function to immediately stop the ramping of A and gamma parameters and set them to their current values.
+
+Emits: `StopRampA`
+
+<SourceCode>
+```vyper
+event StopRampA:
+    current_A: uint256
+    current_gamma: uint256
+    time: uint256
+
+@external
+def stop_ramp_A_gamma():
+    """
+    @notice Stop Ramping A and gamma parameters immediately.
+    @dev Only accessible by factory admin.
+    """
+    assert msg.sender == factory.admin()  # dev: only owner
+
+    A_gamma: uint256[2] = self._A_gamma()
+    current_A_gamma: uint256 = A_gamma[0] << 128
+    current_A_gamma = current_A_gamma | A_gamma[1]
+    self.initial_A_gamma = current_A_gamma
+    self.future_A_gamma = current_A_gamma
+    self.initial_A_gamma_time = block.timestamp
+    self.future_A_gamma_time = block.timestamp
+
+    # ------ Now (block.timestamp < t1) is always False, so we return saved A.
+
+    log StopRampA(A_gamma[0], A_gamma[1], block.timestamp)
+```
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TwoCrypto.stop_ramp_A_gamma()
+```
+
+
+</Example>
+
+
+::::
+
+### `apply_new_parameters`
+::::description[`TwoCrypto.apply_new_parameters(_new_mid_fee: uint256, _new_out_fee: uint256, _new_fee_gamma: uint256, _new_allowed_extra_profit: uint256, _new_adjustment_step: uint256, _new_ma_time: uint256, _new_xcp_ma_time: uint256)`]
+
+
+:::guard[Guarded Method]
+
+This function can only be called by the `admin` of the Factory contract.
+
+
+:::
+
+Function to commit new parameters. The new parameters are applied immediately.
+
+| Input                   | Type      | Description                                         |
+| ----------------------- | --------- | --------------------------------------------------- |
+| `_new_mid_fee`          | `uint256` | New `mid_fee` value.                                |
+| `_new_out_fee`          | `uint256` | New `out_fee` value.                                |
+| `_new_fee_gamma`        | `uint256` | New `fee_gamma` value.                              |
+| `_new_allowed_extra_profit` | `uint256` | New `allowed_extra_profit` value.               |
+| `_new_adjustment_step`  | `uint256` | New `adjustment_step` value.                        |
+| `_new_ma_time`          | `uint256` | New `ma_time` value, which is time_in_seconds/ln(2).|
+| `_new_xcp_ma_time`      | `uint256` | New ma time for xcp oracles.                       |
+
+Emits: `NewParameters`
+
+<SourceCode>
+```vyper
+event NewParameters:
+    mid_fee: uint256
+    out_fee: uint256
+    fee_gamma: uint256
+    allowed_extra_profit: uint256
+    adjustment_step: uint256
+    ma_time: uint256
+    xcp_ma_time: uint256
+
+@external
+@nonreentrant('lock')
+def apply_new_parameters(
+    _new_mid_fee: uint256,
+    _new_out_fee: uint256,
+    _new_fee_gamma: uint256,
+    _new_allowed_extra_profit: uint256,
+    _new_adjustment_step: uint256,
+    _new_ma_time: uint256,
+    _new_xcp_ma_time: uint256,
+):
+    """
+    @notice Commit new parameters.
+    @dev Only accessible by factory admin.
+    @param _new_mid_fee The new mid fee.
+    @param _new_out_fee The new out fee.
+    @param _new_fee_gamma The new fee gamma.
+    @param _new_allowed_extra_profit The new allowed extra profit.
+    @param _new_adjustment_step The new adjustment step.
+    @param _new_ma_time The new ma time. ma_time is time_in_seconds/ln(2).
+    @param _new_xcp_ma_time The new ma time for xcp oracle.
+    """
+    assert msg.sender == factory.admin()  # dev: only owner
+
+    # ----------------------------- Set fee params ---------------------------
+
+    new_mid_fee: uint256 = _new_mid_fee
+    new_out_fee: uint256 = _new_out_fee
+    new_fee_gamma: uint256 = _new_fee_gamma
+
+    current_fee_params: uint256[3] = self._unpack_3(self.packed_fee_params)
+
+    if new_out_fee < MAX_FEE + 1:
+        assert new_out_fee > MIN_FEE - 1  # dev: fee is out of range
+    else:
+        new_out_fee = current_fee_params[1]
+
+    if new_mid_fee > MAX_FEE:
+        new_mid_fee = current_fee_params[0]
+    assert new_mid_fee <= new_out_fee  # dev: mid-fee is too high
+
+    if new_fee_gamma < 10**18:
+        assert new_fee_gamma > 0  # dev: fee_gamma out of range [1 .. 10**18]
+    else:
+        new_fee_gamma = current_fee_params[2]
+
+    self.packed_fee_params = self._pack_3([new_mid_fee, new_out_fee, new_fee_gamma])
+
+    # ----------------- Set liquidity rebalancing parameters -----------------
+
+    new_allowed_extra_profit: uint256 = _new_allowed_extra_profit
+    new_adjustment_step: uint256 = _new_adjustment_step
+    new_ma_time: uint256 = _new_ma_time
+
+    current_rebalancing_params: uint256[3] = self._unpack_3(self.packed_rebalancing_params)
+
+    if new_allowed_extra_profit > 10**18:
+        new_allowed_extra_profit = current_rebalancing_params[0]
+
+    if new_adjustment_step > 10**18:
+        new_adjustment_step = current_rebalancing_params[1]
+
+    if new_ma_time < 872542:  # <----- Calculated as: 7 * 24 * 60 * 60 / ln(2)
+        assert new_ma_time > 86  # dev: MA time should be longer than 60/ln(2)
+    else:
+        new_ma_time = current_rebalancing_params[2]
+
+    self.packed_rebalancing_params = self._pack_3(
+        [new_allowed_extra_profit, new_adjustment_step, new_ma_time]
+    )
+
+    # Set xcp oracle moving average window time:
+    new_xcp_ma_time: uint256 = _new_xcp_ma_time
+    if new_xcp_ma_time < 872542:
+        assert new_xcp_ma_time > 86  # dev: xcp MA time should be longer than 60/ln(2)
+    else:
+        new_xcp_ma_time = self.xcp_ma_time
+    self.xcp_ma_time = new_xcp_ma_time
+
+    # ---------------------------------- LOG ---------------------------------
+
+    log NewParameters(
+        new_mid_fee,
+        new_out_fee,
+        new_fee_gamma,
+        new_allowed_extra_profit,
+        new_adjustment_step,
+        new_ma_time,
+        _new_xcp_ma_time,
+    )
+```
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TwoCrypto.apply_new_parameters(20000000, 45000000, 350000000000000, 100000000000, 100000000000, 1800, 1800)
+```
+
+
+</Example>
+
+
+::::
+
+### `initial_A_gamma`
+::::description[`TwoCrypto.initial_A_gamma -> uint256: view`]
+
+
+Getter for the initial A/gamma.
+
+Returns: A/gamma (`uint256`).
+
+<SourceCode>
+```vyper
+initial_A_gamma: public(uint256)
+```
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TwoCrypto.initial_A_gamma()
+581076037942835227425498917514114728328226821
+```
+
+
+</Example>
+
+
+::::
+
+### `initial_A_gamma_time`
+::::description[`TwoCrypto.initial_A_gamma_time -> uint256: view`]
+
+
+Getter for the initial A/gamma time.
+
+Returns: A/gamma time (`uint256`).
+
+<SourceCode>
+```vyper
+initial_A_gamma_time: public(uint256)
+```
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TwoCrypto.initial_A_gamma_time()
+0
+```
+
+
+</Example>
+
+
+::::
+
+### `future_A_gamma`
+::::description[`TwoCrypto.future_A_gamma -> uint256: view`]
+
+
+Getter for the future A/gamma.
+
+Returns: future A/gamma (`uint256`).
+
+<SourceCode>
+```vyper
+future_A_gamma: public(uint256)
+```
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TwoCrypto.future_A_gamma()
+581076037942835227425498917514114728328226821
+```
+
+
+</Example>
+
+
+::::
+
+### `future_A_gamma_time`
+::::description[`TwoCrypto.future_A_gamma_time -> uint256: view`]
+
+
+:::info
+
+This value is initially set to 0 (default) when the pool is first deployed. It only gets populated by `block.timestamp + future_time` in the `ramp_A_gamma` function when the ramping process is initiated. After ramping is finished (i.e., `self.future_A_gamma_time < block.timestamp`), the variable is left as is and not set to 0.
+
+
+:::
+
+Getter for the future A/gamma time. This is the timestamp when the ramping process is finished.
+
+Returns: future A/gamma time (`uint256`).
+
+<SourceCode>
+```vyper
+future_A_gamma_time: public(uint256)  # <------ Time when ramping is finished.
+#         This value is 0 (default) when pool is first deployed, and only gets
+#        populated by block.timestamp + future_time in `ramp_A_gamma` when the
+#                      ramping process is initiated. After ramping is finished
+#      (i.e. self.future_A_gamma_time < block.timestamp), the variable is left
+#                                                            and not set to 0.
+```
+</SourceCode>
+
+<Example>
+
+
+```shell
+>>> TwoCrypto.future_A_gamma_time()
+0
 ```
 
 </Example>

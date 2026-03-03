@@ -32,6 +32,6 @@ The Stableswap-NG AMM infrastructure marks a sophisticated evolution from its or
 
 However, native tokens like ETH are not directly supported within this implementation. For transactions involving ETH, its wrapped version, wETH, must be utilized. This decision is rooted in ensuring higher security standards.
 
-Additionally, pools now have built-in [moving-average oracles](./stableswap-ng/pools/oracles.md).
+Additionally, pools now have built-in [moving-average oracles](../stableswap-ng/pools/oracles.md).
 
-For an in-depth exploration of the new features introduced by Stableswap-NG, please refer to the  [StableSwap-NG Overview](./stableswap-ng/overview.md).
+For an in-depth exploration of the new features introduced by Stableswap-NG, please refer to the  [StableSwap-NG Overview](../stableswap-ng/overview.md).

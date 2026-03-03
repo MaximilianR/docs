@@ -18,18 +18,18 @@ Stableswap was designed for pools of similarly priced assets, like stablecoins, 
 
 Let's look at an example with a `crvUSD/USDC` pool, where each block represents $1M in tokens:
 
-![Simple Stableswap Example](./assets/images/cryptoswap/stableswap-swap.png)
+![Simple Stableswap Example](../assets/images/cryptoswap/stableswap-swap.png)
 
 Stableswap pools are designed to function effectively even when heavily imbalanced. Depending on the **Amplification Coefficient** (`A`), pools can maintain close to 1:1 pricing even when significantly imbalanced. If the imbalance becomes large enough to cause a price deviation from the 1:1 peg, it creates an arbitrage opportunity. This incentivizes traders to rebalance the pool, with each swap generating fees for liquidity providers (LPs).
 
 While the blocks offer a helpful visual, Stableswap's liquidity is more accurately represented by a bonding curve:
 
-![Stableswap Liquidity Curve](./assets/images/cryptoswap/stableswap-liquidity-curve.png)
+![Stableswap Liquidity Curve](../assets/images/cryptoswap/stableswap-liquidity-curve.png)
 
 The shape of this liquidity bonding curve and how imbalanced a pool can become before price deviates from 1:1 is controlled by a parameter called `A`, the **Amplification Coefficient**:
 
 <figure>
-  <img src={require('./assets/images/cryptoswap/stableswap-a.png').default} alt="Stableswap A" width="500" />
+  <img src={require('../assets/images/cryptoswap/stableswap-a.png').default} alt="Stableswap A" width="500" />
 </figure>
 
 - A **higher `A`** (e.g., 1,000–20,000) concentrates liquidity more tightly around the peg. This provides deeper liquidity for swaps and allows pools to become very imbalanced before the price deviates significantly from 1:1. The trade-off is that if an asset moves far from the peg, liquidity and pricing can drop off sharply.
@@ -52,7 +52,7 @@ The shape of the Liquidity Bonding Curve is governed by two parameters: `A` whic
 
 Here is how they affect the curve in practice (note that orange curve are equal in both charts):
 
-![Cryptoswap A and Gamma](./assets/images/cryptoswap/a_and_gamma.png)
+![Cryptoswap A and Gamma](../assets/images/cryptoswap/a_and_gamma.png)
 
 As the image shows, a higher `A` means more liquidity is concentrated around the price at which it's balanced, called the `price_scale`.  Whereas a higher `gamma` means liquidity is spread wider.
 
@@ -73,7 +73,7 @@ In the following examples, the EMA Price and current price are assumed to be the
 
 Let's look at an example using a forex pool trading Euros (EUR) against US Dollars (USD):
 
-![Cryptoswap Liquidity & Rebalances](./assets/images/cryptoswap/cryptoswap-rebalances.png)
+![Cryptoswap Liquidity & Rebalances](../assets/images/cryptoswap/cryptoswap-rebalances.png)
 
 In this scenario, the pool performs a rebalance once the price hits the adjustment step, using up to 50% of its collected fees to cover the cost.
 
@@ -81,7 +81,7 @@ In this scenario, the pool performs a rebalance once the price hits the adjustme
 
 Rebalancing costs because you are offering your assets to be swapped in return for trading fees.  As price increases, you are selling your assets.  When you rebalance, you are rebuying your assets, but at a higher price, causing a loss.  Let's look at a very simple example of a concentrated liquidity range AMM:
 
-![Rebalancing Loss](./assets/images/cryptoswap/rebalancing-loss.png)
+![Rebalancing Loss](../assets/images/cryptoswap/rebalancing-loss.png)
 
 This example highlights two important takeaways about rebalancing:
 
@@ -109,7 +109,7 @@ Cryptoswap and all new Stableswap pools feature **dynamic fees** that adjust to 
 For Cryptoswap pools, this works as follows:
 
 <figure>
-  <img src={require('./assets/images/cryptoswap/cryptoswap-dynamic-fees.png').default} alt="Cryptoswap Dynamic Fees" width="500" />
+  <img src={require('../assets/images/cryptoswap/cryptoswap-dynamic-fees.png').default} alt="Cryptoswap Dynamic Fees" width="500" />
 </figure>
 
 ## Cryptoswap Benefits
@@ -132,13 +132,13 @@ A Cryptoswap pool's main safety feature is its refusal to rebalance at a loss to
 
 As the market price moves away from the pool's last rebalance price, the available liquidity for traders decreases. This leads to fewer swaps and, consequently, lower fee generation. Without enough profit from fees, the pool cannot afford to rebalance and follow the price, leaving its liquidity stranded.
 
-![Cryptoswap Stale Liquidity](./assets/images/cryptoswap/cryptoswap-stale-pools.png)
+![Cryptoswap Stale Liquidity](../assets/images/cryptoswap/cryptoswap-stale-pools.png)
 
 ## Monitoring Liquidity Balance within Pools
 
 To see how balanced liquidity is within a pool, navigate to the pool's page, for example, the [EURe/USDC pool on Arbitrum](https://www.curve.finance/dex/arbitrum/pools/factory-twocrypto-89/deposit). At the bottom of the pool details, click the `Advanced` tab. You will then see the following details:
 
-![Cryptoswap Pool Details UI](./assets/images/cryptoswap/price-scale.png)
+![Cryptoswap Pool Details UI](../assets/images/cryptoswap/price-scale.png)
 
 In the image above, you can see two key parameters:
 

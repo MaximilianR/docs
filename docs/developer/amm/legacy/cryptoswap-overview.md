@@ -35,8 +35,8 @@ For a detailed overview of the design, please read the official [whitepaper](/pd
 | :----------------: | ---------------------------------------------------------------------- |
 | **`CryptoSwap`**| Genesis two-coin volatile asset pool integration.                      |
 | **`Tricrypto`**| Genesis three-coin volatile asset pool integration.                    |
-| **`TwoCrypto-NG`**| Improved version of `CryptoSwap`, more [here](./twocrypto-ng/overview.md). |
-| **`Tricrypto-NG`**| Improved version of `Tricrypto`, more [here](./tricrypto-ng/overview.md).  |
+| **`TwoCrypto-NG`**| Improved version of `CryptoSwap`, more [here](../twocrypto-ng/overview.md). |
+| **`Tricrypto-NG`**| Improved version of `Tricrypto`, more [here](../tricrypto-ng/overview.md).  |
 
 
 ---
@@ -86,6 +86,6 @@ Fees are charged based on the balance/imbalance of the pool. Fee is low when the
 
 
 <figure>
-  <img src="../assets/images/curveV2_fee.png" alt="" width="400" />
+  <img src="../../../assets/images/curveV2_fee.png" alt="" width="400" />
   <figcaption></figcaption>
 </figure>

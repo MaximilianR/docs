@@ -26,7 +26,7 @@ Core smart contracts include the Curve DAO Token, governance infrastructure gove
 System of liquidity gauges and the `GaugeController` that directs CRV inflation to liquidity providers based on veCRV votes.
 
   </DocCard>
-  <DocCard title="Curve AMM" link="./curve-amm-overview" linkText="Getting started">
+  <DocCard title="Curve AMM" link="./amm/curve-amm-overview" linkText="Getting started">
 
 Implementation of StableSwap and CryptoSwap algorithms into on-chain exchange contracts, including Stableswap-NG, Twocrypto-NG, Tricrypto-NG, pool factories and routers.
 

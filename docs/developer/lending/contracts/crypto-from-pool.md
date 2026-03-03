@@ -11,7 +11,7 @@ The source code for the `CryptoFromPool.vy` contract can be found on [GitHub](ht
 
 :::
 
-The [`OneWayLendingFactory.vy`](./oneway-factory.md) has a [`create_from_pool`](./oneway-factory.md#create_from_pool) method which deploys the full lending market infrastucture along with a price oracle using a [`stableswap-ng`](../../stableswap-ng/pools/oracles.md), [`twocrypto-ng`](../../twocrypto-ng/overview.md) or [`tricrypto-ng`](../../tricrypto-ng/pools/oracles.md) pool. These pools all have a suitable exponential moving-average (EMA) oracle, which can be used in lending markets.
+The [`OneWayLendingFactory.vy`](./oneway-factory.md) has a [`create_from_pool`](./oneway-factory.md#create_from_pool) method which deploys the full lending market infrastucture along with a price oracle using a [`stableswap-ng`](../../amm/stableswap-ng/pools/oracles.md), [`twocrypto-ng`](../../amm/twocrypto-ng/overview.md) or [`tricrypto-ng`](../../amm/tricrypto-ng/pools/oracles.md) pool. These pools all have a suitable exponential moving-average (EMA) oracle, which can be used in lending markets.
 
 :::danger[Oracle Immutability]
 

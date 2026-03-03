@@ -6,7 +6,7 @@ import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 
 Source code is available on [ GitHub](https://github.com/curvefi/tricrypto-ng). The following documentation covers source code up until commit number [`33707fc`](https://github.com/curvefi/tricrypto-ng/commit/33707fc8b84e08786acf184fcfdb744eb4657a99).
 
-All tricrypto-ng deployments can be found in the "Deployment Addresses" section. [↗](../deployments.md).
+All tricrypto-ng deployments can be found in the "Deployment Addresses" section. [↗](../../deployments.md).
 
 
 :::
@@ -41,7 +41,7 @@ Contains **view methods relevant for integrators** and users. The address of the
   </DocCard>
   <DocCard title="Liquidity Gauge Blueprint">
 
-A liquidity gauge blueprint implementation which deploys a liquidity gauge of a pool on Ethereum. Gauges on sidechains must be deployed via the [RootChainGaugeFactory](../gauges/xchain-gauges/root-gauge-factory.md).
+A liquidity gauge blueprint implementation which deploys a liquidity gauge of a pool on Ethereum. Gauges on sidechains must be deployed via the [RootChainGaugeFactory](../../gauges/xchain-gauges/root-gauge-factory.md).
 
   </DocCard>
   <DocCard title="Price Oracles" link="./pools/oracles" linkText="Price Oracles">

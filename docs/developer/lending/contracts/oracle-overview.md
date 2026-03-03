@@ -50,7 +50,7 @@ This [oracle contract](https://arbiscan.io/address/0xbB82bf9a0C6739c0bacFdFFbcE3
 
 The price oracle from the first pool determines the price of FXN relative to ETH. The oracle from the second pool computes the price of wETH in terms of crvUSD. By combining these two prices, we can calculate the final price of FXN relative to crvUSD.[^1]
 
-[^1]: The `price_oracle` method in each pool always returns prices relative to the token at index 0 within the pool. For example, in the tricrypto-crvUSD pool, crvUSD is at index 0, wBTC at index 1, and wETH at index 2. Thus, `price_oracle(0)` returns the price of wBTC with respect to crvUSD, and `price_oracle(1)` returns the price of wETH with respect to crvUSD. More on oracles can be found [here](../../tricrypto-ng/pools/oracles.md).
+[^1]: The `price_oracle` method in each pool always returns prices relative to the token at index 0 within the pool. For example, in the tricrypto-crvUSD pool, crvUSD is at index 0, wBTC at index 1, and wETH at index 2. Thus, `price_oracle(0)` returns the price of wBTC with respect to crvUSD, and `price_oracle(1)` returns the price of wETH with respect to crvUSD. More on oracles can be found [here](../../amm/tricrypto-ng/pools/oracles.md).
 
 *Let's consider some actual values:*
 

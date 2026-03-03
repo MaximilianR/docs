@@ -1,10 +1,12 @@
 # Math Contract
 
 
-**The Math Contract provides AMM Math for 2-coin Curve Twocrypto-NG Pools.**:::deploy[Contract Source & Deployment]
+**The Math Contract provides AMM Math for 2-coin Curve Twocrypto-NG Pools.**
+
+:::deploy[Contract Source & Deployment]
 
 Source code for this contract is available on [Github](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/CurveCryptoMathOptimized2.vy). 
-Full list of all deployments can be found [here](../../deployments.md).
+Full list of all deployments can be found [here](../../../deployments.md).
 
 
 :::
@@ -28,12 +30,12 @@ Note that it returns 0 if given 0. The implementation is inspired by OpenZeppeli
 
 Function to calculate the logarithm base 2 of `x`, following the selected rounding direction.
 
-Returns: 32-byte calculation result (`uint256`).
-
 | Input   | Type      | Description                                      |
 | ------- | --------- | ------------------------------------------------ |
 | `x`     | `uint256` | 32-byte variable                                 |
 | `roundup` | `bool`  | Whether to round up or not. Default is `False` to round down |
+
+Returns: 32-byte calculation result (`uint256`).
 
 
 <SourceCode>
@@ -100,8 +102,6 @@ def _snekmate_log_2(x: uint256, roundup: bool) -> uint256:
 
 Function to calculate `y` given `ANN`, `gamma`, `x`, `D`, and `i`.
 
-Returns: `y` (`uint256`).
-
 | Input   | Type             | Description                                                         |
 |---------|------------------|---------------------------------------------------------------------|
 | `ANN`   | `uint256`        | Amplification coefficient adjusted by N; `ANN = A * N^N`            |
@@ -109,6 +109,8 @@ Returns: `y` (`uint256`).
 | `x`     | `uint256[N_COINS]` | Balances multiplied by prices and precisions of the coins         |
 | `D`     | `uint256`        | D invariant.                                                        |
 | `i`     | `uint256`        | Index of the coin for which to calculate `y`.                       |
+
+Returns: `y` (`uint256`).
 
 
 <SourceCode>
@@ -205,8 +207,6 @@ def _newton_y(ANN: uint256, gamma: uint256, x: uint256[N_COINS], D: uint256, i: 
 
 Function to calculate `y` given `_ANN`, `_gamma`, `_x`, `_D`, and `_i`.
 
-Returns: `y` (`uint256`).
-
 | Input   | Type             | Description                                                         |
 |---------|------------------|---------------------------------------------------------------------|
 | `_ANN`   | `uint256`        | Amplification coefficient adjusted by N; `ANN = A * N^N`           |
@@ -214,6 +214,8 @@ Returns: `y` (`uint256`).
 | `_x`     | `uint256[N_COINS]` | Balances multiplied by prices and precisions of the coins        |
 | `_D`     | `uint256`        | D invariant.                                                       |
 | `_i`     | `uint256`        | Index of the coin for which to calculate `y`.                      |
+
+Returns: `y` (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -370,14 +372,14 @@ def get_y(
 
 Function to find the D invariant using the Newton method.
 
-Returns: D invariant (`uint256`).
-
 | Input        | Type                | Description                                                                 |
 |--------------|---------------------|-----------------------------------------------------------------------------|
 | `_ANN`       | `uint256`           | Amplification coefficient adjusted by N; `_ANN = A * N^N`.                  |
 | `gamma`      | `uint256`           | Gamma value.                                                                |
 | `x_unsorted` | `uint256[N_COINS]`  | Unsorted array of the pool balances.                                        |
 | `K0_prev`    | `uint256`           | A priori for Newton's method derived from `get_y_int`. Defaults to zero if no a priori is provided. |
+
+Returns: D invariant (`uint256`).
 
 
 <SourceCode>
@@ -481,13 +483,13 @@ def newton_D(ANN: uint256, gamma: uint256, x_unsorted: uint256[N_COINS], K0_prev
 
 Function to calculate dx/dy. The output needs to be multiplied with `price_scale` to get the actual value. The function is externally called form a twocrypto-ng pools when prices are tweaked via [`tweak_price`](../pools/twocrypto.md#oracle-methods).
 
-Returns: dx/dy (`uint256`).
-
 | Input | Type | Description |
 | ----- | ---- | ----------- |
 | `_xp` |  `uint256[N_COINS]` | Balances of the pool. |
 | `_D` |  `uint256` | Current value of D. |
 | `_A_gamma` |  `uint256[N_COINS]` | Amplification coefficient and gamma. |
+
+Returns: dx/dy (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -553,11 +555,11 @@ def get_p(
 
 Function to calculate the natural exponential function of a signed integer with a precision of 1e18.
 
-Returns: 32-byte calculation result (`int256`).
-
 | Input | Type | Description |
 | ----- | ---- | ----------- |
 | `x` |  `int256` | 32-byte variable |
+
+Returns: 32-byte calculation result (`int256`).
 
 <SourceCode>
 ```vyper

@@ -211,7 +211,7 @@ def deploy_pool(
 
 :::warning
 
-Deploying a liquidity gauge through the Factory is only possible on Ethereum Mainnet. Gauge deployments on sidechains must be done via the [`RootChainGaugeFactory`](../../gauges/xchain-gauges/root-gauge-factory.md).
+Deploying a liquidity gauge through the Factory is only possible on Ethereum Mainnet. Gauge deployments on sidechains must be done via the [`RootChainGaugeFactory`](../../../gauges/xchain-gauges/root-gauge-factory.md).
 
 
 :::
