@@ -8,7 +8,7 @@ import CrvusdSupply from '@site/src/components/LiveComponents/CrvusdSupply';
 import InlinePill from '@site/src/components/InlinePill';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 
-import CrvusdLogo from '@site/static/img/logos/crvUSD_s.png';
+import CrvusdLogo from '@site/static/img/logos/crvusd.png';
 
 # <img src={CrvusdLogo} className="heading-inline-logo" alt="crvUSD" /> crvUSD
 

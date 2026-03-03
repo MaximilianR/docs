@@ -7,9 +7,9 @@ export const ALL_BUTTONS = {
     line1: 'Lock',
     line2Content: (
       <>
-        <ButtonIcon src="/img/logos/CRV_s.png" alt="CRV" />
+        <ButtonIcon src="/img/logos/crv.png" alt="CRV" />
         CRV &nbsp; ⟶ &nbsp;
-        <ButtonIcon src="/img/logos/veCRV_s.png" alt="veCRV" />
+        <ButtonIcon src="/img/logos/vecrv.png" alt="veCRV" />
         veCRV
       </>
     ),
@@ -19,7 +19,7 @@ export const ALL_BUTTONS = {
     line1: 'Claim',
     line2Content: (
       <>
-        <ButtonIcon src="/img/logos/veCRV_s.png" alt="veCRV" />
+        <ButtonIcon src="/img/logos/vecrv.png" alt="veCRV" />
         veCRV Revenue
       </>
     ),
@@ -29,7 +29,7 @@ export const ALL_BUTTONS = {
     line1: 'Go to',
     line2Content: (
       <>
-        <ButtonIcon src="/img/logos/CRV_s.png" alt="CRV" />
+        <ButtonIcon src="/img/logos/crv.png" alt="CRV" />
         DEX Dashboard
       </>
     ),
@@ -39,7 +39,7 @@ export const ALL_BUTTONS = {
     line1: 'Go to',
     line2Content: (
       <>
-        <ButtonIcon src="/img/logos/CRV_s.png" alt="CRV" />
+        <ButtonIcon src="/img/logos/crv.png" alt="CRV" />
         Boost Calculator
       </>
     ),
@@ -49,7 +49,7 @@ export const ALL_BUTTONS = {
     line1: 'Go to',
     line2Content: (
       <>
-        <ButtonIcon src="/img/logos/scrvUSD_s.png" alt="scrvUSD" />
+        <ButtonIcon src="/img/logos/scrvusd.png" alt="scrvUSD" />
         scrvUSD Savings Vault
       </>
     ),
@@ -59,7 +59,7 @@ export const ALL_BUTTONS = {
     line1: 'Check',
     line2Content: (
       <>
-        <ButtonIcon src="/img/logos/veCRV_s.png" alt="veCRV" />
+        <ButtonIcon src="/img/logos/vecrv.png" alt="veCRV" />
         veCRV Revenue & Metrics
       </>
     ),
@@ -69,7 +69,7 @@ export const ALL_BUTTONS = {
     line1: 'Go to',
     line2Content: (
       <>
-        <ButtonIcon src="/img/logos/CRV_s.png" alt="Curve" />
+        <ButtonIcon src="/img/logos/crv.png" alt="Curve" />
         Curve's DEX
       </>
     ),
@@ -79,7 +79,7 @@ export const ALL_BUTTONS = {
     line1: 'Go to',
     line2Content: (
       <>
-        <ButtonIcon src="/img/logos/CRV_s.png" alt="Curve" />
+        <ButtonIcon src="/img/logos/crv.png" alt="Curve" />
         Curve Swap
       </>
     ),

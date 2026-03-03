@@ -8,7 +8,7 @@ import InlinePill from '@site/src/components/InlinePill';
 import ScrvusdSupply from '@site/src/components/LiveComponents/ScrvusdSupply';
 import GuideCardGrid from '@site/src/components/GuideCardGrid';
 
-import ScrvusdLogo from '@site/static/img/logos/scrvUSD_s.png';
+import ScrvusdLogo from '@site/static/img/logos/scrvusd.png';
 
 # <img src={ScrvusdLogo} className="heading-inline-logo" alt="scrvUSD" /> scrvUSD
 

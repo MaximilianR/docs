@@ -4,9 +4,9 @@ import { ethers } from 'ethers';
 import styles from './styles.module.css';
 
 // Import images from the static directory
-import scrvUsdLogoBig from '@site/static/img/logos/scrvUSD_round_120.png';
-import scrvUsdLogoSmall from '@site/static/img/logos/scrvUSD_round_50.png';
-import crvUsdLogo from '@site/static/img/logos/crvUSD_round_50.png';
+import scrvUsdLogoBig from '@site/static/img/logos/scrvusd.png';
+import scrvUsdLogoSmall from '@site/static/img/logos/scrvusd.png';
+import crvUsdLogo from '@site/static/img/logos/crvusd.png';
 
 
 // --- Smart Contract Configuration ---

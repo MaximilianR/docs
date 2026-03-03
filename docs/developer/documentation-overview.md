@@ -9,7 +9,7 @@ This documentation outlines the technical implementation of the core Curve proto
 
 :::tip[Resources for Non-Technical Users]
 
-Non-technical users might prefer the **[Resources](https://resources.curve.fi/)** site as it offers more general insights and information.
+Non-technical users might prefer the **[User Docs](/user/introduction)** site as it offers more general insights and information.
 
 :::
 
@@ -36,7 +36,7 @@ Implementation of StableSwap and CryptoSwap algorithms into on-chain exchange co
 Over-collateralized USD stablecoin powered by a unique liquidating algorithm ([LLAMMA](./crvusd/amm.md)), which progressively converts the put-up collateral token into crvUSD when the loan health decreases to certain thresholds.
 
   </DocCard>
-  <DocCard title="Savings crvUSD (scrvUSD)" icon="/img/logos/scrvUSD_round_50.png" link="./scrvusd/overview" linkText="Getting started">
+  <DocCard title="Savings crvUSD (scrvUSD)" icon="scrvusd" link="./scrvusd/overview" linkText="Getting started">
 
 Savings version of crvUSD. An ERC-4626 compliant Vault that earns yield from crvUSD interest fees, with cross-chain oracle support.
 

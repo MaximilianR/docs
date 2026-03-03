@@ -9,7 +9,7 @@ import CrvSupply from '@site/src/components/LiveComponents/CrvSupply';
 import InlinePill from '@site/src/components/InlinePill';
 import CrvAllocationChart from '@site/src/components/Charts/CrvAllocation';
 import CrvInflationCumulative from '@site/src/components/Charts/CrvInflationCumulative';
-import CrvLogo from '@site/static/img/logos/CRV_s.png';
+import CrvLogo from '@site/static/img/logo.png';
 
 # <img src={CrvLogo} className="heading-inline-logo" alt="CRV" /> CRV
 

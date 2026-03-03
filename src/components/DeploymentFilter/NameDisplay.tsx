@@ -4,8 +4,8 @@ import styles from './styles.module.css';
 const TOKEN_LOGOS: Record<string, { src: string; label: string }> = {
   crv:     { src: '/img/logos/crv.png',        label: 'CRV' },
   vecrv:   { src: '/img/logos/vecrv.png',      label: 'veCRV' },
-  crvusd:  { src: '/img/logos/crvUSD_xs.png',  label: 'crvUSD' },
-  scrvusd: { src: '/img/logos/scrvUSD_xs.png', label: 'scrvUSD' },
+  crvusd:  { src: '/img/logos/crvusd.png',  label: 'crvUSD' },
+  scrvusd: { src: '/img/logos/scrvusd.png', label: 'scrvUSD' },
 };
 
 export function NameDisplay({ name }: { name: string }) {

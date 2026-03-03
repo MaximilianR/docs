@@ -1,6 +1,6 @@
 # Savings crvUSD (scrvUSD)
 
-<img src="../images/scrvusd/scrvusd_150.png" className="centered" alt="scrvUSD" />
+<img src="../images/scrvusd/scrvusd.png" className="centered" alt="scrvUSD" />
 
 Savings crvUSD, abbreviated as scrvUSD, is an **interest-bearing stablecoin** that earns yield simply by holding the token. Users do not need to take any action whatsoever, as the yield is passively accrued.
 

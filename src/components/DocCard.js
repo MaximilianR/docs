@@ -12,6 +12,15 @@ export default function DocCard({ title, icon, link, linkText, children }) {
       : `/img/logos/${icon}.svg`
     : null;
 
+  const handleError = (e) => {
+    const src = e.target.src;
+    if (src.endsWith('.svg')) {
+      e.target.src = src.replace('.svg', '.png');
+    } else {
+      e.target.style.display = 'none';
+    }
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.header}>
@@ -20,6 +29,7 @@ export default function DocCard({ title, icon, link, linkText, children }) {
             src={iconSrc}
             alt=""
             className={styles.icon}
+            onError={handleError}
           />
         )}
         <code className={styles.title}>{title}</code>

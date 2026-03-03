@@ -8,7 +8,7 @@ import GuideCardGrid from '@site/src/components/GuideCardGrid';
 import VecrvSupply from '@site/src/components/LiveComponents/VecrvSupply';
 import InlinePill from '@site/src/components/InlinePill';
 
-import VecrvLogo from '@site/static/img/logos/veCRV_s.png';
+import VecrvLogo from '@site/static/img/logos/vecrv.png';
 
 # <img src={VecrvLogo} className="heading-inline-logo" alt="veCRV" /> veCRV
 

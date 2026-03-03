@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { formatNumber } from '../../utils/formatters';
 
-import CrvusdLogo from '@site/static/img/logos/crvUSD_xs.png';
+import CrvusdLogo from '@site/static/img/logos/crvusd.png';
 
 // --- API Configuration ---
 const MARKETS_API_URL = 'https://prices.curve.finance/v1/crvusd/markets?fetch_on_chain=false';
