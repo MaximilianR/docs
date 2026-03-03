@@ -474,14 +474,6 @@ export default {
                 { type: 'doc', id: 'integration/rate-provider', label: 'Rate Provider' },
                 {
                     type: 'category',
-                    label: 'Registry',
-                    items: [
-                        { type: 'doc', id: 'integration/registry/overview', label: 'Overview' },
-                        { type: 'doc', id: 'integration/registry/meta-registry-api', label: 'MetaRegistry API' },
-                    ],
-                },
-                {
-                    type: 'category',
                     label: 'API',
                     items: [
                         { type: 'doc', id: 'integration/api/curve-api', label: 'Curve API' },

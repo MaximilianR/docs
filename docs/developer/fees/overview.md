@@ -1,4 +1,5 @@
 import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
+import ThemedImage from '@theme/ThemedImage'
 
 # Fee Collection, Burning, and Distribution
 The Curve ecosystem generates revenue from various sources, primarily through trading fees from liquidity pools and interest from crvUSD markets. This page explains how these fees are collected, converted, and distributed to veCRV holders, detailing the contracts and processes involved.
@@ -25,7 +26,14 @@ If you are running or planning to run fee collection for Curve DAO, there is a T
 The state of the system can be roughly summarized as follows:
 
 <figure>
-  <img src="../assets/images/fees/fee_structure_light.svg" alt="Fee Structure Overview" width="1100" />
+  <ThemedImage
+    alt="Fee Structure Overview"
+    sources={{
+      light: require('@site/docs/assets/images/fees/fee_structure_light.svg').default,
+      dark: require('@site/docs/assets/images/fees/fee_structure_dark.svg').default,
+    }}
+    style={{ width: "1100px" }}
+  />
   <figcaption>Overview of Curve's fee collection, burning, and distribution system</figcaption>
 </figure>
 

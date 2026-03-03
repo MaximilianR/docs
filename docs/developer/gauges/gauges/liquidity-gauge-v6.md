@@ -188,7 +188,7 @@ CRV emissions directed to the gauge are claimable from the [`Minter.vy`](../mint
 
 The liquidity gauge records checkpoints to determine how much external rewards each user is entitled to claim. 
 
-<Dropdown title="`_checkpoint_rewards`">
+<Dropdown title="_checkpoint_rewards">
 
 
 ```py
@@ -967,7 +967,7 @@ The [`working_balances`](#working_balances) of a user and the total [`working_su
 - **When a User is 'Kicked' for Abusing Their Boost**: For more information on what constitutes abuse and the repercussions, see [here](#kick).
 
 
-<Dropdown title="`_update_liquidity_limit`">
+<Dropdown title="_update_liquidity_limit">
 
 
 ```py
@@ -1042,7 +1042,9 @@ voting_total = 10000                        # total veCRV balance
 
 ---
 
-**NO BOOST***Lets calculate the LP position of a user that has a vecrv balance of 0:*
+**NO BOOST**
+
+Lets calculate the LP position of a user that has a vecrv balance of 0:
 
 $\text{lim} = 1000 * 0.4 = 400$
 
@@ -1058,7 +1060,9 @@ $\text{boost factor} = \frac{400}{400} = 1$
 ---
 
 
-**BOOST***Lets calculate the LP position of a user that has a vecrv balance of 500 and therefore receives a boost on his provided liquidity:*
+**BOOST**
+
+Lets calculate the LP position of a user that has a vecrv balance of 500 and therefore receives a boost on his provided liquidity:
 
 $\text{lim} = 1000 * 0.4 = 400$
 
@@ -1066,7 +1070,7 @@ $\text{lim} = 400 + 50000 * \frac{500}{10000} * 0.6 = 1900$
 
 $\text{lim} = \min(1000, 1900)$
 
-*The working supply of this user is 1000 LP tokens. The boost is calculated by:*
+The working supply of this user is 1000 LP tokens. The boost is calculated by:
 
 $\text{boost factor} = \frac{1000}{400} = 2.5$
 

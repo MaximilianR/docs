@@ -15,7 +15,9 @@ A new and updated version is available here: [`CurveRouterNG`](./curve-router-ng
 ---
 
 
-## Exchanging Tokens:::warning
+## Exchanging Tokens
+
+:::warning
 
 This contract only considers liquidity sources that have been added to it. These sources are primarily the liquidity pools registered in `factory_registry` and `crypto_registry`.
 
@@ -37,10 +39,6 @@ Additionally, there are helper functions available to retrieve essential data, s
 
 Function to perform a token exchange using a specific pool. Prior to calling this function, the caller must approve this contract to transfer `_amount` of coins from `_from`.
 
-Returns: amount received (`uint256`)
-
-Emits: `TokenExchange`
-
 | Input        | Type      | Description                                         |
 |--------------|-----------|-----------------------------------------------------|
 | `_pool`      | `address` | Address of the pool to use for the token exchange.  |
@@ -49,6 +47,10 @@ Emits: `TokenExchange`
 | `_amount`    | `uint256` | Amount of coins to exchange.                        |
 | `_expected`  | `uint256` | Minimum amount of coins to receive.                 |
 | `_receiver`  | `address` | Receiver of the tokens. Defaults to `msg.sender`.   |
+
+Returns: amount received (`uint256`)
+
+Emits: `TokenExchange`
 
 <SourceCode>
 ```vyper
@@ -497,10 +499,6 @@ def _exchange(
 
 Function to perform up to four token exchanges in a single transaction. Prior to calling this function, the caller must approve this contract to transfer `_amount` coins from `_from`.
 
-Returns: expected amount of the final output token (`uint256`).
-
-Emits: `ExchangeMultiple`
-
 | Swap Type | Description |
 | :-------: | ----------- |
 | `1`       | Stableswap `exchange` |
@@ -512,6 +510,10 @@ Emits: `ExchangeMultiple`
 | `7 - 11`  | For wrapped coin (underlying for lending pool) -> LP token "exchange" (actually `add_liquidity`) |
 | `12 - 14` | For LP token -> wrapped coin (underlying for lending or fake pool) "exchange" (actually `remove_liquidity_one_coin`) |
 | `15`      | For WETH -> ETH "exchange" (actually deposit/withdraw) |
+
+Returns: expected amount of the final output token (`uint256`).
+
+Emits: `ExchangeMultiple`
 
 | Input          | Type            | Description  |
 | -------------- | --------------- | ------------ |
@@ -842,14 +844,14 @@ This method checks for regular and factory pools.
 
 Function to find the pool offering the best rate for a given swap.
 
-Returns: pool address and amount received (`address`, `uint256`).
-
 | Input            | Type         | Description                                          |
 | ---------------- | ------------ | ---------------------------------------------------- |
 | `_from`          | `address`    | Address of the coin being sent.                      |
 | `_to`            | `address`    | Address of the coin being received.                  |
 | `_amount`        | `uint256`    | Amount of coins to send.                             |
 | `_exclude_pools` | `address[8]` | List of up to 8 pools which should not be returned.  |
+
+Returns: pool address and amount received (`address`, `uint256`).
 
 <SourceCode>
 ```vyper
@@ -1006,14 +1008,14 @@ Getter for the amount of output tokens when performing a swap with multiple step
 | `12 - 14` | For LP token -> wrapped coin (underlying for lending or fake pool) "exchange" (actually `remove_liquidity_one_coin`) |
 | `15`      | For WETH -> ETH "exchange" (actually deposit/withdraw) |
 
-Returns: expected amount of the final output token (`uint256`).
-
 | Input          | Type            | Description  |
 | -------------- | --------------- | ------------ |
 | `_route`       | `address[9]`    | Array of the route consisting of [initial token, pool, token, pool, token, ...]. |
 | `_swap_params` | `uint256[3][4]` | Multidimensional array of `[i, j, swap_type]` where `i` and `j` are the correct values for the n'th pool in `_route`. |
 | `_amount`      | `uint256`       | Amount of initial tokens (`_route[0]`) to exchange. |
 | `_pools`       | `address[4]`    | Array of pools for swaps via zap contracts. This parameter is only needed for Polygon meta-factories underlying swaps. |
+
+Returns: expected amount of the final output token (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -1110,7 +1112,9 @@ def get_exchange_multiple_amount(
 ---
 
 
-## Registry Contracts:::warning[Outdated]
+## Registry Contracts
+
+:::warning[Outdated]
 
 The contract retrieves pool data from various registries sourced from the [`AddressProvider`](https://etherscan.io/address/0x0000000022d53366457f9d5e68ec105046fc4383). Since its deployment, a [new `AddressProvider`](../../integration/address-provider.md) along with additional registries have been deployed.
 
@@ -1160,7 +1164,6 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 ### `factory_registry`
 ::::description[`CurveRegistryExchange.factory_registry() -> address: view`]
 
-
 Getter for the factory regstiry contract.
 
 Returns: factory registry (`address`).
@@ -1199,7 +1202,6 @@ def __init__(_address_provider: address, _calculator: address, _weth: address):
 
 ### `crypto_registry`
 ::::description[`CurveRegistryExchange.crypto_registry() -> address: view`]
-
 
 Getter for the crypto registry contract.
 
@@ -1377,12 +1379,12 @@ This function is only callable by the `admin` of the `AddressProvider` contract.
 
 Function to set a calculator contract for a pool.
 
-Returns: True (`bool`).
-
 | Input   | Type      | Description  |
 | ------- | --------- | ------------ |
 | `_pool` | `address` | Liquidity pool to set the calculator for. | 
 | `_calculator` | `address` | Calculator contract. | 
+
+Returns: True (`bool`).
 
 <SourceCode>
 ```vyper
@@ -1505,11 +1507,11 @@ This function is only callable by the `admin` of the `AddressProvider` contract.
 
 Function to set the `is_killed` status for the contract.
 
-Returns: True (`bool`).
-
 | Input        | Type   | Description  |
 | ------------ | ------ | ------------ |
 | `_is_killed` | `bool` | `true` or `false`. | 
+
+Returns: True (`bool`).
 
 <SourceCode>
 ```vyper

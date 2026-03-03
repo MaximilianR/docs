@@ -26,7 +26,9 @@ The following three functions are required for bridge wrappers contracts to be i
 
 ---
 
-## Must-Implement Methods*The following three functions are required to be implemented to ensure compatibility with the `RootGaugeFactory` and `RootGauge` contracts:*
+## Must-Implement Methods
+
+The following three functions are required to be implemented to ensure compatibility with the `RootGaugeFactory` and `RootGauge` contracts:
 
 ### `cost`
 ::::description[`Bridger.cost() -> uint256: view`]

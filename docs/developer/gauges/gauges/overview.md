@@ -15,10 +15,9 @@ Easiest way to obtain the gauge address of a liquidity pool is by querying [`get
 
 ---
 
-
-*Liquidity gauges have two types of rewards:*
-
 ## Rewards
+
+Liquidity gauges can have two types of rewards:
 
 ### CRV Emissions
 

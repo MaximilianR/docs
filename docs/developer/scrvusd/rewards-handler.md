@@ -111,13 +111,13 @@ Snapshots can only be taken once a minimum time interval ([`min_snapshot_dt_seco
 
 *Snapshots are taken by calling the [`take_snapshot`](#take_snapshot) function. When this function is called, the snapshot value is computed and stored as follows:*
 
-1. **Determine the circulating supply of crvUSD.**Directly calling `crvUSD.totalSupply()` is not feasible because some crvUSD is minted to specific contracts and is not part of the circulating supply (e.g., unborrowed crvUSD held by Controllers, crvUSD allocated to PegKeepers, or crvUSD assigned to the [`FlashLender`](../crvusd/flash-lender.md)). Therefore, the [`StablecoinLens`](./stablecoin-lens.md) contract is used to obtain the actual circulating supply of crvUSD.
+1. **Determine the circulating supply of crvUSD.** Directly calling `crvUSD.totalSupply()` is not feasible because some crvUSD is minted to specific contracts and is not part of the circulating supply (e.g., unborrowed crvUSD held by Controllers, crvUSD allocated to PegKeepers, or crvUSD assigned to the [`FlashLender`](../crvusd/flash-lender.md)). Therefore, the [`StablecoinLens`](./stablecoin-lens.md) contract is used to obtain the actual circulating supply of crvUSD.
 
-2. **Obtain the amount of crvUSD held in the Vault**by calling `Vault.totalAssets()`, which excludes rewards that have not yet been distributed.
+2. **Obtain the amount of crvUSD held in the Vault** by calling `Vault.totalAssets()`, which excludes rewards that have not yet been distributed.
 
-3. **Calculate the supply ratio**as follows:
+3. **Calculate the supply ratio** as follows:
 
-    $$\text\{SupplyRatio\} = \frac\{\text\{SupplyInVault\} \times 10^\{18\}\}\{\text\{CirculatingSupply\}\}$$
+    $$\text{SupplyRatio} = \frac{\text{SupplyInVault} \times10^{18}}{\text{CirculatingSupply}}$$
 
 4. **Store the calculated supply ratio**and the timestamp at which the snapshot was taken in the dynamic array.
 

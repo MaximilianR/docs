@@ -432,8 +432,6 @@ function verifyTotalByStateRoot(
 
 ::::
 
----
-
 
 ## Delegation Verifier
 

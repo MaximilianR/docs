@@ -4,11 +4,11 @@
 The `MetaRegistry` functions as a Curve Pool Registry Aggregator and offers an **on-chain API** for various properties of Curve pools by **consolidating different registries into a single contract**.
 
 
-:::github[GitHub]
+:::vyper[`MetaRegistry.vy and MetaRegistryL2.vy`]
 
 The source code of the `MetaRegistry.vy` and `MetaRegistryL2.vy` contracts can be found on [GitHub](https://github.com/curvefi/metaregistry/tree/main/contracts).
 
-Additionally, each `MetaRegistry` is integrated into the chain-specific [`AddressProvider`](./address-provider.md) at `ID = 7`. To get the **most recent contract, users are advised to fetch it directly from the `AddressProvider`.
+Additionally, each `MetaRegistry` is integrated into the chain-specific [`AddressProvider`](./address-provider.md) at `ID = 7`. To get the most recent contract, users are advised to fetch it directly from the `AddressProvider`.
 
 *For example, to query the `MetaRegistry` contract on Ethereum:*
 
@@ -17,7 +17,7 @@ Additionally, each `MetaRegistry` is integrated into the chain-specific [`Addres
 '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC'
 ```
 
-The contract is deployed on :logos-ethereum: Ethereum at [`0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC`](https://etherscan.io/address/0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC).
+A list of all deployed contracts can be found [here](../deployments.md).
 
 <ContractABI>
 
@@ -33,7 +33,7 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0xF98B45FA17DE75FB1aD
 
 *The contract utilizes `RegistryHandlers` interfaces to return data for most of the methods documented in this section:*
 
-<Dropdown title="`_get_registry_handlers_from_pool(_pool: address) -&gt; address[MAX_REGISTRIES]:`">
+<Dropdown title="_get_registry_handlers_from_pool(_pool: address) -&gt; address[MAX_REGISTRIES]:">
 
 
 ```shell

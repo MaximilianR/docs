@@ -3,11 +3,11 @@
 
 The `AddressProvider` serves as the **entry point contract for Curve's various registries** and is deployed on all chains where Curve is operational. The contract holds the most important contract addresses.
 
-:::github[GitHub]
+:::vyper[`AddressProvider.vy`]
 
-Source code of the `AddressProvider.vy` contract can be found on [GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/AddressProviderNG.vy). A list of all deployed contracts can be found [here](../deployments.md).
+Source code of the `AddressProvider.vy` contract can be found on [GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/AddressProviderNG.vy). The contract is written using Vyper version 0.2.4.
 
-The contract is deployed on :logos-ethereum: Ethereum at [`0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98`](https://etherscan.io/address/0x5ffe7FB82894076ECB99A30D6A32e969e6e35E98).
+A list of all deployed contracts can be found [here](../deployments.md).
 
 <ContractABI>
 
@@ -50,14 +50,6 @@ struct AddressInfo:
 :::colab[Google Colab Notebook]
 
 A Google Colab notebook that provides a full mapping of IDs by iterating over all `ids` via calling the `get_id_info` can be found here: [Google Colab Notebook](https://colab.research.google.com/drive/1PnvfX5E_F7_VCsmkzHrN0_OiJNsUmx9w?usp=sharing)
-
-*The notebook is compatible with querying IDs for different chains and returns a table as shown below:*
-
-<figure>
-    <img src="../assets/images/integration/id_mapping.png" alt="" width="800" />
-    <figcaption></figcaption>
-</figure>
-
 
 :::
 
