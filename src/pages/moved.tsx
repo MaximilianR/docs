@@ -22,7 +22,7 @@ export default function Moved(): React.JSX.Element {
             <a href="/search">Search</a>
           </li>
           <li>
-            <a href="https://dev.curve.finance/">Technical docs (developers &amp; contracts)</a>
+            <a href="/developer/documentation-overview">Technical docs (developers &amp; contracts)</a>
           </li>
         </ul>
       </main>
