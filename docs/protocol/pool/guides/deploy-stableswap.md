@@ -89,16 +89,12 @@ Curve contracts cannot detect malicious or non‑standard ERC‑20 behavior. Dou
 
 ### Oracle-Based Tokens
 
-Check the **Oracle** box if a token requires an external price feed. You'll be asked to enter:
+Check the **Oracle** box if a token requires an external rate feed to track its value relative to the other assets in the pool. You'll be asked to enter:
+
 - The oracle contract address
-- The function name used to return the rate (e.g. `getExchangeRate()`)
+- The function name used to return the rate (e.g. `stEthPerToken()`, `getExchangeRate()`)
 
-This is common for wrapped or staked tokens like rETH, where the rate against the underlying asset must be tracked.
-
-:::warning Oracle Requirements
-- The oracle function must return a value with **1e18 precision**
-- Oracles may be externally controlled (e.g. by an EOA), so proceed with caution
-:::
+This is appropriate for yield-bearing tokens like wstETH or rETH — tokens whose value accumulates over time relative to their underlying asset, and which are not ERC-4626 vaults.
 
 <figure>
   <ThemedImage
@@ -107,7 +103,7 @@ This is common for wrapped or staked tokens like rETH, where the rate against th
       light: require('@site/static/img/protocol/deploy-pool/oracle_light.png').default,
       dark: require('@site/static/img/protocol/deploy-pool/oracle_dark.png').default,
     }}
-    style={{ 
+    style={{
       width: "500px",
       display: "block",
       margin: "0 auto"
@@ -123,7 +119,7 @@ This is common for wrapped or staked tokens like rETH, where the rate against th
       light: require('@site/static/img/protocol/deploy-pool/oracle_input_light.png').default,
       dark: require('@site/static/img/protocol/deploy-pool/oracle_input_dark.png').default,
     }}
-    style={{ 
+    style={{
       width: "500px",
       display: "block",
       margin: "0 auto"
@@ -131,6 +127,61 @@ This is common for wrapped or staked tokens like rETH, where the rate against th
   />
   <figcaption></figcaption>
 </figure>
+
+#### What Kind of Oracle Is Required
+
+The oracle must be a **redemption rate oracle** — sometimes called a NAV (Net Asset Value) oracle. It must return the **value of one token** expressed in terms of the pool's base asset, with **18-decimal precision**.
+
+This is **not** a market price oracle (like a Chainlink ETH/USD price feed). It is an exchange rate that reflects what you would actually receive if you redeemed the token for its underlying asset.
+
+For example:
+- In a WETH/wstETH pool: the oracle returns how much ETH each wstETH is worth (e.g. `1.18e18`, meaning 1 wstETH = 1.18 ETH), using `stEthPerToken()` on the wstETH contract itself
+- In a USDC/sUSDe pool: the oracle returns how many USDC each sUSDe is worth as it accrues yield
+
+#### Up-Only Requirement
+
+**The oracle value must only ever increase.** This is the most critical property for a safe Stableswap oracle.
+
+When the pool is deployed, its liquidity is centered around the oracle rate. As the rate rises over time (reflecting accrued yield), the pool's center of liquidity shifts upward accordingly — this is the intended behavior.
+
+If the oracle can return a lower value than a previous call:
+
+- It tells the pool that the token has lost value, instantly shifting the center of liquidity downward
+- LPs are forced to sell the appreciating asset at a discount — a guaranteed loss
+- It creates a direct manipulation vector: anyone who can push the oracle down can sandwich the update and drain LP value
+
+Redemption rates for legitimate yield-bearing assets (staking rewards, lending interest) are strictly non-decreasing by design. **If your oracle can ever decrease, do not use it in a Stableswap pool.**
+
+#### Rate Limit Rule (2× Fee Sandwich Protection)
+
+Even a correct redemption rate oracle is dangerous if it updates too fast. When the oracle shifts the pool's internal rate, that shift happens instantly on-chain. If the shift is larger than the pool fee, an attacker can sandwich the update and extract value from LPs:
+
+1. **Front-run**: Buy the token before the oracle update
+2. **Oracle update executes**: Pool's rate shifts up
+3. **Back-run**: Sell the token at the new higher internal rate for a guaranteed profit
+
+To prevent this, the oracle must never update by more than **2× the pool fee per block**:
+
+$$
+\Delta P_{oracle} \le 2 \times Fee_{pool}
+$$
+
+For example, with a 0.04% pool fee, the oracle must not shift by more than 0.08% in a single block. If the underlying asset accrues faster than this (unlikely for most LSTs but possible for other assets), the oracle contract must apply **rate smoothing** — capping the per-block change to stay within this bound. See [The Oracle Sandwich](../understanding-stableswap.md#1-the-oracle-sandwich-2-fee-rule) for the full explanation.
+
+#### What to Avoid
+
+:::danger Oracle Dangers
+- **Never use a spot price** from any DeFi pool — these are trivially manipulable via flash loans
+- **Never use withdrawal simulations** like `calc_withdraw_one_coin()` or any balance-based calculation — these are manipulable
+- **Never use spot token balances** to derive value
+- **Never use an oracle that can decrease** — the value must be strictly non-decreasing
+- **Avoid oracles derived from low-liquidity markets** — never use a price source backed by less value than the Curve pool itself
+:::
+
+:::warning Oracle Requirements
+- The oracle function must return a value with **1e18 precision** (18 decimals)
+- Oracles may be externally controlled (e.g. by a multisig or EOA) — verify who controls it and whether they can update it arbitrarily
+:::
 
 :::tip-green
 Swiss Stake, the service provider developing Curve's technology, offers consulting services to guide protocols and asset issuers in the design and integration of price feed oracles for StableSwap liquidity pools. Additionally, Swiss Stake provides thorough audits of client-implemented oracle solutions to ensure correctness and security. Inquiries: [inquiries@curve.finance](mailto:inquiries@curve.finance).
