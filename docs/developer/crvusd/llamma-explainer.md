@@ -236,4 +236,4 @@ For a basic understanding of how LLAMMAs work, consider the following articles:
 - [crvUSD: Just What the User Needs to Know](https://github.com/chanhosuh/curvefi-math/blob/master/LLAMMA.ipynb) by Chanho Suh
 - [From Uniswap v3 to crvUSD LLAMMA](https://www.curve.wiki/post/from-uniswap-v3-to-crvusd-llamma-%E8%8B%B1%E6%96%87%E7%89%88)
 
-For more articles and resources on LLAMMA, see [Useful Resources](../references/useful.md#curve-stablecoin-crvusd).
+For more articles and resources on LLAMMA, see [Useful Resources](../resources/useful.md#curve-stablecoin-crvusd).

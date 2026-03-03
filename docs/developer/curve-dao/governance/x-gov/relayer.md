@@ -10,7 +10,7 @@ The source code for the `Relayer.vy` contract slightly differ depending on the c
 - [ `OptimismRelayer.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/optimism/OptimismRelayer.vy) for Optimism and Optimistic Rollups
 - [ `XYZRelayer.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/xyz/XYZRelayer.vy) for all other chains
 
-A comprehensive list of all deployed contracts is available [here ↗](../../deployments.md).
+A comprehensive list of all deployed contracts is available [here ↗](../../../deployments.md).
 
 
 :::

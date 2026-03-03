@@ -7,13 +7,13 @@ A Pool Factory enables the permissionless deployment of liquidity pools, gauges,
 
 :::deploy[Contract Source & Deployment]
 
-Factories are deployed on the Ethereum Mainnet, as well as on sidechains and Layer-2 networks. Note that some pool types may not yet be supported on these networks. A comprehensive list of all deployed contracts is available [here](../deployments.md).
+Factories are deployed on the Ethereum Mainnet, as well as on sidechains and Layer-2 networks. Note that some pool types may not yet be supported on these networks. A comprehensive list of all deployed contracts is available [here](../../deployments.md).
 The source code for each specific Factory contract can be found on GitHub in the respective section.
 
 
 :::
 
-Each Factory contract includes **built-in functions designed to populate the [MetaRegistry](../registry/meta-registry-api.md)**with details about the created pools. These functions are not documented in this section. For more information, please refer to the [MetaRegistry documentation](../registry/overview.md).
+Each Factory contract includes **built-in functions designed to populate the [MetaRegistry](../../integration/registry/meta-registry-api.md)**with details about the created pools. These functions are not documented in this section. For more information, please refer to the [MetaRegistry documentation](../../integration/registry/overview.md).
 
 
 *Note: The methods described below may vary slightly depending on the specific Factory contract. Any anomalies or noteworthy features will be detailed as accurately as possible in the relevant section.*
@@ -68,7 +68,7 @@ Liquidity pools, gauges, and LP token contracts are created based on their respe
 
 *There are two main methods for deploying contracts:*
 
-- **`create_forwarder_to`**Traditional Factories such as the regular [stableswap](./stableswap/deployer-api.md) or [cryptoswap](./cryptoswap/deployer-api.md) utilize Vyper's [`create_forwarder_to`](https://docs.vyperlang.org/en/stable/built-in-functions.html?highlight=create_forwarder_to#chain-interaction) function (renamed to `create_minimal_proxy_to` in Vyper version 0.3.4) to deploy liquidity pools, LP tokens, and gauges.
+- **`create_forwarder_to`**Traditional Factories such as the regular [stableswap](../legacy/factory/stableswap/deployer-api.md) or [cryptoswap](../legacy/factory/cryptoswap/deployer-api.md) utilize Vyper's [`create_forwarder_to`](https://docs.vyperlang.org/en/stable/built-in-functions.html?highlight=create_forwarder_to#chain-interaction) function (renamed to `create_minimal_proxy_to` in Vyper version 0.3.4) to deploy liquidity pools, LP tokens, and gauges.
 
 - **`Blueprint Contracts`**Newer factories utilize blueprint contracts as outlined in [EIP-5202](https://eips.ethereum.org/EIPS/eip-5202). The corresponding contracts are directly created from their blueprint implementations, which has become the preferred method for all newly deployed factories.
 

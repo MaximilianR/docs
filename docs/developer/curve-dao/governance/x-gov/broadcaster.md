@@ -14,7 +14,7 @@ Because L2's provide different infrastructures to broadcast messages, the indivi
 - [ `GnosisBroadcaster.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/gnosis/GnosisBroadcaster.vy) for Gnosis
 - [ `XYZBroadcaster.vy`](https://github.com/curvefi/curve-xgov/blob/master/contracts/xyz/XYZBroadcaster.vy) for all other chains
 
-A comprehensive list of all deployed contracts is available [here ↗](../../deployments.md).
+A comprehensive list of all deployed contracts is available [here ↗](../../../deployments.md).
 
 
 :::
@@ -27,7 +27,7 @@ The `Broadcaster` contracts are managed by the following three admins, which are
 
 :::warning[Upgradable Ownership]
 
-The admins of the `Broadcaster` contracts are upgradable via a [commit-apply](../../references/curve-practices.md#commit--apply) process after a governance vote has passed.
+The admins of the `Broadcaster` contracts are upgradable via a [commit-apply](../../../resources/curve-practices.md#commit--apply) process after a governance vote has passed.
 
 
 :::

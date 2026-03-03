@@ -7,7 +7,7 @@ The `Agent` contracts acts as a proxy for the agents on Ethereum. Relayed votes 
 
 The source code of the `Agent.vy` contract can be found on [GitHub ](https://github.com/curvefi/curve-xgov/blob/master/contracts/Agent.vy).
 
-A comprehensive list of all deployed contracts is available [here ↗](../../deployments.md).
+A comprehensive list of all deployed contracts is available [here ↗](../../../deployments.md).
 
 
 :::

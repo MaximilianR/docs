@@ -7,7 +7,7 @@ For being able to handle and execute governance activities not only on `Ethereum
 
 Source code of the `x-gov` repository can be found on [ GitHub](https://github.com/curvefi/curve-xgov).
 
-A comprehensive list of all deployed components on different chains is available [here](../../deployments.md).
+A comprehensive list of all deployed components on different chains is available [here](../../../deployments.md).
 
 
 :::

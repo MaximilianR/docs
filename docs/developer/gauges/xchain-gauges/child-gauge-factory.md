@@ -1380,7 +1380,7 @@ def set_call_proxy(_new_call_proxy: address):
 
 ## Ownership
 
-For contract ownership details, see [here](../../references/curve-practices.md#commit--accept).
+For contract ownership details, see [here](../../resources/curve-practices.md#commit--accept).
 
 
 ---

@@ -6,7 +6,7 @@ The `Vault` is a simple smart contract designed to enable the DAO to manage chai
 
 The source code of the `Vault.vy` contract can be found on [GitHub ](https://github.com/curvefi/curve-xgov/blob/master/contracts/Vault.vy).
 
-A comprehensive list of all deployed contracts is available [here ↗](../../deployments.md).
+A comprehensive list of all deployed contracts is available [here ↗](../../../deployments.md).
 
 
 :::
@@ -80,4 +80,4 @@ This example transfers 1 ARB token from the vault to `0x000000000000000000000000
 
 ## Contract Ownership
 
-Ownership of the Vault contract follows the classic model of contract ownership. It includes an `owner` address, which can be updated by first committing a future owner and then applying the changes. More on transfering ownership can be found [here](../../references/curve-practices.md#commit--apply).
+Ownership of the Vault contract follows the classic model of contract ownership. It includes an `owner` address, which can be updated by first committing a future owner and then applying the changes. More on transfering ownership can be found [here](../../../resources/curve-practices.md#commit--apply).
