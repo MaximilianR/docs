@@ -32,7 +32,7 @@ const FeatureList: FeatureItem[] = [
         Essential for developers and technical users.
       </>
     ),
-    link: 'https://dev.curve.finance/documentation-overview/',
+    link: '/developer/documentation-overview',
   },
   {
     title: 'Asset Issuers',
