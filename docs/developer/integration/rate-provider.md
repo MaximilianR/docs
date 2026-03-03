@@ -3,7 +3,7 @@
 
 The `RateProvider` contract is designed to provide rates for token swaps.
 
-:::github[GitHub]
+:::vyper[`RateProvider.vy`]
 
 The source code of the `RateProvider.vy` contract can be found on [GitHub](https://github.com/curvefi/metaregistry/blob/main/contracts/RateProvider.vy).
 
@@ -16,7 +16,7 @@ Additionally, each `RateProvider` contract is **integrated into the chain-specif
 '0xA834f3d23749233c9B61ba723588570A1cCA0Ed7'
 ```
 
-The contract is deployed on :logos-ethereum: Ethereum at [`0xA834f3d23749233c9B61ba723588570A1cCA0Ed7`](https://etherscan.io/address/0xA834f3d23749233c9B61ba723588570A1cCA0Ed7).
+A list of all deployed contracts can be found [here](../deployments.md).
 
 <ContractABI>
 

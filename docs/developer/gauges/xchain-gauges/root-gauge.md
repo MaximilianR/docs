@@ -2,6 +2,7 @@
 
 The `RootGauge` is a simplified liquidity gauge contract on Ethereum used for bridging CRV from Ethereum to a sidechain. This gauge can be, just like any other liquidity gauge, be added to the `GaugeController` and is then eligible to receive voting weight. If that is the case, it can [mint any new emissions and transmit](#checkpointing--crv-emissions) them to the child gauge on another chain using a [bridger contract](#bridger).
 
+Root gauges are deployed from the `RootGaugeFactory` and makes use of Vyper's built-in [create_minimal_proxy_to](https://docs.vyperlang.org/en/stable/built-in-functions.html#create_minimal_proxy_to) function to create a EIP1167-compliant "minimal proxy contract" that duplicates the logic of the contract at target.
 
 :::vyper[`RootGauge.vy`]
 
@@ -9,11 +10,9 @@ The source code for the `RootGauge.vy` contract can be found on [GitHub](https:/
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x96720942F9fF22eFd8611F696E5333Fe3671717a`](https://etherscan.io/address/0x96720942F9fF22eFd8611F696E5333Fe3671717a).
 
-:::
-
 <ContractABI contractAddress="0x96720942F9fF22eFd8611F696E5333Fe3671717a" abi='[{"stateMutability":"nonpayable","type":"constructor","inputs":[{"name":"_crv_token","type":"address"},{"name":"_gauge_controller","type":"address"},{"name":"_minter","type":"address"}],"outputs":[]},{"stateMutability":"payable","type":"fallback"},{"stateMutability":"nonpayable","type":"function","name":"transmit_emissions","inputs":[],"outputs":[]},{"stateMutability":"view","type":"function","name":"integrate_fraction","inputs":[{"name":"_user","type":"address"}],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"nonpayable","type":"function","name":"user_checkpoint","inputs":[{"name":"_user","type":"address"}],"outputs":[{"name":"","type":"bool"}]},{"stateMutability":"nonpayable","type":"function","name":"set_killed","inputs":[{"name":"_is_killed","type":"bool"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"update_bridger","inputs":[],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"set_child_gauge","inputs":[{"name":"_child","type":"address"}],"outputs":[]},{"stateMutability":"nonpayable","type":"function","name":"initialize","inputs":[{"name":"_bridger","type":"address"},{"name":"_chain_id","type":"uint256"},{"name":"_child","type":"address"}],"outputs":[]},{"stateMutability":"view","type":"function","name":"version","inputs":[],"outputs":[{"name":"","type":"string"}]},{"stateMutability":"view","type":"function","name":"chain_id","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"bridger","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"child_gauge","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"factory","inputs":[],"outputs":[{"name":"","type":"address"}]},{"stateMutability":"view","type":"function","name":"inflation_params","inputs":[],"outputs":[{"name":"","type":"tuple","components":[{"name":"rate","type":"uint256"},{"name":"finish_time","type":"uint256"}]}]},{"stateMutability":"view","type":"function","name":"last_period","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"total_emissions","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"stateMutability":"view","type":"function","name":"is_killed","inputs":[],"outputs":[{"name":"","type":"bool"}]}]' />
 
-Root gauges are deployed from the `RootGaugeFactory` and makes use of Vyper's built-in [create_minimal_proxy_to](https://docs.vyperlang.org/en/stable/built-in-functions.html#create_minimal_proxy_to) function to create a EIP1167-compliant "minimal proxy contract" that duplicates the logic of the contract at target.
+:::
 
 ---
 
@@ -357,7 +356,7 @@ The contract makes use of wrapper contracts around different bridging architectu
 
 If a bridger contract needs to be updated for whatever reason, this can only be done within the `RootGaugeFactory` using the `set_child` function. After the bridger has been updated, the `update_bridger()` function needs to be called on the specific gauge to update the bridger contract used by the gauge. This sets the CRV token approval of the "old" bridger to 0 and the new bridger to `max_value(uint256)`.
 
-<Dropdown title="`RootGaugeFactory.set_child(_chain_id: uint256, _bridger: Bridger, _child_factory: address, _child_impl: address)`">
+<Dropdown title="RootGaugeFactory.set_child(_chain_id: uint256, _bridger: Bridger, _child_factory: address, _child_impl: address)">
 
 
 Source code for the `set_child` function, which is used to set the bridger for a specific chain ID.

@@ -253,8 +253,6 @@ Routing and swap parameters need to be determined off-chain. The exchange functi
 
 Function to perform a token exchange with up to 5 swaps in a single transaction.
 
-Returns: received amount of the final output token (`uint256`).
-
 | Input          | Type            | Description |
 | -------------- | --------------- | ----------- |
 | `_route`       | `address[11]`   | Route data: [see here](#_route) |
@@ -263,6 +261,8 @@ Returns: received amount of the final output token (`uint256`).
 | `_expected`    | `uint256`       | The minimum amount received after the final swap. |
 | `_pools`       | `address[5]`    | Array of pools for swaps via zap contracts. This parameter is only needed for `swap_type = 3`. |
 | `receiver`     | `address`       | Address to transfer the final output token to. Defaults to `msg.sender`. |
+
+Returns: received amount of the final output token (`uint256`).
 
 <SourceCode>
 
@@ -526,14 +526,14 @@ An easy-to-follow Jupyter Notebook with some examples on how `get_dy` can be use
 
 Function to calculate the amount of final output tokens received when performing an exchange.
 
-Returns: expected amount of final output token (`uint256`).
-
 | Input          | Type             | Description |
 | -------------- | ---------------- | ----------- |
 | `_route`       | `address[11]`    | Route data: [see here](#_route) |
 | `_swap_params` | `uint256[5][5]`  | Swap parameters: [see here](#_swap_params) |
 | `_amount`      | `uint256`        | The amount of input token (`_route[0]`) to be sent. |
 | `_pools`       | `address[5]`     | Array of pools for swaps via zap contracts. This parameter defaults to an empty array and is only needed for `swap_type = 3`. |
+
+Returns: expected amount of final output token (`uint256`).
 
 <SourceCode>
 ```vyper
@@ -752,8 +752,6 @@ An easy-to-follow Jupyter Notebook with some examples on how `get_dx` can be use
 
 Function to calculate the amount of input tokens required to receive the desired amount of output tokens.
 
-Returns: required amount of input token (`uint256`).
-
 | Input          | Type            | Description |
 | -------------- | --------------- | ----------- |
 | `_route`       | `address[11]`   | Route data: [see here](#_route) |
@@ -762,6 +760,8 @@ Returns: required amount of input token (`uint256`).
 | `_pools`       | `address[5]`    | Array of pools. |
 | `_base_pools`  | `address[5]`    | Array of base pools (for meta pools). Defaults to an empty array. |
 | `_base_tokens` | `address[5]`    | Array of base LP tokens (for meta pools). Should be a zap address for double meta pools. Defaults to an empty array. |
+
+Returns: required amount of input token (`uint256`).
 
 <SourceCode>
 

@@ -838,7 +838,7 @@ This contract makes use of a Snekmate module to manage roles and permissions. Th
 :::
 
 Function to set a new value for `max_price_increment`. The new value must be less than the stableswaps minimum fee.
-$\frac{fee}{2 * \text{block_time}}$ is considered to be safe.
+$\frac{\text{fee}}{2 \cdot \text{block\_time}}$ is considered to be safe.
 
 | Input         | Type      | Description                  |
 | ------------- | --------- | ---------------------------- |
