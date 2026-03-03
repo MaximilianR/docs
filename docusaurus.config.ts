@@ -387,7 +387,7 @@ const config: Config = {
           { from: '/developer/router/CurveRouterNG', to: '/developer/amm/router/curve-router-ng' },
           { from: '/developer/router/CurveRegistryExchange', to: '/developer/amm/router/curve-registry-exchange' },
           // registry file renames
-          { from: '/developer/registry/MetaRegistryAPI', to: '/developer/integration/registry/meta-registry-api' },
+          { from: '/developer/registry/MetaRegistryAPI', to: '/developer/integration/meta-registry' },
           // integration file renames
           { from: '/developer/integration/metaregistry', to: '/developer/integration/meta-registry' },
           // governance file renames
@@ -496,8 +496,8 @@ const config: Config = {
           { from: '/developer/governance/x-gov/agents', to: '/developer/curve-dao/governance/x-gov/agents' },
           { from: '/developer/governance/x-gov/vault', to: '/developer/curve-dao/governance/x-gov/vault' },
           // --- Directory cleanup: registry/ → integration/registry/, api/ → integration/api/ ---
-          { from: '/developer/registry/overview', to: '/developer/integration/registry/overview' },
-          { from: '/developer/registry/meta-registry-api', to: '/developer/integration/registry/meta-registry-api' },
+          { from: '/developer/registry/overview', to: '/developer/integration/overview' },
+          { from: '/developer/registry/meta-registry-api', to: '/developer/integration/meta-registry' },
           { from: '/developer/api/curve-api', to: '/developer/integration/api/curve-api' },
           { from: '/developer/api/curve-prices', to: '/developer/integration/api/curve-prices' },
           // --- Directory cleanup: references/ → resources/ ---
