@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
 
 // --- Configuration ---
 const MARKETS_API_URL = 'https://prices.curve.finance/v1/crvusd/markets?fetch_on_chain=false';
 const RPC_URL = 'https://eth.llamarpc.com';
 const MULTICALL3 = '0xcA11bde05977b3631167028862bE2a173976CA11';
-
-// monetary_policy() selector = keccak256("monetary_policy()")[:4]
-const MONETARY_POLICY_SELECTOR = '0x7a28fb88';
+const MULTICALL3_ABI = [
+  'function aggregate3((address target, bool allowFailure, bytes callData)[] calls) view returns ((bool success, bytes returnData)[])',
+];
+const CONTROLLER_ABI = ['function monetary_policy() view returns (address)'];
 
 // Known monetary policy addresses -> labels + doc links
 const KNOWN_POLICIES = {
@@ -22,51 +24,6 @@ const KNOWN_POLICIES = {
 
 // Etherscan base URL
 const ETHERSCAN_BASE = 'https://etherscan.io/address/';
-
-// Helper: encode multicall3 aggregate3 call
-function encodeAggregate3(calls) {
-  // aggregate3((address,bool,bytes)[]) -> selector 0x82ad56cb
-  // Each call: (target, allowFailure, callData)
-  const abiCoder = {
-    encodeCall(target, allowFailure, callData) {
-      const targetBytes = target.slice(2).toLowerCase().padStart(64, '0');
-      const allowFailureBytes = (allowFailure ? '1' : '0').padStart(64, '0');
-      // callData offset, length, data
-      return { targetBytes, allowFailureBytes, callData: callData.slice(2) };
-    }
-  };
-
-  // We'll use raw JSON-RPC with eth_call and hand-encode the multicall
-  // Actually, let's just do individual calls batched in a single JSON-RPC batch
-  return calls;
-}
-
-// Batch JSON-RPC calls
-async function batchRpcCalls(calls) {
-  const batch = calls.map((call, i) => ({
-    jsonrpc: '2.0',
-    method: 'eth_call',
-    params: [{ to: call.to, data: call.data }, 'latest'],
-    id: i + 1,
-  }));
-
-  const response = await fetch(RPC_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(batch),
-  });
-
-  const results = await response.json();
-  // Sort by id to maintain order
-  results.sort((a, b) => a.id - b.id);
-  return results.map(r => r.result || null);
-}
-
-// Extract address from a 32-byte padded hex result
-function decodeAddress(hex) {
-  if (!hex || hex === '0x') return null;
-  return '0x' + hex.slice(26).toLowerCase();
-}
 
 const CrvusdMonetaryPolicies = () => {
   const [data, setData] = useState(null);
@@ -87,19 +44,33 @@ const CrvusdMonetaryPolicies = () => {
         const markets = marketsJson?.chains?.ethereum?.data || [];
         if (markets.length === 0) throw new Error('No markets found.');
 
-        // 2. Batch RPC calls to get monetary_policy() for each controller
-        const calls = markets.map(m => ({
-          to: m.address,
-          data: MONETARY_POLICY_SELECTOR,
+        // 2. Use multicall3 to batch monetary_policy() calls
+        const provider = new ethers.JsonRpcProvider(RPC_URL, 1, { staticNetwork: true });
+        const multicall = new ethers.Contract(MULTICALL3, MULTICALL3_ABI, provider);
+        const iface = new ethers.Interface(CONTROLLER_ABI);
+        const callData = iface.encodeFunctionData('monetary_policy');
+
+        const aggregate = markets.map(m => ({
+          target: m.address,
+          allowFailure: true,
+          callData,
         }));
 
-        const results = await batchRpcCalls(calls);
+        const results = await multicall.aggregate3(aggregate);
 
         // 3. Build table data
         const rows = markets.map((m, i) => {
-          const policyAddress = decodeAddress(results[i]);
-          const policyKey = policyAddress?.toLowerCase();
-          const knownPolicy = policyKey ? KNOWN_POLICIES[policyKey] : null;
+          let policyAddress = null;
+          if (results[i].success) {
+            try {
+              const decoded = iface.decodeFunctionResult('monetary_policy', results[i].returnData);
+              policyAddress = decoded[0].toLowerCase();
+            } catch (e) {
+              // skip
+            }
+          }
+
+          const knownPolicy = policyAddress ? KNOWN_POLICIES[policyAddress] : null;
 
           return {
             collateral: m.collateral_token?.symbol || 'Unknown',
@@ -144,21 +115,6 @@ const CrvusdMonetaryPolicies = () => {
   if (!data) return null;
 
   const truncate = (addr) => addr ? `${addr.slice(0, 6)}...${addr.slice(-4)}` : '—';
-
-  // Group rows by policy
-  const policyGroups = {};
-  data.rows.forEach(row => {
-    const key = row.policyAddress?.toLowerCase() || 'unknown';
-    if (!policyGroups[key]) {
-      policyGroups[key] = {
-        address: row.policyAddress,
-        label: row.policyLabel,
-        link: row.policyLink,
-        markets: [],
-      };
-    }
-    policyGroups[key].markets.push(row);
-  });
 
   return (
     <div>
