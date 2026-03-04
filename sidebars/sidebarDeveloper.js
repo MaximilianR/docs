@@ -326,6 +326,7 @@ export default {
                     label: 'Monetary Policy',
                     items: [
                         { type: 'doc', id: 'crvusd/monetary-policy/monetary-policy', label: 'Monetary Policy' },
+                        { type: 'doc', id: 'crvusd/monetary-policy/agg-monetary-policy-v4', label: 'AggMonetaryPolicy (v4)' },
                     ],
                 },
                 { type: 'doc', id: 'crvusd/factory', label: 'MarketFactory' },
