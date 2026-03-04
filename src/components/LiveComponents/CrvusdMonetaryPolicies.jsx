@@ -22,6 +22,12 @@ const KNOWN_POLICIES = {
   },
 };
 
+// Deprecated controller addresses (sorted to bottom, shown with label)
+const DEPRECATED_CONTROLLERS = new Set([
+  '0x8472a9a7632b173c8cf3a86d3afec50c35548e76',
+  '0x8aca5a776a878ea1f8967e70a23b8563008f58ef',
+]);
+
 // Etherscan base URL
 const ETHERSCAN_BASE = 'https://etherscan.io/address/';
 
@@ -78,8 +84,12 @@ const CrvusdMonetaryPolicies = () => {
             policyAddress,
             policyLabel: knownPolicy?.label || null,
             policyLink: knownPolicy?.link || null,
+            deprecated: DEPRECATED_CONTROLLERS.has(m.address.toLowerCase()),
           };
         });
+
+        // Sort: active markets first, deprecated at bottom
+        rows.sort((a, b) => (a.deprecated === b.deprecated ? 0 : a.deprecated ? 1 : -1));
 
         setData({
           rows,
@@ -129,8 +139,15 @@ const CrvusdMonetaryPolicies = () => {
         </thead>
         <tbody>
           {data.rows.map((row, i) => (
-            <tr key={i}>
-              <td><strong>{row.collateral}</strong></td>
+            <tr key={i} style={row.deprecated ? { opacity: 0.55 } : undefined}>
+              <td>
+                <strong>{row.collateral}</strong>
+                {row.deprecated && (
+                  <span style={{ marginLeft: '0.4em', fontSize: '0.75em', color: 'var(--ifm-color-emphasis-600)', fontWeight: 'normal' }}>
+                    (deprecated)
+                  </span>
+                )}
+              </td>
               <td>
                 <a href={`${ETHERSCAN_BASE}${row.controllerAddress}`} target="_blank" rel="noopener noreferrer">
                   <code>{truncate(row.controllerAddress)}</code>
