@@ -106,7 +106,7 @@ Each page starts with a `# Title`, a brief intro paragraph, then a `:::vyper` or
 1. Source code link to GitHub
 2. Vyper/Solidity version
 3. Deployment address(es) with chain logo shortcodes and block explorer links
-4. The contract's JSON ABI in a `<ContractABI>` block
+4. The contract's JSON ABI in a `<ContractABI>` block — the JSON must be **minified on a single line** (not pretty-printed), with a blank line between `<ContractABI>` and the code fence, and between the code fence and `</ContractABI>`
 
 ```markdown
 # ContractName
@@ -121,8 +121,9 @@ The contract is deployed on :logos-ethereum: Ethereum at [`0x...`](https://ether
 
 <ContractABI>
 
+
 ```json
-[...]
+[{"name":"functionName","inputs":[],"outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]
 ```
 
 </ContractABI>

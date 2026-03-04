@@ -151,7 +151,15 @@ export default {
                             type: 'category',
                             label: 'Implementations',
                             items: [
-                                { type: 'doc', id: 'amm/twocrypto-ng/implementations/fxswap', label: 'FXSwap' },
+                                {
+                                    type: 'category',
+                                    label: 'FXSwap',
+                                    link: { type: 'doc', id: 'amm/twocrypto-ng/implementations/fxswap' },
+                                    items: [
+                                        { type: 'doc', id: 'amm/twocrypto-ng/implementations/donation-streamer', label: 'DonationStreamer' },
+                                        { type: 'doc', id: 'amm/twocrypto-ng/implementations/stream-executor', label: 'StreamExecutor' },
+                                    ],
+                                },
                             ],
                         },
                     ],
