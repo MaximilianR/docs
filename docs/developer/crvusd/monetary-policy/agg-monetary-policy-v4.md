@@ -1,6 +1,6 @@
 # AggMonetaryPolicy (v4)
 
-The `AggMonetaryPolicy4` contract is the latest version of the aggregated monetary policy for crvUSD markets. It builds on the original `AggMonetaryPolicy` with several key improvements: **EMA-smoothed PegKeeper debt ratios** (reducing manipulation risk), **debt candles** (using the minimum debt over half-day periods for more stable rate calculations), **per-market rate adjustments** (scaling rates based on how close a market is to its debt ceiling), and an additional **`extra_const`** parameter added to the base rate.
+The `AggMonetaryPolicy4` contract is the latest version of the aggregated monetary policy for crvUSD markets. It builds on the original [`AggMonetaryPolicy`](monetary-policy.md) with several key improvements: **EMA-smoothed PegKeeper debt ratios** (reducing manipulation risk), **debt candles** (using the minimum debt over half-day periods for more stable rate calculations), and **per-market rate adjustments** (scaling rates based on how close a market is to its debt ceiling).
 
 :::vyper[`AggMonetaryPolicy4.vy`]
 
@@ -28,6 +28,10 @@ This version of the monetary policy uses the same core formula as the original b
 The base interest rate is computed as:
 
 $$r = rate0 \cdot e^{\text{power}} + extra\_const$$
+
+:::info
+`extra_const` is currently set to `0` and is not actively used. The effective formula simplifies to $r = rate0 \cdot e^{\text{power}}$.
+:::
 
 Where:
 
@@ -443,7 +447,7 @@ def set_target_debt_fraction(target_debt_fraction: uint256):
 ### `extra_const`
 ::::description[`AggMonetaryPolicy4.extra_const() -> uint256: view`]
 
-Getter for the `extra_const` value, an additional constant that is added to the computed rate. This allows setting a minimum floor rate independent of the exponential formula. Must be less than or equal to `MAX_EXTRA_CONST` (which equals `MAX_RATE`).
+Getter for the `extra_const` value, an additional constant that is added to the computed rate. This allows setting a minimum floor rate independent of the exponential formula. Must be less than or equal to `MAX_EXTRA_CONST` (which equals `MAX_RATE`). Currently set to `0` and not actively used.
 
 Returns: extra_const (`uint256`).
 
