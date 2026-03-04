@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import deploymentsData from '../../data/deployments.json';
+import deploymentsData from '@site/static/deployments.json';
 import styles from './styles.module.css';
 import type { DeploymentEntry } from './types';
 import { formatChainName, formatCategoryName } from './constants';
