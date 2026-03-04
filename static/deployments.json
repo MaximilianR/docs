@@ -168,7 +168,7 @@
       "crv": "0x11cDb42B0EB46D95f990BeDD4695A6e3fA034978",
       "vecrv": "",
       "crvUSD": "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5",
-      "scrvUSD": ""
+      "scrvUSD": "0xEfB6601Df148677A338720156E2eFd3c5Ba8809d"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -692,7 +692,7 @@
   },
   "etherlink": {
     "tokens": {
-      "crv": "",
+      "crv": "0x004A476B5B76738E34c86C7144554B9d34402F13",
       "vecrv": "",
       "crvUSD": "",
       "scrvUSD": ""
@@ -765,7 +765,7 @@
     "tokens": {
       "crv": "0xE6c259bc0FCE25b71fE95A00361D3878E16232C3",
       "vecrv": "",
-      "crvUSD": "",
+      "crvUSD": "0xD823D2a2B5AF77835e972A0D5B77f5F5A9a003A6",
       "scrvUSD": "0x5191946500e75f0A74476F146dF7d386e52961d9"
     },
     "x-gov": {
