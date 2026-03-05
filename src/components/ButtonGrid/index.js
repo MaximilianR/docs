@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './Button'; // Assuming this is your ActionButton component
+import Button from '../Button';
 import { ALL_BUTTONS } from '@site/src/data/buttons';
 import clsx from 'clsx'; // Import the clsx utility
 

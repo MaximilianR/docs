@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useColorMode } from '@docusaurus/theme-common';
-import { getChartColors } from '../utils/chartTheme';
+import { getChartColors } from '../../utils/chartTheme';
 
 // Register Chart.js components
 ChartJS.register(

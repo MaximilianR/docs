@@ -1,5 +1,5 @@
 import React from 'react';
-import BadgeGrid from './BadgeGrid';
+import BadgeGrid from '../BadgeGrid';
 import { ALL_GUIDES } from '@site/src/data/guides';
 
 export default function GuideCardGrid({ guideKeys }) {

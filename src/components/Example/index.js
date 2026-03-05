@@ -1,11 +1,11 @@
-import styles from './ContractABI.module.css';
+import styles from './styles.module.css';
 
-export default function ContractABI({ children }) {
+export default function Example({ children }) {
   return (
     <details className={styles.container}>
       <summary className={styles.toggle}>
-        <span className={styles.icon}>{'{ }'}</span>
-        <span className={styles.label}>Contract ABI</span>
+        <span className={styles.icon}>▶</span>
+        <span className={styles.label}>Example</span>
         <span className={styles.chevron}>▼</span>
       </summary>
       <div className={styles.content}>

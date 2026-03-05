@@ -1,6 +1,6 @@
 import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
-import styles from './AuditCard.module.css';
+import styles from './styles.module.css';
 
 // Logos that have separate light/dark variants (keyed by light filename)
 const THEMED_LOGOS = {

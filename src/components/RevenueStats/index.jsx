@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { formatNumber } from '../utils/formatters';
+import { formatNumber } from '../../utils/formatters';
 
 const RevenueStats = () => {
   const [data, setData] = useState(null);

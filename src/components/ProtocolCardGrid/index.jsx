@@ -1,6 +1,6 @@
 import React from 'react';
-import ProtocolCard from './ProtocolCard';
-import styles from './ProtocolCard.module.css';
+import ProtocolCard from '../ProtocolCard';
+import styles from '../ProtocolCard/styles.module.css';
 
 export default function ProtocolCardGrid({ protocols }) {
   return (

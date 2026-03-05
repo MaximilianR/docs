@@ -1,7 +1,7 @@
 import React from 'react';
-import WhitepaperCard from './WhitepaperCard';
+import WhitepaperCard from '../WhitepaperCard';
 import { ALL_WHITEPAPERS } from '@site/src/data/whitepapers';
-import styles from './WhitepaperCard.module.css';
+import styles from '../WhitepaperCard/styles.module.css';
 
 export default function WhitepaperCardGrid() {
   if (ALL_WHITEPAPERS.length === 0) {
