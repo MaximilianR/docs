@@ -2,7 +2,7 @@
 let isInitialMaxFeeLoad = true;
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const web3 = new Web3('https://eth.llamarpc.com');
+    const web3 = new Web3('https://ethereum-rpc.publicnode.com/');
     const FeeCollectorAddress = '0xa2Bcd1a4Efbd04B63cd03f5aFf2561106ebCCE00';
     const Multicall3Address = '0xcA11bde05977b3631167028862bE2a173976CA11';
 

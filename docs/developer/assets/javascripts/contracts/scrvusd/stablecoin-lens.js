@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    const web3 = new Web3('https://eth.llamarpc.com');
+    const web3 = new Web3('https://ethereum-rpc.publicnode.com/');
     const StablecoinLensAddress = '0xe24e2db9f6bb40bbe7c1c025bc87104f5401ecd7';
 
     const StablecoinLensABI = [{"inputs":[],"name":"circulating_supply","outputs":[{"name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];

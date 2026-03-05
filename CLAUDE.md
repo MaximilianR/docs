@@ -69,7 +69,7 @@ Developer reference pages use these components embedded in markdown (imported vi
 - `<SourceCode>` — collapsible block wrapping Vyper/Solidity source code snippets
 - `<Example>` — collapsible block wrapping usage examples (shell snippets or `<ContractCall>`)
 - `<ContractABI>` — collapsible block wrapping the JSON ABI
-- `<ContractCall>` — live on-chain data fetcher (Ethereum mainnet only, via `https://eth.llamarpc.com`). Auto-fetches for zero-arg view functions; renders input fields when `args`/`labels` props are provided. Uses multicall3 batching for efficiency. Cannot be used for L2 contracts.
+- `<ContractCall>` — live on-chain data fetcher (Ethereum mainnet only, via `https://ethereum-rpc.publicnode.com/`). Auto-fetches for zero-arg view functions; renders input fields when `args`/`labels` props are provided. Uses multicall3 batching for efficiency. Cannot be used for L2 contracts.
 
 Live supply/balance components are in `src/components/LiveComponents/`. Chart components (Chart.js-based) live in `src/components/Charts/`.
 

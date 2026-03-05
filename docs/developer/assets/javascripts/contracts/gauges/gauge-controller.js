@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         input.value = window.getCurrentUnixTimestamp();
     });
 
-    const web3 = new Web3('https://eth.llamarpc.com');
+    const web3 = new Web3('https://ethereum-rpc.publicnode.com/');
     const GaugeControllerAddress = '0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB';
     const Multicall3Address = '0xcA11bde05977b3631167028862bE2a173976CA11';
 

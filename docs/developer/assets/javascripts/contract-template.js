@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    const web3 = new Web3('https://eth.llamarpc.com');
+    const web3 = new Web3('https://ethereum-rpc.publicnode.com/');
     const FeeSplitterAddress = '0x2dFd89449faff8a532790667baB21cF733C064f2';
     const Multicall3Address = '0xcA11bde05977b3631167028862bE2a173976CA11';
 

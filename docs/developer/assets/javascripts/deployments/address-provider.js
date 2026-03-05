@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function() {
     const chainList = [
-        { name: 'Ethereum', rpc: 'https://eth.llamarpc.com' },
+        { name: 'Ethereum', rpc: 'https://ethereum-rpc.publicnode.com/' },
         { name: 'Arbitrum', rpc: 'https://arbitrum.llamarpc.com', backupRpc: 'https://arb-pokt.nodies.app' },
         { name: 'Optimism', rpc: 'https://optimism.llamarpc.com', backupRpc: 'wss://optimism-mainnet.publicnode.com' },
         { name: 'Base', rpc: 'https://base.llamarpc.com' },

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    const web3 = new Web3('https://eth.llamarpc.com');
+    const web3 = new Web3('https://ethereum-rpc.publicnode.com/');
     const CRVAddress = '0xD533a949740bb3306d119CC777fa900bA034cd52';
     const Multicall3Address = '0xcA11bde05977b3631167028862bE2a173976CA11';
 

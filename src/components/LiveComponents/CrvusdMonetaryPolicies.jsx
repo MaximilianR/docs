@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 
 // --- Configuration ---
 const MARKETS_API_URL = 'https://prices.curve.finance/v1/crvusd/markets?fetch_on_chain=false';
-const RPC_URL = 'https://eth.llamarpc.com';
+const RPC_URL = 'https://ethereum-rpc.publicnode.com/';
 const MULTICALL3 = '0xcA11bde05977b3631167028862bE2a173976CA11';
 const MULTICALL3_ABI = [
   'function aggregate3((address target, bool allowFailure, bytes callData)[] calls) view returns ((bool success, bytes returnData)[])',
