@@ -122,7 +122,7 @@ with vote(OWNERSHIP, "Description", live_env=BrowserEnv()):
 
 # Using a custom account
 from eth_account import Account
-env = CustomEnv(rpc="https://eth.llamarpc.com", account=Account.from_key("0x..."))
+env = CustomEnv(rpc="https://ethereum-rpc.publicnode.com/", account=Account.from_key("0x..."))
 with vote(OWNERSHIP, "Description", live_env=env):
     contract.do_something()
 ```

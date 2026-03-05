@@ -1,7 +1,7 @@
 // logic for fetching CowSwapBurner contract data
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const web3 = new Web3('https://eth.llamarpc.com');
+    const web3 = new Web3('https://ethereum-rpc.publicnode.com/');
     const HookerAddress = '0x9A9DF35cd8E88565694CA6AD5093c236C7f6f69D';
     const Multicall3Address = '0xcA11bde05977b3631167028862bE2a173976CA11';
 

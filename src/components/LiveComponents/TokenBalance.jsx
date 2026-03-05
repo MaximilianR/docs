@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { formatNumber } from '../../utils/formatters';
 
-const RPC_URL = 'https://eth.llamarpc.com';
+const RPC_URL = 'https://ethereum-rpc.publicnode.com/';
 const provider = new ethers.JsonRpcProvider(RPC_URL);
 
 const ERC20_BALANCE_ABI = [

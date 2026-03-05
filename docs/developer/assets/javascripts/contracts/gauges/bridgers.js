@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    const web3 = new Web3('https://eth.llamarpc.com');
+    const web3 = new Web3('https://ethereum-rpc.publicnode.com/');
     const RootGaugeFactoryAddress = '0x306A45a1478A000dC701A6e1f7a569afb8D9DCD6';
     
     const RootGaugeFactoryABI = [{"name":"get_bridger","inputs":[{"name":"arg0","type":"uint256"}],"outputs":[{"name":"","type":"address"}],"stateMutability":"view","type":"function"}];

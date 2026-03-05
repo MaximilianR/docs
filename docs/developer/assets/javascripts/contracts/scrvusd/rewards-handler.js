@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    const web3 = new Web3('https://eth.llamarpc.com');
+    const web3 = new Web3('https://ethereum-rpc.publicnode.com/');
     const RewardsHandlerAddress = '0xe8d1e2531761406af1615a6764b0d5ff52736f56';
     const Multicall3Address = '0xcA11bde05977b3631167028862bE2a173976CA11';
  
