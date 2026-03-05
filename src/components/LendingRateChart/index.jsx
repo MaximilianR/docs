@@ -12,7 +12,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useColorMode } from '@docusaurus/theme-common';
-import { getChartColors } from '../utils/chartTheme';
+import { getChartColors } from '../../utils/chartTheme';
 
 ChartJS.register(
   CategoryScale,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './WhitepaperCard.module.css';
+import styles from './styles.module.css';
 
 export default function WhitepaperCard({
   title,

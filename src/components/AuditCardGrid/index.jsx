@@ -1,7 +1,7 @@
 import React from 'react';
-import AuditCard from './AuditCard';
+import AuditCard from '../AuditCard';
 import { ALL_AUDITS } from '@site/src/data/audits';
-import styles from './AuditCard.module.css';
+import styles from '../AuditCard/styles.module.css';
 
 export default function AuditCardGrid({ category }) {
   if (!category) {

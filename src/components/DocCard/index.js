@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './DocCard.module.css';
+import styles from './styles.module.css';
 
 export function DocCardGrid({ children }) {
   return <div className={styles.grid}>{children}</div>;

@@ -1,4 +1,4 @@
-import styles from './SourceCode.module.css';
+import styles from './styles.module.css';
 
 export default function SourceCode({ children }) {
   return (
