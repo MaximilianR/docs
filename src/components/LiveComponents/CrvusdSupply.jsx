@@ -10,7 +10,7 @@ const PRICE_API_URL = 'https://prices.curve.finance/v1/usd_price/ethereum/0xf939
 const YB_API_URL = 'https://prices.curve.finance/v1/crvusd/yield_basis/ethereum/supply';
 
 // --- RPC Configuration for RSUP ---
-const RPC_URL = 'https://eth.llamarpc.com';
+const RPC_URL = 'https://ethereum-rpc.publicnode.com/';
 const RSUP_CONTRACT = '0xC32B0Cf36e06c790A568667A17DE80cba95A5Aad';
 const RSUP_HOLDER = '0x21862cA8d044c104ac9EB728c86Bc38B8625BeCD';
 const PRICE_PER_SHARE_SELECTOR = '0x99530b06'; // keccak256("pricePerShare()")

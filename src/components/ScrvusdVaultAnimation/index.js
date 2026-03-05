@@ -10,7 +10,7 @@ import crvUsdLogo from '@site/static/img/logos/crvusd.png';
 
 
 // --- Smart Contract Configuration ---
-const RPC_URL = 'https://eth.llamarpc.com';
+const RPC_URL = 'https://ethereum-rpc.publicnode.com/';
 const CONTRACT_ADDRESS = '0x0655977FEb2f289A4aB78af67BAB0d17aAb84367';
 const ABI = [{"name":"pricePerShare","type":"function","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"uint256"}]},{"name":"decimals","type":"function","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"uint8"}]}];
 const SECONDS_IN_YEAR = 365 * 24 * 60 * 60;
