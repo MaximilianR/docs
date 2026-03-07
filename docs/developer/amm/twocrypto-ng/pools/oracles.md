@@ -1,3 +1,5 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
+
 # Twocrypto-NG Oracles
 
 
@@ -5,14 +7,18 @@
 
 *Twocrypto-NG pools contain the following built-in oracles:*
 
+<DocCardGrid>
+  <DocCard title="price_oracle" link="#price_oracle" linkText="Jump to section">
 
--   **`price_oracle`**---
+An exponential moving-average (EMA) price oracle with a periodicity determined by `ma_time`. It returns the price of the coin at index 1 with regard to the coin at index 0 in the pool.
 
-    An exponential moving-average (EMA) price oracle with a periodicity determined by `ma_time`. It returns the price of the coin at index 1 with regard to the coin at index 0 in the pool.
+  </DocCard>
+  <DocCard title="xcp_oracle" link="#xcp_oracle" linkText="Jump to section">
 
--   **`xcp_oracle`**---
+An exponential moving-average (EMA) oracle value of the estimated TVL in the pool with a periodicity determined by `xcp_ma_time`.
 
-    An exponential moving-average (EMA) oracle value of the estimated TVL in the pool with a periodicity determined by `xcp_ma_time`. 
+  </DocCard>
+</DocCardGrid>
 
 
 :::example[Example: Price Oracle for CVG/ETH]
@@ -20,7 +26,7 @@
 
 The [`CVG/ETH`](https://etherscan.io/address/0x004c167d27ada24305b76d80762997fa6eb8d9b2) pool consists of `CVG &lt;&gt; wETH`.
 
-Because `wETH` is `coin[0]`, the price of `CVG`is returned with regard to `wETH`.
+Because `wETH` is `coin[0]`, the price of `CVG` is returned with regard to `wETH`.
 
 ```shell
 >>> price_oracle() = 74644221911389
@@ -29,7 +35,7 @@ Because `wETH` is `coin[0]`, the price of `CVG`is returned with regard to `wETH`
 
 *In order to get the reverse EMA (e.g. price of `wETH` with regard to `CVG`):*
 
-$\frac{10^{36}}{\text{price_oracle()}} = 1.3396884e+22$
+$\frac{10^{36}}{\text{price\_oracle()}} = 1.3396884e+22$
 
 
 :::
@@ -39,9 +45,7 @@ $\frac{10^{36}}{\text{price_oracle()}} = 1.3396884e+22$
 *The AMM implementation uses several private variables to pack and store values, which are used for calculating the EMA oracles.*
 
 
-<Tabs>
-<TabItem value="packing-values" label="Packing Values">
-
+<SourceCode>
 
 ```vyper
 @internal
@@ -58,17 +62,7 @@ def _pack_3(x: uint256[3]) -> uint256:
 @internal
 def _pack_2(p1: uint256, p2: uint256) -> uint256:
     return p1 | (p2 << 128)
-```
 
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="unpacking-values" label="Unpacking Values">
-
-
-```vyper
 @internal
 @pure
 def _unpack_3(_packed: uint256) -> uint256[3]:
@@ -89,9 +83,7 @@ def _unpack_2(packed: uint256) -> uint256[2]:
     return [packed & (2**128 - 1), packed >> 128]
 ```
 
-
-</TabItem>
-</Tabs>
+</SourceCode>
 
 | Variable | Description |
 | -------- | ----------- |
@@ -105,7 +97,7 @@ def _unpack_2(packed: uint256) -> uint256[2]:
 
 
 ### `price_oracle`
-::::description[`CurveTwocryptoOptimized.price_oracle() -> uint256:`]
+::::description[`CurveTwocryptoOptimized.price_oracle() -> uint256: view`]
 
 
 :::danger[Oracle Manipulation Prevention]
@@ -126,6 +118,7 @@ $$\text{EMA} = \frac{\min(\text{last\_prices}, 2 \times \text{price\_scale}) \ti
 Returns: ema oracle price of coin at index 1 w.r.t coin at index 0 (`uint256`).
 
 <SourceCode>
+
 ```vyper
 @external
 @view
@@ -245,6 +238,7 @@ def wad_exp(x: int256) -> int256:
     return convert(unsafe_mul(convert(convert(r, bytes32), uint256), 3_822_833_074_963_236_453_042_738_258_902_158_003_155_416_615_667) >>\
         convert(unsafe_sub(195, k), uint256), int256)
 ```
+
 </SourceCode>
 
 <Example>
@@ -262,7 +256,7 @@ def wad_exp(x: int256) -> int256:
 ::::
 
 ### `xcp_oracle`
-::::description[`CurveTwocryptoOptimized.xcp_oracle() -> uint256`]
+::::description[`CurveTwocryptoOptimized.xcp_oracle() -> uint256: view`]
 
 
 Getter for the oracle value for xcp. The oracle is an exponential moving-average, with a periodicity determined by `xcp_ma_time`.
@@ -276,6 +270,7 @@ $$\text{xcp\_oracle} = \frac{\text{last\_xcp} \times (10^{18} - \alpha) + \text{
 Returns: xcp ema oracle value (`uint256`).
 
 <SourceCode>
+
 ```vyper
 cached_xcp_oracle: uint256  # <----------- EMA of totalSupply * virtual_price.
 
@@ -313,6 +308,7 @@ def xcp_oracle() -> uint256:
 
     return cached_xcp_oracle
 ```
+
 </SourceCode>
 
 <Example>
@@ -341,8 +337,7 @@ The function is called whenever `add_liquidity`, `remove_liquidity_one_coin`, or
 To prevent oracle manipulation, `price_oracle` and `xcp_oracle` are only **updated once per block**.
 
 
-<Dropdown title="`tweak_price`">
-
+<SourceCode>
 
 *The function takes the following inputs:*
 
@@ -353,11 +348,7 @@ To prevent oracle manipulation, `price_oracle` and `xcp_oracle` are only **updat
 | `new_D`   | `uint256`          | New `D` value.                      |
 | `K0_preb` | `uint256`          | Initial guess for `newton_D`.       |
 
-<Tabs>
-<TabItem value="curvetwocryptooptimized-vy" label="CurveTwocryptoOptimized.vy">
-
-
-```py
+```vyper
 @internal
 def tweak_price(
     A_gamma: uint256[2],
@@ -577,12 +568,7 @@ def tweak_price(
     return price_scale
 ```
 
-
-</TabItem>
-</Tabs>
-
-
-</Dropdown>
+</SourceCode>
 
 ---
 
@@ -590,7 +576,7 @@ def tweak_price(
 ## Other Methods
 
 ### `last_prices`
-::::description[`CurveTwocryptoOptimized.last_prices -> uint256: view`]
+::::description[`CurveTwocryptoOptimized.last_prices() -> uint256: view`]
 
 
 Getter for the last price of the coin at index 1 with regard to the coin at index 0. This variable is used to calculate the moving average price oracle.
@@ -598,6 +584,7 @@ Getter for the last price of the coin at index 1 with regard to the coin at inde
 Returns: last price (`uint256`).
 
 <SourceCode>
+
 ```vyper
 last_prices: public(uint256)
 
@@ -631,7 +618,7 @@ def tweak_price(
 
     ...
 ```
-```py
+```vyper
 @external
 @view
 def get_p(
@@ -683,6 +670,7 @@ def get_p(
         denominator
     )
 ```
+
 </SourceCode>
 
 <Example>
@@ -708,9 +696,11 @@ Getter for the last timestamps when price and xcp oracles were updated. Both tim
 Returns: packed value of the timestamps of the most recent updated of the price and xcp oracle (`uint256`).
 
 <SourceCode>
+
 ```vyper
 last_timestamp: public(uint256)    # idx 0 is for prices, idx 1 is for xcp.
 ```
+
 </SourceCode>
 
 <Example>
@@ -735,7 +725,7 @@ last_timestamp: public(uint256)    # idx 0 is for prices, idx 1 is for xcp.
 ::::
 
 ### `ma_time`
-::::description[`CurveTwocryptoOptimized.ma_time() -> uint256:`]
+::::description[`CurveTwocryptoOptimized.ma_time() -> uint256: view`]
 
 
 Getter for the moving average time for `price_oracle` denominated in seconds. This variable can be changed using the `apply_new_parameters` method.
@@ -743,6 +733,7 @@ Getter for the moving average time for `price_oracle` denominated in seconds. Th
 Returns: moving average time (`uint256`).
 
 <SourceCode>
+
 ```vyper
 packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 #               parameters allowed_extra_profit, adjustment_step, and ma_time.
@@ -758,6 +749,7 @@ def ma_time() -> uint256:
     """
     return self._unpack_3(self.packed_rebalancing_params)[2] * 694 / 1000
 ```
+
 </SourceCode>
 
 <Example>
@@ -783,6 +775,7 @@ Getter for the moving-average periodicity for `price_oracle` denominated in seco
 Returns: ma time (`uint256`).
 
 <SourceCode>
+
 ```vyper
 xcp_ma_time: public(uint256)
 
@@ -803,6 +796,7 @@ def __init__(
     self.xcp_ma_time = 62324  # <--------- 12 hours default on contract start.
     ...
 ```
+
 </SourceCode>
 
 <Example>
@@ -820,7 +814,7 @@ def __init__(
 ::::
 
 ### `lp_price`
-::::description[`CurveTwocryptoOptimized.lp_price() -> uint256:`]
+::::description[`CurveTwocryptoOptimized.lp_price() -> uint256: view`]
 
 
 Function to calculate the price of the LP token with regard to the coin at `index 0` in the pool. The value is calculate the following:
@@ -830,6 +824,7 @@ $$\text{lp\_price} = \frac{2 \times \text{virtual\_price} \times \sqrt{\text{pri
 Returns: LP token price (`uint256`).
 
 <SourceCode>
+
 ```vyper
 @external
 @view
@@ -877,6 +872,7 @@ def internal_price_oracle() -> uint256:
 
     return price_oracle
 ```
+
 </SourceCode>
 
 <Example>
@@ -909,10 +905,12 @@ Getter for the cached virtual price. This variable provides a fast read by acces
 Returns: cached virtual price (`uint256`).
 
 <SourceCode>
+
 ```vyper
 virtual_price: public(uint256)  # <------ Cached (fast to read) virtual price.
 #                          The cached `virtual_price` is also used internally.
 ```
+
 </SourceCode>
 
 <Example>
@@ -945,6 +943,7 @@ Function to dynamically calculate the current virtual price of the pool's LP tok
 Returns: virtual price (`uint256`).
 
 <SourceCode>
+
 ```vyper
 @external
 @view
@@ -969,6 +968,7 @@ def get_xcp(D: uint256, price_scale: uint256) -> uint256:
 
     return isqrt(x[0] * x[1])  # <------------------- Geometric Mean.
 ```
+
 </SourceCode>
 
 <Example>

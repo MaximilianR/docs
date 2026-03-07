@@ -1,12 +1,17 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
+
 # Tricrypto-NG Oracles
 
 
 *Tricrypto-NG pools have the following oracle:*
 
+<DocCardGrid>
+  <DocCard title="price_oracle" link="#price_oracle" linkText="Jump to section">
 
--   **`price_oracle`**---
+An exponential moving-average (EMA) price oracle with a periodicity determined by `ma_time`. It returns the price relative to the coin at index 0 in the pool.
 
-    An exponential moving-average (EMA) price oracle with a periodicity determined by `ma_time`. It returns the price relative to the coin at index 0 in the pool.
+  </DocCard>
+</DocCardGrid>
 
 
 :::example[Example: Price Oracle for TriCRV]
@@ -26,7 +31,7 @@ Because `crvUSD` is `coin[0]`, the prices of `wETH` and `CRV` are returned with 
 
 *In order to get the reverse EMA (e.g. price of `crvUSD` with regard to `wETH`):*
 
-$\frac{10^{36}}{\text{price_oracle(0)}} = 2.7240908e+14$
+$\frac{10^{36}}{\text{price\_oracle(0)}} = 2.7240908e+14$
 
 
 :::
@@ -36,8 +41,7 @@ $\frac{10^{36}}{\text{price_oracle(0)}} = 2.7240908e+14$
 
 *The formula to calculate the exponential moving-average essentially comes down to:*
 
-<Dropdown title="Source Code for Calculating the EMA">
-
+<SourceCode>
 
 ```vyper
 @internal
@@ -247,8 +251,7 @@ def tweak_price(
     return packed_price_scale
 ```
 
-
-</Dropdown>
+</SourceCode>
 
 $$\alpha = e^{\text{power}}$$
 
@@ -258,7 +261,7 @@ $$\text{power} = \frac{(\text{block.timestamp} - \text{last\_prices\_timestamp})
 
 $$\text{EMA} = \frac{\min(\text{last\_prices}, 2 \times \text{price\_scale}) \times (10^{18} - \alpha) + \text{price\_oracle} \times \alpha}{10^{18}}$$
 
-**Note:**The state price that goes into the EMA is capped with `2 x price_scale` to prevent manipulation.
+**Note:** The state price that goes into the EMA is capped with `2 x price_scale` to prevent manipulation.
 
 
 | Variable                | Description                                                                                           |
@@ -281,12 +284,7 @@ $$\text{EMA} = \frac{\min(\text{last\_prices}, 2 \times \text{price\_scale}) \ti
 
 Some storage variables pack multiple values into a single entry to save on gas costs. These values are unpacked when needed for use.
 
-<Dropdown title="Source Code">
-
-
-<Tabs>
-<TabItem value="packing" label="Packing">
-
+<SourceCode>
 
 ```vyper
 PRICE_SIZE: constant(uint128) = 256 / (N_COINS - 1)
@@ -310,21 +308,6 @@ def _pack_prices(prices_to_pack: uint256[N_COINS-1]) -> uint256:
         assert p < PRICE_MASK
         packed_prices = p | packed_prices
     return packed_prices
-```
-
-
-</TabItem>
-</Tabs>
-
-<Tabs>
-<TabItem value="unpacking" label="Unpacking">
-
-
-```vyper
-PRICE_SIZE: constant(uint128) = 256 / (N_COINS - 1)
-PRICE_MASK: constant(uint256) = 2**PRICE_SIZE - 1
-
-last_prices_packed: uint256
 
 @internal
 @view
@@ -343,12 +326,7 @@ def _unpack_prices(_packed_prices: uint256) -> uint256[2]:
     return unpacked_prices
 ```
 
-
-</TabItem>
-</Tabs>
-
-
-</Dropdown>
+</SourceCode>
 
 
 :::
@@ -368,7 +346,7 @@ def _unpack_prices(_packed_prices: uint256) -> uint256[2]:
 ## Oracle and Price Methods
 
 ### `price_oracle`
-::::description[`CurveTricryptoOptimizedWETH.price_oracle(k: uint256) -> uint256:`]
+::::description[`CurveTricryptoOptimizedWETH.price_oracle(k: uint256) -> uint256: view`]
 
 
 :::warning[Revert]
@@ -389,6 +367,7 @@ The moving average price oracle is calculated using the last_price of the trade 
 Returns: EMA price of coin `k` (`uint256`).
 
 <SourceCode>
+
 ```vyper
 price_scale_packed: uint256  # <------------------------ Internal price scale.
 price_oracle_packed: uint256  # <------- Price target given by moving average.
@@ -433,6 +412,7 @@ def price_oracle(k: uint256) -> uint256:
 
     return price_oracle
 ```
+
 </SourceCode>
 
 <Example>
@@ -452,7 +432,7 @@ def price_oracle(k: uint256) -> uint256:
 ::::
 
 ### `price_scale`
-::::description[`CurveTricryptoOptimizedWETH.price_scale(k: uint256) -> uint256:`]
+::::description[`CurveTricryptoOptimizedWETH.price_scale(k: uint256) -> uint256: view`]
 
 
 :::warning[Revert]
@@ -471,6 +451,7 @@ Getter for the price scale of the coin at index `k`.
 Returns: price scale of the coin `k` (`uint256`).
 
 <SourceCode>
+
 ```vyper
 price_scale_packed: uint256  # <------------------------ Internal price scale.
 
@@ -487,6 +468,7 @@ def price_scale(k: uint256) -> uint256:
     """
     return self._unpack_prices(self.price_scale_packed)[k]
 ```
+
 </SourceCode>
 
 <Example>
@@ -506,7 +488,7 @@ def price_scale(k: uint256) -> uint256:
 ::::
 
 ### `last_prices`
-::::description[`CurveTricryptoOptimizedWETH.last_prices(k: uint256) -> uint256:`]
+::::description[`CurveTricryptoOptimizedWETH.last_prices(k: uint256) -> uint256: view`]
 
 
 :::warning[Revert]
@@ -525,6 +507,7 @@ Getter method for the last stored price for coin at index value `k`, stored in `
 Returns: last stored spot price of coin `k` (`uint256`).
 
 <SourceCode>
+
 ```vyper
 last_prices_packed: uint256
 
@@ -560,6 +543,7 @@ def _unpack_prices(_packed_prices: uint256) -> uint256[2]:
 
     return unpacked_prices
 ```
+
 </SourceCode>
 
 <Example>
@@ -587,9 +571,11 @@ Getter for the timestamp when the EMA price oracle was updated the last time.
 Returns: timestamp (`uint256`).
 
 <SourceCode>
+
 ```vyper
 last_prices_timestamp: public(uint256)
 ```
+
 </SourceCode>
 
 <Example>
@@ -614,6 +600,7 @@ Getter for the exponential moving average time for the price oracle. This value 
 Returns: periodicity of the EMA (`uint256`) 
 
 <SourceCode>
+
 ```vyper
 packed_rebalancing_params: public(uint256)  # <---------- Contains rebalancing
 #               parameters allowed_extra_profit, adjustment_step, and ma_time.
@@ -629,6 +616,7 @@ def ma_time() -> uint256:
     """
     return self._unpack(self.packed_rebalancing_params)[2] * 694 / 1000
 ```
+
 </SourceCode>
 
 <Example>
@@ -655,6 +643,7 @@ $$\text{lp token price} = 3 \times \text{virtual\_price} \times \sqrt[3]{\frac{(
 Returns: LP token price (`uint256`).
 
 <SourceCode>
+
 ```vyper
 price_oracle_packed: uint256  # <------- Price target given by moving average.
             
@@ -675,6 +664,7 @@ def lp_price() -> uint256:
         3 * self.virtual_price * MATH.cbrt(price_oracle[0] * price_oracle[1])
     ) / 10**24
 ```
+
 </SourceCode>
 
 <Example>
@@ -691,7 +681,7 @@ def lp_price() -> uint256:
 ::::
 
 ### `get_virtual_price`
-::::description[`CurveTricryptoOptimizedWETH.get_virtual_price() -> uint256:`]
+::::description[`CurveTricryptoOptimizedWETH.get_virtual_price() -> uint256: view`]
 
 
 Function to calculate the current virtual price of the pool 's LP token.
@@ -699,6 +689,7 @@ Function to calculate the current virtual price of the pool 's LP token.
 Returns: virtual price (`uint256`).
 
 <SourceCode>
+
 ```vyper
 totalSupply: public(uint256)
 
@@ -714,6 +705,7 @@ def get_virtual_price() -> uint256:
     """
     return 10**18 * self.get_xcp(self.D) / self.totalSupply
 ```
+
 </SourceCode>
 
 <Example>
@@ -738,10 +730,12 @@ Getter for the cached virtual price.
 Returns: cached virtual price (`uint256`).
 
 <SourceCode>
+
 ```vyper
 virtual_price: public(uint256)  # <------ Cached (fast to read) virtual price.
 #                          The cached `virtual_price` is also used internally.
 ```
+
 </SourceCode>
 
 <Example>
@@ -762,7 +756,7 @@ virtual_price: public(uint256)  # <------ Cached (fast to read) virtual price.
 
 ## Updating Oracles and Other Storage Variables
 
-The EMA oracle and other storage variables are updated each time the internal `tweak_price` function is called. This function tweaks`price_oracle` and `last_price`, and conditionally adjusts `price_scale`.
+The EMA oracle and other storage variables are updated each time the internal `tweak_price` function is called. This function tweaks `price_oracle` and `last_price`, and conditionally adjusts `price_scale`.
 
 The `tweak_price` function is called whenever there is an unbalanced liquidity operation, including:
 
@@ -771,7 +765,7 @@ The `tweak_price` function is called whenever there is an unbalanced liquidity o
 - `remove_liquidity_one_coin`
 
 
-<Dropdown title="Source Code">
+<SourceCode>
 
 
 ```vyper
@@ -982,5 +976,4 @@ def tweak_price(
     return packed_price_scale
 ```
 
-
-</Dropdown>
+</SourceCode>

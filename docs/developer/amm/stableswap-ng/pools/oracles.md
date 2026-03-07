@@ -1,21 +1,21 @@
+import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
+
 # Stableswap-NG Oracles
 
 
 :::danger[WARNING: Oracle Vulnerability]
 
-A specific AMM implementation of [stableswap-ng](https://github.com/curvefi/stableswap-ng) has a bug that can cause the price oracle to change sharply if the tokens within the AMM **do not all have the same token decimal precision of 18 or if the tokens use external rates**. For example, the [`USDe &lt;&gt; USDC`](https://etherscan.io/address/0x02950460e2b9529d0e00284a5fa2d7bdf3fa4d72) pool has this issue, as USDe has a precision of 18 and USDC of 6.
+A specific AMM implementation of [stableswap-ng](https://github.com/curvefi/stableswap-ng) has a bug that can cause the price oracle to change sharply if the tokens within the AMM **do not all have the same token decimal precision of 18 or if the tokens use external rates**. For example, the [`USDe<>USDC`](https://etherscan.io/address/0x02950460e2b9529d0e00284a5fa2d7bdf3fa4d72) pool has this issue, as USDe has a precision of 18 and USDC of 6.
 
 A list of identified affected pools can be found in this [ Google Spreadsheet](https://docs.google.com/spreadsheets/d/130LPSQbAnMWTC1yVO23cqRSblrkYFfdHdRwYNpaaoYY/edit?usp=sharing).
 
-**This bug only affects the use of the oracle and does not impact token exchanges or any liquidity actions at all. The AMM still functions as intended.**Pools deployed after **`Dec-12-2023 09:39:35 AM +UTC`**do not include the bug, as the fixed AMM implementation of the `StableSwapNG Factory` was [set to the updated version](https://etherscan.io/tx/0x5fc02a3f46e40a48ae4cecc07534bb3e0228b7a7a59b652801521f2af3a00b72).
-
-<Tabs>
-<TabItem value="code-changes" label="Code Changes">
-
+**This bug only affects the use of the oracle and does not impact token exchanges or any liquidity actions at all. The AMM still functions as intended.** Pools deployed after **`Dec-12-2023 09:39:35 AM +UTC`** do not include the bug, as the fixed AMM implementation of the `StableSwapNG Factory` was [set to the updated version](https://etherscan.io/tx/0x5fc02a3f46e40a48ae4cecc07534bb3e0228b7a7a59b652801521f2af3a00b72).
 
 *The source of the bug is in the AMM implementations [`code line 777`](https://github.com/curvefi/stableswap-ng/commit/4bb402ecb386979c113bee770ffbea9aebd5ae66#diff-5fb59b0d4563b84cdb3bb3740486847e798a1eca825b537ecbab95cb74d03847L777-L779) and was fixed in commit [`4bb402ecb386979c113bee770ffbea9aebd5ae66`](https://github.com/curvefi/stableswap-ng/commit/4bb402ecb386979c113bee770ffbea9aebd5ae66). The function did not take token precisions into account when updating the oracle in the `remove_liquidity_imbalance` function. The only change to fix the bug was made in a single line to ensure the `upkeep_oracle` calls the internal `_xp_mem` function before upkeeping the oracle:*
 
-```py hl_lines="2 6"
+<SourceCode>
+
+```vyper
 ### ----- old code (bugged) ----- ###
 self.upkeep_oracles(new_balances, amp, D1)
 
@@ -36,9 +36,7 @@ def _xp_mem(
     return result
 ```
 
-
-</TabItem>
-</Tabs>
+</SourceCode>
 
 To **manually verify if a pool is using a correct (bug-free) implementation**, one can simply view the source code of the contract and check if `self.xp_mem(...)` is being called within `self.upkeep_oracles(...)` in the `remove_liquidity_imbalance` function.
 
@@ -48,34 +46,41 @@ To **manually verify if a pool is using a correct (bug-free) implementation**, o
 ---
 
 
-## Price and D Oracles*Stableswap-NG pools have the following oracles:*
+## Price and D Oracles
 
+Stableswap-NG pools have the following oracles:
 
--   **`price_oracle`**---
+<DocCardGrid>
+  <DocCard title="price_oracle" link="#price_oracle" linkText="Jump to section">
 
-    An exponential moving-average price oracle of an asset within the AMM with regard to the coin at index 0.
+An exponential moving-average price oracle of an asset within the AMM with regard to the coin at index 0.
 
+  </DocCard>
+  <DocCard title="D_oracle" link="#d_oracle" linkText="Jump to section">
 
--   **`D_oracle`**---
+An exponential moving-average oracle of the D invariant.
 
-    An exponential moving-average oracle of the D invariant.
+  </DocCard>
+</DocCardGrid>
 
 
 :::example[Example: Price Oracle for crvusd/USDC]
 
 
-The [`crvusd/USDC`](https://etherscan.io/address/0x4dece678ceceb27446b35c672dc7d61f30bad69e) pool consists of `crvUSD &lt;&gt; USDC`.
+The [`crvusd/USDC`](https://etherscan.io/address/0x4dece678ceceb27446b35c672dc7d61f30bad69e) pool consists of `crvUSD and USDC`.
 
 Because `USDC` is the coin at index 0, `price_oracle()` returns the price of `crvUSD` with regard to `USDC`. 
 
 ```vyper
+>>> coins(0) = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'     # USDC
+
 >>> price_oracle() = 999043303185591283
 0.99904330318       # price of crvUSD w.r.t USDC
 ```
 
 *In order to get the reverse EMA (price of `USDC` with regard to `crvUSD`):*
 
-$\frac{10^{36}}{\text{price_oracle()}} = 1.0009576e+18$
+$\frac{10^{36}}{\text{price\_oracle()}} = 1.0009576e^{18}$
 
 
 :::
@@ -91,7 +96,7 @@ The AMM implementation utilizes two private variables, `last_prices_packed` and 
 The spot price cannot be immediately used for the calculation of the moving average, as this would permit single-block oracle manipulation. Consequently, the `_calc_moving_average` method, which calculates the moving average of the oracle, uses `last_prices_packed` or `last_D_packed`. These variables retain prices from previous actions.
 
 
-<Dropdown title="`_calc_moving_average`">
+<Dropdown title="_calc_moving_average">
 
 
 ```vyper
@@ -167,18 +172,18 @@ It can be accessed here: https://try.vyperlang.org/hub/user-redirect/lab/tree/sh
 
 
 ### `price_oracle`
-::::description[`StableSwap.price_oracle(i: uint256) -> uint256:`]
+::::description[`StableSwap.price_oracle(i: uint256) -> uint256: view`]
 
 
 Function to calculate the exponential moving average (EMA) price for the coin at index `i` with regard to the coin at index 0. The calculation is based on the last spot value (`last_price`), the last ma value (`ema_price`), the moving average time window (`ma_exp_time`), and on the difference between the current timestamp (`block.timestamp`) and the timestamp when the ma oracle was last updated (unpacks from the first value of `ma_last_time`).
 
 `i = 0` will return the price oracle of `coin[1]`, `i = 1` the price oracle of `coin[2]`, and so on.
 
-Returns: EMA price of coin `i` (`uint256`).
-
 | Input  | Type      | Description                        |
 | ------ | --------- | ---------------------------------- |
 | `i`    | `uint256` | Index value of the coin to calculate the EMA price for. i = 0 returns the price oracle for coin(1). |
+
+Returns: EMA price of coin `i` (`uint256`).
 
 <SourceCode>
 
@@ -238,7 +243,7 @@ def _calc_moving_average(
 ::::
 
 ### `D_oracle`
-::::description[`StableSwap.D_oracle() -> uint256:`]
+::::description[`StableSwap.D_oracle() -> uint256: view`]
 
 
 Function to calculate the exponential moving average (EMA) value for the `D` invariant, distinct from calculations for individual coins. This is based on the most recent "spot" value and EMA value of D, extracted from the private `last_D_packed` variable. It considers the moving average time window for D (`D_ma_time`), and calculates the difference between the current timestamp (`block.timestamp`) and the timestamp of the last update to the ma oracle of D, derived from the second value in `ma_last_time`.
@@ -308,7 +313,7 @@ def _calc_moving_average(
 ## Other Methods
 
 ### `last_price`
-::::description[`StableSwap.last_price(i: uint256) -> uint256:`]
+::::description[`StableSwap.last_price(i: uint256) -> uint256: view`]
 
 
 :::warning[Revert]
@@ -322,11 +327,11 @@ Getter method for the last stored price for the coin at index value `i`, stored 
 
 `i = 0` will return the last price of `coin[1]`, `i = 1` the last price of `coin[2]`, and so on.
 
-Returns: last stored spot price of coin `i` (`uint256`).
-
 | Input | Type      | Description                                  |
 |-------|-----------|----------------------------------------------|
 | `i`   | `uint256` | Index value of the coin to get the last price for. |
+
+Returns: last stored spot price of coin `i` (`uint256`).
 
 <SourceCode>
 
@@ -358,10 +363,10 @@ def last_price(i: uint256) -> uint256:
 ::::
 
 ### `ema_price`
-::::description[`StableSwap.ema_price(i: uint256) -> uint256:`]
+::::description[`StableSwap.ema_price(i: uint256) -> uint256: view`]
 
 
-:::Warning[Revert]
+:::warning[Revert]
 
 This function will revert if `i >= MAX_COINS`.
 
@@ -372,11 +377,11 @@ Getter method for the last stored exponential moving-average (EMA) price of the 
 
 `i = 0` will return the last EMA price of `coin[1]`, `i = 1` of `coin[2]`, and so on.
 
-Returns: the last stored EMA price of coin `i` (`uint256`).
-
 | Input | Type      | Description                                      |
 |-------|-----------|--------------------------------------------------|
 | `i`   | `uint256` | Index of the coin for which to retrieve the last EMA price. |
+
+Returns: the last stored EMA price of coin `i` (`uint256`).
 
 <SourceCode>
 
@@ -408,18 +413,18 @@ def ema_price(i: uint256) -> uint256:
 ::::
 
 ### `get_p`
-::::description[`StableSwap.get_p(i: uint256) -> uint256:`]
+::::description[`StableSwap.get_p(i: uint256) -> uint256: view`]
 
 
-Function to calculate the current AMM spot price of coin `i` based on the coin balances in the pool, the amplification coefficient `A`, and the `D` invariant. 
+Function to calculate the current AMM spot price of coin `i` based on the coin balances in the pool, the amplification coefficient `A`, and the `D` invariant.
 
 `i = 0` will return the price of `coin[1]`, `i = 1` the price of `coin[2]`, and so on.
-
-Returns: current spot price (`uint256`).
 
 | Input | Type      | Description                                       |
 |-------|-----------|---------------------------------------------------|
 | `i`   | `uint256` | Index of the coin for which to calculate the current spot price. |
+
+Returns: current spot price (`uint256`).
 
 <SourceCode>
 
@@ -491,7 +496,7 @@ def _get_p(
 ::::
 
 ### `get_virtual_price`
-::::description[`StableSwap.get_virtual_price() -> uint256:`]
+::::description[`StableSwap.get_virtual_price() -> uint256: view`]
 
 
 :::danger[Attack Vector]
@@ -615,9 +620,11 @@ D_ma_time: public(uint256)
 ::::description[`StableSwap.ma_last_time() -> uint256: view`]
 
 
-:::warning[Destinction between price and D]
+:::warning[Distinction between price and D]
 
-This variable contains two packed values because there needs to be a distinction between prices and the D invariant. The reasoning behind this is that the **moving-average price oracle is not updated if users remove liquidity in a balanced proportion (`remove_liquidity`), but the D oracle is.**:::
+This variable contains two packed values because there needs to be a distinction between prices and the D invariant. The reasoning behind this is that the **moving-average price oracle is not updated if users remove liquidity in a balanced proportion (`remove_liquidity`), but the D oracle is.**
+
+:::
 
 Getter for the last time the exponential moving-average oracle of coin prices or the D invariant was updated. This variable contains two packed values: **ma_last_time_p**, which represents the timestamp of the last update for prices, and **ma_last_time_D**, which represents the last timestamp of the oracle update for the D invariant.
 
@@ -646,7 +653,7 @@ ma_last_time: public(uint256)                     # packing: ma_last_time_p, ma_
 
 :::note[Unpacking values]
 
-The value needs to be unpacked, as it contains two values, **ma_last_time_p**and **ma_last_time_D**.  
+The value needs to be unpacked, as it contains two values, **ma_last_time_p** and **ma_last_time_D**.  
 
 For example, 579359617954437487117250992339883299967854142015 is unpacked into two uint256 numbers. First, its lower 128 bits are isolated using a bitwise AND with 2**128 − 1, and then the value is shifted right by 128 bits to extract the upper 128 bits.  
 It returns: [1702584895, 1702584895], meaning both moving-average oracles were updated at the same time. 
