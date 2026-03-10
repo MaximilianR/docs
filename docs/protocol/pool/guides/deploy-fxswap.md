@@ -202,5 +202,5 @@ Once everything looks correct, click the blue **Create Pool** button at the bott
 ## What to do after deployment
 
 ✅ **Seed initial liquidity** — a pool with zero balance cannot process trades.  
-✅ (Optional) **Add Refuels (Donations)** — Refuels help maintain pool efficiency by subsidizing rebalancing costs. You can add them via the standard `add_liquidity` function or use the community UI at [crvhub.com/refuel](https://crvhub.com/refuel). More here: [FXSwap Refuels](../understanding-fxswap.md#refuels)  
+✅ (Optional) **Add Refuels (Donations)** — Refuels help maintain pool efficiency by subsidizing rebalancing costs. You can add them manually via [crvhub.com/refuel](https://crvhub.com/refuel), or set up recurring automated refuels with the [**Donation Streamer**](./donation-streamer.md). More here: [FXSwap Refuels](../understanding-fxswap.md#refuels)
 ✅ (Optional) **[Create a gauge](/protocol/gauge/overview)** to distribute CRV or other incentives to LPs.

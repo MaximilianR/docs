@@ -52,6 +52,10 @@ export default {
                 },
                 {
                     type: 'doc',
+                    id: 'pool/guides/donation-streamer',
+                },
+                {
+                    type: 'doc',
                     id: 'pool/post-deployment',
                 },
             ],
