@@ -42,7 +42,7 @@ Key variables:
 - $rate0$: the baseline rate when PegKeepers are debt-free and crvUSD price equals 1
 - $price\_peg$: target crvUSD price (1.00)
 - $price\_crvusd$: actual crvUSD price from `PRICE_ORACLE.price()`
-- $\sigma$: sensitivity parameter controlling how much price deviations affect the rate
+- $\sigma$: sensitivity parameter controlling how much price deviations affect the rate (see [intuition behind sigma](overview.md#intuition-behind-sigma))
 - $EMA(DebtRatio)$: exponentially smoothed PegKeeper debt ratio (see below)
 - $TargetFraction$: target debt fraction for PegKeepers
 - $extra\_const$: an additional constant added to the rate
