@@ -93,6 +93,28 @@ An [automated bot](https://github.com/curvefi/refuel-automation) runs every 8 ho
 
 To manually trigger due refuels (or to earn the ETH bounties yourself), use the **Stream Executor** section at the bottom of the UI. The **StreamExecutor Address** is pre-filled — just click **Execute via Executor** to batch-execute all currently due streams and collect the bounties.
 
+## Tracking Refuel Consumption
+
+:::info
+Track refuel activity for any pool on the [**Refuel Monitor**](https://refuel.curvemonitor.com/ethereum).
+:::
+
+Select your pool to view detailed stats. For example: [refuel.curvemonitor.com/ethereum/0x027B...](https://refuel.curvemonitor.com/ethereum/0x027B40F5917FCd0eac57d7015e120096A5F92ca9).
+
+The dashboard shows **Donation Shares** (total refuel buffer) vs **Unlocked Shares** (how much has been consumed by rebalancing), as well as **Daily Donations** in USD over the last 7 days.
+
+<figure>
+  <img src={require('@site/static/img/protocol/automate-donations/donation-stats.png').default} alt="Donation shares and daily donation stats" style={{ width: '100%', maxWidth: '800px', display: 'block', margin: '0 auto' }} />
+  <figcaption></figcaption>
+</figure>
+
+It also includes a **Top Donors** leaderboard showing each donor's total contribution in USD, number of donations, and token breakdown.
+
+<figure>
+  <img src={require('@site/static/img/protocol/automate-donations/top-donors.png').default} alt="Top donors leaderboard" style={{ width: '100%', maxWidth: '800px', display: 'block', margin: '0 auto' }} />
+  <figcaption></figcaption>
+</figure>
+
 ## Cancelling a Stream
 
 You can cancel your stream at any time to recover remaining tokens and unspent ETH bounties. In the **Pool Streams** section, find your stream (marked with **(you)**) and click the **Cancel** button.
