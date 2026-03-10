@@ -45,7 +45,7 @@ function flattenDeployments(data: any): DeploymentEntry[] {
   }
 
   for (const [chain, chainData] of Object.entries(data)) {
-    if (chain === '_explorers') continue;
+    if (chain.startsWith('_')) continue;
 
     if (typeof chainData === 'object' && chainData !== null) {
       for (const [category, categoryData] of Object.entries(chainData as any)) {
