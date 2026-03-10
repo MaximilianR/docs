@@ -2,30 +2,31 @@ import React from 'react';
 import { toSlug } from './constants';
 import styles from './styles.module.css';
 
+const EXTS = ['png', 'svg', 'webp'];
+
 export function ChainLogo({ chain }: { chain: string }) {
   const slug = toSlug(chain);
-  const exts = ['svg', 'png', 'webp'];
-  const [idx, setIdx] = React.useState(0);
-  const [hasTried, setHasTried] = React.useState(false);
-
-  const src = idx < exts.length ? `/img/chains/${slug}.${exts[idx]}` : '';
+  const imgRef = React.useRef<HTMLImageElement>(null);
+  const idxRef = React.useRef(0);
 
   const handleError = () => {
-    if (idx < exts.length - 1) {
-      setIdx(idx + 1);
+    idxRef.current += 1;
+    if (idxRef.current < EXTS.length) {
+      if (imgRef.current) {
+        imgRef.current.src = `/img/chains/${slug}.${EXTS[idxRef.current]}`;
+      }
     } else {
-      setHasTried(true);
+      if (imgRef.current) {
+        imgRef.current.style.display = 'none';
+      }
     }
   };
-
-  if (hasTried || !src) {
-    return null;
-  }
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={src}
+      ref={imgRef}
+      src={`/img/chains/${slug}.${EXTS[0]}`}
       alt=""
       className={styles.chainLogo}
       onError={handleError}
