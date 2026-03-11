@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react'
-import { createPublicClient, http, formatUnits, type PublicClient } from 'viem'
+import { createPublicClient, http, fallback, formatUnits, type PublicClient } from 'viem'
 import { mainnet } from 'viem/chains'
 import { addresses } from '../data/contracts'
 
 const client: PublicClient = createPublicClient({
   chain: mainnet,
-  transport: http('https://ethereum-rpc.publicnode.com/'),
+  transport: fallback([
+    http('https://ethereum-rpc.publicnode.com/'),
+    http('https://rpc.ankr.com/eth'),
+    http('https://eth.drpc.org'),
+    http('https://1rpc.io/eth'),
+  ]),
   batch: { multicall: true },
 })
 
