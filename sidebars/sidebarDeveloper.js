@@ -459,6 +459,7 @@ export default {
                 { type: 'doc', id: 'fees/fee-splitter', label: 'FeeSplitter' },
                 { type: 'doc', id: 'fees/cow-swap-burner', label: 'CowSwapBurner' },
                 { type: 'doc', id: 'fees/hooker', label: 'Hooker' },
+                { type: 'doc', id: 'fees/fee-allocator', label: 'FeeAllocator' },
                 {
                     type: 'category',
                     label: 'Legacy Architecture',
