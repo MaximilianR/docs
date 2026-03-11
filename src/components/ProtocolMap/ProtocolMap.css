@@ -121,6 +121,22 @@
   cursor: pointer;
 }
 
+/* Detail panel — override Docusaurus table styles */
+.protocol-map-detail-panel table {
+  margin: 0 !important;
+  display: table !important;
+  border: none !important;
+}
+.protocol-map-detail-panel th,
+.protocol-map-detail-panel td {
+  padding: 1px 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+.protocol-map-detail-panel tr {
+  background: transparent !important;
+}
+
 /* Animations */
 @keyframes flowDot {
   0% { offset-distance: 0%; }

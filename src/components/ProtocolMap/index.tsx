@@ -48,41 +48,23 @@ const edgeTypes: EdgeTypes = {
   oracleFlow: OracleFlowEdge,
 }
 
-// Per-tab localStorage keys
-function posKey(tabId: string) { return `curve-map-pos-${tabId}` }
-function edgeKey(tabId: string) { return `curve-map-edges-${tabId}` }
-function hiddenEdgesKey(tabId: string) { return `curve-map-hidden-${tabId}` }
-
-function loadJSON<T>(key: string): T | null {
-  try {
-    const raw = localStorage.getItem(key)
-    return raw ? JSON.parse(raw) : null
-  } catch { return null }
-}
-
 function buildNodesForTab(tabId: string) {
   const tab = tabs.find(t => t.id === tabId)!
   const isOverview = tab.nodeIds.size === 0
-  const savedPositions = loadJSON<Record<string, { x: number; y: number }>>(posKey(tabId))
 
   return initialNodes
     .filter(n => isOverview || tab.nodeIds.has(n.id))
     .map(n => {
-      const pos = savedPositions?.[n.id] ?? tab.positions[n.id] ?? n.position
+      const pos = tab.positions[n.id] ?? n.position
       return { ...n, position: pos }
     })
 }
 
-function buildEdgesForTab(tabId: string) {
-  const savedEdges = loadJSON<Record<string, { sourceHandle?: string; targetHandle?: string }>>(edgeKey(tabId))
-  return initialEdges.map(e => {
-    const override = savedEdges?.[e.id]
-    return override ? { ...e, ...override } : e
-  })
+function buildEdgesForTab(_tabId: string) {
+  return initialEdges.map(e => e)
 }
 
 function buildStablecoinDynamic(markets: CrvusdMarket[], pegkeepers: PegKeeper[]) {
-  const savedPositions = loadJSON<Record<string, { x: number; y: number }>>(posKey('stablecoin'))
   const nodes: Node<ProtocolNodeData>[] = []
   const edges: import('@xyflow/react').Edge[] = []
 
@@ -96,7 +78,7 @@ function buildStablecoinDynamic(markets: CrvusdMarket[], pegkeepers: PegKeeper[]
     nodes.push({
       id: 'dyn-mint-markets',
       type: 'systemNode',
-      position: savedPositions?.['dyn-mint-markets'] ?? { x: -300, y: -25 },
+      position: { x: -300, y: -25 },
       data: {
         label: 'Mint Markets',
         category: 'stablecoin',
@@ -122,7 +104,7 @@ function buildStablecoinDynamic(markets: CrvusdMarket[], pegkeepers: PegKeeper[]
     nodes.push({
       id: 'dyn-pegkeepers',
       type: 'systemNode',
-      position: savedPositions?.['dyn-pegkeepers'] ?? { x: 300, y: -25 },
+      position: { x: 300, y: -25 },
       data: {
         label: 'PegKeepers',
         category: 'stablecoin',
@@ -151,11 +133,8 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
   const [activeTab, setActiveTab] = useState(defaultTab)
   const [nodes, setNodes, onNodesChange] = useNodesState(buildNodesForTab(defaultTab))
   const [edges, setEdges, onEdgesChange] = useEdgesState(buildEdgesForTab(defaultTab))
-  const [hiddenEdges, setHiddenEdges] = useState<Set<string>>(() => {
-    const saved = loadJSON<string[]>(hiddenEdgesKey(defaultTab))
-    return new Set(saved || [])
-  })
-  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [hiddenEdges, setHiddenEdges] = useState<Set<string>>(new Set())
+
   const [selectedNode, setSelectedNode] = useState<Node<ProtocolNodeData> | null>(null)
   const [popupPos, setPopupPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
   const [search, setSearch] = useState('')
@@ -168,8 +147,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
     setActiveTab(tabId)
     setNodes(buildNodesForTab(tabId))
     setEdges(buildEdgesForTab(tabId))
-    const saved = loadJSON<string[]>(hiddenEdgesKey(tabId))
-    setHiddenEdges(new Set(saved || []))
+    setHiddenEdges(new Set())
     setSelectedNode(null)
     setHoveredNode(null)
     setTimeout(() => fitView({ padding: 0.15, duration: 300 }), 50)
@@ -179,21 +157,9 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
     setHiddenEdges(prev => {
       const next = new Set(prev)
       deleted.forEach(e => next.add(e.id))
-      localStorage.setItem(hiddenEdgesKey(activeTab), JSON.stringify([...next]))
       return next
     })
-  }, [activeTab])
-
-  const resetTab = useCallback(() => {
-    localStorage.removeItem(posKey(activeTab))
-    localStorage.removeItem(edgeKey(activeTab))
-    localStorage.removeItem(hiddenEdgesKey(activeTab))
-    localStorage.removeItem('curve-protocol-map-label-offsets')
-    setHiddenEdges(new Set())
-    setNodes(buildNodesForTab(activeTab))
-    setEdges(buildEdgesForTab(activeTab))
-    setTimeout(() => fitView({ padding: 0.15, duration: 300 }), 50)
-  }, [activeTab, setNodes, setEdges, fitView])
+  }, [])
 
   useEffect(() => {
     setTimeout(() => fitView({ padding: 0.15 }), 100)
@@ -215,42 +181,11 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
 
   const handleNodesChange = useCallback((changes: NodeChange[]) => {
     onNodesChange(changes)
-    const hasDrag = changes.some(c => c.type === 'position' && !c.dragging)
-    if (hasDrag) {
-      if (saveTimer.current) clearTimeout(saveTimer.current)
-      saveTimer.current = setTimeout(() => {
-        setNodes(currentNodes => {
-          const positions: Record<string, { x: number; y: number }> = {}
-          currentNodes.forEach(n => { positions[n.id] = n.position })
-          localStorage.setItem(posKey(activeTab), JSON.stringify(positions))
-          return currentNodes
-        })
-      }, 300)
-    }
-  }, [onNodesChange, setNodes, activeTab])
+  }, [onNodesChange])
 
-  const onReconnect = useCallback((oldEdge: { id: string }, newConnection: Connection) => {
-    setEdges(eds => {
-      const updated = eds.map(e => {
-        if (e.id !== oldEdge.id) return e
-        return {
-          ...e,
-          source: newConnection.source!,
-          target: newConnection.target!,
-          sourceHandle: newConnection.sourceHandle,
-          targetHandle: newConnection.targetHandle,
-        }
-      })
-      const overrides: Record<string, { sourceHandle?: string; targetHandle?: string }> = {}
-      updated.forEach(e => {
-        if (e.sourceHandle || e.targetHandle) {
-          overrides[e.id] = { sourceHandle: e.sourceHandle ?? undefined, targetHandle: e.targetHandle ?? undefined }
-        }
-      })
-      localStorage.setItem(edgeKey(activeTab), JSON.stringify(overrides))
-      return updated
-    })
-  }, [setEdges, activeTab])
+  const onReconnect = useCallback((_oldEdge: { id: string }, _newConnection: Connection) => {
+    // Edges are locked — no reconnecting
+  }, [])
 
   const filteredNodes = useMemo(() => {
     return nodes.filter(n => {
@@ -344,7 +279,8 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
         onPaneClick={() => setSelectedNode(null)}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        edgesReconnectable
+        nodesDraggable={false}
+        edgesReconnectable={false}
         fitView
         minZoom={0.2}
         maxZoom={2}
@@ -353,6 +289,25 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
         <Controls position="bottom-left" />
         <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="rgba(255,255,255,0.2)" />
       </ReactFlow>
+
+      {/* Hint box */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 68,
+          right: 16,
+          zIndex: 10,
+          fontFamily: 'System, monospace',
+          fontSize: 10,
+          color: 'rgba(255,255,255,0.7)',
+          background: 'rgba(0,0,0,0.25)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          padding: '5px 10px',
+          pointerEvents: 'none',
+        }}
+      >
+        Click on nodes and edges for live data &amp; details
+      </div>
 
       <DetailPanel node={selectedNode} liveData={liveData} position={popupPos} onClose={() => setSelectedNode(null)} />
     </div>

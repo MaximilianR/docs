@@ -525,17 +525,17 @@ export const initialEdges: Edge[] = [
   { id: 'tf-twocrypto', source: 'twocrypto-factory', target: 'twocrypto', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'dataFlow', label: 'Deploy' },
   { id: 'trf-tricrypto', source: 'tricrypto-factory', target: 'tricrypto', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'dataFlow', label: 'Deploy' },
 
-  // Pool fees → FeeCollector — down
-  { id: 'stableswap-fees', source: 'stableswap', target: 'fee-collector', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'feeFlow', label: '50% Admin Fee' },
-  { id: 'twocrypto-fees', source: 'twocrypto', target: 'fee-collector', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'feeFlow' },
-  { id: 'tricrypto-fees', source: 'tricrypto', target: 'fee-collector', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'feeFlow' },
+  // Pool fees → FeeCollector — right to left
+  { id: 'stableswap-fees', source: 'stableswap', target: 'fee-collector', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'feeFlow', label: '50% Admin Fee' },
+  { id: 'twocrypto-fees', source: 'twocrypto', target: 'fee-collector', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'feeFlow' },
+  { id: 'tricrypto-fees', source: 'tricrypto', target: 'fee-collector', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'feeFlow' },
 
   // AMM fee flow: FeeCollector → CowSwapBurner → FeeCollector → FeeAllocator → FeeDistributor → veCRV
-  { id: 'fc-burner', source: 'fee-collector', target: 'cowswap-burner', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'feeFlow', label: 'Swap to crvUSD', animated: true },
+  { id: 'fc-burner', source: 'fee-collector', target: 'cowswap-burner', sourceHandle: 'right-source', targetHandle: 'top-target', type: 'feeFlow', label: 'Swap to crvUSD', animated: true },
   { id: 'burner-fc', source: 'cowswap-burner', target: 'fee-collector', sourceHandle: 'bottom-source', targetHandle: 'right-target', type: 'feeFlow', animated: true },
   { id: 'fc-allocator', source: 'fee-collector', target: 'fee-allocator', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'feeFlow', label: 'Allocate' },
-  { id: 'allocator-treasury', source: 'fee-allocator', target: 'treasury', sourceHandle: 'left-source', targetHandle: 'top-target', type: 'feeFlow', label: '10% Treasury' },
-  { id: 'allocator-dist', source: 'fee-allocator', target: 'fee-distributor', sourceHandle: 'right-source', targetHandle: 'top-target', type: 'feeFlow', label: '90% to veCRV' },
+  { id: 'allocator-treasury', source: 'fee-allocator', target: 'treasury', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'feeFlow', label: '10% Treasury' },
+  { id: 'allocator-dist', source: 'fee-allocator', target: 'fee-distributor', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'feeFlow', label: '90% to veCRV' },
   { id: 'dist-vecrv', source: 'fee-distributor', target: 'vecrv', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'feeFlow', label: 'Weekly Revenue' },
 
   // crvUSD mint markets
@@ -545,10 +545,10 @@ export const initialEdges: Edge[] = [
   { id: 'policy-mint-markets', source: 'monetary-policy', target: 'crvusd-mint-markets', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'oracleFlow', label: 'Rates' },
 
   // Mint market fee flow: FeeSplitter → RewardsHandler / FeeCollector
-  { id: 'mint-markets-splitter', source: 'crvusd-mint-markets', target: 'fee-splitter', sourceHandle: 'right-source', targetHandle: 'top-target', type: 'feeFlow', label: 'Borrow Interest' },
+  { id: 'mint-markets-splitter', source: 'crvusd-mint-markets', target: 'fee-splitter', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'feeFlow', label: 'Borrow Interest' },
   { id: 'splitter-rh', source: 'fee-splitter', target: 'rewards-handler', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'feeFlow', label: '80%' },
-  { id: 'splitter-fc', source: 'fee-splitter', target: 'fee-collector', sourceHandle: 'left-source', targetHandle: 'right-target', type: 'feeFlow', label: '20%' },
-  { id: 'rh-scrvusd', source: 'rewards-handler', target: 'scrvusd', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'feeFlow', label: 'Savings Yield' },
+  { id: 'splitter-fc', source: 'fee-splitter', target: 'fee-collector', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'feeFlow', label: '20%' },
+  { id: 'rh-scrvusd', source: 'rewards-handler', target: 'scrvusd', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'feeFlow', label: 'Savings Yield' },
   { id: 'agg-pegkeepers', source: 'price-aggregator', target: 'pegkeepers', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'oracleFlow', label: 'Price' },
   { id: 'pegkeepers-pools', source: 'pegkeepers', target: 'stableswap', sourceHandle: 'left-source', targetHandle: 'right-target', type: 'dataFlow', label: 'Stabilize' },
 

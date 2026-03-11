@@ -44,7 +44,7 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
         className={`
           relative px-4 py-2.5 cursor-pointer transition-all duration-150
           border-[6px] border-double border-white
-          ${isToken ? 'rounded-sm min-w-[100px] text-center' : 'rounded-none'}
+          ${isToken ? 'rounded-sm min-w-[100px] text-center' : 'rounded-none min-w-[180px]'}
           ${isSystem ? 'border-dashed' : ''}
           ${selected ? 'scale-105' : 'hover:scale-105 hover:brightness-110'}
         `}

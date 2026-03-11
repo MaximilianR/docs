@@ -1,6 +1,5 @@
 import { useCallback, useRef, useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { useReactFlow } from '@xyflow/react'
 import { getEdgeDescription } from '../data/edgeDescriptions'
 
 // Render description text, converting [text](url) markdown links to clickable <a> tags
@@ -15,29 +14,6 @@ function renderDescription(text: string) {
   })
 }
 
-const LABEL_OFFSETS_KEY = 'curve-protocol-map-label-offsets'
-
-let cachedOffsets: Record<string, { dx: number; dy: number }> | null = null
-
-function loadOffsets(): Record<string, { dx: number; dy: number }> {
-  if (cachedOffsets) return cachedOffsets
-  try {
-    const raw = localStorage.getItem(LABEL_OFFSETS_KEY)
-    cachedOffsets = raw ? JSON.parse(raw) : {}
-    return cachedOffsets!
-  } catch {
-    cachedOffsets = {}
-    return cachedOffsets
-  }
-}
-
-function saveOffset(edgeId: string, dx: number, dy: number) {
-  const offsets = loadOffsets()
-  offsets[edgeId] = { dx, dy }
-  cachedOffsets = offsets
-  localStorage.setItem(LABEL_OFFSETS_KEY, JSON.stringify(offsets))
-}
-
 interface Props {
   edgeId: string
   labelX: number
@@ -48,15 +24,9 @@ interface Props {
 }
 
 export default function DraggableEdgeLabel({ edgeId, labelX, labelY, label, background, borderColor }: Props) {
-  const { getViewport } = useReactFlow()
-  const saved = loadOffsets()[edgeId]
-  const [offset, setOffset] = useState<{ dx: number; dy: number }>(saved || { dx: 0, dy: 0 })
   const [showTooltip, setShowTooltip] = useState(false)
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
   const labelRef = useRef<HTMLDivElement>(null)
-  const dragging = useRef(false)
-  const didDrag = useRef(false)
-  const startPos = useRef({ mx: 0, my: 0, dx: 0, dy: 0 })
 
   const description = getEdgeDescription(edgeId)
 
@@ -75,62 +45,33 @@ export default function DraggableEdgeLabel({ edgeId, labelX, labelY, label, back
     }
   }, [showTooltip])
 
-  const onMouseDown = useCallback((e: React.MouseEvent) => {
+  const onClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation()
-    e.preventDefault()
-    dragging.current = true
-    didDrag.current = false
-    startPos.current = { mx: e.clientX, my: e.clientY, dx: offset.dx, dy: offset.dy }
-
-    const onMouseMove = (ev: MouseEvent) => {
-      if (!dragging.current) return
-      const dx = Math.abs(ev.clientX - startPos.current.mx)
-      const dy = Math.abs(ev.clientY - startPos.current.my)
-      if (dx > 3 || dy > 3) didDrag.current = true
-      const { zoom } = getViewport()
-      const newDx = startPos.current.dx + (ev.clientX - startPos.current.mx) / zoom
-      const newDy = startPos.current.dy + (ev.clientY - startPos.current.my) / zoom
-      setOffset({ dx: newDx, dy: newDy })
-    }
-
-    const onMouseUp = (ev: MouseEvent) => {
-      dragging.current = false
-      if (!didDrag.current && description) {
-        setShowTooltip(v => {
-          if (!v) {
-            // Position tooltip at click location
-            setTooltipPos({ x: ev.clientX, y: ev.clientY + 8 })
-          }
-          return !v
-        })
-      }
-      setOffset(cur => {
-        saveOffset(edgeId, cur.dx, cur.dy)
-        return cur
+    if (description) {
+      setShowTooltip(v => {
+        if (!v) {
+          setTooltipPos({ x: e.clientX, y: e.clientY + 8 })
+        }
+        return !v
       })
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('mouseup', onMouseUp)
     }
-
-    window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('mouseup', onMouseUp)
-  }, [edgeId, offset.dx, offset.dy, getViewport, description])
+  }, [description])
 
   const foWidth = 200
-  const x = labelX + offset.dx - foWidth / 2
-  const y = labelY + offset.dy - 13
+  const x = labelX - foWidth / 2
+  const y = labelY - 13
 
   return (
     <>
       <foreignObject x={x} y={y} width={foWidth} height={30} requiredExtensions="http://www.w3.org/1999/xhtml">
         <div ref={labelRef} style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100%' }}>
           <div
-            onMouseDown={onMouseDown}
+            onClick={onClick}
             style={{
               fontFamily: 'System, monospace', fontSize: 10, fontWeight: 'bold', textAlign: 'center',
               color: 'white', background, border: `3px double ${borderColor}`, padding: '2px 8px',
               boxShadow: '3px 3px 2px rgba(0,0,0,0.4)',
-              cursor: description ? 'pointer' : 'grab',
+              cursor: description ? 'pointer' : 'default',
               userSelect: 'none',
               whiteSpace: 'nowrap',
               width: 'fit-content',

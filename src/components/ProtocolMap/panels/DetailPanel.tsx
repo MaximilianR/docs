@@ -5,7 +5,7 @@ import { categories } from '../data/graph'
 import type { LiveData } from '../hooks/useLiveData'
 import { formatNumber, shortenAddress } from '../utils/formatters'
 
-const DOCS_BASE = 'https://docs.curve.finance'
+const DOCS_BASE = ''
 const MARKETS_API = 'https://prices.curve.finance/v1/crvusd/markets/ethereum'
 
 // Known address labels for FeeAllocator receivers
@@ -228,11 +228,11 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
   return (
     <div
       ref={ref}
-      className="fixed z-50"
+      className="fixed z-50 protocol-map-detail-panel"
       style={{
         left: pos.x,
         top: pos.y,
-        width: 320,
+        width: 300,
         maxHeight: 'calc(100vh - 32px)',
         overflowY: 'auto',
         background: '#3465a4',
@@ -285,24 +285,24 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* Market breakdown table (dynamic stablecoin tab) */}
         {(data as any).marketRows && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
               Markets (Live)
             </div>
             <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                  <th className="py-1 text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Collateral</th>
-                  <th className="py-1 text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Debt</th>
-                  <th className="py-1 text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Loans</th>
+                  <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Collateral</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Debt</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Loans</th>
                 </tr>
               </thead>
               <tbody>
                 {((data as any).marketRows as { symbol: string; debt: number; loans: number }[]).map((r, i) => (
                   <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.8)' }}>{r.symbol}</td>
-                    <td className="py-1 font-bold text-right">${formatNumber(r.debt)}</td>
-                    <td className="py-1 text-right">{r.loans}</td>
+                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.8)' }}>{r.symbol}</td>
+                    <td className="py-px font-bold text-right">${formatNumber(r.debt)}</td>
+                    <td className="py-px text-right">{r.loans}</td>
                   </tr>
                 ))}
               </tbody>
@@ -316,7 +316,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* Live data — combine with scrvUSD APY when both available */}
         {live && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="flex items-center gap-2">
               {live.icon && <img src={live.icon} alt="" className="w-5 h-5 rounded-full" />}
               <div className="flex-1">
@@ -342,7 +342,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
         )}
 
         {liveData.loading && data.liveDataKey && (
-          <div className="animate-pulse" style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div className="animate-pulse" style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="h-3 bg-white/20 w-20 mb-2" />
             <div className="h-5 bg-white/20 w-32" />
           </div>
@@ -350,19 +350,19 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* crvUSD Mint Markets collected & pending fees */}
         {node.id === 'crvusd-mint-markets' && marketFees && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
               Interest Fees
             </div>
             <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
               <tbody>
                 <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                  <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Total Collected</td>
-                  <td className="py-1 font-bold text-right">{formatNumber(marketFees.collected)} crvUSD</td>
+                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Total Collected</td>
+                  <td className="py-px font-bold text-right">{formatNumber(marketFees.collected)} crvUSD</td>
                 </tr>
                 <tr>
-                  <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Pending Collection</td>
-                  <td className="py-1 font-bold text-right">{formatNumber(marketFees.pending)} crvUSD</td>
+                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Pending Collection</td>
+                  <td className="py-px font-bold text-right">{formatNumber(marketFees.pending)} crvUSD</td>
                 </tr>
               </tbody>
             </table>
@@ -375,28 +375,28 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* FeeSplitter active receivers */}
         {node.id === 'fee-splitter' && liveData.rhEffectiveWeight != null && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
               Active Receivers
             </div>
             <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                  <th className="py-1 text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Receiver</th>
-                  <th className="py-1 text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Share</th>
-                  <th className="py-1 text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Type</th>
+                  <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Receiver</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Share</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Type</th>
                 </tr>
               </thead>
               <tbody>
                 <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                  <td className="py-1" style={{ color: 'rgba(255,255,255,0.85)' }}>RewardsHandler</td>
-                  <td className="py-1 font-bold text-right">{(liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
-                  <td className="py-1 text-right text-[10px]" style={{ color: '#facc15' }}>dynamic</td>
+                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)' }}>RewardsHandler</td>
+                  <td className="py-px font-bold text-right">{(liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
+                  <td className="py-px text-right text-[10px]" style={{ color: '#facc15' }}>dynamic</td>
                 </tr>
                 <tr>
-                  <td className="py-1" style={{ color: 'rgba(255,255,255,0.85)' }}>FeeCollector</td>
-                  <td className="py-1 font-bold text-right">{(100 - liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
-                  <td className="py-1 text-right text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>static</td>
+                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)' }}>FeeCollector</td>
+                  <td className="py-px font-bold text-right">{(100 - liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
+                  <td className="py-px text-right text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>static</td>
                 </tr>
               </tbody>
             </table>
@@ -412,21 +412,21 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* FeeAllocator receivers */}
         {node.id === 'fee-allocator' && liveData.allocatorReceivers && liveData.allocatorReceivers.length > 0 && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
               Active Receivers
             </div>
             <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                  <th className="py-1 text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Receiver</th>
-                  <th className="py-1 text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Weight</th>
+                  <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Receiver</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Weight</th>
                 </tr>
               </thead>
               <tbody>
                 {liveData.allocatorReceivers.map((r, i) => (
                   <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-1">
+                    <td className="py-px">
                       <a
                         href={`https://etherscan.io/address/${r.address}`}
                         target="_blank"
@@ -437,13 +437,13 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
                         {ADDRESS_LABELS[r.address.toLowerCase()] || shortenAddress(r.address)}
                       </a>
                     </td>
-                    <td className="py-1 font-bold text-right">{(r.weight / 100).toFixed(2)}%</td>
+                    <td className="py-px font-bold text-right">{(r.weight / 100).toFixed(2)}%</td>
                   </tr>
                 ))}
                 {liveData.allocatorDistributorWeight != null && (
                   <tr>
-                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.85)' }}>FeeDistributor</td>
-                    <td className="py-1 font-bold text-right">{(liveData.allocatorDistributorWeight / 100).toFixed(2)}%</td>
+                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)' }}>FeeDistributor</td>
+                    <td className="py-px font-bold text-right">{(liveData.allocatorDistributorWeight / 100).toFixed(2)}%</td>
                   </tr>
                 )}
               </tbody>
@@ -457,7 +457,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* RewardsHandler dynamic weight breakdown */}
         {node.id === 'rewards-handler' && liveData.rhEffectiveWeight != null && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
               Dynamic Weight
             </div>
@@ -465,37 +465,37 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               <tbody>
                 {liveData.crvusdCirculating != null && (
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>crvUSD Minted</td>
-                    <td className="py-1 font-bold text-right">{formatNumber(parseFloat(liveData.crvusdCirculating))}</td>
+                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>crvUSD Minted</td>
+                    <td className="py-px font-bold text-right">{formatNumber(parseFloat(liveData.crvusdCirculating))}</td>
                   </tr>
                 )}
                 {liveData.scrvusdAssets != null && (
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>scrvUSD Staked</td>
-                    <td className="py-1 font-bold text-right">{formatNumber(parseFloat(liveData.scrvusdAssets))}</td>
+                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>scrvUSD Staked</td>
+                    <td className="py-px font-bold text-right">{formatNumber(parseFloat(liveData.scrvusdAssets))}</td>
                   </tr>
                 )}
                 {liveData.rhDynamicWeight != null && (
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Requested Weight</td>
-                    <td className="py-1 font-bold text-right">{(liveData.rhDynamicWeight / 100).toFixed(2)}%</td>
+                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Requested Weight</td>
+                    <td className="py-px font-bold text-right">{(liveData.rhDynamicWeight / 100).toFixed(2)}%</td>
                   </tr>
                 )}
                 {liveData.rhMaxWeight != null && (
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Maximum (cap)</td>
-                    <td className="py-1 font-bold text-right">{(liveData.rhMaxWeight / 100).toFixed(2)}%</td>
+                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Maximum (cap)</td>
+                    <td className="py-px font-bold text-right">{(liveData.rhMaxWeight / 100).toFixed(2)}%</td>
                   </tr>
                 )}
                 {liveData.rhMinWeight != null && (
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Minimum (floor)</td>
-                    <td className="py-1 font-bold text-right">{(liveData.rhMinWeight / 100).toFixed(2)}%</td>
+                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Minimum (floor)</td>
+                    <td className="py-px font-bold text-right">{(liveData.rhMinWeight / 100).toFixed(2)}%</td>
                   </tr>
                 )}
                 <tr>
-                  <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Effective Weight</td>
-                  <td className="py-1 font-bold text-right" style={{ color: '#4ade80' }}>{(liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
+                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Effective Weight</td>
+                  <td className="py-px font-bold text-right" style={{ color: '#4ade80' }}>{(liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
                 </tr>
               </tbody>
             </table>
@@ -541,11 +541,13 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               href={`${DOCS_BASE}${data.docPath}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-3 py-1 text-[11px] font-bold text-white hover:brightness-110 transition-all"
+              className="inline-block px-3 py-1 text-[11px] font-bold hover:brightness-110 transition-all"
               style={{
                 background: 'green',
+                color: 'white',
                 border: '1px outset green',
                 boxShadow: '3px 3px 0 rgba(0,0,0,0.3)',
+                textDecoration: 'none',
               }}
             >
               View Full Docs →
@@ -603,7 +605,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* Fee distribution history (FeeDistributor only) */}
         {isFeeDistributor && showFeeHistory && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
               Weekly Distributions
             </div>
@@ -616,15 +618,15 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                    <th className="py-1 text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Week</th>
-                    <th className="py-1 text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Fees (USD)</th>
+                    <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Week</th>
+                    <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Fees (USD)</th>
                   </tr>
                 </thead>
                 <tbody>
                   {feeHistory.map((d, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                      <td className="py-1" style={{ color: 'rgba(255,255,255,0.8)' }}>{formatDate(d.timestamp)}</td>
-                      <td className="py-1 font-bold text-right">${formatNumber(d.fees_usd)}</td>
+                      <td className="py-px" style={{ color: 'rgba(255,255,255,0.8)' }}>{formatDate(d.timestamp)}</td>
+                      <td className="py-px font-bold text-right">${formatNumber(d.fees_usd)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -676,7 +678,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* Settlements history (CowSwap Burner) */}
         {isCowswapBurner && showSettlements && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
               Latest Settlements
             </div>
@@ -690,17 +692,17 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
                 <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                      <th className="py-1 text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Token</th>
-                      <th className="py-1 text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Received (USD)</th>
-                      <th className="py-1 w-5" />
+                      <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Token</th>
+                      <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Received (USD)</th>
+                      <th className="py-px w-5" />
                     </tr>
                   </thead>
                   <tbody>
                     {settlements.slice(0, SETTLEMENTS_PER_PAGE).map((s, i) => (
                       <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                        <td className="py-1" style={{ color: 'rgba(255,255,255,0.85)' }}>{s.coin.symbol}</td>
-                        <td className="py-1 font-bold text-right">${formatNumber(s.amount_received)}</td>
-                        <td className="py-1 text-right">
+                        <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)' }}>{s.coin.symbol}</td>
+                        <td className="py-px font-bold text-right">${formatNumber(s.amount_received)}</td>
+                        <td className="py-px text-right">
                           <a
                             href={`https://etherscan.io/tx/${s.tx_hash}`}
                             target="_blank"
@@ -733,7 +735,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* Savings distribution history (RewardsHandler) */}
         {isRewardsHandler && showSavingsHistory && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: 10 }}>
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             {savingsData && savingsData.total_distributed !== '0' && (
               <div className="mb-2 flex items-center justify-between">
                 <div className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>
@@ -756,17 +758,17 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                    <th className="py-1 text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Date</th>
-                    <th className="py-1 text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Gain (crvUSD)</th>
-                    <th className="py-1 w-5" />
+                    <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Date</th>
+                    <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Gain (crvUSD)</th>
+                    <th className="py-px w-5" />
                   </tr>
                 </thead>
                 <tbody>
                   {savingsData.history.map((d, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                      <td className="py-1" style={{ color: 'rgba(255,255,255,0.8)' }}>{formatDate(d.dt, true)}</td>
-                      <td className="py-1 font-bold text-right">{formatNumber(parseFloat(d.gain) / 1e18)}</td>
-                      <td className="py-1 text-right">
+                      <td className="py-px" style={{ color: 'rgba(255,255,255,0.8)' }}>{formatDate(d.dt, true)}</td>
+                      <td className="py-px font-bold text-right">{formatNumber(parseFloat(d.gain) / 1e18)}</td>
+                      <td className="py-px text-right">
                         <a
                           href={`https://etherscan.io/tx/${d.tx_hash}`}
                           target="_blank"

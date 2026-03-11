@@ -18,22 +18,22 @@ export const tabs: TabConfig[] = [
     ]),
     positions: {
       // Left column: AMM fee sources
-      'stableswap': { x: -400, y: 50 },
-      'twocrypto': { x: -400, y: 140 },
-      'tricrypto': { x: -400, y: 230 },
-      // Top right: crvUSD interest path → scrvUSD
-      'crvusd-mint-markets': { x: 100, y: -200 },
-      'fee-splitter': { x: 100, y: -50 },
-      'rewards-handler': { x: 400, y: -50 },
-      'scrvusd': { x: 650, y: -50 },
+      'stableswap': { x: -350, y: 50 },
+      'twocrypto': { x: -350, y: 180 },
+      'tricrypto': { x: -350, y: 310 },
+      // Top: crvUSD interest path → scrvUSD
+      'crvusd-mint-markets': { x: 50, y: -280 },
+      'fee-splitter': { x: 50, y: -80 },
+      'rewards-handler': { x: 450, y: -80 },
+      'scrvusd': { x: 800, y: -80 },
       // Center: fee collection & burn loop
-      'fee-collector': { x: 100, y: 140 },
-      'cowswap-burner': { x: 400, y: 140 },
+      'fee-collector': { x: 50, y: 180 },
+      'cowswap-burner': { x: 450, y: 250 },
       // Bottom: allocation & distribution
-      'fee-allocator': { x: 100, y: 340 },
-      'treasury': { x: -150, y: 500 },
-      'fee-distributor': { x: 350, y: 500 },
-      'vecrv': { x: 600, y: 500 },
+      'fee-allocator': { x: 50, y: 440 },
+      'treasury': { x: -250, y: 640 },
+      'fee-distributor': { x: 350, y: 640 },
+      'vecrv': { x: 700, y: 640 },
     },
   },
   {
