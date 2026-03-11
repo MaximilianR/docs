@@ -1,45 +1,45 @@
 {
-    "_instructions": "This is the source of truth for deployments.json. After editing this file, run 'npm run sync-deployments' to sync it to src/data/deployments.json and static/deployments.json",
-    "_explorers": {
-        "ethereum": "https://etherscan.io/address/",
-        "arbitrum": "https://arbiscan.io/address/",
-        "polygon": "https://polygonscan.com/address/",
-        "base": "https://basescan.org/address/",
-        "avalanche": "https://snowtrace.io/address/",
-        "corn": "https://maizenet-explorer.usecorn.com/address/",
-        "fantom": "https://ftmscan.com/address/",
-        "binance-smart-chain": "https://bscscan.com/address/",
-        "bsc": "https://bscscan.com/address/",
-        "etherlink": "https://explorer.etherlink.com/address/",
-        "fraxtal": "https://fraxscan.com/address/",
-        "hyperliquid": "https://hyperevmscan.io/address/",
-        "ink": "https://explorer.inkonchain.com/address/",
-        "kava": "https://kavascan.com/address/",
-        "aurora": "https://aurorascan.dev/address/",
-        "mantle": "https://explorer.mantle.xyz/address/",
-        "monad": "https://monadvision.com/address/",
-        "sonic": "https://sonicscan.io/address/",
-        "optimism": "https://optimistic.etherscan.io/address/",
-        "gnosis": "https://gnosisscan.io/address/",
-        "gnosis-chain": "https://gnosisscan.io/address/",
-        "moonbeam": "https://moonscan.io/address/",
-        "celo": "https://celoscan.io/address/",
-        "zksync": "https://explorer.zksync.io/address/",
-        "zksync-era": "https://explorer.zksync.io/address/",
-        "linea": "https://lineascan.build/address/",
-        "plasma": "https://plasmascan.to/address/",
-        "plume": "https://explorer.plume.org/address/",
-        "scroll": "https://scrollscan.com/address/",
-        "stable": "https://stablescan.xyz/address/",
-        "tac": "https://explorer.tac.build/address/",
-        "taiko": "https://taikoscan.io/address/",
-        "unichain": "https://uniscan.xyz/address/",
-        "x-layer": "https://web3.okx.com/explorer/x-layer/address/",
-        "xdc": "https://xdcscan.io/address/",
-        "blast": "https://blastscan.io/address/",
-        "mode": "https://explorer.mode.network/address/"
-    },
-    "ethereum": {
+  "_instructions": "This is the source of truth for deployments.json. After editing this file, run 'npm run sync-deployments' to sync it to src/data/deployments.json and static/deployments.json",
+  "_explorers": {
+    "ethereum": "https://etherscan.io/address/",
+    "arbitrum": "https://arbiscan.io/address/",
+    "polygon": "https://polygonscan.com/address/",
+    "base": "https://basescan.org/address/",
+    "avalanche": "https://snowtrace.io/address/",
+    "corn": "https://maizenet-explorer.usecorn.com/address/",
+    "fantom": "https://ftmscan.com/address/",
+    "binance-smart-chain": "https://bscscan.com/address/",
+    "bsc": "https://bscscan.com/address/",
+    "etherlink": "https://explorer.etherlink.com/address/",
+    "fraxtal": "https://fraxscan.com/address/",
+    "hyperliquid": "https://hyperevmscan.io/address/",
+    "ink": "https://explorer.inkonchain.com/address/",
+    "kava": "https://kavascan.com/address/",
+    "aurora": "https://aurorascan.dev/address/",
+    "mantle": "https://explorer.mantle.xyz/address/",
+    "monad": "https://monadvision.com/address/",
+    "sonic": "https://sonicscan.io/address/",
+    "optimism": "https://optimistic.etherscan.io/address/",
+    "gnosis": "https://gnosisscan.io/address/",
+    "gnosis-chain": "https://gnosisscan.io/address/",
+    "moonbeam": "https://moonscan.io/address/",
+    "celo": "https://celoscan.io/address/",
+    "zksync": "https://explorer.zksync.io/address/",
+    "zksync-era": "https://explorer.zksync.io/address/",
+    "linea": "https://lineascan.build/address/",
+    "plasma": "https://plasmascan.to/address/",
+    "plume": "https://explorer.plume.org/address/",
+    "scroll": "https://scrollscan.com/address/",
+    "stable": "https://stablescan.xyz/address/",
+    "tac": "https://explorer.tac.build/address/",
+    "taiko": "https://taikoscan.io/address/",
+    "unichain": "https://uniscan.xyz/address/",
+    "x-layer": "https://web3.okx.com/explorer/x-layer/address/",
+    "xdc": "https://xdcscan.io/address/",
+    "blast": "https://blastscan.io/address/",
+    "mode": "https://explorer.mode.network/address/"
+  },
+  "ethereum": {
     "tokens": {
       "crv": "0xD533a949740bb3306d119CC777fa900bA034cd52",
       "vecrv": "0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2",
@@ -176,9 +176,17 @@
       "vault": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
       "rewards-handler": "0xe8d1e2531761406af1615a6764b0d5ff52736f56",
       "stablecoin-lens": "0xe24e2db9f6bb40bbe7c1c025bc87104f5401ecd7"
-    }
     },
-    "arbitrum": {
+    "fast-bridge": {
+      "fast-bridge-vault-arbitrum": "0xadB10d2d5A95e58Ddb1A0744a0d2D7B55Db7843D",
+      "fast-bridge-vault-optimism": "0x97d024859B68394122B3d0bb407dD7299cC8E937",
+      "fast-bridge-vault-fraxtal": "0x5EF620631AA46e7d2F6f963B6bE4F6823521B9eC",
+      "vault-messenger-lz-arbitrum": "0x15945526b5c32d963391343e9bc080838fe3e6d9",
+      "vault-messenger-lz-optimism": "0x4a10d0ff9e394f3a3dcdb297973db40ce304b44f",
+      "vault-messenger-lz-fraxtal": "0xec0e1c5cc900d87b1fa44584310c43f82f75870f"
+    }
+  },
+  "arbitrum": {
     "tokens": {
       "crv": "0x11cDb42B0EB46D95f990BeDD4695A6e3fA034978",
       "vecrv": "",
@@ -256,6 +264,10 @@
       "monetary-policy-implementation": "0x0b3536245faDABCF091778C4289caEbDc2c8f5C1",
       "odos-leverage-zap": "0xb7b240cfa985306563a301bc417bc9715059a117",
       "odos-leverage-zap-v3": "0xFE02553d3Ba4c3f39F36a4632F91404DF94b9AE2"
+    },
+    "fast-bridge": {
+      "fast-bridge-l2": "0x1f2af270029d028400265ce1dd0919ba8780dae1",
+      "l2-messenger-lz": "0x14e11c1b8f04a7de306a7b5bf21bbca0d5cf79ff"
     }
   },
   "aurora": {
@@ -329,8 +341,8 @@
         "meta-zap-ng": "0x9293f068912bae932843a1bA01806c54f416019D"
       }
     }
-    },
-    "avalanche": {
+  },
+  "avalanche": {
     "tokens": {
       "crv": "0xEEbC562d445F4bC13aC75c8caABb438DFae42A1B",
       "vecrv": "",
@@ -426,9 +438,7 @@
       "emergency-agent": "0x95F0f720CAdDED982E6998b3390E6D3788c2CE5C",
       "vault": "0xA4c0eA0fb8eb652e11C8123E589197E18Ca78AA8"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -480,7 +490,7 @@
         "meta-zap-ng": "0x3f445D38E820c010a7A6E33c5F80cBEBE6930f61"
       }
     }
-    },
+  },
   "bsc": {
     "tokens": {
       "crv": "0x9996D0276612d23b35f90C51EE935520B3d7355B",
@@ -561,7 +571,7 @@
         "meta-zap-ng": "0x07920e98a66e462c2aa4c8fa6200bc68ca161ea0"
       }
     }
-    },
+  },
   "celo": {
     "tokens": {
       "crv": "0x75184c282e55a7393053f0b8f4f3e7beae067fdc",
@@ -579,9 +589,7 @@
       "agent": "0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69",
       "verifier": "0x6a2691068C7CbdA03292Ba0f9c77A25F658bAeF5"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -633,7 +641,7 @@
         "meta-zap-ng": "0x3f445D38E820c010a7A6E33c5F80cBEBE6930f61"
       }
     }
-    },
+  },
   "corn": {
     "tokens": {
       "crv": "0x1b3757d5EE281Eaf6a9c8E5D9b8488b4475Aa955",
@@ -651,9 +659,7 @@
       "agent": "0xe35A879E5EfB4F1Bb7F70dCF3250f2e19f096bd8",
       "verifier": "0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -722,9 +728,7 @@
       "agent": "0x988d1037e9608B21050A8EFba0c6C45e01A3Bce7",
       "verifier": "0x74d6aABD6197E83d963F0B48be9C034F93E8E66d"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -775,7 +779,7 @@
         "meta-zap-ng": "0x2AF43209B366A4491CCe0A97C5a7B6059fd21295"
       }
     }
-    },
+  },
   "fantom": {
     "tokens": {
       "crv": "0xE6c259bc0FCE25b71fE95A00361D3878E16232C3",
@@ -872,9 +876,7 @@
       "emergency-agent": "0xeF3D6Bc9a603AcABAEd46f43506F01e7eC4d1301",
       "vault": "0x50eD95CEb917443eE0790Eea97494121CA318a6C"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -935,9 +937,13 @@
       "monetary-policy-implementation": "0x86D347cE5f1E6f7Ef4Da00FB7c8d31fBD16996F0",
       "llamalend-leverage-zap": "0x37c5ab57af7100bdc9b668d766e193ccbf6614fd",
       "odos-leverage-zap-v3": "0x3294514B78Df4Bb90132567fcf8E5e99f390B687"
-    }
     },
-    "gnosis": {
+    "fast-bridge": {
+      "fast-bridge-l2": "0x3fe593e651cd0b383ad36b75f4159f30bb0631a6",
+      "l2-messenger-lz": "0x672c38258729060bf443ba28faef4f2db154c6fc"
+    }
+  },
+  "gnosis": {
     "tokens": {
       "crv": "0x712b3d230F3C1c19db860d80619288b1F0BDd0Bd",
       "vecrv": "",
@@ -954,9 +960,7 @@
       "agent": "0x0dE10187c6699F069619D480Bf69B4E54545280f",
       "verifier": "0x5dFAFdA4D5B26bE0e99e6A8C6B1eB97eD99B9bD3"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -1030,9 +1034,7 @@
       "agent": "0xe35A879E5EfB4F1Bb7F70dCF3250f2e19f096bd8",
       "verifier": "0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -1099,9 +1101,7 @@
       "agent": "0x5bcA7dDF1bcccB2eE8e46c56bfc9d3CDC77262bC",
       "verifier": "0x3c0a405E914337139992625D5100Ea141a9C4d11"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -1247,9 +1247,7 @@
       "emergency-agent": "0x4339b53cf7f6eec1a997ceea81165e45c1244429",
       "vault": "0x77A214bd4ee3650e5608339BBbE04b09f5546ECF"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -1317,8 +1315,7 @@
       "emergency-agent": "0xabc336d4C71ad275695744d32DdB1d8266Db1cbF",
       "vault": "0x193110Ce1542d7371e1515BD6A2E470fDefc310D"
     },
-    "x-dao": {
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "",
       "block-oracle": "",
@@ -1387,9 +1384,7 @@
       "agent": "0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69",
       "verifier": "0x6a2691068C7CbdA03292Ba0f9c77A25F658bAeF5"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -1439,8 +1434,8 @@
         "meta-zap-ng": ""
       }
     }
-    },
-    "optimism": {
+  },
+  "optimism": {
     "tokens": {
       "crv": "0x0994206dfE8De6Ec6920FF4D779B0d950605Fb53",
       "vecrv": "",
@@ -1455,9 +1450,7 @@
       "emergency-agent": "0x9fF1ddE4BE9BbD891836863d227248047B3D881b",
       "vault": "0xD166EEdf272B860E991d331B71041799379185D5"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -1518,6 +1511,10 @@
       "monetary-policy-implementation": "0xa2294769e9CFA9Fd029030F7be94E2602821677B",
       "llamalend-leverage-zap": "0x273e44B9a1841857d9360e8792bB59f9e1FfE9Da",
       "odos-leverage-zap-v3": "0xBFab8ebc836E1c4D81837798FC076D219C9a1855"
+    },
+    "fast-bridge": {
+      "fast-bridge-l2": "0xd16d5ec345dd86fb63c6a9c43c517210f1027914",
+      "l2-messenger-lz": "0x7a1f2f99b65f6c3b2413648c86c0326cff8d8837"
     }
   },
   "plasma": {
@@ -1537,9 +1534,7 @@
       "agent": "0xe35A879E5EfB4F1Bb7F70dCF3250f2e19f096bd8",
       "verifier": "0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "",
       "block-oracle": "",
@@ -1591,7 +1586,7 @@
         "meta-zap-ng": "0x2AF43209B366A4491CCe0A97C5a7B6059fd21295"
       }
     }
-    },
+  },
   "plume": {
     "tokens": {
       "crv": "",
@@ -1609,9 +1604,7 @@
       "agent": "0xe35A879E5EfB4F1Bb7F70dCF3250f2e19f096bd8",
       "verifier": "0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -1662,7 +1655,7 @@
         "meta-zap-ng": "0xd05b37dFe4c0377dbCb8030eAD07b41888716fE4"
       }
     }
-    },
+  },
   "polygon": {
     "tokens": {
       "crv": "0x172370d5Cd63279eFa6d502DAB29171933a610AF",
@@ -1850,9 +1843,7 @@
       "agent": "",
       "verifier": ""
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "",
       "block-oracle": "",
@@ -1922,9 +1913,7 @@
       "agent": "0xe35A879E5EfB4F1Bb7F70dCF3250f2e19f096bd8",
       "verifier": "0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -1992,9 +1981,7 @@
       "emergency-agent": "0xA73EdCf18421B56D9AF1cE08A34E102E23b2C4B6",
       "vault": "0x3c0a405E914337139992625D5100Ea141a9C4d11"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
@@ -2062,9 +2049,7 @@
       "emergency-agent": "0xabc336d4C71ad275695744d32DdB1d8266Db1cbF",
       "vault": "0xf3A431008396df8A8b2DF492C913706BDB0874ef"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "",
       "block-oracle": "",
@@ -2133,9 +2118,7 @@
       "emergency-agent": "0x9ffc6f671d88593aae56d9d34f2b40d7a56d467f",
       "vault": "0x0848F3800F04b3ad4309A5f27814be7FC4740cB9"
     },
-    "x-dao": {
-
-    },
+    "x-dao": {},
     "curve-block-oracle": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "block-oracle": "0xb10cface69821Ff7b245Cf5f28f3e714fDbd86b8",
