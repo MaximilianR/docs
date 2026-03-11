@@ -441,19 +441,6 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
     }
   }, [activeTab, simProgress, setNodes, setEdges])
 
-  // Press 'p' to log all node positions to console
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'p') {
-        const positions: Record<string, { x: number; y: number }> = {}
-        nodes.forEach(n => { positions[n.id] = { x: Math.round(n.position.x), y: Math.round(n.position.y) } })
-        console.log(JSON.stringify(positions, null, 2))
-      }
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [nodes])
-
   // Auto-play: advance simulation continuously
   useEffect(() => {
     if (activeTab !== 'emissions' || !simPlaying) {
@@ -564,17 +551,18 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
         nodes={filteredNodes}
         edges={styledEdges}
         onNodesChange={handleNodesChange}
-        onEdgesChange={onEdgesChange}
         onEdgesDelete={onEdgesDelete}
-        onReconnect={onReconnect}
         onNodeClick={onNodeClick}
         onNodeMouseEnter={useCallback((_: React.MouseEvent, node: Node) => setHoveredNode(node.id), [])}
         onNodeMouseLeave={useCallback(() => setHoveredNode(null), [])}
         onPaneClick={() => setSelectedNode(null)}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        nodesDraggable={true}
+        nodesDraggable={false}
+        nodesConnectable={false}
         edgesReconnectable={false}
+        elementsSelectable={true}
+        deleteKeyCode={null}
         fitView
         minZoom={0.2}
         maxZoom={2}
@@ -586,6 +574,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
 
       {/* Hint box */}
       <div
+        className="protocol-map-hint"
         style={{
           position: 'absolute',
           top: 68,
@@ -600,12 +589,13 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
           pointerEvents: 'none',
         }}
       >
-        Click on nodes and edges for live data &amp; details
+        Tap nodes and edges for live data &amp; details
       </div>
 
       {/* Emissions timeline conveyor */}
       {activeTab === 'emissions' && (() => {
-        const trackW = 420
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+        const trackW = isMobile ? Math.min(window.innerWidth - 160, 260) : 420
         const weekPx = trackW
         const offset = simProgress * weekPx
         const currentWeek = Math.floor(simProgress) + 1
@@ -613,33 +603,35 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
 
         return (
           <div
+            className="protocol-map-timeline"
             style={{
               position: 'absolute',
-              bottom: 16,
+              bottom: isMobile ? 8 : 16,
               left: '50%',
               transform: 'translateX(-50%)',
               zIndex: 10,
               fontFamily: 'System, monospace',
-              border: '6px double white',
-              boxShadow: '0 0 0 3px #3465a4, 8px 8px 3px rgba(0,0,0,0.5)',
+              border: isMobile ? '4px double white' : '6px double white',
+              boxShadow: isMobile ? '0 0 0 2px #3465a4, 4px 4px 2px rgba(0,0,0,0.5)' : '0 0 0 3px #3465a4, 8px 8px 3px rgba(0,0,0,0.5)',
               overflow: 'hidden',
+              maxWidth: 'calc(100vw - 16px)',
             }}
           >
             {/* Title bar */}
             <div style={{
               background: '#3465a4',
-              padding: '4px 12px',
+              padding: isMobile ? '2px 8px' : '4px 12px',
               display: 'flex',
               alignItems: 'center',
-              gap: 8,
+              gap: 6,
               borderBottom: '2px solid rgba(255,255,255,0.3)',
             }}>
-              <span style={{ fontSize: 10, fontWeight: 'bold', color: 'white' }}>Epoch Simulation</span>
-              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)' }}>Week {currentWeek}</span>
+              <span style={{ fontSize: isMobile ? 8 : 10, fontWeight: 'bold', color: 'white' }}>Epoch Simulation</span>
+              <span style={{ fontSize: isMobile ? 7 : 9, color: 'rgba(255,255,255,0.5)' }}>Week {currentWeek}</span>
             </div>
             {/* Track area */}
-            <div style={{ background: '#3465a4', padding: '8px 12px 6px' }}>
-              <div style={{ position: 'relative', width: trackW, height: 30, overflow: 'hidden', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.15)' }}>
+            <div style={{ background: '#3465a4', padding: isMobile ? '4px 8px 4px' : '8px 12px 6px' }}>
+              <div style={{ position: 'relative', width: trackW, height: isMobile ? 24 : 30, overflow: 'hidden', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.15)' }}>
                 {/* Moving tape */}
                 <div style={{
                   position: 'absolute',
@@ -667,16 +659,16 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
                         }}>
                           <div style={{
                             width: isThursday ? 2 : 1,
-                            height: isThursday ? 14 : isMonday ? 10 : 6,
+                            height: isThursday ? (isMobile ? 10 : 14) : isMonday ? (isMobile ? 7 : 10) : (isMobile ? 4 : 6),
                             background: isThursday ? '#e67e00' : 'rgba(255,255,255,0.25)',
                           }} />
                           <span style={{
-                            fontSize: 8,
+                            fontSize: isMobile ? 6 : 8,
                             color: isThursday ? '#e67e00' : 'rgba(255,255,255,0.4)',
                             fontWeight: isThursday ? 'bold' : 'normal',
-                            marginTop: 2,
+                            marginTop: 1,
                           }}>
-                            {day}
+                            {isMobile ? day.charAt(0) : day}
                           </span>
                         </div>
                       )
@@ -689,7 +681,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
                   left: trackW / 2,
                   top: 0,
                   width: 2,
-                  height: 20,
+                  height: isMobile ? 14 : 20,
                   background: 'white',
                   zIndex: 2,
                   boxShadow: '0 0 4px rgba(255,255,255,0.5)',
@@ -697,7 +689,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
                 <div style={{
                   position: 'absolute',
                   left: trackW / 2 - 3,
-                  top: 20,
+                  top: isMobile ? 14 : 20,
                   width: 0,
                   height: 0,
                   borderLeft: '4px solid transparent',

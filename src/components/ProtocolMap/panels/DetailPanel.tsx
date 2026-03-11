@@ -126,31 +126,56 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
     e.preventDefault()
   }, [pos])
 
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest('button')) return
+    const touch = e.touches[0]
+    setDragging(true)
+    dragOffset.current = { x: touch.clientX - pos.x, y: touch.clientY - pos.y }
+  }, [pos])
+
   useEffect(() => {
     if (!dragging) return
     const onMove = (e: MouseEvent) => {
       setPos({ x: e.clientX - dragOffset.current.x, y: e.clientY - dragOffset.current.y })
     }
+    const onTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0]
+      setPos({ x: touch.clientX - dragOffset.current.x, y: touch.clientY - dragOffset.current.y })
+    }
     const onUp = () => setDragging(false)
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mouseup', onUp)
+    window.addEventListener('touchmove', onTouchMove)
+    window.addEventListener('touchend', onUp)
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseup', onUp)
+      window.removeEventListener('touchmove', onTouchMove)
+      window.removeEventListener('touchend', onUp)
     }
   }, [dragging])
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   // Clamp position so popup stays within viewport on initial open
   useEffect(() => {
     if (!node || !ref.current) return
     const rect = ref.current.getBoundingClientRect()
     const pad = 16
-    let x = position.x + 12
-    let y = position.y - 20
-    if (x + rect.width + pad > window.innerWidth) x = position.x - rect.width - 12
-    if (y + rect.height + pad > window.innerHeight) y = window.innerHeight - rect.height - pad
-    if (y < pad) y = pad
-    if (x < pad) x = pad
+    let x: number, y: number
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      // Center horizontally on mobile, position near top
+      const w = Math.min(300, window.innerWidth - 24)
+      x = (window.innerWidth - w) / 2
+      y = 56
+    } else {
+      x = position.x + 12
+      y = position.y - 20
+      if (x + rect.width + pad > window.innerWidth) x = position.x - rect.width - 12
+      if (y + rect.height + pad > window.innerHeight) y = window.innerHeight - rect.height - pad
+      if (y < pad) y = pad
+      if (x < pad) x = pad
+    }
     setPos({ x, y })
     setShowFeeHistory(false)
     setFeeHistory(null)
@@ -265,8 +290,8 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
       style={{
         left: pos.x,
         top: pos.y,
-        width: 300,
-        maxHeight: 'calc(100vh - 32px)',
+        width: isMobile ? Math.min(300, window.innerWidth - 24) : 300,
+        maxHeight: isMobile ? 'calc(100vh - 72px)' : 'calc(100vh - 32px)',
         overflowY: 'auto',
         background: '#3465a4',
         color: 'white',
@@ -280,6 +305,7 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
         className="flex items-center justify-between px-3 py-1.5"
         style={{ background: 'rgba(0,0,0,0.2)', borderBottom: '2px solid rgba(255,255,255,0.3)', cursor: 'grab' }}
         onMouseDown={onMouseDown}
+        onTouchStart={onTouchStart}
       >
         <span className="text-xs font-bold truncate select-none">{data.label}</span>
         <button
