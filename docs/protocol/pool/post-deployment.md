@@ -30,6 +30,10 @@ Some pools are later optimized by external contributors or protocols. However, *
 
 If you'd like help evaluating or optimizing your pool, feel free to reach out in the official Curve channels.
 
+## Add Refuels (FXSwap Pools)
+
+If you deployed an **FXSwap pool**, consider adding refuels to subsidize rebalancing and keep liquidity tight around the current price. Refuels can be added manually via [crvhub.com/refuel](https://crvhub.com/refuel), or automated with the [**Donation Streamer**](./guides/donation-streamer.md). For more on how refuels work, see [Understanding FXSwap — Refuels](./understanding-fxswap.md#refuels).
+
 ## Grow Liquidity Using Incentives
 
 Curve offers various ways for protocols or asset issuers to sustainably grow liquidity and asset proliferation. Examples include attracting gauge weight to receive CRV emissions or providing external incentives and points.

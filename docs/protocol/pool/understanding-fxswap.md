@@ -106,6 +106,8 @@ In this scenario, Refuels represent only **3.6% of TVL per year** (approx. 23% o
 
 Refuels are deposited via the standard `add_liquidity` function. A community UI is available at: [crvhub.com/refuel](https://crvhub.com/refuel)
 
+To set up **recurring automated refuels**, use the [**Donation Streamer**](./guides/donation-streamer.md) — deposit tokens once and have them streamed into the pool on a schedule.
+
 ### Can I add another Refuel while one is unlocking?
 
 Yes. FXSwap pools track the total refuel amount within an unlock period (default 7 days) and calculate a continuous unlock rate.
