@@ -37,6 +37,23 @@ export const tabs: TabConfig[] = [
     },
   },
   {
+    id: 'emissions',
+    label: 'Emissions',
+    nodeIds: new Set([
+      'voter-convex', 'voter-stakedao', 'voter-yearn',
+      'voter-user1', 'voter-user2',
+      'gauge-controller',
+    ]),
+    positions: {
+      'voter-convex': { x: -343, y: -4 },
+      'voter-stakedao': { x: -348, y: 56 },
+      'voter-yearn': { x: -350, y: 120 },
+      'voter-user1': { x: -350, y: 183 },
+      'voter-user2': { x: -341, y: 246 },
+      'gauge-controller': { x: 150, y: 80 },
+    },
+  },
+  {
     id: 'governance',
     label: 'veCRV',
     nodeIds: new Set([
@@ -55,23 +72,6 @@ export const tabs: TabConfig[] = [
       'dao-voting': { x: 300, y: 300 },
       // Left: Revenue distribution
       'fee-distributor': { x: -400, y: 50 },
-    },
-  },
-  {
-    id: 'emissions',
-    label: 'Emissions',
-    nodeIds: new Set([
-      'voter-convex', 'voter-stakedao', 'voter-yearn',
-      'voter-user1', 'voter-user2',
-      'gauge-controller',
-    ]),
-    positions: {
-      'voter-convex': { x: -343, y: -4 },
-      'voter-stakedao': { x: -348, y: 56 },
-      'voter-yearn': { x: -350, y: 120 },
-      'voter-user1': { x: -350, y: 183 },
-      'voter-user2': { x: -341, y: 246 },
-      'gauge-controller': { x: 150, y: 80 },
     },
   },
   {
