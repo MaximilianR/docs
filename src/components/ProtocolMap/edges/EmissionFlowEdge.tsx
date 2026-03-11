@@ -22,7 +22,7 @@ export default function EmissionFlowEdge(props: EdgeProps) {
       <BaseEdge path={edgePath} markerEnd={markerEnd} style={{ stroke: '#22c55e', strokeWidth: 3 }} />
       {useCrvLogo ? (
         <g>
-          <animateMotion dur="3s" repeatCount="indefinite" path={edgePath} />
+          <animateMotion dur="3s" repeatCount="indefinite" fill="freeze" path={edgePath} />
           <image
             href="/icons/crv.svg"
             x={-logoSize / 2}

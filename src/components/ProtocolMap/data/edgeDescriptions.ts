@@ -1,15 +1,17 @@
 // Brief descriptions shown when clicking on edge labels
 export const edgeDescriptions: Record<string, string> = {
   // Governance — developer (technical)
-  'crv-vecrv': 'VotingEscrow.create_lock(value, unlock_time) — Lock CRV for 1–4 years. Voting power decays linearly toward unlock time.',
-  'vecrv-gc': 'GaugeController.vote_for_gauge_weights(gauge_addr, user_weight) — Allocate voting power (in BPS) to a gauge. Votes persist until changed.',
+  'crv-vecrv': 'Lock CRV for 1 week to 4 years to gain voting power, earn protocol revenue, and boost LP rewards. Voting power decays linearly toward unlock time. [Learn more](/user/vecrv/how-to-lock)',
+  'vecrv-gc': 'veCRV holders vote to direct CRV emissions to pools. Votes persist until changed. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
   'vecrv-dao': 'Voting.vote(vote_id, supports, executes_if_decided) — Cast a yes/no vote on an active DAO proposal.',
   'gc-gauges': 'GaugeController.gauge_relative_weight(gauge) — Returns the gauge\'s share of total emissions for the current epoch.',
-  'minter-crv': 'Minter.mint(gauge_addr) — Mints allocated CRV for a gauge. Anyone can call to trigger distribution.',
+  'yearn-gc': 'veCRV holders and protocols vote to allocate CRV emissions across gauges. Votes are cast per-gauge and persist until changed (10-day cooldown per gauge). [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
+  'minter-crv': 'The Minter creates new CRV tokens according to the emission schedule. The emission rate decreases over time following a predetermined curve. [Learn more](/user/crv/overview)',
+  'minter-gc': 'The Minter reads gauge weights from the GaugeController to determine how much CRV each gauge should receive for the current epoch.',
   'minter-gauges': 'Minter.mint(gauge_addr) — Mints CRV and transfers it to the gauge contract for LP distribution.',
   // Governance — user (simple)
   'u-crv-vecrv': 'Lock CRV for 1 week to 4 years to gain voting power, earn protocol revenue, and boost LP rewards up to 2.5x. [Learn more](https://docs.curve.finance/user/vecrv/how-to-lock)',
-  'u-vecrv-gc': 'veCRV holders vote weekly to direct CRV emissions to pools and lending markets. Each gauge\'s weight determines its share of new CRV. [Learn more](https://docs.curve.finance/user/dao/gauge-weights#voting-for-gauge-weight)',
+  'u-vecrv-gc': 'veCRV holders vote weekly to direct CRV emissions to pools and lending markets. Each gauge\'s weight determines its share of new CRV. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
   'u-vecrv-dao': 'veCRV holders vote on governance proposals that affect protocol parameters, add new features, or allocate resources. [Learn more](https://docs.curve.finance/user/dao/proposals#voting-on-proposals)',
   'u-gc-gauges': 'CRV emissions are distributed to gauges based on weekly veCRV votes. Gauges with more votes receive more CRV rewards. [Learn more](https://docs.curve.finance/user/dao/gauge-weights)',
   'gauges-stableswap': 'Pools with gauge weight receive CRV emissions. LPs must stake their LP tokens in the gauge to earn CRV, with a boost up to 2.5x from veCRV. [Learn more](https://docs.curve.finance/user/yield/boosting)',

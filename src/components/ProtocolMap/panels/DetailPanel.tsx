@@ -8,9 +8,12 @@ import { formatNumber, shortenAddress } from '../utils/formatters'
 const DOCS_BASE = ''
 const MARKETS_API = 'https://prices.curve.finance/v1/crvusd/markets/ethereum'
 
-// Known address labels for FeeAllocator receivers
+// Known address labels for FeeAllocator receivers and veCRV lockers
 const ADDRESS_LABELS: Record<string, string> = {
   '0x6508ef65b0bd57eabd0f1d52685a70433b2d290b': 'Treasury',
+  '0x989aeb4d175e16225e39e87d0d97a3360524ad80': 'Convex',
+  '0x52f541764e6e90eebc5c21ff570de0e2d63766b6': 'StakeDAO',
+  '0xf147b8125d2ef93fb6965db97d6746952a133934': 'Yearn',
 }
 const FEE_API = 'https://prices.curve.finance/v1/dao/fees/distributions'
 const FEE_PER_PAGE = 5
@@ -19,10 +22,21 @@ const SAVINGS_PER_PAGE = 5
 const SETTLEMENTS_API = 'https://prices.curve.finance/v1/dao/fees/settlements'
 const SETTLEMENTS_PER_PAGE = 10
 
+const LOCKERS_API = 'https://prices.curve.finance/v1/dao/lockers/5'
+
+interface VecrvLocker {
+  user: string
+  locked: string
+  weight: string
+  weight_ratio: string
+  unlock_time: number
+}
+
 interface DetailPanelProps {
   node: Node<ProtocolNodeData> | null
   liveData: LiveData
   position: { x: number; y: number }
+  activeTab?: string
   onClose: () => void
 }
 
@@ -73,7 +87,7 @@ function formatDate(ts: string, includeTime = false): string {
   return `${date} ${time}`
 }
 
-export default function DetailPanel({ node, liveData, position, onClose }: DetailPanelProps) {
+export default function DetailPanel({ node, liveData, position, activeTab, onClose }: DetailPanelProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [pos, setPos] = useState(position)
   const [showFeeHistory, setShowFeeHistory] = useState(false)
@@ -95,6 +109,10 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
   const [showSettlements, setShowSettlements] = useState(false)
   const [settlements, setSettlements] = useState<Settlement[] | null>(null)
   const [settlementsLoading, setSettlementsLoading] = useState(false)
+
+  // veCRV lockers (governance tab only)
+  const [lockers, setLockers] = useState<VecrvLocker[] | null>(null)
+  const [lockersLoading, setLockersLoading] = useState(false)
 
   // Dragging state
   const [dragging, setDragging] = useState(false)
@@ -144,6 +162,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
     setSavingsPage(1)
     setShowSettlements(false)
     setSettlements(null)
+    setLockers(null)
   }, [node, position])
 
   // Fetch market fees for crvUSD Mint Markets
@@ -215,6 +234,20 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
       .catch(() => setSettlements([]))
       .finally(() => setSettlementsLoading(false))
   }, [showSettlements])
+
+  // Fetch top veCRV lockers (governance tab only)
+  useEffect(() => {
+    if (!node || node.id !== 'vecrv' || activeTab !== 'governance') {
+      setLockers(null)
+      return
+    }
+    setLockersLoading(true)
+    fetch(LOCKERS_API)
+      .then(r => r.json())
+      .then(data => setLockers(data.users as VecrvLocker[]))
+      .catch(() => setLockers([]))
+      .finally(() => setLockersLoading(false))
+  }, [node, activeTab])
 
   if (!node) return null
 
@@ -345,6 +378,74 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
           <div className="animate-pulse" style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
             <div className="h-3 bg-white/20 w-20 mb-2" />
             <div className="h-5 bg-white/20 w-32" />
+          </div>
+        )}
+
+        {/* veCRV governance data (governance tab only) */}
+        {node.id === 'vecrv' && activeTab === 'governance' && (
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+              Supply
+            </div>
+            <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
+              <tbody>
+                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
+                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>veCRV Supply</td>
+                  <td className="py-px font-bold text-right">
+                    {liveData.vecrvSupply ? formatNumber(parseFloat(liveData.vecrvSupply)) : '...'}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Total CRV Locked</td>
+                  <td className="py-px font-bold text-right">
+                    {liveData.vecrvLockedCrv ? formatNumber(parseFloat(liveData.vecrvLockedCrv)) : '...'}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div className="text-[10px] uppercase tracking-widest mt-3 mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+              Top 5 Lockers
+            </div>
+            {lockersLoading && (
+              <div className="animate-pulse space-y-1">
+                {[...Array(5)].map((_, i) => <div key={i} className="h-3 bg-white/20 w-full" />)}
+              </div>
+            )}
+            {lockers && lockers.length > 0 && !lockersLoading && (
+              <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
+                    <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Address</th>
+                    <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Locked</th>
+                    <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Share</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {lockers.map((l, i) => (
+                    <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                      <td className="py-px">
+                        <a
+                          href={`https://etherscan.io/address/${l.user}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                          style={{ color: 'rgba(255,255,255,0.85)' }}
+                        >
+                          {ADDRESS_LABELS[l.user.toLowerCase()] || shortenAddress(l.user)}
+                        </a>
+                      </td>
+                      <td className="py-px font-bold text-right">{formatNumber(parseFloat(l.locked) / 1e18)}</td>
+                      <td className="py-px text-right" style={{ color: '#c4b5fd' }}>{parseFloat(l.weight_ratio).toFixed(1)}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: '#4ade80' }}>
+              <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
+              Live from Ethereum &amp; API
+            </div>
           </div>
         )}
 

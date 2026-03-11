@@ -23,6 +23,7 @@ export interface LiveData {
   crvSupply?: string
   crvusdSupply?: string
   vecrvSupply?: string
+  vecrvLockedCrv?: string
   scrvusdAssets?: string
   scrvusdSupply?: string        // scrvUSD supply in crvUSD (from API)
   scrvusdApy?: number           // projected APY % (from API)
@@ -115,6 +116,12 @@ export function useLiveData(): LiveData {
           }),
           // scrvUSD savings statistics (supply + APY)
           scrvusdStatsPromise,
+          // veCRV: total CRV locked (supply() on VotingEscrow)
+          client.readContract({
+            address: addresses.vecrv,
+            abi: [{ name: 'supply', inputs: [], outputs: [{ type: 'uint256' }], stateMutability: 'view', type: 'function' }] as const,
+            functionName: 'supply',
+          }),
         ])
 
         if (cancelled) return
@@ -197,6 +204,7 @@ export function useLiveData(): LiveData {
           minterRate: val(results[5]),
           treasuryBalance: val(results[6]),
           crvusdCirculating: val(results[10]),
+          vecrvLockedCrv: val(results[12]),
           rhDynamicWeight,
           rhMinWeight,
           rhMaxWeight,

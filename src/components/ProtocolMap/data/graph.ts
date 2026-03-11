@@ -1,6 +1,6 @@
 import type { Node, Edge } from '@xyflow/react'
 
-export type Category = 'amm' | 'lending' | 'stablecoin' | 'savings' | 'governance' | 'fees' | 'token' | 'external'
+export type Category = 'amm' | 'lending' | 'stablecoin' | 'savings' | 'governance' | 'gauge' | 'fees' | 'token' | 'external'
 
 export interface ProtocolNodeData {
   label: string
@@ -308,7 +308,7 @@ export const initialNodes: Node<ProtocolNodeData>[] = [
     data: {
       label: 'GaugeController',
       category: 'governance',
-      description: 'Manages gauge weights. veCRV holders vote to direct CRV emissions to pools.',
+      description: 'Manages gauge weights for CRV emission distribution. veCRV holders and protocols (Convex, StakeDAO, Yearn) vote to allocate emissions across gauges. A snapshot of weights is taken every Thursday at 00:00 UTC, locking the distribution for that epoch. CRV emissions are then streamed to gauges proportionally over the following week.',
       address: '0x2F50D538606Fa9Edd2B11E2446BEb18C9D5846bB',
       docPath: '/developer/gauges/gauge-controller',
       icon: 'gauge',
@@ -365,6 +365,83 @@ export const initialNodes: Node<ProtocolNodeData>[] = [
       address: '0x467947EE34aF926cF1DCac093870f613C96B1E0c',
       docPath: '/user/dao/emergency-dao',
       icon: 'emergency',
+    },
+  },
+
+  // ── Emissions simulation ───
+  {
+    id: 'voter-convex',
+    type: 'tokenNode',
+    position: { x: -500, y: -200 },
+    data: {
+      label: 'Convex',
+      category: 'external',
+      description: 'Largest veCRV holder. Aggregates CRV from depositors and votes on gauge weights via vlCVX governance.',
+      icon: 'convex',
+    },
+  },
+  {
+    id: 'voter-stakedao',
+    type: 'tokenNode',
+    position: { x: -500, y: -60 },
+    data: {
+      label: 'StakeDAO',
+      category: 'external',
+      description: 'Liquid locker protocol. Holds veCRV and votes on gauge weights based on sdCRV holder governance.',
+      icon: 'stakedao',
+    },
+  },
+  {
+    id: 'voter-yearn',
+    type: 'tokenNode',
+    position: { x: -500, y: 80 },
+    data: {
+      label: 'Yearn',
+      category: 'external',
+      description: 'DeFi yield aggregator. Holds veCRV and directs gauge votes to optimize vault yields.',
+      icon: 'yearn',
+    },
+  },
+  {
+    id: 'voter-user1',
+    type: 'tokenNode',
+    position: { x: -500, y: 220 },
+    data: {
+      label: 'Alice',
+      category: 'governance',
+      description: 'Individual veCRV holder voting on gauge weights. Can change vote per gauge once every 10 days.',
+    },
+  },
+  {
+    id: 'voter-user2',
+    type: 'tokenNode',
+    position: { x: -500, y: 360 },
+    data: {
+      label: 'Bob',
+      category: 'governance',
+      description: 'Individual veCRV holder voting on gauge weights. Can change vote per gauge once every 10 days.',
+    },
+  },
+  {
+    id: 'gauge-chart',
+    type: 'gaugeChartNode',
+    position: { x: 400, y: 0 },
+    data: {
+      label: 'Gauge Weights',
+      category: 'governance',
+      description: 'Current gauge weight distribution. Weights determine each gauge\'s share of CRV emissions. Updated every Thursday at 00:00 UTC via snapshot.',
+    },
+  },
+
+  // ── Epoch Clock ───
+  {
+    id: 'epoch-clock',
+    type: 'epochNode',
+    position: { x: 0, y: 0 },
+    data: {
+      label: 'Weekly Epoch',
+      category: 'governance',
+      description: 'CRV emissions follow a weekly cycle. veCRV holders vote on gauge weights continuously. Every Thursday at 00:00 UTC, weights are finalized and CRV emissions for the next week are distributed accordingly.',
     },
   },
 
@@ -495,6 +572,19 @@ export const initialEdges: Edge[] = [
   // Minter → CRV (emissions) — left
   { id: 'minter-crv', source: 'minter', target: 'crv', sourceHandle: 'left-source', targetHandle: 'right-target', type: 'emissionFlow', label: 'Mint CRV' },
 
+  // Voters → GaugeController
+  { id: 'convex-gc', source: 'voter-convex', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
+  { id: 'stakedao-gc', source: 'voter-stakedao', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
+  { id: 'yearn-gc', source: 'voter-yearn', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true, label: 'Vote for Gauge Weights' },
+  { id: 'user1-gc', source: 'voter-user1', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
+  { id: 'user2-gc', source: 'voter-user2', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
+
+  // GaugeController → Gauge Chart (weights)
+  { id: 'gc-chart', source: 'gauge-controller', target: 'gauge-chart', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'emissionFlow', label: 'CRV Emissions', animated: true },
+
+  // Minter → GaugeController (reads weights)
+  { id: 'minter-gc', source: 'gauge-controller', target: 'minter', sourceHandle: 'top-source', targetHandle: 'bottom-target', type: 'dataFlow', label: 'Read Weights' },
+
   // GaugeController → Gauges (weights) — left-down
   { id: 'gc-gauges', source: 'gauge-controller', target: 'gauges', sourceHandle: 'left-source', targetHandle: 'right-target', type: 'governanceFlow', label: 'Emission Weights' },
 
@@ -507,10 +597,10 @@ export const initialEdges: Edge[] = [
   { id: 'gauges-tricrypto', source: 'gauges', target: 'tricrypto', sourceHandle: 'left-source', targetHandle: 'right-target', type: 'emissionFlow' },
 
   // veCRV → GaugeController (voting) — right
-  { id: 'vecrv-gc', source: 'vecrv', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', label: 'Vote on Gauges' },
+  { id: 'vecrv-gc', source: 'vecrv', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', label: 'Gauge Weight Voting' },
 
   // veCRV → DAO — right-down
-  { id: 'vecrv-dao', source: 'vecrv', target: 'dao-voting', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', label: 'Vote on Proposals' },
+  { id: 'vecrv-dao', source: 'vecrv', target: 'dao-voting', sourceHandle: 'bottom-source', targetHandle: 'top-target', type: 'votingFlow', label: 'Vote on Proposals' },
 
   // DAO → Emergency DAO — right-down
   { id: 'dao-emergency', source: 'dao-voting', target: 'emergency-dao', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow' },
@@ -574,6 +664,7 @@ export const categories: Record<Category, { label: string; color: string }> = {
   stablecoin: { label: 'Stablecoin', color: '#14b8a6' },
   savings: { label: 'Savings', color: '#06b6d4' },
   governance: { label: 'Governance', color: '#8b5cf6' },
+  gauge: { label: 'Gauge', color: '#a855f7' },
   fees: { label: 'Fees', color: '#f97316' },
   token: { label: 'Tokens', color: '#eab308' },
   external: { label: 'External', color: '#6b7280' },
