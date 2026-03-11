@@ -441,19 +441,6 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
     }
   }, [activeTab, simProgress, setNodes, setEdges])
 
-  // Press 'p' to log all node positions to console
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'p') {
-        const positions: Record<string, { x: number; y: number }> = {}
-        nodes.forEach(n => { positions[n.id] = { x: Math.round(n.position.x), y: Math.round(n.position.y) } })
-        console.log(JSON.stringify(positions, null, 2))
-      }
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [nodes])
-
   // Auto-play: advance simulation continuously
   useEffect(() => {
     if (activeTab !== 'emissions' || !simPlaying) {
@@ -564,17 +551,18 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
         nodes={filteredNodes}
         edges={styledEdges}
         onNodesChange={handleNodesChange}
-        onEdgesChange={onEdgesChange}
         onEdgesDelete={onEdgesDelete}
-        onReconnect={onReconnect}
         onNodeClick={onNodeClick}
         onNodeMouseEnter={useCallback((_: React.MouseEvent, node: Node) => setHoveredNode(node.id), [])}
         onNodeMouseLeave={useCallback(() => setHoveredNode(null), [])}
         onPaneClick={() => setSelectedNode(null)}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        nodesDraggable={true}
+        nodesDraggable={false}
+        nodesConnectable={false}
         edgesReconnectable={false}
+        elementsSelectable={true}
+        deleteKeyCode={null}
         fitView
         minZoom={0.2}
         maxZoom={2}
