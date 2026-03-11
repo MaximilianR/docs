@@ -8,7 +8,7 @@ function renderDescription(text: string) {
   return parts.map((part, i) => {
     const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
     if (match) {
-      return <a key={i} href={match[2]} target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', textDecoration: 'underline' }}>{match[1]}</a>
+      return <a key={i} href={match[2]} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--pm-link, #60a5fa)', textDecoration: 'underline' }}>{match[1]}</a>
     }
     return part
   })
@@ -68,9 +68,9 @@ export default function DraggableEdgeLabel({ edgeId, labelX, labelY, label, back
           <div
             onClick={onClick}
             style={{
-              fontFamily: 'System, monospace', fontSize: 10, fontWeight: 'bold', textAlign: 'center',
-              color: 'white', background, border: `3px double ${borderColor}`, padding: '2px 8px',
-              boxShadow: '3px 3px 2px rgba(0,0,0,0.4)',
+              fontFamily: 'var(--Text-FontFamily-Body, system-ui, sans-serif)', fontSize: 10, fontWeight: 'bold', textAlign: 'center',
+              color: 'white', background, border: `1px solid ${borderColor}`, borderRadius: 4, padding: '2px 8px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
               cursor: description ? 'pointer' : 'default',
               userSelect: 'none',
               whiteSpace: 'nowrap',
@@ -105,13 +105,14 @@ export default function DraggableEdgeLabel({ edgeId, labelX, labelY, label, back
             transform: 'translateX(-50%)',
             zIndex: 9999,
             maxWidth: 260,
-            fontFamily: 'System, monospace',
+            fontFamily: 'var(--Text-FontFamily-Body, system-ui, sans-serif)',
             fontSize: 11,
-            color: 'white',
-            background: '#1e293b',
-            border: '3px double #64748b',
+            color: 'var(--pm-tooltip-text, white)',
+            background: 'var(--pm-tooltip-bg, #1e293b)',
+            border: '1px solid var(--pm-tooltip-border, #64748b)',
+            borderRadius: 6,
             padding: '8px 10px',
-            boxShadow: '4px 4px 0 rgba(0,0,0,0.4)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
             lineHeight: 1.5,
           }}
         >
@@ -119,8 +120,8 @@ export default function DraggableEdgeLabel({ edgeId, labelX, labelY, label, back
             onClick={(e) => { e.stopPropagation(); setShowTooltip(false) }}
             style={{
               position: 'absolute', top: 3, right: 5,
-              background: 'none', border: 'none', color: '#94a3b8',
-              cursor: 'pointer', fontSize: 11, fontFamily: 'System, monospace',
+              background: 'none', border: 'none', color: 'var(--pm-text-muted, #94a3b8)',
+              cursor: 'pointer', fontSize: 11, fontFamily: 'inherit',
               padding: 0, lineHeight: 1,
             }}
           >

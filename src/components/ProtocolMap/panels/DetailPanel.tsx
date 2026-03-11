@@ -235,17 +235,18 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
         width: 300,
         maxHeight: 'calc(100vh - 32px)',
         overflowY: 'auto',
-        background: '#3465a4',
-        color: 'white',
-        border: '6px double white',
-        boxShadow: '8px 8px 0 rgba(0,0,0,0.35)',
-        fontFamily: 'System, monospace',
+        background: 'var(--pm-panel-bg)',
+        color: 'var(--pm-text)',
+        border: '1px solid var(--pm-panel-border)',
+        borderRadius: 8,
+        boxShadow: '0 8px 24px var(--pm-panel-shadow)',
+        fontFamily: 'var(--Text-FontFamily-Body, system-ui, sans-serif)',
       }}
     >
       {/* Title bar — draggable */}
       <div
         className="flex items-center justify-between px-3 py-1.5"
-        style={{ background: 'rgba(0,0,0,0.2)', borderBottom: '2px solid rgba(255,255,255,0.3)', cursor: 'grab' }}
+        style={{ background: 'var(--pm-panel-inset)', borderBottom: '1px solid var(--pm-panel-inset-border)', cursor: 'grab', borderRadius: '8px 8px 0 0' }}
         onMouseDown={onMouseDown}
       >
         <span className="text-xs font-bold truncate select-none">{data.label}</span>
@@ -253,9 +254,10 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
           onClick={onClose}
           className="hover:opacity-70 flex-shrink-0 ml-2"
           style={{
-            background: 'red',
-            color: 'white',
-            border: '1px outset red',
+            background: 'var(--pm-close-bg)',
+            color: 'var(--pm-close-text)',
+            border: 'none',
+            borderRadius: 4,
             width: 18,
             height: 18,
             display: 'flex',
@@ -263,7 +265,6 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
             justifyContent: 'center',
             fontSize: 11,
             fontWeight: 'bold',
-            boxShadow: '2px 2px 0 rgba(0,0,0,0.3)',
             cursor: 'pointer',
           }}
         >
@@ -275,39 +276,39 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
         {/* Category badge */}
         <span
           className="inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest"
-          style={{ background: cat.color, border: '1px outset ' + cat.color, boxShadow: '2px 2px 0 rgba(0,0,0,0.3)' }}
+          style={{ background: cat.color, color: 'white', borderRadius: 4 }}
         >
           {data.category}
         </span>
 
         {/* Description */}
-        <p className="text-[11px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.85)' }}>{data.description}</p>
+        <p className="text-[11px] leading-relaxed" style={{ color: 'var(--pm-text-secondary)' }}>{data.description}</p>
 
         {/* Market breakdown table (dynamic stablecoin tab) */}
         {(data as any).marketRows && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
-            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <div style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--pm-text-muted)' }}>
               Markets (Live)
             </div>
             <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                  <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Collateral</th>
-                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Debt</th>
-                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Loans</th>
+                <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                  <th className="py-px text-left font-bold" style={{ color: 'var(--pm-text-muted)' }}>Collateral</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'var(--pm-text-muted)' }}>Debt</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'var(--pm-text-muted)' }}>Loans</th>
                 </tr>
               </thead>
               <tbody>
                 {((data as any).marketRows as { symbol: string; debt: number; loans: number }[]).map((r, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.8)' }}>{r.symbol}</td>
+                  <tr key={i} style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                    <td className="py-px" style={{ color: 'var(--pm-text-secondary)' }}>{r.symbol}</td>
                     <td className="py-px font-bold text-right">${formatNumber(r.debt)}</td>
                     <td className="py-px text-right">{r.loans}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: '#4ade80' }}>
+            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: 'var(--pm-live-color)' }}>
               <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
               Live from API
             </div>
@@ -316,13 +317,13 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* Live data — combine with scrvUSD APY when both available */}
         {live && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
+          <div style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
             <div className="flex items-center gap-2">
               {live.icon && <img src={live.icon} alt="" className="w-5 h-5 rounded-full" />}
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>{live.label}</span>
-                  <span className="text-[10px] flex items-center gap-1" style={{ color: '#4ade80' }}>
+                  <span className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--pm-text-muted)' }}>{live.label}</span>
+                  <span className="text-[10px] flex items-center gap-1" style={{ color: 'var(--pm-live-color)' }}>
                     <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
                     Live
                   </span>
@@ -331,9 +332,9 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               </div>
             </div>
             {node.id === 'scrvusd' && liveData.scrvusdApy != null && (
-              <div className="mt-2 pt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+              <div className="mt-2 pt-2" style={{ borderTop: '1px solid var(--pm-table-border)' }}>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>Projected APY</span>
+                  <span className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--pm-text-muted)' }}>Projected APY</span>
                 </div>
                 <div className="text-sm font-bold">{liveData.scrvusdApy.toFixed(2)}%</div>
               </div>
@@ -342,7 +343,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
         )}
 
         {liveData.loading && data.liveDataKey && (
-          <div className="animate-pulse" style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
+          <div className="animate-pulse" style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
             <div className="h-3 bg-white/20 w-20 mb-2" />
             <div className="h-5 bg-white/20 w-32" />
           </div>
@@ -350,23 +351,23 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* crvUSD Mint Markets collected & pending fees */}
         {node.id === 'crvusd-mint-markets' && marketFees && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
-            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <div style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--pm-text-muted)' }}>
               Interest Fees
             </div>
             <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
               <tbody>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Total Collected</td>
+                <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                  <td className="py-px" style={{ color: 'var(--pm-text-muted)' }}>Total Collected</td>
                   <td className="py-px font-bold text-right">{formatNumber(marketFees.collected)} crvUSD</td>
                 </tr>
                 <tr>
-                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Pending Collection</td>
+                  <td className="py-px" style={{ color: 'var(--pm-text-muted)' }}>Pending Collection</td>
                   <td className="py-px font-bold text-right">{formatNumber(marketFees.pending)} crvUSD</td>
                 </tr>
               </tbody>
             </table>
-            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: '#4ade80' }}>
+            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: 'var(--pm-live-color)' }}>
               <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
               Live from API
             </div>
@@ -375,35 +376,35 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* FeeSplitter active receivers */}
         {node.id === 'fee-splitter' && liveData.rhEffectiveWeight != null && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
-            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <div style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--pm-text-muted)' }}>
               Active Receivers
             </div>
             <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                  <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Receiver</th>
-                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Share</th>
-                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Type</th>
+                <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                  <th className="py-px text-left font-bold" style={{ color: 'var(--pm-text-muted)' }}>Receiver</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'var(--pm-text-muted)' }}>Share</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'var(--pm-text-muted)' }}>Type</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)' }}>RewardsHandler</td>
+                <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                  <td className="py-px" style={{ color: 'var(--pm-text-secondary)' }}>RewardsHandler</td>
                   <td className="py-px font-bold text-right">{(liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
-                  <td className="py-px text-right text-[10px]" style={{ color: '#facc15' }}>dynamic</td>
+                  <td className="py-px text-right text-[10px]" style={{ color: 'var(--pm-dynamic-color)' }}>dynamic</td>
                 </tr>
                 <tr>
-                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)' }}>FeeCollector</td>
+                  <td className="py-px" style={{ color: 'var(--pm-text-secondary)' }}>FeeCollector</td>
                   <td className="py-px font-bold text-right">{(100 - liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
-                  <td className="py-px text-right text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>static</td>
+                  <td className="py-px text-right text-[10px]" style={{ color: 'var(--pm-text-muted)' }}>static</td>
                 </tr>
               </tbody>
             </table>
-            <p className="text-[10px] mt-2 leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
+            <p className="text-[10px] mt-2 leading-relaxed" style={{ color: 'var(--pm-text-muted)' }}>
               The RewardsHandler weight is dynamic — it requests a share equal to the percentage of total crvUSD supply staked in scrvUSD, capped by a configured maximum. The FeeCollector receives the remainder.
             </p>
-            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: '#4ade80' }}>
+            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: 'var(--pm-live-color)' }}>
               <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
               Live from Ethereum
             </div>
@@ -412,27 +413,27 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* FeeAllocator receivers */}
         {node.id === 'fee-allocator' && liveData.allocatorReceivers && liveData.allocatorReceivers.length > 0 && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
-            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <div style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--pm-text-muted)' }}>
               Active Receivers
             </div>
             <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                  <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Receiver</th>
-                  <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Weight</th>
+                <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                  <th className="py-px text-left font-bold" style={{ color: 'var(--pm-text-muted)' }}>Receiver</th>
+                  <th className="py-px text-right font-bold" style={{ color: 'var(--pm-text-muted)' }}>Weight</th>
                 </tr>
               </thead>
               <tbody>
                 {liveData.allocatorReceivers.map((r, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
+                  <tr key={i} style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
                     <td className="py-px">
                       <a
                         href={`https://etherscan.io/address/${r.address}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline"
-                        style={{ color: 'rgba(255,255,255,0.85)' }}
+                        style={{ color: 'var(--pm-text-secondary)' }}
                       >
                         {ADDRESS_LABELS[r.address.toLowerCase()] || shortenAddress(r.address)}
                       </a>
@@ -442,13 +443,13 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
                 ))}
                 {liveData.allocatorDistributorWeight != null && (
                   <tr>
-                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)' }}>FeeDistributor</td>
+                    <td className="py-px" style={{ color: 'var(--pm-text-secondary)' }}>FeeDistributor</td>
                     <td className="py-px font-bold text-right">{(liveData.allocatorDistributorWeight / 100).toFixed(2)}%</td>
                   </tr>
                 )}
               </tbody>
             </table>
-            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: '#4ade80' }}>
+            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: 'var(--pm-live-color)' }}>
               <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
               Live from Ethereum
             </div>
@@ -457,54 +458,54 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* RewardsHandler dynamic weight breakdown */}
         {node.id === 'rewards-handler' && liveData.rhEffectiveWeight != null && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
-            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <div style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--pm-text-muted)' }}>
               Dynamic Weight
             </div>
             <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
               <tbody>
                 {liveData.crvusdCirculating != null && (
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>crvUSD Minted</td>
+                  <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                    <td className="py-px" style={{ color: 'var(--pm-text-muted)' }}>crvUSD Minted</td>
                     <td className="py-px font-bold text-right">{formatNumber(parseFloat(liveData.crvusdCirculating))}</td>
                   </tr>
                 )}
                 {liveData.scrvusdAssets != null && (
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>scrvUSD Staked</td>
+                  <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                    <td className="py-px" style={{ color: 'var(--pm-text-muted)' }}>scrvUSD Staked</td>
                     <td className="py-px font-bold text-right">{formatNumber(parseFloat(liveData.scrvusdAssets))}</td>
                   </tr>
                 )}
                 {liveData.rhDynamicWeight != null && (
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Requested Weight</td>
+                  <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                    <td className="py-px" style={{ color: 'var(--pm-text-muted)' }}>Requested Weight</td>
                     <td className="py-px font-bold text-right">{(liveData.rhDynamicWeight / 100).toFixed(2)}%</td>
                   </tr>
                 )}
                 {liveData.rhMaxWeight != null && (
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Maximum (cap)</td>
+                  <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                    <td className="py-px" style={{ color: 'var(--pm-text-muted)' }}>Maximum (cap)</td>
                     <td className="py-px font-bold text-right">{(liveData.rhMaxWeight / 100).toFixed(2)}%</td>
                   </tr>
                 )}
                 {liveData.rhMinWeight != null && (
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-                    <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Minimum (floor)</td>
+                  <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                    <td className="py-px" style={{ color: 'var(--pm-text-muted)' }}>Minimum (floor)</td>
                     <td className="py-px font-bold text-right">{(liveData.rhMinWeight / 100).toFixed(2)}%</td>
                   </tr>
                 )}
                 <tr>
-                  <td className="py-px" style={{ color: 'rgba(255,255,255,0.6)' }}>Effective Weight</td>
-                  <td className="py-px font-bold text-right" style={{ color: '#4ade80' }}>{(liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
+                  <td className="py-px" style={{ color: 'var(--pm-text-muted)' }}>Effective Weight</td>
+                  <td className="py-px font-bold text-right" style={{ color: 'var(--pm-live-color)' }}>{(liveData.rhEffectiveWeight / 100).toFixed(2)}%</td>
                 </tr>
               </tbody>
             </table>
-            <p className="text-[10px] mt-2 leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
+            <p className="text-[10px] mt-2 leading-relaxed" style={{ color: 'var(--pm-text-muted)' }}>
               Weight is based on a TWA (time-weighted average, 1 week window) of scrvUSD staked / crvUSD minted from controllers{liveData.scrvusdAssets != null && liveData.crvusdCirculating != null
                 ? ` (currently ${(parseFloat(liveData.scrvusdAssets) / parseFloat(liveData.crvusdCirculating) * 100).toFixed(2)}%)`
                 : ''}, clamped between min and max. Distribution is permissionless — anyone can call process_rewards(). Once triggered, rewards stream linearly to scrvUSD holders over the vault's distribution time.
             </p>
-            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: '#4ade80' }}>
+            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: 'var(--pm-live-color)' }}>
               <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
               Live from Ethereum
             </div>
@@ -514,20 +515,20 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
         {/* Contract address */}
         {data.address && (
           <div>
-            <div className="text-[10px] uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Contract</div>
+            <div className="text-[10px] uppercase tracking-widest mb-1" style={{ color: 'var(--pm-text-muted)' }}>Contract</div>
             <a
               href={`https://etherscan.io/address/${data.address}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[11px] font-bold hover:underline"
-              style={{ color: 'white' }}
+              style={{ color: 'var(--pm-link)' }}
             >
               {shortenAddress(data.address)}
             </a>
             <button
               onClick={() => navigator.clipboard.writeText(data.address!)}
               className="ml-2 text-[10px] hover:underline"
-              style={{ color: 'rgba(255,255,255,0.6)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'System, monospace' }}
+              style={{ color: 'var(--pm-text-muted)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
             >
               [copy]
             </button>
@@ -543,10 +544,11 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               rel="noopener noreferrer"
               className="inline-block px-3 py-1 text-[11px] font-bold hover:brightness-110 transition-all"
               style={{
-                background: 'green',
-                color: 'white',
-                border: '1px outset green',
-                boxShadow: '3px 3px 0 rgba(0,0,0,0.3)',
+                background: 'var(--pm-btn-primary-bg)',
+                color: 'var(--pm-btn-primary-text)',
+                border: 'none',
+                borderRadius: 4,
+                boxShadow: '0 2px 4px var(--pm-panel-shadow)',
                 textDecoration: 'none',
               }}
             >
@@ -560,10 +562,11 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               className="inline-block px-3 py-1 text-[11px] font-bold text-white hover:brightness-110 transition-all"
               style={{
                 background: showFeeHistory ? '#cc6600' : '#e67e00',
-                border: '1px outset #e67e00',
-                boxShadow: '3px 3px 0 rgba(0,0,0,0.3)',
+                border: 'none',
+                borderRadius: 4,
+                boxShadow: '0 2px 4px var(--pm-panel-shadow)',
                 cursor: 'pointer',
-                fontFamily: 'System, monospace',
+                fontFamily: 'inherit',
               }}
             >
               {showFeeHistory ? 'Hide History' : 'Fee History →'}
@@ -576,10 +579,11 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               className="inline-block px-3 py-1 text-[11px] font-bold text-white hover:brightness-110 transition-all"
               style={{
                 background: showSavingsHistory ? '#cc6600' : '#e67e00',
-                border: '1px outset #e67e00',
-                boxShadow: '3px 3px 0 rgba(0,0,0,0.3)',
+                border: 'none',
+                borderRadius: 4,
+                boxShadow: '0 2px 4px var(--pm-panel-shadow)',
                 cursor: 'pointer',
-                fontFamily: 'System, monospace',
+                fontFamily: 'inherit',
               }}
             >
               {showSavingsHistory ? 'Hide History' : 'Distribution History →'}
@@ -592,10 +596,11 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               className="inline-block px-3 py-1 text-[11px] font-bold text-white hover:brightness-110 transition-all"
               style={{
                 background: showSettlements ? '#cc6600' : '#e67e00',
-                border: '1px outset #e67e00',
-                boxShadow: '3px 3px 0 rgba(0,0,0,0.3)',
+                border: 'none',
+                borderRadius: 4,
+                boxShadow: '0 2px 4px var(--pm-panel-shadow)',
                 cursor: 'pointer',
-                fontFamily: 'System, monospace',
+                fontFamily: 'inherit',
               }}
             >
               {showSettlements ? 'Hide Settlements' : 'Recent Settlements →'}
@@ -605,8 +610,8 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* Fee distribution history (FeeDistributor only) */}
         {isFeeDistributor && showFeeHistory && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
-            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <div style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--pm-text-muted)' }}>
               Weekly Distributions
             </div>
             {feeLoading && (
@@ -617,15 +622,15 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
             {feeHistory && feeHistory.length > 0 && !feeLoading && (
               <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                    <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Week</th>
-                    <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Fees (USD)</th>
+                  <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                    <th className="py-px text-left font-bold" style={{ color: 'var(--pm-text-muted)' }}>Week</th>
+                    <th className="py-px text-right font-bold" style={{ color: 'var(--pm-text-muted)' }}>Fees (USD)</th>
                   </tr>
                 </thead>
                 <tbody>
                   {feeHistory.map((d, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                      <td className="py-px" style={{ color: 'rgba(255,255,255,0.8)' }}>{formatDate(d.timestamp)}</td>
+                    <tr key={i} style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                      <td className="py-px" style={{ color: 'var(--pm-text-secondary)' }}>{formatDate(d.timestamp)}</td>
                       <td className="py-px font-bold text-right">${formatNumber(d.fees_usd)}</td>
                     </tr>
                   ))}
@@ -633,7 +638,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               </table>
             )}
             {feeHistory && feeHistory.length === 0 && !feeLoading && (
-              <div className="text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>No data available</div>
+              <div className="text-[10px]" style={{ color: 'var(--pm-text-muted)' }}>No data available</div>
             )}
             {/* Pagination */}
             {feeCount > FEE_PER_PAGE && (
@@ -643,17 +648,17 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
                   disabled={feePage <= 1}
                   className="text-[10px] font-bold"
                   style={{
-                    background: feePage <= 1 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
-                    border: '1px outset rgba(255,255,255,0.3)',
-                    color: feePage <= 1 ? 'rgba(255,255,255,0.3)' : 'white',
+                    background: feePage <= 1 ? 'var(--pm-panel-inset)' : 'var(--pm-panel-inset)',
+                    border: '1px solid var(--pm-panel-inset-border)',
+                    color: feePage <= 1 ? 'var(--pm-text-muted)' : 'var(--pm-text)',
                     padding: '2px 8px',
                     cursor: feePage <= 1 ? 'default' : 'pointer',
-                    fontFamily: 'System, monospace',
+                    fontFamily: 'inherit', borderRadius: 3,
                   }}
                 >
                   ← Prev
                 </button>
-                <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <span className="text-[10px]" style={{ color: 'var(--pm-text-muted)' }}>
                   {feePage} / {Math.ceil(feeCount / FEE_PER_PAGE)}
                 </span>
                 <button
@@ -661,12 +666,12 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
                   disabled={feePage >= Math.ceil(feeCount / FEE_PER_PAGE)}
                   className="text-[10px] font-bold"
                   style={{
-                    background: feePage >= Math.ceil(feeCount / FEE_PER_PAGE) ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
-                    border: '1px outset rgba(255,255,255,0.3)',
-                    color: feePage >= Math.ceil(feeCount / FEE_PER_PAGE) ? 'rgba(255,255,255,0.3)' : 'white',
+                    background: feePage >= Math.ceil(feeCount / FEE_PER_PAGE) ? 'var(--pm-panel-inset)' : 'var(--pm-panel-inset)',
+                    border: '1px solid var(--pm-panel-inset-border)',
+                    color: feePage >= Math.ceil(feeCount / FEE_PER_PAGE) ? 'var(--pm-text-muted)' : 'var(--pm-text)',
                     padding: '2px 8px',
                     cursor: feePage >= Math.ceil(feeCount / FEE_PER_PAGE) ? 'default' : 'pointer',
-                    fontFamily: 'System, monospace',
+                    fontFamily: 'inherit', borderRadius: 3,
                   }}
                 >
                   Next →
@@ -678,8 +683,8 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* Settlements history (CowSwap Burner) */}
         {isCowswapBurner && showSettlements && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
-            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <div style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--pm-text-muted)' }}>
               Latest Settlements
             </div>
             {settlementsLoading && (
@@ -691,16 +696,16 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               <>
                 <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
                   <thead>
-                    <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                      <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Token</th>
-                      <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Received (USD)</th>
+                    <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                      <th className="py-px text-left font-bold" style={{ color: 'var(--pm-text-muted)' }}>Token</th>
+                      <th className="py-px text-right font-bold" style={{ color: 'var(--pm-text-muted)' }}>Received (USD)</th>
                       <th className="py-px w-5" />
                     </tr>
                   </thead>
                   <tbody>
                     {settlements.slice(0, SETTLEMENTS_PER_PAGE).map((s, i) => (
-                      <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                        <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)' }}>{s.coin.symbol}</td>
+                      <tr key={i} style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                        <td className="py-px" style={{ color: 'var(--pm-text-secondary)' }}>{s.coin.symbol}</td>
                         <td className="py-px font-bold text-right">${formatNumber(s.amount_received)}</td>
                         <td className="py-px text-right">
                           <a
@@ -718,15 +723,15 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
                     ))}
                   </tbody>
                 </table>
-                <div className="text-[10px] mt-2" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <div className="text-[10px] mt-2" style={{ color: 'var(--pm-text-muted)' }}>
                   Showing {Math.min(SETTLEMENTS_PER_PAGE, settlements.length)} of {settlements.length} tokens
                 </div>
               </>
             )}
             {settlements && settlements.length === 0 && !settlementsLoading && (
-              <div className="text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>No settlements found</div>
+              <div className="text-[10px]" style={{ color: 'var(--pm-text-muted)' }}>No settlements found</div>
             )}
-            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: '#4ade80' }}>
+            <div className="text-[10px] mt-2 flex items-center gap-1" style={{ color: 'var(--pm-live-color)' }}>
               <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
               Live from API
             </div>
@@ -735,10 +740,10 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
 
         {/* Savings distribution history (RewardsHandler) */}
         {isRewardsHandler && showSavingsHistory && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
+          <div style={{ background: 'var(--pm-panel-inset)', border: '1px solid var(--pm-panel-inset-border)', borderRadius: 6, padding: '6px 8px' }}>
             {savingsData && savingsData.total_distributed !== '0' && (
               <div className="mb-2 flex items-center justify-between">
-                <div className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                <div className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--pm-text-muted)' }}>
                   Total Distributed
                 </div>
                 <div className="text-[11px] font-bold">
@@ -746,7 +751,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
                 </div>
               </div>
             )}
-            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--pm-text-muted)' }}>
               Recent Distributions
             </div>
             {savingsLoading && (
@@ -757,16 +762,16 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
             {savingsData && savingsData.history.length > 0 && !savingsLoading && (
               <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                    <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Date</th>
-                    <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Gain (crvUSD)</th>
+                  <tr style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                    <th className="py-px text-left font-bold" style={{ color: 'var(--pm-text-muted)' }}>Date</th>
+                    <th className="py-px text-right font-bold" style={{ color: 'var(--pm-text-muted)' }}>Gain (crvUSD)</th>
                     <th className="py-px w-5" />
                   </tr>
                 </thead>
                 <tbody>
                   {savingsData.history.map((d, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                      <td className="py-px" style={{ color: 'rgba(255,255,255,0.8)' }}>{formatDate(d.dt, true)}</td>
+                    <tr key={i} style={{ borderBottom: '1px solid var(--pm-table-border)' }}>
+                      <td className="py-px" style={{ color: 'var(--pm-text-secondary)' }}>{formatDate(d.dt, true)}</td>
                       <td className="py-px font-bold text-right">{formatNumber(parseFloat(d.gain) / 1e18)}</td>
                       <td className="py-px text-right">
                         <a
@@ -786,7 +791,7 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
               </table>
             )}
             {savingsData && savingsData.history.length === 0 && !savingsLoading && (
-              <div className="text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>No data available</div>
+              <div className="text-[10px]" style={{ color: 'var(--pm-text-muted)' }}>No data available</div>
             )}
             {/* Pagination */}
             {savingsData && savingsData.count > SAVINGS_PER_PAGE && (
@@ -796,17 +801,17 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
                   disabled={savingsPage <= 1}
                   className="text-[10px] font-bold"
                   style={{
-                    background: savingsPage <= 1 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
-                    border: '1px outset rgba(255,255,255,0.3)',
-                    color: savingsPage <= 1 ? 'rgba(255,255,255,0.3)' : 'white',
+                    background: savingsPage <= 1 ? 'var(--pm-panel-inset)' : 'var(--pm-panel-inset)',
+                    border: '1px solid var(--pm-panel-inset-border)',
+                    color: savingsPage <= 1 ? 'var(--pm-text-muted)' : 'var(--pm-text)',
                     padding: '2px 8px',
                     cursor: savingsPage <= 1 ? 'default' : 'pointer',
-                    fontFamily: 'System, monospace',
+                    fontFamily: 'inherit', borderRadius: 3,
                   }}
                 >
                   ← Prev
                 </button>
-                <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <span className="text-[10px]" style={{ color: 'var(--pm-text-muted)' }}>
                   {savingsPage} / {Math.ceil(savingsData.count / SAVINGS_PER_PAGE)}
                 </span>
                 <button
@@ -814,12 +819,12 @@ export default function DetailPanel({ node, liveData, position, onClose }: Detai
                   disabled={savingsPage >= Math.ceil(savingsData.count / SAVINGS_PER_PAGE)}
                   className="text-[10px] font-bold"
                   style={{
-                    background: savingsPage >= Math.ceil(savingsData.count / SAVINGS_PER_PAGE) ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
-                    border: '1px outset rgba(255,255,255,0.3)',
-                    color: savingsPage >= Math.ceil(savingsData.count / SAVINGS_PER_PAGE) ? 'rgba(255,255,255,0.3)' : 'white',
+                    background: savingsPage >= Math.ceil(savingsData.count / SAVINGS_PER_PAGE) ? 'var(--pm-panel-inset)' : 'var(--pm-panel-inset)',
+                    border: '1px solid var(--pm-panel-inset-border)',
+                    color: savingsPage >= Math.ceil(savingsData.count / SAVINGS_PER_PAGE) ? 'var(--pm-text-muted)' : 'var(--pm-text)',
                     padding: '2px 8px',
                     cursor: savingsPage >= Math.ceil(savingsData.count / SAVINGS_PER_PAGE) ? 'default' : 'pointer',
-                    fontFamily: 'System, monospace',
+                    fontFamily: 'inherit', borderRadius: 3,
                   }}
                 >
                   Next →

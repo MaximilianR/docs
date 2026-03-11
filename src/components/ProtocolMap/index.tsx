@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useRef, useEffect } from 'react'
+import { useCallback, useState, useMemo, useEffect } from 'react'
 import {
   ReactFlow,
   Controls,
@@ -124,12 +124,39 @@ function buildStablecoinDynamic(markets: CrvusdMarket[], pegkeepers: PegKeeper[]
 // Tabs that are live vs coming soon
 const ENABLED_TABS = new Set(['fees'])
 
+function useThemeToggle() {
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof document === 'undefined') return false
+    return document.documentElement.getAttribute('data-theme') === 'dark'
+  })
+
+  const toggle = useCallback(() => {
+    const next = !isDark
+    document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light')
+    // Persist in localStorage so Docusaurus picks it up
+    try { localStorage.setItem('theme', next ? 'dark' : 'light') } catch {}
+    setIsDark(next)
+  }, [isDark])
+
+  // Sync if changed externally
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.getAttribute('data-theme') === 'dark')
+    })
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => observer.disconnect()
+  }, [])
+
+  return { isDark, toggle }
+}
+
 interface ProtocolMapCanvasProps {
   defaultTab?: string
 }
 
 function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
   const { fitView } = useReactFlow()
+  const { isDark, toggle: toggleTheme } = useThemeToggle()
   const [activeTab, setActiveTab] = useState(defaultTab)
   const [nodes, setNodes, onNodesChange] = useNodesState(buildNodesForTab(defaultTab))
   const [edges, setEdges, onEdgesChange] = useEdgesState(buildEdgesForTab(defaultTab))
@@ -251,10 +278,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
               <button
                 key={tab.id}
                 onClick={() => enabled && switchTab(tab.id)}
-                className={`protocol-map-tab ${!enabled ? 'protocol-map-tab-disabled' : ''}`}
-                style={{
-                  background: active ? '#e67e00' : enabled ? '#3465a4' : 'rgba(52,101,164,0.4)',
-                }}
+                className={`protocol-map-tab ${active ? 'protocol-map-tab-active' : ''} ${!enabled ? 'protocol-map-tab-disabled' : ''}`}
                 title={!enabled ? 'Coming soon' : undefined}
               >
                 {tab.label}
@@ -264,6 +288,15 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
         </div>
 
         <div style={{ flex: 1 }} />
+
+        {/* Theme toggle */}
+        <button
+          onClick={toggleTheme}
+          className="protocol-map-theme-toggle"
+          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {isDark ? '\u2600' : '\u263E'}
+        </button>
       </div>
 
       <ReactFlow
@@ -287,25 +320,11 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
         proOptions={{ hideAttribution: true }}
       >
         <Controls position="bottom-left" />
-        <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="rgba(255,255,255,0.2)" />
+        <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="var(--pm-canvas-dots)" />
       </ReactFlow>
 
       {/* Hint box */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 68,
-          right: 16,
-          zIndex: 10,
-          fontFamily: 'System, monospace',
-          fontSize: 10,
-          color: 'rgba(255,255,255,0.7)',
-          background: 'rgba(0,0,0,0.25)',
-          border: '1px solid rgba(255,255,255,0.2)',
-          padding: '5px 10px',
-          pointerEvents: 'none',
-        }}
-      >
+      <div className="protocol-map-hint">
         Click on nodes and edges for live data &amp; details
       </div>
 

@@ -38,14 +38,13 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
         style={{
           background: cat.color,
           boxShadow: selected
-            ? `0 0 0 3px ${cat.color}, 8px 8px 3px rgba(0,0,0,0.5), 0 0 16px ${cat.color}66`
-            : `0 0 0 3px ${cat.color}, 8px 8px 3px rgba(0,0,0,0.5)`,
+            ? `0 0 0 2px var(--pm-node-border, white), 0 4px 12px var(--pm-node-shadow, rgba(0,0,0,0.25)), 0 0 16px ${cat.color}44`
+            : `0 0 0 2px var(--pm-node-border, white), 0 4px 12px var(--pm-node-shadow, rgba(0,0,0,0.25))`,
         }}
         className={`
           relative px-4 py-2.5 cursor-pointer transition-all duration-150
-          border-[6px] border-double border-white
-          ${isToken ? 'rounded-sm min-w-[100px] text-center' : 'rounded-none min-w-[180px]'}
-          ${isSystem ? 'border-dashed' : ''}
+          ${isToken ? 'rounded-lg min-w-[100px] text-center' : 'rounded-md min-w-[180px]'}
+          ${isSystem ? 'border-2 border-dashed border-white/40' : ''}
           ${selected ? 'scale-105' : 'hover:scale-105 hover:brightness-110'}
         `}
       >
@@ -54,18 +53,18 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
             <img src={iconSrc} alt="" className="w-5 h-5 rounded-full" style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.3))' }} />
           ) : (
             <div
-              className="w-5 h-5 flex items-center justify-center text-[10px] font-bold border border-white/40 bg-white/15"
+              className="w-5 h-5 flex items-center justify-center text-[10px] font-bold border border-white/40 bg-white/15 rounded"
               style={{ color: 'white' }}
             >
               {data.label.charAt(0)}
             </div>
           )}
           <div>
-            <div className="font-bold text-xs text-white whitespace-nowrap" style={{ fontFamily: 'System, monospace' }}>
+            <div className="font-bold text-xs text-white whitespace-nowrap" style={{ fontFamily: 'var(--Text-FontFamily-Body, system-ui, sans-serif)' }}>
               {data.label}
             </div>
             {isSystem && (
-              <div className="text-[9px] text-white/60 uppercase tracking-widest" style={{ fontFamily: 'System, monospace' }}>
+              <div className="text-[9px] text-white/60 uppercase tracking-widest" style={{ fontFamily: 'var(--Text-FontFamily-Body, system-ui, sans-serif)' }}>
                 {data.category}
               </div>
             )}

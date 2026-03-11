@@ -1,39 +1,170 @@
-/* Protocol Map — scoped styles for Docusaurus embedding */
+/* Protocol Map — scoped styles with light/dark theming */
 
+/* ── Theme Variables ──────────────────────────────────────────────── */
+.protocol-map-container {
+  /* Light mode (default) */
+  --pm-canvas: #eae7e4;
+  --pm-canvas-dots: rgba(0,0,0,0.1);
+  --pm-topbar: #ffffff;
+  --pm-topbar-border: #D4D0CC;
+  --pm-topbar-shadow: rgba(0,0,0,0.06);
+  --pm-text: #1F1E1B;
+  --pm-text-secondary: #5A554F;
+  --pm-text-muted: #968E84;
+  --pm-panel-bg: #ffffff;
+  --pm-panel-border: #D4D0CC;
+  --pm-panel-shadow: rgba(0,0,0,0.12);
+  --pm-panel-inset: #F6F4F4;
+  --pm-panel-inset-border: #EEECEB;
+  --pm-controls-bg: #ffffff;
+  --pm-controls-border: #D4D0CC;
+  --pm-controls-btn-hover: #F6F4F4;
+  --pm-controls-icon: #1F1E1B;
+  --pm-tab-bg: #F6F4F4;
+  --pm-tab-text: #5A554F;
+  --pm-tab-active-bg: #3162F4;
+  --pm-tab-active-text: #ffffff;
+  --pm-tab-disabled-text: #BBB6AF;
+  --pm-tab-border: #D4D0CC;
+  --pm-back-bg: #F6F4F4;
+  --pm-back-text: #5A554F;
+  --pm-back-border: #D4D0CC;
+  --pm-hint-bg: rgba(0,0,0,0.05);
+  --pm-hint-text: #968E84;
+  --pm-hint-border: rgba(0,0,0,0.08);
+  --pm-close-bg: #ED242F;
+  --pm-close-text: #ffffff;
+  --pm-link: #3162F4;
+  --pm-live-color: #1FA25E;
+  --pm-live-dot: #32CE79;
+  --pm-dynamic-color: #F77F00;
+  --pm-effective-color: #1FA25E;
+  --pm-btn-primary-bg: #3162F4;
+  --pm-btn-primary-text: #ffffff;
+  --pm-btn-secondary-bg: #e67e00;
+  --pm-btn-secondary-text: #ffffff;
+  --pm-table-border: rgba(0,0,0,0.1);
+  --pm-table-header: #968E84;
+  --pm-edge-fee: #8888a8;
+  --pm-edge-fee-dash: #a0a0b8;
+  --pm-edge-fee-label-bg: #505070;
+  --pm-edge-fee-label-border: #8888a8;
+  --pm-edge-data: #aaaacc;
+  --pm-edge-data-label-bg: #606080;
+  --pm-edge-data-label-border: #aaaacc;
+  --pm-edge-governance: #a855f7;
+  --pm-edge-emission: #22c55e;
+  --pm-edge-oracle: #38bdf8;
+  --pm-tooltip-bg: #1F1E1B;
+  --pm-tooltip-border: #5A554F;
+  --pm-tooltip-text: #F8F7F7;
+  --pm-node-border: #ffffff;
+  --pm-node-text: #ffffff;
+  --pm-node-shadow: rgba(0,0,0,0.25);
+}
+
+[data-theme='dark'] .protocol-map-container {
+  --pm-canvas: #1A1918;
+  --pm-canvas-dots: rgba(255,255,255,0.06);
+  --pm-topbar: #252420;
+  --pm-topbar-border: #3B3834;
+  --pm-topbar-shadow: rgba(0,0,0,0.3);
+  --pm-text: #F8F7F7;
+  --pm-text-secondary: #D4D0CC;
+  --pm-text-muted: #968E84;
+  --pm-panel-bg: #252420;
+  --pm-panel-border: #494540;
+  --pm-panel-shadow: rgba(0,0,0,0.4);
+  --pm-panel-inset: #1F1E1B;
+  --pm-panel-inset-border: #3B3834;
+  --pm-controls-bg: #252420;
+  --pm-controls-border: #494540;
+  --pm-controls-btn-hover: #3B3834;
+  --pm-controls-icon: #F8F7F7;
+  --pm-tab-bg: #302E2A;
+  --pm-tab-text: #D4D0CC;
+  --pm-tab-active-bg: #3162F4;
+  --pm-tab-active-text: #ffffff;
+  --pm-tab-disabled-text: #5A554F;
+  --pm-tab-border: #3B3834;
+  --pm-back-bg: #302E2A;
+  --pm-back-text: #D4D0CC;
+  --pm-back-border: #494540;
+  --pm-hint-bg: rgba(255,255,255,0.05);
+  --pm-hint-text: #968E84;
+  --pm-hint-border: rgba(255,255,255,0.08);
+  --pm-close-bg: #ED242F;
+  --pm-close-text: #ffffff;
+  --pm-link: #5A81F3;
+  --pm-live-color: #32CE79;
+  --pm-live-dot: #32CE79;
+  --pm-dynamic-color: #FFC300;
+  --pm-effective-color: #4ade80;
+  --pm-btn-primary-bg: #3162F4;
+  --pm-btn-primary-text: #ffffff;
+  --pm-btn-secondary-bg: #e67e00;
+  --pm-btn-secondary-text: #ffffff;
+  --pm-table-border: rgba(255,255,255,0.1);
+  --pm-table-header: #968E84;
+  --pm-edge-fee: #8888a8;
+  --pm-edge-fee-dash: #a0a0b8;
+  --pm-edge-fee-label-bg: #404058;
+  --pm-edge-fee-label-border: #606078;
+  --pm-edge-data: #8888a8;
+  --pm-edge-data-label-bg: #505070;
+  --pm-edge-data-label-border: #8888a8;
+  --pm-edge-governance: #a855f7;
+  --pm-edge-emission: #22c55e;
+  --pm-edge-oracle: #38bdf8;
+  --pm-tooltip-bg: #1F1E1B;
+  --pm-tooltip-border: #494540;
+  --pm-tooltip-text: #F8F7F7;
+  --pm-node-border: #ffffff;
+  --pm-node-text: #ffffff;
+  --pm-node-shadow: rgba(0,0,0,0.5);
+}
+
+/* ── Base Layout ──────────────────────────────────────────────────── */
 .protocol-map-container {
   width: 100%;
   height: 100vh;
   position: relative;
-  font-family: System, 'Courier New', monospace;
+  font-family: var(--Text-FontFamily-Body, system-ui, sans-serif);
   font-size: 10pt;
 }
 
-/* Retro Curve canvas background */
 .protocol-map-container .react-flow {
-  background: #a5a4ce !important;
+  background: var(--pm-canvas) !important;
 }
 
-/* Controls in retro style */
+/* ── Controls ─────────────────────────────────────────────────────── */
 .protocol-map-container .react-flow__controls {
-  border: 3px double white !important;
-  border-radius: 0 !important;
-  box-shadow: 4px 4px 0 rgba(0,0,0,0.3) !important;
-  background: #3465a4 !important;
+  border: 1px solid var(--pm-controls-border) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 8px var(--pm-panel-shadow) !important;
+  background: var(--pm-controls-bg) !important;
+  overflow: hidden;
 }
 .protocol-map-container .react-flow__controls button {
-  background: #3465a4 !important;
-  border: 1px solid rgba(255,255,255,0.3) !important;
+  background: var(--pm-controls-bg) !important;
+  border: none !important;
+  border-bottom: 1px solid var(--pm-controls-border) !important;
   border-radius: 0 !important;
-  color: white !important;
+  color: var(--pm-controls-icon) !important;
+  width: 28px !important;
+  height: 28px !important;
+}
+.protocol-map-container .react-flow__controls button:last-child {
+  border-bottom: none !important;
 }
 .protocol-map-container .react-flow__controls button:hover {
-  background: #4a7fc4 !important;
+  background: var(--pm-controls-btn-hover) !important;
 }
 .protocol-map-container .react-flow__controls button svg {
-  fill: white !important;
+  fill: var(--pm-controls-icon) !important;
 }
 
-/* Top bar */
+/* ── Top Bar ──────────────────────────────────────────────────────── */
 .protocol-map-topbar {
   position: absolute;
   top: 0;
@@ -44,84 +175,108 @@
   align-items: center;
   gap: 12px;
   padding: 8px 16px;
-  background: #3465a4;
-  border-bottom: 3px double white;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.2);
-  font-family: System, monospace;
+  background: var(--pm-topbar);
+  border-bottom: 1px solid var(--pm-topbar-border);
+  box-shadow: 0 1px 4px var(--pm-topbar-shadow);
+  font-family: var(--Text-FontFamily-Body, system-ui, sans-serif);
 }
 
 .protocol-map-back {
   font-size: 11px;
-  font-weight: bold;
-  color: rgba(255,255,255,0.8);
+  font-weight: 600;
+  color: var(--pm-back-text);
   text-decoration: none;
-  padding: 3px 10px;
-  background: rgba(0,0,0,0.2);
-  border: 1px outset rgba(255,255,255,0.3);
-  font-family: System, monospace;
+  padding: 4px 12px;
+  background: var(--pm-back-bg);
+  border: 1px solid var(--pm-back-border);
+  border-radius: 4px;
+  font-family: inherit;
   cursor: pointer;
   white-space: nowrap;
   margin-right: 8px;
+  transition: all 0.15s;
 }
 .protocol-map-back:hover {
-  color: white;
-  background: rgba(0,0,0,0.35);
+  color: var(--pm-text);
+  background: var(--pm-controls-btn-hover);
   text-decoration: none;
-}
-
-.protocol-map-title {
-  font-size: 14px;
-  font-weight: bold;
-  color: white;
-  white-space: nowrap;
-  margin: 0 8px 0 0;
 }
 
 .protocol-map-tabs {
   display: flex;
-  border: 2px outset silver;
+  gap: 2px;
+  background: var(--pm-tab-border);
+  border: 1px solid var(--pm-tab-border);
+  border-radius: 6px;
+  padding: 2px;
+  overflow: hidden;
 }
 
 .protocol-map-tab {
-  padding: 2px 12px;
-  font-size: 10px;
-  font-weight: bold;
-  color: white;
+  padding: 4px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--pm-tab-text);
+  background: transparent;
   border: none;
-  border-right: 1px solid rgba(255,255,255,0.2);
-  font-family: System, monospace;
+  border-radius: 4px;
+  font-family: inherit;
   cursor: pointer;
+  transition: all 0.15s;
+}
+.protocol-map-tab:hover:not(.protocol-map-tab-disabled) {
+  background: var(--pm-controls-btn-hover);
+}
+
+.protocol-map-tab-active {
+  background: var(--pm-tab-active-bg) !important;
+  color: var(--pm-tab-active-text) !important;
 }
 
 .protocol-map-tab-disabled {
-  color: rgba(255,255,255,0.35);
+  color: var(--pm-tab-disabled-text);
   cursor: default;
 }
 
-.protocol-map-search {
-  padding: 4px 8px;
-  font-size: 12px;
-  width: 112px;
-  background: silver;
-  color: black;
-  border: 2px inset silver;
-  font-family: System, monospace;
-  outline: none;
-}
-
-.protocol-map-btn {
-  padding: 2px 8px;
-  font-size: 10px;
-  font-weight: bold;
-  color: white;
-  background: green;
-  border: 1px outset green;
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-  font-family: System, monospace;
+/* ── Theme Toggle ─────────────────────────────────────────────────── */
+.protocol-map-theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--pm-back-bg);
+  border: 1px solid var(--pm-back-border);
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.15s;
+  color: var(--pm-text-secondary);
+  padding: 0;
+  font-family: inherit;
+}
+.protocol-map-theme-toggle:hover {
+  background: var(--pm-controls-btn-hover);
+  color: var(--pm-text);
 }
 
-/* Detail panel — override Docusaurus table styles */
+/* ── Hint Box ─────────────────────────────────────────────────────── */
+.protocol-map-hint {
+  position: absolute;
+  top: 56px;
+  right: 16px;
+  z-index: 10;
+  font-size: 11px;
+  color: var(--pm-hint-text);
+  background: var(--pm-hint-bg);
+  border: 1px solid var(--pm-hint-border);
+  border-radius: 4px;
+  padding: 5px 12px;
+  pointer-events: none;
+}
+
+/* ── Detail Panel — override Docusaurus table styles ──────────────── */
 .protocol-map-detail-panel table {
   margin: 0 !important;
   display: table !important;
@@ -137,7 +292,7 @@
   background: transparent !important;
 }
 
-/* Animations */
+/* ── Animations ───────────────────────────────────────────────────── */
 @keyframes flowDot {
   0% { offset-distance: 0%; }
   100% { offset-distance: 100%; }
