@@ -23,9 +23,10 @@ export default function GaugeChartNode({ data, selected }: NodeProps<Node<GaugeC
   const ticks = [0, Math.round(tickMax / 3), Math.round((tickMax * 2) / 3), tickMax]
 
   const handleClass = "!bg-transparent !w-3 !h-3 !border-0 hover:!bg-white/50 !transition-all"
-  const barMaxHeight = 140
-  const barWidth = 32
-  const gap = 12
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+  const barMaxHeight = isMobile ? 100 : 140
+  const barWidth = isMobile ? 22 : 32
+  const gap = isMobile ? 6 : 12
 
   return (
     <>
@@ -49,7 +50,7 @@ export default function GaugeChartNode({ data, selected }: NodeProps<Node<GaugeC
           cursor: 'pointer',
           border: flash ? '6px double #22c55e' : '6px double #a78bfa',
           transition: 'all 0.3s',
-          padding: '14px 18px 10px',
+          padding: isMobile ? '10px 12px 8px' : '14px 18px 10px',
         }}
         className={`relative ${selected ? 'scale-105' : 'hover:scale-105 hover:brightness-110'}`}
       >

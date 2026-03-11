@@ -63,7 +63,7 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
         className={`
           relative cursor-pointer transition-all duration-150
           border-[6px] border-double
-          ${isToken ? 'rounded-sm min-w-[60px] text-center px-2 py-1.5' : gauges ? 'rounded-none min-w-[280px] px-5 py-3' : 'rounded-none min-w-[180px] px-4 py-2.5'}
+          ${isToken ? 'rounded-sm min-w-[60px] text-center px-2 py-1.5' : gauges ? 'rounded-none min-w-[200px] sm:min-w-[280px] px-3 sm:px-5 py-2 sm:py-3' : 'rounded-none min-w-[140px] sm:min-w-[180px] px-3 sm:px-4 py-2 sm:py-2.5'}
           ${isSystem ? 'border-dashed' : ''}
           ${selected ? 'scale-105' : 'hover:scale-105 hover:brightness-110'}
         `}

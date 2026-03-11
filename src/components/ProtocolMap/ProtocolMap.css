@@ -33,6 +33,11 @@
   fill: white !important;
 }
 
+/* Ensure smooth touch panning on mobile */
+.protocol-map-container .react-flow {
+  touch-action: none;
+}
+
 /* Top bar */
 .protocol-map-topbar {
   position: absolute;
@@ -172,4 +177,59 @@
 @keyframes dashFlow {
   0% { stroke-dashoffset: 20; }
   100% { stroke-dashoffset: 0; }
+}
+
+/* ── Mobile responsive ──────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .protocol-map-topbar {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .protocol-map-back {
+    font-size: 10px;
+    padding: 2px 6px;
+    margin-right: 4px;
+  }
+
+  .protocol-map-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: calc(100vw - 100px);
+    scrollbar-width: none;
+  }
+  .protocol-map-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .protocol-map-tab {
+    padding: 2px 8px;
+    font-size: 9px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .protocol-map-hint {
+    display: none;
+  }
+
+  .protocol-map-container .react-flow__controls button {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .protocol-map-detail-panel {
+    width: calc(100vw - 24px) !important;
+    max-width: 300px !important;
+    left: 12px !important;
+    right: 12px !important;
+  }
+
+  .protocol-map-timeline {
+    /* Center between controls (~100px left edge) and viewport right edge */
+    max-width: calc(100vw - 120px) !important;
+    left: calc(50px + 50vw) !important;
+    transform: translateX(-50%) !important;
+  }
 }
