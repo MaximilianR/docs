@@ -137,6 +137,19 @@
   background: transparent !important;
 }
 
+/* Hide handles on default (annotation) nodes and fix spacing */
+.react-flow__node-default .react-flow__handle {
+  display: none !important;
+}
+.react-flow__node-default {
+  line-height: 1.2 !important;
+}
+.react-flow__node-default .react-flow__node-default-inner,
+.react-flow__node-default > div {
+  padding: 0 !important;
+  line-height: 1.2 !important;
+}
+
 /* Animations */
 @keyframes flowDot {
   0% { offset-distance: 0%; }

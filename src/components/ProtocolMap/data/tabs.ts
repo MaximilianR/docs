@@ -38,18 +38,40 @@ export const tabs: TabConfig[] = [
   },
   {
     id: 'governance',
-    label: 'Governance',
+    label: 'veCRV',
     nodeIds: new Set([
-      'crv', 'vecrv', 'gauge-controller', 'minter', 'gauges',
+      'crv', 'vecrv', 'gauge-controller',
       'dao-voting',
+      'fee-distributor',
     ]),
     positions: {
-      'crv': { x: -188, y: -80 },
-      'vecrv': { x: -61, y: 102 },
-      'gauge-controller': { x: 272, y: 104 },
-      'gauges': { x: 473, y: -38 },
-      'minter': { x: 300, y: -100 },
-      'dao-voting': { x: -62, y: 324 },
+      // Top: CRV token
+      'crv': { x: -50, y: -200 },
+      // Center: veCRV (hub)
+      'vecrv': { x: -50, y: 50 },
+      // Right: Gauge voting
+      'gauge-controller': { x: 300, y: 50 },
+      // Bottom-right: DAO governance
+      'dao-voting': { x: 300, y: 300 },
+      // Left: Revenue distribution
+      'fee-distributor': { x: -400, y: 50 },
+    },
+  },
+  {
+    id: 'emissions',
+    label: 'Emissions',
+    nodeIds: new Set([
+      'voter-convex', 'voter-stakedao', 'voter-yearn',
+      'voter-user1', 'voter-user2',
+      'gauge-controller',
+    ]),
+    positions: {
+      'voter-convex': { x: -343, y: -4 },
+      'voter-stakedao': { x: -348, y: 56 },
+      'voter-yearn': { x: -350, y: 120 },
+      'voter-user1': { x: -350, y: 183 },
+      'voter-user2': { x: -341, y: 246 },
+      'gauge-controller': { x: 150, y: 80 },
     },
   },
   {

@@ -22,14 +22,19 @@ import ContractNode from './nodes/ContractNode'
 import SystemNode from './nodes/SystemNode'
 import TokenNode from './nodes/TokenNode'
 import ExternalNode from './nodes/ExternalNode'
+import EpochNode from './nodes/EpochNode'
+import GaugeChartNode from './nodes/GaugeChartNode'
 import FeeFlowEdge from './edges/FeeFlowEdge'
 import GovernanceEdge from './edges/GovernanceEdge'
 import DataFlowEdge from './edges/DataFlowEdge'
 import EmissionFlowEdge from './edges/EmissionFlowEdge'
+import GaugeEmissionEdge from './edges/GaugeEmissionEdge'
 import OracleFlowEdge from './edges/OracleFlowEdge'
+import VotingEdge from './edges/VotingEdge'
 import DetailPanel from './panels/DetailPanel'
 import { useLiveData } from './hooks/useLiveData'
 import { useCrvusdMarkets, type CrvusdMarket, type PegKeeper } from './hooks/useCrvusdMarkets'
+import { useGaugeWeights, type GaugeWeight } from './hooks/useGaugeWeights'
 import { formatNumber } from './utils/formatters'
 import './ProtocolMap.css'
 
@@ -38,6 +43,8 @@ const nodeTypes: NodeTypes = {
   systemNode: SystemNode,
   tokenNode: TokenNode,
   externalNode: ExternalNode,
+  epochNode: EpochNode,
+  gaugeChartNode: GaugeChartNode,
 }
 
 const edgeTypes: EdgeTypes = {
@@ -45,8 +52,12 @@ const edgeTypes: EdgeTypes = {
   governanceFlow: GovernanceEdge,
   dataFlow: DataFlowEdge,
   emissionFlow: EmissionFlowEdge,
+  gaugeEmission: GaugeEmissionEdge,
   oracleFlow: OracleFlowEdge,
+  votingFlow: VotingEdge,
 }
+
+const BAR_COLORS = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6', '#1abc9c', '#e84393']
 
 function buildNodesForTab(tabId: string) {
   const tab = tabs.find(t => t.id === tabId)!
@@ -121,8 +132,156 @@ function buildStablecoinDynamic(markets: CrvusdMarket[], pegkeepers: PegKeeper[]
   return { nodes, edges }
 }
 
+function buildGovernanceDynamic(gauges: GaugeWeight[]) {
+  const nodes: Node<ProtocolNodeData>[] = []
+  const edges: import('@xyflow/react').Edge[] = []
+
+  if (gauges.length === 0) return { nodes, edges }
+
+  // Fan out to the right of GaugeController (300, 50)
+  const startX = 600
+  const startY = -150
+  const spacing = 100
+
+  gauges.forEach((g, i) => {
+    const id = `dyn-gauge-${i}`
+    const pct = (g.gauge_relative_weight * 100).toFixed(2)
+    nodes.push({
+      id,
+      type: 'contractNode',
+      position: { x: startX, y: startY + i * spacing },
+      data: {
+        label: g.pool_name || g.name,
+        category: 'gauge',
+        description: `${pct}% of total gauge weight. ${formatNumber(g.emissions)} CRV emissions this epoch.${g.chain ? ` Chain: ${g.chain}.` : ''}`,
+        address: g.address,
+        icon: 'gauge',
+      },
+    })
+    edges.push({
+      id: `dyn-gc-gauge-${i}`,
+      source: 'gauge-controller',
+      target: id,
+      sourceHandle: 'right-source',
+      targetHandle: 'left-target',
+      type: 'emissionFlow',
+      label: `${pct}%`,
+    })
+  })
+
+  return { nodes, edges }
+}
+
+// ── Emissions simulation ──────────────────────────────────────────────
+
+// Fictional gauges with weight drift patterns (start → mid → end of week)
+// Smooth gauge weight simulation. Each gauge drifts via overlapping sine waves.
+// Non-integer frequencies so each week looks different.
+const SIM_GAUGES = [
+  { name: 'Gauge 1', base: 25, waves: [{ amp: 12, freq: 0.7, phase: 0 }, { amp: 5, freq: 1.8, phase: 1.2 }] },
+  { name: 'Gauge 2', base: 22, waves: [{ amp: 10, freq: 0.5, phase: 2.1 }, { amp: 6, freq: 1.3, phase: 0.5 }] },
+  { name: 'Gauge 3', base: 20, waves: [{ amp: 11, freq: 0.9, phase: 4.0 }, { amp: 4, freq: 1.6, phase: 1.8 }] },
+  { name: 'Gauge 4', base: 18, waves: [{ amp: 9, freq: 0.6, phase: 0.8 }, { amp: 5, freq: 1.4, phase: 3.5 }] },
+  { name: 'Gauge 5', base: 10, waves: [{ amp: 5, freq: 0.8, phase: 3.0 }, { amp: 3, freq: 1.7, phase: 0.3 }] },
+]
+
+const SNAPSHOT_POINT = 3 / 7 // Thursday ≈ 0.43
+
+function rawGaugeWeight(gauge: typeof SIM_GAUGES[0], t: number): number {
+  let w = gauge.base
+  for (const wave of gauge.waves) {
+    w += wave.amp * Math.sin(2 * Math.PI * wave.freq * t + wave.phase)
+  }
+  return Math.max(1, w)
+}
+
+// Returns weights normalized to sum to 100%
+function getEmissionsCurrentWeights(progress: number) {
+  const raw = SIM_GAUGES.map(g => rawGaugeWeight(g, progress))
+  const total = raw.reduce((a, b) => a + b, 0)
+  return raw.map(w => (w / total) * 100)
+}
+
+function getEmissionsSnapshotWeights(progress: number) {
+  const snapT = Math.floor(progress) + SNAPSHOT_POINT
+  const raw = SIM_GAUGES.map(g => rawGaugeWeight(g, snapT))
+  const total = raw.reduce((a, b) => a + b, 0)
+  return raw.map(w => (w / total) * 100)
+}
+
+
+function buildEmissionsDynamic(snapshotWeights: number[]) {
+  const nodes: Node<ProtocolNodeData>[] = []
+  const edges: import('@xyflow/react').Edge[] = []
+  const count = SIM_GAUGES.length
+  const startX = -130
+  const spacing = 160
+  const gaugeY = -100
+
+  SIM_GAUGES.forEach((g, i) => {
+    const pct = snapshotWeights[i].toFixed(1)
+    nodes.push({
+      id: `dyn-em-gauge-${i}`,
+      type: 'tokenNode',
+      position: { x: startX + i * spacing, y: gaugeY },
+      data: {
+        label: g.name,
+        category: 'gauge',
+        description: `Receives ${pct}% of CRV emissions, streamed over one week until the next snapshot.`,
+        colorOverride: BAR_COLORS[i % BAR_COLORS.length],
+      },
+    })
+    edges.push({
+      id: `dyn-em-gc-gauge-${i}`,
+      source: 'gauge-controller',
+      target: `dyn-em-gauge-${i}`,
+      sourceHandle: 'top-source',
+      targetHandle: 'bottom-target',
+      type: 'gaugeEmission',
+      label: `${pct}%`,
+    })
+  })
+
+  // Annotation label
+  nodes.push({
+    id: 'dyn-em-label',
+    type: 'default',
+    position: { x: 310, y: 37 },
+    data: { label: 'CRV emissions streamed over 1 week\nbased on Thursday snapshot' } as any,
+    sourcePosition: undefined,
+    targetPosition: undefined,
+    connectable: false,
+    selectable: true,
+    draggable: true,
+    style: {
+      background: '#505070',
+      border: '1px solid #8888a8',
+      borderRadius: 0,
+      boxShadow: '4px 4px 0 rgba(0,0,0,0.3)',
+      color: 'white',
+      fontSize: 9,
+      fontFamily: 'System, monospace',
+      width: 'auto',
+      whiteSpace: 'pre-line',
+      textAlign: 'center',
+      lineHeight: 1.3,
+      cursor: 'grab',
+      padding: '3px 8px',
+    } as any,
+  } as any)
+
+  return { nodes, edges }
+}
+
 // Tabs that are live vs coming soon
-const ENABLED_TABS = new Set(['fees'])
+const ENABLED_TABS = new Set(['fees', 'emissions'])
+
+// Map tab IDs to their page URLs for navigation
+const TAB_ROUTES: Record<string, string> = {
+  fees: '/fee-architecture',
+  governance: '/governance',
+  emissions: '/emissions',
+}
 
 interface ProtocolMapCanvasProps {
   defaultTab?: string
@@ -140,10 +299,21 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
   const [search, setSearch] = useState('')
   const [animationsOn, setAnimationsOn] = useState(true)
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
+  const [simProgress, setSimProgress] = useState(0) // emissions simulation (endless weeks)
+  const [simPlaying, setSimPlaying] = useState(true)
+  const simRef = useRef<number | null>(null)
+  const snapshotRef = useRef<number[] | null>(null) // locked snapshot weights
+  const prevProgressRef = useRef(0) // to detect week wrap
   const liveData = useLiveData()
   const crvusdData = useCrvusdMarkets()
+  const gaugeData = useGaugeWeights()
 
   const switchTab = useCallback((tabId: string) => {
+    const route = TAB_ROUTES[tabId]
+    if (route && window.location.pathname !== route) {
+      window.location.href = route
+      return
+    }
     setActiveTab(tabId)
     setNodes(buildNodesForTab(tabId))
     setEdges(buildEdgesForTab(tabId))
@@ -162,6 +332,25 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
   }, [])
 
   useEffect(() => {
+    // Initialize emissions simulation data on first load — trigger initial snapshot
+    if (defaultTab === 'emissions') {
+      snapshotRef.current = getEmissionsSnapshotWeights(0)
+      const currentWeights = getEmissionsCurrentWeights(simProgress)
+      const gauges = SIM_GAUGES.map((g, i) => ({
+        name: g.name, weight: currentWeights[i], snapshot: snapshotRef.current![i],
+      }))
+
+      const { nodes: dynNodes, edges: dynEdges } = buildEmissionsDynamic(snapshotRef.current!)
+
+      setNodes(prev => {
+        const updated = prev.map(n => {
+          if (n.id === 'gauge-controller') return { ...n, data: { ...n.data, gauges, snapshotFlash: false } }
+          return n
+        })
+        return [...updated, ...dynNodes]
+      })
+      setEdges(prev => [...prev, ...dynEdges])
+    }
     setTimeout(() => fitView({ padding: 0.15 }), 100)
   }, [fitView])
 
@@ -178,6 +367,110 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
     })
     setTimeout(() => fitView({ padding: 0.15, duration: 300 }), 100)
   }, [activeTab, crvusdData.loading, crvusdData.markets, crvusdData.pegkeepers, setNodes, setEdges, fitView])
+
+  useEffect(() => {
+    if (activeTab !== 'governance' || gaugeData.loading) return
+    const { nodes: dynNodes, edges: dynEdges } = buildGovernanceDynamic(gaugeData.gauges)
+    setNodes(prev => {
+      const staticNodes = prev.filter(n => !n.id.startsWith('dyn-'))
+      return [...staticNodes, ...dynNodes]
+    })
+    setEdges(prev => {
+      const staticEdges = prev.filter(e => !e.id.startsWith('dyn-'))
+      return [...staticEdges, ...dynEdges]
+    })
+    setTimeout(() => fitView({ padding: 0.15, duration: 300 }), 100)
+  }, [activeTab, gaugeData.loading, gaugeData.gauges, setNodes, setEdges, fitView])
+
+  // Emissions simulation: update gauge-controller bar chart on every tick (lightweight)
+  useEffect(() => {
+    if (activeTab !== 'emissions') return
+    const prevWeekPos = prevProgressRef.current % 1
+    const currWeekPos = simProgress % 1
+    const crossedSnapshot = prevWeekPos < SNAPSHOT_POINT && currWeekPos >= SNAPSHOT_POINT
+    const newWeek = Math.floor(simProgress) > Math.floor(prevProgressRef.current)
+    const snapshotEvent = crossedSnapshot || (newWeek && currWeekPos >= SNAPSHOT_POINT)
+    if (snapshotEvent) {
+      snapshotRef.current = getEmissionsSnapshotWeights(simProgress)
+    }
+    prevProgressRef.current = simProgress
+
+    const snapshotFlash = Math.abs(currWeekPos - SNAPSHOT_POINT) < 0.02
+    const currentWeights = getEmissionsCurrentWeights(simProgress)
+    const gauges = SIM_GAUGES.map((g, i) => ({
+      name: g.name,
+      weight: currentWeights[i],
+      snapshot: snapshotRef.current?.[i],
+    }))
+
+    // Only update gauge-controller data (no node add/remove)
+    setNodes(ns => ns.map(n => {
+      if (n.id === 'gauge-controller') return { ...n, data: { ...n.data, gauges, snapshotFlash } }
+      return n
+    }))
+
+    // Add/update dynamic gauge nodes only on snapshot events
+    if (snapshotEvent && snapshotRef.current) {
+      // Trigger CRV flow animation on all gauge emission edges
+      window.dispatchEvent(new Event('crv-flow-trigger'))
+      const { nodes: dynNodes, edges: dynEdges } = buildEmissionsDynamic(snapshotRef.current)
+      setNodes(ns => {
+        const existing = ns.some(n => n.id === 'dyn-em-gauge-0')
+        if (!existing) {
+          const without = ns.filter(n => !n.id.startsWith('dyn-em-'))
+          return [...without, ...dynNodes]
+        }
+        return ns.map(n => {
+          const dynMatch = dynNodes.find(d => d.id === n.id)
+          if (dynMatch) return { ...n, data: dynMatch.data }
+          return n
+        })
+      })
+      setEdges(es => {
+        const existing = es.some(e => e.id === 'dyn-em-gc-gauge-0')
+        if (!existing) {
+          const without = es.filter(e => !e.id.startsWith('dyn-em-'))
+          return [...without, ...dynEdges]
+        }
+        return es.map(e => {
+          const dynMatch = dynEdges.find(d => d.id === e.id)
+          if (dynMatch) return { ...e, label: dynMatch.label }
+          return e
+        })
+      })
+    }
+  }, [activeTab, simProgress, setNodes, setEdges])
+
+  // Press 'p' to log all node positions to console
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'p') {
+        const positions: Record<string, { x: number; y: number }> = {}
+        nodes.forEach(n => { positions[n.id] = { x: Math.round(n.position.x), y: Math.round(n.position.y) } })
+        console.log(JSON.stringify(positions, null, 2))
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [nodes])
+
+  // Auto-play: advance simulation continuously
+  useEffect(() => {
+    if (activeTab !== 'emissions' || !simPlaying) {
+      if (simRef.current) { cancelAnimationFrame(simRef.current); simRef.current = null }
+      return
+    }
+    let last = performance.now()
+    const tick = (now: number) => {
+      const dt = (now - last) / 1000 // seconds elapsed
+      last = now
+      // Speed: ~1 week per 5 seconds, never wraps
+      setSimProgress(prev => prev + dt / 5)
+      simRef.current = requestAnimationFrame(tick)
+    }
+    simRef.current = requestAnimationFrame(tick)
+    return () => { if (simRef.current) cancelAnimationFrame(simRef.current) }
+  }, [activeTab, simPlaying])
 
   const handleNodesChange = useCallback((changes: NodeChange[]) => {
     onNodesChange(changes)
@@ -230,6 +523,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
   }, [filteredEdges, hoveredNode])
 
   const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
+    if (node.type === 'default') return // skip annotation labels
     setSelectedNode(node as Node<ProtocolNodeData>)
     setPopupPos({ x: event.clientX, y: event.clientY })
   }, [])
@@ -279,7 +573,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
         onPaneClick={() => setSelectedNode(null)}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        nodesDraggable={false}
+        nodesDraggable={true}
         edgesReconnectable={false}
         fitView
         minZoom={0.2}
@@ -309,7 +603,115 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
         Click on nodes and edges for live data &amp; details
       </div>
 
-      <DetailPanel node={selectedNode} liveData={liveData} position={popupPos} onClose={() => setSelectedNode(null)} />
+      {/* Emissions timeline conveyor */}
+      {activeTab === 'emissions' && (() => {
+        const trackW = 420
+        const weekPx = trackW
+        const offset = simProgress * weekPx
+        const currentWeek = Math.floor(simProgress) + 1
+        const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+        return (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 16,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 10,
+              fontFamily: 'System, monospace',
+              border: '6px double white',
+              boxShadow: '0 0 0 3px #3465a4, 8px 8px 3px rgba(0,0,0,0.5)',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Title bar */}
+            <div style={{
+              background: '#3465a4',
+              padding: '4px 12px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              borderBottom: '2px solid rgba(255,255,255,0.3)',
+            }}>
+              <span style={{ fontSize: 10, fontWeight: 'bold', color: 'white' }}>Epoch Simulation</span>
+              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)' }}>Week {currentWeek}</span>
+            </div>
+            {/* Track area */}
+            <div style={{ background: '#3465a4', padding: '8px 12px 6px' }}>
+              <div style={{ position: 'relative', width: trackW, height: 30, overflow: 'hidden', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.15)' }}>
+                {/* Moving tape */}
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: trackW / 2,
+                  transform: `translateX(${-offset}px)`,
+                  height: '100%',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {Array.from({ length: 6 }, (_, wi) => {
+                    const weekIdx = Math.floor(simProgress) - 2 + wi
+                    return DAYS.map((day, di) => {
+                      const x = (weekIdx + di / 7) * weekPx
+                      const isThursday = di === 3
+                      const isMonday = di === 0
+                      return (
+                        <div key={`${weekIdx}-${di}`} style={{
+                          position: 'absolute',
+                          left: x,
+                          top: 0,
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                        }}>
+                          <div style={{
+                            width: isThursday ? 2 : 1,
+                            height: isThursday ? 14 : isMonday ? 10 : 6,
+                            background: isThursday ? '#e67e00' : 'rgba(255,255,255,0.25)',
+                          }} />
+                          <span style={{
+                            fontSize: 8,
+                            color: isThursday ? '#e67e00' : 'rgba(255,255,255,0.4)',
+                            fontWeight: isThursday ? 'bold' : 'normal',
+                            marginTop: 2,
+                          }}>
+                            {day}
+                          </span>
+                        </div>
+                      )
+                    })
+                  })}
+                </div>
+                {/* Fixed center needle */}
+                <div style={{
+                  position: 'absolute',
+                  left: trackW / 2,
+                  top: 0,
+                  width: 2,
+                  height: 20,
+                  background: 'white',
+                  zIndex: 2,
+                  boxShadow: '0 0 4px rgba(255,255,255,0.5)',
+                }} />
+                <div style={{
+                  position: 'absolute',
+                  left: trackW / 2 - 3,
+                  top: 20,
+                  width: 0,
+                  height: 0,
+                  borderLeft: '4px solid transparent',
+                  borderRight: '4px solid transparent',
+                  borderTop: '5px solid white',
+                  zIndex: 2,
+                }} />
+              </div>
+            </div>
+          </div>
+        )
+      })()}
+
+      <DetailPanel node={selectedNode} liveData={liveData} position={popupPos} activeTab={activeTab} onClose={() => setSelectedNode(null)} />
     </div>
   )
 }
