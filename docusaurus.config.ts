@@ -113,6 +113,11 @@ const config: Config = {
           activeBasePath: '/protocol',
         },
         {
+          to: 'fee-architecture',
+          label: 'Visualizations',
+          activeBasePath: '/fee-architecture',
+        },
+        {
           href: 'https://github.com/curvefi',
           position: 'right',
           className: 'header-github-link',

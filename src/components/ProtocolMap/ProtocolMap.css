@@ -1,0 +1,162 @@
+/* Protocol Map — scoped styles for Docusaurus embedding */
+
+.protocol-map-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  font-family: System, 'Courier New', monospace;
+  font-size: 10pt;
+}
+
+/* Retro Curve canvas background */
+.protocol-map-container .react-flow {
+  background: #a5a4ce !important;
+}
+
+/* Controls in retro style */
+.protocol-map-container .react-flow__controls {
+  border: 3px double white !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.3) !important;
+  background: #3465a4 !important;
+}
+.protocol-map-container .react-flow__controls button {
+  background: #3465a4 !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  border-radius: 0 !important;
+  color: white !important;
+}
+.protocol-map-container .react-flow__controls button:hover {
+  background: #4a7fc4 !important;
+}
+.protocol-map-container .react-flow__controls button svg {
+  fill: white !important;
+}
+
+/* Top bar */
+.protocol-map-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: #3465a4;
+  border-bottom: 3px double white;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+  font-family: System, monospace;
+}
+
+.protocol-map-back {
+  font-size: 11px;
+  font-weight: bold;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  padding: 3px 10px;
+  background: rgba(0,0,0,0.2);
+  border: 1px outset rgba(255,255,255,0.3);
+  font-family: System, monospace;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+.protocol-map-back:hover {
+  color: white;
+  background: rgba(0,0,0,0.35);
+  text-decoration: none;
+}
+
+.protocol-map-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  white-space: nowrap;
+  margin: 0 8px 0 0;
+}
+
+.protocol-map-tabs {
+  display: flex;
+  border: 2px outset silver;
+}
+
+.protocol-map-tab {
+  padding: 2px 12px;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-right: 1px solid rgba(255,255,255,0.2);
+  font-family: System, monospace;
+  cursor: pointer;
+}
+
+.protocol-map-tab-disabled {
+  color: rgba(255,255,255,0.35);
+  cursor: default;
+}
+
+.protocol-map-search {
+  padding: 4px 8px;
+  font-size: 12px;
+  width: 112px;
+  background: silver;
+  color: black;
+  border: 2px inset silver;
+  font-family: System, monospace;
+  outline: none;
+}
+
+.protocol-map-btn {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  background: green;
+  border: 1px outset green;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  font-family: System, monospace;
+  cursor: pointer;
+}
+
+/* Detail panel — override Docusaurus table styles */
+.protocol-map-detail-panel table {
+  margin: 0 !important;
+  display: table !important;
+  border: none !important;
+}
+.protocol-map-detail-panel th,
+.protocol-map-detail-panel td {
+  padding: 1px 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+.protocol-map-detail-panel tr {
+  background: transparent !important;
+}
+
+/* Animations */
+@keyframes flowDot {
+  0% { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animated-edge-dot {
+  animation: flowDot 3s linear infinite;
+}
+
+.pulse-glow {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes dashFlow {
+  0% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
