@@ -17,9 +17,15 @@ The Emergency DAO is designed very conservatively and **cannot move or withdraw 
 - **Controller (Llamalend markets):** Adjust AMM fees, modify monetary policy, update the liquidity-mining callback, and manage borrowing discounts (without triggering liquidation for any users).
 - **Lending Vaults:** Set deposit limits.
 
+## Deployments
+
+The original EmergencyDAO is deployed on :logos-ethereum: Ethereum at [`0x467947EE34aF926cF1DCac093870f613C96B1E0c`](https://etherscan.io/address/0x467947EE34aF926cF1DCac093870f613C96B1E0c).
+
+Additionally, the Emergency DAO multisig is deployed at [`0x6d447e544D01a59cb0774763bf15526574CffFeD`](https://etherscan.io/address/0x6d447e544D01a59cb0774763bf15526574CffFeD) on all chains where Curve is active (except Moonbeam, which is incompatible with Safe).
+
 ## EmergencyDAO Members
 
-The EmergencyDAO is deployed on Ethereum at [`0x467947EE34aF926cF1DCac093870f613C96B1E0c`](https://etherscan.io/address/0x467947EE34aF926cF1DCac093870f613C96B1E0c) and consists of the following members:
+The EmergencyDAO consists of the following members:
 
 <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }} markdown="block">
 | Name            | Telegram Handle       |

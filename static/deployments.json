@@ -57,7 +57,8 @@
       "voting-parameter": "0xbcff8b0b9419b9a88c44546519b1e909cf330399",
       "agent-ownership": "0x40907540d8a6C65c637785e8f8B742ae6b0b9968",
       "agent-parameter": "0x4EEb3bA4f221cA16ed4A0cC7254E2E32DF948c5f",
-      "emergency-dao": "0x467947EE34aF926cF1DCac093870f613C96B1E0c"
+      "emergency-dao": "0x467947EE34aF926cF1DCac093870f613C96B1E0c",
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-dao": {
       "keepers": {
@@ -193,6 +194,9 @@
       "crvUSD": "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5",
       "scrvUSD": "0xEfB6601Df148677A338720156E2eFd3c5Ba8809d"
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0xb7b0FF38E0A01D798B5cd395BbA6Ddb56A323830",
@@ -277,6 +281,9 @@
       "crvUSD": "",
       "scrvUSD": ""
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0x3c0a405E914337139992625D5100Ea141a9C4d11",
@@ -348,6 +355,9 @@
       "vecrv": "",
       "crvUSD": "0xCb7c161602d04C4e8aF1832046EE08AAF96d855D",
       "scrvUSD": "0xA3ea433509F7941df3e33857D9c9f212Ad4A4e64"
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -430,6 +440,9 @@
       "crvUSD": "0x417Ac0e078398C154EdFadD9Ef675d30Be60Af93",
       "scrvUSD": "0x646a737b9b6024e49f5908762b3ff73e65b5160c"
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0xCb843280C5037ACfA67b8D4aDC71484ceD7C48C9",
@@ -497,6 +510,9 @@
       "vecrv": "",
       "crvUSD": "0xe2fb3F127f5450DeE44afe054385d74C392BdeF4",
       "scrvUSD": "0x0094Ad026643994c8fB2136ec912D508B15fe0E5"
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -578,6 +594,9 @@
       "vecrv": "",
       "crvUSD": "",
       "scrvUSD": ""
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -718,6 +737,9 @@
       "crvUSD": "",
       "scrvUSD": ""
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0xC772063cE3e622B458B706Dd2e36309418A1aE42",
@@ -786,6 +808,9 @@
       "vecrv": "",
       "crvUSD": "0xD823D2a2B5AF77835e972A0D5B77f5F5A9a003A6",
       "scrvUSD": "0x5191946500e75f0A74476F146dF7d386e52961d9"
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -867,6 +892,9 @@
       "vecrv": "",
       "crvUSD": "0xB102f7Efa0d5dE071A8D37B3548e1C7CB148Caf3",
       "scrvUSD": "0xaB94C721040b33aA8b0b4D159Da9878e2a836Ed0"
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -950,6 +978,9 @@
       "crvUSD": "0xaBEf652195F98A91E490f047A5006B71c85f058d",
       "scrvUSD": ""
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0xe0A1D8C3d243789EC6853b0d00903E70fded32d0",
@@ -1024,6 +1055,9 @@
       "crvUSD": "",
       "scrvUSD": ""
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0x5bcA7dDF1bcccB2eE8e46c56bfc9d3CDC77262bC",
@@ -1090,6 +1124,9 @@
       "vecrv": "",
       "crvUSD": "0x39fec550CC6DDCEd810eCCfA9B2931b4B5f2344D",
       "scrvUSD": ""
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -1159,6 +1196,9 @@
       "vecrv": "",
       "crvUSD": "0x98B4029CaBEf7Fd525A36B0BF8555EC1d42ec0B6",
       "scrvUSD": ""
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -1239,6 +1279,9 @@
       "crvUSD": "0x0994206dfe8de6ec6920ff4d779b0d950605fb53",
       "scrvUSD": ""
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0xB50B9a0D8A4ED8115Fe174F300465Ea4686d86Df",
@@ -1306,6 +1349,9 @@
       "vecrv": "",
       "crvUSD": "",
       "scrvUSD": ""
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -1442,6 +1488,9 @@
       "crvUSD": "0xc52d7f23a2e460248db6ee192cb23dd12bddcbf6",
       "scrvUSD": "0x289f635106d5b822a505b39ac237a0ae9189335b"
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0x8e1e5001C7B8920196c7E3EdF2BCf47B2B6153ff",
@@ -1524,6 +1573,9 @@
       "crvUSD": "",
       "scrvUSD": ""
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0x5bcA7dDF1bcccB2eE8e46c56bfc9d3CDC77262bC",
@@ -1594,6 +1646,9 @@
       "crvUSD": "",
       "scrvUSD": ""
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0x5bcA7dDF1bcccB2eE8e46c56bfc9d3CDC77262bC",
@@ -1662,6 +1717,9 @@
       "vecrv": "",
       "crvUSD": "0xc4Ce1D6F5D98D65eE25Cf85e9F2E9DcFEe6Cb5d6",
       "scrvUSD": ""
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -1745,6 +1803,9 @@
       "vecrv": "",
       "crvUSD": "0x7FFf4C4a827C84E32c5E175052834111B2ccd270",
       "scrvUSD": "0xb5f0edecff09081354db252ceec000b213186fac"
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
@@ -1903,6 +1964,9 @@
       "crvUSD": "",
       "scrvUSD": ""
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0x5bcA7dDF1bcccB2eE8e46c56bfc9d3CDC77262bC",
@@ -1973,6 +2037,9 @@
       "crvUSD": "0xc8F4518ed4bAB9a972808a493107926cE8237068",
       "scrvUSD": "0x8c74d11da5E6cE0498cd280F9209dFB0C5e048A7"
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0xE5De15A9C9bBedb4F5EC13B131E61245f2983A69",
@@ -2040,6 +2107,9 @@
       "vecrv": "",
       "crvUSD": "",
       "scrvUSD": ""
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "",
@@ -2110,6 +2180,9 @@
       "crvUSD": "0xda8f4eb4503acf5dec5420523637bb5b33a846f6",
       "scrvUSD": ""
     },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
+    },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
       "l2-relayer": "0x9D9e70CA10fE911Dee9869F21e5ebB24A9519Ade",
@@ -2177,6 +2250,9 @@
       "vecrv": "",
       "crvUSD": "",
       "scrvUSD": "0x3d8EADb739D1Ef95dd53D718e4810721837c69c1"
+    },
+    "dao": {
+      "emergency-dao-multisig": "0x6d447e544D01a59cb0774763bf15526574CffFeD"
     },
     "x-gov": {
       "l1-broadcaster": "0x7BA33456EC00812C6B6BB6C1C3dfF579c34CC2cc",
