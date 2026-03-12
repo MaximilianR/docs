@@ -94,9 +94,10 @@ export default function ChainPresence(): React.ReactNode {
           if (!res.ok) throw new Error(`lending chains ${res.status} ${res.statusText}`);
           const json: any = await safeJson(res);
           const arr: string[] = json?.data ?? [];
+          const deprecatedLending = ['optimism', 'sonic'];
           lendingLocal = arr
             .map((n) => (n || '').toString())
-            .filter(Boolean)
+            .filter((n) => n && !deprecatedLending.includes(n.toLowerCase()))
             .sort((a, b) => a.localeCompare(b));
         })(),
       ]);
