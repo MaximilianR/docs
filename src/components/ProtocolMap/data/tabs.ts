@@ -40,11 +40,14 @@ export const tabs: TabConfig[] = [
     id: 'emissions',
     label: 'Emissions',
     nodeIds: new Set([
+      'vlcvx-holders', 'sdcrv-holders',
       'voter-convex', 'voter-stakedao', 'voter-yearn',
       'voter-user1', 'voter-user2',
       'gauge-controller',
     ]),
     positions: {
+      'vlcvx-holders': { x: -571, y: -4 },
+      'sdcrv-holders': { x: -570, y: 56 },
       'voter-convex': { x: -250, y: -4 },
       'voter-stakedao': { x: -250, y: 56 },
       'voter-yearn': { x: -250, y: 120 },

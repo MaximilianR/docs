@@ -39,6 +39,13 @@ export interface LiveData {
   // FeeAllocator receivers
   allocatorReceivers?: AllocatorReceiver[]
   allocatorDistributorWeight?: number  // BPS going to FeeDistributor (remainder)
+  // Locker data (from prices API)
+  lockerConvex?: LockerInfo
+  lockerStakedao?: LockerInfo
+  lockerYearn?: LockerInfo
+  // vlCVX data
+  vlcvxSupply?: string           // total vlCVX supply
+  vecrvPerVlcvx?: number         // veCRV voting power per 1 vlCVX
   loading: boolean
   error?: string
 }
@@ -46,6 +53,12 @@ export interface LiveData {
 export interface AllocatorReceiver {
   address: string
   weight: number  // in BPS
+}
+
+export interface LockerInfo {
+  locked: string   // formatted CRV amount
+  weight: string   // formatted veCRV power
+  weightRatio: string // e.g. "53.49%"
 }
 
 export function useLiveData(): LiveData {
@@ -57,6 +70,30 @@ export function useLiveData(): LiveData {
     async function fetch() {
       try {
         const erc20Abi = [{ name: 'totalSupply', inputs: [], outputs: [{ type: 'uint256' }], stateMutability: 'view', type: 'function' }] as const
+        const LOCKER_ADDRESSES: Record<string, 'convex' | 'stakedao' | 'yearn'> = {
+          '0x989aeb4d175e16225e39e87d0d97a3360524ad80': 'convex',
+          '0x52f541764e6e90eebc5c21ff570de0e2d63766b6': 'stakedao',
+          '0xf147b8125d2ef93fb6965db97d6746952a133934': 'yearn',
+        }
+        const lockersPromise = globalThis.fetch('https://prices.curve.finance/v1/dao/lockers/10')
+          .then(r => r.json())
+          .then(d => {
+            const result: Partial<Record<'convex' | 'stakedao' | 'yearn', LockerInfo>> = {}
+            for (const u of (d.users || [])) {
+              const key = LOCKER_ADDRESSES[u.user.toLowerCase()]
+              if (key) {
+                // Values may have decimals; truncate to integer for BigInt
+                const toBigInt = (v: string) => BigInt(v.split('.')[0])
+                result[key] = {
+                  locked: formatUnits(toBigInt(String(u.locked)), 18),
+                  weight: formatUnits(toBigInt(String(u.weight)), 18),
+                  weightRatio: u.weight_ratio,
+                }
+              }
+            }
+            return result
+          })
+          .catch(() => ({}))
         const crvusdApiPromise = globalThis.fetch('https://api.curve.finance/v1/getCrvusdTotalSupply')
           .then(r => r.json())
           .then(d => d?.data?.crvusdTotalSupply as number | undefined)
@@ -121,6 +158,12 @@ export function useLiveData(): LiveData {
             address: addresses.vecrv,
             abi: [{ name: 'supply', inputs: [], outputs: [{ type: 'uint256' }], stateMutability: 'view', type: 'function' }] as const,
             functionName: 'supply',
+          }),
+          // vlCVX totalSupply
+          client.readContract({
+            address: '0x72a19342e8F1838460eBFCCEf09F6585e32db86E',
+            abi: erc20Abi,
+            functionName: 'totalSupply',
           }),
         ])
 
@@ -192,6 +235,18 @@ export function useLiveData(): LiveData {
           if (stats.apy != null) scrvusdApy = stats.apy
         }
 
+        // Await lockers data
+        const lockers = await lockersPromise
+
+        // Compute vlCVX stats
+        const vlcvxSupplyRaw = val(results[13])
+        let vecrvPerVlcvx: number | undefined
+        if (vlcvxSupplyRaw && lockers.convex) {
+          const vlcvxNum = parseFloat(vlcvxSupplyRaw)
+          const convexVecrv = parseFloat(lockers.convex.weight)
+          if (vlcvxNum > 0) vecrvPerVlcvx = convexVecrv / vlcvxNum
+        }
+
         setData({
           loading: false,
           crvSupply: val(results[0]),
@@ -211,6 +266,11 @@ export function useLiveData(): LiveData {
           rhEffectiveWeight,
           allocatorReceivers,
           allocatorDistributorWeight,
+          lockerConvex: lockers.convex,
+          lockerStakedao: lockers.stakedao,
+          lockerYearn: lockers.yearn,
+          vlcvxSupply: vlcvxSupplyRaw,
+          vecrvPerVlcvx,
         })
       } catch (err) {
         if (!cancelled) setData({ loading: false, error: (err as Error).message })
