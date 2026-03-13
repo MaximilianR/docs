@@ -45,12 +45,12 @@ export const tabs: TabConfig[] = [
       'gauge-controller',
     ]),
     positions: {
-      'voter-convex': { x: -343, y: -4 },
-      'voter-stakedao': { x: -348, y: 56 },
-      'voter-yearn': { x: -350, y: 120 },
-      'voter-user1': { x: -350, y: 183 },
-      'voter-user2': { x: -341, y: 246 },
-      'gauge-controller': { x: 150, y: 80 },
+      'voter-convex': { x: -250, y: -4 },
+      'voter-stakedao': { x: -250, y: 56 },
+      'voter-yearn': { x: -250, y: 120 },
+      'voter-user1': { x: -250, y: 183 },
+      'voter-user2': { x: -250, y: 246 },
+      'gauge-controller': { x: 50, y: 30 },
     },
   },
   {

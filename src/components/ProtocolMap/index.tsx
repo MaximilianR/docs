@@ -178,11 +178,11 @@ function buildGovernanceDynamic(gauges: GaugeWeight[]) {
 // Smooth gauge weight simulation. Each gauge drifts via overlapping sine waves.
 // Non-integer frequencies so each week looks different.
 const SIM_GAUGES = [
-  { name: 'Gauge 1', base: 25, waves: [{ amp: 12, freq: 0.7, phase: 0 }, { amp: 5, freq: 1.8, phase: 1.2 }] },
-  { name: 'Gauge 2', base: 22, waves: [{ amp: 10, freq: 0.5, phase: 2.1 }, { amp: 6, freq: 1.3, phase: 0.5 }] },
-  { name: 'Gauge 3', base: 20, waves: [{ amp: 11, freq: 0.9, phase: 4.0 }, { amp: 4, freq: 1.6, phase: 1.8 }] },
-  { name: 'Gauge 4', base: 18, waves: [{ amp: 9, freq: 0.6, phase: 0.8 }, { amp: 5, freq: 1.4, phase: 3.5 }] },
-  { name: 'Gauge 5', base: 10, waves: [{ amp: 5, freq: 0.8, phase: 3.0 }, { amp: 3, freq: 1.7, phase: 0.3 }] },
+  { name: 'Liquidity Gauge', shortName: 'Gauge', base: 25, icon: 'optimism', color: '#e74c3c', crosschain: true, waves: [{ amp: 12, freq: 0.7, phase: 0 }, { amp: 5, freq: 1.8, phase: 1.2 }] },
+  { name: 'Liquidity Gauge', shortName: 'Gauge', base: 22, icon: 'ethereum', color: '#e67e22', crosschain: false, waves: [{ amp: 10, freq: 0.5, phase: 2.1 }, { amp: 6, freq: 1.3, phase: 0.5 }] },
+  { name: 'Fundraising Gauge', shortName: 'Gauge', base: 20, icon: 'vyper', color: '#f1c40f', crosschain: false, description: 'Fundraising gauges are public good gauges used to fund initiatives and development. CRV emissions are directed to the gauge recipient instead of LPs. Learn more: https://github.com/vefunder/crvfunder', waves: [{ amp: 11, freq: 0.9, phase: 4.0 }, { amp: 4, freq: 1.6, phase: 1.8 }] },
+  { name: 'Liquidity Gauge', shortName: 'Gauge', base: 18, icon: 'ethereum', color: '#2ecc71', crosschain: false, waves: [{ amp: 9, freq: 0.6, phase: 0.8 }, { amp: 5, freq: 1.4, phase: 3.5 }] },
+  { name: 'Liquidity Gauge', shortName: 'Gauge', base: 10, icon: 'arbitrum', color: '#3498db', crosschain: true, waves: [{ amp: 5, freq: 0.8, phase: 3.0 }, { amp: 3, freq: 1.7, phase: 0.3 }] },
 ]
 
 const SNAPSHOT_POINT = 3 / 7 // Thursday ≈ 0.43
@@ -213,41 +213,72 @@ function getEmissionsSnapshotWeights(progress: number) {
 function buildEmissionsDynamic(snapshotWeights: number[]) {
   const nodes: Node<ProtocolNodeData>[] = []
   const edges: import('@xyflow/react').Edge[] = []
-  const count = SIM_GAUGES.length
-  const startX = -130
-  const spacing = 160
-  const gaugeY = -100
+  const gaugeX = 550
+  const startY = -30
+  const spacing = 70
+  const crosschainX = 933
 
   SIM_GAUGES.forEach((g, i) => {
     const pct = snapshotWeights[i].toFixed(1)
+    const chainLabel = g.crosschain ? 'L2' : 'Ethereum'
     nodes.push({
       id: `dyn-em-gauge-${i}`,
       type: 'tokenNode',
-      position: { x: startX + i * spacing, y: gaugeY },
+      position: { x: gaugeX, y: startY + i * spacing },
       data: {
         label: g.name,
         category: 'gauge',
-        description: `Receives ${pct}% of CRV emissions, streamed over one week until the next snapshot.`,
-        colorOverride: BAR_COLORS[i % BAR_COLORS.length],
+        description: (g as any).description
+          || (g.crosschain
+            ? `Proxy gauge on Ethereum receiving ${pct}% of CRV emissions. Bridges CRV to the L2 chain (delayed by ~7 days).`
+            : `Receives ${pct}% of CRV emissions, streamed over one week until the next snapshot.`),
+        icon: g.icon,
+        colorOverride: g.color,
       },
     })
     edges.push({
       id: `dyn-em-gc-gauge-${i}`,
       source: 'gauge-controller',
       target: `dyn-em-gauge-${i}`,
-      sourceHandle: 'top-source',
-      targetHandle: 'bottom-target',
+      sourceHandle: 'right-source',
+      targetHandle: 'left-target',
       type: 'gaugeEmission',
       label: `${pct}%`,
     })
+
+    // Crosschain gauges: add a ChildGauge node and bridging edge
+    if (g.crosschain) {
+      const childId = `dyn-em-child-${i}`
+      nodes.push({
+        id: childId,
+        type: 'tokenNode',
+        position: { x: crosschainX, y: startY + i * spacing },
+        data: {
+          label: 'Crosschain Liquidity Gauge',
+          category: 'gauge',
+          description: `L2 gauge that distributes CRV to LPs. Receives bridged CRV from the proxy gauge on Ethereum with a ~7 day delay.`,
+          icon: g.icon,
+          colorOverride: g.color,
+        },
+      })
+      edges.push({
+        id: `dyn-em-bridge-${i}`,
+        source: `dyn-em-gauge-${i}`,
+        target: childId,
+        sourceHandle: 'right-source',
+        targetHandle: 'left-target',
+        type: 'gaugeEmission',
+        label: 'Bridge CRV (~7d)',
+      })
+    }
   })
 
   // Annotation label
   nodes.push({
     id: 'dyn-em-label',
     type: 'default',
-    position: { x: 310, y: 37 },
-    data: { label: 'CRV emissions streamed over 1 week\nbased on Thursday snapshot' } as any,
+    position: { x: 359, y: -35 },
+    data: { label: 'CRV emissions streamed\nover 1 week based on\nThursday snapshot' } as any,
     sourcePosition: undefined,
     targetPosition: undefined,
     connectable: false,
@@ -337,7 +368,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
       snapshotRef.current = getEmissionsSnapshotWeights(0)
       const currentWeights = getEmissionsCurrentWeights(simProgress)
       const gauges = SIM_GAUGES.map((g, i) => ({
-        name: g.name, weight: currentWeights[i], snapshot: snapshotRef.current![i],
+        name: g.shortName, weight: currentWeights[i], snapshot: snapshotRef.current![i],
       }))
 
       const { nodes: dynNodes, edges: dynEdges } = buildEmissionsDynamic(snapshotRef.current!)
@@ -398,7 +429,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
     const snapshotFlash = Math.abs(currWeekPos - SNAPSHOT_POINT) < 0.02
     const currentWeights = getEmissionsCurrentWeights(simProgress)
     const gauges = SIM_GAUGES.map((g, i) => ({
-      name: g.name,
+      name: g.shortName,
       weight: currentWeights[i],
       snapshot: snapshotRef.current?.[i],
     }))
@@ -462,6 +493,22 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
   const handleNodesChange = useCallback((changes: NodeChange[]) => {
     onNodesChange(changes)
   }, [onNodesChange])
+
+  // Press "p" to print current node positions to console
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'p' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        const positions: Record<string, { x: number; y: number }> = {}
+        nodes.forEach(n => {
+          positions[n.id] = { x: Math.round(n.position.x), y: Math.round(n.position.y) }
+        })
+        console.log(`\n=== Node positions (${activeTab}) ===`)
+        console.log(JSON.stringify(positions, null, 2))
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [nodes, activeTab])
 
   const onReconnect = useCallback((_oldEdge: { id: string }, _newConnection: Connection) => {
     // Edges are locked — no reconnecting
@@ -558,7 +605,7 @@ function FlowCanvas({ defaultTab = 'fees' }: ProtocolMapCanvasProps) {
         onPaneClick={() => setSelectedNode(null)}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        nodesDraggable={false}
+        nodesDraggable={true}
         nodesConnectable={false}
         edgesReconnectable={false}
         elementsSelectable={true}

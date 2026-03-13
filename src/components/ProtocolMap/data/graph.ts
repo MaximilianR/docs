@@ -575,7 +575,7 @@ export const initialEdges: Edge[] = [
   // Voters → GaugeController
   { id: 'convex-gc', source: 'voter-convex', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
   { id: 'stakedao-gc', source: 'voter-stakedao', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
-  { id: 'yearn-gc', source: 'voter-yearn', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true, label: 'Vote for Gauge Weights' },
+  { id: 'yearn-gc', source: 'voter-yearn', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true, label: 'Vote for Gauge Weights', zIndex: 10 },
   { id: 'user1-gc', source: 'voter-user1', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
   { id: 'user2-gc', source: 'voter-user2', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
 
