@@ -5,6 +5,17 @@ import { categories } from '../data/graph'
 import type { LiveData } from '../hooks/useLiveData'
 import { formatNumber, shortenAddress } from '../utils/formatters'
 
+function renderDescriptionLinks(text: string) {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/)
+  return parts.map((part, i) => {
+    const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+    if (match) {
+      return <a key={i} href={match[2]} target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', textDecoration: 'underline' }}>{match[1]}</a>
+    }
+    return part
+  })
+}
+
 const DOCS_BASE = ''
 const MARKETS_API = 'https://prices.curve.finance/v1/crvusd/markets/ethereum'
 
@@ -340,7 +351,7 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
         </span>
 
         {/* Description */}
-        <p className="text-[11px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.85)' }}>{data.description}</p>
+        <p className="text-[11px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.85)' }}>{renderDescriptionLinks(data.description)}</p>
 
         {/* Market breakdown table (dynamic stablecoin tab) */}
         {(data as any).marketRows && (

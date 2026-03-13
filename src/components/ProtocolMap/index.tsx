@@ -180,7 +180,7 @@ function buildGovernanceDynamic(gauges: GaugeWeight[]) {
 const SIM_GAUGES = [
   { name: 'Liquidity Gauge', shortName: 'Gauge', base: 25, icon: 'optimism', color: '#e74c3c', crosschain: true, waves: [{ amp: 12, freq: 0.7, phase: 0 }, { amp: 5, freq: 1.8, phase: 1.2 }] },
   { name: 'Liquidity Gauge', shortName: 'Gauge', base: 22, icon: 'ethereum', color: '#e67e22', crosschain: false, waves: [{ amp: 10, freq: 0.5, phase: 2.1 }, { amp: 6, freq: 1.3, phase: 0.5 }] },
-  { name: 'Fundraising Gauge', shortName: 'Gauge', base: 20, icon: 'vyper', color: '#f1c40f', crosschain: false, description: 'Fundraising gauges are public good gauges used to fund initiatives and development. CRV emissions are directed to the gauge recipient instead of LPs. Learn more: https://github.com/vefunder/crvfunder', waves: [{ amp: 11, freq: 0.9, phase: 4.0 }, { amp: 4, freq: 1.6, phase: 1.8 }] },
+  { name: 'Fundraising Gauge', shortName: 'Gauge', base: 20, icon: 'vyper', color: '#f1c40f', crosschain: false, description: 'Fundraising gauges are public good gauges used to fund initiatives and development. CRV emissions are directed to the gauge recipient instead of LPs. [Learn more](https://github.com/vefunder/crvfunder)', waves: [{ amp: 11, freq: 0.9, phase: 4.0 }, { amp: 4, freq: 1.6, phase: 1.8 }] },
   { name: 'Liquidity Gauge', shortName: 'Gauge', base: 18, icon: 'ethereum', color: '#2ecc71', crosschain: false, waves: [{ amp: 9, freq: 0.6, phase: 0.8 }, { amp: 5, freq: 1.4, phase: 3.5 }] },
   { name: 'Liquidity Gauge', shortName: 'Gauge', base: 10, icon: 'arbitrum', color: '#3498db', crosschain: true, waves: [{ amp: 5, freq: 0.8, phase: 3.0 }, { amp: 3, freq: 1.7, phase: 0.3 }] },
 ]
