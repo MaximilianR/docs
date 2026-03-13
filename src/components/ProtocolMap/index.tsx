@@ -230,7 +230,7 @@ function buildEmissionsDynamic(snapshotWeights: number[]) {
         category: 'gauge',
         description: (g as any).description
           || (g.crosschain
-            ? `Proxy gauge on Ethereum receiving ${pct}% of CRV emissions. Bridges CRV to the L2 chain (delayed by ~7 days).`
+            ? `Proxy gauge on Ethereum receiving ${pct}% of CRV emissions. CRV is streamed over 7 days, then bridged to the L2 chain.`
             : `Receives ${pct}% of CRV emissions, streamed over one week until the next snapshot.`),
         icon: g.icon,
         colorOverride: g.color,
@@ -256,7 +256,7 @@ function buildEmissionsDynamic(snapshotWeights: number[]) {
         data: {
           label: 'Crosschain Liquidity Gauge',
           category: 'gauge',
-          description: `L2 gauge that distributes CRV to LPs. Receives bridged CRV from the proxy gauge on Ethereum with a ~7 day delay.`,
+          description: `L2 gauge that distributes CRV to LPs. Receives bridged CRV from the proxy gauge on Ethereum after the 7-day streaming period ends.`,
           icon: g.icon,
           colorOverride: g.color,
         },
@@ -268,7 +268,7 @@ function buildEmissionsDynamic(snapshotWeights: number[]) {
         sourceHandle: 'right-source',
         targetHandle: 'left-target',
         type: 'gaugeEmission',
-        label: 'Bridge CRV (~7d)',
+        label: 'Bridge CRV',
       })
     }
   })
