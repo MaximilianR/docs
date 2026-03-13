@@ -74,6 +74,7 @@ const dynamicPatterns: [RegExp, string][] = [
   [/^dyn-mint-mint$/, 'Borrowers deposit collateral (WETH, WBTC, wstETH, etc.) to mint crvUSD. Loans use LLAMMA for soft-liquidation protection.'],
   [/^dyn-mint-interest$/, 'Interest paid by borrowers flows to the FeeSplitter, which allocates it between scrvUSD yield and veCRV revenue.'],
   [/^dyn-pk-stabilize$/, 'PegKeepers mint or burn crvUSD into Curve pools (USDT, USDC, pyUSD, frxUSD) to keep the price close to $1.'],
+  [/^dyn-em-bridge-/, 'CRV emissions are bridged from the proxy gauge on Ethereum to the L2 chain using the native bridge, which takes ~7 days. This means L2 gauge rewards are delayed by one week compared to Ethereum gauges. [Learn more](/user/dao/gauge-weights#gauge-weights-on-l2s)'],
 ]
 
 export function getEdgeDescription(edgeId: string): string | undefined {

@@ -10,6 +10,10 @@ const ICON_MAP: Record<string, string> = {
   convex: '/img/logos/convex.svg',
   stakedao: '/img/logos/stakedao.svg',
   yearn: '/img/logos/yearn.svg',
+  ethereum: '/img/logos/ethereum.svg',
+  arbitrum: '/img/logos/arbitrum.svg',
+  optimism: '/img/logos/optimism.svg',
+  vyper: '/img/logos/vyper.svg',
 }
 
 const BAR_COLORS = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6', '#1abc9c', '#e84393']
@@ -63,7 +67,7 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
         className={`
           relative cursor-pointer transition-all duration-150
           border-[6px] border-double
-          ${isToken ? 'rounded-sm min-w-[60px] text-center px-2 py-1.5' : gauges ? 'rounded-none min-w-[200px] sm:min-w-[280px] px-3 sm:px-5 py-2 sm:py-3' : 'rounded-none min-w-[140px] sm:min-w-[180px] px-3 sm:px-4 py-2 sm:py-2.5'}
+          ${isToken ? 'rounded-sm min-w-[60px] text-center px-2 py-1.5' : gauges ? 'rounded-none min-w-[240px] sm:min-w-[336px] px-4 sm:px-6 py-2.5 sm:py-4' : 'rounded-none min-w-[140px] sm:min-w-[180px] px-3 sm:px-4 py-2 sm:py-2.5'}
           ${isSystem ? 'border-dashed' : ''}
           ${selected ? 'scale-105' : 'hover:scale-105 hover:brightness-110'}
         `}
@@ -80,7 +84,7 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
             </div>
           )}
           <div>
-            <div className="font-bold text-xs text-white whitespace-nowrap" style={{ fontFamily: 'System, monospace' }}>
+            <div className={`font-bold text-white whitespace-nowrap ${gauges ? 'text-sm' : 'text-xs'}`} style={{ fontFamily: 'System, monospace' }}>
               {data.label}
             </div>
             {isSystem && (
@@ -94,7 +98,7 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
         {/* Inline gauge weight bar chart */}
         {gauges && gauges.length > 0 && (() => {
           const hasSnapshot = gauges.some(g => g.snapshot != null)
-          const barH = 80
+          const barH = 96
           // Fixed scale: max weight is capped at 50% for consistent bar sizing
           const maxW = 50
           return (
@@ -102,13 +106,13 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 0, height: barH }}>
                 {/* Y-axis title */}
                 <div style={{ display: 'flex', alignItems: 'center', height: barH, marginRight: 2, marginLeft: -12 }}>
-                  <span className="text-[6px] text-white/40" style={{ fontFamily: 'System, monospace', writingMode: 'vertical-rl', transform: 'rotate(180deg)', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>gauge weight</span>
+                  <span className="text-[6px] text-white/70" style={{ fontFamily: 'System, monospace', writingMode: 'vertical-rl', transform: 'rotate(180deg)', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>gauge weight</span>
                 </div>
                 {/* Y-axis labels */}
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: barH, marginRight: 4, alignItems: 'flex-end' }}>
-                  <span className="text-[6px] text-white/40" style={{ fontFamily: 'System, monospace', lineHeight: 1 }}>{maxW}%</span>
-                  <span className="text-[6px] text-white/40" style={{ fontFamily: 'System, monospace', lineHeight: 1 }}>{maxW / 2}%</span>
-                  <span className="text-[6px] text-white/40" style={{ fontFamily: 'System, monospace', lineHeight: 1 }}>0%</span>
+                  <span className="text-[6px] text-white/70" style={{ fontFamily: 'System, monospace', lineHeight: 1 }}>{maxW}%</span>
+                  <span className="text-[6px] text-white/70" style={{ fontFamily: 'System, monospace', lineHeight: 1 }}>{maxW / 2}%</span>
+                  <span className="text-[6px] text-white/70" style={{ fontFamily: 'System, monospace', lineHeight: 1 }}>0%</span>
                 </div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: barH, flex: 1 }}>
                 {gauges.map((g, i) => {
@@ -136,7 +140,7 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
                             position: 'absolute', bottom: snapH + 1, left: 0, right: 0, lineHeight: 1,
                             textAlign: 'center', pointerEvents: 'none',
                           }}>
-                            <span className="text-[6px] text-white/55" style={{ fontFamily: 'System, monospace' }}>
+                            <span className="text-[6px] text-white/90" style={{ fontFamily: 'System, monospace' }}>
                               {g.snapshot.toFixed(1)}%
                             </span>
                           </div>
@@ -151,10 +155,10 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
               <div style={{ display: 'flex', gap: 4, marginTop: 3, paddingLeft: 28 }}>
                 {gauges.map((g, i) => (
                   <div key={i} style={{ flex: 1, textAlign: 'center', lineHeight: 1.2 }}>
-                    <div className="text-[7px] font-bold text-white/70" style={{ fontFamily: 'System, monospace' }}>
+                    <div className="text-[7px] font-bold text-white" style={{ fontFamily: 'System, monospace' }}>
                       {g.name}
                     </div>
-                    <div className="text-[7px] text-white/50" style={{ fontFamily: 'System, monospace' }}>
+                    <div className="text-[7px] text-white/80" style={{ fontFamily: 'System, monospace' }}>
                       {g.weight.toFixed(1)}%
                     </div>
                   </div>
@@ -164,8 +168,8 @@ export default function BaseNode({ data, selected, variant = 'default' }: BaseNo
               {hasSnapshot && (
                 <div style={{ display: 'flex', gap: 8, marginTop: 5, paddingTop: 4, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-                    <div style={{ width: 10, height: 2, background: 'white' }} />
-                    <span className="text-[7px] text-white/50" style={{ fontFamily: 'System, monospace' }}>Snapshot Weight (Thursday at 00:00 UTC)</span>
+                    <div style={{ width: 14, height: 2, background: 'white' }} />
+                    <span className="text-[9px] text-white/80" style={{ fontFamily: 'System, monospace' }}>Snapshot Weight (Thursday at 00:00 UTC)</span>
                   </div>
                 </div>
               )}
