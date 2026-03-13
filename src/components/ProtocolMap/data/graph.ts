@@ -370,14 +370,36 @@ export const initialNodes: Node<ProtocolNodeData>[] = [
 
   // ── Emissions simulation ───
   {
+    id: 'vlcvx-holders',
+    type: 'tokenNode',
+    position: { x: -800, y: -200 },
+    data: {
+      label: 'vlCVX Holders',
+      category: 'governance',
+      description: 'Holders of vote-locked CVX (vlCVX). They vote on which gauges Convex should allocate its veCRV voting power to. Convex then executes these votes on-chain as a proxy.',
+      liveDataKey: 'vlcvxHolders',
+    },
+  },
+  {
+    id: 'sdcrv-holders',
+    type: 'tokenNode',
+    position: { x: -800, y: -60 },
+    data: {
+      label: 'sdCRV Holders',
+      category: 'governance',
+      description: 'Holders of sdCRV (StakeDAO liquid-locked CRV). They vote on which gauges StakeDAO should allocate its veCRV voting power to. StakeDAO then executes these votes on-chain as a proxy.',
+    },
+  },
+  {
     id: 'voter-convex',
     type: 'tokenNode',
     position: { x: -500, y: -200 },
     data: {
       label: 'Convex',
       category: 'external',
-      description: 'Largest veCRV holder. Aggregates CRV from depositors and votes on gauge weights via vlCVX governance.',
+      description: 'Largest veCRV holder. Acts as a proxy — vlCVX holders vote on gauge weights, and Convex executes those votes on-chain using its veCRV position.',
       icon: 'convex',
+      liveDataKey: 'lockerConvex',
     },
   },
   {
@@ -387,8 +409,9 @@ export const initialNodes: Node<ProtocolNodeData>[] = [
     data: {
       label: 'StakeDAO',
       category: 'external',
-      description: 'Liquid locker protocol. Holds veCRV and votes on gauge weights based on sdCRV holder governance.',
+      description: 'Liquid locker protocol. Acts as a proxy — sdCRV holders vote on gauge weights, and StakeDAO executes those votes on-chain using its veCRV position.',
       icon: 'stakedao',
+      liveDataKey: 'lockerStakedao',
     },
   },
   {
@@ -398,8 +421,9 @@ export const initialNodes: Node<ProtocolNodeData>[] = [
     data: {
       label: 'Yearn',
       category: 'external',
-      description: 'DeFi yield aggregator. Holds veCRV and directs gauge votes to optimize vault yields.',
+      description: 'DeFi yield aggregator. Holds veCRV and uses an automated strategy to maximize vote incentive yield for st-yCRV stakers. Votes are executed by the Yearn governance multisig (6-of-9). yCRV holders have no direct voting rights.',
       icon: 'yearn',
+      liveDataKey: 'lockerYearn',
     },
   },
   {
@@ -572,7 +596,10 @@ export const initialEdges: Edge[] = [
   // Minter → CRV (emissions) — left
   { id: 'minter-crv', source: 'minter', target: 'crv', sourceHandle: 'left-source', targetHandle: 'right-target', type: 'emissionFlow', label: 'Mint CRV' },
 
-  // Voters → GaugeController
+  // Holders → Vote Proxies
+  { id: 'vlcvx-convex', source: 'vlcvx-holders', target: 'voter-convex', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true, label: 'Gauge Votes' },
+  { id: 'sdcrv-stakedao', source: 'sdcrv-holders', target: 'voter-stakedao', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true, label: 'Gauge Votes' },
+  // Vote Proxies → GaugeController
   { id: 'convex-gc', source: 'voter-convex', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
   { id: 'stakedao-gc', source: 'voter-stakedao', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
   { id: 'yearn-gc', source: 'voter-yearn', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true, label: 'Vote for Gauge Weights', zIndex: 10 },

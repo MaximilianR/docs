@@ -86,6 +86,10 @@ function getLiveValue(key: string | undefined, liveData: LiveData): { label: str
     case 'nGauges': return liveData.nGauges ? { label: 'Active Gauges', value: liveData.nGauges } : null
     case 'minterRate': return liveData.minterRate ? { label: 'Emission Rate', value: formatNumber(parseFloat(liveData.minterRate) * 86400) + ' CRV/day' } : null
     case 'treasuryBalance': return liveData.treasuryBalance ? { label: 'crvUSD Balance', value: formatNumber(parseFloat(liveData.treasuryBalance)), icon: '/icons/crvusd.svg' } : null
+    case 'lockerConvex': return liveData.lockerConvex ? { label: 'Locked CRV', value: formatNumber(parseFloat(liveData.lockerConvex.locked)) + ' CRV', icon: '/icons/crv.svg' } : null
+    case 'lockerStakedao': return liveData.lockerStakedao ? { label: 'Locked CRV', value: formatNumber(parseFloat(liveData.lockerStakedao.locked)) + ' CRV', icon: '/icons/crv.svg' } : null
+    case 'lockerYearn': return liveData.lockerYearn ? { label: 'Locked CRV', value: formatNumber(parseFloat(liveData.lockerYearn.locked)) + ' CRV', icon: '/icons/crv.svg' } : null
+    case 'vlcvxHolders': return liveData.vlcvxSupply ? { label: 'vlCVX Supply', value: formatNumber(parseFloat(liveData.vlcvxSupply)) + ' vlCVX' } : null
     default: return null
   }
 }
@@ -384,32 +388,100 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
           </div>
         )}
 
-        {/* Live data — combine with scrvUSD APY when both available */}
-        {live && (
-          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
-            <div className="flex items-center gap-2">
-              {live.icon && <img src={live.icon} alt="" className="w-5 h-5 rounded-full" />}
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>{live.label}</span>
-                  <span className="text-[10px] flex items-center gap-1" style={{ color: '#4ade80' }}>
-                    <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
-                    Live
-                  </span>
-                </div>
-                <div className="text-sm font-bold">{live.value}</div>
+        {/* Live data — locker nodes get a compact table, others get the standard display */}
+        {(() => {
+          const locker = node.id === 'voter-convex' ? liveData.lockerConvex
+            : node.id === 'voter-stakedao' ? liveData.lockerStakedao
+            : node.id === 'voter-yearn' ? liveData.lockerYearn
+            : null
+          if (node.id === 'vlcvx-holders' && liveData.vlcvxSupply) return (
+            <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>vlCVX Stats</span>
+                <span className="text-[10px] flex items-center gap-1" style={{ color: '#4ade80' }}>
+                  <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
+                  Live
+                </span>
               </div>
+              <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
+                <tbody>
+                  <tr style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>vlCVX Supply</td>
+                    <td className="py-1 text-right font-bold">{formatNumber(parseFloat(liveData.vlcvxSupply))}</td>
+                  </tr>
+                  {liveData.vecrvPerVlcvx != null && (
+                    <tr style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+                      <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                        <span className="flex items-center gap-1"><img src="/icons/vecrv.svg" alt="" className="w-3.5 h-3.5" />veCRV per vlCVX</span>
+                      </td>
+                      <td className="py-1 text-right font-bold">{liveData.vecrvPerVlcvx.toFixed(2)}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+              <p className="text-[10px] mt-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                Each vlCVX represents a share of Convex's total veCRV voting power.
+              </p>
             </div>
-            {node.id === 'scrvusd' && liveData.scrvusdApy != null && (
-              <div className="mt-2 pt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }}>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>Projected APY</span>
-                </div>
-                <div className="text-sm font-bold">{liveData.scrvusdApy.toFixed(2)}%</div>
+          )
+          if (locker) return (
+            <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>veCRV Position</span>
+                <span className="text-[10px] flex items-center gap-1" style={{ color: '#4ade80' }}>
+                  <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
+                  Live
+                </span>
               </div>
-            )}
-          </div>
-        )}
+              <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
+                <tbody>
+                  <tr style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                      <span className="flex items-center gap-1"><img src="/icons/crv.svg" alt="" className="w-3.5 h-3.5" />Locked CRV</span>
+                    </td>
+                    <td className="py-1 text-right font-bold">{formatNumber(parseFloat(locker.locked))}</td>
+                  </tr>
+                  <tr style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                      <span className="flex items-center gap-1"><img src="/icons/vecrv.svg" alt="" className="w-3.5 h-3.5" />veCRV Power</span>
+                    </td>
+                    <td className="py-1 text-right font-bold">{formatNumber(parseFloat(locker.weight))}</td>
+                  </tr>
+                  <tr style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+                    <td className="py-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Total veCRV Share</td>
+                    <td className="py-1 text-right font-bold">{locker.weightRatio}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )
+          if (!live) return null
+          return (
+            <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
+              <div className="flex items-center gap-2">
+                {live.icon && <img src={live.icon} alt="" className="w-5 h-5 rounded-full" />}
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>{live.label}</span>
+                    <span className="text-[10px] flex items-center gap-1" style={{ color: '#4ade80' }}>
+                      <span className="w-1.5 h-1.5 bg-green-400 inline-block pulse-glow" />
+                      Live
+                    </span>
+                  </div>
+                  <div className="text-sm font-bold">{live.value}</div>
+                </div>
+              </div>
+              {node.id === 'scrvusd' && liveData.scrvusdApy != null && (
+                <div className="mt-2 pt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>Projected APY</span>
+                  </div>
+                  <div className="text-sm font-bold">{liveData.scrvusdApy.toFixed(2)}%</div>
+                </div>
+              )}
+            </div>
+          )
+        })()}
 
         {liveData.loading && data.liveDataKey && (
           <div className="animate-pulse" style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>

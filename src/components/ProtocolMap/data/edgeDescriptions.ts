@@ -5,7 +5,11 @@ export const edgeDescriptions: Record<string, string> = {
   'vecrv-gc': 'veCRV holders vote to direct CRV emissions to pools. Votes persist until changed. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
   'vecrv-dao': 'Voting.vote(vote_id, supports, executes_if_decided) — Cast a yes/no vote on an active DAO proposal.',
   'gc-gauges': 'GaugeController.gauge_relative_weight(gauge) — Returns the gauge\'s share of total emissions for the current epoch.',
-  'yearn-gc': 'veCRV holders and protocols vote to allocate CRV emissions across gauges. Votes are cast per-gauge and persist until changed (10-day cooldown per gauge). [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
+  'vlcvx-convex': 'vlCVX holders vote biweekly on which gauges should receive CRV emissions (due to the 10-day vote cooldown). Convex aggregates these votes and executes them on-chain using its veCRV position.',
+  'sdcrv-stakedao': 'sdCRV holders decide which gauges should receive CRV emissions. sdCRV voting power can be boosted up to 1.38x with veSDT. StakeDAO aggregates these votes and executes them on-chain using its veCRV position.',
+  'convex-gc': 'Convex executes gauge weight votes on behalf of vlCVX holders, using its large veCRV position. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
+  'stakedao-gc': 'StakeDAO executes gauge weight votes biweekly on behalf of sdCRV holders, using its veCRV position. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
+  'yearn-gc': 'Yearn uses an automated strategy to vote on gauge weights, optimizing for maximum vote incentive (bribe) yield for st-yCRV stakers. Votes are executed by the Yearn governance multisig. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
   'minter-crv': 'The Minter creates new CRV tokens according to the emission schedule. The emission rate decreases over time following a predetermined curve. [Learn more](/user/crv/overview)',
   'minter-gc': 'The Minter reads gauge weights from the GaugeController to determine how much CRV each gauge should receive for the current epoch.',
   'minter-gauges': 'Minter.mint(gauge_addr) — Mints CRV and transfers it to the gauge contract for LP distribution.',
@@ -74,7 +78,7 @@ const dynamicPatterns: [RegExp, string][] = [
   [/^dyn-mint-mint$/, 'Borrowers deposit collateral (WETH, WBTC, wstETH, etc.) to mint crvUSD. Loans use LLAMMA for soft-liquidation protection.'],
   [/^dyn-mint-interest$/, 'Interest paid by borrowers flows to the FeeSplitter, which allocates it between scrvUSD yield and veCRV revenue.'],
   [/^dyn-pk-stabilize$/, 'PegKeepers mint or burn crvUSD into Curve pools (USDT, USDC, pyUSD, frxUSD) to keep the price close to $1.'],
-  [/^dyn-em-bridge-/, 'CRV emissions must first be fully streamed to the proxy gauge over the 7-day epoch before they can be bridged to the L2 chain. Once streamed, bridging is usually very fast. This means L2 gauge rewards are delayed by about one week compared to Ethereum gauges. [Learn more](/user/dao/gauge-weights#gauge-weights-on-l2s)'],
+  [/^dyn-em-bridge-/, 'CRV emissions must first be fully streamed to the proxy gauge over the 7-day epoch before they can be bridged to the L2 chain. This means L2 gauge rewards are delayed by about one week compared to Ethereum gauges. [Learn more](/user/dao/gauge-weights#gauge-weights-on-l2s)'],
 ]
 
 export function getEdgeDescription(edgeId: string): string | undefined {
