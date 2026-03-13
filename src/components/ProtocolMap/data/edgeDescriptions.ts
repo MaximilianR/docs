@@ -9,7 +9,7 @@ export const edgeDescriptions: Record<string, string> = {
   'sdcrv-stakedao': 'sdCRV holders decide which gauges should receive CRV emissions. sdCRV voting power can be boosted up to 1.38x with veSDT. StakeDAO aggregates these votes and executes them on-chain using its veCRV position.',
   'convex-gc': 'Convex executes gauge weight votes on behalf of vlCVX holders, using its large veCRV position. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
   'stakedao-gc': 'StakeDAO executes gauge weight votes biweekly on behalf of sdCRV holders, using its veCRV position. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
-  'yearn-gc': 'Yearn votes on gauge weights via a multisig to direct CRV emissions toward pools that optimize vault yields. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
+  'yearn-gc': 'Yearn uses an automated strategy to vote on gauge weights, optimizing for maximum vote incentive (bribe) yield for st-yCRV stakers. Votes are executed by the Yearn governance multisig. [Learn more](/user/dao/gauge-weights#voting-for-gauge-weight)',
   'minter-crv': 'The Minter creates new CRV tokens according to the emission schedule. The emission rate decreases over time following a predetermined curve. [Learn more](/user/crv/overview)',
   'minter-gc': 'The Minter reads gauge weights from the GaugeController to determine how much CRV each gauge should receive for the current epoch.',
   'minter-gauges': 'Minter.mint(gauge_addr) — Mints CRV and transfers it to the gauge contract for LP distribution.',

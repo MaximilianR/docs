@@ -421,7 +421,7 @@ export const initialNodes: Node<ProtocolNodeData>[] = [
     data: {
       label: 'Yearn',
       category: 'external',
-      description: 'DeFi yield aggregator. Holds veCRV and directs gauge votes via a multisig to optimize vault yields.',
+      description: 'DeFi yield aggregator. Holds veCRV and uses an automated strategy to maximize vote incentive yield for st-yCRV stakers. Votes are executed by the Yearn governance multisig (6-of-9). yCRV holders have no direct voting rights.',
       icon: 'yearn',
       liveDataKey: 'lockerYearn',
     },
@@ -602,7 +602,7 @@ export const initialEdges: Edge[] = [
   // Vote Proxies → GaugeController
   { id: 'convex-gc', source: 'voter-convex', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
   { id: 'stakedao-gc', source: 'voter-stakedao', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
-  { id: 'yearn-gc', source: 'voter-yearn', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true, label: 'Vote (Multisig)', zIndex: 10 },
+  { id: 'yearn-gc', source: 'voter-yearn', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true, label: 'Vote for Gauge Weights', zIndex: 10 },
   { id: 'user1-gc', source: 'voter-user1', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
   { id: 'user2-gc', source: 'voter-user2', target: 'gauge-controller', sourceHandle: 'right-source', targetHandle: 'left-target', type: 'governanceFlow', animated: true },
 
