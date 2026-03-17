@@ -400,6 +400,7 @@ code {
 .theme-doc-markdown ul, .theme-doc-markdown ol {
   margin-bottom: var(--Typography-ParagraphSpacing-lg);
   padding-left: var(--Spacing-xl);
+  list-style: revert;
 }
 
 .theme-doc-markdown li {
