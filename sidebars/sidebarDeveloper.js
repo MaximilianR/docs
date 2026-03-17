@@ -448,6 +448,20 @@ export default {
             ],
         },
 
+        // --- Llamalend v2 ---
+        {
+            type: 'category',
+            label: 'Llamalend v2',
+            items: [
+                { type: 'doc', id: 'llamalend-v2/overview', label: 'Overview' },
+                { type: 'doc', id: 'llamalend-v2/lend-factory', label: 'LendFactory' },
+                { type: 'doc', id: 'llamalend-v2/vault', label: 'Vault' },
+                { type: 'doc', id: 'llamalend-v2/lend-controller', label: 'LendController' },
+                { type: 'doc', id: 'llamalend-v2/lend-controller-view', label: 'LendControllerView' },
+                { type: 'doc', id: 'llamalend-v2/amm', label: 'AMM (LLAMMA)' },
+            ],
+        },
+
         // --- Fees ---
         {
             type: 'category',
