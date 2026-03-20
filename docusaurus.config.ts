@@ -64,26 +64,10 @@ const config: Config = {
       apiKey: '924b8a275700d8f67826ed2ed67671bb',
       indexName: 'curve-docs',
       contextualSearch: false,
+      searchParameters: {
+        optionalFilters: ['NOT hierarchy.lvl0:Risk Disclaimers<score=3>'],
+      },
       searchPagePath: 'search',
-      askAi: {
-        assistantId: 'IYRY71AZnunB',
-        indexName: 'markdown-index',
-        apiKey: '924b8a275700d8f67826ed2ed67671bb',
-        appId: '0JUF43T81Z',
-      },
-      translations: {
-        button: {
-          buttonText: 'Search & Ask AI',
-          buttonAriaLabel: 'Search & Ask AI',
-        },
-        modal: {
-          searchBox: {
-            placeholderTextAskAi: 'Ask another question...',
-            placeholderTextAskAiStreaming: 'Answering...',
-          },
-        },
-      },
-      placeholder: 'Search docs or ask AI a question',
     },
     navbar: {
       hideOnScroll: false,
