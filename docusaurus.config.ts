@@ -62,13 +62,8 @@ const config: Config = {
     algolia: {
       appId: '0JUF43T81Z',
       apiKey: '924b8a275700d8f67826ed2ed67671bb',
-      indexName: 'algolia branch',
-      contextualSearch: true,
-      replaceSearchResultPathname: {
-        from: '/docs/',
-        to: '/',
-      },
-      searchParameters: {},
+      indexName: 'curve-docs',
+      contextualSearch: false,
       searchPagePath: 'search',
       askAi: {
         assistantId: 'IYRY71AZnunB',
