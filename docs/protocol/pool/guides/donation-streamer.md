@@ -4,6 +4,16 @@ title: "Automating Refuels"
 sidebar_label: "Automating Refuels"
 ---
 
+:::vyper[`DonationStreamer.vy`]
+
+The technical documentation for the `DonationStreamer.vy` contract can be found [here](/developer/amm/twocrypto-ng/implementations/donation-streamer). The contract is deployed at the same address on all supported chains:
+
+- :logos-ethereum: Ethereum: [`0x2b786BB995978CC2242C567Ae62fd617b0eBC828`](https://etherscan.io/address/0x2b786BB995978CC2242C567Ae62fd617b0eBC828)
+- :logos-gnosis: Gnosis: [`0x2b786BB995978CC2242C567Ae62fd617b0eBC828`](https://gnosisscan.io/address/0x2b786BB995978CC2242C567Ae62fd617b0eBC828)
+- :logos-base: Base: [`0x2b786BB995978CC2242C567Ae62fd617b0eBC828`](https://basescan.org/address/0x2b786BB995978CC2242C567Ae62fd617b0eBC828)
+
+:::
+
 [FXSwap pools](../understanding-fxswap.md) use **refuels** to subsidize rebalancing and keep liquidity tight around the current price. While refuels can be added manually via [crvhub.com/refuel](https://crvhub.com/refuel), the **Donation Streamer** lets you automate this process — depositing tokens once and having them streamed into the pool over a set schedule.
 
 This is useful for projects that want to keep their FXSwap pools consistently refueled without manual intervention.
