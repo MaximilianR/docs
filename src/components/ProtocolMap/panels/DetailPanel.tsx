@@ -124,6 +124,9 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
   const [showSettlements, setShowSettlements] = useState(false)
   const [settlements, setSettlements] = useState<Settlement[] | null>(null)
   const [settlementsLoading, setSettlementsLoading] = useState(false)
+  const [settlementsPage, setSettlementsPage] = useState(1)
+  const [settlementsEpoch, setSettlementsEpoch] = useState<string | null>(null)
+  const [settlementsTotalReceived, setSettlementsTotalReceived] = useState(0)
 
   // veCRV lockers (governance tab only)
   const [lockers, setLockers] = useState<VecrvLocker[] | null>(null)
@@ -202,6 +205,9 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
     setSavingsPage(1)
     setShowSettlements(false)
     setSettlements(null)
+    setSettlementsPage(1)
+    setSettlementsEpoch(null)
+    setSettlementsTotalReceived(0)
     setLockers(null)
   }, [node, position])
 
@@ -258,17 +264,20 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
   useEffect(() => {
     if (!showSettlements) return
     setSettlementsLoading(true)
-    const now = Math.floor(Date.now() / 1000)
-    fetch(`${SETTLEMENTS_API}?timestamp=${now}`)
+    setSettlementsPage(1)
+    fetch(SETTLEMENTS_API)
       .then(r => r.json())
       .then(resp => {
-        const entries = resp?.data as Settlement[] | undefined
+        const entries = resp?.data as (Settlement & { epoch?: number })[] | undefined
         if (entries) {
-          // Filter out LP tokens, sort by date desc
-          const filtered = entries
-            .filter(e => !e.coin.lp_token)
-            .sort((a, b) => new Date(b.dt).getTime() - new Date(a.dt).getTime())
-          setSettlements(filtered)
+          // Sort by amount received descending (large → small)
+          const sorted = [...entries].sort((a, b) => b.amount_received - a.amount_received)
+          setSettlements(sorted)
+          setSettlementsTotalReceived(sorted.reduce((sum, s) => sum + s.amount_received, 0))
+          // Extract epoch date from first entry
+          if (entries.length > 0 && entries[0].epoch) {
+            setSettlementsEpoch(new Date(entries[0].epoch * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }))
+          }
         }
       })
       .catch(() => setSettlements([]))
@@ -295,8 +304,13 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
   const cat = categories[data.category]
   const live = getLiveValue(data.liveDataKey, liveData)
   const isFeeDistributor = node.id === 'fee-distributor'
+  const isFeeCollector = node.id === 'fee-collector'
   const isRewardsHandler = node.id === 'rewards-handler'
   const isCowswapBurner = node.id === 'cowswap-burner'
+
+  // FeeCollector epoch info (injected into node.data by index.tsx)
+  const epochPhase = data.epochPhase as string | undefined
+  const epochHoursLeft = data.epochHoursLeft as number | undefined
 
   return (
     <div
@@ -305,7 +319,7 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
       style={{
         left: pos.x,
         top: pos.y,
-        width: isMobile ? Math.min(300, window.innerWidth - 24) : 300,
+        width: isMobile ? Math.min(380, window.innerWidth - 24) : 380,
         maxHeight: isMobile ? 'calc(100vh - 72px)' : 'calc(100vh - 32px)',
         overflowY: 'auto',
         background: '#3465a4',
@@ -356,6 +370,40 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
 
         {/* Description */}
         <p className="text-[11px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.85)' }}>{renderDescriptionLinks(data.description)}</p>
+
+        {/* FeeCollector epoch phase */}
+        {isFeeCollector && epochPhase && (
+          <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
+            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
+              Current Epoch
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{
+                display: 'inline-block',
+                padding: '2px 8px',
+                fontSize: 11,
+                fontWeight: 'bold',
+                fontFamily: 'System, monospace',
+                color: 'white',
+                background: epochPhase === 'SLEEP' ? '#6b7280' : epochPhase === 'COLLECT' ? '#f59e0b' : epochPhase === 'EXCHANGE' ? '#3b82f6' : '#22c55e',
+                border: '1px outset rgba(255,255,255,0.3)',
+              }}>
+                {epochPhase}
+              </span>
+              {epochHoursLeft != null && (
+                <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                  {epochHoursLeft}h remaining
+                </span>
+              )}
+            </div>
+            <div className="text-[10px] mt-2" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              {epochPhase === 'SLEEP' && 'Idle — waiting for collect window.'}
+              {epochPhase === 'COLLECT' && 'Collecting admin fees from pools via withdraw_many().'}
+              {epochPhase === 'EXCHANGE' && 'Burning collected tokens to crvUSD via CowSwap.'}
+              {epochPhase === 'FORWARD' && 'Forwarding crvUSD to FeeDistributor.'}
+            </div>
+          </div>
+        )}
 
         {/* Market breakdown table (dynamic stablecoin tab) */}
         {(data as any).marketRows && (
@@ -889,50 +937,148 @@ export default function DetailPanel({ node, liveData, position, activeTab, onClo
         {/* Settlements history (CowSwap Burner) */}
         {isCowswapBurner && showSettlements && (
           <div style={{ background: 'rgba(0,0,0,0.2)', border: '2px inset rgba(255,255,255,0.2)', padding: '6px 8px' }}>
-            <div className="text-[10px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
-              Latest Settlements
-            </div>
-            {settlementsLoading && (
-              <div className="animate-pulse space-y-1">
-                {[...Array(SETTLEMENTS_PER_PAGE)].map((_, i) => <div key={i} className="h-3 bg-white/20 w-full" />)}
+            {/* Summary stats */}
+            {settlements && settlements.length > 0 && !settlementsLoading && (
+              <div className="mb-2" style={{ borderBottom: '1px solid rgba(255,255,255,0.15)', paddingBottom: 6 }}>
+                <div className="flex items-center justify-between mb-1">
+                  <div className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                    Total Burned
+                  </div>
+                  <div className="text-[11px] font-bold">${formatNumber(settlementsTotalReceived)}</div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                    Tokens
+                  </div>
+                  <div className="text-[11px] font-bold">{settlements.length}</div>
+                </div>
+                {settlementsEpoch && (
+                  <div className="flex items-center justify-between">
+                    <div className="text-[10px] uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                      Epoch
+                    </div>
+                    <div className="text-[11px]" style={{ color: 'rgba(255,255,255,0.7)' }}>{settlementsEpoch}</div>
+                  </div>
+                )}
               </div>
             )}
-            {settlements && settlements.length > 0 && !settlementsLoading && (
-              <>
-                <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
-                  <thead>
-                    <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
-                      <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Token</th>
-                      <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Received (USD)</th>
-                      <th className="py-px w-5" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {settlements.slice(0, SETTLEMENTS_PER_PAGE).map((s, i) => (
-                      <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                        <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)' }}>{s.coin.symbol}</td>
-                        <td className="py-px font-bold text-right">${formatNumber(s.amount_received)}</td>
-                        <td className="py-px text-right">
-                          <a
-                            href={`https://etherscan.io/tx/${s.tx_hash}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title="View on Etherscan"
-                            className="inline-block hover:opacity-70"
-                            style={{ lineHeight: 0 }}
-                          >
-                            <img src="/icons/etherscan.svg" alt="Etherscan" className="w-3.5 h-3.5 inline-block" style={{ opacity: 0.6 }} />
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <div className="text-[10px] mt-2" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  Showing {Math.min(SETTLEMENTS_PER_PAGE, settlements.length)} of {settlements.length} tokens
-                </div>
-              </>
+
+            {settlementsLoading && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px 0', gap: 10 }}>
+                <div className="settlement-spinner" />
+                <div className="text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>Loading settlements...</div>
+              </div>
             )}
+            {settlements && settlements.length > 0 && !settlementsLoading && (() => {
+              const totalPages = Math.ceil(settlements.length / SETTLEMENTS_PER_PAGE)
+              const start = (settlementsPage - 1) * SETTLEMENTS_PER_PAGE
+              const pageItems = settlements.slice(start, start + SETTLEMENTS_PER_PAGE)
+              return (
+                <>
+                  <table className="text-[11px] w-full" style={{ borderCollapse: 'collapse' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.3)' }}>
+                        <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)', width: '16px' }}>#</th>
+                        <th className="py-px text-left font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Token</th>
+                        <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)', textAlign: 'right' }}>Sold</th>
+                        <th className="py-px text-right font-bold" style={{ color: 'rgba(255,255,255,0.6)', textAlign: 'right', whiteSpace: 'nowrap' }}>Received (crvUSD)</th>
+                        <th className="py-px w-5" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pageItems.map((s, i) => {
+                        const sold = parseFloat(s.amount) / Math.pow(10, s.coin.precision)
+                        return (
+                        <tr key={start + i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                          <td className="py-px" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 9 }}>{start + i + 1}</td>
+                          <td className="py-px" style={{ color: 'rgba(255,255,255,0.85)', maxWidth: 100 }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, maxWidth: '100%' }}>
+                              <img
+                                src={`https://raw.githubusercontent.com/curvefi/curve-assets/main/images/assets/${s.coin.address.toLowerCase()}.png`}
+                                alt=""
+                                width={14}
+                                height={14}
+                                style={{ borderRadius: '50%', verticalAlign: 'middle', flexShrink: 0 }}
+                                onError={(e) => {
+                                  const img = e.currentTarget
+                                  img.onerror = null
+                                  img.style.display = 'none'
+                                  const placeholder = document.createElement('span')
+                                  if (s.coin.lp_token) {
+                                    placeholder.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;font-size:6px;color:rgba(255,255,255,0.7);font-weight:bold;'
+                                    placeholder.textContent = 'LP'
+                                  } else {
+                                    placeholder.style.cssText = 'display:inline-block;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;'
+                                  }
+                                  img.parentElement?.insertBefore(placeholder, img)
+                                }}
+                              />
+                              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={s.coin.symbol}>{s.coin.symbol}</span>
+                            </span>
+                          </td>
+                          <td className="py-px text-right" style={{ color: 'rgba(255,255,255,0.7)', textAlign: 'right' }}>{formatNumber(sold)}</td>
+                          <td className="py-px font-bold text-right" style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>${formatNumber(s.amount_received)}</td>
+                          <td className="py-px text-right">
+                            <a
+                              href={`https://etherscan.io/tx/${s.tx_hash}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title="View on Etherscan"
+                              className="inline-block hover:opacity-70"
+                              style={{ lineHeight: 0 }}
+                            >
+                              <img src="/icons/etherscan.svg" alt="Etherscan" className="w-3.5 h-3.5 inline-block" style={{ opacity: 0.6 }} />
+                            </a>
+                          </td>
+                        </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                  {/* Pagination */}
+                  {totalPages > 1 && (
+                    <div className="flex items-center justify-between mt-2">
+                      <button
+                        onClick={() => setSettlementsPage(p => Math.max(1, p - 1))}
+                        disabled={settlementsPage <= 1}
+                        className="text-[10px] font-bold"
+                        style={{
+                          background: settlementsPage <= 1 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
+                          border: '1px outset rgba(255,255,255,0.3)',
+                          color: settlementsPage <= 1 ? 'rgba(255,255,255,0.3)' : 'white',
+                          padding: '2px 8px',
+                          cursor: settlementsPage <= 1 ? 'default' : 'pointer',
+                          fontFamily: 'System, monospace',
+                        }}
+                      >
+                        ← Prev
+                      </button>
+                      <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                        {settlementsPage} / {totalPages}
+                      </span>
+                      <button
+                        onClick={() => setSettlementsPage(p => Math.min(totalPages, p + 1))}
+                        disabled={settlementsPage >= totalPages}
+                        className="text-[10px] font-bold"
+                        style={{
+                          background: settlementsPage >= totalPages ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
+                          border: '1px outset rgba(255,255,255,0.3)',
+                          color: settlementsPage >= totalPages ? 'rgba(255,255,255,0.3)' : 'white',
+                          padding: '2px 8px',
+                          cursor: settlementsPage >= totalPages ? 'default' : 'pointer',
+                          fontFamily: 'System, monospace',
+                        }}
+                      >
+                        Next →
+                      </button>
+                    </div>
+                  )}
+                  <div className="text-[10px] mt-2" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                    Showing {start + 1}–{Math.min(start + SETTLEMENTS_PER_PAGE, settlements.length)} of {settlements.length} tokens
+                  </div>
+                </>
+              )
+            })()}
             {settlements && settlements.length === 0 && !settlementsLoading && (
               <div className="text-[10px]" style={{ color: 'rgba(255,255,255,0.5)' }}>No settlements found</div>
             )}

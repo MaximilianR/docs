@@ -179,6 +179,42 @@
   100% { stroke-dashoffset: 0; }
 }
 
+/* Ripple spinner for loading states */
+.settlement-spinner {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+.settlement-spinner::before,
+.settlement-spinner::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 50%;
+  animation: ripple 1.5s ease-out infinite;
+}
+.settlement-spinner::after {
+  animation-delay: 0.5s;
+}
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    margin-top: 0;
+    margin-left: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 36px;
+    height: 36px;
+    margin-top: -18px;
+    margin-left: -18px;
+    opacity: 0;
+  }
+}
+
 /* ── Mobile responsive ──────────────────────────────────── */
 
 @media (max-width: 768px) {
@@ -221,7 +257,7 @@
 
   .protocol-map-detail-panel {
     width: calc(100vw - 24px) !important;
-    max-width: 300px !important;
+    max-width: 380px !important;
     left: 12px !important;
     right: 12px !important;
   }
