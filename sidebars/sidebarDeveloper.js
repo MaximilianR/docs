@@ -485,6 +485,16 @@ export default {
                 { type: 'doc', id: 'integration/rate-provider', label: 'Rate Provider' },
                 {
                     type: 'category',
+                    label: 'Integrating Curve AMMs',
+                    items: [
+                        { type: 'doc', id: 'integration/stableswap-ng', label: 'Stableswap-NG' },
+                        { type: 'doc', id: 'integration/twocrypto-ng', label: 'Twocrypto-NG' },
+                        { type: 'doc', id: 'integration/tricrypto-ng', label: 'Tricrypto-NG' },
+                        { type: 'doc', id: 'integration/llamma', label: 'LLAMMA' },
+                    ],
+                },
+                {
+                    type: 'category',
                     label: 'API',
                     items: [
                         { type: 'doc', id: 'integration/api/curve-api', label: 'Curve API' },
