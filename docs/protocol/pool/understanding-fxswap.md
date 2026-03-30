@@ -12,6 +12,17 @@ FXSwap is a specialized Automated Market Maker (AMM) designed for uncorrelated b
 
 As with all Curve AMM pools, providing liquidity in FXSwap is completely passive. All liquidity is full-range (no active range management required), so anyone can participate easily.
 
+<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%' }}>
+  <iframe
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+    src="https://www.youtube.com/embed/9p_xDGC3IKA"
+    title="FXSwap Explainer"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
 ## Why FXSwap?
 
 **Cryptoswap** pools are designed to be entirely self-sufficient, relying on trading volumes and swap fees to naturally rebalance liquidity around the market price. This model works well for assets where the Cryptoswap pool is the dominant liquidity pool for tokens, and where price discovery happens (e.g., CVX, YB, RSUP, etc).
