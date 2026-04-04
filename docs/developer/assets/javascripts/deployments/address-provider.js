@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             case 'Kava':
                 return `https://explorer.kava.io/address/${address}`;
             case 'X-layer':
-                return `https://www.oklink.com/xlayer/address/${address}`;
+                return `https://web3.okx.com/explorer/x-layer/address/${address}`;
             case 'zk-Sync':
                 return `https://explorer.zksync.io/address/${address}`;
             // Add more cases for other chains as needed
