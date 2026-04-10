@@ -20,7 +20,7 @@ CRV is the native token of the Curve ecosystem. It was launched in August 2020 o
 
 CRV tokens are constantly and slowly put into circulation following an emission schedule and are distributed to Liquidity Providers (LPs). The issuance rate decreases over time, reducing by 16% each August (see the [stats section](#current-crv-stats) below for this year's exact date). A portion of the initial supply (1.3B) was distributed with vesting schedules that have now finished as of August 2024. The majority of the remaining 1.7B CRV is emitted to liquidity providers gradually over the next approximately 200 years.
 
-<GuideCardGrid guideKeys={['lockingCrv', 'claimingCrvRewards']} />
+<GuideCardGrid guideKeys={['lockingCrv', 'claimingCrvRewards', 'claimPreCrvAirdrop']} />
 
 ---
 
