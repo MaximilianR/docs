@@ -28,7 +28,18 @@ export default {
                     type: 'doc',
                     id: 'curve-tokens/scrvusd',
                     label: 'scrvUSD',
-                }
+                },
+                {
+                    type: 'category',
+                    label: 'Guides',
+                    items: [
+                        {
+                            type: 'doc',
+                            id: 'curve-tokens/guides/claim-crv-airdrop',
+                            label: 'Claim Pre-CRV Airdrop',
+                        },
+                    ],
+                },
             ],
         },
         {

@@ -245,6 +245,12 @@ export const ALL_GUIDES = {
     image: '',
     link: '/user/llamalend/guides/borrow/liquidation',
   },
+  claimPreCrvAirdrop: {
+    title: 'Claim Pre-CRV Airdrop',
+    description: 'Check eligibility and claim CRV tokens allocated to early liquidity providers.',
+    image: '',
+    link: '/user/curve-tokens/guides/claim-crv-airdrop',
+  },
   learnBoosting:  {
     title: 'Learn About Boosting',
     description: 'Learn about how boosting works, including calculators and the boosting formula.',
