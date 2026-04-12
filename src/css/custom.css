@@ -999,7 +999,7 @@ html[data-curve-theme='chad'] .theme-doc-markdown a:hover {
 html[data-curve-theme='chad'] .pagination-nav__link {
   border-radius: 0;
   border-color: var(--Violet-300);
-  background: var(--Violet-50);
+  background: var(--Layer-1-Fill);
 }
 
 html[data-curve-theme='chad'] .pagination-nav__link:hover {

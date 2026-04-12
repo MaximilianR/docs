@@ -181,11 +181,11 @@ html[data-curve-theme='chad'] {
 
   /* Layer Colors */
   --Layer-App-Background: #bdbbec;
-  --Layer-1-Fill: var(--Violet-100);
+  --Layer-1-Fill: #c8c6e8;
   --Layer-1-Outline: var(--Violet-300);
-  --Layer-2-Fill: var(--Violet-50);
-  --Layer-2-Outline: var(--Violet-200);
-  --Layer-3-Fill: var(--Violet-100);
+  --Layer-2-Fill: #d0ceed;
+  --Layer-2-Outline: var(--Violet-300);
+  --Layer-3-Fill: #c8c6e8;
   --Layer-3-Outline: var(--Violet-300);
 
   /* Primary Colors — Violet scale */
