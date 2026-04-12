@@ -927,3 +927,30 @@ code {
 .swagger-ui-wrapper .swagger-ui .topbar {
   display: none;
 }
+
+/* LLM plain-text download link in doc footer */
+.llm-txt-link {
+  padding-top: var(--Spacing-md);
+  border-top: 1px solid var(--Layer-2-Outline);
+  font-size: var(--Typography-FontSize-sm);
+  color: var(--Text-TextColors-Tertiary);
+}
+
+.llm-txt-label {
+  margin-right: 0.4em;
+}
+
+.llm-txt-separator {
+  color: var(--Layer-2-Outline);
+  margin: 0 0.15em;
+}
+
+.llm-txt-link a {
+  color: var(--Text-TextColors-Tertiary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.llm-txt-link a:hover {
+  color: var(--Text-TextColors-Highlight);
+}

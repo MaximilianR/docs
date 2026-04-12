@@ -234,6 +234,16 @@ const config: Config = {
       },
     ],
     [
+      'docusaurus-plugin-llms',
+      {
+        generateLLMsTxt: false,
+        generateLLMsFullTxt: true,
+        generateMarkdownFiles: true,
+        docsDir: 'docs',
+        excludeImports: true,
+      },
+    ],
+    [
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
