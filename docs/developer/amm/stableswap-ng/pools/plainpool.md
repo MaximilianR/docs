@@ -135,7 +135,9 @@ def _transfer_out(_coin_idx: int128, _amount: uint256, receiver: address):
 ---
 
 
-## Exchange Methods*Two functions for token exchanges:*
+## Exchange Methods
+
+*Two functions for token exchanges:*
 
 - The regular `exchange` function.
 - A novel `exchange_received` function that executes a token exchange based on the internal balances of the pool.

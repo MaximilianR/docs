@@ -191,7 +191,9 @@ def get_implementation_address(_pool: address) -> address:
 
 ::::
 
-## Set New Implementation*New implementations can be set via these admin-only functions:*
+## Set New Implementation
+
+*New implementations can be set via these admin-only functions:*
 
 ### `set_metapool_implementation`
 ::::description[`Factory.set_metapool_implementations(_base_pool: address, _implementations: address[10]):`]

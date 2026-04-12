@@ -12,7 +12,7 @@ Curve stablecoin infrastructure enables users to mint crvUSD using a selection o
 
 ---
 
-## **CrvUSD Design Risks**
+## CrvUSD Design Risks
 
 ### Soft-Liquidation and Hard-Liquidation
 
@@ -46,7 +46,7 @@ There may be assumptions in the Monetary Policy design that, in some circumstanc
 
 ---
 
-## **Market Risks**
+## Market Risks
 
 ### Liquidity Risk
 
@@ -64,7 +64,7 @@ The blockchain ecosystem has witnessed instances where stablecoins experienced s
 
 ---
 
-## **Technology Risk**
+## Technology Risk
 
 ### Smart Contract Risk
 

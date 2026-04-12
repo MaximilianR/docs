@@ -64,6 +64,6 @@ If the vote passes:
 
 ---
 
-## **Next Steps**
+## Next Steps
 
 todo

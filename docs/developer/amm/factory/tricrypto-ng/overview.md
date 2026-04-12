@@ -14,10 +14,13 @@ A list of all deployed contracts can be found [here](../../../deployments.md).
 ---
 
 
-## Implementations**The Tricrypto-NG Factory makes use of blueprint contracts to deploy its contracts from the implementations.**:::warning
+## Implementations
 
-**Implementation contracts are upgradable.**They can either be replaced, or additional implementation contracts can be added. Therefore, please always make sure to check the most recent ones.
+**The Tricrypto-NG Factory makes use of blueprint contracts to deploy its contracts from the implementations.**
 
+:::warning
+
+**Implementation contracts are upgradable.** They can either be replaced, or additional implementation contracts can be added. Therefore, please always make sure to check the most recent ones.
 
 :::
 
@@ -166,7 +169,9 @@ math_implementation: public(address)
 
 ::::
 
-## Set New Implementations*New implementations can be set via these admin-only functions:*
+## Set New Implementations
+
+*New implementations can be set via these admin-only functions:*
 
 ### `set_pool_implementation`
 ::::description[`Factory.set_pool_implementation(_pool_implementation: address, _implementation_index: uint256):`]

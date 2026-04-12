@@ -14,7 +14,7 @@ Users wishing to acquaint themselves with a broader range of general risk disclo
 
 ---
 
-## **Permissionless Markets Risks**
+## Permissionless Markets Risks
 
 Curve Lending markets are permissionless, allowing anyone to create and customize markets with unique token pairs, a price oracle, and parameters that influence the LLAMMA liquidation algorithm and interest rate model. Given the protocol's permissionless nature, users should verify that the market has been instantiated with sensible parameters. Curve provides a [LLAMMA-simulator](https://github.com/curvefi/llamma-simulator) that can be referenced for finding optimal parameters.
 
@@ -40,7 +40,7 @@ The Curve Lending admin is the Curve DAO, a decentralized organization made up o
 
 ---
 
-## **Borrowing Risks**
+## Borrowing Risks
 
 Borrowers can choose from various lending markets to borrow crvUSD against another asset or provide crvUSD as collateral. Markets are designated as one-way or two-way. In one-way markets, collateral cannot be lent out to other users. These assets serve solely as collateral to secure the loan and maintain the borrowing capacity within the protocol. Two-way markets allow collateral to be lent out, creating an opportunity for borrowers to earn interest.
 
@@ -61,7 +61,7 @@ Borrowers should be aware that, while in soft liquidation, they essentially pay 
 
 The borrowing rate is algorithmically determined based on the utilization rate of the lending markets. It is calculated using a function that accounts for the spectrum of borrowing activity, ranging from conditions where no assets are borrowed (where the rate is set to a minimum) to conditions where all available assets are borrowed (where the rate is set to a maximum). The rates within the described monetary policy are subject to changes only by Curve DAO. More information on the interest rate model can be found in the Semi-log Monetary Policy docs.
 
-## **Lending Risks**
+## Lending Risks
 
 When participating in lending activities on Curve Lending, Users may deposit crvUSD (or other assets designated for borrowing) into non-custodial Vaults that accrue interest from borrowers. There may also be the opportunity for additional CRV incentives by staking Vault tokens in a Gauge contract, pending DAO approval.
 
@@ -77,7 +77,7 @@ Curve Lending is designed to minimize the risk of bad debt through over-collater
 
 ---
 
-## **crvUSD Risks**
+## crvUSD Risks
 
 Users should be mindful of risks associated with exposure to the crvUSD stablecoin:
 
@@ -90,7 +90,7 @@ Users should be mindful of risks associated with exposure to the crvUSD stableco
 * Users of crvUSD are exposed to various technological risks, including irreversible transactions, anonymity and security concerns, software dependency, cybersecurity threats, and operational and settlement risks, which can lead to potential asset loss.
 * The continued development and functionality of the crvUSD protocol rely on developer contributions, with no guarantee of sustained involvement, posing a risk to its maintenance and scalability.
 
-## **General Financial Risks**
+## General Financial Risks
 
 ### Volatility
 

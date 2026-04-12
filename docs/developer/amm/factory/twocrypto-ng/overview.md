@@ -153,7 +153,9 @@ math_implementation: public(address)
 
 ::::
 
-## Set New Implementations*New implementations can be set via the following admin-only functions:*
+## Set New Implementations
+
+*New implementations can be set via the following admin-only functions:*
 
 
 ### `set_pool_implementation`

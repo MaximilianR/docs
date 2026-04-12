@@ -43,7 +43,7 @@ Efficiency within the intermediate conversions is the reason it is important to 
 
 **There are multiple burner contracts, each of which handles a different category of fee coin.**
 
-## **Deployed Burner Contracts**
+## Deployed Burner Contracts
 
 :::deploy[Contract Source & Deployment]
 

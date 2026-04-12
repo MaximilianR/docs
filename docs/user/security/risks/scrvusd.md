@@ -12,7 +12,7 @@ Curve stablecoin infrastructure enables users to mint crvUSD using a selection o
 
 ---
 
-## **crvUSD Dependency**
+## crvUSD Dependency
 
 As scrvUSD is directly tied to crvUSD, it inherits all risks associated with the underlying token. Users should consider the potential for cascading impacts from issues affecting crvUSD mint markets, including but not limited to:
 
@@ -28,7 +28,7 @@ Read the [crvUSD Risk Disclaimer](./crvusd.md) for a more detailed overview of r
 
 ---
 
-## **Vault Smart Contract Risks**
+## Vault Smart Contract Risks
 
 To obtain scrvUSD, users deposit crvUSD into a Savings Vault which make use of [Yearn V3 vaults](https://docs.yearn.fi/developers/v3/overview). While Yearn vaults have undergone extensive [audits](https://github.com/yearn/yearn-vaults-v3/tree/master/audits) and demonstrated resilience and security, users should be aware of the technical risks associated with interacting with smart contracts.
 
@@ -42,7 +42,7 @@ In case of an emergency, a privileged role can be assigned to call shutdown_vaul
 
 ---
 
-## **Interest Accrual Risks**
+## Interest Accrual Risks
 
 The interest accrued to scrvUSD originates from crvUSD interest rate fees paid by borrowers taking out crvUSD loans. Interest on scrvUSD accrues passively and is designed to increase the underlying value of scrvUSD over time.
 
@@ -58,7 +58,7 @@ Users should recognize that the value increase is not guaranteed, nor does Curve
 
 ---
 
-## **MEV and Revenue Distribution Risks**
+## MEV and Revenue Distribution Risks
 
 The accuracy of scrvUSD supply calculations is crucial for the proper distribution of protocol revenue among holders. Users should be aware that supply calculations may be subject to manipulation through MEV (Maximal Extractable Value) strategies, which could affect revenue distribution and, consequently, the actual yields received by scrvUSD holders. This can lead to discrepancies between expected and actually received yields for users. From a practical standpoint, when evaluating potential scrvUSD yields, users should consider that published APYs may differ from actual returns due to these factors.
 
@@ -66,7 +66,7 @@ scrvUSD accounts for MEV risk by incorporating protections that calculate a Time
 
 ---
 
-## **Cross-chain scrvUSD Risks**
+## Cross-chain scrvUSD Risks
 
 While scrvUSD can be bridged, cross-chain representations lack the method to return its continuously updating price. Therefore cross-chain scrvUSD incorporates a series of additional contracts that provide and validate Ethereum block hashes, using those to calculate and store the current rate.
 
@@ -76,7 +76,7 @@ Furthermore, there is a trust assumption in the owner of the scrvUSD oracle whic
 
 ---
 
-## **Secondary Market Risks**
+## Secondary Market Risks
 
 scrvUSD can also be acquired on secondary markets outside of the primary access venue (and cross-chain scrvUSD is only available on secondary markets). As a consequence of certain market scenarios, scrvUSD may trade at a discount to its underlying crvUSD value. Users who sell scrvUSD at such a discounted price will realize losses relative to its intrinsic value. Secondary market dynamics are subject to external factors, including market sentiment, trading volume, and liquidity conditions, which may amplify these risks.
 

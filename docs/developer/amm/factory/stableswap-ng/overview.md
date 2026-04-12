@@ -690,7 +690,9 @@ _coins = ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0xae78736Cd615f374D3085
 
 ---
 
-### A, Fee, Off-Peg Fee Multiplier, and MA-Exp-Time- `_A` represents the amplification coefficient of the pool, signifying its density.
+### A, Fee, Off-Peg Fee Multiplier, and MA-Exp-Time
+
+- `_A` represents the amplification coefficient of the pool, signifying its density.
 - `_fee` is referred to as the "base fee."
 - The `offpeg_fee_multiplier` parameter enables the system to dynamically adjust fees according to the pool's state.
 - `ma_exp_time` denotes the time window for the moving average oracle.
@@ -796,7 +798,9 @@ _asset_types = [0, 2]   # coin(0) = asset type 0; coin(1) = asset type 2
 
 ---
 
-### Method IDs and Rate Oracles`method_ids` and `_oracles` are required for rate oracles to function. ERC-4626 does not need either of these. The sole requirement for those is to have a `convertToAssets` method.
+### Method IDs and Rate Oracles
+
+`method_ids` and `_oracles` are required for rate oracles to function. ERC-4626 does not need either of these. The sole requirement for those is to have a `convertToAssets` method.
 
 
 :::info
