@@ -17,7 +17,9 @@ For a detailed overview of the design, please read the official [whitepaper](/pd
 ---
 
 
-## Implementations*There have been several implementations of the CryptoSwap algorithm:*
+## Implementations
+
+*There have been several implementations of the CryptoSwap algorithm:*
 
 :::deploy[Contract Source]
 

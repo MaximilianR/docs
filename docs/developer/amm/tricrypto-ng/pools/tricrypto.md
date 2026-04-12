@@ -62,7 +62,9 @@ def _unpack(_packed: uint256) -> uint256[3]:
 ---
 
 
-## Exchange Methods*The contract offers two different ways to exchange tokens:*
+## Exchange Methods
+
+*The contract offers two different ways to exchange tokens:*
 
 - A regular `exchange` method.
 - A `exchange_underlying` method, which swaps tokens based on native token transfers into the pool. More [here](../../stableswap-ng/overview.md#exchange_received).
@@ -842,7 +844,9 @@ def _reduction_coefficient(x: uint256[N_COINS], fee_gamma: uint256) -> uint256:
 ---
 
 
-## Adding and Removing Liquidity*The tricrypto-ng implementation utilizes the usual methods to add and remove liquidity.*
+## Adding and Removing Liquidity
+
+*The tricrypto-ng implementation utilizes the usual methods to add and remove liquidity.*
 
 **Adding liquidity**can be done via the `add_liquidity` method. The code uses a list of unsigned integers `uint256[N_COINS]` as input for the pools underlying tokens to add. **Any proportion is possible**. For example, adding fully single-sided can be done using `[0, 1e18]` or `[1e18, 0]`, but again, any variation is possible, e.g., `[1e18, 1e19]`.
 

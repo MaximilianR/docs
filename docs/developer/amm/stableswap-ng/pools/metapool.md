@@ -191,7 +191,9 @@ E.g., in the USDV&lt;&gt;3CRV pool: `coin[0]` = USDV, `coin[1]` = DAI, `coin[2]`
 ---
 
 
-## Exchange Methods*Three functions for token exchanges:*
+## Exchange Methods
+
+*Three functions for token exchanges:*
 
 - The regular `exchange` function.
 - A novel `exchange_received` function that executes a token exchange based on the internal balances of the pool.

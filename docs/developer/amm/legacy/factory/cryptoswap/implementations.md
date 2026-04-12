@@ -108,7 +108,9 @@ gauge_implementation: public(address)
 
 ::::
 
-## Set New Implementation*New implementations can be set via these admin-only functions:*
+## Set New Implementation
+
+*New implementations can be set via these admin-only functions:*
 
 ### `set_pool_implementation`
 ::::description[`Factory.set_pool_implementation(_pool_implementation: address):`]

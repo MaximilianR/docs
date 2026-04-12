@@ -1628,7 +1628,9 @@ def set_killed(_is_killed: bool):
 ---
 
 
-## Contract Info Methods*Basic contract informations:*
+## Contract Info Methods
+
+*Basic contract informations:*
 
 ### `integrate_fraction`
 ::::description[`LiquidityGaugeV6.integrate_fraction(arg0: address) -> uint256: view`]

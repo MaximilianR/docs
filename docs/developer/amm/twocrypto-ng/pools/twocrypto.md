@@ -196,7 +196,9 @@ def _transfer_out(_coin_idx: uint256, _amount: uint256, receiver: address):
 ---
 
 
-## Exchange Methods*The contract offers two different ways to exchange tokens:*
+## Exchange Methods
+
+*The contract offers two different ways to exchange tokens:*
 
 - A regular `exchange` method.
 - A novel `exchange_received` method, which swaps tokens based on the *"internal balances"* of the pool. This method is of great use for aggregators, as it **does not require token approval**of the pool, which eliminates certain smart contract risks and *can* remove one redundant ERC-20 transfer. More [here](../../stableswap-ng/overview.md#exchange_received).
@@ -1538,7 +1540,9 @@ def _fee(xp: uint256[N_COINS]) -> uint256:
 ---
 
 
-## Adding and Removing Liquidity*The twocrypto-ng implementation utilizes the usual methods to add and remove liquidity.*
+## Adding and Removing Liquidity
+
+*The twocrypto-ng implementation utilizes the usual methods to add and remove liquidity.*
 
 **Adding liquidity**can be done via the `add_liquidity` method. The code uses a list of unsigned integers `uint256[N_COINS]` as input for the pools underlying tokens to add. **Any proportion is possible**. For example, adding fully single-sided can be done using `[0, 1e18]` or `[1e18, 0]`, but again, any variation is possible, e.g., `[1e18, 1e19]`.
 
