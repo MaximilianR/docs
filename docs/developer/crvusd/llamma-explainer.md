@@ -198,7 +198,7 @@ Arbitrage traders should observe `get_p` and `price_oracle` inside the AMM. The 
 
 The loan-to-value (LTV) ratio depends on the number of bands (`N`) and the band width factor (`A`). The higher the number of bands, the lower the LTV. The maximum LTV can be approximated using the following function:
 
-$$LTV = \text{100%} - \text{loan_discount} - 100 * \frac{N}{2*A}$$
+$$LTV = 100\% - \text{loan\_discount} - 100 \cdot \frac{N}{2 \cdot A}$$
 
 The loan discount is the percentage used to discount the collateral for calculating the maximum borrowable amount when creating a loan.
 
@@ -219,7 +219,7 @@ $\text{LTV (50 bands)} = 1 - 0.09 - 1 \times \frac{50}{2 \times 100} = 0.66 ≈ 
 
 The start of the liquidation range is also determined by the LTV:
 
-$$\text{starting_price} = \frac{debt}{collateral * LTV}$$
+$$\text{starting\_price} = \frac{debt}{collateral \cdot LTV}$$
 
 To obtain the actual starting price value in dollars, multiply the value by the `price_oracle` at the time of creating the loan.
 

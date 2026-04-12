@@ -73,7 +73,7 @@ When a user deposits or withdraws, the change in $I_{u}$ can be calculated as th
 ---
 
 ## Boosting
-In order to incentivize users to participate in governance, and additionally create stickiness for liquidity, we implement the following mechanism. A user’s balance, counted in the liquidity gauge, gets boosted by users locking CRV tokens in Voting Escrow contract, depending on their vote weight $w_{i}:b_{u}^* = min(0.4b_{u}+0.6S\frac{w_{i}}W, b_{u})$.
+In order to incentivize users to participate in governance, and additionally create stickiness for liquidity, we implement the following mechanism. A user’s balance, counted in the liquidity gauge, gets boosted by users locking CRV tokens in Voting Escrow contract, depending on their vote weight $w_{i}:b_{u}^* = \min(0.4b_{u}+0.6S\frac{w_{i}}{W}, b_{u})$.
 The value of $w_{i}$ is taken at the time the user performs any action (deposit, withdrawal, withdrawal of minted CRV tokens) and is applied until the next action this user performs.
 
 If no users vote-lock any CRV (or simply don’t have any), the inflation will simply be distributed proportionally to the liquidity $b_{u}$ each one of them provided. However, if a user stakes enough CRV, they are able to boost their stream of CRV by up to factor of 2.5 (reducing it slightly for all users who are not doing that).

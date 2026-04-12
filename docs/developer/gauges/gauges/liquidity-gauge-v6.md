@@ -1046,9 +1046,9 @@ voting_total = 10000                        # total veCRV balance
 
 Lets calculate the LP position of a user that has a vecrv balance of 0:
 
-$\text{lim} = 1000 * 0.4 = 400$
+$\text{lim} = 1000 \cdot 0.4 = 400$
 
-$\text{lim} = 400 + 50000 * \frac{0}{10000} * 0.6 = 400$
+$\text{lim} = 400 + 50000 \cdot \frac{0}{10000} \cdot 0.6 = 400$
 
 $\text{lim} = \min(1000, 400)$
 
@@ -1064,9 +1064,9 @@ $\text{boost factor} = \frac{400}{400} = 1$
 
 Lets calculate the LP position of a user that has a vecrv balance of 500 and therefore receives a boost on his provided liquidity:
 
-$\text{lim} = 1000 * 0.4 = 400$
+$\text{lim} = 1000 \cdot 0.4 = 400$
 
-$\text{lim} = 400 + 50000 * \frac{500}{10000} * 0.6 = 1900$
+$\text{lim} = 400 + 50000 \cdot \frac{500}{10000} \cdot 0.6 = 1900$
 
 $\text{lim} = \min(1000, 1900)$
 

@@ -626,7 +626,7 @@ Getter for the stored rates fetched from a stableswap pool.
 
 The `stored_rate` is calculated the following:
 
-$$\text\{rate\} = 10^\{18\} * \frac\{\text\{stored_rates[collateral_ix]\}\}\{\text\{stored_rates[borrowed_ix]\}\}$$
+$$\text{rate} = 10^{18} \cdot \frac{\text{stored\_rates[collateral\_ix]}}{\text{stored\_rates[borrowed\_ix]}}$$
 
 Returns: stored rate (`uint256`).
 

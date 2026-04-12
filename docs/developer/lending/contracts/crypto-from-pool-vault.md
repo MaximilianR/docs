@@ -140,7 +140,7 @@ Additionally, the `CryptoFromPoolVault.vy` contract has a **built-in mechanism t
 
 *The formula to calculate the applied redemption rate is the following:*
 
-$$\min \left( \text\{pricePerShare\}, \frac\{\text\{cached_price_per_share\} \times (10^\{18\} + \text\{PPS_MAX_SPEED\} \times (\text\{block.timestamp\} - \text\{cached_timestamp\}))\}\{10^\{18\}\} \right)$$
+$$\min \left( \text{pricePerShare}, \frac{\text{cached\_price\_per\_share} \times (10^{18} + \text{PPS\_MAX\_SPEED} \times (\text{block.timestamp} - \text{cached\_timestamp}))}{10^{18}} \right)$$
 
 In this example, `pricePerShare` is used, but it can really be any equivalent method that returns the redemption rate of the vault token with respect to its underlying token.
 

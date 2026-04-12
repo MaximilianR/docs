@@ -14,7 +14,7 @@ The source code for the `SemilogMonetaryPolicy.vy` contract can be found on [Git
 
 *The function for the rate is as simple as:*
 
-$$\text\{rate\} = \text\{rate\}_\{\text\{min\}\} \cdot \left(\frac\{\text\{rate\}_\{\text\{max\}\}\}\{\text\{rate\}_\{\text\{min\}\}\}\right)^\{\text\{utilization\}\}$$
+$$\text{rate} = \text{rate}_{\text{min}} \cdot \left(\frac{\text{rate}_{\text{max}}}{\text{rate}_{\text{min}}}\right)^{\text{utilization}}$$
 
 | Variable | Description |
 | :------: | ----------- |
