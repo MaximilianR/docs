@@ -954,3 +954,69 @@ code {
 .llm-txt-link a:hover {
   color: var(--Text-TextColors-Highlight);
 }
+
+/* Chad Theme overrides */
+html[data-curve-theme='chad'] .main-wrapper,
+html[data-curve-theme='chad'] .main-wrapper .container,
+html[data-curve-theme='chad'] .main-wrapper .row,
+html[data-curve-theme='chad'] .main-wrapper .col,
+html[data-curve-theme='chad'] .theme-doc-markdown {
+  background-color: var(--Layer-App-Background) !important;
+  background: var(--Layer-App-Background) !important;
+}
+
+html[data-curve-theme='chad'] .navbar {
+  background-color: var(--Violet-200);
+  border-bottom: 2px solid var(--Violet-400);
+}
+
+html[data-curve-theme='chad'] .menu {
+  background-color: var(--Layer-App-Background);
+}
+
+html[data-curve-theme='chad'] .menu__link--active {
+  color: var(--Violet-600);
+  font-weight: var(--Typography-FontWeight-Bold);
+}
+
+html[data-curve-theme='chad'] .menu__link:hover {
+  color: var(--Violet-700);
+  background-color: var(--Violet-100);
+}
+
+html[data-curve-theme='chad'] .table-of-contents__link--active {
+  color: var(--Violet-600);
+}
+
+html[data-curve-theme='chad'] .theme-doc-markdown a {
+  color: var(--Violet-600);
+}
+
+html[data-curve-theme='chad'] .theme-doc-markdown a:hover {
+  color: var(--Violet-800);
+}
+
+html[data-curve-theme='chad'] .pagination-nav__link {
+  border-radius: 0;
+  border-color: var(--Violet-300);
+  background: var(--Layer-1-Fill);
+}
+
+html[data-curve-theme='chad'] .pagination-nav__link:hover {
+  border-color: var(--Violet-500);
+  background: var(--Violet-100);
+}
+
+html[data-curve-theme='chad'] code {
+  border-radius: 0;
+}
+
+html[data-curve-theme='chad'] .menu__link,
+html[data-curve-theme='chad'] .menu__caret,
+html[data-curve-theme='chad'] .menu__list-item-collapsible {
+  border-radius: 0;
+}
+
+html[data-curve-theme='chad'] .theme-doc-sidebar-container {
+  border-right: 2px solid var(--Violet-300);
+}

@@ -163,3 +163,68 @@
   --Feedback-Danger: var(--Reds-400);
   --Feedback-Error: var(--Reds-500);
 }
+
+/* Chad Theme */
+html[data-curve-theme='chad'] {
+  /* Text Colors */
+  --Text-TextColors-Primary: var(--Grays-950);
+  --Text-TextColors-Secondary: var(--Grays-800);
+  --Text-TextColors-Tertiary: var(--Grays-600);
+  --Text-TextColors-Highlight: var(--Violet-600);
+  --Text-TextColors-Disabled: var(--Grays-400);
+
+  /* Font Families */
+  --Text-FontFamily-Heading: 'Minecraft', monospace;
+  --Text-FontFamily-Body: 'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --Text-FontFamily-Mono: 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  --Text-FontFamily-Button: 'Minecraft', monospace;
+
+  /* Layer Colors */
+  --Layer-App-Background: #bdbbec;
+  --Layer-1-Fill: #c8c6e8;
+  --Layer-1-Outline: var(--Violet-300);
+  --Layer-2-Fill: #d0ceed;
+  --Layer-2-Outline: var(--Violet-300);
+  --Layer-3-Fill: #c8c6e8;
+  --Layer-3-Outline: var(--Violet-300);
+
+  /* Primary Colors — Violet scale */
+  --Color-Primary-50: var(--Violet-50);
+  --Color-Primary-100: var(--Violet-100);
+  --Color-Primary-200: var(--Violet-200);
+  --Color-Primary-300: var(--Violet-300);
+  --Color-Primary-400: var(--Violet-400);
+  --Color-Primary-500: var(--Violet-500);
+  --Color-Primary-600: var(--Violet-600);
+  --Color-Primary-700: var(--Violet-700);
+  --Color-Primary-800: var(--Violet-800);
+  --Color-Primary-900: var(--Violet-900);
+  --Color-Primary-950: var(--Violet-950);
+
+  /* Docusaurus overrides */
+  --ifm-color-primary: var(--Violet-600);
+  --ifm-color-primary-dark: var(--Violet-700);
+  --ifm-color-primary-darker: var(--Violet-800);
+  --ifm-color-primary-darkest: var(--Violet-950);
+  --ifm-color-primary-light: var(--Violet-500);
+  --ifm-color-primary-lighter: var(--Violet-400);
+  --ifm-color-primary-lightest: var(--Violet-200);
+
+  /* Sharp corners — retro style */
+  --Radius-xs: 0px;
+  --Radius-sm: 0px;
+  --Radius-md: 0px;
+  --Radius-lg: 0px;
+  --Radius-xl: 0px;
+  --Radius-round: 0px;
+  --ifm-card-border-radius: 0px;
+
+  /* Feedback Colors */
+  --Feedback-Success: var(--Greens-300);
+  --Feedback-Warning: var(--Reds-300);
+  --Feedback-Danger: var(--Reds-400);
+  --Feedback-Error: var(--Reds-500);
+
+  /* Button Focus */
+  --Button-Focus-Outline: var(--Violet-600);
+}

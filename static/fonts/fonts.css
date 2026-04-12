@@ -80,6 +80,24 @@
   }
 
   @font-face {
+    font-family: 'Minecraft';
+    src: local('Minecraft'),
+      url('./Minecraft-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Minecraft';
+    src: local('Minecraft Bold'),
+      url('./Minecraft-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
     font-family: 'JetBrains Mono';
     src: url('./JetBrainsMono-Regular.woff2') format('woff2');
     font-weight: normal;
