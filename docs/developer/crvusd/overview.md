@@ -82,9 +82,9 @@ The crvUSD mint markets use several iterations of the Controller and AMM (LLAMMA
 
 | Version | Vyper | Controller Blueprint | AMM Blueprint | Source |
 |---------|-------|---------------------|---------------|--------|
-| **V1** | 0.3.7 | `0x...8fA` ([Etherscan](https://etherscan.io/address/0x6340678b2bab22a37d781571BD37894f855Ae84a)) | `0x...3D1` ([Etherscan](https://etherscan.io/address/0x5eA546C26e07Dbc82096D8D2D75c8E53a1bE00f1)) | [58289a4](https://github.com/curvefi/curve-stablecoin/tree/58289a4283d7cc3c53aba2d3801dcac5ef124957) |
-| **V2** | 0.3.9 | `0x...7Dd` ([Etherscan](https://etherscan.io/address/0x07CbC1c6757C97a4db7abF47B2843f8E44a02b7d)) | `0x...3D1` ([Etherscan](https://etherscan.io/address/0x5eA546C26e07Dbc82096D8D2D75c8E53a1bE00f1)) | — |
-| **V3** | 0.3.10 | `0xe3e...415` ([Etherscan](https://etherscan.io/address/0xe3e3Fb7E9f48d26817b7210C9bD6B22744790415)) | `0x2B7...e9` ([Etherscan](https://etherscan.io/address/0x2B7e624bdb839975d56D8428d9f6A4cf1160D3e9)) | [b0240d8](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721) |
+| **V1** | 0.3.7 | `0x856...8CC` ([Etherscan](https://etherscan.io/address/0x856fF1aaff4782eEe27D2C6bbAd48781F57f88CC)) | `0x7Ec...099` ([Etherscan](https://etherscan.io/address/0x7Ec8e02b74CDD1C1c222DbF3Bf47F3256B734099)) | [58289a4](https://github.com/curvefi/curve-stablecoin/tree/58289a4283d7cc3c53aba2d3801dcac5ef124957) |
+| **V2** | 0.3.9 | `0x803...737` ([Etherscan](https://etherscan.io/address/0x80333bd8791Fee04C4C3e1CA8a524CEfA7C94737)) | `0x762...260` ([Etherscan](https://etherscan.io/address/0x7624C0DD4f5D06d650DDFF25fFEC45D032501260)) | — |
+| **V3** | 0.3.10 | `0xe3e...415` ([Etherscan](https://etherscan.io/address/0xe3e3Fb7E9f48d26817b7210C9bD6B22744790415)) | `0x2B7...3e9` ([Etherscan](https://etherscan.io/address/0x2B7e624bdb839975d56D8428d9f6A4cf1160D3e9)) | [b0240d8](https://github.com/curvefi/curve-stablecoin/tree/b0240d844c9e60fdab78b481a556a187ceee3721) |
 
 :::info
 V3 is the **current blueprint** set on the Controller Factory. It is also the version used by all [Llamalend](../lending/overview.md) markets.

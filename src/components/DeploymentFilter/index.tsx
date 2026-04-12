@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import deploymentsData from '@site/static/deployments.json';
 import styles from './styles.module.css';
 import type { DeploymentEntry } from './types';
@@ -8,6 +8,26 @@ import { NameDisplay } from './NameDisplay';
 import { CategorySelect } from './CategorySelect';
 import { ChainSelect } from './ChainSelect';
 import { filterDeployments } from './searchFilter';
+
+function getInitialParams() {
+  if (typeof window === 'undefined') return { search: '', chains: [], category: 'all' };
+  const params = new URLSearchParams(window.location.search);
+  return {
+    search: params.get('search') || '',
+    chains: params.get('chains') ? params.get('chains')!.split(',').filter(Boolean) : [],
+    category: params.get('category') || 'all',
+  };
+}
+
+function updateUrlParams(search: string, chains: string[], category: string) {
+  const params = new URLSearchParams();
+  if (search) params.set('search', search);
+  if (chains.length > 0) params.set('chains', chains.join(','));
+  if (category && category !== 'all') params.set('category', category);
+  const qs = params.toString();
+  const newUrl = window.location.pathname + (qs ? `?${qs}` : '') + window.location.hash;
+  window.history.replaceState(null, '', newUrl);
+}
 
 // Get explorer URLs from JSON data
 const getExplorerUrls = (data: any): Record<string, string> => {
@@ -64,13 +84,19 @@ function copyToClipboard(text: string) {
 }
 
 export default function DeploymentFilter(): React.ReactNode {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedChains, setSelectedChains] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const initial = useMemo(() => getInitialParams(), []);
+  const [searchTerm, setSearchTerm] = useState(initial.search);
+  const [selectedChains, setSelectedChains] = useState<string[]>(initial.chains);
+  const [selectedCategory, setSelectedCategory] = useState<string>(initial.category);
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null);
   const [chainDropdownOpen, setChainDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Sync filter state to URL
+  useEffect(() => {
+    updateUrlParams(searchTerm, selectedChains, selectedCategory);
+  }, [searchTerm, selectedChains, selectedCategory]);
 
   // Check if mobile on mount and resize
   React.useEffect(() => {
