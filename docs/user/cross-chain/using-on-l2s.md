@@ -8,7 +8,7 @@ Using Curve products on L1s and L2s works exactly the same way as on Ethereum. H
 
 Curve offers these two main products:
 
-## **DEX (Decentralized Exchange)**
+## DEX (Decentralized Exchange)
 
 The Curve DEX is available on many chains, with more becoming available all the time. Providing liquidity to pools and creating new pools works the same way across all chains. Both [**Stableswap**](/protocol/pool/overview#stableswap-pool) and [**Cryptoswap**](/protocol/pool/overview#cryptoswap) pools are available on all chains where Curve has been deployed.
 
@@ -25,7 +25,7 @@ The Curve DEX is available on many chains, with more becoming available all the 
 - **Reward Contracts** - so any reward token can be easily streamed to LPs
 - **Governance Contracts** - ensuring cross-chain operations like parameter updates remain fully under DAO control
 
-## **Llamalend**
+## Llamalend
 
 Llamalend is currently available on five chains: **Ethereum**, **Arbitrum**, **Fraxtal**, **Sonic**, and **Optimism**.
 

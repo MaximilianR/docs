@@ -12,7 +12,7 @@ Providing liquidity on Curve doesn't come without risks. Before making a deposit
 
 ---
 
-## **Technology Risk**
+## Technology Risk
 
 
 ### Smart Contract Risk:
@@ -29,7 +29,7 @@ When you engage in transactions on Ethereum or EVM-compatible blockchains, it is
 ---
 
 
-## **Counterparty Risk**
+## Counterparty Risk
 
 ### Access Control:
 Curve pool smart contracts are intentionally designed to be immutable and noncustodial, meaning they cannot be upgraded and liquidity providers always retain full control of their funds. While this characteristic may limit protective actions in case of emergencies, it significantly strengthens user assurances about custody of their funds.
@@ -40,7 +40,7 @@ The Curve Emergency Admin is a [5-of-9 multisig](https://etherscan.io/address/0x
 
 ---
 
-## **Asset Risk**
+## Asset Risk
 
 ### Permanent Loss of a Peg:
 
@@ -75,7 +75,7 @@ Due to composability within DeFi, it is possible for assets in Curve pools to be
 ---
 
 
-## **Regulatory Risk**
+## Regulatory Risk
 
 ### Regulatory Uncertainty:
 The regulatory landscape surrounding blockchain technology, DeFi protocols, tokens, cryptocurrencies, and related activities is constantly evolving, resulting in regulatory uncertainty. The lack of clear and consistent regulations may impact legal obligations, compliance requirements, and potential risks associated with the protocol activities.

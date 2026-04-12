@@ -66,7 +66,7 @@ The contract addresses for bridges are mirrored meaning the bridge contract on E
 
 ---
 
-## **Bridging tokens from Ethereum to an L1 blockchain**
+## Bridging tokens from Ethereum to an L1 blockchain
 
 ### Step 1: Approve the Bridge Contract to Spend Your Tokens
 
@@ -194,7 +194,7 @@ The bridging transaction will not be settled immediately. After completing these
 
 ---
 
-## **Bridging tokens from an L1 blockchain to Ethereum**
+## Bridging tokens from an L1 blockchain to Ethereum
 
 ### Step 1: Approve the Bridge Contract to Spend Your Tokens
 
