@@ -2,6 +2,11 @@
 
 > Curve Finance is a decentralized exchange and DeFi protocol specializing in efficient stablecoin and crypto asset trading through advanced automated market makers (AMMs), and also offers decentralized lending markets with liquidation protection. This is the official documentation at docs.curve.finance.
 
+## LLM Documentation
+
+- [llms.txt](https://docs.curve.finance/llms.txt): This file — curated index of all documentation sections
+- [llms-full.txt](https://docs.curve.finance/llms-full.txt): All documentation pages in a single markdown file
+
 ## Core Products
 
 - [Curve DEX](https://docs.curve.finance/user/dex/overview): Decentralized exchange using Stableswap, Cryptoswap, and Tricrypto AMMs for low-slippage trading
