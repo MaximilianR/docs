@@ -496,6 +496,13 @@ const config: Config = {
     ],
   ],
 
+  scripts: [
+    {
+      src: '/js/chad-theme.js',
+      async: false,
+    },
+  ],
+
   stylesheets: [
     {
       href: '/katex/katex.min.css',
