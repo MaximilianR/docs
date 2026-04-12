@@ -150,6 +150,9 @@
 
 [data-theme='dark'] .theme-doc-sidebar-item-link--active {
   background: rgba(59, 130, 246, 0.1) !important;
+}
+
+[data-theme='dark'] .menu__link--active {
   color: #60a5fa !important;
   font-weight: 600;
 }
@@ -577,6 +580,10 @@ code {
 }
 
 /* Active state styling */
+.menu__link--active {
+  font-weight: 600;
+}
+
 .menu__list-item-collapsible--active {
   background-color: var(--ifm-menu-color-background-active);
 }

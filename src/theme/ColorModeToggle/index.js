@@ -33,12 +33,7 @@ const THEME_ICONS = {
     </svg>
   ),
   chad: (
-    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden>
-      <path
-        fill="currentColor"
-        d="M4 2h16v2H4V2zm0 4h4v4H4V6zm6 0h4v4h-4V6zm6 0h4v4h-4V6zM4 12h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 18h16v2H4v-2zm2 2h12v2H6v-2z"
-      />
-    </svg>
+    <img src="/img/chad.png" width="20" height="20" alt="" aria-hidden style={{imageRendering: 'pixelated'}} />
   ),
 };
 
