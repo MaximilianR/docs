@@ -59,9 +59,9 @@ The price oracle from the first pool determines the price of FXN relative to ETH
 
 *Calculating the final price:*
 
-$$\text\{price\} = \frac\{\text\{FXN/ETH\} \times \text\{ETH/crvUSD\}\}\{10^\{18\}\}$$ 
+$$\text{price} = \frac{\text{FXN/ETH} \times \text{ETH/crvUSD}}{10^{18}}$$ 
 
-$$\text\{price\} = \frac\{43130436331749331 \times 3011786169374663706441\}\{10^\{18\}\} = 129899651623057139817$$
+$$\text{price} = \frac{43130436331749331 \times 3011786169374663706441}{10^{18}} = 129899651623057139817$$
 
 *This final value represents the price of FXN in terms of crvUSD by chaining together two oracles. All values are based on a scale of 1e18; hence, 129899651623057139817 would approximate to 129.71 crvUSD per FXN token.*
 

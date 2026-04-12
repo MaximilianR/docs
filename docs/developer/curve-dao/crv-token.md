@@ -298,7 +298,7 @@ The rate can be adjusted by invoking the `update_mining_parameters()` function. 
 
 *Effectively, each rate reduction decreases CRV inflation by approximately 15.9%. The future rate is calculated as follows:*
 
-$$\text{rate}_\text{future} = \text{rate}_\text{current} * \frac{10^{18}}{2^{\frac{1}{4}} * 10^{18}}$$
+$$\text{rate}_\text{future} = \text{rate}_\text{current} \cdot \frac{10^{18}}{2^{\frac{1}{4}} \cdot 10^{18}}$$
 
 with $\text{rate}_\text{current}$ fetched from the [`rate()`](#rate) function.
 
