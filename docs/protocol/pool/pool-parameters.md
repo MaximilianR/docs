@@ -48,7 +48,7 @@ FXSwap parameters inherit the same ones as the Cryptoswap parameters above. Addi
 
 | Name | Variable Name | Role |
 |------|:------:|-------------------|
-| Amplification coefficient | `A` | Controls liquidity concentration around the balanced price. Higher values reduce slippage near the peg, lower values spread liquidity more evenly. Same as Cryptoswap `A` (Stableswap `A` factored by 10,000).  More here: [FXSwap `A`](understanding-stableswap.md#amplification-factor-a) |
+| Amplification coefficient | `A` | Controls liquidity concentration around the balanced price. Higher values reduce slippage near the peg, lower values spread liquidity more evenly. Same meaning as Stableswap `A`. More here: [FXSwap `A`](understanding-fxswap.md#amplification-factor-a) |
 | EMA half-life | `ma_time` | Time constant (in seconds) of the exponential moving average that tracks the market price |
 | Allowed extra profit | `allowed_extra_profit` | Minimum theoretical arbitrage gain (in bp) before the contract updates its internal price scale, preventing micro-adjustments |
 | Adjustment step | `adjustment_step` | The minimum rebalancing step (min movement of `price_scale`) |
