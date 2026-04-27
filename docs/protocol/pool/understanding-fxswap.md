@@ -144,10 +144,7 @@ Yes, but be aware that FXSwap pools use the simpler Stableswap invariant (no `ga
 
 ### Amplification Factor (`A`)
 
-The amplification factor in FXSwap pools works similarly to the [amplification factor in Stableswap pools](understanding-stableswap.md#amplification-factor-a), with two distinctions:
-
-1.  **Center Price:** The liquidity centers around a variable called `price_scale` rather than a fixed 1.0 peg.
-2.  **Precision:** `A` values are scaled up. An `A` of **10,000** in FXSwap is equivalent to an `A` of **1** in Stableswap. This provides pool creators with 4 decimal places of precision for the liquidity curve.
+The amplification factor in FXSwap pools works similarly to the [amplification factor in Stableswap pools](understanding-stableswap.md#amplification-factor-a), with one key distinction: the liquidity centers around a variable called `price_scale` rather than a fixed 1.0 peg.
 
 Let's have a look at what this means in terms of balance in the pools and prices:
 

@@ -135,7 +135,7 @@ To fine-tune the pool, enable the **Advanced** toggle. However, before experimen
 |----------|-------------|
 | **Mid Fee / Out Fee** | The base and maximum fee range, charged depending on pool imbalance. More here: [FXSwap Dynamic Fees](../understanding-fxswap.md#dynamic-fees).|
 | **Fee Gamma** | Controls how fee ramps up with imbalance. Lower gamma results in a sharper rise from Mid Fee to Out Fee as imbalance grows. More here: [FXSwap Dynamic Fees](../understanding-fxswap.md#dynamic-fees).|
-| **Amplification (A)** | Higher = flatter curve = tighter prices near balance. **Note:** A values are scaled up in FXSwap — an `A` of **10,000** in FXSwap is equivalent to an `A` of **1** in Stableswap. More here: [FXSwap Parameters](../understanding-fxswap.md#amplification-factor-a).|
+| **Amplification (A)** | Higher = flatter curve = tighter prices near balance. More here: [FXSwap Parameters](../understanding-fxswap.md#amplification-factor-a).|
 | **Gamma** | **Unused** in FXSwap logic. Retained solely for backward compatibility. |
 | **Allowed Extra Profit** | Sets profit-taking buffer for rebalancing. |
 | **Adjustment Step** | Step size for rebalancing operations. |
