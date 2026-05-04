@@ -11,6 +11,8 @@ The source code for the `StreamExecutor.vy` contract can be found on [GitHub](ht
 The contract is deployed at the same address on all chains (via CREATE3):
 
 - :logos-ethereum: Ethereum: [`0x4a8Cc5Cb8f7242be9944E1313793c2E5411c462A`](https://etherscan.io/address/0x4a8Cc5Cb8f7242be9944E1313793c2E5411c462A)
+- :logos-gnosis: Gnosis: [`0x4a8Cc5Cb8f7242be9944E1313793c2E5411c462A`](https://gnosisscan.io/address/0x4a8Cc5Cb8f7242be9944E1313793c2E5411c462A)
+- :logos-base: Base: [`0x4a8Cc5Cb8f7242be9944E1313793c2E5411c462A`](https://basescan.org/address/0x4a8Cc5Cb8f7242be9944E1313793c2E5411c462A)
 - :logos-polygon: Polygon: [`0x4a8Cc5Cb8f7242be9944E1313793c2E5411c462A`](https://polygonscan.com/address/0x4a8Cc5Cb8f7242be9944E1313793c2E5411c462A)
 
 <ContractABI>
