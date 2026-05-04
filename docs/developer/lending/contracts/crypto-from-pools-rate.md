@@ -10,7 +10,7 @@ These kinds of oracle contracts **need to be deployed manually**, as there is cu
 
 :::vyper[`CryptoFromPoolsRate.vy`]
 
-The source code for the `CryptoFromPoolsRate.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolsRate.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolsRateWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolsRateWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `CryptoFromPoolsRate.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoFromPoolsRate.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolsRateWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoFromPoolsRateWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 

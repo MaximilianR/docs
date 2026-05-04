@@ -5,7 +5,7 @@ The Views Contract contains **view-only external methods**, which **may be gas-i
 
 :::deploy[Contract Source & Deployment]
 
-Source code for this contract is available on [Github](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/CurveCryptoViews2Optimized.vy). 
+Source code for this contract is available on [Github](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/TwocryptoView.vy). 
 Full list of all deployments can be found [here](../../../deployments.md).
 
 

@@ -13,7 +13,7 @@ The source code for each specific Factory contract can be found on GitHub in the
 
 :::
 
-Each Factory contract includes **built-in functions designed to populate the [MetaRegistry](../../integration/registry/meta-registry-api.md)**with details about the created pools. These functions are not documented in this section. For more information, please refer to the [MetaRegistry documentation](../../integration/registry/overview.md).
+Each Factory contract includes **built-in functions designed to populate the [MetaRegistry](../../integration/meta-registry.md)** with details about the created pools. These functions are not documented in this section. For more information, please refer to the [MetaRegistry documentation](../../integration/meta-registry.md).
 
 
 *Note: The methods described below may vary slightly depending on the specific Factory contract. Any anomalies or noteworthy features will be detailed as accurately as possible in the relevant section.*
@@ -26,7 +26,7 @@ Each Factory contract includes **built-in functions designed to populate the [Me
 
 Curve Factories facilitate the deployment of pools containing almost any combination of assets, whether they are stable or volatile, rebasing or not. Note that some variations (e.g., cryptoswap pool) might not yet be supported on sidechains or Layer 2 networks.
 
-*For a straightforward, non-technical explanation of pool variations, visit: https://resources.curve.fi/pools/overview/*
+*For a straightforward, non-technical explanation of pool variations, see the [DEX overview](/user/dex/overview).*
 
 <DocCardGrid>
   <DocCard title="CurveStableswapFactoryNG.vy" icon="vyper" link="./stableswap-ng/overview" linkText="CurveStableswapFactoryNG.vy">

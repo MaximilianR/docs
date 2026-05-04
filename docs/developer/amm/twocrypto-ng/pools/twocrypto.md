@@ -4,7 +4,7 @@ A Twocrypto-NG pool consists of **two non-pegged assets**. The LP token is an ER
 
 :::vyper[`CurveTwocryptoOptimized.vy`]
 
-The source code for the `CurveTwocryptoOptimized.vy` contract can be found on [GitHub](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/CurveTwocryptoOptimized.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.10`.
+The source code for the `CurveTwocryptoOptimized.vy` contract can be found on [GitHub](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/Twocrypto.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.10`.
 
 This is a **blueprint contract** — individual pools are deployed via the [Factory](../../factory/twocrypto-ng/overview.md). Pool and LP token share the same address. Full list of all deployments can be found [here](../../../deployments.md).
 

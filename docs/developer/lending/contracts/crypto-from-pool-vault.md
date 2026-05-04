@@ -9,7 +9,7 @@ These kinds of oracle contracts **need to be deployed manually**, as there is cu
 
 :::vyper[`CryptoFromPoolVault.vy`]
 
-The source code for the `CryptoFromPoolVault.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVault.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolVaultWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolVaultWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `CryptoFromPoolVault.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoFromPoolVault.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolVaultWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoFromPoolVaultWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::warning[Oracle Suitability]
 
@@ -126,7 +126,7 @@ The oracle price is calculated by taking the `price_oracle` of a Curve pool and 
 
 :::example[Example]
 
-Let's take a look at the [sDOLA/crvUSD lending market](https://lend.curve.fi/#/ethereum/markets/one-way-market-17/create), which uses the `CryptoFromPoolVaultWAgg.vy` code. 
+Let's take a look at the [sDOLA/crvUSD lending market](https://lend.curve.finance/#/ethereum/markets/one-way-market-17/create), which uses the `CryptoFromPoolVaultWAgg.vy` code. 
 
 The [oracle contract](https://etherscan.io/address/0x002688C4296A2C4d800F271fe6F01741111B09Be) fetches the `price_oracle` of the [DOLA &lt;&gt; crvUSD stableswap-ng pool](https://etherscan.io/address/0x8272E1A3dBef607C04AA6e5BD3a1A134c8ac063B#readContract#F9) and then adjusts this value by the redemption rate obtained from the [`convertToAssets`](https://etherscan.io/address/0xb45ad160634c528Cc3D2926d9807104FA3157305#readContract#F7) method of the [sDOLA vault](https://etherscan.io/address/0xb45ad160634c528Cc3D2926d9807104FA3157305).
 

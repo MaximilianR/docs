@@ -20,7 +20,7 @@ The token is deployed on :logos-ethereum: Ethereum at [`0xD533a949740bb3306d119C
 
 :::
 
-For a broader understanding of the use case of the CRV token, check out [Understanding CRV](https://resources.curve.fi/crv-token/overview/).
+For a broader understanding of the use case of the CRV token, check out [Understanding CRV](/user/curve-tokens/crv).
 
 ---
 

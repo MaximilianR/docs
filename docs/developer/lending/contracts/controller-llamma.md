@@ -4,7 +4,7 @@ import DocCard, { DocCardGrid } from '@site/src/components/DocCard'
 
 :::vyper[`AMM.vy` & `Controller.vy`]
 
-The source code for both contracts, `AMM.vy` and `Controller.vy`, can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/lending/contracts). The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for both contracts, `AMM.vy` and `Controller.vy`, can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/curve_stablecoin). The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 

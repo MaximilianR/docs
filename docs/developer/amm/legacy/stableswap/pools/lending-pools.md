@@ -9,17 +9,17 @@ Currently, Curve supports the following lending pools:
 
 ``aave``: [Aave pool](https://www.curve.fi/aave), with lending on [Aave](https://www.aave.com)
 
-``busd``: [BUSD](https://www.curve.fi/busd) pool, with lending on [yearn.finance](https://www.yearn.finance)
+``busd``: [BUSD](https://www.curve.fi/busd) pool, with lending on [yearn.finance](https://yearn.fi)
 
 ``compound``: [Compound](https://www.curve.fi/compound) pool, with lending on [Compound](https://compound.finance/)
 
-``ib``: [Iron Bank pool](https://curve.fi/ib), with lending on [Cream](https://v1.yearn.finance/lending)
+``ib``: [Iron Bank pool](https://curve.fi/ib), with lending on [Cream](https://yearn.fi)
 
-``pax``: [PAX](https://curve.fi/pax) pool, with lending on [yearn.finance](https://www.yearn.finance)
+``pax``: [PAX](https://curve.fi/pax) pool, with lending on [yearn.finance](https://yearn.fi)
 
 ``usdt``: [USDT pool](https://curve.fi/usdt), with lending on [Compound](https://www.curve.fi/compound)
 
-``y``: [Y pool](https://curve.fi/y), with lending on [yearn.finance](https://www.yearn.finance)
+``y``: [Y pool](https://curve.fi/y), with lending on [yearn.finance](https://yearn.fi)
 
 An example of a Curve lending pool is 
 [Compound Pool](https://github.com/curvefi/curve-contract/tree/master/contracts/pools/compound), 

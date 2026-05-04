@@ -21,19 +21,19 @@ export const ALL_GUIDES = {
     title: 'How to Earn CRV with DEX Pools',
     description: 'Learn how to earn CRV by depositing liquidity in a DEX pool.',
     image: '',
-    link: '/user/dex/guides/how-to-earn-crv',
+    link: '/user/dex/understanding-rewards',
   },
   earnCrvWithLlamalend: {
     title: 'How to Earn CRV with Llamalend',
     description: 'Learn how to earn CRV by supplying (lending) liquidity in a Llamalend market.',
     image: '',
-    link: '/user/lending/guides/how-to-earn-crv',
+    link: '/user/llamalend/supplying',
   },
   borrowCrvusd: {
     title: 'How to Borrow crvUSD',
     description: 'Learn how to borrow crvUSD using ETH as collateral.',
     image: '',
-    link: '/user/lending/guides/beginner/open-and-close',
+    link: '/user/llamalend/guides/borrow/open-and-close',
   },
   scrvusd: {
     title: 'Learn About scrvUSD',
@@ -69,7 +69,7 @@ export const ALL_GUIDES = {
     title: 'How to Claim Pool Rewards',
     description: 'Learn how to claim your CRV and other token rewards earned from pools.',
     image: '',
-    link: '/user/dex/guides/how-to-claim-rewards',
+    link: '/user/dex/guides/claim-rewards',
   },
   learnDexPoolRewards: {
     title: 'Learn About DEX Pool Rewards',
@@ -141,7 +141,7 @@ export const ALL_GUIDES = {
     title: 'How to Borrow with Llamalend',
     description: 'Learn how to borrow or repay your assets from Llamalend and claim any earned rewards.',
     image: '',
-    link: '/user/lending/guides/beginner/borrowing',
+    link: '/user/llamalend/borrowing',
   },
   gaugeWeights: {
     title: 'Voting for Gauge Weights',
@@ -219,13 +219,13 @@ export const ALL_GUIDES = {
     title: 'How to Add Permissionless Rewards',
     description: 'Learn how to add permissionless rewards to a gauge.',
     image: '',
-    link: '/protocol/gauge/adding-permissionless-rewards',
+    link: '/protocol/gauge/guides/adding-permissionless-rewards',
   },
   HowToGetCRVEmissions: {
     title: 'How to Get CRV Emissions',
     description: 'Learn how to get CRV emissions for a gauge.',
     image: '',
-    link: '/protocol/gauge/how-to-get-a-gauge',
+    link: '/protocol/gauge/guides/getting-crv-emissions',
   },
   howToOpenAndCloseLoan: {
     title: 'How to Open and Close a Loan',

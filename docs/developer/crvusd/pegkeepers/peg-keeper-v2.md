@@ -3,7 +3,7 @@
 
 :::vyper[`PegKeeperV2.vy`]
 
-Source code for the `PegKeeperV2.vy` contract is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeperV2.vy). Relevant deployments can be found [here](../../deployments.md).
+Source code for the `PegKeeperV2.vy` contract is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/stabilizer/PegKeeperV2.vy). Relevant deployments can be found [here](../../deployments.md).
 
 
 :::

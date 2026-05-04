@@ -14,7 +14,7 @@ const CONTROLLER_ABI = ['function monetary_policy() view returns (address)'];
 const KNOWN_POLICIES = {
   '0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1': {
     label: 'AggMonetaryPolicy',
-    link: '/developer/crvusd/monetary-policy/monetary-policy',
+    link: '/developer/crvusd/monetary-policy/',
   },
   '0x07491d124ddb3ef59a8938fcb3ee50f9fa0b9251': {
     label: 'AggMonetaryPolicy (v4)',

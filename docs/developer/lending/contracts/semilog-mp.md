@@ -8,7 +8,7 @@ The **borrow rate**in the semi-logarithmic MonetaryPolicy contract is **intricat
 
 :::vyper[`SemilogMonetaryPolicy.vy`]
 
-The source code for the `SemilogMonetaryPolicy.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/mpolicies/SemilogMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `SemilogMonetaryPolicy.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/mpolicies/SemilogMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 

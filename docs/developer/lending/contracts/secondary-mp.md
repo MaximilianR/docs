@@ -9,7 +9,7 @@ This design ensures that when the target utilization is met, the borrow rate in 
 
 :::vyper[`SecondaryMonetaryPolicy.vy`]
 
-The source code for the `SecondaryMonetaryPolicy.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/mpolicies/SecondaryMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `SecondaryMonetaryPolicy.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/mpolicies/SecondaryMonetaryPolicy.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 

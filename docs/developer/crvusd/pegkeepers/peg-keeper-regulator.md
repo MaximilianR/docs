@@ -5,7 +5,7 @@ The regulator contract supervises prices and other parameters telling whether th
 
 :::vyper[`PegKeeperRegulator.vy`]
 
-Source code for the `PegKeeperRegulator.vy` contract is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeperRegulator.vy). Relevant deployments can be found [here](../../deployments.md).
+Source code for the `PegKeeperRegulator.vy` contract is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/stabilizer/PegKeeperRegulator.vy). Relevant deployments can be found [here](../../deployments.md).
 
 
 :::

@@ -7,7 +7,7 @@ A one-way lending market is a **non-rehypothecating** market where one token is 
 
 :::vyper[`OneWayLendingFactory.vy`]
 
-The source code for the `OneWayLendingFactory.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/OneWayLendingFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `OneWayLendingFactory.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/lending/LendFactory.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 

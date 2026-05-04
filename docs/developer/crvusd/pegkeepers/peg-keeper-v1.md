@@ -22,7 +22,7 @@ PegKeepers **do not actually mint or burn crvUSD tokens**. They have a defined a
 
 :::vyper[`PegKeeper.vy`]
 
-Source code for this contract is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/stabilizer/PegKeeper.vy). 
+Source code for this contract is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/stabilizer/PegKeeper.vy). 
 
 | PegKeepers                | Deployment Address  |
 | ------------------------- | ------------------- |
