@@ -5,7 +5,7 @@ The `AggregateStablePrice.vy` contract is designed to **get an aggregated price 
 
 :::vyper[`AggregateStablePrice.vy`]
 
-There are three iterations of the `AggregateStablePrice` contract. Source code for the contracts can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/price_oracles). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.7`.
+There are three iterations of the `AggregateStablePrice` contract. Source code for the contracts can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/curve_stablecoin/price_oracles). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.7`.
 
 - :logos-ethereum: Ethereum: [`0x18672b1b0c623a30089A280Ed9256379fb0E4E62`](https://etherscan.io/address/0x18672b1b0c623a30089A280Ed9256379fb0E4E62)
 - :logos-arbitrum: Arbitrum: [`0x44a4FdFb626Ce98e36396d491833606309520330`](https://arbiscan.io/address/0x44a4FdFb626Ce98e36396d491833606309520330)

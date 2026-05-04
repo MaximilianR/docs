@@ -5,7 +5,7 @@ The AggregatorStablePrice contract is designed to **aggregate the prices of crvU
 
 :::vyper[`AggregateStablePrice.vy`]
 
-The source code for the `AggregateStablePrice.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/AggregateStablePrice2.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.7`.
+The source code for the `AggregateStablePrice.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/AggregateStablePrice2.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.7`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7`](https://etherscan.io/address/0xe5Afcf332a5457E8FafCD668BcE3dF953762Dfe7).
 

@@ -4,7 +4,7 @@ The `AggMonetaryPolicy4` contract is the latest version of the aggregated moneta
 
 :::vyper[`AggMonetaryPolicy4.vy`]
 
-The source code for the `AggMonetaryPolicy4.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/mpolicies/AggMonetaryPolicy4.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.4.3`.
+The source code for the `AggMonetaryPolicy4.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/mpolicies/AggMonetaryPolicy4.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.4.3`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0x07491D124ddB3Ef59a8938fCB3EE50F9FA0b9251`](https://etherscan.io/address/0x07491D124ddB3Ef59a8938fCB3EE50F9FA0b9251).
 

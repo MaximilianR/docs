@@ -9,7 +9,7 @@ Savings crvUSD, in short scrvUSD, is a savings version of crvUSD.
 
 ## Smart Contracts
 
-The documentation of the `FeeSplitter` contract can be found [here](https://docs.curve.fi/fees/FeeSplitter/).
+The documentation of the `FeeSplitter` contract can be found [here](/developer/fees/fee-splitter).
 
 <DocCardGrid>
   <DocCard title="VaultV3.vy" icon="vyper" link="https://docs.yearn.fi/developers/v3/overview" linkText="Yearn Dev Docs">
@@ -19,7 +19,7 @@ The Vault contract is based on Yearn's `VaultV3.vy` contract, more precisely [ve
   </DocCard>
   <DocCard title="RewardsHandler.vy" icon="vyper" link="./rewards-handler" linkText="Read more">
 
-The `RewardsHandler` is a peripheral contract that implements the `weight` function needed by the [`FeeSplitter`](https://docs.curve.fi/fees/FeeSplitter/). This function enables the Vault to receive rewards to depositors based on the proportion of crvUSD deposited in the Vault.
+The `RewardsHandler` is a peripheral contract that implements the `weight` function needed by the [`FeeSplitter`](/developer/fees/fee-splitter). This function enables the Vault to receive rewards to depositors based on the proportion of crvUSD deposited in the Vault.
 
   </DocCard>
   <DocCard title="StablecoinLens.vy" icon="vyper" link="./stablecoin-lens" linkText="Read more">

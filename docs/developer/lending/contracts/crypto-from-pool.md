@@ -7,7 +7,7 @@ Oracle contract for a collateral token that **fetches its price from a single Cu
 
 :::vyper[`CryptoFromPool.vy`]
 
-The source code for the `CryptoFromPool.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPool.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/price_oracles/CryptoFromPoolWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `CryptoFromPool.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoFromPool.vy). A variant that includes the aggregated crvUSD price, [`CryptoFromPoolWAgg.vy`](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/price_oracles/CryptoFromPoolWAgg.vy), is also available. The contracts are written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 

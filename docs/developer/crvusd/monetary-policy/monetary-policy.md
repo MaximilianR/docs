@@ -4,7 +4,7 @@ MonetaryPolicy contracts are integrated into the crvUSD ecosystem, where they pl
 
 :::vyper[`AggMonetaryPolicy.vy`]
 
-The source code for the `AggMonetaryPolicy.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/mpolicies/AggMonetaryPolicy4.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.7`.
+The source code for the `AggMonetaryPolicy.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/mpolicies/AggMonetaryPolicy4.vy). The contract is written in [Vyper](https://vyperlang.org/) version `0.3.7`.
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1`](https://etherscan.io/address/0xc684432fd6322c6d58b6bc5d28b18569aa0ad0a1).
 

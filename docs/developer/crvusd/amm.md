@@ -4,7 +4,7 @@ LLAMMA (Lending Liquidating Automated Market Maker Algorithm) is the **market-ma
 
 :::vyper[`AMM.vy`]
 
-Each market deploys its own AMM from a blueprint contract. Source code is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/AMM.vy). Relevant deployments can be found [here](../deployments.md).
+Each market deploys its own AMM from a blueprint contract. Source code is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/AMM.vy). Relevant deployments can be found [here](../deployments.md).
 
 :::
 

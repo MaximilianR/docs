@@ -6,7 +6,7 @@ The **borrowable liquidity is provided by willing lenders**through [Vaults](./co
 :::deploy[Contract Source & Deployment]
 
 Lending-related deployments can be found [here](../deployments.md).  
-Source code for all lending-relevant contracts is available on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/lending).
+Source code for all lending-relevant contracts is available on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/curve_stablecoin/lending).
 
 
 :::

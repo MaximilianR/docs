@@ -5,7 +5,7 @@ The Twocrypto-NG Factory allows the permissionless deployment of two-coin volati
 
 :::deploy[Contract Source & Deployment]
 
-Source code for the Factory is available on [Github](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/CurveTwocryptoFactory.vy).   
+Source code for the Factory is available on [Github](https://github.com/curvefi/twocrypto-ng/blob/main/contracts/main/TwocryptoFactory.vy).   
 A full list of all deployments can be found [here](../../../deployments.md).
 
 

@@ -6,7 +6,7 @@ Other than the pool factory, this factory **does not allow permissionless deploy
 
 :::vyper[`ControllerFactory.vy`]
 
-The source code for the `ControllerFactory.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/ControllerFactory.vy).
+The source code for the `ControllerFactory.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/ControllerFactory.vy).
 
 The contract is deployed on :logos-ethereum: Ethereum at [`0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC`](https://etherscan.io/address/0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC#code).
 

@@ -10,7 +10,7 @@ The Controller contract acts as a on-chain interface for **creating loans and fu
 
 :::vyper[`Controller.vy`]
 
-Each market deploys its own Controller from a blueprint contract. Source code is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/contracts/Controller.vy). Relevant deployments can be found [here](../deployments.md).
+Each market deploys its own Controller from a blueprint contract. Source code is available on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/controller.vy). Relevant deployments can be found [here](../deployments.md).
 
 :::
 

@@ -2,7 +2,7 @@
 
 :::github[GitHub]
 
-Source code of all PegKeepers can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/contracts/stabilizer).
+Source code of all PegKeepers can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/tree/master/curve_stablecoin/stabilizer).
 
 A list of all contract deployments can be found [here](../../deployments.md).
 

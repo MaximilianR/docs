@@ -7,7 +7,7 @@ The vault is an **implementation of a [ERC-4626](https://ethereum.org/developers
 
 :::vyper[`Vault.vy`]
 
-The source code for the `Vault.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/lending/contracts/lending/Vault.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
+The source code for the `Vault.vy` contract can be found on [GitHub](https://github.com/curvefi/curve-stablecoin/blob/master/curve_stablecoin/lending/Vault.vy). The contract is written using [Vyper](https://github.com/vyperlang/vyper) version `0.3.10`.
 
 :::
 
