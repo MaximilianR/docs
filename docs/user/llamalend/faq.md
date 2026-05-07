@@ -266,6 +266,19 @@ If users get here, it's normally best to repay the loan and reopen it, because t
   />
 </figure>
 
+### What happens when a market encounters bad debt?
+
+Bad debt means the market cannot fully recover some loans from available collateral.
+
+In Llamalend, this can happen in extreme conditions if liquidation does not recover enough of the borrowed asset before a position becomes undercollateralized. When that happens, the shortfall remains inside that market.
+
+For users, this usually means:
+- Lenders in that market are exposed to the shortfall
+- Withdrawals may be limited
+- Borrowers may still be able to repay or close positions if the market remains operational
+
+Llamalend markets are isolated, so bad debt in one market does not automatically affect all other markets.
+
 ---
 
 ## Losses & Loan Health
