@@ -32,7 +32,7 @@ Deploying Llamalend markets is fully permissionless through a dedicated Factory 
 
 ## How It Works
 
-Users deposit collateral tokens to borrow against them, maintaining health factors above liquidation thresholds. Interest accrues on borrowed amounts and is paid to lenders providing market liquidity. Automated liquidation mechanisms help reduce the risk of bad debt, but extreme market conditions can still result in shortfalls.
+Users deposit collateral tokens to borrow against them, maintaining health factors above liquidation thresholds. Interest accrues on borrowed amounts and is paid to lenders providing market liquidity. Automated liquidation mechanisms protect against bad debt accumulation.
 
 ## Incentives & Liquidity Growth
 
