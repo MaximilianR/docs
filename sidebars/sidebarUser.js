@@ -198,6 +198,11 @@ export default {
                 },
                 {
                     type: 'doc',
+                    id: 'llamalend/bad-debt',
+                    label: 'Bad Debt',
+                },
+                {
+                    type: 'doc',
                     id: 'llamalend/faq',
                     label: 'FAQ',
                 },
