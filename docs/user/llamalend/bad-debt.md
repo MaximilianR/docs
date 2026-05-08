@@ -10,7 +10,7 @@ This article explains what bad debt is in Llamalend, how it can occur, and what 
 
 Bad debt means a market has suffered a shortfall and cannot fully recover all outstanding loans from available collateral.
 
-In Llamalend, this can happen in extreme market conditions if a position enters liquidation and the collateral is not converted into enough of the borrowed asset to fully repay the debt. If the remaining collateral is worth less than the outstanding loan, the market is left with bad debt.
+In Llamalend, this can arise only in extreme market conditions, when a position enters liquidation and the collateral is not converted into enough of the borrowed asset to fully repay the debt. If the remaining collateral is worth less than the outstanding loan, the market is left with bad debt.
 
 Bad debt is always specific to the affected market. Llamalend markets are isolated, so any shortfall in a market does not spread to other Curve lending markets.
 
@@ -68,6 +68,8 @@ A market with bad debt has a solvency shortfall, meaning total recoverable asset
 
 This is why a market can remain visible and partially operational while still limiting lender withdrawals.
 
+A solvency level below 100% does not always mean a shortfall is permanently irrecoverable. Recovery can still depend on later collateral values, liquidation outcomes, and broader market conditions.
+
 ## Does Bad Debt Affect All Llamalend Markets?
 
 No.
@@ -111,4 +113,4 @@ Supplying assets to a lending market involves risk.
 
 Curve Lending is designed to reduce risk through over-collateralization, isolated markets, and the LLAMMA liquidation mechanism, but these are risk mitigation tools, not guarantees.
 
-Users should understand the collateral asset, liquidity conditions, market configuration, and the possibility of partial or total loss before supplying funds to any market.
+Users should understand the collateral asset, liquidity conditions, market configuration, and the possibility of partial or total loss before supplying funds to any market. See also the [Curve Lending disclaimers](https://www.curve.finance/dex/ethereum/legal?tab=disclaimers&subtab=lend).
