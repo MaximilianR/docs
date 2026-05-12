@@ -18,6 +18,8 @@ The source code for the `DonationStreamer.vy` contract can be found on [GitHub](
 The contract is deployed at the same address on all chains (via CREATE3):
 
 - :logos-ethereum: Ethereum: [`0x2b786BB995978CC2242C567Ae62fd617b0eBC828`](https://etherscan.io/address/0x2b786BB995978CC2242C567Ae62fd617b0eBC828)
+- :logos-gnosis: Gnosis: [`0x2b786BB995978CC2242C567Ae62fd617b0eBC828`](https://gnosisscan.io/address/0x2b786BB995978CC2242C567Ae62fd617b0eBC828)
+- :logos-base: Base: [`0x2b786BB995978CC2242C567Ae62fd617b0eBC828`](https://basescan.org/address/0x2b786BB995978CC2242C567Ae62fd617b0eBC828)
 - :logos-polygon: Polygon: [`0x2b786BB995978CC2242C567Ae62fd617b0eBC828`](https://polygonscan.com/address/0x2b786BB995978CC2242C567Ae62fd617b0eBC828)
 
 <ContractABI>
